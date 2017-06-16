@@ -8,18 +8,21 @@ export class Audio extends React.Component{
         };
     }
     render(){
-        if (this.props.media[0]) {
+        console.log(this.props.url);
+        if (this.props.url) {
             return (
-                <tr>
-                    <td>
-                < audio
-                    ref = "audio_tag"
-                    src = {this.props.media[0].url}
-                    controls
-                    autoPlay = "false" />
-                    </td>
-                </tr>
-        )
+
+                    <tr>
+                        <td>
+                            < audio
+                                ref = "audio_tag"
+                                src = {this.props.url}
+                                controls />
+                        </td>
+                    </tr>
+                )
+
+
         }
         else
         { return null }
