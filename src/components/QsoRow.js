@@ -2,6 +2,7 @@ import React from 'react';
 import {QRAs} from './QRAs'
 import {AudioList} from './AudioList'
 import {Image} from './Image'
+import {QsoLikeButton} from './QsoLikeButton'
 export class QsoRow extends React.Component{
     constructor(){
         super();
@@ -13,9 +14,9 @@ export class QsoRow extends React.Component{
     render() {
 
         let image = null;
-        console.log("media" + this.props.qso.media);
+
         let picList = this.props.qso.media.filter( (media) => media.type === "image" );
-        console.log("PICS" + picList);
+
         if (picList.length > 0){
             image = <Image img = {picList[0].url} />;
         }
@@ -40,6 +41,7 @@ export class QsoRow extends React.Component{
                                 />
                                 {image}
                                 {audio}
+                                <QsoLikeButton />
                             </tbody></table>
                         </td>
                     </tr>
