@@ -1,5 +1,6 @@
 import React from 'react';
 import {Audio} from './Audio';
+import {Grid, Col, Row} from 'react-bootstrap'
 export class AudioList extends React.Component{
     constructor(){
         super();
@@ -11,10 +12,17 @@ export class AudioList extends React.Component{
         if (this.props.mediaList.length > 0 ) {
             return (
                 <div className="AudioList">
+                    <Grid>
+
                     {this.props.mediaList.map((m, i) =>
-                    <Audio key = {i}
-                        url = {m.url}/>
+                    <Row>
+                        <Col key={i}>
+                            <Audio key = {i}
+                                url = {m.url}/>
+                        </Col>
+                    </Row>
                 )}
+                    </Grid>
                 </div>
 
         )

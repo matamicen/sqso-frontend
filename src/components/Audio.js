@@ -12,14 +12,12 @@ export class Audio extends React.Component{
         if (this.props.url) {
             return (
 
-                    <tr>
-                        <td>
+
                             < audio
                                 ref = "audio_tag"
                                 src = {this.props.url}
                                 controls />
-                        </td>
-                    </tr>
+                       
                 )
 
 

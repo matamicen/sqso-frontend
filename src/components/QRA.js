@@ -9,12 +9,11 @@ export class QRA extends React.Component{
     }
     render() {
         return (
-            <td>
                 <Picture
                     img = {this.props.qra.profilepic}
                     h = {'50'}
                     w = {'50'} />
-            </td>
+
         )
     }
 }

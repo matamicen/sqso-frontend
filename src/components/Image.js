@@ -12,14 +12,12 @@ export class Image extends React.Component{
         if (this.props.img) {
             return (
 
-                    <tr>
-                        <td>
+
                             <Picture
                                 img = {this.props.img}
                                 h = {'200'}
                                 w = {'300'} />
-                        </td>
-                    </tr>
+
                 )
 
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import {QsoRow} from './QsoRow'
+import {Grid} from 'react-bootstrap'
 
 
 
@@ -101,9 +102,9 @@ export class QSOsTable extends React.Component{
 
         return (
             <div className="QSOsTable">
-                <table><tbody>
+                <Grid fluid={true}>
                 { qsos }
-                </tbody></table>
+                </Grid>
             </div>
         );
     }

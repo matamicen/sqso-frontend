@@ -3,6 +3,7 @@ import {QRAs} from './QRAs'
 import {AudioList} from './AudioList'
 import {Image} from './Image'
 import {QsoLikeButton} from './QsoLikeButton'
+import {Row, Col} from 'react-bootstrap'
 export class QsoRow extends React.Component{
     constructor(){
         super();
@@ -32,19 +33,24 @@ export class QsoRow extends React.Component{
 
 
         return (
-                    <tr>
-                        <td>
-                            <table><tbody>
-                                < QRAs
+                    <Row>
+                       <Col  md={12}>
+                           < QRAs
                                        qras = {this.props.qso.qras}
                                        qra_owner = {this.props.qso.profilepic}
-                                />
+                           />
+
+                           <Row><Col >
                                 {image}
+                           </Col></Row>
+                           <Row><Col>
                                 {audio}
+                           </Col></Row>
+                           <Row><Col md={2}>
                                 <QsoLikeButton />
-                            </tbody></table>
-                        </td>
-                    </tr>
+                           </Col></Row>
+                       </Col>
+                    </Row>
         )
         }
 }
