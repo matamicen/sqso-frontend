@@ -14,7 +14,7 @@ export class PublicDashboard extends React.Component{
                 return response.json()
             })
             .then((result) => {
-                // console.log(result)
+                console.log(result)
                 this.setState({ publicQsos :  result });
             })
 

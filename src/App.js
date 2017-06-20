@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { Router, Route, IndexRoute, browserHistory, Link } from 'react-router'
 import './App.css';
-import {Home} from './components/Home'
+import {Header} from './components/Header'
 
 class App extends Component {
     constructor(){
@@ -18,8 +19,9 @@ class App extends Component {
     }
   render() {
     return (
-      <div className="App">
-        < Home />
+              <div>
+                  <nav><Header/></nav>
+                {this.props.children}
       </div>
     );
   }

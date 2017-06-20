@@ -11,6 +11,7 @@ export class Main extends React.Component{
       //  if (!this.props.isLoggedIn) {
             return (
                 <div className="Main">
+                    { this.props.children }
                     < PublicDashboard/>
                 </div>
             );

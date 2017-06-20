@@ -1,6 +1,6 @@
 import React from 'react';
 import {Search} from './Search';
-import {Account} from './Account'
+import {Account} from './Auth/Account'
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import { Grid, Row, Col } from 'react-bootstrap'
