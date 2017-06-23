@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
-import { FormGroup, FormControl, } from 'react-bootstrap';
+import { FormGroup, FormControl, Navbar} from 'react-bootstrap';
 export class Search extends React.Component{
     constructor(){
         super();
@@ -27,22 +27,14 @@ export class Search extends React.Component{
     }
     render(){
         return (
-            <form>
-                <FormGroup
-                    controlId="formBasicText"
-                    validationState={this.getValidationState()}
-                >
+            <Navbar.Collapse>
+                <Navbar.Form pullLeft>
+                    <FormGroup>
+                        <FormControl type="text" placeholder="Search" />
+                    </FormGroup>
 
-                    <FormControl
-                        type="text"
-                        value={this.state.value}
-                        placeholder="Search"
-                        onChange={this.handleChange}
-                    />
-                    <FormControl.Feedback />
-
-                </FormGroup>
-            </form>
+                </Navbar.Form>
+            </Navbar.Collapse>
         );
     }
 }

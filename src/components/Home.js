@@ -1,5 +1,4 @@
 import React from 'react';
-import {Header} from './Header';
 import {Main} from './Main';
 
 export class Home extends React.Component{
@@ -12,7 +11,6 @@ export class Home extends React.Component{
     render() {
         return (
             <div className="Home">
-
                 <Main/>
             </div>
         );

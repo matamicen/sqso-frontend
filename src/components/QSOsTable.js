@@ -10,6 +10,7 @@ export class QSOsTable extends React.Component{
         this.state = {
             qsos : []
         };
+
     }
     componentDidMount() {
        // this.setState( qsos : {this.props.qsos});

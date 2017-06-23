@@ -15,8 +15,8 @@ export class AudioList extends React.Component{
                     <Grid>
 
                     {this.props.mediaList.map((m, i) =>
-                    <Row>
-                        <Col key={i}>
+                    <Row key={i}>
+                        <Col >
                             <Audio key = {i}
                                 url = {m.url}/>
                         </Col>
