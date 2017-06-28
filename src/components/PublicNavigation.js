@@ -1,21 +1,17 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
-import {Nav, NavItem, Button, ButtonGroup, Navbar, FormControl, FormGroup} from "react-bootstrap";
+import { Button, ButtonGroup, Navbar, FormControl, FormGroup} from "react-bootstrap";
 const PublicNavigation = () => (
-    <Navbar.Collapse>
-        <Nav pullLeft>
+         <Navbar.Collapse>
 
-                <Navbar.Form>
+                <Navbar.Form pullLeft>
                     <FormGroup>
                         <FormControl type="text" placeholder="Search"/>
                     </FormGroup>
 
                 </Navbar.Form>
 
-        </Nav>
-        <Nav pullRight>
-
-                <Navbar.Form>
+                <Navbar.Form pullRight>
                     <FormGroup>
                         <FormControl type="text" placeholder="QRA"/>
                         <FormControl type="text" placeholder="Password"/>
@@ -31,8 +27,8 @@ const PublicNavigation = () => (
                     </ButtonGroup>
                 </Navbar.Form>
 
-        </Nav>
-    </Navbar.Collapse>
+        </Navbar.Collapse>
+
 );
 
 export default PublicNavigation;

@@ -1,21 +1,20 @@
 import React from "react";
-import {Col, FormControl, Form, Button, FormGroup, ControlLabel, Checkbox} from "react-bootstrap";
-import AWS, {Config, CognitoIdentityCredentials} from 'aws-sdk'
-import {AuthenticationDetails, CognitoUser, CognitoUserPool} from 'amazon-cognito-identity-js';
-import {Redirect} from 'react-router-dom'
+import {Col, FormControl, Button, FormGroup, ControlLabel, Checkbox} from "react-bootstrap";
+import {CognitoUserPool, CognitoUser, AuthenticationDetails} from "amazon-cognito-identity-js";
 // ES Modules, e.g. transpiling with Babel
 import appConfig from "./Config";
-
+import AWS from "aws-sdk";
 import "../../App.css";
-Config.region = appConfig.region;
-Config.credentials = new CognitoIdentityCredentials({
-    IdentityPoolId: appConfig.IdentityPoolId
-});
 
+
+var poolData = {
+    UserPoolId: appConfig.UserPoolId, // Your user pool id here
+    ClientId: appConfig.ClientId // Your client id here
+};
 
 export class LogIn extends React.Component {
-    constructor(props) {
-        super(props);
+    constructor(props, context) {
+        super(props, context);
 
         this.state = {
             userLogged: false,
@@ -23,17 +22,20 @@ export class LogIn extends React.Component {
             qra: ''
         };
 
+
+
         //Fields
-        this.handlePasswordChange = this.handlePasswordChange.bind(this);
-        this.handleQraChange = this.handleQraChange.bind(this);
+      //  this.handlePasswordChange = this.handlePasswordChange.bind(this);
+      //  this.handleQraChange = this.handleQraChange.bind(this);
 
         //Event
-        this.handleOnClickLogin = this.handleOnClickLogin.bind(this);
+      //  this.handleOnClickLogin = this.handleOnClickLogin.bind(this);
 
         //Callback
-        this.handleOnLoginSuccess = this.handleOnLoginSuccess.bind(this);
+      //  this.handleOnLoginSuccess = this.handleOnLoginSuccess.bind(this);
 
     }
+
 
     handleOnLoginSuccess(result) {
         //alert("result" )
@@ -58,7 +60,7 @@ export class LogIn extends React.Component {
 
     }
 
-    handleOnClickLogin() {
+    handleOnClickLogin(e) {
 
 
         var authenticationData = {
@@ -66,28 +68,35 @@ export class LogIn extends React.Component {
             Password: this.state.password
         };
         var authenticationDetails = new AuthenticationDetails(authenticationData);
-        console.log(authenticationDetails)
-        var poolData = {
-            UserPoolId: appConfig.UserPoolId, // Your user pool id here
-            ClientId: appConfig.ClientId // Your client id here
-        };
+
         var userPool = new CognitoUserPool(poolData);
         var userData = {
             Username: this.state.qra,
             Pool: userPool
         };
 
-        console.log(userData)
         var cognitoUser = new CognitoUser(userData);
         cognitoUser.authenticateUser(authenticationDetails, {
-            onSuccess: function(result){
-                console.debug(result)
+            onSuccess: function(result) {
                 console.log(result);
-            },
-            onFailure: function (err) {
-                console.log(err);
+                console.log('access token + ' + result.getAccessToken().getJwtToken());
+
+                // AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                //     IdentityPoolId : '...', // your identity pool id here
+                //     Logins : {
+                //         // Change the key below according to the specific region your user pool is in.
+                //         'cognito-idp.<region>.amazonaws.com/<YOUR_USER_POOL_ID>' : result.getIdToken().getJwtToken()
+                //     }
+                // });
+
+                // Instantiate aws sdk service objects now that the credentials have been updated.
+                // example: var s3 = new AWS.S3();
+
             },
 
+            onFailure: function(err) {
+                console.error(err);
+            }
         });
 
     }
@@ -101,12 +110,106 @@ export class LogIn extends React.Component {
 
     }
 
+    loadAuthenticatedUser() {
+        var that = this;
+        console.log("Loading Auth User");
+
+        var userPool = new CognitoUserPool(poolData);
+        var cognitoUser = userPool.getCurrentUser();
+
+        if (cognitoUser != null) {
+            cognitoUser.getSession(function(err, session) {
+                if (err) {
+                    alert(err);
+                    return;
+                }
+                console.log(session);
+                console.log('session validity: ' + session.isValid());
+                console.log(session.getIdToken().getJwtToken());
+                var creds = new AWS.CognitoIdentityCredentials({
+                    IdentityPoolId: 'us-east-1:051d18f6-a6bf-4237-af95-33c0f3a45cc1', // your identity pool id here
+                    Logins: {
+                        // Change the key below according to the specific region your user pool is in.
+                        'cognito-idp.us-east-1.amazonaws.com/us-east-1_dqZFpjJEt': session.getIdToken().getJwtToken()
+                    }
+                },{
+                    region: "us-east-1"
+                });
+
+                creds.refresh(function(err,data){
+                    if(err) console.log(err);
+                    else {
+                        console.log(creds);
+                        console.log(creds.accessKeyId);
+                        console.log(creds.secretAccessKey);
+                        console.log(creds.sessionToken);
+
+                        var apigClient = window.apigClientFactory.newClient({
+                            accessKey: creds.accessKeyId,
+                            secretKey: creds.secretAccessKey,
+                            sessionToken: creds.sessionToken
+                        });
+                        var params = {};
+                        var body = {};
+                        var additionalParams = {};
+
+
+                        apigClient.qsoPublicListGet(params, body, additionalParams)
+                            .then(function (result) {
+                                console.log("success");
+                                console.log(result.data);
+                                that.setState(result.data);
+
+                            }).catch(function (error) {
+                            console.log("error");
+                            console.error(error);
+                        });
+
+                        // var lambda = new AWS.Lambda({
+                        //   credentials: creds,
+                        //   region: "us-east-1"
+                        // });
+                        //
+                        // var params = {
+                        //   FunctionName: 'listFeaturedItems',
+                        //   InvocationType: 'RequestResponse',
+                        //   Payload: ''
+                        // };
+                        //
+                        // lambda.invoke(params, function(err, result) {
+                        //   if (err) console.log(err, err.stack); // an error occurred
+                        //   else {
+                        //
+                        //     var payload = JSON.parse(result.Payload)
+                        //     var body = JSON.parse(payload.body)
+                        //     console.log(body);           // successful response
+                        //     that.setState(body);
+                        //     }
+                        // });
+
+                    }
+                });
+                // AWS.config.credentials
+
+                // Instantiate aws sdk service objects now that the credentials have been updated.
+                // example: var s3 = new AWS.S3();
+
+            });
+        }
+    }
+
+    componentDidMount() {
+        this.loadAuthenticatedUser();
+        // var that = this;
+        // console.log("Component mounted!");
+
+    }
 
     render() {
 
         return (
             <div className="content">
-                <Form horizontal>
+
                     <FormGroup controlId="formHorizontalQRA">
                         <Col componentClass={ControlLabel} sm={2}>
                             QRA
@@ -135,12 +238,12 @@ export class LogIn extends React.Component {
 
                     <FormGroup>
                         <Col smOffset={2} sm={10}>
-                            <Button type="submit" onClick={this.handleOnClickLogin}>
+                            <Button type="submit" onClick={(e) => this.handleOnClickLogin(e)}>
                                 Login
                             </Button>
                         </Col>
                     </FormGroup>
-                </Form>
+
             </div>
         );
 

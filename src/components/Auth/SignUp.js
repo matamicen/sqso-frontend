@@ -1,8 +1,8 @@
 import React from "react";
-import {ControlLabel, FormGroup, Col, FormControl, Form, Button} from "react-bootstrap";
+import {ControlLabel, FormGroup, Col, FormControl, Button} from "react-bootstrap";
 // ES Modules, e.g. transpiling with Babel
 import {Config, CognitoIdentityCredentials, } from "aws-sdk";
-import {CognitoUserPool, CognitoUserAttribute, CognitoUser} from "amazon-cognito-identity-js";
+import {CognitoUserPool, CognitoUserAttribute} from "amazon-cognito-identity-js";
 import "../../App.css";
 import appConfig from "./Config";
 import {Redirect} from "react-router-dom";
@@ -113,7 +113,7 @@ export class SignUp extends React.Component {
     handleOnConfirm(e) {
 
         e.preventDefault();
-        const qra = this.state.qra.trim();
+
         const code = this.state.code.trim();
 
         this.state.cognitoUser.confirmRegistration(code, true, this.handleUserConfirmed);
@@ -130,7 +130,7 @@ export class SignUp extends React.Component {
         if (this.state.userCreated) {
             return (
                 <div className="content">
-                    <Form horizontal>
+
                         <FormGroup controlId="formHorizontalCode">
                             <Col componentClass={ControlLabel} sm={2}>
                                 Code
@@ -149,13 +149,13 @@ export class SignUp extends React.Component {
                                 </Button>
                             </Col>
                         </FormGroup>
-                    </Form>
+
                 </div>
             )
         }
         return (
             <div className="content">
-                <Form horizontal>
+
                     <FormGroup controlId="formHorizontalEmail">
                         <Col componentClass={ControlLabel} sm={2}>
                             Email
@@ -194,7 +194,7 @@ export class SignUp extends React.Component {
                             </Button>
                         </Col>
                     </FormGroup>
-                </Form>
+
             </div>
         );
 
