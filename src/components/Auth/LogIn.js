@@ -5,6 +5,7 @@ import {CognitoUserPool, CognitoUser, AuthenticationDetails} from "amazon-cognit
 import appConfig from "./Config";
 import AWS from "aws-sdk";
 import "../../App.css";
+import {Redirect} from 'react-router-dom'
 
 
 var poolData = {
@@ -15,54 +16,33 @@ var poolData = {
 export class LogIn extends React.Component {
     constructor(props, context) {
         super(props, context);
-
         this.state = {
-            userLogged: false,
             password: '',
             qra: ''
+
         };
 
 
 
         //Fields
-      //  this.handlePasswordChange = this.handlePasswordChange.bind(this);
-      //  this.handleQraChange = this.handleQraChange.bind(this);
+       // this.handlePasswordChange = this.handlePasswordChange.bind(this);
+       // this.handleQraChange = this.handleQraChange.bind(this);
 
         //Event
-      //  this.handleOnClickLogin = this.handleOnClickLogin.bind(this);
+       // this.handleOnClickLogin = this.handleOnClickLogin.bind(this);
+
 
         //Callback
-      //  this.handleOnLoginSuccess = this.handleOnLoginSuccess.bind(this);
+       // this.handleOnLoginSuccess = this.handleOnLoginSuccess.bind(this);
 
     }
 
 
-    handleOnLoginSuccess(result) {
-        //alert("result" )
-       // // console.debug(result)
-       //  console.log('access token + ' + result.getAccessToken().getJwtToken());
-       //  //var URL = "cognito-idp." + appConfig.region + ".amazonaws.com/" + appConfig.UserPoolId;
-       //  //POTENTIAL: Region needs to be set if not already set previously elsewhere.
-       //  AWS.config.region = appConfig.region;
-       //  alert(result.getIdToken().getJwtToken());
-       //  console.log(result)
-       //  AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-       //      IdentityPoolId: appConfig.IdentityPoolId, // your identity pool id here
-       //      Logins: {
-       //          // Change the key below according to the specific region your user pool is in.
-       //          URL : result.getIdToken().getJwtToken()
-       //      }
-       //  });
-       //
-       // // this.setState({userLogged : true});
-       //  // Instantiate aws sdk service objects now that the credentials have been updated.
-       //  // example: var s3 = new AWS.S3();
-
-    }
 
     handleOnClickLogin(e) {
-
-
+        console.log("onClick")
+        var that = this;
+        e.preventDefault();
         var authenticationData = {
             Username: this.state.qra,
             Password: this.state.password
@@ -76,6 +56,8 @@ export class LogIn extends React.Component {
         };
 
         var cognitoUser = new CognitoUser(userData);
+        console.log("onClick")
+        this.props.doLogin();
         cognitoUser.authenticateUser(authenticationDetails, {
             onSuccess: function(result) {
                 console.log(result);
@@ -91,7 +73,9 @@ export class LogIn extends React.Component {
 
                 // Instantiate aws sdk service objects now that the credentials have been updated.
                 // example: var s3 = new AWS.S3();
+                console.debug()
 
+                console.log("authenticated");
             },
 
             onFailure: function(err) {
@@ -123,9 +107,9 @@ export class LogIn extends React.Component {
                     alert(err);
                     return;
                 }
-                console.log(session);
-                console.log('session validity: ' + session.isValid());
-                console.log(session.getIdToken().getJwtToken());
+              //  console.log(session);
+                // console.log('session validity: ' + session.isValid());
+                //console.log(session.getIdToken().getJwtToken());
                 var creds = new AWS.CognitoIdentityCredentials({
                     IdentityPoolId: 'us-east-1:051d18f6-a6bf-4237-af95-33c0f3a45cc1', // your identity pool id here
                     Logins: {
@@ -139,31 +123,31 @@ export class LogIn extends React.Component {
                 creds.refresh(function(err,data){
                     if(err) console.log(err);
                     else {
-                        console.log(creds);
-                        console.log(creds.accessKeyId);
-                        console.log(creds.secretAccessKey);
-                        console.log(creds.sessionToken);
+                   //     console.log(creds);
+                   //     console.log(creds.accessKeyId);
+                    //    console.log(creds.secretAccessKey);
+                    //    console.log(creds.sessionToken);
 
-                        var apigClient = window.apigClientFactory.newClient({
-                            accessKey: creds.accessKeyId,
-                            secretKey: creds.secretAccessKey,
-                            sessionToken: creds.sessionToken
-                        });
-                        var params = {};
-                        var body = {};
-                        var additionalParams = {};
-
-
-                        apigClient.qsoPublicListGet(params, body, additionalParams)
-                            .then(function (result) {
-                                console.log("success");
-                                console.log(result.data);
-                                that.setState(result.data);
-
-                            }).catch(function (error) {
-                            console.log("error");
-                            console.error(error);
-                        });
+                        // var apigClient = window.apigClientFactory.newClient({
+                        //     accessKey: creds.accessKeyId,
+                        //     secretKey: creds.secretAccessKey,
+                        //     sessionToken: creds.sessionToken
+                        // });
+                        // var params = {};
+                        // var body = {};
+                        // var additionalParams = {};
+                        //
+                        //
+                        // apigClient.qsoPublicListGet(params, body, additionalParams)
+                        //     .then(function (result) {
+                        //         console.log("success");
+                        //         console.log(result.data);
+                        //         that.setState(result.data);
+                        //
+                        //     }).catch(function (error) {
+                        //     console.log("error");
+                        //     console.error(error);
+                        // });
 
                         // var lambda = new AWS.Lambda({
                         //   credentials: creds,
@@ -206,7 +190,7 @@ export class LogIn extends React.Component {
     }
 
     render() {
-
+        if (this.props.authenticated){ return <Redirect to="/home" /> }
         return (
             <div className="content">
 
@@ -238,7 +222,7 @@ export class LogIn extends React.Component {
 
                     <FormGroup>
                         <Col smOffset={2} sm={10}>
-                            <Button type="submit" onClick={(e) => this.handleOnClickLogin(e)}>
+                            <Button type="submit" onClick={this.handleOnClickLogin.bind(this)}>
                                 Login
                             </Button>
                         </Col>

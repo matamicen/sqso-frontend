@@ -8,7 +8,6 @@ export class Audio extends React.Component{
         };
     }
     render(){
-        console.log(this.props.url);
         if (this.props.url) {
             return (
 

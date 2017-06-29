@@ -1,29 +1,32 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, {Component} from "react";
 import {Navbar} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import PublicNavigation from "./PublicNavigation.js";
 import AuthenticatedNavigation from "./AuthenticatedNavigation.js";
 
-const renderNavigation = authenticated =>
-    (authenticated ? <AuthenticatedNavigation /> : <PublicNavigation />);
+export default class AppNavigation extends Component{
 
-const AppNavigation = ({authenticated}) => (
-    <Navbar fixedTop>
-        <Navbar.Header>
-            <Navbar.Brand>
-                <Link to="/">SuperQSO</Link>
-            </Navbar.Brand>
-            <Navbar.Toggle />
-        </Navbar.Header>
+    renderNavigation()
+    {
+        return (this.props.authenticated ? <AuthenticatedNavigation /> : <PublicNavigation />);
+    }
+    render()
+    {
+        return (
+            <Navbar fixedTop>
+                <Navbar.Header>
+                    <Navbar.Brand>
+                        <Link to="/">SuperQSO</Link>
+                    </Navbar.Brand>
+                    <Navbar.Toggle />
+                </Navbar.Header>
 
-        { renderNavigation(authenticated) }
+                { this.renderNavigation(this.props.authenticated) }
 
-    </Navbar>
-);
+            </Navbar>
+        );
+    }
 
-AppNavigation.propTypes = {
-    authenticated: PropTypes.bool,
-};
+}
 
-export default AppNavigation;
+

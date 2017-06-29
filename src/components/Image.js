@@ -8,7 +8,6 @@ export class Image extends React.Component{
         };
     }
     render(){
-        console.log(this.props.img);
         if (this.props.img) {
             return (
 
