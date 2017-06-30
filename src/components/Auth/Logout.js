@@ -21,13 +21,13 @@ export default class Logout extends React.Component {
     componentDidMount() {
         var userPool = new CognitoUserPool(poolData);
         var cognitoUser = userPool.getCurrentUser();
-        this.props.doLogout();
+
         console.log(cognitoUser)
         if (cognitoUser != null) {
             console.log("exit")
             cognitoUser.clearCachedTokens();
             //this.props.doLogout();
-            cognitoUser.globalSignOut({
+            cognitoUser.signOut({
                 onSuccess: function(result) {
                     console.log(result);
 
@@ -51,6 +51,7 @@ export default class Logout extends React.Component {
                 }
             });
         }
+        this.props.doLogout();
         // var that = this;
         // console.log("Component mounted!");
 

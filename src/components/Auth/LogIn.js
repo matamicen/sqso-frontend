@@ -3,7 +3,7 @@ import {Col, FormControl, Button, FormGroup, ControlLabel, Checkbox} from "react
 import {CognitoUserPool, CognitoUser, AuthenticationDetails} from "amazon-cognito-identity-js";
 // ES Modules, e.g. transpiling with Babel
 import appConfig from "./Config";
-import AWS from "aws-sdk";
+
 import "../../App.css";
 import {Redirect} from 'react-router-dom'
 
@@ -41,8 +41,7 @@ export class LogIn extends React.Component {
 
     handleOnClickLogin(e) {
         console.log("onClick")
-        var that = this;
-        e.preventDefault();
+                e.preventDefault();
         var authenticationData = {
             Username: this.state.qra,
             Password: this.state.password
@@ -94,100 +93,7 @@ export class LogIn extends React.Component {
 
     }
 
-    loadAuthenticatedUser() {
-        var that = this;
-        console.log("Loading Auth User");
 
-        var userPool = new CognitoUserPool(poolData);
-        var cognitoUser = userPool.getCurrentUser();
-
-        if (cognitoUser != null) {
-            cognitoUser.getSession(function(err, session) {
-                if (err) {
-                    alert(err);
-                    return;
-                }
-              //  console.log(session);
-                // console.log('session validity: ' + session.isValid());
-                //console.log(session.getIdToken().getJwtToken());
-                var creds = new AWS.CognitoIdentityCredentials({
-                    IdentityPoolId: 'us-east-1:051d18f6-a6bf-4237-af95-33c0f3a45cc1', // your identity pool id here
-                    Logins: {
-                        // Change the key below according to the specific region your user pool is in.
-                        'cognito-idp.us-east-1.amazonaws.com/us-east-1_dqZFpjJEt': session.getIdToken().getJwtToken()
-                    }
-                },{
-                    region: "us-east-1"
-                });
-
-                creds.refresh(function(err,data){
-                    if(err) console.log(err);
-                    else {
-                   //     console.log(creds);
-                   //     console.log(creds.accessKeyId);
-                    //    console.log(creds.secretAccessKey);
-                    //    console.log(creds.sessionToken);
-
-                        // var apigClient = window.apigClientFactory.newClient({
-                        //     accessKey: creds.accessKeyId,
-                        //     secretKey: creds.secretAccessKey,
-                        //     sessionToken: creds.sessionToken
-                        // });
-                        // var params = {};
-                        // var body = {};
-                        // var additionalParams = {};
-                        //
-                        //
-                        // apigClient.qsoPublicListGet(params, body, additionalParams)
-                        //     .then(function (result) {
-                        //         console.log("success");
-                        //         console.log(result.data);
-                        //         that.setState(result.data);
-                        //
-                        //     }).catch(function (error) {
-                        //     console.log("error");
-                        //     console.error(error);
-                        // });
-
-                        // var lambda = new AWS.Lambda({
-                        //   credentials: creds,
-                        //   region: "us-east-1"
-                        // });
-                        //
-                        // var params = {
-                        //   FunctionName: 'listFeaturedItems',
-                        //   InvocationType: 'RequestResponse',
-                        //   Payload: ''
-                        // };
-                        //
-                        // lambda.invoke(params, function(err, result) {
-                        //   if (err) console.log(err, err.stack); // an error occurred
-                        //   else {
-                        //
-                        //     var payload = JSON.parse(result.Payload)
-                        //     var body = JSON.parse(payload.body)
-                        //     console.log(body);           // successful response
-                        //     that.setState(body);
-                        //     }
-                        // });
-
-                    }
-                });
-                // AWS.config.credentials
-
-                // Instantiate aws sdk service objects now that the credentials have been updated.
-                // example: var s3 = new AWS.S3();
-
-            });
-        }
-    }
-
-    componentDidMount() {
-        this.loadAuthenticatedUser();
-        // var that = this;
-        // console.log("Component mounted!");
-
-    }
 
     render() {
         if (this.props.authenticated){ return <Redirect to="/home" /> }
