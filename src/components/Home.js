@@ -1,18 +1,19 @@
-import React from 'react';
-import {PublicDashboard} from './PublicDashboard'
-export class Home extends React.Component{
-    constructor(){
+import React from "react";
+import {PublicDashboard} from "./PublicDashboard";
+import {UserDashboard} from "./UserDashboard";
+export class Home extends React.Component {
+    constructor() {
         super();
-        this.state = {
-
-        };
+        this.state = {};
     }
-    componentDidMount(){
+
+    componentDidMount() {
         console.log("home");
     }
+
     render() {
         return (
-                    < PublicDashboard/>
-        );
+            this.props.isAuthenticated ? <UserDashboard/> : <PublicDashboard/>
+        )
     }
 }

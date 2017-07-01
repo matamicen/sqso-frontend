@@ -14,7 +14,6 @@ export class QRA extends React.Component {
             <Feed.User> {this.props.qra.qra} </Feed.User>
         </Label>
 
-
         )
     }
 }

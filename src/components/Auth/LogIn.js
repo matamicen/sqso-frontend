@@ -2,7 +2,7 @@ import React from "react";
 import {CognitoUserPool, CognitoUser, AuthenticationDetails} from "amazon-cognito-identity-js";
 // ES Modules, e.g. transpiling with Babel
 import appConfig from "./Config";
-import {Form, Segment} from "semantic-ui-react";
+import {Form} from "semantic-ui-react";
 import "../../App.css";
 import {Redirect} from "react-router-dom";
 
@@ -37,7 +37,9 @@ export class LogIn extends React.Component {
 
 
     handleOnClickLogin(e) {
+        var that = this;
         console.log("onClick")
+        console.log("trying to login " + this.state.qra)
         e.preventDefault();
         var authenticationData = {
             Username: this.state.qra,
@@ -52,15 +54,12 @@ export class LogIn extends React.Component {
         };
 
         var cognitoUser = new CognitoUser(userData);
-        console.log("onClickLogin")
-        this.props.doLogin();
+
+
         cognitoUser.authenticateUser(authenticationDetails, {
             onSuccess: function (result) {
-                console.log(result);
-                console.log('access token + ' + result.getAccessToken().getJwtToken());
-
-
-                console.log("authenticated Login");
+                console.log("authenticated Login" + that.state.qra);
+                that.props.doLogin();
             },
 
             onFailure: function (err) {
@@ -82,8 +81,8 @@ export class LogIn extends React.Component {
 
     render() {
         console.log("login");
-        console.log(this.props.authenticated);
-        if (this.props.authenticated) {
+        console.log(this.props.isAuthenticated);
+        if (this.props.isAuthenticated) {
             return <Redirect to="/"/>
         }
         return (

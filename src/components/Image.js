@@ -14,8 +14,7 @@ export class Image extends React.Component{
 
                             <Picture
                                 img = {this.props.img}
-                                h = {'200'}
-                                w = {'300'} />
+                                />
 
                 )
 

@@ -8,12 +8,12 @@ export default class AppNavigation extends Component{
 
     renderNavigation()
     {
-        return (this.props.authenticated ? <AuthenticatedNavigation /> : <PublicNavigation />);
+        return (this.props.isAuthenticated ? <AuthenticatedNavigation /> : <PublicNavigation />);
     }
     render()
     {
         return (
-                 this.renderNavigation(this.props.authenticated)
+                 this.renderNavigation(this.props.isAuthenticated)
         );
     }
 

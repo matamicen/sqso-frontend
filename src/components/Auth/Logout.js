@@ -22,31 +22,20 @@ export default class Logout extends React.Component {
         var userPool = new CognitoUserPool(poolData);
         var cognitoUser = userPool.getCurrentUser();
 
+        console.log("logout")
         console.log(cognitoUser)
         if (cognitoUser != null) {
             console.log("exit")
             cognitoUser.clearCachedTokens();
-            //this.props.doLogout();
+            this.props.doLogout();
+
             cognitoUser.signOut({
-                onSuccess: function(result) {
+                onSuccess: function (result) {
                     console.log(result);
-
-                   // console.log('access token + ' + result.getAccessToken().getJwtToken());
-
-                    // AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                    //     IdentityPoolId : '...', // your identity pool id here
-                    //     Logins : {
-                    //         // Change the key below according to the specific region your user pool is in.
-                    //         'cognito-idp.<region>.amazonaws.com/<YOUR_USER_POOL_ID>' : result.getIdToken().getJwtToken()
-                    //     }
-                    // });
-
-                    // Instantiate aws sdk service objects now that the credentials have been updated.
-                    // example: var s3 = new AWS.S3();
 
                 },
 
-                onFailure: function(err) {
+                onFailure: function (err) {
                     console.error(err);
                 }
             });

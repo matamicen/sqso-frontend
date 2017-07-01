@@ -155,6 +155,42 @@ apigClientFactory.newClient = function (config) {
     };
     
     
+    apigClient.qsoGetUserFeedGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization'], ['body']);
+        
+        var qsoGetUserFeedGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/qso-get-user-feed').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(qsoGetUserFeedGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.qsoGetUserFeedOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var qsoGetUserFeedOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/qso-get-user-feed').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(qsoGetUserFeedOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
     apigClient.qsoPublicListGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         

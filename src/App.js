@@ -10,17 +10,14 @@ import AWS from "aws-sdk";
 import {CognitoUserPool} from "amazon-cognito-identity-js";
 import appConfig from "./components/Auth/Config";
 import {Segment } from 'semantic-ui-react'
-var poolData = {
-    UserPoolId: appConfig.UserPoolId, // Your user pool id here
-    ClientId: appConfig.ClientId // Your client id here
-};
+
 
 export default class App extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            authenticated: false
+            isAuthenticated: false
         };
         this.doLogin = this.doLogin.bind(this);
 
@@ -28,13 +25,13 @@ export default class App extends Component {
 
     doLogin() {
         console.log("authenticated true")
-        this.setState({authenticated: true});
+        this.setState({isAuthenticated: true});
 
     }
 
     doLogout() {
         console.log("authenticated false")
-        this.setState({authenticated: false});
+        this.setState({isAuthenticated: false});
 
     }
 
@@ -42,7 +39,7 @@ export default class App extends Component {
         var that = this;
         console.log("Loading Auth User");
 
-        var userPool = new CognitoUserPool(poolData);
+        var userPool = new CognitoUserPool(appConfig.poolData);
         var cognitoUser = userPool.getCurrentUser();
         console.log("Cognito User");
         console.log(cognitoUser);
@@ -146,19 +143,19 @@ export default class App extends Component {
         return (
             <Router>
                 <div>
-                    <AppNavigation authenticated={this.state.authenticated}/>
+                    <AppNavigation isAuthenticated={this.state.isAuthenticated}/>
                     <Segment attached='bottom'>
                         <Switch>
-                            <Route exact path="/" component={Home}/>
+                            <Route exact path="/" component={() => <Home isAuthenticated={this.state.isAuthenticated} />}/>
                             {/*<Authenticated exact path="/documents" component={Documents} {...appProps} />*/}
                             {/*<Authenticated exact path="/documents/new" component={NewDocument} {...appProps} />*/}
                             {/*<Authenticated exact path="/documents/:_id" component={ViewDocument} {...appProps} />*/}
                             {/*<Authenticated exact path="/documents/:_id/edit" component={EditDocument} {...appProps} />*/}
                             <Route exact path="/signup" component={SignUp}/>
-                            <Route exact path="/login" component={() => <LogIn authenticated={this.state.authenticated}
+                            <Route exact path="/login" component={() => <LogIn isAuthenticated={this.state.isAuthenticated}
                                                                                doLogin={this.doLogin.bind(this)}/>}/>
                             <Route exact path="/logout"
-                                   component={() => <Logout authenticated={this.state.authenticated}
+                                   component={() => <Logout isAuthenticated={this.state.isAuthenticated}
                                                             doLogout={this.doLogout.bind(this)}/>}/>
                             {/*<Route name="recover-password" path="/recover-password" component={RecoverPassword} />*/}
                             {/*<Route name="reset-password" path="/reset-password/:token" component={ResetPassword} />*/}
