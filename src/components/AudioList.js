@@ -1,6 +1,6 @@
 import React from 'react';
 import {Audio} from './Audio';
-import {Grid, Col, Row} from 'react-bootstrap'
+import {Grid} from 'semantic-ui-react'
 export class AudioList extends React.Component{
     constructor(){
         super();
@@ -13,14 +13,13 @@ export class AudioList extends React.Component{
             return (
                 <div className="AudioList">
                     <Grid>
-
                     {this.props.mediaList.map((m, i) =>
-                    <Row key={i}>
-                        <Col >
+                    <Grid.Row key={i}>
+                        <Grid.Column >
                             <Audio key = {i}
                                 url = {m.url}/>
-                        </Col>
-                    </Row>
+                        </Grid.Column>
+                    </Grid.Row>
                 )}
                     </Grid>
                 </div>

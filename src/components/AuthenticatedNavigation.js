@@ -1,28 +1,23 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
-import {Navbar, FormGroup, FormControl, Button} from "react-bootstrap";
+import {Menu, Button, Input} from "semantic-ui-react";
 
-const PublicNavigation = () => (
-    <div>
-        <Navbar.Form pullLeft>
-            <FormGroup>
-                <FormControl type="text" placeholder="Search"/>
-            </FormGroup>
+const AuthenticatedNavigation = () => (
+    <Menu attached='top'>
+        <Menu.Item as={NavLink} to='/'>
+            SuperQSO
+        </Menu.Item>
+        <Menu.Item>
+            <Input className='icon' icon='search' placeholder='Search...'/>
+        </Menu.Item>
+        <Menu.Menu position='right'>
+            <Menu.Item as={NavLink} to='/logout'>
+                <Button>Logout</Button>
+            </Menu.Item>
+        </Menu.Menu>
+    </Menu>
 
-        </Navbar.Form>
-        <Navbar.Collapse>
-            <Navbar.Form pullRight>
-
-                <NavLink to="/logout" activeClassName="active">
-                    <Button type="submit">Logout</Button>
-                </NavLink>
-
-
-            </Navbar.Form>
-
-        </Navbar.Collapse>
-    </div>
 
 );
 
-export default PublicNavigation;
+export default AuthenticatedNavigation;

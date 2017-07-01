@@ -59,6 +59,6 @@ export default class Logout extends React.Component {
 
     render() {
 
-        return <Redirect to="/home"/>
+        return <Redirect to="/"/>
     }
 }

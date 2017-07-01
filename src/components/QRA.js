@@ -1,18 +1,19 @@
-import React from 'react';
-import {Picture} from './Picture'
-export class QRA extends React.Component{
-    constructor(){
+import React from "react";
+import {Feed, Label} from "semantic-ui-react";
+export class QRA extends React.Component {
+    constructor() {
         super();
-        this.state = {
-
-        };
+        this.state = {};
     }
+
     render() {
+
         return (
-                <Picture
-                    img = {this.props.qra.profilepic}
-                    h = {'50'}
-                    w = {'50'} />
+        <Label image>
+            <img src={this.props.qra.profilepic} alt=""/>
+            <Feed.User> {this.props.qra.qra} </Feed.User>
+        </Label>
+
 
         )
     }

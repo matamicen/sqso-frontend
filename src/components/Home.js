@@ -1,6 +1,5 @@
 import React from 'react';
-import {Main} from './Main';
-
+import {PublicDashboard} from './PublicDashboard'
 export class Home extends React.Component{
     constructor(){
         super();
@@ -13,10 +12,7 @@ export class Home extends React.Component{
     }
     render() {
         return (
-
-            <div className="Home">
-                <Main/>
-            </div>
+                    < PublicDashboard/>
         );
     }
 }

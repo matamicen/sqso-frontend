@@ -2,16 +2,14 @@ import React, {Component} from "react";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import "./App.css";
 import {Home} from "./components/Home";
-import {Grid} from "react-bootstrap";
 import {SignUp} from "./components/Auth/SignUp";
-import Public from "./components/Auth/Public";
 import Logout from "./components/Auth/Logout";
 import {LogIn} from "./components/Auth/LogIn";
 import AppNavigation from "./components/AppNavigation";
 import AWS from "aws-sdk";
 import {CognitoUserPool} from "amazon-cognito-identity-js";
 import appConfig from "./components/Auth/Config";
-
+import {Segment } from 'semantic-ui-react'
 var poolData = {
     UserPoolId: appConfig.UserPoolId, // Your user pool id here
     ClientId: appConfig.ClientId // Your client id here
@@ -49,7 +47,7 @@ export default class App extends Component {
         console.log("Cognito User");
         console.log(cognitoUser);
         if (cognitoUser != null) {
-            cognitoUser.getSession(function(err, session) {
+            cognitoUser.getSession(function (err, session) {
                 if (err) {
                     alert(err);
                     that.doLogout();
@@ -58,7 +56,7 @@ export default class App extends Component {
                 that.doLogin();
                 console.log("Session")
                 console.log(session);
-                 console.log('session validity: ' + session.isValid());
+                console.log('session validity: ' + session.isValid());
                 //console.log(session.getIdToken().getJwtToken());
                 var creds = new AWS.CognitoIdentityCredentials({
                     IdentityPoolId: 'us-east-1:051d18f6-a6bf-4237-af95-33c0f3a45cc1', // your identity pool id here
@@ -66,12 +64,12 @@ export default class App extends Component {
                         // Change the key below according to the specific region your user pool is in.
                         'cognito-idp.us-east-1.amazonaws.com/us-east-1_dqZFpjJEt': session.getIdToken().getJwtToken()
                     }
-                },{
+                }, {
                     region: "us-east-1"
                 });
 
-                creds.refresh(function(err,data){
-                    if(err) console.log(err);
+                creds.refresh(function (err, data) {
+                    if (err) console.log(err);
                     else {
                         console.log("Creds");
                         console.log(creds);
@@ -147,29 +145,26 @@ export default class App extends Component {
     render() {
         return (
             <Router>
-                <div className="App">
-                    <div className="bar">
-                        <AppNavigation authenticated={this.state.authenticated}/>
-                    </div>
-                    <Grid className="content">
+                <div>
+                    <AppNavigation authenticated={this.state.authenticated}/>
+                    <Segment attached='bottom'>
                         <Switch>
-                            <Route exact name="home" path="/home" component={Home}/>
+                            <Route exact path="/" component={Home}/>
                             {/*<Authenticated exact path="/documents" component={Documents} {...appProps} />*/}
                             {/*<Authenticated exact path="/documents/new" component={NewDocument} {...appProps} />*/}
                             {/*<Authenticated exact path="/documents/:_id" component={ViewDocument} {...appProps} />*/}
                             {/*<Authenticated exact path="/documents/:_id/edit" component={EditDocument} {...appProps} />*/}
-                            <Public path="/signup" component={SignUp}  />
+                            <Route exact path="/signup" component={SignUp}/>
                             <Route exact path="/login" component={() => <LogIn authenticated={this.state.authenticated}
-                                    doLogin={this.doLogin.bind(this)}/>} />
-                            <Route exact path="/logout" component={() => <Logout authenticated={this.state.authenticated}
-                                   doLogout={this.doLogout.bind(this)}/>} />
+                                                                               doLogin={this.doLogin.bind(this)}/>}/>
+                            <Route exact path="/logout"
+                                   component={() => <Logout authenticated={this.state.authenticated}
+                                                            doLogout={this.doLogout.bind(this)}/>}/>
                             {/*<Route name="recover-password" path="/recover-password" component={RecoverPassword} />*/}
                             {/*<Route name="reset-password" path="/reset-password/:token" component={ResetPassword} />*/}
                             {/*<Route component={NotFound} />*/}
                         </Switch>
-                    </Grid>
-
-
+                    </Segment>
                 </div>
             </Router>
         );

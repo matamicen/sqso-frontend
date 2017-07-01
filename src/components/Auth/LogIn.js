@@ -1,11 +1,10 @@
 import React from "react";
-import {Col, FormControl, Button, FormGroup, ControlLabel, Checkbox} from "react-bootstrap";
 import {CognitoUserPool, CognitoUser, AuthenticationDetails} from "amazon-cognito-identity-js";
 // ES Modules, e.g. transpiling with Babel
 import appConfig from "./Config";
-
+import {Form, Segment} from "semantic-ui-react";
 import "../../App.css";
-import {Redirect} from 'react-router-dom'
+import {Redirect} from "react-router-dom";
 
 
 var poolData = {
@@ -23,25 +22,23 @@ export class LogIn extends React.Component {
         };
 
 
-
         //Fields
-       // this.handlePasswordChange = this.handlePasswordChange.bind(this);
-       // this.handleQraChange = this.handleQraChange.bind(this);
+        // this.handlePasswordChange = this.handlePasswordChange.bind(this);
+        // this.handleQraChange = this.handleQraChange.bind(this);
 
         //Event
-       // this.handleOnClickLogin = this.handleOnClickLogin.bind(this);
+        // this.handleOnClickLogin = this.handleOnClickLogin.bind(this);
 
 
         //Callback
-       // this.handleOnLoginSuccess = this.handleOnLoginSuccess.bind(this);
+        // this.handleOnLoginSuccess = this.handleOnLoginSuccess.bind(this);
 
     }
 
 
-
     handleOnClickLogin(e) {
         console.log("onClick")
-                e.preventDefault();
+        e.preventDefault();
         var authenticationData = {
             Username: this.state.qra,
             Password: this.state.password
@@ -55,29 +52,18 @@ export class LogIn extends React.Component {
         };
 
         var cognitoUser = new CognitoUser(userData);
-        console.log("onClick")
+        console.log("onClickLogin")
         this.props.doLogin();
         cognitoUser.authenticateUser(authenticationDetails, {
-            onSuccess: function(result) {
+            onSuccess: function (result) {
                 console.log(result);
                 console.log('access token + ' + result.getAccessToken().getJwtToken());
 
-                // AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                //     IdentityPoolId : '...', // your identity pool id here
-                //     Logins : {
-                //         // Change the key below according to the specific region your user pool is in.
-                //         'cognito-idp.<region>.amazonaws.com/<YOUR_USER_POOL_ID>' : result.getIdToken().getJwtToken()
-                //     }
-                // });
 
-                // Instantiate aws sdk service objects now that the credentials have been updated.
-                // example: var s3 = new AWS.S3();
-                console.debug()
-
-                console.log("authenticated");
+                console.log("authenticated Login");
             },
 
-            onFailure: function(err) {
+            onFailure: function (err) {
                 console.error(err);
             }
         });
@@ -94,47 +80,29 @@ export class LogIn extends React.Component {
     }
 
 
-
     render() {
-        if (this.props.authenticated){ return <Redirect to="/home" /> }
+        console.log("login");
+        console.log(this.props.authenticated);
+        if (this.props.authenticated) {
+            return <Redirect to="/"/>
+        }
         return (
-            <div className="content">
 
-                    <FormGroup controlId="formHorizontalQRA">
-                        <Col componentClass={ControlLabel} sm={2}>
-                            QRA
-                        </Col>
-                        <Col sm={10}>
-                            <FormControl type="qra" placeholder="QRA"
-                                         onChange={this.handleQraChange.bind(this)}/>
-                        </Col>
-                    </FormGroup>
+                <Form onSubmit={this.handleOnClickLogin.bind(this)}>
+                    <Form.Field>
+                        <label>QRA</label>
+                        <Form.Input placeholder='QRA' name='QRA' onChange={this.handleQraChange.bind(this)}/>
+                    </Form.Field>
+                    <Form.Field>
+                        <label>Password</label>
+                        <Form.Input type='password' placeholder='password' name='password'
+                                    onChange={this.handlePasswordChange.bind(this)}/>
+                    </Form.Field>
+                    <Form.Button content='Login'/>
+                </Form>
 
-                    <FormGroup controlId="formHorizontalPassword">
-                        <Col componentClass={ControlLabel} sm={2}>
-                            Password
-                        </Col>
-                        <Col sm={10}>
-                            <FormControl type="password" placeholder="Password"
-                                         onChange={this.handlePasswordChange.bind(this)}/>
-                        </Col>
-                    </FormGroup>
 
-                    <FormGroup>
-                        <Col smOffset={2} sm={10}>
-                            <Checkbox>Remember me</Checkbox>
-                        </Col>
-                    </FormGroup>
 
-                    <FormGroup>
-                        <Col smOffset={2} sm={10}>
-                            <Button type="submit" onClick={this.handleOnClickLogin.bind(this)}>
-                                Login
-                            </Button>
-                        </Col>
-                    </FormGroup>
-
-            </div>
         );
 
     }

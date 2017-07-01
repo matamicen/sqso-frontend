@@ -1,11 +1,11 @@
 import React from "react";
-import {ControlLabel, FormGroup, Col, FormControl, Button} from "react-bootstrap";
 // ES Modules, e.g. transpiling with Babel
-import {Config, CognitoIdentityCredentials, } from "aws-sdk";
+import {Config, CognitoIdentityCredentials} from "aws-sdk";
 import {CognitoUserPool, CognitoUserAttribute} from "amazon-cognito-identity-js";
 import "../../App.css";
 import appConfig from "./Config";
 import {Redirect} from "react-router-dom";
+import {Form, Label} from "semantic-ui-react";
 
 Config.region = appConfig.region;
 Config.credentials = new CognitoIdentityCredentials({
@@ -61,12 +61,13 @@ export class SignUp extends React.Component {
         this.setState({qra: e.target.value});
 
     }
+
     handleUserCreated(err, result) {
         if (err) {
             alert(err);
             return;
         }
-        this.setState({ cognitoUser: result.user });
+        this.setState({cognitoUser: result.user});
         console.log('user name is ' + this.state.cognitoUser.getUsername());
         console.log('call result: ' + result);
         this.setState({userCreated: true});
@@ -82,7 +83,6 @@ export class SignUp extends React.Component {
         this.setState({userConfirmed: true});
 
     }
-
 
 
     handleOnClick(e) {
@@ -129,73 +129,35 @@ export class SignUp extends React.Component {
         }
         if (this.state.userCreated) {
             return (
-                <div className="content">
+                <Form onSubmit={this.handleOnConfirm.bind(this)}>
+                    <Form.Field>
+                        <label>Code</label>
+                        <Form.Input placeholder='Code' name='Code' onChange={this.handleCodeChange.bind(this)}/>
+                    </Form.Field>
+                    <Form.Button content='Confirm'/>
 
-                        <FormGroup controlId="formHorizontalCode">
-                            <Col componentClass={ControlLabel} sm={2}>
-                                Code
-                            </Col>
-                            <Col sm={10}>
-                                <FormControl type="text" placeholder="Code"
-                                             onChange={this.handleCodeChange.bind(this)}/>
-                            </Col>
-                        </FormGroup>
+                </Form>
 
-
-                        <FormGroup>
-                            <Col smOffset={2} sm={10}>
-                                <Button type="submit" onClick={this.handleOnConfirm}>
-                                    Sign Up
-                                </Button>
-                            </Col>
-                        </FormGroup>
-
-                </div>
             )
         }
         return (
-            <div className="content">
+            <Form onSubmit={this.handleOnClick.bind(this)}>
+                <Form.Field>
+                    <Label>Email</Label>
+                    <Form.Input placeholder='Email' name='email' onChange={this.handleEmailChange.bind(this)}/>
+                </Form.Field>
+                <Form.Field>
+                    <Label>QRA</Label>
+                    <Form.Input placeholder='Qra' name='QRA' onChange={this.handleQraChange.bind(this)}/>
+                </Form.Field>
+                <Form.Field>
+                    <Label>Password</Label>
+                    <Form.Input type='password' placeholder='Password' name='password' onChange={this.handlePasswordChange.bind(this)}/>
+                </Form.Field>
+                <Form.Button content='SignUp'/>
 
-                    <FormGroup controlId="formHorizontalEmail">
-                        <Col componentClass={ControlLabel} sm={2}>
-                            Email
-                        </Col>
-                        <Col sm={10}>
-                            <FormControl type="email" placeholder="Email"
-                                         onChange={this.handleEmailChange.bind(this)}/>
-                        </Col>
-                    </FormGroup>
+            </Form>
 
-                    <FormGroup controlId="formHorizontalQRA">
-                        <Col componentClass={ControlLabel} sm={2}>
-                            QRA
-                        </Col>
-                        <Col sm={10}>
-                            <FormControl type="qra" placeholder="QRA"
-                                         onChange={this.handleQraChange.bind(this)}/>
-                        </Col>
-                    </FormGroup>
-
-                    <FormGroup controlId="formHorizontalPassword">
-                        <Col componentClass={ControlLabel} sm={2}>
-                            Password
-                        </Col>
-                        <Col sm={10}>
-                            <FormControl type="password" placeholder="Password"
-                                         onChange={this.handlePasswordChange.bind(this)}/>
-                        </Col>
-                    </FormGroup>
-
-
-                    <FormGroup>
-                        <Col smOffset={2} sm={10}>
-                            <Button type="submit" onClick={this.handleOnClick}>
-                                Sign Up
-                            </Button>
-                        </Col>
-                    </FormGroup>
-
-            </div>
         );
 
     }
