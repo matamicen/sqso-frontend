@@ -24,13 +24,13 @@ export default class App extends Component {
     }
 
     doLogin() {
-        console.log("authenticated true")
+        console.log("doLogin")
         this.setState({isAuthenticated: true});
 
     }
 
     doLogout() {
-        console.log("authenticated false")
+        console.log("doLogout")
         this.setState({isAuthenticated: false});
 
     }
@@ -42,6 +42,7 @@ export default class App extends Component {
         var userPool = new CognitoUserPool(appConfig.poolData);
         var cognitoUser = userPool.getCurrentUser();
         if (cognitoUser != null) {
+
             cognitoUser.getSession(function (err, session) {
                 if (err) {
                     alert(err);
@@ -67,54 +68,6 @@ export default class App extends Component {
                         that.setState({isAuthenticated : false});
                     }
                     else {
-                        console.log("Creds");
-                        console.log(creds);
-                        //     console.log(creds.accessKeyId);
-                        //    console.log(creds.secretAccessKey);
-                        //    console.log(creds.sessionToken);
-
-                        // var apigClient = window.apigClientFactory.newClient({
-                        //     accessKey: creds.accessKeyId,
-                        //     secretKey: creds.secretAccessKey,
-                        //     sessionToken: creds.sessionToken
-                        // });
-                        // var params = {};
-                        // var body = {};
-                        // var additionalParams = {};
-                        //
-                        //
-                        // apigClient.qsoPublicListGet(params, body, additionalParams)
-                        //     .then(function (result) {
-                        //         console.log("success");
-                        //         console.log(result.data);
-                        //         that.setState(result.data);
-                        //
-                        //     }).catch(function (error) {
-                        //     console.log("error");
-                        //     console.error(error);
-                        // });
-
-                        // var lambda = new AWS.Lambda({
-                        //   credentials: creds,
-                        //   region: "us-east-1"
-                        // });
-                        //
-                        // var params = {
-                        //   FunctionName: 'listFeaturedItems',
-                        //   InvocationType: 'RequestResponse',
-                        //   Payload: ''
-                        // };
-                        //
-                        // lambda.invoke(params, function(err, result) {
-                        //   if (err) console.log(err, err.stack); // an error occurred
-                        //   else {
-                        //
-                        //     var payload = JSON.parse(result.Payload)
-                        //     var body = JSON.parse(payload.body)
-                        //     console.log(body);           // successful response
-                        //     that.setState(body);
-                        //     }
-                        // });
 
                     }
                 });

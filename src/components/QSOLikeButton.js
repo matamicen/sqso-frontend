@@ -11,7 +11,8 @@ export class QSOLikeButton extends React.Component {
             icon: "thumbs outline up",
             liked: false,
             likeCounter: 0,
-            token: null
+            token: null,
+            cognitoUser: {}
         };
         this.handleOnLike = this.handleOnLike.bind(this);
         this.getSession = this.getSession.bind(this);
@@ -20,16 +21,25 @@ export class QSOLikeButton extends React.Component {
 
     componentDidMount() {
         this.getSession();
+
         if (this.props.qso.likes) {
+            var userPool = new CognitoUserPool(appConfig.poolData);
+            var cognitoUser = userPool.getCurrentUser();
             this.setState({likeCounter: this.props.qso.likes.length});
+
+            if (this.props.qso.likes.some(o => o.qra === cognitoUser.username.toUpperCase())) {
+                this.setState({liked: true});
+                this.setState({icon: "thumbs up"})
+            }
         }
     }
 
     getSession() {
         var userPool = new CognitoUserPool(appConfig.poolData);
         var cognitoUser = userPool.getCurrentUser();
-        if (cognitoUser) {
 
+
+        if (cognitoUser) {
             cognitoUser.getSession(function (err, session) {
                 if (err) {
                     alert(err);

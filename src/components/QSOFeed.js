@@ -31,11 +31,10 @@ export class QSOFeed extends React.Component {
                     return;
                 }
 
-                console.log("Session")
-                console.log(session);
-                console.log('session validity: ' + session.isValid());
-                console.log(session.getIdToken().getJwtToken());
-                //console.log(session.getIdToken().getJwtToken());
+
+                //console.log('session validity: ' + session.isValid());
+               // console.log(session.getIdToken().getJwtToken());
+
 
                 var apigClient = window.apigClientFactory.newClient({});
 
