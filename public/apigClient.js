@@ -158,7 +158,7 @@ apigClientFactory.newClient = function (config) {
     apigClient.qsoGetUserFeedGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
-        apiGateway.core.utils.assertParametersDefined(params, ['Authorization'], ['body']);
+        apiGateway.core.utils.assertParametersDefined(params, ['body', 'Authorization'], ['body']);
         
         var qsoGetUserFeedGetRequest = {
             verb: 'get'.toUpperCase(),
@@ -188,6 +188,60 @@ apigClientFactory.newClient = function (config) {
         
         
         return apiGatewayClient.makeRequest(qsoGetUserFeedOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.qsoLikePost = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization'], ['body']);
+        
+        var qsoLikePostRequest = {
+            verb: 'post'.toUpperCase(),
+            path: pathComponent + uritemplate('/qso-like').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(qsoLikePostRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.qsoLikeDelete = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Authorization'], ['body']);
+        
+        var qsoLikeDeleteRequest = {
+            verb: 'delete'.toUpperCase(),
+            path: pathComponent + uritemplate('/qso-like').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(qsoLikeDeleteRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.qsoLikeOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var qsoLikeOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/qso-like').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(qsoLikeOptionsRequest, authType, additionalParams, config.apiKey);
     };
     
     

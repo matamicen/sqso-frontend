@@ -2,18 +2,17 @@ import React from "react";
 import {QRAs} from "./QRAs";
 import {AudioList} from "./AudioList";
 import {Image} from "./Image";
-import {Feed, Icon, Label} from "semantic-ui-react";
+import {Feed, Label} from "semantic-ui-react";
+import {QSOLikeButton} from './QSOLikeButton'
 export class QSOFeedItem extends React.Component {
     constructor() {
         super();
         this.state = {
-            likecolor: "black"
+
         };
     }
 
-    handleOnLike() {
-        this.setState({likecolor: "red"});
-    }
+
 
     render() {
 
@@ -50,10 +49,7 @@ export class QSOFeedItem extends React.Component {
                         {audio}
                     </Feed.Extra>
                     <Feed.Meta>
-                        <Feed.Like onClick={this.handleOnLike.bind(this)}>
-                            < Icon name='like' color={this.state.likecolor}/>
-                            4 Likes
-                        </Feed.Like>
+                        <QSOLikeButton qso={this.props.qso}/>
                     </Feed.Meta>
                 </Feed.Content>
             </Feed.Event>

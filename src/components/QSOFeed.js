@@ -20,11 +20,9 @@ export class QSOFeed extends React.Component {
 
     componentDidMount() {
         var that = this;
-        console.log(appConfig)
         var userPool = new CognitoUserPool(appConfig.poolData);
         var cognitoUser = userPool.getCurrentUser();
-        console.log("Cognito User");
-        console.log(cognitoUser);
+
         if (cognitoUser != null) {
             cognitoUser.getSession(function (err, session) {
                 if (err) {

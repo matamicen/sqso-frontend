@@ -41,8 +41,6 @@ export default class App extends Component {
 
         var userPool = new CognitoUserPool(appConfig.poolData);
         var cognitoUser = userPool.getCurrentUser();
-        console.log("Cognito User");
-        console.log(cognitoUser);
         if (cognitoUser != null) {
             cognitoUser.getSession(function (err, session) {
                 if (err) {
@@ -51,9 +49,7 @@ export default class App extends Component {
                     return;
                 }
                 that.doLogin();
-                console.log("Session")
-                console.log(session);
-                console.log('session validity: ' + session.isValid());
+                //console.log('session validity: ' + session.isValid());
                 //console.log(session.getIdToken().getJwtToken());
                 var creds = new AWS.CognitoIdentityCredentials({
                     IdentityPoolId: 'us-east-1:051d18f6-a6bf-4237-af95-33c0f3a45cc1', // your identity pool id here
@@ -66,7 +62,10 @@ export default class App extends Component {
                 });
 
                 creds.refresh(function (err, data) {
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        that.setState({isAuthenticated : false});
+                    }
                     else {
                         console.log("Creds");
                         console.log(creds);
