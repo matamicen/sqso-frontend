@@ -3,7 +3,7 @@ import {NavLink} from "react-router-dom";
 import {Menu, Button, Input} from "semantic-ui-react";
 
 const AuthenticatedNavigation = () => (
-    <Menu attached='top'>
+    <Menu attached='top' stackable>
         <Menu.Item as={NavLink} to='/'>
             SuperQSO
         </Menu.Item>

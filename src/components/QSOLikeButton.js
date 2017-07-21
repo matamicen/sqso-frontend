@@ -25,9 +25,11 @@ export class QSOLikeButton extends React.Component {
         if (this.props.qso.likes) {
             var userPool = new CognitoUserPool(appConfig.poolData);
             var cognitoUser = userPool.getCurrentUser();
+
             this.setState({likeCounter: this.props.qso.likes.length});
 
-            if (this.props.qso.likes.some(o => o.qra === cognitoUser.username.toUpperCase())) {
+
+            if (cognitoUser && (this.props.qso.likes.some(o => o.qra === cognitoUser.username.toUpperCase()))) {
                 this.setState({liked: true});
                 this.setState({icon: "thumbs up"})
             }

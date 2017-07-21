@@ -2,7 +2,7 @@ import React from "react";
 import {NavLink} from "react-router-dom";
 import {Menu, Input, Button} from 'semantic-ui-react'
 const PublicNavigation = () => (
-    <Menu attached='top'>
+    <Menu attached='top' stackable>
         <Menu.Item as={NavLink} to='/'>
             SuperQSO
         </Menu.Item>

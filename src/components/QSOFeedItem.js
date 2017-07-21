@@ -1,18 +1,24 @@
 import React from "react";
-import {QRAs} from "./QRAs";
 import {AudioList} from "./AudioList";
 import {Image} from "./Image";
-import {Feed, Label} from "semantic-ui-react";
-import {QSOLikeButton} from './QSOLikeButton'
+import {Feed, Icon, Label} from "semantic-ui-react";
+import {QSOComments} from "./QSOComments";
+import {QSOLikeButton} from "./QSOLikeButton";
+import {QRAs} from "./QRAs";
 export class QSOFeedItem extends React.Component {
     constructor() {
         super();
         this.state = {
-
+            showComment: false
         };
+        this.handleOnComment = this.handleOnComment.bind(this);
     }
 
 
+    handleOnComment() {
+        console.log("Comment Pressed")
+        this.setState({showComment: true});
+    }
 
     render() {
 
@@ -32,8 +38,14 @@ export class QSOFeedItem extends React.Component {
             audio = <AudioList mediaList={audioList}/>;
         }
 
+        let comment = null;
+        if (this.state.showComment) {
+            comment = <QSOComments qso={this.props.qso}/>;
+        }
+
 
         return (
+
             <Feed.Event>
                 <Feed.Content>
                     <Feed.Summary>
@@ -50,7 +62,14 @@ export class QSOFeedItem extends React.Component {
                     </Feed.Extra>
                     <Feed.Meta>
                         <QSOLikeButton qso={this.props.qso}/>
+                        <Feed.Like onClick={this.handleOnComment.bind(this)}>
+                            < Icon name='comment outline'/>
+                            Comment
+                        </Feed.Like>
                     </Feed.Meta>
+                    <Feed.Extra>
+                        {comment}
+                    </Feed.Extra>
                 </Feed.Content>
             </Feed.Event>
 

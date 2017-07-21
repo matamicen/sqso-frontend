@@ -1,6 +1,6 @@
 import React from "react";
 import {QSOFeed} from "./QSOFeed";
-import {Grid} from 'semantic-ui-react'
+import {Grid, Container} from 'semantic-ui-react'
 export class PublicDashboard extends React.Component {
     constructor() {
         super();
@@ -16,12 +16,14 @@ export class PublicDashboard extends React.Component {
 
     render() {
         return (
-            <Grid celled='internally' >
-                <Grid.Column width={3}/>
-                <Grid.Column width={10}>
+            <Grid  >
+
+                <Grid.Column >
+                    <Container fluid>
                     < QSOFeed />
+                    </Container>
                 </Grid.Column>
-                <Grid.Column width={3}/>
+
 
             </Grid>
 
