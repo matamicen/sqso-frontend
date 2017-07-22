@@ -1,6 +1,7 @@
 import React from "react";
 import {QRA} from "./QRA";
 import {Label, Feed} from "semantic-ui-react";
+import {Link} from 'react-router-dom'
 export class QRAs extends React.Component {
     constructor() {
         super();
@@ -13,7 +14,7 @@ export class QRAs extends React.Component {
             <div>
                 <Label image >
                     <img src={this.props.profilepic} alt=""/>
-                    <Feed.User>{this.props.qso_owner}</Feed.User>
+                    <Feed.User><Link to={"/" + this.props.qso_owner}>{this.props.qso_owner}</Link></Feed.User>
                 </Label> started a QSO with
                 {this.props.qras.map((qra, i) =>
                     <QRA key={i} qra={qra}/>

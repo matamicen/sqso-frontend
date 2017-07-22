@@ -1,10 +1,11 @@
 import React from "react";
 import {Comment} from "semantic-ui-react";
+import {Link} from 'react-router-dom'
 import {CognitoUserPool} from "amazon-cognito-identity-js";
 import appConfig from "./Auth/Config";
 
 
-export default  class extends React.Component {
+export class QSOCommentItem extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -20,8 +21,8 @@ export default  class extends React.Component {
         this.getSession();
 
         if (this.props.comment) {
-            var userPool = new CognitoUserPool(appConfig.poolData);
-            var cognitoUser = userPool.getCurrentUser();
+        //    var userPool = new CognitoUserPool(appConfig.poolData);
+        //    var cognitoUser = userPool.getCurrentUser();
 
 
 
@@ -77,7 +78,7 @@ export default  class extends React.Component {
             <Comment>
 
                 <Comment.Content>
-                    <Comment.Author as='a'>{this.props.comment.qra.toUpperCase()}</Comment.Author>
+                    <Comment.Author><Link to={"/" + this.props.comment.qra}>{this.props.comment.qra.toUpperCase()}</Link></Comment.Author>
                     <Comment.Metadata>
                         <span>{timestamp} </span>
                     </Comment.Metadata>

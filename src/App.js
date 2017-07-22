@@ -10,6 +10,7 @@ import AWS from "aws-sdk";
 import {CognitoUserPool} from "amazon-cognito-identity-js";
 import appConfig from "./components/Auth/Config";
 import {Segment } from 'semantic-ui-react'
+import {QRAProfile} from "./components/QRAProfile";
 
 
 export default class App extends Component {
@@ -112,6 +113,7 @@ export default class App extends Component {
                             {/*<Route name="recover-password" path="/recover-password" component={RecoverPassword} />*/}
                             {/*<Route name="reset-password" path="/reset-password/:token" component={ResetPassword} />*/}
                             {/*<Route component={NotFound} />*/}
+                            <Route path="/:qra" component={QRAProfile}/>
                         </Switch>
                     </Segment>
                 </div>

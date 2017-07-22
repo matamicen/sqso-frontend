@@ -1,5 +1,6 @@
 import React from "react";
 import {Feed, Label} from "semantic-ui-react";
+import {Link} from 'react-router-dom'
 export class QRA extends React.Component {
     constructor() {
         super();
@@ -11,7 +12,7 @@ export class QRA extends React.Component {
         return (
         <Label image>
             <img src={this.props.qra.profilepic} alt=""/>
-            <Feed.User> {this.props.qra.qra} </Feed.User>
+            <Feed.User><Link to={"/" + this.props.qra.qra}> {this.props.qra.qra}</Link> </Feed.User>
         </Label>
 
         )

@@ -2,7 +2,7 @@ import React from "react";
 import {Form, Button, Comment} from "semantic-ui-react";
 import {CognitoUserPool} from "amazon-cognito-identity-js";
 import appConfig from "./Auth/Config";
-import QSOCOmmentItem from "./QSOCommentItem";
+import {QSOCommentItem} from "./QSOCommentItem";
 
 export class QSOComments extends React.Component {
     constructor() {
@@ -23,8 +23,8 @@ export class QSOComments extends React.Component {
         this.getSession();
 
         if (this.props.qso.comments) {
-            var userPool = new CognitoUserPool(appConfig.poolData);
-            var cognitoUser = userPool.getCurrentUser();
+      //      var userPool = new CognitoUserPool(appConfig.poolData);
+      //      var cognitoUser = userPool.getCurrentUser();
 
         }
     }
@@ -105,7 +105,7 @@ export class QSOComments extends React.Component {
         let comments = null;
         if (this.state.comments) {
             comments = this.state.comments.map((comment, i) =>
-                <QSOCOmmentItem key={i} comment={comment}/>
+                <QSOCommentItem key={i} comment={comment}/>
             )
         };
         let form = null;
