@@ -2,7 +2,7 @@ import React from "react";
 // ES Modules, e.g. transpiling with Babel
 import {Config, CognitoIdentityCredentials} from "aws-sdk";
 import {CognitoUserPool, CognitoUserAttribute} from "amazon-cognito-identity-js";
-import "../../App.css";
+import "../../styles/App.css";
 import appConfig from "./Config";
 import {Redirect} from "react-router-dom";
 import {Form, Label} from "semantic-ui-react";

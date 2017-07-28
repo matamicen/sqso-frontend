@@ -3,16 +3,18 @@ import {CognitoUserPool, CognitoUser, AuthenticationDetails} from "amazon-cognit
 // ES Modules, e.g. transpiling with Babel
 import appConfig from "./Config";
 import {Form} from "semantic-ui-react";
-import "../../App.css";
+import "../../styles/App.css";
 import {Redirect} from "react-router-dom";
-
+import { bindActionCreators } from 'redux';
+import {connect} from 'react-redux';
+import * as Actions from '../../actions/Actions';
 
 var poolData = {
     UserPoolId: appConfig.UserPoolId, // Your user pool id here
     ClientId: appConfig.ClientId // Your client id here
 };
 
-export class LogIn extends React.Component {
+class LogIn extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
@@ -22,24 +24,14 @@ export class LogIn extends React.Component {
         };
 
 
-        //Fields
-        // this.handlePasswordChange = this.handlePasswordChange.bind(this);
-        // this.handleQraChange = this.handleQraChange.bind(this);
 
-        //Event
-        // this.handleOnClickLogin = this.handleOnClickLogin.bind(this);
-
-
-        //Callback
-        // this.handleOnLoginSuccess = this.handleOnLoginSuccess.bind(this);
+    }
+    componentDidMount() {
 
     }
 
-
     handleOnClickLogin(e) {
-        var that = this;
-        console.log("onClick")
-        console.log("trying to login " + this.state.qra)
+
         e.preventDefault();
         var authenticationData = {
             Username: this.state.qra,
@@ -58,9 +50,10 @@ export class LogIn extends React.Component {
 
         cognitoUser.authenticateUser(authenticationDetails, {
             onSuccess: function (result) {
-                console.log("authenticated Login" + that.state.qra);
-                that.props.doLogin();
-            },
+                let token = result.idToken.jwtToken;
+                this.props.actions.doLogin(token, this.state.qra.toUpperCase());
+
+            }.bind(this),
 
             onFailure: function (err) {
                 console.error(err);
@@ -78,11 +71,8 @@ export class LogIn extends React.Component {
 
     }
 
-
     render() {
-        console.log("login");
-        console.log(this.props.isAuthenticated);
-        if (this.props.isAuthenticated) {
+        if (this.props.state.userData.isAuthenticated) {
             return <Redirect to="/"/>
         }
         return (
@@ -100,9 +90,19 @@ export class LogIn extends React.Component {
                     <Form.Button content='Login'/>
                 </Form>
 
-
-
         );
 
     }
 }
+
+const mapStateToProps = (state) => ({
+    state: state
+});
+const mapDispatchToProps = (dispatch) => ({
+    actions: bindActionCreators(Actions, dispatch)
+})
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(LogIn);
