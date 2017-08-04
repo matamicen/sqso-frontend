@@ -1,11 +1,15 @@
 import React from "react";
-import {QSOFeed} from "./QSOFeed";
+import QSOFeed from "./QSOFeed";
 import {Grid, Card, Image, Feed, Icon, Segment, Container} from "semantic-ui-react";
-export class UserDashboard extends React.Component {
+import {connect} from 'react-redux'
+
+import {bindActionCreators} from 'redux';
+import * as Actions from '../actions/Actions';
+class UserDashboard extends React.Component {
     constructor() {
         super();
         this.state = {
-            publicQsos: []
+
         };
     }
 
@@ -13,8 +17,32 @@ export class UserDashboard extends React.Component {
 
 
     }
+    getFeedFromApi() {
+        var apigClient = window.apigClientFactory.newClient({});
+        var params;
+        var body = {};
+        var additionalParams = {};
+
+
+
+            params = {
+                "Authorization": this.props.state.userData.token
+            };
+            this.props.actions.doRequestFeed();
+            apigClient.qsoGetUserFeedGet(params, body, additionalParams)
+                .then(function (result) {
+                    this.props.actions.doReceiveFeed(result.data);
+
+                }.bind(this)).catch(function (error) {
+                console.log("error");
+                alert(error);
+            });
+
+
+    }
 
     render() {
+        if (this.props.state.qsos.length === 0)  this.getFeedFromApi()
         return (
             <Grid >
                 <Grid.Row columns={3} only='computer'>
@@ -104,3 +132,17 @@ export class UserDashboard extends React.Component {
         );
     }
 }
+
+const mapStateToProps = (state) => ({
+    state: state
+});
+const mapDispatchToProps = (dispatch) => ({
+    actions: bindActionCreators(Actions, dispatch)
+})
+
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(UserDashboard);
+

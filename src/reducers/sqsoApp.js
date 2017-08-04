@@ -1,4 +1,4 @@
-import {LOGIN, LOGOUT} from "../actions/Actions"
+import {LOGIN, LOGOUT, RECEIVE_FEED} from "../actions/Actions"
 const initialState = {
     userData: {
         token: "test",
@@ -11,6 +11,11 @@ const initialState = {
 //define a reducer with an initialized state action
 function sqsoApp(state = initialState, action) {
     switch (action.type) {
+        case RECEIVE_FEED:
+            let receivedFeedStore = Object.assign({}, state, {
+                qsos: action.qsos
+            });
+            return receivedFeedStore;
         case LOGIN:
             let logInUserData =  {
                 token: action.token,
@@ -23,7 +28,7 @@ function sqsoApp(state = initialState, action) {
                 userData: logInUserData
                 });
 
-            return loggedinStore
+            return loggedinStore;
         case LOGOUT:
             let logoutUserData =  {
                 token: "",
@@ -35,7 +40,7 @@ function sqsoApp(state = initialState, action) {
                     qsos: []
                 });
 
-            return loggedoutStore
+            return loggedoutStore;
         default:
             return state
     }

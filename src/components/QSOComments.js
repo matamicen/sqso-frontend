@@ -1,50 +1,29 @@
 import React from "react";
-import {Form, Button, Comment} from "semantic-ui-react";
-import {CognitoUserPool} from "amazon-cognito-identity-js";
-import appConfig from "./Auth/Config";
-import {QSOCommentItem} from "./QSOCommentItem";
+import {Button, Comment, Form} from "semantic-ui-react";
+import QSOCommentItem from "./QSOCommentItem";
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux';
+import * as Actions from '../actions/Actions';
 
-export class QSOComments extends React.Component {
+class QSOComments extends React.Component {
     constructor() {
         super();
         this.state = {
-            token: null,
             comments: [],
             comment: null,
-            qra: null
+
         };
-        this.getSession = this.getSession.bind(this);
+
         this.handleAddComment = this.handleAddComment.bind(this);
 
     }
 
     componentDidMount() {
         if (this.props.qso.comments) this.setState({comments: this.props.qso.comments});
-        this.getSession();
+
 
         if (this.props.qso.comments) {
-      //      var userPool = new CognitoUserPool(appConfig.poolData);
-      //      var cognitoUser = userPool.getCurrentUser();
 
-        }
-    }
-
-    getSession() {
-        var userPool = new CognitoUserPool(appConfig.poolData);
-        var cognitoUser = userPool.getCurrentUser();
-
-
-        if (cognitoUser) {
-            this.setState({qra: cognitoUser.username});
-            cognitoUser.getSession(function (err, session) {
-                if (err) {
-                    alert(err);
-                    return;
-                }
-                this.setState({token: session.getIdToken().getJwtToken()});
-
-
-            }.bind(this));
         }
     }
 
@@ -54,7 +33,7 @@ export class QSOComments extends React.Component {
         var apigClient = window.apigClientFactory.newClient({});
 
         var params = {
-            "Authorization": this.state.token
+            "Authorization": this.props.state.userData.token
         };
         var body = {
             "qso": this.props.qso.idqsos,
@@ -92,12 +71,9 @@ export class QSOComments extends React.Component {
         this.setState({comment: comment});
         this.setState({comments: this.state.comments.concat(comment)});
         e.target.comment.value = null;
-        if (this.state.token != null) {
-            this.doComment(comment);
-        } else {
-            this.getSession()
-                .then(this.doComment(comment));
-        }
+
+        this.doComment(comment);
+
     }
 
 
@@ -107,9 +83,10 @@ export class QSOComments extends React.Component {
             comments = this.state.comments.map((comment, i) =>
                 <QSOCommentItem key={i} comment={comment}/>
             )
-        };
+        }
+        ;
         let form = null;
-        if (this.state.token != null) {
+        if (this.props.state.userData.isAuthenticated) {
             form = <Form size="mini" reply onSubmit={this.handleAddComment.bind(this)}>
                 <Form.Group>
                     <input placeholder='Comment' name="comment"/>
@@ -128,3 +105,17 @@ export class QSOComments extends React.Component {
         );
     }
 }
+
+const mapStateToProps = (state) => ({
+    state: state
+});
+const mapDispatchToProps = (dispatch) => ({
+    actions: bindActionCreators(Actions, dispatch)
+})
+
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(QSOComments);
+

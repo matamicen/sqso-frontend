@@ -1,55 +1,31 @@
 import React from "react";
 import {Feed, Icon} from "semantic-ui-react";
-import {CognitoUserPool} from "amazon-cognito-identity-js";
-import appConfig from "./Auth/Config";
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux';
+import * as Actions from '../actions/Actions';
 
-
-export class QSOLikeButton extends React.Component {
+class QSOLikeButton extends React.Component {
     constructor() {
         super();
         this.state = {
             icon: "thumbs outline up",
             liked: false,
-            likeCounter: 0,
-            token: null,
-            cognitoUser: {}
+            likeCounter: 0
         };
-        this.handleOnLike = this.handleOnLike.bind(this);
-        this.getSession = this.getSession.bind(this);
 
     }
 
     componentDidMount() {
-        this.getSession();
 
         if (this.props.qso.likes) {
-            var userPool = new CognitoUserPool(appConfig.poolData);
-            var cognitoUser = userPool.getCurrentUser();
 
             this.setState({likeCounter: this.props.qso.likes.length});
 
 
-            if (cognitoUser && (this.props.qso.likes.some(o => o.qra === cognitoUser.username.toUpperCase()))) {
+            if (this.props.state.userData.isAuthenticated && (this.props.qso.likes.some(o => o.qra === this.props.state.userData.qra.toUpperCase()))) {
                 this.setState({liked: true});
                 this.setState({icon: "thumbs up"})
             }
-        }
-    }
-
-    getSession() {
-        var userPool = new CognitoUserPool(appConfig.poolData);
-        var cognitoUser = userPool.getCurrentUser();
-
-
-        if (cognitoUser) {
-            cognitoUser.getSession(function (err, session) {
-                if (err) {
-                    alert(err);
-                    return;
-                }
-                this.setState({token: session.getIdToken().getJwtToken()});
-
-            }.bind(this));
         }
     }
 
@@ -59,7 +35,7 @@ export class QSOLikeButton extends React.Component {
         var apigClient = window.apigClientFactory.newClient({});
 
         var params = {
-            "Authorization": this.state.token
+            "Authorization": this.props.state.userData.token
         };
         var body = {"qso": this.props.qso.idqsos};
         var additionalParams = {};
@@ -103,30 +79,21 @@ export class QSOLikeButton extends React.Component {
     }
 
     handleOnLike() {
-        if (!this.state.token) return null;
+        if (!this.props.state.userData.isAuthenticated) return null;
 
         console.log("handleOnLike")
 
         if (!this.state.liked) {
             this.setState({likeCounter: this.state.likeCounter + 1});
-            if (this.state.token != null) {
-                this.doLike();
-            } else {
-                this.getSession()
-                    .then(this.doLike());
-            }
+            if (this.props.state.userData.isAuthenticated) this.doLike();
 
             this.setState({icon: "thumbs up"})
 
         }
         else {
             this.setState({likeCounter: this.state.likeCounter - 1});
-            if (this.state.token != null) {
-                this.doUnLike();
-            } else {
-                this.getSession()
-                    .then(this.doUnLike());
-            }
+            if (this.props.state.userData.isAuthenticated) this.doUnLike();
+
             this.setState({icon: "thumbs outline up"})
         }
 
@@ -144,3 +111,17 @@ export class QSOLikeButton extends React.Component {
         );
     }
 }
+
+const mapStateToProps = (state) => ({
+    state: state
+});
+const mapDispatchToProps = (dispatch) => ({
+    actions: bindActionCreators(Actions, dispatch)
+})
+
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(QSOLikeButton);
+

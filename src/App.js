@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import "./styles/App.css";
-import {Home} from "./components/Home";
+import Home from "./components/Home";
 import {SignUp} from "./components/Auth/SignUp";
 import Logout from "./components/Auth/Logout";
 import LogIn from "./components/Auth/LogIn";
@@ -59,7 +59,7 @@ class App extends Component {
 
     }
 
-    componentDidMount() {
+    componentWillMount() {
 
         this.loadAuthenticatedUser();
 

@@ -30,19 +30,7 @@ export class SignUp extends React.Component {
             userConfirmed: false,
             cognitoUser: ''
         };
-        //Events Binding
-        //Buttons
-        this.handleOnClick = this.handleOnClick.bind(this);
-        this.handleOnConfirm = this.handleOnConfirm.bind(this);
 
-        //Fields
-        this.handleEmailChange = this.handleEmailChange.bind(this);
-        this.handleQraChange = this.handleQraChange.bind(this);
-        this.handleCodeChange = this.handleCodeChange.bind(this);
-
-        //API Callbacks
-        this.handleUserCreated = this.handleUserCreated.bind(this);
-        this.handleUserConfirmed = this.handleUserConfirmed.bind(this);
     }
 
     handleEmailChange(e) {
@@ -107,7 +95,7 @@ export class SignUp extends React.Component {
         attributeList.push(attributeEmail);
         //attributeList.push(attributeUsername);
 
-        userPool.signUp(qra, password, attributeList, null, this.handleUserCreated);
+        userPool.signUp(qra, password, attributeList, null, this.handleUserCreated.bind(this));
     }
 
     handleOnConfirm(e) {
@@ -116,7 +104,7 @@ export class SignUp extends React.Component {
 
         const code = this.state.code.trim();
 
-        this.state.cognitoUser.confirmRegistration(code, true, this.handleUserConfirmed);
+        this.state.cognitoUser.confirmRegistration(code, true, this.handleUserConfirmed.bind(this));
 
 
     }

@@ -12,7 +12,7 @@ class AppNavigation extends Component{
     }
     renderNavigation()
     {
-        return (this.props.state.userData.isAuthenticated ? <AuthenticatedNavigation /> : <PublicNavigation />);
+         return (this.props.state.userData.isAuthenticated ? <AuthenticatedNavigation /> : <PublicNavigation />);
     }
     render()
     {

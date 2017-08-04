@@ -2,8 +2,8 @@ import React from "react";
 import {AudioList} from "./AudioList";
 import {Image} from "./Image";
 import {Feed, Icon, Label} from "semantic-ui-react";
-import {QSOComments} from "./QSOComments";
-import {QSOLikeButton} from "./QSOLikeButton";
+import QSOComments from "./QSOComments";
+import QSOLikeButton from "./QSOLikeButton";
 import {QRAs} from "./QRAs";
 export class QSOFeedItem extends React.Component {
     constructor() {
