@@ -72,7 +72,7 @@ class LogIn extends React.Component {
     }
 
     render() {
-        if (this.props.state.userData.isAuthenticated) {
+        if (this.props.state.default.userData.isAuthenticated) {
             return <Redirect to="/"/>
         }
         return (

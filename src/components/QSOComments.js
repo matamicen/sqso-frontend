@@ -29,7 +29,7 @@ class QSOComments extends React.Component {
 
 
     doComment(c) {
-        console.log("doComment");
+
         var apigClient = window.apigClientFactory.newClient({});
 
         var params = {
@@ -43,7 +43,6 @@ class QSOComments extends React.Component {
         var additionalParams = {};
         apigClient.qsoCommentPost(params, body, additionalParams)
             .then(function (result) {
-                console.log("Comment added");
                 if (result.data.body.error > 0) {
                     console.error(result.data.body.message);
                 } else {
@@ -58,13 +57,13 @@ class QSOComments extends React.Component {
 
 
     handleAddComment(e) {
-        console.log("handleAddComment");
+
         e.preventDefault();
         if (!e.target.comment.value) return;
 
         var datetime = new Date();
         var comment = {
-            qra: this.state.qra,
+            qra: this.props.state.default.userData.qra.toUpperCase(),
             comment: e.target.comment.value,
             datetime: datetime
         };

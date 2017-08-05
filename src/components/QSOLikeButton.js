@@ -31,7 +31,7 @@ class QSOLikeButton extends React.Component {
 
 
     doLike() {
-        console.log("doLike");
+
         var apigClient = window.apigClientFactory.newClient({});
 
         var params = {
@@ -41,7 +41,7 @@ class QSOLikeButton extends React.Component {
         var additionalParams = {};
         apigClient.qsoLikePost(params, body, additionalParams)
             .then(function (result) {
-                console.log("updateCounter success");
+
                 if (result.data.body.error > 0) {
                     console.error(result.data.body.message);
                 } else {
@@ -55,7 +55,7 @@ class QSOLikeButton extends React.Component {
     }
 
     doUnLike() {
-        console.log("doUnLike");
+
         var apigClient = window.apigClientFactory.newClient({});
 
         var params = {
@@ -81,7 +81,7 @@ class QSOLikeButton extends React.Component {
     handleOnLike() {
         if (!this.props.state.default.userData.isAuthenticated) return null;
 
-        console.log("handleOnLike")
+
 
         if (!this.state.liked) {
             this.setState({likeCounter: this.state.likeCounter + 1});
@@ -104,7 +104,7 @@ class QSOLikeButton extends React.Component {
     render() {
 
         return (
-            <Feed.Like onClick={this.handleOnLike}>
+            <Feed.Like onClick={this.handleOnLike.bind(this)}>
                 < Icon name={this.state.icon}/>
                 {this.state.likeCounter} Likes
             </Feed.Like>

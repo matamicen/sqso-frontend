@@ -8,9 +8,7 @@ import * as Actions from '../actions/Actions';
 class PublicDashboard extends React.Component {
     constructor() {
         super();
-        this.state = {
-
-        };
+        this.state = {};
     }
 
     componentDidMount() {
@@ -29,28 +27,27 @@ class PublicDashboard extends React.Component {
         this.props.actions.doRequestFeed();
         apigClient.qsoPublicListGet(params, body, additionalParams)
             .then(function (result) {
-                console.log("qsoPublicListGet success");
                 this.props.actions.doReceiveFeed(result.data);
 
             }.bind(this)).catch(function (error) {
             console.log("error");
-            console.alert(error);
+            alert(error);
         });
 
 
     }
 
     render() {
-        if (this.props.state.default.qsos === 0)  this.getFeedFromApi()
+        if (this.props.state.default.qsos.length === 0) this.getFeedFromApi()
         return (
             <Grid>
-
-                <Grid.Column>
-                    <Container fluid>
-                        < QSOFeed />
-                    </Container>
-                </Grid.Column>
-
+                <Grid.Row columns={1}>
+                    <Grid.Column>
+                        <Container fluid>
+                            < QSOFeed/>
+                        </Container>
+                    </Grid.Column>
+                </Grid.Row>
 
             </Grid>
 
