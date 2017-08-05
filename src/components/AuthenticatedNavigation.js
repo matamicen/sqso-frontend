@@ -16,8 +16,6 @@ const AuthenticatedNavigation = () => (
             </Menu.Item>
         </Menu.Menu>
     </Menu>
-
-
 );
 
 export default AuthenticatedNavigation;

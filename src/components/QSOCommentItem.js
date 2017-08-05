@@ -18,8 +18,6 @@ export class QSOCommentItem extends React.Component {
 
 
         if (this.props.comment) {
-            //    var userPool = new CognitoUserPool(appConfig.poolData);
-            //    var cognitoUser = userPool.getCurrentUser();
 
 
         }
@@ -34,10 +32,7 @@ export class QSOCommentItem extends React.Component {
         var timestamp = "";
 
         if (this.props.comment.datetime) {
-
-
             //https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString
-
             if (now.getMonth() !== commentDate.getMonth()) {
                 month = commentDate.toLocaleString('en-us', {month: "long"});
                 timestamp = commentDate.getDate() + " of " + month;

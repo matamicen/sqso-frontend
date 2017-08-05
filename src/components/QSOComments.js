@@ -33,7 +33,7 @@ class QSOComments extends React.Component {
         var apigClient = window.apigClientFactory.newClient({});
 
         var params = {
-            "Authorization": this.props.state.userData.token
+            "Authorization": this.props.state.default.userData.token
         };
         var body = {
             "qso": this.props.qso.idqsos,
@@ -86,7 +86,7 @@ class QSOComments extends React.Component {
         }
         ;
         let form = null;
-        if (this.props.state.userData.isAuthenticated) {
+        if (this.props.state.default.userData.isAuthenticated) {
             form = <Form size="mini" reply onSubmit={this.handleAddComment.bind(this)}>
                 <Form.Group>
                     <input placeholder='Comment' name="comment"/>

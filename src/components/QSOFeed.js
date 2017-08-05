@@ -28,8 +28,8 @@ class QSOFeed extends React.Component {
 
         let qsos = null;
 
-        if (this.props.state.qsos && this.props.state.qsos.length > 0) {
-            qsos = this.props.state.qsos.map((qso, i) =>
+        if (this.props.state.default.qsos && this.props.state.default.qsos.length > 0) {
+            qsos = this.props.state.default.qsos.map((qso, i) =>
                 <QSOFeedItem key={i} qso={qso}/>
             )
         }

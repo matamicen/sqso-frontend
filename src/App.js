@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {Route, Switch} from "react-router-dom";
 import "./styles/App.css";
 import Home from "./components/Home";
 import {SignUp} from "./components/Auth/SignUp";
@@ -10,9 +10,8 @@ import AWS from "aws-sdk";
 import {CognitoUserPool} from "amazon-cognito-identity-js";
 import appConfig from "./components/Auth/Config";
 import {Segment} from 'semantic-ui-react'
-import {QRAProfile} from "./components/QRAProfile";
-import {connect, Provider} from 'react-redux'
-
+import QRAProfile from "./components/QRAProfile";
+import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from './actions/Actions';
 
@@ -72,30 +71,29 @@ class App extends Component {
     render() {
 
         return (
-            <Provider store={this.props.store}>
-                <Router>
-                    <div>
-                        <AppNavigation/>
-                        <Segment attached='bottom'>
-                            <Switch>
-                                <Route exact path="/"
-                                       component={() => <Home/>}/>
+            <div>
+                <AppNavigation/>
+                <Segment attached='bottom'>
+                    <Switch>
+                        <Route exact path="/"
+                               component={() => <Home/>}/>
 
-                                <Route exact path="/signup" component={SignUp}/>
-                                <Route exact path="/login"
-                                       component={() => <LogIn />}/>
-                                <Route exact path="/logout"
-                                       component={() => <Logout/>}/>
-                                {/*<Route name="recover-password" path="/recover-password" component={RecoverPassword} />*/}
-                                {/*<Route name="reset-password" path="/reset-password/:token" component={ResetPassword} />*/}
-                                {/*<Route component={NotFound} />*/}
-                                <Route path="/:qra"
-                                       component={() => <QRAProfile/>}/>
-                            </Switch>
-                        </Segment>
-                    </div>
-                </Router>
-            </Provider>
+                        <Route exact path="/signup" component={SignUp}/>
+                        <Route exact path="/login"
+                               component={() => <LogIn/>}/>
+                        <Route exact path="/logout"
+                               component={() => <Logout/>}/>
+                        {/*<Route name="recover-password" path="/recover-password" component={RecoverPassword} />*/}
+                        {/*<Route name="reset-password" path="/reset-password/:token" component={ResetPassword} />*/}
+                        {/*<Route component={NotFound} />*/}
+                        <Route path="/:qra"
+                               component={() =>
+                                   <QRAProfile/>
+                               }/>
+                    </Switch>
+                </Segment>
+            </div>
+
         );
     }
 
@@ -111,8 +109,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export default connect(
     mapStateToProps,
-    mapDispatchToProps
-)(App);
+    mapDispatchToProps)(App);
 
 
 

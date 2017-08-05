@@ -22,7 +22,7 @@ class QSOLikeButton extends React.Component {
             this.setState({likeCounter: this.props.qso.likes.length});
 
 
-            if (this.props.state.userData.isAuthenticated && (this.props.qso.likes.some(o => o.qra === this.props.state.userData.qra.toUpperCase()))) {
+            if (this.props.state.default.userData.isAuthenticated && (this.props.qso.likes.some(o => o.qra === this.props.state.default.userData.qra.toUpperCase()))) {
                 this.setState({liked: true});
                 this.setState({icon: "thumbs up"})
             }
@@ -35,7 +35,7 @@ class QSOLikeButton extends React.Component {
         var apigClient = window.apigClientFactory.newClient({});
 
         var params = {
-            "Authorization": this.props.state.userData.token
+            "Authorization": this.props.state.default.userData.token
         };
         var body = {"qso": this.props.qso.idqsos};
         var additionalParams = {};
@@ -59,7 +59,7 @@ class QSOLikeButton extends React.Component {
         var apigClient = window.apigClientFactory.newClient({});
 
         var params = {
-            "Authorization": this.state.token
+            "Authorization": this.props.state.default.userData.token
         };
         var body = {"qso": this.props.qso.idqsos};
         var additionalParams = {};
@@ -79,20 +79,20 @@ class QSOLikeButton extends React.Component {
     }
 
     handleOnLike() {
-        if (!this.props.state.userData.isAuthenticated) return null;
+        if (!this.props.state.default.userData.isAuthenticated) return null;
 
         console.log("handleOnLike")
 
         if (!this.state.liked) {
             this.setState({likeCounter: this.state.likeCounter + 1});
-            if (this.props.state.userData.isAuthenticated) this.doLike();
+            if (this.props.state.default.userData.isAuthenticated) this.doLike();
 
             this.setState({icon: "thumbs up"})
 
         }
         else {
             this.setState({likeCounter: this.state.likeCounter - 1});
-            if (this.props.state.userData.isAuthenticated) this.doUnLike();
+            if (this.props.state.default.userData.isAuthenticated) this.doUnLike();
 
             this.setState({icon: "thumbs outline up"})
         }

@@ -16,7 +16,7 @@ class Home extends React.Component {
 
     render() {
         return (
-            this.props.state.userData.isAuthenticated ? <UserDashboard/> : <PublicDashboard/>
+            this.props.state.default.userData.isAuthenticated ? <UserDashboard/> : <PublicDashboard/>
         )
     }
 }

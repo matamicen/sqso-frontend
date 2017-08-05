@@ -9,7 +9,7 @@ const initialState = {
 }
 
 //define a reducer with an initialized state action
-function sqsoApp(state = initialState, action) {
+export default  function defaultState(state = initialState, action) {
     switch (action.type) {
         case RECEIVE_FEED:
             let receivedFeedStore = Object.assign({}, state, {
@@ -47,4 +47,3 @@ function sqsoApp(state = initialState, action) {
 
 }
 
-export default sqsoApp

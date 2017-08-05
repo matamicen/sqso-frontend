@@ -26,7 +26,7 @@ class UserDashboard extends React.Component {
 
 
             params = {
-                "Authorization": this.props.state.userData.token
+                "Authorization": this.props.state.default.userData.token
             };
             this.props.actions.doRequestFeed();
             apigClient.qsoGetUserFeedGet(params, body, additionalParams)
@@ -42,7 +42,7 @@ class UserDashboard extends React.Component {
     }
 
     render() {
-        if (this.props.state.qsos.length === 0)  this.getFeedFromApi()
+        if (this.props.state.default.qsos.length === 0)  this.getFeedFromApi()
         return (
             <Grid >
                 <Grid.Row columns={3} only='computer'>

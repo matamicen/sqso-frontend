@@ -41,7 +41,7 @@ class PublicDashboard extends React.Component {
     }
 
     render() {
-        if (this.props.state.qsos === 0)  this.getFeedFromApi()
+        if (this.props.state.default.qsos === 0)  this.getFeedFromApi()
         return (
             <Grid>
 

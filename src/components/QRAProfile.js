@@ -1,56 +1,28 @@
 import React from "react";
 import {Button, Card, Icon} from "semantic-ui-react";
-import {CognitoUserPool} from "amazon-cognito-identity-js";
-import appConfig from "./Auth/Config";
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux';
+import * as Actions from '../actions/Actions';
 
-
-export class QRAProfile extends React.Component {
-    constructor({match}) {
+class QRAProfile extends React.Component {
+    constructor() {
         super();
         this.state = {
-            token: null,
-            qra: match.params.qra,
-            followed: false
+                   followed: false
         }
         ;
-        this.getSession = this.getSession.bind(this);
+
 
     }
 
-    componentDidMount() {
-        this.getSession();
 
-        if (this.props.comment) {
-            //     var userPool = new CognitoUserPool(appConfig.poolData);
-            //     var cognitoUser = userPool.getCurrentUser();
-
-
-        }
-    }
-
-    getSession() {
-        var userPool = new CognitoUserPool(appConfig.poolData);
-        var cognitoUser = userPool.getCurrentUser();
-
-
-        if (cognitoUser) {
-            cognitoUser.getSession(function (err, session) {
-                if (err) {
-                    alert(err);
-                    return;
-                }
-                this.setState({token: session.getIdToken().getJwtToken()});
-
-            }.bind(this));
-        }
-    }
 
     doFollow(f) {
-        console.log("doComment");
+        console.log("doFollow");
         var apigClient = window.apigClientFactory.newClient({});
 
         var params = {
-            "Authorization": this.state.token
+            "Authorization": this.props.state.default.userData.token
         };
         var body = {
             "qra": f.qra,
@@ -80,16 +52,13 @@ export class QRAProfile extends React.Component {
         if (!this.state.followed) {
             var datetime = new Date();
             var follow = {
-                qra: this.state.qra,
+                qra: this.props.state.router.location.pathname.substr(1),
                 datetime: datetime
             };
             this.setState({followed: !this.state.followed});
 
-            if (this.state.token != null) {
+            if (this.props.state.default.userData.isAuthenticated) {
                 this.doFollow(follow);
-            } else {
-                this.getSession()
-                    .then(this.doFollow(follow));
             }
         }
     }
@@ -107,11 +76,12 @@ export class QRAProfile extends React.Component {
         else {
             buttonText = "Follow";
         }
+
         return (
             <div>
                 <Card
                     image='/assets/images/avatar/large/elliot.jpg'
-                    header={this.state.qra}
+                    header={this.props.state.router.location.pathname.substr(1)}
                     meta='Friend'
                     description='Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat.'
                     extra={extra}
@@ -123,3 +93,15 @@ export class QRAProfile extends React.Component {
         );
     }
 }
+
+const mapStateToProps = (state, ownProps) => ({
+    state: state
+});
+const mapDispatchToProps = (dispatch) => ({
+    actions: bindActionCreators(Actions, dispatch)
+})
+
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps)(QRAProfile);
