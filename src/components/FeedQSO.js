@@ -7,7 +7,7 @@ import {bindActionCreators} from 'redux';
 import * as Actions from '../actions/Actions';
 
 
-class QSOFeed extends React.Component {
+class FeedQSO extends React.Component {
 
     constructor() {
         super();
@@ -53,5 +53,5 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(QSOFeed);
+)(FeedQSO);
 

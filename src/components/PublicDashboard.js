@@ -1,5 +1,5 @@
 import React from "react";
-import QSOFeed from "./QSOFeed";
+import FeedQSO from "./FeedQSO";
 import {Container, Grid} from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
@@ -44,7 +44,7 @@ class PublicDashboard extends React.Component {
                 <Grid.Row columns={1}>
                     <Grid.Column>
                         <Container fluid>
-                            < QSOFeed/>
+                            < FeedQSO/>
                         </Container>
                     </Grid.Column>
                 </Grid.Row>

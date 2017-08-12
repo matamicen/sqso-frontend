@@ -84,14 +84,14 @@ class QSOLikeButton extends React.Component {
 
 
         if (!this.state.liked) {
-            this.setState({likeCounter: this.state.likeCounter + 1});
+            this.setState(previousState => ({likeCounter: previousState.likeCounter + 1}));
             if (this.props.state.default.userData.isAuthenticated) this.doLike();
 
             this.setState({icon: "thumbs up"})
 
         }
         else {
-            this.setState({likeCounter: this.state.likeCounter - 1});
+            this.setState(previousState => ({likeCounter: previousState.likeCounter - 1}));
             if (this.props.state.default.userData.isAuthenticated) this.doUnLike();
 
             this.setState({icon: "thumbs outline up"})

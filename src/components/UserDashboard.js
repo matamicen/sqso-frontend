@@ -1,10 +1,11 @@
 import React from "react";
-import QSOFeed from "./QSOFeed";
-import {Grid, Card, Image, Feed, Icon, Segment, Container} from "semantic-ui-react";
+import FeedQSO from "./FeedQSO";
+import {Grid, Card, Feed, Segment, Container} from "semantic-ui-react";
 import {connect} from 'react-redux'
-
+import FeedUser from './FeedUser'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../actions/Actions';
+
 class UserDashboard extends React.Component {
     constructor() {
         super();
@@ -17,58 +18,22 @@ class UserDashboard extends React.Component {
 
 
     }
-    getFeedFromApi() {
-        var apigClient = window.apigClientFactory.newClient({});
-        var params;
-        var body = {};
-        var additionalParams = {};
 
-
-
-            params = {
-                "Authorization": this.props.state.default.userData.token
-            };
-            this.props.actions.doRequestFeed();
-            apigClient.qsoGetUserFeedGet(params, body, additionalParams)
-                .then(function (result) {
-                    this.props.actions.doReceiveFeed(result.data);
-
-                }.bind(this)).catch(function (error) {
-                console.log("error");
-                alert(error);
-            });
-
-
-    }
 
     render() {
-        if (this.props.state.default.qsos.length === 0)  this.getFeedFromApi()
+
         return (
             <Grid >
                 <Grid.Row columns={3} only='computer'>
                     <Grid.Column width={3} only="computer">
                         <Segment>
-                            <Card>
-                                <Image
-                                    src="https://s3.amazonaws.com/sqso/us-east-1:7382470b-8c80-4b59-a183-b6112ff08712/profile/profile.jpg"/>
-                                <Card.Content>
-                                    <Card.Header>LU2ACH</Card.Header>
-                                    <Card.Meta>Joined in 2016</Card.Meta>
-                                    <Card.Description>Daniel is a comedian living in Nashville.</Card.Description>
-                                </Card.Content>
-                                <Card.Content extra>
-                                    <a>
-                                        <Icon name='user'/>
-                                        10 Friends
-                                    </a>
-                                </Card.Content>
-                            </Card>
+                            <FeedUser/>
                         </Segment>
                     </Grid.Column>
 
                     <Grid.Column computer={10} tablet={5}>
                         <Segment>
-                            < QSOFeed />
+                            < FeedQSO />
                         </Segment>
                     </Grid.Column>
 
@@ -123,7 +88,7 @@ class UserDashboard extends React.Component {
                 <Grid.Row columns={1} only='mobile tablet'>
                     <Grid.Column >
                         <Container fluid>
-                            < QSOFeed />
+                            < FeedQSO />
                         </Container>
                     </Grid.Column>
                 </Grid.Row>

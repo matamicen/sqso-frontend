@@ -8,13 +8,13 @@ class QRAProfile extends React.Component {
     constructor() {
         super();
         this.state = {
-                   followed: false
+            followed: false,
+            qra:  null
         }
         ;
 
 
     }
-
 
 
     doFollow(f) {
@@ -48,8 +48,8 @@ class QRAProfile extends React.Component {
     handleButtonClick(e) {
         console.log("handleAddComment");
         e.preventDefault();
-
-        if (!this.state.followed) {
+        let followed = this.props.state.default.userData.following.filter(o => o.qra === this.props.state.router.location.pathname.substr(1))
+        if (followed) {
             var datetime = new Date();
             var follow = {
                 qra: this.props.state.router.location.pathname.substr(1),
@@ -64,13 +64,14 @@ class QRAProfile extends React.Component {
     }
 
     render() {
+        let followed = this.props.state.default.userData.following.filter(o => o.qra === this.props.state.router.location.pathname.substr(1))
         const extra = <a>
             <Icon name='user'/>
             16 Friends
         </a>;
         let buttonText;
-
-        if (this.state.followed) {
+        if (followed){
+          //  this.setState({followed: true});
             buttonText = "Unfollow";
         }
         else {
@@ -86,7 +87,7 @@ class QRAProfile extends React.Component {
                     description='Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat.'
                     extra={extra}
                 />
-                <Button positive={!this.state.followed}
+                <Button positive={!followed}
                         onClick={this.handleButtonClick.bind(this)}> {buttonText} </ Button>
             </ div>
 

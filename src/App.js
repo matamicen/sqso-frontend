@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Route, Switch} from "react-router-dom";
+import {Route, Switch, withRouter} from "react-router-dom";
 import "./styles/App.css";
 import Home from "./components/Home";
 import {SignUp} from "./components/Auth/SignUp";
@@ -48,9 +48,39 @@ class App extends Component {
                         this.props.actions.doLogout()
                     }
                     else {
+                        var apigClient = window.apigClientFactory.newClient({});
+                        var params;
+                        var body = {};
+                        var additionalParams = {};
 
+
+
+                        params = {
+                            "Authorization": this.props.state.default.userData.token
+                        };
+                        this.props.actions.doRequestUserInfo();
+                        apigClient.userInfoGet(params, body, additionalParams)
+                            .then(function (result) {
+                                if (result.data.body.error === 0) {
+                                    this.props.actions.doReceiveUserInfo(result.data.body.message.followers, result.data.body.message.following, result.data.body.message.profilepic);
+                                }
+
+
+                            }.bind(this)).catch(function (error) {
+                            console.log("error");
+                            alert(error);
+                        });
+                        this.props.actions.doRequestFeed();
+                        apigClient.qsoGetUserFeedGet(params, body, additionalParams)
+                            .then(function (result) {
+                                this.props.actions.doReceiveFeed(result.data);
+
+                            }.bind(this)).catch(function (error) {
+                            console.log("error");
+                            alert(error);
+                        });
                     }
-                });
+                }.bind(this));
 
 
             }.bind(this));
@@ -107,9 +137,9 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 
-export default connect(
+export default withRouter(connect(
     mapStateToProps,
-    mapDispatchToProps)(App);
+    mapDispatchToProps)(App));
 
 
 

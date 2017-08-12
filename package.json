@@ -2,6 +2,7 @@
   "name": "sqso-frontend",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://www.superqso.com",
   "dependencies": {
     "amazon-cognito-identity-js": "^1.19.0",
     "aws-sdk": "^2.77.0",
