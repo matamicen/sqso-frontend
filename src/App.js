@@ -11,6 +11,7 @@ import {CognitoUserPool} from "amazon-cognito-identity-js";
 import appConfig from "./components/Auth/Config";
 import {Segment} from 'semantic-ui-react'
 import QRAProfile from "./components/QRAProfile";
+import QSODetail from "./components/QSODetail"
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from './actions/Actions';
@@ -21,6 +22,7 @@ class App extends Component {
     loadAuthenticatedUser() {
         var userPool = new CognitoUserPool(appConfig.poolData);
         var cognitoUser = userPool.getCurrentUser();
+        console.log("load");
         if (cognitoUser != null) {
 
             cognitoUser.getSession(function (err, session) {
@@ -116,9 +118,13 @@ class App extends Component {
                         {/*<Route name="recover-password" path="/recover-password" component={RecoverPassword} />*/}
                         {/*<Route name="reset-password" path="/reset-password/:token" component={ResetPassword} />*/}
                         {/*<Route component={NotFound} />*/}
-                        <Route path="/:qra"
+                        <Route exact path="/:qra"
+                                         component={() =>
+                                             <QRAProfile/>
+                                         }/>
+                        <Route path="/qso/:idqso"
                                component={() =>
-                                   <QRAProfile/>
+                                   <QSODetail/>
                                }/>
                     </Switch>
                 </Segment>

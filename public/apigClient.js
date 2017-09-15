@@ -83,6 +83,42 @@ apigClientFactory.newClient = function (config) {
     
     
     
+    apigClient.qraEndpointPut = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['body', 'Authorization'], ['body']);
+        
+        var qraEndpointPutRequest = {
+            verb: 'put'.toUpperCase(),
+            path: pathComponent + uritemplate('/qra-endpoint').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(qraEndpointPutRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.qraEndpointOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var qraEndpointOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/qra-endpoint').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(qraEndpointOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
     apigClient.qraFollowerPost = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
@@ -224,6 +260,42 @@ apigClientFactory.newClient = function (config) {
         
         
         return apiGatewayClient.makeRequest(qsoCommentOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.qsoDetailPost = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['body'], ['body']);
+        
+        var qsoDetailPostRequest = {
+            verb: 'post'.toUpperCase(),
+            path: pathComponent + uritemplate('/qso-detail').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(qsoDetailPostRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.qsoDetailOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var qsoDetailOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/qso-detail').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(qsoDetailOptionsRequest, authType, additionalParams, config.apiKey);
     };
     
     

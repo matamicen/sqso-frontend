@@ -1,8 +1,10 @@
 import React from "react";
 import {Button, Card, Icon} from "semantic-ui-react";
 import {connect} from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../actions/Actions';
+
 
 class QRAProfile extends React.Component {
     constructor() {
@@ -64,7 +66,11 @@ class QRAProfile extends React.Component {
     }
 
     render() {
-        let followed = this.props.state.default.userData.following.filter(o => o.qra === this.props.state.router.location.pathname.substr(1))
+        console.log("render")
+        console.log(this.props.state.default.userData.following)
+        let followed = this.props.state.default.userData.following.includes(this.props.match.params.qra)
+
+        console.log(followed)
         const extra = <a>
             <Icon name='user'/>
             16 Friends
@@ -82,7 +88,7 @@ class QRAProfile extends React.Component {
             <div>
                 <Card
                     image='/assets/images/avatar/large/elliot.jpg'
-                    header={this.props.state.router.location.pathname.substr(1)}
+                    header={this.props.match.params.qra}
                     meta='Friend'
                     description='Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat.'
                     extra={extra}
@@ -102,7 +108,6 @@ const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 })
 
-
-export default connect(
+export default  withRouter( connect(
     mapStateToProps,
-    mapDispatchToProps)(QRAProfile);
+    mapDispatchToProps)(QRAProfile));
