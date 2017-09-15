@@ -25,7 +25,6 @@ class QSODetail extends React.Component {
         var body = {"qso": this.props.match.params.idqso};
         var additionalParams = {};
 
-
         apigClient.qsoDetailPost(params, body, additionalParams)
             .then(function (result) {
                 this.setState({qso: result.data});
