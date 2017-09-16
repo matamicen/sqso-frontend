@@ -1,18 +1,17 @@
 import React from "react";
 import PublicDashboard from "./PublicDashboard";
 import UserDashboard from "./UserDashboard";
-import { bindActionCreators } from 'redux';
+import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as Actions from '../actions/Actions';
+
 class Home extends React.Component {
     constructor() {
         super();
         this.state = {};
     }
 
-    componentDidMount() {
 
-    }
 
     render() {
         return (

@@ -16,7 +16,8 @@ class FeedUser extends React.Component {
 
 
     componentWillMount() {
-
+        if (!this.props.state.default.userData.FetchingUser) this.props.actions.doFetchUserInfo(this.props.state.default.userData.token);
+        console.log("componentWillMount");
 
     }
 
@@ -25,6 +26,8 @@ class FeedUser extends React.Component {
     }
 
     render() {
+
+        console.log("render");
         let following = this.props.state.default.userData.following ? this.props.state.default.userData.following.length : 0;
         let followers = this.props.state.default.userData.followers ? this.props.state.default.userData.followers.length : 0;
         return (

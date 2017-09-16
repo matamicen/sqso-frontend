@@ -11,34 +11,14 @@ class PublicDashboard extends React.Component {
         this.state = {};
     }
 
-    componentDidMount() {
+    componentWillMount() {
 
 
     }
 
-    getFeedFromApi() {
-        var apigClient = window.apigClientFactory.newClient({});
-        var params = {};
-        var body = {};
-        var additionalParams = {};
-
-
-//TODO: pasar como parametro la fecha de ahora o del ultimo qso para que traiga los 50 siguientes.
-        this.props.actions.doRequestFeed();
-        apigClient.qsoPublicListGet(params, body, additionalParams)
-            .then(function (result) {
-                this.props.actions.doReceiveFeed(result.data);
-
-            }.bind(this)).catch(function (error) {
-            console.log("error");
-            alert(error);
-        });
-
-
-    }
 
     render() {
-        if (this.props.state.default.qsos.length === 0) this.getFeedFromApi()
+
         return (
             <Grid>
                 <Grid.Row columns={1}>

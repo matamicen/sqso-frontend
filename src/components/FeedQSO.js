@@ -17,8 +17,12 @@ class FeedQSO extends React.Component {
 
 
     componentWillMount() {
-
-
+        if (!this.props.state.default.FetchingQSOS) {
+            this.props.state.default.userData.isAuthenticated ?
+                this.props.actions.doFetchUserFeed(this.props.state.default.userData.token)
+        :
+            this.props.actions.doFetchPublicFeed(this.props.state.default.userData.token);
+        }
     }
     componentWillUnmount() {
 

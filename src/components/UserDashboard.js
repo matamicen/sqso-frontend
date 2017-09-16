@@ -1,6 +1,6 @@
 import React from "react";
 import FeedQSO from "./FeedQSO";
-import {Grid, Card, Feed, Segment, Container} from "semantic-ui-react";
+import {Card, Container, Feed, Grid, Segment} from "semantic-ui-react";
 import {connect} from 'react-redux'
 import FeedUser from './FeedUser'
 import {bindActionCreators} from 'redux';
@@ -9,21 +9,17 @@ import * as Actions from '../actions/Actions';
 class UserDashboard extends React.Component {
     constructor() {
         super();
-        this.state = {
-
-        };
+        this.state = {};
     }
 
-    componentDidMount() {
-
+    componentWillMount() {
 
     }
-
 
     render() {
 
         return (
-            <Grid >
+            <Grid>
                 <Grid.Row columns={3} only='computer'>
                     <Grid.Column width={3} only="computer">
                         <Segment>
@@ -33,7 +29,7 @@ class UserDashboard extends React.Component {
 
                     <Grid.Column computer={10} tablet={5}>
                         <Segment>
-                            < FeedQSO />
+                            < FeedQSO/>
                         </Segment>
                     </Grid.Column>
 
@@ -86,9 +82,9 @@ class UserDashboard extends React.Component {
                     </Grid.Column>
                 </Grid.Row>
                 <Grid.Row columns={1} only='mobile tablet'>
-                    <Grid.Column >
+                    <Grid.Column>
                         <Container fluid>
-                            < FeedQSO />
+                            < FeedQSO/>
                         </Container>
                     </Grid.Column>
                 </Grid.Row>

@@ -6,38 +6,28 @@ import * as Actions from '../actions/Actions';
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 
+
 class QSODetail extends React.Component {
 
     constructor() {
         super();
         this.state = {
-            qso: null
+
         }        ;
     }
     componentWillMount() {
-        this.getDataFromApi();
+        console.log("componentWillMount");
+        console.log(this.props.state.default.FetchingQSO);
+        if (!this.props.state.default.FetchingQSO) this.props.actions.doFetchQSO(this.props.match.params.idqso);
+    }
+    componentWillUnMount() {
+        console.log("componentWillUnMount");
     }
 
-    getDataFromApi() {
-
-        var apigClient = window.apigClientFactory.newClient({});
-        var params = {};
-        var body = {"qso": this.props.match.params.idqso};
-        var additionalParams = {};
-
-        apigClient.qsoDetailPost(params, body, additionalParams)
-            .then(function (result) {
-                this.setState({qso: result.data});
-
-            }.bind(this)).catch(function (error) {
-            console.log("error");
-            alert(error);
-        });
-    }
 
     render() {
-        console.log(this.state.qso)
-        if (!this.state.qso ) {
+        console.log(this.props.state.default.qso)
+        if (!this.props.state.default.qso ) {
             return null;
         } else {
             return ( <Grid>
@@ -45,7 +35,7 @@ class QSODetail extends React.Component {
                     <Grid.Column>
                         <Container fluid>
                             <Feed>
-                                <QSOFeedItem key={this.props.match.params.idqso} qso={this.state.qso}/>
+                                <QSOFeedItem key={this.props.match.params.idqso} qso={this.props.state.default.qso}/>
                             </Feed>
                         </Container>
                     </Grid.Column>
@@ -55,7 +45,9 @@ class QSODetail extends React.Component {
     }
 }
 
-const mapStateToProps = (state, ownProps) => ({state: state});
+const mapStateToProps = (state) => ({
+    state: state
+});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 })

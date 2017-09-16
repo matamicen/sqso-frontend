@@ -22,7 +22,7 @@ class App extends Component {
     loadAuthenticatedUser() {
         var userPool = new CognitoUserPool(appConfig.poolData);
         var cognitoUser = userPool.getCurrentUser();
-        console.log("load");
+
         if (cognitoUser != null) {
 
             cognitoUser.getSession(function (err, session) {
@@ -32,7 +32,11 @@ class App extends Component {
                     return;
                 }
                 let token = session.getIdToken().getJwtToken();
+
                 this.props.actions.doLogin(token, cognitoUser.username.toUpperCase());
+
+               // this.props.actions.doFetchUserFeed(token);
+               // this.props.actions.doFetchUserInfo(token);
 
                 var creds = new AWS.CognitoIdentityCredentials({
                     IdentityPoolId: 'us-east-1:051d18f6-a6bf-4237-af95-33c0f3a45cc1', // your identity pool id here
@@ -50,49 +54,22 @@ class App extends Component {
                         this.props.actions.doLogout()
                     }
                     else {
-                        var apigClient = window.apigClientFactory.newClient({});
-                        var params;
-                        var body = {};
-                        var additionalParams = {};
 
-
-
-                        params = {
-                            "Authorization": this.props.state.default.userData.token
-                        };
-                        this.props.actions.doRequestUserInfo();
-                        apigClient.userInfoGet(params, body, additionalParams)
-                            .then(function (result) {
-                                if (result.data.body.error === 0) {
-                                    this.props.actions.doReceiveUserInfo(result.data.body.message.followers, result.data.body.message.following, result.data.body.message.profilepic);
-                                }
-
-
-                            }.bind(this)).catch(function (error) {
-                            console.log("error");
-                            alert(error);
-                        });
-                        this.props.actions.doRequestFeed();
-                        apigClient.qsoGetUserFeedGet(params, body, additionalParams)
-                            .then(function (result) {
-                                this.props.actions.doReceiveFeed(result.data);
-
-                            }.bind(this)).catch(function (error) {
-                            console.log("error");
-                            alert(error);
-                        });
                     }
                 }.bind(this));
 
 
             }.bind(this));
         }
+        //else this.props.actions.doFetchPublicFeed();
+
 
     }
 
     componentWillMount() {
 
-        this.loadAuthenticatedUser();
+        this.loadAuthenticatedUser()
+
 
     }
 
@@ -119,9 +96,9 @@ class App extends Component {
                         {/*<Route name="reset-password" path="/reset-password/:token" component={ResetPassword} />*/}
                         {/*<Route component={NotFound} />*/}
                         <Route exact path="/:qra"
-                                         component={() =>
-                                             <QRAProfile/>
-                                         }/>
+                               component={() =>
+                                   <QRAProfile/>
+                               }/>
                         <Route path="/qso/:idqso"
                                component={() =>
                                    <QSODetail/>
