@@ -28,33 +28,57 @@ export function doReceiveUserInfo(followers = null, following = null, profilepic
 }
 
 export function doLogin(token, qra) {
-
+   // console.log("doLogin")
     return {
         type: LOGIN,
         token: token,
-        qra: qra
+        qsosFetched: false,
+        FetchingQSO: false,
+        FetchingQSOS: false,
+        qsos: null,
+        qso: null,
+        qra: qra,
+        followers: null,
+        following: null,
+        profilepic: null,
+        FetchingUser: false
     }
 }
 
 export function doLogout() {
-
+   // console.log("doLogout")
     return {
-        type: LOGOUT
+        type: LOGOUT,
+        qsos: null,
+        qso: null,
+        qsosFetched: false,
+        FetchingQSO: false,
+        FetchingQSOS: false,
+        token: null,
+        qra: null,
+        followers: null,
+        following: null,
+        profilepic: null,
+        FetchingUser: false
     }
 }
 
 export function doRequestFeed() {
+ //   console.log("doRequestFeed")
     return {
         type: REQUEST_FEED,
-        FetchingQSOS: true
+        FetchingQSOS: true,
+        qsosFetched: false
     }
 }
 
 export function doReceiveFeed(qsos) {
+   // console.log("doReceiveFeed")
     return {
         type: RECEIVE_FEED,
         qsos: qsos,
-        FetchingQSOS: false
+        FetchingQSOS: false,
+        qsosFetched: true
 
     }
 }
@@ -80,11 +104,12 @@ export function doFetchUserInfo(token) {
             }).catch(function (error) {
             console.log("error");
             console.log(error);
-            alert(error);
+            //alert(error);
         });
     }
 }
 export function doFetchUserFeed(token) {
+  //  console.log("doFetchUserFeed");
     return (dispatch) => {
         var apigClient = window.apigClientFactory.newClient({});
         var params;
@@ -104,7 +129,7 @@ export function doFetchUserFeed(token) {
             }).catch(function (error) {
             console.log("error");
             console.log(error);
-            alert(error);
+
         });
     };
 }
@@ -140,7 +165,8 @@ export function doRequestQSO() {
 export function doReceiveQSO(qso) {
     return {
         type: RECEIVE_QSO,
-        qso: qso
+        qso: qso,
+        FetchingQSO: false
 
 
     }

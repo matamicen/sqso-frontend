@@ -79,6 +79,7 @@ class App extends Component {
 
     render() {
 
+
         return (
             <div>
                 <AppNavigation/>
@@ -117,8 +118,7 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
-})
-
+});
 
 export default withRouter(connect(
     mapStateToProps,

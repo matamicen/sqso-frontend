@@ -1,5 +1,5 @@
 import React from "react";
-import {QSOFeedItem} from "./QSOFeedItem";
+import QSOFeedItem from "./QSOFeedItem";
 import {Container, Feed, Grid} from 'semantic-ui-react'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../actions/Actions';
@@ -26,7 +26,7 @@ class QSODetail extends React.Component {
 
 
     render() {
-        console.log(this.props.state.default.qso)
+        console.log(this.props.state.default.qso);
         if (!this.props.state.default.qso ) {
             return null;
         } else {
@@ -50,6 +50,6 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
-})
+});
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(QSODetail));

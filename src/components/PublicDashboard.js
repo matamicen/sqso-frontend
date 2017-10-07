@@ -6,19 +6,9 @@ import {bindActionCreators} from 'redux';
 import * as Actions from '../actions/Actions';
 
 class PublicDashboard extends React.Component {
-    constructor() {
-        super();
-        this.state = {};
-    }
-
-    componentWillMount() {
-
-
-    }
-
 
     render() {
-
+        console.log("render PublicDasbhoard");
         return (
             <Grid>
                 <Grid.Row columns={1}>
@@ -40,10 +30,10 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
-})
+});
 
 
 export default connect(
     mapStateToProps,
-    mapDispatchToProps
+    mapDispatchToProps,  null, { pure: true }
 )(PublicDashboard);

@@ -11,23 +11,34 @@ class FeedUser extends React.Component {
 
     constructor() {
         super();
-        this.state = {};
+        this.state = {
+            fetchingData: false
+        };
     }
 
 
-    componentWillMount() {
-        if (!this.props.state.default.userData.FetchingUser) this.props.actions.doFetchUserInfo(this.props.state.default.userData.token);
-        console.log("componentWillMount");
+    componentDiDMount() {
+        //if (!this.props.state.default.userData.FetchingUser)
+        console.log("componentDiDMount");
+        if (!this.state.fetchingData) {
+            this.props.actions.doFetchUserInfo(this.props.state.default.userData.token);
+        }
+    }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({fetchingData: false});
     }
 
     componentWillUnmount() {
 
     }
+    shouldComponentUpdate(){
+        console.log("shouldComponentUpdate");
+        console.log(!this.state.fetchingData);
+        return !this.state.fetchingData;
+    }
 
     render() {
-
-        console.log("render");
         let following = this.props.state.default.userData.following ? this.props.state.default.userData.following.length : 0;
         let followers = this.props.state.default.userData.followers ? this.props.state.default.userData.followers.length : 0;
         return (
@@ -61,7 +72,7 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
-})
+});
 
 
 export default connect(

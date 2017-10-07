@@ -1,11 +1,15 @@
 import React from "react";
 import {AudioList} from "./AudioList";
 import {Image} from "./Image";
-import {Feed, Icon, Label} from "semantic-ui-react";
+import {Card, Feed, Icon, Label} from "semantic-ui-react";
 import QSOComments from "./QSOComments";
 import QSOLikeButton from "./QSOLikeButton";
 import {QRAs} from "./QRAs";
-export class QSOFeedItem extends React.Component {
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux';
+import * as Actions from '../actions/Actions';
+
+class QSOFeedItem extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -13,10 +17,14 @@ export class QSOFeedItem extends React.Component {
         };
         this.handleOnComment = this.handleOnComment.bind(this);
     }
+    shouldComponentUpdate(nextProps) {
+     //   console.log("shouldComponentUpdate QSOFEEDITEM" + this.props.qsosFetched);
+        return this.props.qsosFetched;
+    }
 
 
     handleOnComment() {
-        console.log("Comment Pressed")
+        console.log("Comment Pressed");
         this.setState({showComment: true});
     }
 
@@ -45,7 +53,7 @@ export class QSOFeedItem extends React.Component {
 
 
         return (
-
+            <Card fluid>
             <Feed.Event>
                 <Feed.Content>
                     <Feed.Summary>
@@ -72,7 +80,24 @@ export class QSOFeedItem extends React.Component {
                     </Feed.Extra>
                 </Feed.Content>
             </Feed.Event>
-
+            </Card>
         )
     }
 }
+
+const mapStateToProps = (state, qsos) => ({
+    fetchingQSOS: state.default.FetchingQSOS,
+    qsosFetched: state.default.qsosFetched,
+
+});
+const mapDispatchToProps = (dispatch) => ({
+    actions: bindActionCreators(Actions, dispatch)
+});
+
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps, null, {
+        pure: false
+    }
+)(QSOFeedItem);

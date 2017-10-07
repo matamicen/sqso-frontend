@@ -1,27 +1,28 @@
 import React from 'react';
 import {Picture} from './Picture'
-export class Image extends React.Component{
-    constructor(){
-        super();
-        this.state = {
 
-        };
+export class Image extends React.Component {
+    constructor() {
+        super();
+        this.state = {};
     }
-    render(){
+
+    render() {
         if (this.props.img) {
             return (
 
 
-                            <Picture
-                                img = {this.props.img}
-                                />
+                <Picture
+                    img={this.props.img}
+                />
 
-                )
+            )
 
 
         }
-        else
-        { return null }
+        else {
+            return null
+        }
 
     }
 }

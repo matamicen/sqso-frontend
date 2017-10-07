@@ -23,7 +23,9 @@ class UserDashboard extends React.Component {
                 <Grid.Row columns={3} only='computer'>
                     <Grid.Column width={3} only="computer">
                         <Segment>
-                            <FeedUser/>
+
+                                <FeedUser/>
+
                         </Segment>
                     </Grid.Column>
 
@@ -35,49 +37,51 @@ class UserDashboard extends React.Component {
 
                     <Grid.Column width={3} only="computer">
                         <Segment>
-                            <Card>
-                                <Card.Content>
-                                    <Card.Header>
-                                        Recent Activity
-                                    </Card.Header>
-                                </Card.Content>
-                                <Card.Content>
-                                    <Feed>
-                                        <Feed.Event>
-                                            <Feed.Label
-                                                image='https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg'/>
-                                            <Feed.Content>
-                                                <Feed.Date content='1 day ago'/>
-                                                <Feed.Summary>
-                                                    You added <a>Jenny Hess</a> to your <a>coworker</a> group.
-                                                </Feed.Summary>
-                                            </Feed.Content>
-                                        </Feed.Event>
 
-                                        <Feed.Event>
-                                            <Feed.Label
-                                                image='https://react.semantic-ui.com/assets/images/avatar/small/molly.png'/>
-                                            <Feed.Content>
-                                                <Feed.Date content='3 days ago'/>
-                                                <Feed.Summary>
-                                                    You added <a>Molly Malone</a> as a friend.
-                                                </Feed.Summary>
-                                            </Feed.Content>
-                                        </Feed.Event>
+                                <Card>
+                                    <Card.Content>
+                                        <Card.Header>
+                                            Recent Activity
+                                        </Card.Header>
+                                    </Card.Content>
+                                    <Card.Content>
+                                        <Feed>
+                                            <Feed.Event>
+                                                <Feed.Label
+                                                    image='https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg'/>
+                                                <Feed.Content>
+                                                    <Feed.Date content='1 day ago'/>
+                                                    <Feed.Summary>
+                                                        You added <a>Jenny Hess</a> to your <a>coworker</a> group.
+                                                    </Feed.Summary>
+                                                </Feed.Content>
+                                            </Feed.Event>
 
-                                        <Feed.Event>
-                                            <Feed.Label
-                                                image='https://react.semantic-ui.com/assets/images/avatar/small/elliot.jpg'/>
-                                            <Feed.Content>
-                                                <Feed.Date content='4 days ago'/>
-                                                <Feed.Summary>
-                                                    You added <a>Elliot Baker</a> to your <a>musicians</a> group.
-                                                </Feed.Summary>
-                                            </Feed.Content>
-                                        </Feed.Event>
-                                    </Feed>
-                                </Card.Content>
-                            </Card>
+                                            <Feed.Event>
+                                                <Feed.Label
+                                                    image='https://react.semantic-ui.com/assets/images/avatar/small/molly.png'/>
+                                                <Feed.Content>
+                                                    <Feed.Date content='3 days ago'/>
+                                                    <Feed.Summary>
+                                                        You added <a>Molly Malone</a> as a friend.
+                                                    </Feed.Summary>
+                                                </Feed.Content>
+                                            </Feed.Event>
+
+                                            <Feed.Event>
+                                                <Feed.Label
+                                                    image='https://react.semantic-ui.com/assets/images/avatar/small/elliot.jpg'/>
+                                                <Feed.Content>
+                                                    <Feed.Date content='4 days ago'/>
+                                                    <Feed.Summary>
+                                                        You added <a>Elliot Baker</a> to your <a>musicians</a> group.
+                                                    </Feed.Summary>
+                                                </Feed.Content>
+                                            </Feed.Event>
+                                        </Feed>
+                                    </Card.Content>
+                                </Card>
+
                         </Segment>
                     </Grid.Column>
                 </Grid.Row>
@@ -99,7 +103,7 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
-})
+});
 
 
 export default connect(

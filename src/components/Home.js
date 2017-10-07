@@ -6,30 +6,30 @@ import {connect} from 'react-redux';
 import * as Actions from '../actions/Actions';
 
 class Home extends React.Component {
-    constructor() {
-        super();
-        this.state = {};
+    shouldComponentUpdate(){
+        return false;
     }
 
-
-
     render() {
+        if (this.props.fetchingQSOS) return null;
+
         return (
-            this.props.state.default.userData.isAuthenticated ? <UserDashboard/> : <PublicDashboard/>
+            this.props.isAuthenticated ? <UserDashboard/> : <PublicDashboard/>
         )
     }
 }
 
 const mapStateToProps = (state) => ({
-    state: state
+    isAuthenticated: state.default.userData.isAuthenticated,
+    fetchingQSOS: state.default.fetchingQSOS
 });
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
-})
+});
 
 
 export default connect(
     mapStateToProps,
-    mapDispatchToProps
+    mapDispatchToProps,  null, { pure: true }
 )(Home);
 
