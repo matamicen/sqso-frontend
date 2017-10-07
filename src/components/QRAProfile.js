@@ -1,119 +1,68 @@
 import React from "react";
-import {Button, Card, Grid, Icon} from "semantic-ui-react";
-import {connect} from 'react-redux'
-import {withRouter} from 'react-router-dom'
-import {bindActionCreators} from 'redux';
-import * as Actions from '../actions/Actions';
+import QRAProfileFollowers from './QRAProfileFollowers'
+import QRAProfileFollowing from './QRAProfileFollowing'
+import QRAProfilePictures from './QRAProfilePictures'
+import QRAProfileBio from './QRAProfileBio'
+import QRAProfileInfo from './QRAProfileInfo'
+import {Header, Image, Segment, Tab} from 'semantic-ui-react'
 
-
-class QRAProfile extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            followed: false,
-            qra: null
-        }
-        ;
-
-
+const panes = [
+    {
+        menuItem: 'Biography',
+        render: () => <Tab.Pane><QRAProfileBio/></Tab.Pane>,
+    },
+    {
+        menuItem: 'Information',
+        render: () => <Tab.Pane><QRAProfileInfo/></Tab.Pane>,
+    },
+    {
+        menuItem: 'QSOs',
+        render: () => <Tab.Pane>Tab 2 Content</Tab.Pane>,
+    },
+    {
+        menuItem: 'Pictures',
+        render: () => <Tab.Pane><QRAProfilePictures/></Tab.Pane>,
+    },
+    {
+        menuItem: 'Following',
+        render: () => <Tab.Pane><QRAProfileFollowing/></Tab.Pane>,
+    },
+    {
+        menuItem: 'Followers',
+        render: () => <Tab.Pane><QRAProfileFollowers/></Tab.Pane>,
     }
 
+];
+const QRAProfile = () => (
+    <div>
 
-    doFollow(f) {
-        console.log("doFollow");
-        var apigClient = window.apigClientFactory.newClient({});
+            <Segment clearing>
+                <Image
+                    src='https://s3.amazonaws.com/sqso/us-east-1:7382470b-8c80-4b59-a183-b6112ff08712/profile/profile.jpg'
+                    centered size='small' shape='circular'/>
 
-        var params = {
-            "Authorization": this.props.state.default.userData.token
-        };
-        var body = {
-            "qra": f.qra,
-            "datetime": f.datetime
-        };
-        var additionalParams = {};
-        apigClient.qraFollowerPost(params, body, additionalParams)
-            .then(function (result) {
-                console.log("Follower added");
-                if (result.data.body.error > 0) {
-                    console.error(result.data.body.message);
-                } else {
-                    console.log(result.data.body.message);
-                    this.setState({followed: true});
-                }
-            }.bind(this))
-            .catch(function (error) {
-                console.log("error");
-                console.error(error);
-            });
-    }
 
-    handleButtonClick(e) {
-        console.log("handleAddComment");
-        e.preventDefault();
-        let followed = this.props.state.default.userData.following.filter(o => o.qra === this.props.state.router.location.pathname.substr(1));
-        if (followed) {
-            var datetime = new Date();
-            var follow = {
-                qra: this.props.state.router.location.pathname.substr(1),
-                datetime: datetime
-            };
-            this.setState({followed: !this.state.followed});
+                <Header as='h1' icon textAlign='center'>
+                    <Header.Content>
+                        LU2ACH
+                    </Header.Content>
+                </Header>
+                <Header as='h2' icon textAlign='center'>
+                    <Header.Content>
+                        Matias Micenmacher
+                    </Header.Content>
+                </Header>
+            </Segment>
 
-            if (this.props.state.default.userData.isAuthenticated) {
-                this.doFollow(follow);
-            }
-        }
-    }
 
-    render() {
-        console.log("render");
-        console.log(this.props.state.default.userData);
+            <Segment raised>
+                <Tab panes={panes}/>
 
-        let followed = this.props.state.default.userData.following.includes(this.props.match.params.qra);
+            </Segment>
 
-        console.log(followed);
-        const extra = <a>
-            <Icon name='user'/>
-            16 Friends
-        </a>;
-        let buttonText;
-        if (followed) {
-            //  this.setState({followed: true});
-            buttonText = "Unfollow";
-        }
-        else {
-            buttonText = "Follow";
-        }
+    </div>
 
-        return (
-            <div>
-                <Grid centered columns={3}>
 
-                    <Grid.Column>
-                        <Card
-                            image='/assets/images/avatar/large/elliot.jpg'
-                            header={this.props.match.params.qra}
-                            meta='Friend'
-                            description='Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat.'
-                            extra={extra}
-                        />
-                        <Button positive={!followed}
-                                onClick={this.handleButtonClick.bind(this)}> {buttonText} </ Button>
-                    </Grid.Column>
-                </Grid>
-            </ div>
+);
 
-        );
-    }
-}
-
-const mapStateToProps = (state, ownProps) => ({
-    state: state
-});
-const mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators(Actions, dispatch)
-});
-
-export default withRouter(connect(
-    mapStateToProps,
-    mapDispatchToProps)(QRAProfile));
+export default QRAProfile;

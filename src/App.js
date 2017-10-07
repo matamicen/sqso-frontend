@@ -10,7 +10,7 @@ import AWS from "aws-sdk";
 import {CognitoUserPool} from "amazon-cognito-identity-js";
 import appConfig from "./components/Auth/Config";
 import {Segment} from 'semantic-ui-react'
-import QRAProfile from "./components/QRAProfile";
+import QRAProfileContainer from "./components/QRAProfileContainer";
 import QSODetail from "./components/QSODetail"
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
@@ -98,7 +98,7 @@ class App extends Component {
                         {/*<Route component={NotFound} />*/}
                         <Route exact path="/:qra"
                                component={() =>
-                                   <QRAProfile/>
+                                   <QRAProfileContainer/>
                                }/>
                         <Route path="/qso/:idqso"
                                component={() =>

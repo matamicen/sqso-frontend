@@ -1,7 +1,7 @@
 import React from "react";
 import {AudioList} from "./AudioList";
 import {Image} from "./Image";
-import {Card, Feed, Icon, Label} from "semantic-ui-react";
+import {Feed, Icon, Label, Segment} from "semantic-ui-react";
 import QSOComments from "./QSOComments";
 import QSOLikeButton from "./QSOLikeButton";
 import {QRAs} from "./QRAs";
@@ -53,7 +53,7 @@ class QSOFeedItem extends React.Component {
 
 
         return (
-            <Card fluid>
+            <Segment raised>
             <Feed.Event>
                 <Feed.Content>
                     <Feed.Summary>
@@ -80,7 +80,7 @@ class QSOFeedItem extends React.Component {
                     </Feed.Extra>
                 </Feed.Content>
             </Feed.Event>
-            </Card>
+            </Segment>
         )
     }
 }

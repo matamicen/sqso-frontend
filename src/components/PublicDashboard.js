@@ -8,7 +8,7 @@ import * as Actions from '../actions/Actions';
 class PublicDashboard extends React.Component {
 
     render() {
-        console.log("render PublicDasbhoard");
+
         return (
             <Grid>
                 <Grid.Row columns={1}>
