@@ -1,5 +1,4 @@
 import React from "react";
-import {Icon} from "semantic-ui-react";
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import {bindActionCreators} from 'redux';
@@ -11,10 +10,22 @@ class QRAProfileContainer extends React.Component {
     constructor() {
         super();
         this.state = {
-            followed: false,
-            qra: null
+            fetchingData: false,
+            followed: false
         }
         ;
+    }
+
+    componentWillMount() {
+        if (!this.props.fetchingQRA && !this.props.QRAFetched) {
+            // this.setState({fetchingData: true});
+            this.props.actions.doFetchQRA(this.props.match.params.qra, this.props.token);
+        }
+    }
+
+    shouldComponentUpdate(nextProps) {
+        //     console.log("shouldComponentUpdate FEEDQRA" + this.props.QRAFetched);
+        return this.props.QRAFetched;
     }
 
 
@@ -65,16 +76,12 @@ class QRAProfileContainer extends React.Component {
     }
 
     render() {
+        if (this.props.fetchingQRA || !this.props.QRAFetched) return null;
 
-
-
+       // console.log("render")
         let followed = this.props.state.default.userData.following.includes(this.props.match.params.qra);
 
 
-        const extra = <a>
-            <Icon name='user'/>
-            16 Friends
-        </a>;
         let buttonText;
         if (followed) {
             //  this.setState({followed: true});
@@ -83,7 +90,10 @@ class QRAProfileContainer extends React.Component {
         else {
             buttonText = "Follow";
         }
-        return     <QRAProfile/>;
+        console.log(this.props.qra);
+        let qraInfo = null;
+        if (this.props.qra) qraInfo= this.props.qra.qra;
+        return <QRAProfile qraInfo={qraInfo} qra={this.props.qra}/>;
         /*return (
             <div>
                 <Grid centered columns={3}>
@@ -108,7 +118,13 @@ class QRAProfileContainer extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    state: state
+    state: state,
+    //qra: state.default.userData.qra,
+    token: state.default.userData.token,
+    fetchingQRA: state.default.FetchingQRA,
+    QRAFetched: state.default.QRAFetched,
+    qra: state.default.qra
+
 });
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
@@ -116,4 +132,6 @@ const mapDispatchToProps = (dispatch) => ({
 
 export default withRouter(connect(
     mapStateToProps,
-    mapDispatchToProps)(QRAProfileContainer));
+    mapDispatchToProps, null, {
+        pure: false
+    })(QRAProfileContainer));

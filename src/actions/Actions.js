@@ -6,13 +6,14 @@ export const REQUEST_USERINFO = 'REQUEST_USERINFO';
 export const RECEIVE_USERINFO = 'RECEIVE_USERINFO';
 export const REQUEST_QSO = 'REQUEST_QSO';
 export const RECEIVE_QSO = 'RECEIVE_QSO';
-
+export const REQUEST_QRA = 'REQUEST_QRA';
+export const RECEIVE_QRA = 'RECEIVE_QRA';
 
 export function doRequestUserInfo() {
     return {
         type: REQUEST_USERINFO,
-        FetchingUser: true
-
+        FetchingUser: true,
+        userFetched: false
     }
 }
 
@@ -23,7 +24,8 @@ export function doReceiveUserInfo(followers = null, following = null, profilepic
         followers: followers,
         following: following,
         profilepic: profilepic,
-        FetchingUser: false
+        FetchingUser: false,
+        userFetched: true
     }
 }
 
@@ -41,7 +43,8 @@ export function doLogin(token, qra) {
         followers: null,
         following: null,
         profilepic: null,
-        FetchingUser: false
+        FetchingUser: false,
+        userFetched: false
     }
 }
 
@@ -59,7 +62,10 @@ export function doLogout() {
         followers: null,
         following: null,
         profilepic: null,
-        FetchingUser: false
+        FetchingUser: false,
+        userFetched: false,
+        QRAFetched: false,
+        FetchingQRA: false
     }
 }
 
@@ -192,4 +198,44 @@ export function doFetchQSO(idqso) {
             alert(error);
         });
     };
+}
+
+export function doFetchQRA(qra, token) {
+    console.log("doFetchQRA");
+    return (dispatch) => {
+        var apigClient = window.apigClientFactory.newClient({});
+        var params = {};
+        var body = {"qra": qra};
+        var additionalParams = {};
+        params = {
+            "Authorization": token
+        };
+        dispatch(doRequestQRA());
+        apigClient.qraInfoPost(params, body, additionalParams)
+            .then(function (result) {
+                dispatch(doReceiveQRA(result.data.body.message));
+
+            }).catch(function (error) {
+            console.log("error");
+            console.log(error);
+            alert(error);
+        });
+    };
+}
+
+export function doRequestQRA() {
+    return {
+        type: REQUEST_QRA,
+        FetchingQRA: true,
+        QRAFetched: false
+
+    }
+}
+export function doReceiveQRA(qra) {
+    return {
+        type: RECEIVE_QRA,
+        qra: qra,
+        FetchingQRA: false,
+        QRAFetched: true
+    }
 }

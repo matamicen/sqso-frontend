@@ -11,7 +11,7 @@ class FeedQSO extends React.Component {
 
     componentWillMount() {
         if (!this.props.fetchingQSOS && !this.props.qsosFetched) {
-            this.setState({fetchingData: true});
+          //  this.setState({fetchingData: true});
             this.props.isAuthenticated ?
                 this.props.actions.doFetchUserFeed(this.props.token)
                 :

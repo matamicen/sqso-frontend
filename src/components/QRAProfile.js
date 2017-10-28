@@ -4,65 +4,79 @@ import QRAProfileFollowing from './QRAProfileFollowing'
 import QRAProfilePictures from './QRAProfilePictures'
 import QRAProfileBio from './QRAProfileBio'
 import QRAProfileInfo from './QRAProfileInfo'
-import {Header, Image, Segment, Tab} from 'semantic-ui-react'
+import {Grid, Header, Image, Segment, Tab} from 'semantic-ui-react'
 
 const panes = [
     {
         menuItem: 'Biography',
-        render: () => <Tab.Pane><QRAProfileBio/></Tab.Pane>,
+        render: () => <Tab.Pane><QRAProfileBio/></Tab.Pane>
     },
     {
         menuItem: 'Information',
-        render: () => <Tab.Pane><QRAProfileInfo/></Tab.Pane>,
+        render: () => <Tab.Pane><QRAProfileInfo/></Tab.Pane>
     },
     {
         menuItem: 'QSOs',
-        render: () => <Tab.Pane>Tab 2 Content</Tab.Pane>,
+        render: () => <Tab.Pane>Tab 2 Content</Tab.Pane>
     },
     {
         menuItem: 'Pictures',
-        render: () => <Tab.Pane><QRAProfilePictures/></Tab.Pane>,
+        render: () => <Tab.Pane><QRAProfilePictures/></Tab.Pane>
     },
     {
         menuItem: 'Following',
-        render: () => <Tab.Pane><QRAProfileFollowing/></Tab.Pane>,
+        render: () => <Tab.Pane><QRAProfileFollowing/></Tab.Pane>
     },
     {
         menuItem: 'Followers',
-        render: () => <Tab.Pane><QRAProfileFollowers/></Tab.Pane>,
+        render: () => <Tab.Pane><QRAProfileFollowers/></Tab.Pane>
     }
 
 ];
-const QRAProfile = () => (
-    <div>
+const QRAProfile = (props) => (
+        <div>
+            {props.qraInfo ?
+                <div>
+                    <Segment>
+                        <Grid columns={4}>
+                            <Grid.Column>
+                                {props.qraInfo.profilepic ?
+                                    <Image
+                                        src={props.qraInfo.profilepic}
+                                        centered size='small' shape='circular'/>
+                                    : ""
+                                }
+                            </Grid.Column>
+                            <Grid.Column floated="left">
+                                <Header as='h1' icon textAlign='center'>
+                                    <Header.Content>
+                                        {props.qraInfo.qra}
+                                    </Header.Content>
+                                </Header>
 
-            <Segment clearing>
-                <Image
-                    src='https://s3.amazonaws.com/sqso/us-east-1:7382470b-8c80-4b59-a183-b6112ff08712/profile/profile.jpg'
-                    centered size='small' shape='circular'/>
+                                <Header as='h2' icon textAlign='center'>
+                                    <Header.Content>
+                                        {props.qraInfo.firstname ? props.qraInfo.firstame + " " : ""}
+                                        {props.qraInfo.lastname ? props.qraInfo.lastname : ""}
+                                    </Header.Content>
+                                </Header>
+                            </Grid.Column>
+                        </Grid>
+
+                    </Segment>
 
 
-                <Header as='h1' icon textAlign='center'>
-                    <Header.Content>
-                        LU2ACH
-                    </Header.Content>
-                </Header>
-                <Header as='h2' icon textAlign='center'>
-                    <Header.Content>
-                        Matias Micenmacher
-                    </Header.Content>
-                </Header>
-            </Segment>
+                    <Segment raised>
+                        < Tab panes={panes}/>
 
+                    </Segment>
+                </div>
+                : "QRA Not Found"
+            }
 
-            <Segment raised>
-                <Tab panes={panes}/>
+        </div>
 
-            </Segment>
-
-    </div>
-
-
-);
+    )
+;
 
 export default QRAProfile;
