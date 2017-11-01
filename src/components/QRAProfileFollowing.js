@@ -2,27 +2,21 @@ import React from 'react'
 import {Image, List} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 
-const QRAProfileFollowing = () => (
+const QRAProfileFollowing = (props) => (
     <div>
         <List horizontal relaxed>
-            <List.Item>
-                <Image avatar src='https://react.semantic-ui.com/assets/images/avatar/small/daniel.jpg'/>
-                <List.Content>
-                    <List.Header as='a'><Link to={"/" + "LU7ACH"}> LU7ACH</Link></List.Header>
-                </List.Content>
-            </List.Item>
-            <List.Item>
-                <Image avatar src='https://react.semantic-ui.com/assets/images/avatar/small/stevie.jpg'/>
-                <List.Content>
-                    <List.Header as='a'><Link to={"/" + "LU7ACH"}> LU7ACH</Link></List.Header>
-                </List.Content>
-            </List.Item>
-            <List.Item>
-                <Image avatar src='https://react.semantic-ui.com/assets/images/avatar/small/elliot.jpg'/>
-                <List.Content>
-                    <List.Header as='a'><Link to={"/" + "LU7ACH"}> LU7ACH</Link></List.Header>
-                </List.Content>
-            </List.Item>
+            {props.following ?
+                props.following.map((qra, i) =>
+                    <List.Item key={qra.qra}>
+                        {qra.profilepic ? <Image avatar src={qra.profilepic}/> : ""}
+
+                        <List.Content>
+                            <List.Header as='a'><Link to={"/" + qra.qra}> {qra.qra}</Link></List.Header>
+                        </List.Content>
+                    </List.Item>
+                )
+                : ""
+            }
         </List>
 
     </div>
