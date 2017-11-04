@@ -1,77 +1,44 @@
 import React from "react";
-import {connect} from 'react-redux'
-import {withRouter} from 'react-router-dom'
 import {bindActionCreators} from 'redux';
 import QRAProfile from './QRAProfile'
 import * as Actions from '../actions/Actions';
-
+import {withRouter} from "react-router-dom";
+import {connect} from 'react-redux'
 
 class QRAProfileContainer extends React.Component {
     constructor() {
         super();
         this.state = {
-            fetchingData: false,
+           // fetchingData: false,
             followed: false
-        }
-        ;
+        };
+        this.handleButtonClick = this.handleButtonClick.bind(this);
     }
 
     componentWillMount() {
         let qraInMemory = this.props.qra ? this.props.qra.qra.qra : "";
-
-        if ((!this.props.fetchingQRA && !this.props.QRAFetched) || (this.props.QRAFetched && ( this.props.match.params.qra !== qraInMemory) ) ) {
-             this.props.actions.doFetchQRA(this.props.match.params.qra, this.props.token);
+        if (!this.props.fetchingUser && !this.props.userFetched && this.props.token) {
+            this.props.actions.doFetchUserInfo(this.props.token);
         }
+        if ((!this.props.fetchingQRA && !this.props.QRAFetched) || (this.props.QRAFetched && ( this.props.match.params.qra !== qraInMemory) )) {
+            this.props.actions.doFetchQRA(this.props.match.params.qra);
+        }
+        this.setState({followed : this.props.following.some(o => o.qra === this.props.match.params.qra)});
+
     }
 
     shouldComponentUpdate(nextProps) {
-        //     console.log("shouldComponentUpdate FEEDQRA" + this.props.QRAFetched);
-        return this.props.QRAFetched;
+             return this.props.QRAFetched;
     }
 
 
-    doFollow(f) {
-        console.log("doFollow");
-        var apigClient = window.apigClientFactory.newClient({});
-
-        var params = {
-            "Authorization": this.props.state.default.userData.token
-        };
-        var body = {
-            "qra": f.qra,
-            "datetime": f.datetime
-        };
-        var additionalParams = {};
-        apigClient.qraFollowerPost(params, body, additionalParams)
-            .then(function (result) {
-                console.log("Follower added");
-                if (result.data.body.error > 0) {
-                    console.error(result.data.body.message);
-                } else {
-                    console.log(result.data.body.message);
-                    this.setState({followed: true});
-                }
-            }.bind(this))
-            .catch(function (error) {
-                console.log("error");
-                console.error(error);
-            });
-    }
-
-    handleButtonClick(e) {
-        console.log("handleAddComment");
-        e.preventDefault();
-        let followed = this.props.state.default.userData.following.filter(o => o.qra === this.props.state.router.location.pathname.substr(1));
-        if (followed) {
-            var datetime = new Date();
-            var follow = {
-                qra: this.props.state.router.location.pathname.substr(1),
-                datetime: datetime
-            };
-            this.setState({followed: !this.state.followed});
-
-            if (this.props.state.default.userData.isAuthenticated) {
-                this.doFollow(follow);
+    handleButtonClick() {
+        console.log("handleButtonClick");
+        if (!this.props.token) return null;
+        this.setState((prevState) => { return{followed: !prevState.followed}; });
+        if (!this.state.followed) {
+            if (this.props.isAuthenticated) {
+                this.props.actions.doFollowQRA(this.props.token, this.props.match.params.qra);
             }
         }
     }
@@ -79,59 +46,40 @@ class QRAProfileContainer extends React.Component {
     render() {
         if (this.props.fetchingQRA || !this.props.QRAFetched) return null;
 
-       // console.log("render")
-        let followed = this.props.state.default.userData.following.includes(this.props.match.params.qra);
-
-
-        let buttonText;
-        if (followed) {
-            //  this.setState({followed: true});
-            buttonText = "Unfollow";
-        }
-        else {
-            buttonText = "Follow";
-        }
         let qraInfo = null;
-         if (this.props.qra) qraInfo= this.props.qra.qra;
-        return <QRAProfile qraInfo={qraInfo} qra={this.props.qra}/>;
-        /*return (
-            <div>
-                <Grid centered columns={3}>
-
-                    <Grid.Column>
-                        <QRAProfile/>
-                        <Card
-                            image='/assets/images/avatar/large/elliot.jpg'
-                            header={this.props.match.params.qra}
-                            meta='Friend'
-                            description='Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat.'
-                            extra={extra}
-                        />
-                        <Button positive={!followed}
-                                onClick={this.handleButtonClick.bind(this)}> {buttonText} </ Button>
-                    </Grid.Column>
-                </Grid>
-            </ div>
-
-        );*/
+        if (this.props.qra) qraInfo = this.props.qra.qra;
+        return <QRAProfile qraInfo={qraInfo}
+                           qra={this.props.qra}
+                           onClick={this.handleButtonClick}
+                           isAuthenticated={this.props.isAuthenticated}
+                           currentQRA={this.props.currentQRA}
+                           followed={this.state.followed}/>;
     }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-    state: state,
-    //qra: state.default.userData.qra,
-    token: state.default.userData.token,
-    fetchingQRA: state.default.FetchingQRA,
-    QRAFetched: state.default.QRAFetched,
-    qra: state.default.qra
+const
+    mapStateToProps = (state, ownProps) => ({
+        state: state,
+        currentQRA: state.default.userData.qra,
+        isAuthenticated: state.default.userData.isAuthenticated,
+        following: state.default.userData.following,
+        token: state.default.userData.token,
+        fetchingQRA: state.default.FetchingQRA,
+        QRAFetched: state.default.QRAFetched,
+        qra: state.default.qra,
+        fetchingUser: state.default.userData.fetchingUser,
+        userFetched: state.default.userData.userFetched
 
-});
-const mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators(Actions, dispatch)
-});
+    });
+const
+    mapDispatchToProps = (dispatch) => ({
+        actions: bindActionCreators(Actions, dispatch)
+    });
 
 export default withRouter(connect(
-    mapStateToProps,
-    mapDispatchToProps, null, {
-        pure: false
-    })(QRAProfileContainer));
+        mapStateToProps,
+        mapDispatchToProps,
+        null, {
+            pure: false
+        }
+    )(QRAProfileContainer));

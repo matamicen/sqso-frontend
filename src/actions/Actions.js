@@ -8,11 +8,13 @@ export const REQUEST_QSO = 'REQUEST_QSO';
 export const RECEIVE_QSO = 'RECEIVE_QSO';
 export const REQUEST_QRA = 'REQUEST_QRA';
 export const RECEIVE_QRA = 'RECEIVE_QRA';
+export const FOLLOW_QRA = 'FOLLOW_QRA';
+export const RECEIVE_FOLLOWERS = 'RECEIVE_FOLLOWERS';
 
 export function doRequestUserInfo() {
     return {
         type: REQUEST_USERINFO,
-        FetchingUser: true,
+        fetchingUser: true,
         userFetched: false
     }
 }
@@ -24,13 +26,13 @@ export function doReceiveUserInfo(followers = null, following = null, profilepic
         followers: followers,
         following: following,
         profilepic: profilepic,
-        FetchingUser: false,
+        fetchingUser: false,
         userFetched: true
     }
 }
 
 export function doLogin(token, qra) {
-   // console.log("doLogin")
+    // console.log("doLogin")
     return {
         type: LOGIN,
         token: token,
@@ -49,7 +51,7 @@ export function doLogin(token, qra) {
 }
 
 export function doLogout() {
-   // console.log("doLogout")
+    // console.log("doLogout")
     return {
         type: LOGOUT,
         qsos: null,
@@ -70,7 +72,7 @@ export function doLogout() {
 }
 
 export function doRequestFeed() {
- //   console.log("doRequestFeed")
+    //   console.log("doRequestFeed")
     return {
         type: REQUEST_FEED,
         FetchingQSOS: true,
@@ -79,7 +81,6 @@ export function doRequestFeed() {
 }
 
 export function doReceiveFeed(qsos) {
-   // console.log("doReceiveFeed")
     return {
         type: RECEIVE_FEED,
         qsos: qsos,
@@ -88,6 +89,7 @@ export function doReceiveFeed(qsos) {
 
     }
 }
+
 export function doFetchUserInfo(token) {
     return (dispatch) => {
         var apigClient = window.apigClientFactory.newClient({});
@@ -96,9 +98,9 @@ export function doFetchUserInfo(token) {
         var additionalParams = {};
 
 
-        params = {
-            "Authorization": token
-        };
+          params = {
+              "Authorization": token
+          };
         dispatch(doRequestUserInfo());
         apigClient.userInfoGet(params, body, additionalParams)
             .then(function (result) {
@@ -114,8 +116,9 @@ export function doFetchUserInfo(token) {
         });
     }
 }
+
 export function doFetchUserFeed(token) {
-  //  console.log("doFetchUserFeed");
+    //  console.log("doFetchUserFeed");
     return (dispatch) => {
         var apigClient = window.apigClientFactory.newClient({});
         var params;
@@ -168,6 +171,7 @@ export function doRequestQSO() {
 
     }
 }
+
 export function doReceiveQSO(qso) {
     return {
         type: RECEIVE_QSO,
@@ -200,16 +204,14 @@ export function doFetchQSO(idqso) {
     };
 }
 
-export function doFetchQRA(qra, token) {
-    console.log("doFetchQRA");
+export function doFetchQRA(qra) {
+
     return (dispatch) => {
         var apigClient = window.apigClientFactory.newClient({});
         var params = {};
         var body = {"qra": qra};
         var additionalParams = {};
-        params = {
-            "Authorization": token
-        };
+
         dispatch(doRequestQRA());
         apigClient.qraInfoPost(params, body, additionalParams)
             .then(function (result) {
@@ -223,6 +225,34 @@ export function doFetchQRA(qra, token) {
     };
 }
 
+export function doFollowQRA(token, follower) {
+    return (dispatch) => {
+        var apigClient = window.apigClientFactory.newClient({});
+
+        var params = {
+            "Authorization": token
+        };
+        var body = {
+            "qra": follower,
+            "datetime": new Date()
+        };
+        var additionalParams = {};
+        apigClient.qraFollowerPost(params, body, additionalParams)
+            .then(function (result) {
+                if (result.data.body.error > 0) {
+                    console.error(result.data.body.message);
+                    alert(result.data.body.error);
+                } else {
+                    dispatch(doReceiveFollowers(result.data.body.message));
+                }
+            })
+            .catch(function (error) {
+                console.log("error");
+                console.error(error);
+            });
+    };
+}
+
 export function doRequestQRA() {
     return {
         type: REQUEST_QRA,
@@ -231,11 +261,20 @@ export function doRequestQRA() {
 
     }
 }
+
 export function doReceiveQRA(qra) {
     return {
         type: RECEIVE_QRA,
         qra: qra,
         FetchingQRA: false,
         QRAFetched: true
+    }
+}
+
+export function doReceiveFollowers(following) {
+    console.log("doReceiveFollowers");
+    return {
+        type: RECEIVE_FOLLOWERS,
+        following: following
     }
 }

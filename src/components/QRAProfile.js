@@ -4,7 +4,7 @@ import QRAProfileFollowing from './QRAProfileFollowing'
 import QRAProfilePictures from './QRAProfilePictures'
 import QRAProfileBio from './QRAProfileBio'
 import QRAProfileInfo from './QRAProfileInfo'
-import {Grid, Header, Image, Segment, Tab} from 'semantic-ui-react'
+import {Button, Grid, Header, Image, Segment, Tab} from 'semantic-ui-react'
 
 
 const QRAProfile = (props) => {
@@ -39,6 +39,15 @@ const QRAProfile = (props) => {
             }
 
         ];
+
+    let buttonText;
+
+    if (props.followed) {
+        buttonText = "Unfollow";
+    }
+    else {
+        buttonText = "Follow";
+    }
         return (
             <div>
                 {props.qraInfo ?
@@ -59,7 +68,11 @@ const QRAProfile = (props) => {
                                             {props.qraInfo.qra}
                                         </Header.Content>
                                     </Header>
-
+                                    {(props.isAuthenticated && props.qraInfo.qra !== props.currentQRA ) ?
+                                        <Button positive={!props.followed}
+                                                onClick={() => props.onClick()}> {buttonText} </ Button>
+                                        : ""
+                                    }
                                     <Header as='h2' icon textAlign='center'>
                                         <Header.Content>
                                             {props.qraInfo.firstname ? props.qraInfo.firstame + " " : ""}

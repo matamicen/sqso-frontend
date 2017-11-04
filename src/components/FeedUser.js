@@ -19,7 +19,7 @@ class FeedUser extends React.Component {
 
     componentDiDMount() {
         //if (!this.props.state.default.userData.FetchingUser)
-        console.log("componentDiDMount");
+      //  console.log("componentDiDMount");
         if (!this.state.fetchingData) {
             this.props.actions.doFetchUserInfo(this.props.state.default.userData.token);
         }

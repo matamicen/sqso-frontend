@@ -2,6 +2,7 @@ import {
     LOGIN,
     LOGOUT,
     RECEIVE_FEED,
+    RECEIVE_FOLLOWERS,
     RECEIVE_QRA,
     RECEIVE_QSO,
     RECEIVE_USERINFO,
@@ -19,8 +20,9 @@ const initialState = {
         following: [],
         followers: [],
         profilepic: null,
-        FetchingUser: false,
+        fetchingUser: false,
         userFetched: false
+
     },
     qsos: [],
     FetchingQSOS: false,
@@ -30,6 +32,7 @@ const initialState = {
     qra: null,
     FetchingQRA: false,
     QRAFetched: false
+
 };
 
 //define a reducer with an initialized state action
@@ -40,7 +43,8 @@ export default function defaultState(state = initialState, action) {
         case REQUEST_USERINFO:
             userInfo = {
                 ...state.userData,
-                FetchingUser: true
+                fetchingUser: action.fetchingUser,
+                userFetched: action.userFetched
             };
             newStore = Object.assign({}, state,
                 {
@@ -53,7 +57,9 @@ export default function defaultState(state = initialState, action) {
                 ...state.userData,
                 following: action.following,
                 followers: action.followers,
-                profilepic: action.profilepic
+                profilepic: action.profilepic,
+                fetchingUser: action.fetchingUser,
+                userFetched: action.userFetched
             };
             newStore = Object.assign({}, state,
                 {
@@ -61,6 +67,18 @@ export default function defaultState(state = initialState, action) {
                     userData: userInfo
                 });
             return newStore;
+          case RECEIVE_FOLLOWERS:
+              console.log("RECEIVE_FOLLOWERS");
+              userInfo = {
+                  ...state.userData,
+                  following: action.following
+              };
+              newStore = Object.assign({}, state,
+                  {
+                      ...state,
+                      userData: userInfo
+                  });
+              return newStore;
         case REQUEST_FEED:
             newStore = Object.assign({}, state, {
                 ...state,

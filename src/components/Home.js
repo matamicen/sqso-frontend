@@ -7,7 +7,7 @@ import * as Actions from '../actions/Actions';
 
 class Home extends React.Component {
     shouldComponentUpdate(){
-        return false;
+        return !this.props.fetchingQSOS;
     }
 
     render() {
