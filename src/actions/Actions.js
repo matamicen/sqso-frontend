@@ -8,7 +8,6 @@ export const REQUEST_QSO = 'REQUEST_QSO';
 export const RECEIVE_QSO = 'RECEIVE_QSO';
 export const REQUEST_QRA = 'REQUEST_QRA';
 export const RECEIVE_QRA = 'RECEIVE_QRA';
-export const FOLLOW_QRA = 'FOLLOW_QRA';
 export const RECEIVE_FOLLOWERS = 'RECEIVE_FOLLOWERS';
 
 export function doRequestUserInfo() {
@@ -107,8 +106,6 @@ export function doFetchUserInfo(token) {
                 if (result.data.body.error === 0) {
                     dispatch(doReceiveUserInfo(result.data.body.message.followers, result.data.body.message.following, result.data.body.message.profilepic));
                 }
-
-
             }).catch(function (error) {
             console.log("error");
             console.log(error);
@@ -238,6 +235,33 @@ export function doFollowQRA(token, follower) {
         };
         var additionalParams = {};
         apigClient.qraFollowerPost(params, body, additionalParams)
+            .then(function (result) {
+                if (result.data.body.error > 0) {
+                    console.error(result.data.body.message);
+                    alert(result.data.body.error);
+                } else {
+                    dispatch(doReceiveFollowers(result.data.body.message));
+                }
+            })
+            .catch(function (error) {
+                console.log("error");
+                console.error(error);
+            });
+    };
+}
+
+export function doUnfollowQRA(token, follower) {
+    return (dispatch) => {
+        var apigClient = window.apigClientFactory.newClient({});
+
+        var params = {
+            "Authorization": token
+        };
+        var body = {
+            "qra": follower
+        };
+        var additionalParams = {};
+        apigClient.qraFollowerDelete(params, body, additionalParams)
             .then(function (result) {
                 if (result.data.body.error > 0) {
                     console.error(result.data.body.message);

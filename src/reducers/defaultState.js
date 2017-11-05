@@ -22,7 +22,6 @@ const initialState = {
         profilepic: null,
         fetchingUser: false,
         userFetched: false
-
     },
     qsos: [],
     FetchingQSOS: false,

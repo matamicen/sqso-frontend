@@ -1,11 +1,11 @@
 import React from "react";
-import {CognitoUserPool, CognitoUser, AuthenticationDetails} from "amazon-cognito-identity-js";
+import {AuthenticationDetails, CognitoUser, CognitoUserPool} from "amazon-cognito-identity-js";
 // ES Modules, e.g. transpiling with Babel
 import appConfig from "./Config";
 import {Form} from "semantic-ui-react";
 import "../../styles/App.css";
 import {Redirect} from "react-router-dom";
-import { bindActionCreators } from 'redux';
+import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as Actions from '../../actions/Actions';
 
@@ -80,7 +80,7 @@ class LogIn extends React.Component {
                 <Form onSubmit={this.handleOnClickLogin.bind(this)}>
                     <Form.Field>
                         <label>QRA</label>
-                        <Form.Input placeholder='QRA' name='QRA' onChange={this.handleQraChange.bind(this)}/>
+                        <Form.Input placeholder='QRA' name='QRA' onChange={this.handleQraChange.bind(this)} style={{ 'textTransform': 'uppercase'}}/>
                     </Form.Field>
                     <Form.Field>
                         <label>Password</label>
@@ -100,7 +100,7 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
-})
+});
 
 export default connect(
     mapStateToProps,

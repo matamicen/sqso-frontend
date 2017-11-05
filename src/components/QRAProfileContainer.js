@@ -40,6 +40,8 @@ class QRAProfileContainer extends React.Component {
             if (this.props.isAuthenticated) {
                 this.props.actions.doFollowQRA(this.props.token, this.props.match.params.qra);
             }
+        } else {
+            this.props.actions.doUnfollowQRA(this.props.token, this.props.match.params.qra);
         }
     }
 
