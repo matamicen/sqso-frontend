@@ -1,7 +1,7 @@
 import React from "react";
 import QRAProfileFollowers from './QRAProfileFollowers'
 import QRAProfileFollowing from './QRAProfileFollowing'
-import QRAProfilePictures from './QRAProfilePictures'
+import QRAProfileQsos from './QRAProfileQsos'
 import QRAProfileBio from './QRAProfileBio'
 import QRAProfileInfo from './QRAProfileInfo'
 import {Button, Grid, Header, Image, Segment, Tab} from 'semantic-ui-react'
@@ -19,12 +19,12 @@ const QRAProfile = (props) => {
             },
             {
                 menuItem: 'QSOs',
-                render: () => <Tab.Pane>Tab 2 Content</Tab.Pane>
+                render: () => <Tab.Pane><QRAProfileQsos qsos={props.qra.qsos}/></Tab.Pane>
             },
-            {
-                menuItem: 'Pictures',
-                render: () => <Tab.Pane><QRAProfilePictures/></Tab.Pane>
-            },
+          //  {
+          //      menuItem: 'Pictures',
+          //      render: () => <Tab.Pane><QRAProfilePictures/></Tab.Pane>
+          //  },
             {
                 menuItem: 'Following',
                 render: () => <Tab.Pane><QRAProfileFollowing following={props.qra.following}/></Tab.Pane>
@@ -32,10 +32,10 @@ const QRAProfile = (props) => {
             {
                 menuItem: 'Followers',
                 render: () => <Tab.Pane><QRAProfileFollowers followers={props.qra.followers}/></Tab.Pane>
-            },
-            {
-                menuItem: 'Awards',
-                render: () => <Tab.Pane><QRAProfileFollowers/></Tab.Pane>
+     //       },
+     //       {
+     //           menuItem: 'Awards',
+     //           render: () => <Tab.Pane><QRAProfileFollowers/></Tab.Pane>
             }
 
         ];

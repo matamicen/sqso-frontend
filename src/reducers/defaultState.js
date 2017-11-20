@@ -14,8 +14,8 @@ import {
 
 const initialState = {
     userData: {
-        token: "test",
-        qra: "test",
+        token: null,
+        qra: null,
         isAuthenticated: false,
         following: [],
         followers: [],

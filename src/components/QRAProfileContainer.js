@@ -47,7 +47,7 @@ class QRAProfileContainer extends React.Component {
 
     render() {
         if (this.props.fetchingQRA || !this.props.QRAFetched) return null;
-
+        console.log(this.props.qra)
         let qraInfo = null;
         if (this.props.qra) qraInfo = this.props.qra.qra;
         return <QRAProfile qraInfo={qraInfo}
@@ -61,7 +61,7 @@ class QRAProfileContainer extends React.Component {
 
 const
     mapStateToProps = (state, ownProps) => ({
-        state: state,
+        //state: state,
         currentQRA: state.default.userData.qra,
         isAuthenticated: state.default.userData.isAuthenticated,
         following: state.default.userData.following,
