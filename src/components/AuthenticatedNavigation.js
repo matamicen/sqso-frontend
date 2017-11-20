@@ -1,6 +1,7 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
 import {Menu, Button, Input} from "semantic-ui-react";
+import NavigationSearch from './NavigationSearch'
 
 const AuthenticatedNavigation = () => (
     <Menu attached='top' stackable>
@@ -8,7 +9,7 @@ const AuthenticatedNavigation = () => (
             SuperQSO
         </Menu.Item>
         <Menu.Item>
-            <Input className='icon' icon='search' placeholder='Search...'/>
+            <NavigationSearch/>
         </Menu.Item>
         <Menu.Menu position='right'>
             <Menu.Item as={NavLink} to='/logout'>
