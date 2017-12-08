@@ -8,6 +8,7 @@
     "aws-sdk": "^2.77.0",
     "bootstrap": "^3.3.7",
     "history": "^4.6.3",
+    "immutable": "^3.8.2",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",

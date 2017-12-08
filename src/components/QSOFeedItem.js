@@ -1,7 +1,7 @@
 import React from "react";
 import {AudioList} from "./AudioList";
-import {Image} from "./Image";
-import {Feed, Icon, Label, Segment} from "semantic-ui-react";
+import {Image} from 'semantic-ui-react'
+import {Feed, Icon, Label, Segment, Button, Item} from "semantic-ui-react";
 import QSOComments from "./QSOComments";
 import QSOLikeButton from "./QSOLikeButton";
 import {QRAs} from "./QRAs";
@@ -17,8 +17,9 @@ class QSOFeedItem extends React.Component {
         };
         this.handleOnComment = this.handleOnComment.bind(this);
     }
+
     shouldComponentUpdate(nextProps) {
-     //   console.log("shouldComponentUpdate QSOFEEDITEM" + this.props.qsosFetched);
+        //   console.log("shouldComponentUpdate QSOFEEDITEM" + this.props.qsosFetched);
         return this.props.qsosFetched;
     }
 
@@ -29,14 +30,21 @@ class QSOFeedItem extends React.Component {
     }
 
     render() {
-
+        console.log(this.props.qso.idqsos)
         let image = null;
-
         let picList = this.props.qso.media.filter((media) => media.type === "image");
-
         if (picList.length > 0) {
-            image = <Image img={picList[0].url}/>;
-        }
+            image =
+
+                <Image src={picList[0].url}
+                       shape='rounded'
+                       size='small'
+                       centered
+                       onLoad={this.props.measure}/>
+
+
+            ;
+        } else image = <span></span>
 
 
         let audioList = this.props.qso.media.filter((media) => media.type === 'audio');
@@ -44,7 +52,7 @@ class QSOFeedItem extends React.Component {
         let audio = null;
         if (audioList.length > 0) {
             audio = <AudioList mediaList={audioList}/>;
-        }
+        } else audio = <span></span>
 
         let comment = null;
         if (this.state.showComment) {
@@ -54,32 +62,36 @@ class QSOFeedItem extends React.Component {
 
         return (
             <Segment raised>
-            <Feed.Event>
-                <Feed.Content>
-                    <Feed.Summary>
-                        <QRAs profilepic={this.props.qso.profilepic} qso_owner={this.props.qso.qra}
-                              qras={this.props.qso.qras}/>
-                        <Label>Mode:</Label>{this.props.qso.mode}
-                        <Label>Band:</Label>{this.props.qso.band}
-                    </Feed.Summary>
-                    <Feed.Extra images>
+                <Feed.Event>
+                    <Item.Extra>
+                        <Button icon floated='right' size='mini'>
+                            <Icon name='close'/>
+                        </Button>
+                    </Item.Extra>
+                    <Feed.Content>
+                        <Feed.Summary>
+                            <QRAs profilepic={this.props.qso.profilepic} qso_owner={this.props.qso.qra}
+                                  qras={this.props.qso.qras}/>
+                            <Label>Mode:</Label>{this.props.qso.mode}
+                            <Label>Band:</Label>{this.props.qso.band}
+                            <Label>QSO: </Label>{this.props.qso.idqsos}
+                        </Feed.Summary>
+
                         {image}
-                    </Feed.Extra>
-                    <Feed.Extra>
                         {audio}
-                    </Feed.Extra>
-                    <Feed.Meta>
-                        <QSOLikeButton qso={this.props.qso}/>
-                        <Feed.Like onClick={this.handleOnComment.bind(this)}>
-                            < Icon name='comment outline'/>
-                            Comment
-                        </Feed.Like>
-                    </Feed.Meta>
-                    <Feed.Extra>
-                        {comment}
-                    </Feed.Extra>
-                </Feed.Content>
-            </Feed.Event>
+
+                        <Feed.Meta>
+                            <QSOLikeButton qso={this.props.qso}/>
+                            <Feed.Like onClick={this.handleOnComment.bind(this)}>
+                                < Icon name='comment outline'/>
+                                Comment
+                            </Feed.Like>
+                        </Feed.Meta>
+                        <Feed.Extra>
+                            {comment}
+                        </Feed.Extra>
+                    </Feed.Content>
+                </Feed.Event>
             </Segment>
         )
     }

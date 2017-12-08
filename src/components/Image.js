@@ -14,6 +14,7 @@ export class Image extends React.Component {
 
                 <Picture
                     img={this.props.img}
+                    measure={this.props.measure}
                 />
 
             )

@@ -1,5 +1,5 @@
 import React from "react";
-import {Comment} from "semantic-ui-react";
+import {Comment, Item, Button, Icon} from "semantic-ui-react";
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
@@ -51,6 +51,11 @@ export class QSOCommentItem extends React.Component {
             <Comment>
 
                 <Comment.Content>
+                    <Item.Extra>
+                        <Button icon floated='right' size='mini'>
+                            <Icon name='close' />
+                        </Button>
+                    </Item.Extra>
                     <Comment.Author><Link
                         to={"/" + this.props.comment.qra}>{this.props.comment.qra.toUpperCase()}</Link></Comment.Author>
                     <Comment.Metadata>

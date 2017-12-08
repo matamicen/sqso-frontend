@@ -11,7 +11,7 @@ export class AudioList extends React.Component {
         if (this.props.mediaList.length > 0) {
             return (
 
-                <Item.Group>
+                <Item.Group >
                     {this.props.mediaList.map((m, i) =>
                         <Item key={i}>
                             <a>

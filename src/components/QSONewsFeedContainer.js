@@ -1,42 +1,48 @@
 import React from "react";
 import QSOFeedItem from "./QSOFeedItem";
-import {Feed} from "semantic-ui-react";
 
+import QSONewsFeed from './QSONewsFeed';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
+import Immutable from 'immutable';
 import * as Actions from '../actions/Actions';
+import 'react-virtualized/styles.css'; // only needs to be imported once
 
-
-class FeedQSO extends React.Component {
+class QSONewsFeedContainer extends React.Component {
+// This example assumes you have a way to know/load this information
 
     componentWillMount() {
         if (!this.props.fetchingQSOS && !this.props.qsosFetched) {
-          //  this.setState({fetchingData: true});
+            //  this.setState({fetchingData: true});
             this.props.isAuthenticated ?
                 this.props.actions.doFetchUserFeed(this.props.token)
                 :
                 this.props.actions.doFetchPublicFeed(this.props.token);
         }
     }
+
     shouldComponentUpdate(nextProps) {
-    //    console.log("shouldComponentUpdate FEEDQSO" + this.props.qsosFetched);
+        //    console.log("shouldComponentUpdate FEEDQSO" + this.props.qsosFetched);
         return this.props.qsosFetched;
     }
 
     render() {
         if (this.props.fetchingQSOS || !this.props.qsosFetched) return null;
-        let qsos = null;
+        let qsos = Immutable.List(this.props.qsos);
         if (this.props.qsos && this.props.qsos.length > 0) {
             qsos = this.props.qsos.map((qso, i) =>
 
                 <QSOFeedItem key={i} qso={qso}/>
             )
         }
+        /* return (
+             <Feed>
+                 {qsos}
+             </Feed>
+         );*/
         return (
-            <Feed>
-                {qsos}
-            </Feed>
-        );
+            <QSONewsFeed list={qsos}/>
+        )
     }
 }
 
@@ -57,5 +63,5 @@ export default connect(
     mapDispatchToProps, null, {
         pure: false
     }
-)(FeedQSO);
+)(QSONewsFeedContainer);
 

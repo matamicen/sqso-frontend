@@ -15,8 +15,9 @@ export class Audio extends React.Component{
                             < audio
                                 ref = "audio_tag"
                                 src = {this.props.url}
-                                controls />
-                       
+                                controls
+                            />
+
                 )
 
 
