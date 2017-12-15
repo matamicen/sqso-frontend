@@ -12,7 +12,9 @@ export default class QSONewsFeed extends PureComponent {
             loadedRowsMap: {},
             scrollToIndex: undefined,
             loadingRowCount: 0,
+            overscanRowCount: 10,
             randomScrollToIndex: null,
+            rowCount: this.props.list.length,
 
 
         };
@@ -21,24 +23,13 @@ export default class QSONewsFeed extends PureComponent {
             fixedWidth: true,
             minHeight: 100,
         });
-
-        this._timeoutIdMap = {}
-
-        this._clearData = this._clearData.bind(this)
+        this._setRef = this._setRef.bind(this);
+        this._onScrollToRowChange = this._onScrollToRowChange.bind(this);
         this._isRowLoaded = this._isRowLoaded.bind(this)
         this._loadMoreRows = this._loadMoreRows.bind(this)
         this._rowRenderer = this._rowRenderer.bind(this)
     }
 
-    componentWillReceiveProps(nextProps) {
-
-    }
-
-    componentWillUnmount() {
-        Object.keys(this._timeoutIdMap).forEach(timeoutId => {
-            clearTimeout(timeoutId)
-        })
-    }
 
     _clearData() {
         this.setState({
@@ -49,7 +40,9 @@ export default class QSONewsFeed extends PureComponent {
     }
 
     _isRowLoaded({index}) {
-        return !!this.props.list[index] // STATUS_LOADING or STATUS_LOADED
+        // console.log("_isRowLoaded", index, !!this.props.list[index])
+        //    return !!this.props.list[index] // STATUS_LOADING or STATUS_LOADED
+        return true;
     }
 
     _loadMoreRows({startIndex, stopIndex}) {
@@ -58,9 +51,15 @@ export default class QSONewsFeed extends PureComponent {
 
     }
 
+    _setRef(windowScroller) {
+        this._windowScroller = windowScroller;
+    }
+
     _rowRenderer({index, isScrolling, key, parent, style}) {
 
-        const row = this.props.list[index]
+
+        let row = this.props.list[index];
+        console.log("_rowRenderer", index, "-",  row.props.qso.idqsos)
         return (
             <CellMeasurer
                 cache={this._cache}
@@ -86,9 +85,30 @@ export default class QSONewsFeed extends PureComponent {
         )
     }
 
+    _onScrollToRowChange(event) {
+        console.log("onScrollToRowChange")
+        const {list} = this.props.list;
+        let scrollToIndex = Math.min(
+            list.length - 1,
+            parseInt(event.target.value, 10),
+        );
+
+        if (isNaN(scrollToIndex)) {
+            scrollToIndex = undefined;
+        }
+        setTimeout(() => {
+            this.setState({scrollToIndex});
+        }, 0);
+
+    }
+
     render() {
-        const
-            rowCount = this.props.list.length + 1;
+        const {
+            scrollToIndex,
+            rowCount,
+            overscanRowCount
+
+        } = this.state;
         return (
             <div className="WindowScrollerWrapper">
                 <InfiniteLoader
@@ -97,18 +117,22 @@ export default class QSONewsFeed extends PureComponent {
                     rowCount={rowCount}
                     threshold={10}>
                     {({onRowsRendered, registerChild}) => (
-                        <WindowScroller>
-                            {({height, isScrolling, scrollTop}) => (
+                        <WindowScroller ref={this._setRef}>
+                            {({height, isScrolling, onChildScroll, scrollTop}) => (
 
                                 <AutoSizer disableHeight>
                                     {({width}) => (
                                         <List
                                             autoHeight
-                                            ref={registerChild}
-                                      //      deferredMeasurementCache={this._cache}
+                                                ref={registerChild}
+                                            //      deferredMeasurementCache={this._cache}
                                             height={height}
-                                            onRowsRendered={onRowsRendered}
-                                      //      overscanRowCount={1}
+                                            //      onRowsRendered={onRowsRendered}
+                                            //       scrollToIndex={scrollToIndex}
+                                            isScrolling={isScrolling}
+                                            scrollTop={scrollTop}
+                                            onScroll={onChildScroll}
+                                            overscanRowCount={overscanRowCount}
                                             rowCount={rowCount}
                                             rowHeight={this._cache.rowHeight}
                                             rowRenderer={this._rowRenderer}

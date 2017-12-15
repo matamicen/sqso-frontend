@@ -30,7 +30,7 @@ class QSOFeedItem extends React.Component {
     }
 
     render() {
-        console.log(this.props.qso.idqsos)
+    //    console.log(this.props.qso.idqsos)
         let image = null;
         let picList = this.props.qso.media.filter((media) => media.type === "image");
         if (picList.length > 0) {
