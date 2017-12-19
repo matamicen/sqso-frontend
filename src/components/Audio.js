@@ -1,29 +1,52 @@
 import React from 'react';
+import {Button, Icon} from 'semantic-ui-react'
 
-export class Audio extends React.Component{
-    constructor(){
+export class Audio extends React.Component {
+    constructor() {
         super();
         this.state = {
-
-        };
+            audioNotVisible: true
+        }
+        this.onClick = this.onClick.bind(this)
     }
-    render(){
+
+    componentDidMount() {
+
+    }
+    onClick(){
+        this.setState({audioNotVisible:false})
+    }
+    render() {
         if (this.props.url) {
-            return (
 
 
-                            < audio
-                                ref = "audio_tag"
-                                src = {this.props.url}
-                                controls
-                            />
 
-                )
+                        if (this.state.audioNotVisible) {
+                            return ( <Button icon onClick={this.onClick} >
+                                <Icon name='play'/>
+                            </Button> )
+                        }
+                        else {
+                            return ( < audio
+                                    ref="audio_tag"
+                                    src={this.props.url}
+                                    controls
+                                    autoPlay
+                                    preload="none"
+                                />
+                            )
+                        }
+
+
+
+
+
 
 
         }
-        else
-        { return null }
+        else {
+            return null
+        }
 
     }
 }

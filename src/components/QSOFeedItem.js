@@ -44,7 +44,7 @@ class QSOFeedItem extends React.Component {
 
 
             ;
-        } else image = <span></span>
+        }
 
 
         let audioList = this.props.qso.media.filter((media) => media.type === 'audio');
@@ -52,7 +52,7 @@ class QSOFeedItem extends React.Component {
         let audio = null;
         if (audioList.length > 0) {
             audio = <AudioList mediaList={audioList}/>;
-        } else audio = <span></span>
+        }
 
         let comment = null;
         if (this.state.showComment) {

@@ -77,6 +77,7 @@ export default class QSONewsFeed extends PureComponent {
                             key={key}
                             qso={row.props.qso}
                             measure={measure}/>
+                        <div></div>
                     </div>
 
                 }
@@ -104,7 +105,7 @@ export default class QSONewsFeed extends PureComponent {
 
     render() {
         const {
-            scrollToIndex,
+
             rowCount,
             overscanRowCount
 
