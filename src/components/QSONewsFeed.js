@@ -28,6 +28,7 @@ export default class QSONewsFeed extends PureComponent {
         this._isRowLoaded = this._isRowLoaded.bind(this)
         this._loadMoreRows = this._loadMoreRows.bind(this)
         this._rowRenderer = this._rowRenderer.bind(this)
+        this.recalculateRowHeight = this.recalculateRowHeight.bind(this)
     }
 
 
@@ -59,9 +60,10 @@ export default class QSONewsFeed extends PureComponent {
 
 
         let row = this.props.list[index];
-        console.log("_rowRenderer", index, "-",  row.props.qso.idqsos)
+   //     console.log("_rowRenderer", index, "-",  row.props.qso.idqsos)
         return (
             <CellMeasurer
+             //   ref={(CellMeasurer) => this.cellMeasurer = CellMeasurer}
                 cache={this._cache}
                 columnIndex={0}
                 key={key}
@@ -76,7 +78,9 @@ export default class QSONewsFeed extends PureComponent {
                         <QSOFeedItem
                             key={key}
                             qso={row.props.qso}
-                            measure={measure}/>
+                            measure={measure}
+                            recalculateRowHeight={this.recalculateRowHeight}
+                            index={index}/>
                         <div></div>
                     </div>
 
@@ -102,7 +106,16 @@ export default class QSONewsFeed extends PureComponent {
         }, 0);
 
     }
+    recalculateRowHeight(index){
+        console.log(this.list);
+        console.log(index);
+ //       console.log(this.cellMeasurer)
+  //      this.cellMeasurer.resetMeasurements()
+        this._cache.clear(index);
+     //   this.measure();
+        this.list.recomputeRowHeights(index);
 
+    }
     render() {
         const {
 
@@ -118,15 +131,16 @@ export default class QSONewsFeed extends PureComponent {
                     rowCount={rowCount}
                     threshold={10}>
                     {({onRowsRendered, registerChild}) => (
-                        <WindowScroller ref={this._setRef}>
+                        <WindowScroller
+                            ref={(ref) => this._windowScroller = ref}>
                             {({height, isScrolling, onChildScroll, scrollTop}) => (
 
                                 <AutoSizer disableHeight>
                                     {({width}) => (
                                         <List
                                             autoHeight
-                                                ref={registerChild}
-                                            //      deferredMeasurementCache={this._cache}
+                                            ref={(list) => this.list = list}
+                                            deferredMeasurementCache={this._cache}
                                             height={height}
                                             //      onRowsRendered={onRowsRendered}
                                             //       scrollToIndex={scrollToIndex}

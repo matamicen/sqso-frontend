@@ -72,7 +72,6 @@ class QSOComments extends React.Component {
         e.target.comment.value = null;
 
         this.doComment(comment);
-
     }
 
 
@@ -82,6 +81,7 @@ class QSOComments extends React.Component {
             comments = this.state.comments.map((comment, i) =>
                 <QSOCommentItem key={i} comment={comment}/>
             )
+            this.props.recalculateRowHeight();
         }
         ;
         let form = null;

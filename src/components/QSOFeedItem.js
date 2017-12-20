@@ -16,6 +16,7 @@ class QSOFeedItem extends React.Component {
             showComment: false
         };
         this.handleOnComment = this.handleOnComment.bind(this);
+        this.recalculateRowHeight = this.recalculateRowHeight.bind(this);
     }
 
     shouldComponentUpdate(nextProps) {
@@ -27,10 +28,17 @@ class QSOFeedItem extends React.Component {
     handleOnComment() {
         console.log("Comment Pressed");
         this.setState({showComment: true});
+        this.recalculateRowHeight();
     }
 
+    recalculateRowHeight() {
+        console.log("recalculateRowHeight");
+        this.props.recalculateRowHeight(this.props.index);
+    }
+
+
     render() {
-    //    console.log(this.props.qso.idqsos)
+        //    console.log(this.props.qso.idqsos)
         let image = null;
         let picList = this.props.qso.media.filter((media) => media.type === "image");
         if (picList.length > 0) {
@@ -56,11 +64,13 @@ class QSOFeedItem extends React.Component {
 
         let comment = null;
         if (this.state.showComment) {
-            comment = <QSOComments qso={this.props.qso}/>;
+            comment = <QSOComments
+                qso={this.props.qso}
+                recalculateRowHeight={this.recalculateRowHeight}/>;
         }
 
 
-        return (
+                return (
             <Segment raised>
                 <Feed.Event>
                     <Item.Extra>
@@ -94,22 +104,22 @@ class QSOFeedItem extends React.Component {
                 </Feed.Event>
             </Segment>
         )
-    }
-}
+        }
+        }
 
-const mapStateToProps = (state, qsos) => ({
-    fetchingQSOS: state.default.FetchingQSOS,
-    qsosFetched: state.default.qsosFetched,
+        const mapStateToProps = (state, qsos) => ({
+            fetchingQSOS: state.default.FetchingQSOS,
+            qsosFetched: state.default.qsosFetched,
 
-});
-const mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators(Actions, dispatch)
-});
+        });
+        const mapDispatchToProps = (dispatch) => ({
+            actions: bindActionCreators(Actions, dispatch)
+        });
 
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps, null, {
-        pure: false
-    }
-)(QSOFeedItem);
+        export default connect(
+        mapStateToProps,
+        mapDispatchToProps, null, {
+            pure: false
+        }
+        )(QSOFeedItem);
