@@ -1,6 +1,6 @@
 import React from "react";
 import {AudioList} from "./AudioList";
-import {Image} from 'semantic-ui-react'
+import {Image} from './Image'
 import {Feed, Icon, Label, Segment, Button, Item} from "semantic-ui-react";
 import QSOComments from "./QSOComments";
 import QSOLikeButton from "./QSOLikeButton";
@@ -8,6 +8,8 @@ import {QRAs} from "./QRAs";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../actions/Actions';
+import PropTypes from 'prop-types';
+
 
 class QSOFeedItem extends React.Component {
     constructor() {
@@ -44,13 +46,8 @@ class QSOFeedItem extends React.Component {
         if (picList.length > 0) {
             image =
 
-                <Image src={picList[0].url}
-                       shape='rounded'
-                       size='small'
-                       centered
-                       onLoad={this.props.measure}/>
-
-
+                <Image img={picList[0].url}              
+                       measure={this.props.measure}/>
             ;
         }
 
@@ -88,6 +85,7 @@ class QSOFeedItem extends React.Component {
                         </Feed.Summary>
 
                         {image}
+
                         {audio}
 
                         <Feed.Meta>
@@ -105,21 +103,28 @@ class QSOFeedItem extends React.Component {
             </Segment>
         )
         }
-        }
-
-        const mapStateToProps = (state, qsos) => ({
-            fetchingQSOS: state.default.FetchingQSOS,
-            qsosFetched: state.default.qsosFetched,
-
-        });
-        const mapDispatchToProps = (dispatch) => ({
-            actions: bindActionCreators(Actions, dispatch)
-        });
+}
 
 
-        export default connect(
-        mapStateToProps,
-        mapDispatchToProps, null, {
-            pure: false
-        }
-        )(QSOFeedItem);
+
+const mapStateToProps = (state, qsos) => ({
+    fetchingQSOS: state.default.FetchingQSOS,
+    qsosFetched: state.default.qsosFetched,
+
+});
+const mapDispatchToProps = (dispatch) => ({
+    actions: bindActionCreators(Actions, dispatch)
+});
+
+
+export default connect(
+mapStateToProps,
+mapDispatchToProps, null, {
+    pure: false
+}
+)(QSOFeedItem);
+
+ QSOFeedItem.PropTypes = {
+     qso : PropTypes.object.isRequired,
+     measure: PropTypes.func.isRequired
+ }

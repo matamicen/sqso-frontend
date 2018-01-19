@@ -245,6 +245,96 @@ apigClientFactory.newClient = function (config) {
     };
     
     
+    apigClient.qraListGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['qra'], ['body']);
+        
+        var qraListGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/qra-list').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['qra']),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(qraListGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.qraListPost = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['qra'], ['body']);
+        
+        var qraListPostRequest = {
+            verb: 'post'.toUpperCase(),
+            path: pathComponent + uritemplate('/qra-list').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['qra']),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(qraListPostRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.qraListOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var qraListOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/qra-list').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(qraListOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.qraQsoFeedPost = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var qraQsoFeedPostRequest = {
+            verb: 'post'.toUpperCase(),
+            path: pathComponent + uritemplate('/qra-qso-feed').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(qraQsoFeedPostRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.qraQsoFeedOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var qraQsoFeedOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/qra-qso-feed').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(qraQsoFeedOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
     apigClient.qraSetProfilePicPost = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         

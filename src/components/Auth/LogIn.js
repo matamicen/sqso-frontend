@@ -2,12 +2,12 @@ import React from "react";
 import {AuthenticationDetails, CognitoUser, CognitoUserPool} from "amazon-cognito-identity-js";
 // ES Modules, e.g. transpiling with Babel
 import appConfig from "./Config";
-import {Form} from "semantic-ui-react";
 import "../../styles/App.css";
 import {Redirect} from "react-router-dom";
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as Actions from '../../actions/Actions';
+import { Button, Form, Message } from 'semantic-ui-react'
 
 var poolData = {
     UserPoolId: appConfig.UserPoolId, // Your user pool id here
@@ -19,8 +19,8 @@ class LogIn extends React.Component {
         super(props, context);
         this.state = {
             password: '',
-            qra: ''
-
+            qra: '',
+            loginError: false
         };
 
 
@@ -57,7 +57,9 @@ class LogIn extends React.Component {
 
             onFailure: function (err) {
                 console.error(err);
-            }
+                this.setState({loginError : true})
+
+            }.bind(this)
         });
 
     }
@@ -75,20 +77,34 @@ class LogIn extends React.Component {
         if (this.props.state.default.userData.isAuthenticated) {
             return <Redirect to="/"/>
         }
+        console.log(this.state.loginError)
         return (
 
                 <Form onSubmit={this.handleOnClickLogin.bind(this)}>
                     <Form.Field>
                         <label>QRA</label>
-                        <Form.Input placeholder='QRA' name='QRA' onChange={this.handleQraChange.bind(this)} style={{ 'textTransform': 'uppercase'}}/>
+                        <Form.Input placeholder='QRA' 
+                         error={this.state.loginError}
+                         name='QRA' onChange={this.handleQraChange.bind(this)} style={{ 'textTransform': 'uppercase'}}/>
                     </Form.Field>
                     <Form.Field>
                         <label>Password</label>
-                        <Form.Input type='password' placeholder='password' name='password'
+                        <Form.Input type='password' 
+                                    error={this.state.loginError}
+                                    placeholder='password' name='password'
                                     onChange={this.handlePasswordChange.bind(this)}/>
+                                    
                     </Form.Field>
-                    <Form.Button content='Login'/>
+                                      
+                     {this.state.loginError &&
+                    <Message>                       
+                        <Message.List>
+                        <Message.Item>User or Password invalid</Message.Item>                        
+                        </Message.List>
+                    </Message>}
+                    <Button content='Login'/>
                 </Form>
+                
 
         );
 

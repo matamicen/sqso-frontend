@@ -51,6 +51,6 @@ export class Audio extends React.Component {
 
     }
 }
-Audio.propTypes = {
+Audio.propTypes = {    
     url: PropTypes.string.isRequired
 }
