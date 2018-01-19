@@ -7,6 +7,7 @@ import {Config, CognitoIdentityCredentials} from "aws-sdk";
 import {NavLink} from "react-router-dom";
 // ES Modules, e.g. transpiling with Babel
 import appConfig from "./Config";
+import PropTypes from 'prop-types';
 
 Config.region = appConfig.region;
 Config.credentials = new CognitoIdentityCredentials({
@@ -86,4 +87,7 @@ export class Account extends React.Component {
         );
 
     }
+}
+Account.propTypes = {
+    
 }

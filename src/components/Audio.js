@@ -1,5 +1,6 @@
 import React from 'react';
 import {Button, Icon} from 'semantic-ui-react'
+import PropTypes from 'prop-types';
 
 export class Audio extends React.Component {
     constructor() {
@@ -49,4 +50,7 @@ export class Audio extends React.Component {
         }
 
     }
+}
+Audio.propTypes = {
+    url: PropTypes.string.isRequired
 }
