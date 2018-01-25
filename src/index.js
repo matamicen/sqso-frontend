@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import App from "./components/App";
 import thunk from 'redux-thunk';
 import createHistory from 'history/createBrowserHistory'
 import {ConnectedRouter, routerMiddleware, routerReducer as router} from 'react-router-redux'

@@ -1,13 +1,13 @@
 import React from "react";
-import {AudioList} from "./AudioList";
-import {Image} from './Image'
+import {AudioList} from "../AudioList";
+import {Image} from '../Image'
 import {Feed, Icon, Label, Segment, Button, Item} from "semantic-ui-react";
-import QSOComments from "./QSOComments";
-import QSOLikeButton from "./QSOLikeButton";
-import {QRAs} from "./QRAs";
+import QSOComments from "../QSOComments";
+import QSOLikeButton from "../QSOLikeButton";
+import {QRAs} from "../QRAs";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
-import * as Actions from '../actions/Actions';
+import * as Actions from '../../actions/Actions';
 import PropTypes from 'prop-types';
 
 

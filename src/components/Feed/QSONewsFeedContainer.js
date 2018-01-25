@@ -1,11 +1,11 @@
 import React from "react";
 import QSOFeedItem from "./QSOFeedItem";
 
-import QSONewsFeed from './QSONewsFeed';
+import QSONewsFeed from './QSONewsFeedPresentational';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import Immutable from 'immutable';
-import * as Actions from '../actions/Actions';
+import * as Actions from '../../actions/Actions';
 import 'react-virtualized/styles.css'; // only needs to be imported once
 
 class QSONewsFeedContainer extends React.Component {

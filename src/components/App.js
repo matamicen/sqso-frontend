@@ -1,20 +1,20 @@
 import React, {Component} from "react";
 import {Route, Switch, withRouter} from "react-router-dom";
-import "./styles/App.css";
-import Home from "./components/Home";
-import {SignUp} from "./components/Auth/SignUp";
-import Logout from "./components/Auth/Logout";
-import LogIn from "./components/Auth/LogIn";
-import AppNavigation from "./components/AppNavigation";
+import "../styles/App.css";
+import Home from "./Home/Home";
+import {SignUp} from "./Auth/SignUp";
+import Logout from "./Auth/Logout";
+import LogIn from "./Auth/LogIn";
+import AppNavigation from "./Home/AppNavigation";
 import AWS from "aws-sdk";
 import {CognitoUserPool} from "amazon-cognito-identity-js";
-import appConfig from "./components/Auth/Config";
+import appConfig from "./Auth/Config";
 import {Segment} from 'semantic-ui-react'
-import QRAProfileContainer from "./components/QRAProfileContainer";
-import QSODetail from "./components/QSODetail"
+import QRAProfileContainer from "./Profile/QRAProfileContainer";
+import QSODetail from "./QSODetail"
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
-import * as Actions from './actions/Actions';
+import * as Actions from '../actions/Actions';
 
 
 class App extends Component {

@@ -1,10 +1,10 @@
 import React from "react";
-import FeedQSO from "./QSONewsFeedContainer";
+import FeedQSO from "../Feed/QSONewsFeedContainer";
 import {Card, Container, Feed, Grid, Segment} from "semantic-ui-react";
 import {connect} from 'react-redux'
-import FeedUser from './FeedUser'
+import FeedUser from '../Feed/FeedUser'
 import {bindActionCreators} from 'redux';
-import * as Actions from '../actions/Actions';
+import * as Actions from '../../actions/Actions';
 
 class UserDashboard extends React.Component {
     constructor() {

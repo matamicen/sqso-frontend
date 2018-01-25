@@ -4,7 +4,7 @@ import {Card, Icon, Image} from "semantic-ui-react";
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
-import * as Actions from '../actions/Actions';
+import * as Actions from '../../actions/Actions';
 
 
 class FeedUser extends React.Component {

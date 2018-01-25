@@ -1,5 +1,5 @@
 import React from "react";
-import QSOFeedItem from "./QSOFeedItem";
+import QSOFeedItem from "./Feed/QSOFeedItem";
 import {Container, Feed, Grid} from 'semantic-ui-react'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../actions/Actions';

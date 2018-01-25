@@ -1,9 +1,9 @@
 import React from "react";
-import FeedQSO from "./QSONewsFeedContainer";
+import FeedQSO from "../Feed/QSONewsFeedContainer";
 import {Container, Grid} from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
-import * as Actions from '../actions/Actions';
+import * as Actions from '../../actions/Actions';
 
 class PublicDashboard extends React.Component {
 

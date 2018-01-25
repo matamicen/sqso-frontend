@@ -4,7 +4,7 @@ import PublicNavigation from "./PublicNavigation.js";
 import AuthenticatedNavigation from "./AuthenticatedNavigation.js";
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
-import * as Actions from '../actions/Actions';
+import * as Actions from '../../actions/Actions';
 
 class AppNavigation extends Component{
     componentDidMount() {

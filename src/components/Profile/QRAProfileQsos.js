@@ -1,6 +1,6 @@
 import React from 'react'
 import {Feed} from 'semantic-ui-react'
-import QSOFeedItem from "./QSOFeedItem";
+import QSOFeedItem from "../Feed/QSOFeedItem";
 
 
 const QRAProfileQsos = (props) => (

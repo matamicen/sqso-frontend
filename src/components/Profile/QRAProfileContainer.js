@@ -1,7 +1,7 @@
 import React from "react";
 import {bindActionCreators} from 'redux';
-import QRAProfile from './QRAProfile'
-import * as Actions from '../actions/Actions';
+import QRAProfile from './QRAProfilePresentational'
+import * as Actions from '../../actions/Actions';
 import {withRouter} from "react-router-dom";
 import {connect} from 'react-redux'
 
