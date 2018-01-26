@@ -1,6 +1,6 @@
 import React from "react";
 import {AudioList} from "../AudioList";
-import {Image} from '../Image'
+import {FeedImage} from './FeedImage'
 import {Feed, Icon, Label, Segment, Button, Item} from "semantic-ui-react";
 import QSOComments from "../QSOComments";
 import QSOLikeButton from "../QSOLikeButton";
@@ -42,11 +42,11 @@ class QSOFeedItem extends React.Component {
     render() {
         //    console.log(this.props.qso.idqsos)
         let image = null;
-        let picList = this.props.qso.media.filter((media) => media.type === "image");
+        let picList = this.props.qso.media.filter((media) => media.type === "image");        
         if (picList.length > 0) {
             image =
 
-                <Image img={picList[0].url}              
+                <FeedImage img={picList}              
                        measure={this.props.measure}/>
             ;
         }

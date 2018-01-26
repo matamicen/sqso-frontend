@@ -152,6 +152,7 @@ export function doFetchPublicFeed() {
         apigClient.qsoPublicListGet(params, body, additionalParams)
             .then(function (result) {
                 dispatch(doReceiveFeed(result.data));
+                
 
             }).catch(function (error) {
             console.log("error");
