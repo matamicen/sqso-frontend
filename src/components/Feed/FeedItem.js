@@ -11,7 +11,7 @@ import * as Actions from '../../actions/Actions';
 import PropTypes from 'prop-types';
 
 
-class QSOFeedItem extends React.Component {
+class FeedItem extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -122,9 +122,9 @@ mapStateToProps,
 mapDispatchToProps, null, {
     pure: false
 }
-)(QSOFeedItem);
+)(FeedItem);
 
- QSOFeedItem.PropTypes = {
+ FeedItem.PropTypes = {
      qso : PropTypes.object.isRequired,
      measure: PropTypes.func.isRequired
  }

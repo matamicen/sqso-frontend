@@ -1,5 +1,5 @@
 import React from "react";
-import FeedQSO from "../Feed/QSONewsFeedContainer";
+import FeedQSO from "../Feed/NewsFeedContainer";
 import {Container, Grid} from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';

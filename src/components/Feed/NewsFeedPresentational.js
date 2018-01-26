@@ -1,8 +1,8 @@
-import QSOFeedItem from './QSOFeedItem'
+import FeedItem from './FeedItem'
 import React, {PureComponent} from 'react';
 import {AutoSizer, List, InfiniteLoader, WindowScroller, CellMeasurer, CellMeasurerCache} from 'react-virtualized'
 import PropTypes from "prop-types";
-export default class QSONewsFeed extends PureComponent {
+export default class NewsFeed extends PureComponent {
     constructor(props) {
         super(props)
 
@@ -74,7 +74,7 @@ export default class QSONewsFeed extends PureComponent {
                         style={style}
                         key={key}
                     >
-                        <QSOFeedItem
+                        <FeedItem
                             key={key}
                             qso={row.props.qso}
                             measure={measure}
@@ -162,6 +162,6 @@ export default class QSONewsFeed extends PureComponent {
             </div>)
     }
 }
-QSONewsFeed.propTypes = {
+NewsFeed.propTypes = {
     list : PropTypes.array.isRequired
 }

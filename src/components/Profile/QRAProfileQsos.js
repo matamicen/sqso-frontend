@@ -1,6 +1,6 @@
 import React from 'react'
 import {Feed} from 'semantic-ui-react'
-import QSOFeedItem from "../Feed/QSOFeedItem";
+import FeedItem from "../Feed/FeedItem";
 
 
 const QRAProfileQsos = (props) => (
@@ -8,7 +8,7 @@ const QRAProfileQsos = (props) => (
         <Feed>
             {props.qsos ?
                 props.qsos.map((qso, i) =>
-                    <QSOFeedItem key={i} qso={qso}/>
+                    <FeedItem key={i} qso={qso}/>
                 )
                 : ""
             }

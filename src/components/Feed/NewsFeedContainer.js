@@ -1,14 +1,13 @@
 import React from "react";
-import QSOFeedItem from "./QSOFeedItem";
-
-import QSONewsFeed from './QSONewsFeedPresentational';
+import FeedItem from "./FeedItem";
+import NewsFeed from './NewsFeedPresentational';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import Immutable from 'immutable';
 import * as Actions from '../../actions/Actions';
 import 'react-virtualized/styles.css'; // only needs to be imported once
 
-class QSONewsFeedContainer extends React.Component {
+class NewsFeedContainer extends React.Component {
 // This example assumes you have a way to know/load this information
 
     componentWillMount() {
@@ -32,7 +31,7 @@ class QSONewsFeedContainer extends React.Component {
         if (this.props.qsos && this.props.qsos.length > 0) {
             qsos = this.props.qsos.map((qso, i) =>
 
-                <QSOFeedItem key={i} qso={qso}/>
+                <FeedItem key={i} qso={qso}/>
             )
         }
         /* return (
@@ -41,7 +40,7 @@ class QSONewsFeedContainer extends React.Component {
              </Feed>
          );*/
         return (
-            <QSONewsFeed list={qsos}/>
+            <NewsFeed list={qsos}/>
         )
     }
 }
@@ -63,5 +62,5 @@ export default connect(
     mapDispatchToProps, null, {
         pure: false
     }
-)(QSONewsFeedContainer);
+)(NewsFeedContainer);
 

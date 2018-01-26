@@ -1,5 +1,5 @@
 import React from "react";
-import FeedQSO from "../Feed/QSONewsFeedContainer";
+import NewsFeed from "../Feed/NewsFeedContainer";
 import {Card, Container, Feed, Grid, Segment} from "semantic-ui-react";
 import {connect} from 'react-redux'
 import FeedUser from '../Feed/FeedUser'
@@ -31,7 +31,7 @@ class UserDashboard extends React.Component {
 
                     <Grid.Column computer={10} tablet={5}>
                         <Segment>
-                            < FeedQSO/>
+                            < NewsFeed/>
                         </Segment>
                     </Grid.Column>
 
@@ -88,7 +88,7 @@ class UserDashboard extends React.Component {
                 <Grid.Row columns={1} only='mobile tablet'>
                     <Grid.Column>
                         <Container fluid>
-                            < FeedQSO/>
+                            < NewsFeed/>
                         </Container>
                     </Grid.Column>
                 </Grid.Row>
