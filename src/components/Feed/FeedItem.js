@@ -68,7 +68,7 @@ class FeedItem extends React.Component {
 
 
                 return (
-            <Segment raised>
+            <Segment raised >
                 <Feed.Event>
                     <Item.Extra>
                         <Button icon floated='right' size='mini'>

@@ -56,7 +56,7 @@ class NavigationSearch extends Component {
                                 autoload={false}
                                 autosize={false}
                                 autoclear={true}
-                                style={{width:  '400px'}}
+                                //style={{width:  '400px'}}
                                 backspaceRemoves={true}/>
 
             </div>

@@ -12,7 +12,7 @@ class AppNavigation extends Component{
     }
     renderNavigation()
     {
-         return (this.props.state.default.userData.isAuthenticated ? <AuthenticatedNavigation /> : <PublicNavigation />);
+         return (this.props.isAuthenticated ? <AuthenticatedNavigation /> : <PublicNavigation />);
     }
     render()
     {
@@ -33,7 +33,7 @@ class AppNavigation extends Component{
  * that is necessary.
  */
 const mapStateToProps = (state) => ({
-    state: state
+    isAuthenticated: state.default.userData.isAuthenticated
 });
 
 /**
