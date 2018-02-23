@@ -69,6 +69,7 @@ export default class NewsFeed extends PureComponent {
         let row = this.props.list[index];
 
         return (
+            
             <CellMeasurer
                 cache={this._cache}
                 columnIndex={0}

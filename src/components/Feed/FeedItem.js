@@ -85,7 +85,7 @@ class FeedItem extends React.Component {
                             <Label>QSO:
                             </Label>{this.props.qso.idqsos}
                         </Feed.Summary>
-
+                  
                         {
                             picList.length > 0 && 
                             <FeedImage img={picList} measure={this.props.measure}/>

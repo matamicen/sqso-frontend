@@ -1,6 +1,14 @@
 import React from "react";
 import NewsFeed from "../Feed/NewsFeedContainer";
-import {Card, Container, Feed, Grid, Segment} from "semantic-ui-react";
+import {
+    Card,
+    Container,
+    Feed,
+    Grid,
+   
+    Segment,
+    Sticky
+} from "semantic-ui-react";
 import {connect} from 'react-redux'
 import FeedUser from '../Feed/FeedUser'
 import {bindActionCreators} from 'redux';
@@ -12,31 +20,31 @@ class UserDashboard extends React.Component {
         this.state = {};
     }
 
-    componentWillMount() {
-
-    }
-
+    componentWillMount() {}
+    handleContextRef = contextRef => this.setState({contextRef})
     render() {
-
+        const {contextRef} = this.state
         return (
-            <Grid>
-                <Grid.Row columns={3} only='computer'>
-                    <Grid.Column width={3} only="computer">
-                        <Segment>
+            <Segment attached='bottom'  ref={this.handleContextRef}>
+            
+                <Grid>
+                    <Grid.Row columns={3} only='computer'>
+                        <Grid.Column width={3} only="computer">
 
+                            <Sticky context={contextRef}>
                                 <FeedUser/>
+                            </Sticky>
 
-                        </Segment>
-                    </Grid.Column>
+                        </Grid.Column>
 
-                    <Grid.Column computer={10} tablet={5}>
-                        <Segment>
-                            < NewsFeed/>
-                        </Segment>
-                    </Grid.Column>
+                        <Grid.Column computer={10} tablet={5}>
+                            <Segment>
+                                < NewsFeed/>
+                            </Segment>
+                        </Grid.Column>
 
-                    <Grid.Column width={3} only="computer">
-                        <Segment>
+                        <Grid.Column width={3} only="computer">
+                        <Sticky context={contextRef}>
 
                                 <Card>
                                     <Card.Content>
@@ -52,7 +60,11 @@ class UserDashboard extends React.Component {
                                                 <Feed.Content>
                                                     <Feed.Date content='1 day ago'/>
                                                     <Feed.Summary>
-                                                        You added <a>Jenny Hess</a> to your <a>coworker</a> group.
+                                                        You added
+                                                        <a>Jenny Hess</a>
+                                                        to your
+                                                        <a>coworker</a>
+                                                        group.
                                                     </Feed.Summary>
                                                 </Feed.Content>
                                             </Feed.Event>
@@ -63,7 +75,9 @@ class UserDashboard extends React.Component {
                                                 <Feed.Content>
                                                     <Feed.Date content='3 days ago'/>
                                                     <Feed.Summary>
-                                                        You added <a>Molly Malone</a> as a friend.
+                                                        You added
+                                                        <a>Molly Malone</a>
+                                                        as a friend.
                                                     </Feed.Summary>
                                                 </Feed.Content>
                                             </Feed.Event>
@@ -74,7 +88,11 @@ class UserDashboard extends React.Component {
                                                 <Feed.Content>
                                                     <Feed.Date content='4 days ago'/>
                                                     <Feed.Summary>
-                                                        You added <a>Elliot Baker</a> to your <a>musicians</a> group.
+                                                        You added
+                                                        <a>Elliot Baker</a>
+                                                        to your
+                                                        <a>musicians</a>
+                                                        group.
                                                     </Feed.Summary>
                                                 </Feed.Content>
                                             </Feed.Event>
@@ -82,32 +100,25 @@ class UserDashboard extends React.Component {
                                     </Card.Content>
                                 </Card>
 
-                        </Segment>
-                    </Grid.Column>
-                </Grid.Row>
-                <Grid.Row columns={1} only='mobile tablet'>
-                    <Grid.Column>
-                        <Container fluid>
-                            < NewsFeed/>
-                        </Container>
-                    </Grid.Column>
-                </Grid.Row>
-            </Grid>
-
+                            </Sticky>
+                        </Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row columns={1} only='mobile tablet'>
+                        <Grid.Column>
+                            <Container fluid>
+                                < NewsFeed/>
+                            </Container>
+                        </Grid.Column>
+                    </Grid.Row>
+                </Grid>
+            </Segment>
         );
     }
 }
 
-const mapStateToProps = (state) => ({
-    state: state
-});
+const mapStateToProps = (state) => ({state: state});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 });
 
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(UserDashboard);
-
+export default connect(mapStateToProps, mapDispatchToProps)(UserDashboard);

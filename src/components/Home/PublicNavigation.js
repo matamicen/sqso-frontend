@@ -4,7 +4,7 @@ import {Menu, Button} from 'semantic-ui-react'
 import NavigationSearch from './NavigationSearch'
 
 const PublicNavigation = () => (
-    <Menu fluid attached='top' stackable compact>
+    <Menu attached='top' compact stackable>
         <Menu.Item as={NavLink} to='/'>
             SuperQSO
         </Menu.Item>
@@ -22,7 +22,7 @@ const PublicNavigation = () => (
                 <Button.Or/>
                 <Button>
                     <Link to='/signup'>
-                        Signup
+                        Sign Up
                     </Link>
                 </Button>
             </Button.Group>

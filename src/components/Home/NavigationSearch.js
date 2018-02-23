@@ -27,8 +27,7 @@ class NavigationSearch extends Component {
         if (input.length > 2) {
             return fetch(`https://bvi2z1683m.execute-api.us-east-1.amazonaws.com/reactWeb/qra-list?qra=${input}`)
                 .then((response) => response.json())
-                .then((json) => {
-                    console.log(json.message);
+                .then((json) => {                    
                     return {options: json.message};
                 });
         }

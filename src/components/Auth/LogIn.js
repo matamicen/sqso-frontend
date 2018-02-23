@@ -4,10 +4,11 @@ import {AuthenticationDetails, CognitoUser, CognitoUserPool} from "amazon-cognit
 import appConfig from "./Config";
 import "../../styles/App.css";
 import {Redirect} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as Actions from '../../actions/Actions';
-import { Button, Form, Message } from 'semantic-ui-react'
+import {Button, Form, Message, Grid, Segment} from 'semantic-ui-react'
 
 var poolData = {
     UserPoolId: appConfig.UserPoolId, // Your user pool id here
@@ -23,12 +24,8 @@ class LogIn extends React.Component {
             loginError: false
         };
 
-
-
     }
-    componentDidMount() {
-
-    }
+    componentDidMount() {}
 
     handleOnClickLogin(e) {
 
@@ -47,17 +44,19 @@ class LogIn extends React.Component {
 
         var cognitoUser = new CognitoUser(userData);
 
-
         cognitoUser.authenticateUser(authenticationDetails, {
             onSuccess: function (result) {
                 let token = result.idToken.jwtToken;
-                this.props.actions.doLogin(token, this.state.qra.toUpperCase());
+                this
+                    .props
+                    .actions
+                    .doLogin(token, this.state.qra.toUpperCase());
 
             }.bind(this),
 
             onFailure: function (err) {
                 console.error(err);
-                this.setState({loginError : true})
+                this.setState({loginError: true})
 
             }.bind(this)
         });
@@ -74,37 +73,71 @@ class LogIn extends React.Component {
     }
 
     render() {
-        if (this.props.state.default.userData.isAuthenticated) {
+        if (this.props.isAuthenticated) {
             return <Redirect to="/"/>
         }
-        console.log(this.state.loginError)
-        return (
 
-                <Form onSubmit={this.handleOnClickLogin.bind(this)}>
-                    <Form.Field>
-                        <label>QRA</label>
-                        <Form.Input placeholder='QRA' 
-                         error={this.state.loginError}
-                         name='QRA' onChange={this.handleQraChange.bind(this)} style={{ 'textTransform': 'uppercase'}}/>
-                    </Form.Field>
-                    <Form.Field>
-                        <label>Password</label>
-                        <Form.Input type='password' 
+        return (
+            <Grid
+                textAlign='center'
+                style={{
+                height: '100%'
+            }}
+                verticalAlign='middle'>
+                <Grid.Column style={{
+                    maxWidth: 450
+                }}>
+                    <Form
+                        size='large'
+                        onSubmit={this
+                        .handleOnClickLogin
+                        .bind(this)}>
+                        <Segment stacked>
+                            <Form.Field>
+                                
+                                <Form.Input
+                                    fluid
+                                    icon='user'
+                                    iconPosition='left'
+                                    placeholder='QRA'
                                     error={this.state.loginError}
-                                    placeholder='password' name='password'
-                                    onChange={this.handlePasswordChange.bind(this)}/>
-                                    
-                    </Form.Field>
-                                      
-                     {this.state.loginError &&
-                    <Message>                       
-                        <Message.List>
-                        <Message.Item>User or Password invalid</Message.Item>                        
-                        </Message.List>
-                    </Message>}
-                    <Button content='Login'/>
-                </Form>
-                
+                                    name='QRA'
+                                    onChange={this
+                                    .handleQraChange
+                                    .bind(this)}
+                                    style={{
+                                    'textTransform': 'uppercase'
+                                }}/>
+                            </Form.Field>
+                            <Form.Field>
+                                
+                                <Form.Input
+                                 fluid
+                                 icon='lock'
+                                 iconPosition='left'
+                                    type='password'
+                                    error={this.state.loginError}
+                                    placeholder='Password'
+                                    name='password'
+                                    onChange={this
+                                    .handlePasswordChange
+                                    .bind(this)}/>
+
+                            </Form.Field>
+
+                            {this.state.loginError && <Message>
+                                <Message.List>
+                                    <Message.Item>User or Password invalid</Message.Item>
+                                </Message.List>
+                            </Message>}
+                            <Button content='Login'/>
+                        </Segment>
+                    </Form>
+                    <Message>
+                        New to us? <Link to='/signup'>Sign Up</Link>
+                    </Message>
+                </Grid.Column>
+            </Grid>
 
         );
 
@@ -112,13 +145,10 @@ class LogIn extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    state: state
+    isAuthenticated: state.default.userData.isAuthenticated
 });
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(LogIn);
+export default connect(mapStateToProps, mapDispatchToProps)(LogIn);

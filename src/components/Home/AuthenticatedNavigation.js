@@ -4,7 +4,7 @@ import {Menu, Button} from "semantic-ui-react";
 import NavigationSearch from './NavigationSearch'
 
 const AuthenticatedNavigation = () => (
-    <Menu attached='top' stackable>
+    <Menu fixed='top' attached stackable compact>
         <Menu.Item as={NavLink} to='/'>
             SuperQSO
         </Menu.Item>

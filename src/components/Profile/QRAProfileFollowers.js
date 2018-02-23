@@ -13,7 +13,7 @@ const QRAProfileFollowers = (props) => {
                             {qra.profilepic ? <Image avatar src={qra.profilepic}/> : ""}
 
                             <List.Content>
-                                <List.Header as='a'><Link to={"/" + qra.qra}> {qra.qra}</Link></List.Header>
+                                <List.Header><Link to={"/" + qra.qra}> {qra.qra}</Link></List.Header>
                             </List.Content>
                         </List.Item>
                     )

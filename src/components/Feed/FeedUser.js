@@ -39,16 +39,16 @@ class FeedUser extends React.Component {
                     <Card.Header>{this.props.userData.qra}</Card.Header>                                        
                 </Card.Content>
                 <Card.Content extra>
-                    <a>
+                    
                         <Icon name='user'/>
                         Following {following}
-                    </a>
+                   
                 </Card.Content>
                 <Card.Content extra>
-                    <a>
+                    
                         <Icon name='user'/>
                         Followers {followers}
-                    </a>
+                    
                 </Card.Content>
             </Card>
         );

@@ -9,12 +9,13 @@ export const FeedImage = ({img, measure}) => (
     }
     onLoad = {
         measure
-    } />}
+    } />}    
         closeIcon>
         <Modal.Content image scrolling>
             <Modal.Description>
-                {img.map(m => <Segment raised textAlign='center'>
-                    <Image key={m.url} wrapped centered src={m.url}/>
+               
+                {img.map(m => <Segment key={m.idqsos_media} raised textAlign='center'>
+                    <Image key={m.idqsos_media} wrapped centered src={m.url}/>
                     <p>{m.description}</p>
                 </Segment>)}
             </Modal.Description>
