@@ -16,7 +16,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/Actions';
 import PropTypes from 'prop-types';
-
+import {  WhatsappShareButton,   WhatsappIcon } from 'react-share';
 class FeedItem extends React.Component {
     constructor() {
         super();
@@ -63,9 +63,6 @@ class FeedItem extends React.Component {
             .media
             .filter((media) => media.type === 'audio');
 
-      
-       
-
         return (
             <Segment raised>
                 <Feed.Event>
@@ -85,16 +82,12 @@ class FeedItem extends React.Component {
                             <Label>QSO:
                             </Label>{this.props.qso.idqsos}
                         </Feed.Summary>
-                  
-                        {
-                            picList.length > 0 && 
-                            <FeedImage img={picList} measure={this.props.measure}/>
-                        }
 
-                        {
-                            audioList.length > 0 && 
-                            <AudioList mediaList={audioList}/>
-                        }
+                        {picList.length > 0 && <FeedImage img={picList} measure={this.props.measure}/>
+}
+
+                        {audioList.length > 0 && <AudioList mediaList={audioList}/>
+}
 
                         <Feed.Meta>
                             <QSOLikeButton qso={this.props.qso}/>
@@ -105,16 +98,16 @@ class FeedItem extends React.Component {
                                 < Icon name='comment outline'/>
                                 Comment
                             </Feed.Like>
+                             <WhatsappShareButton title="CheckOut this QSO" 
+                                                  url={'http://d3cevjpdxmn966.cloudfront.net/qso/' + this.props.qso.idqsos}><WhatsappIcon size={20}/>
+                                                  </WhatsappShareButton>
                         </Feed.Meta>
                         <Feed.Extra>
-                            {
-                                 this.state.showComment &&
-                                 <QSOComments
-                                        qso={this.props.qso}
-                                        recalculateRowHeight={this.recalculateRowHeight}/>
-                                
-                            }
-                        </Feed.Extra>
+                            {this.state.showComment && <QSOComments
+                                qso={this.props.qso}
+                                recalculateRowHeight={this.recalculateRowHeight}/>
+}
+                        </Feed.Extra>                        
                     </Feed.Content>
                 </Feed.Event>
             </Segment>

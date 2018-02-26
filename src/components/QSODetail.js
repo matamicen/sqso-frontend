@@ -9,25 +9,15 @@ import {withRouter} from 'react-router-dom'
 
 class QSODetail extends React.Component {
 
-    constructor() {
-        super();
-        this.state = {
-
-        }        ;
-    }
     componentWillMount() {
-        console.log("componentWillMount");
-        console.log(this.props.state.default.FetchingQSO);
-        if (!this.props.state.default.FetchingQSO) this.props.actions.doFetchQSO(this.props.match.params.idqso);
+        if (!this.props.FetchingQSO) this.props.actions.doFetchQSO(this.props.match.params.idqso);
     }
-    componentWillUnMount() {
-        console.log("componentWillUnMount");
-    }
+
 
 
     render() {
-        console.log(this.props.state.default.qso);
-        if (!this.props.state.default.qso ) {
+
+        if (!this.props.qso ) {
             return null;
         } else {
             return ( <Grid>
@@ -35,7 +25,7 @@ class QSODetail extends React.Component {
                     <Grid.Column>
                         <Container fluid>
                             <Feed>
-                                <QSOFeedItem key={this.props.match.params.idqso} qso={this.props.state.default.qso}/>
+                                <QSOFeedItem key={this.props.match.params.idqso} qso={this.props.qso}/>
                             </Feed>
                         </Container>
                     </Grid.Column>
@@ -45,8 +35,9 @@ class QSODetail extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({
-    state: state
+const mapStateToProps = (state) => ({    
+    qso: state.default.qso,
+    FetchingQSO: state.default.FetchingQSO
 });
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
