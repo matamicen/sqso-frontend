@@ -68,7 +68,7 @@ class FeedItem extends React.Component {
                 <Feed.Event>
                     <Item.Extra>
                         <Button icon floated='right' size='mini'>
-                            <Icon name='close'/>
+                            <Icon name='ellipsis vertical'/>
                         </Button>
                     </Item.Extra>
                     <Feed.Content>

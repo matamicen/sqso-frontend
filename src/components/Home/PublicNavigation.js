@@ -1,6 +1,6 @@
 import React from "react";
-import {NavLink, Link} from "react-router-dom";
-import {Menu, Button, Dropdown} from 'semantic-ui-react'
+import {Link} from "react-router-dom";
+import {Menu, Dropdown} from 'semantic-ui-react'
 import NavigationSearch from './NavigationSearch'
 
 const PublicNavigation = () => (
@@ -18,7 +18,7 @@ const PublicNavigation = () => (
                 <Dropdown.Menu>
                     <Dropdown.Item>
                         <Link to='/login'>
-                            Login
+                            Sign In
                         </Link>
                     </Dropdown.Item>
                     <Dropdown.Item>

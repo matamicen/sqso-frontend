@@ -1,6 +1,6 @@
 import React from "react";
-import {NavLink, Link} from "react-router-dom";
-import {Menu, Button, Dropdown} from "semantic-ui-react";
+import {Link} from "react-router-dom";
+import {Menu, Dropdown} from "semantic-ui-react";
 import NavigationSearch from './NavigationSearch'
 
 const AuthenticatedNavigation = () => (
@@ -18,7 +18,7 @@ const AuthenticatedNavigation = () => (
                 <Dropdown.Menu>
                     <Dropdown.Item>
                         <Link to='/logout'>
-                            Logout
+                            Signout
                         </Link>
                     </Dropdown.Item>
 

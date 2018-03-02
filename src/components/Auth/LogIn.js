@@ -9,7 +9,7 @@ import {Link} from "react-router-dom";
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as Actions from '../../actions/Actions';
-import {Button, Form, Message, Grid, Segment} from 'semantic-ui-react'
+import {Button, Form, Header, Message, Grid, Segment} from 'semantic-ui-react'
 
 var poolData = {
     UserPoolId: appConfig.UserPoolId, // Your user pool id here
@@ -43,8 +43,8 @@ class LogIn extends React.Component {
             Pool: userPool
         };
 
-    /*     ///TEST NEW API
-     
+        /*     ///TEST NEW API
+
         var authParams = {
           AuthFlow: 'ADMIN_NO_SRP_AUTH',
           ClientId: poolData.ClientId,
@@ -57,55 +57,55 @@ class LogIn extends React.Component {
         var cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider({
             region: 'us-east-1' // Why do I need this? Its in .aws/config
         });
-        
+
         cognitoidentityserviceprovider.adminInitiateAuth(authParams, function(err, sessionData) {
-        
+
             if (err) {
                 console.log(err, err.stack);
             } else {
-        
+
                 var cognitoidentity = new AWS.CognitoIdentity({
                     region: 'us-east-1' // Why do I need this? Its in .aws/config
                 });
-        
+
                 var getIdParams = {
                     IdentityPoolId: 'us-east-1:051d18f6-a6bf-4237-af95-33c0f3a45cc1',
                     Logins: {
                         'cognito-idp.us-east-1.amazonaws.com/us-east-1_yznBlsoTx': sessionData.AuthenticationResult.IdToken
                     }
                 }
-        
+
                 cognitoidentity.getId(getIdParams, function(err, identity) {
                     if (err)
                     {
                         console.log(err, err.stack);
                     }
                     else
-                    {       
-        
+                    {
+
                         var getCredentialsParams = {
                             IdentityId: identity.IdentityId,
                             Logins: {
                                 'cognito-idp.us-east-1.amazonaws.com/us-east-1_yznBlsoTx': sessionData.AuthenticationResult.IdToken
-                            }                        
+                            }
                         };
-        
-                        cognitoidentity.getCredentialsForIdentity(getCredentialsParams, function(err, credentials) {                        
+
+                        cognitoidentity.getCredentialsForIdentity(getCredentialsParams, function(err, credentials) {
                           if (err)
                           {
                               console.log(err, err.stack);
                           }
-                          else 
+                          else
                           {
                               console.log(credentials); // SUCCESS!
                           }
                         });
-        
-        
+
+
                     }
                 });
-        
-        
+
+
             }
         });
 
@@ -155,6 +155,9 @@ class LogIn extends React.Component {
                 <Grid.Column style={{
                     maxWidth: 450
                 }}>
+                    <Header as='h2' color='teal' textAlign='center'>
+                        Sign-in to your account
+                    </Header>
                     <Form
                         size='large'
                         onSubmit={this
@@ -162,7 +165,7 @@ class LogIn extends React.Component {
                         .bind(this)}>
                         <Segment stacked>
                             <Form.Field>
-                                
+
                                 <Form.Input
                                     fluid
                                     icon='user'
@@ -178,11 +181,11 @@ class LogIn extends React.Component {
                                 }}/>
                             </Form.Field>
                             <Form.Field>
-                                
+
                                 <Form.Input
-                                 fluid
-                                 icon='lock'
-                                 iconPosition='left'
+                                    fluid
+                                    icon='lock'
+                                    iconPosition='left'
                                     type='password'
                                     error={this.state.loginError}
                                     placeholder='Password'
@@ -198,11 +201,12 @@ class LogIn extends React.Component {
                                     <Message.Item>User or Password invalid</Message.Item>
                                 </Message.List>
                             </Message>}
-                            <Button content='Login'/>
+                            <Button content='SignIn'/>
                         </Segment>
                     </Form>
                     <Message>
-                        New to us? <Link to='/signup'>Sign Up</Link>
+                        New to us?
+                        <Link to='/signup'>{' '}Sign Up</Link>
                     </Message>
                 </Grid.Column>
             </Grid>
@@ -212,9 +216,7 @@ class LogIn extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({
-    isAuthenticated: state.default.userData.isAuthenticated
-});
+const mapStateToProps = (state) => ({isAuthenticated: state.default.userData.isAuthenticated});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 });
