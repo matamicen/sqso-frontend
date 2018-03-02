@@ -1,6 +1,6 @@
 import React from "react";
 import {NavLink, Link} from "react-router-dom";
-import {Menu, Button} from "semantic-ui-react";
+import {Menu, Button, Dropdown} from "semantic-ui-react";
 import NavigationSearch from './NavigationSearch'
 
 const AuthenticatedNavigation = () => (
