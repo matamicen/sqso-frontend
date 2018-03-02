@@ -2,7 +2,7 @@ import React from "react";
 import {AuthenticationDetails, CognitoUser, CognitoUserPool} from "amazon-cognito-identity-js";
 // ES Modules, e.g. transpiling with Babel
 import appConfig from "./Config";
-import AWS from 'aws-sdk'
+
 import "../../styles/App.css";
 import {Redirect} from "react-router-dom";
 import {Link} from "react-router-dom";

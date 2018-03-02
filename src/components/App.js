@@ -9,7 +9,7 @@ import AppNavigation from "./Home/AppNavigation";
 import AWS from "aws-sdk";
 import {CognitoUserPool} from "amazon-cognito-identity-js";
 import appConfig from "./Auth/Config";
-import {Segment, Sticky} from 'semantic-ui-react'
+import {Container} from 'semantic-ui-react'
 import QRAProfileContainer from "./Profile/QRAProfileContainer";
 import QSODetail from "./QSODetail"
 import {connect} from 'react-redux'
@@ -87,7 +87,7 @@ class App extends Component {
 
                 <AppNavigation/>
 
-               <div>
+                <Container text style={{ marginTop: '5em' }}>
                     <Switch>
                         <Route exact path="/" component={() => <Home/>}/>
 
@@ -99,7 +99,7 @@ class App extends Component {
                         <Route exact path="/:qra" component={() => <QRAProfileContainer/>}/>
                         <Route path="/qso/:idqso" component={() => <QSODetail/>}/>
                     </Switch>
-              </div>
+              </Container>
             </div>
 
         );
