@@ -34,11 +34,6 @@ class NewsFeedContainer extends React.Component {
                 <FeedItem key={i} qso={qso}/>
             )
         }
-        /* return (
-             <Feed>
-                 {qsos}
-             </Feed>
-         );*/
         return (
             <NewsFeed list={qsos}/>
         )

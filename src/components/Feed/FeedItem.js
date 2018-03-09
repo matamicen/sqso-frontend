@@ -5,18 +5,19 @@ import {
     Feed,
     Icon,
     Label,
+    Dropdown,
     Segment,
     Button,
     Item
 } from "semantic-ui-react";
 import QSOComments from "../QSOComments";
-import QSOLikeButton from "../QSOLikeButton";
+import QSOLikeButton from "./QSOLikeButton";
 import {QRAs} from "../QRAs";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/Actions';
 import PropTypes from 'prop-types';
-import {  WhatsappShareButton,   WhatsappIcon } from 'react-share';
+import {WhatsappShareButton, FacebookShareButton, TwitterShareButton} from 'react-share';
 class FeedItem extends React.Component {
     constructor() {
         super();
@@ -90,38 +91,72 @@ class FeedItem extends React.Component {
 }
 
                         <Feed.Meta>
-                            <QSOLikeButton qso={this.props.qso}/>
-                            <Feed.Like
-                                onClick={this
-                                .handleOnComment
-                                .bind(this)}>
-                                < Icon name='comment outline'/>
-                                Comment
-                            </Feed.Like>
-                             <WhatsappShareButton title="CheckOut this QSO" 
-                                                  url={'http://d3cevjpdxmn966.cloudfront.net/qso/' + this.props.qso.idqsos}><WhatsappIcon size={20}/>
-                                                  </WhatsappShareButton>
+                            <Button.Group attached='bottom'>
+                                <Button><QSOLikeButton qso={this.props.qso}/></Button>
+                                <Button>
+                                    <Feed.Like
+                                        onClick={this
+                                        .handleOnComment
+                                        .bind(this)}>
+                                        < Icon name='comment outline'/>
+                                        Comment
+                                    </Feed.Like>
+                                </Button>
+                                <Button>
+                                    <Dropdown text='Share' icon='share alternate' floating className='icon'>
+                                        <Dropdown.Menu>
+                                            <Dropdown.Item button>
+                                                <WhatsappShareButton
+                                                    title='CheckOut this QSO'
+                                                    url={'http://d3cevjpdxmn966.cloudfront.net/qso/' + this.props.qso.idqsos}>
+
+                                                    <Icon name='whatsapp'/>
+                                                    WhatsApp
+
+                                                </WhatsappShareButton>
+                                            </Dropdown.Item>
+                                            <Dropdown.Item button>
+                                                <FacebookShareButton
+                                                    quote="CheckOut this QSO"
+                                                    url={'http://d3cevjpdxmn966.cloudfront.net/qso/' + this.props.qso.idqsos}>
+
+                                                    <Icon name='facebook'/>
+                                                    Facebook
+
+                                                </FacebookShareButton>
+                                            </Dropdown.Item>
+                                            <Dropdown.Item button>
+                                                <TwitterShareButton
+                                                    title="CheckOut this QSO"
+                                                    url={'http://d3cevjpdxmn966.cloudfront.net/qso/' + this.props.qso.idqsos}>
+
+                                                    <Icon name='twitter'/>
+                                                    Twitter
+
+                                                </TwitterShareButton>
+                                            </Dropdown.Item>
+                                        </Dropdown.Menu>
+                                    </Dropdown>
+                                </Button>
+                            </Button.Group>
                         </Feed.Meta>
                         <Feed.Extra>
                             {this.state.showComment && <QSOComments
                                 qso={this.props.qso}
                                 recalculateRowHeight={this.recalculateRowHeight}/>
 }
-                        </Feed.Extra>                        
+                        </Feed.Extra>
                     </Feed.Content>
                 </Feed.Event>
             </Segment>
         )
     }
 }
-
 const mapStateToProps = (state, qsos) => ({fetchingQSOS: state.default.FetchingQSOS, qsosFetched: state.default.qsosFetched});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 });
-
 export default connect(mapStateToProps, mapDispatchToProps, null, {pure: false})(FeedItem);
-
 FeedItem.PropTypes = {
     qso: PropTypes.object.isRequired,
     measure: PropTypes.func.isRequired

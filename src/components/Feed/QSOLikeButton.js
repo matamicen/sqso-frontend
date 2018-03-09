@@ -2,7 +2,7 @@ import React from "react";
 import {Feed, Icon} from "semantic-ui-react";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
-import * as Actions from '../actions/Actions';
+import * as Actions from '../../actions/Actions';
 
 class QSOLikeButton extends React.Component {
     constructor() {

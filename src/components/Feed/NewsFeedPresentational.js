@@ -78,7 +78,7 @@ export default class NewsFeed extends PureComponent {
                 parent={parent}>
                 {({measure}) => <div style={style} key={key}>
                     <Grid centered>
-                        <Grid.Row columns={2} only='large screen'>
+                        <Grid.Row columns={1} only='large screen'>
                             <Grid.Column>
                                 <FeedItem
                                     key={key}
