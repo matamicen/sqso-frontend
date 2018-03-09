@@ -26,6 +26,7 @@ class NewsFeedContainer extends React.Component {
     }
 
     render() {
+        
         if (this.props.fetchingQSOS || !this.props.qsosFetched) return null;
         let qsos = Immutable.List(this.props.qsos);
         if (this.props.qsos && this.props.qsos.length > 0) {

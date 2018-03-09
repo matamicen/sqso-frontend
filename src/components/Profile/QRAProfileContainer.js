@@ -46,6 +46,7 @@ class QRAProfileContainer extends React.Component {
     }
 
     render() {
+       
         if (this.props.fetchingQRA || !this.props.QRAFetched) return null;
         
         let qraInfo = null;

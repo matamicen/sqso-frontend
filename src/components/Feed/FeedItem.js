@@ -1,11 +1,11 @@
 import React from "react";
 import {AudioList} from "../AudioList";
 import {FeedImage} from './FeedImage'
+import QSOShareButtons from './QSOShareButtons'
 import {
     Feed,
     Icon,
     Label,
-    Dropdown,
     Segment,
     Button,
     Item
@@ -17,7 +17,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/Actions';
 import PropTypes from 'prop-types';
-import {WhatsappShareButton, FacebookShareButton, TwitterShareButton} from 'react-share';
+
 class FeedItem extends React.Component {
     constructor() {
         super();
@@ -45,14 +45,11 @@ class FeedItem extends React.Component {
 
     recalculateRowHeight() {
         console.log("recalculateRowHeight");
-        this
-            .props
-            .recalculateRowHeight(this.props.index);
-    }
-
+        if (this.props.recalculateRowHeight) 
+            this.props.recalculateRowHeight(this.props.index);
+        }
+    
     render() {
-        //    console.log(this.props.qso.idqsos)
-
         let picList = this
             .props
             .qso
@@ -91,8 +88,10 @@ class FeedItem extends React.Component {
 }
 
                         <Feed.Meta>
-                            <Button.Group attached='bottom'>
-                                <Button><QSOLikeButton qso={this.props.qso}/></Button>
+                            <Button.Group basic fluid>
+
+                                <QSOLikeButton qso={this.props.qso}/>
+
                                 <Button>
                                     <Feed.Like
                                         onClick={this
@@ -103,40 +102,10 @@ class FeedItem extends React.Component {
                                     </Feed.Like>
                                 </Button>
                                 <Button>
-                                    <Dropdown text='Share' icon='share alternate' floating className='icon'>
-                                        <Dropdown.Menu>
-                                            <Dropdown.Item button>
-                                                <WhatsappShareButton
-                                                    title='CheckOut this QSO'
-                                                    url={'http://d3cevjpdxmn966.cloudfront.net/qso/' + this.props.qso.idqsos}>
+                                    <Feed.Like>
+                                        <QSOShareButtons idqso={this.props.qso.idqsos}/>
+                                    </Feed.Like>
 
-                                                    <Icon name='whatsapp'/>
-                                                    WhatsApp
-
-                                                </WhatsappShareButton>
-                                            </Dropdown.Item>
-                                            <Dropdown.Item button>
-                                                <FacebookShareButton
-                                                    quote="CheckOut this QSO"
-                                                    url={'http://d3cevjpdxmn966.cloudfront.net/qso/' + this.props.qso.idqsos}>
-
-                                                    <Icon name='facebook'/>
-                                                    Facebook
-
-                                                </FacebookShareButton>
-                                            </Dropdown.Item>
-                                            <Dropdown.Item button>
-                                                <TwitterShareButton
-                                                    title="CheckOut this QSO"
-                                                    url={'http://d3cevjpdxmn966.cloudfront.net/qso/' + this.props.qso.idqsos}>
-
-                                                    <Icon name='twitter'/>
-                                                    Twitter
-
-                                                </TwitterShareButton>
-                                            </Dropdown.Item>
-                                        </Dropdown.Menu>
-                                    </Dropdown>
                                 </Button>
                             </Button.Group>
                         </Feed.Meta>

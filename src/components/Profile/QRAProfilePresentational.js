@@ -16,15 +16,15 @@ import {
 const QRAProfile = (props) => {
     const panes = [
         {
+            menuItem: 'QSOs',
+            render: () => <Tab.Pane><QRAProfileQsos qsos={props.qra.qsos}/></Tab.Pane>
+        },{
             menuItem: 'Biography',
             render: () => <Tab.Pane><QRAProfileBio qraInfo={props.qraInfo}/></Tab.Pane>
         }, {
             menuItem: 'Information',
             render: () => <Tab.Pane><QRAProfileInfo qraInfo={props.qraInfo}/></Tab.Pane>
-        }, {
-            menuItem: 'QSOs',
-            render: () => <Tab.Pane><QRAProfileQsos qsos={props.qra.qsos}/></Tab.Pane>
-        }, {
+        },  {
             menuItem: 'Following',
             render: () => <Tab.Pane><QRAProfileFollowing following={props.qra.following}/></Tab.Pane>
         }, {
