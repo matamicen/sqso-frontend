@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/App";
+import { render } from 'react-snapshot';
 import thunk from 'redux-thunk';
 import createHistory from 'history/createBrowserHistory'
 import {ConnectedRouter, routerMiddleware, routerReducer as router} from 'react-router-redux'
@@ -26,7 +27,7 @@ const store = createStore(
     applyMiddleware(middleware, thunk)
 )
 
-ReactDOM.render((
+render((
     <div>
         <Provider store={store}>
             {/* ConnectedRouter will use the store from Provider automatically */}
