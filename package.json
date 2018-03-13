@@ -1,6 +1,6 @@
 {
   "name": "sqso-frontend",
-  "homepage": "http://matamicen.github.io/sqso-frontend",
+
   "version": "0.1.0",
   "private": true,
   "dependencies": {
