@@ -157,7 +157,7 @@ export function doFetchPublicFeed() {
             }).catch(function (error) {
             console.log("error");
             console.log(error);
-            alert(error);
+         //   alert(error);
         });
     };
 }

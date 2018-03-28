@@ -4,6 +4,7 @@ import QRAProfileFollowing from './QRAProfileFollowing'
 import QRAProfileQsos from './QRAProfileQsos'
 import QRAProfileBio from './QRAProfileBio'
 import QRAProfileInfo from './QRAProfileInfo'
+import {Helmet} from 'react-helmet'
 import {
     Button,
     Grid,
@@ -18,13 +19,13 @@ const QRAProfile = (props) => {
         {
             menuItem: 'QSOs',
             render: () => <Tab.Pane><QRAProfileQsos qsos={props.qra.qsos}/></Tab.Pane>
-        },{
+        }, {
             menuItem: 'Biography',
             render: () => <Tab.Pane><QRAProfileBio qraInfo={props.qraInfo}/></Tab.Pane>
         }, {
             menuItem: 'Information',
             render: () => <Tab.Pane><QRAProfileInfo qraInfo={props.qraInfo}/></Tab.Pane>
-        },  {
+        }, {
             menuItem: 'Following',
             render: () => <Tab.Pane><QRAProfileFollowing following={props.qra.following}/></Tab.Pane>
         }, {
@@ -45,15 +46,60 @@ const QRAProfile = (props) => {
     }
     return (
         <div>
-            {props.qraInfo
+            <Helmet
+                title={props.qraInfo.qra}
+                meta={[
+                {
+                    name: 'author',
+                    content: "SuperQSO.com"
+                }, {
+                    name: 'twitter:site',
+                    content: "SuperQSO.com"
+                }, {
+                    name: 'twitter:creator',
+                    content: "SuperQSO.com"
+                }, {
+                    name: 'twitter:title',
+                    content: props.qraInfo.qra
+                }, {
+                    name: 'twitter:image',
+                    content: props.qraInfo.profilepic
+                }, {
+                    property: 'og:title',
+                    content: props.qraInfo.qra
+                }, {
+                    property: 'og:site_name',
+                    content: "SuperQSO.com"
+                }, {
+                    property: 'og:type',
+                    content: "website"
+                }, {
+                    property: 'og:url',
+                    content: "http://superqso.com/" + props.qraInfo.qra
+                }, {
+                    property: 'og:description',
+                    content: props.qraInfo.qra
+                }, {
+                    property: 'og:image',
+                    content: props.qraInfo.profilepic
+                }, {
+                    property: 'og:site_name',
+                    content: "SuperQSO.com"
+                }, {
+                    name: 'viewport',
+                    content: 'width=device-width, maximum-scale=1'
+                }, {
+                    name: 'apple-itunes-app',
+                    content: 'app-id=1125423676'
+                }
+            ]}/> {props.qraInfo
                 ? <div>
                         <Segment>
                             <Grid columns={4}>
                                 <Grid.Column>
-                                    
-                                    { props.qraInfo.profilepic && 
-                                    <Image src={props.qraInfo.profilepic} centered size='small' circular/>
-                                    }
+
+                                    {props.qraInfo.profilepic && <Image src={props.qraInfo.profilepic} centered size='small' circular/>
+}
                                 </Grid.Column>
                                 <Grid.Column floated="left">
                                     <Header as='h1' icon textAlign='center'>
@@ -67,12 +113,10 @@ const QRAProfile = (props) => {
 }
                                     <Header as='h2' icon textAlign='center'>
                                         <Header.Content>
-                                            {props.qraInfo.firstname
-                                                && props.qraInfo.firstname + " "
-                                                }
-                                            {props.qraInfo.lastname
-                                                && props.qraInfo.lastname
-                                                }
+                                            {props.qraInfo.firstname && props.qraInfo.firstname + " "
+}
+                                            {props.qraInfo.lastname && props.qraInfo.lastname
+}
                                         </Header.Content>
                                     </Header>
                                 </Grid.Column>

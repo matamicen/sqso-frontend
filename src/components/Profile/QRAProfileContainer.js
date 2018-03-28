@@ -15,7 +15,7 @@ class QRAProfileContainer extends React.Component {
         this.handleButtonClick = this.handleButtonClick.bind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         let qraInMemory = this.props.qra ? this.props.qra.qra.qra : "";
         if (!this.props.fetchingUser && !this.props.userFetched && this.props.token) {
             this.props.actions.doFetchUserInfo(this.props.token);

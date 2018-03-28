@@ -69,6 +69,6 @@ export default connect(
     mapDispatchToProps
 )(FeedUser);
 
-FeedUser.PropTypes = {
+FeedUser.propTypes = {
     userData: PropTypes.object.isRequired
 }

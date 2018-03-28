@@ -24,7 +24,7 @@ export class Picture extends React.Component{
         }
     }
 }
-Picture.PropTypes = {
+Picture.propTypes = {
     img : PropTypes.string.isRequired,
     measure : PropTypes.func
 }

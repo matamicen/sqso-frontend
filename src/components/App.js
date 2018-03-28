@@ -15,7 +15,6 @@ import QSODetail from "./QSODetail"
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../actions/Actions';
-
 class App extends Component {
     constructor() {
         super();
@@ -83,8 +82,7 @@ class App extends Component {
     render() {
 
         return (
-            <div>
-
+            <div> 
                 <AppNavigation/>
 
                 <Container text style={{ marginTop: '5em' }}>

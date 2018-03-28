@@ -4,9 +4,8 @@ import FeedItem from "../Feed/FeedItem";
 
 const QRAProfileQsos = (props) => (
     <div>   
-      
-        {   
-            props.qsos && <Feed>
+        { console.table(props.qsos) }
+        {   props.qsos && <Feed>
             {props
                 .qsos
                 .map((qso, i) => <FeedItem key={i} qso={qso}/>)

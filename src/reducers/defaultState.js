@@ -15,7 +15,7 @@ import {
 const initialState = {
     userData: {
         token: null,
-        qra: null,
+        qra: 'LU2ACH',
         isAuthenticated: false,
         following: [],
         followers: [],
@@ -35,7 +35,7 @@ const initialState = {
 };
 
 //define a reducer with an initialized state action
-export default function defaultState(state = initialState, action) {
+export default (state = initialState, action) => {
     let newStore;
     let userInfo;
       switch (action.type) {
@@ -159,8 +159,8 @@ export default function defaultState(state = initialState, action) {
 
             return newStore;
         default:
-            return state
+            return state;
     }
 
-}
+};
 
