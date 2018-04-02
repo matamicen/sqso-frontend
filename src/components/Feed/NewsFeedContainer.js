@@ -10,7 +10,7 @@ import 'react-virtualized/styles.css'; // only needs to be imported once
 class NewsFeedContainer extends React.Component {
 // This example assumes you have a way to know/load this information
 
-    componentWillMount() {
+    componentDidMount() {
         if (!this.props.fetchingQSOS && !this.props.qsosFetched) {
             //  this.setState({fetchingData: true});
             this.props.isAuthenticated ?
