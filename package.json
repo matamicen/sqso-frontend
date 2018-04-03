@@ -43,9 +43,8 @@
     "redux-devtools-dock-monitor": "^1.1.2",
     "redux-devtools-log-monitor": "^1.3.0"
   },
-  "scripts": {
-    "prestart": "NODE_ENV=development",
-    "start": "node app.js",
+  "scripts": {    
+    "start": "npm run build && node app.js",
     "dummy": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
