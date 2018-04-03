@@ -6,6 +6,7 @@ import * as Actions from '../actions/Actions';
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import Helmet from 'react-helmet';
+import Page from './Profile/page'
 
 class QSODetail extends React.Component {
 
@@ -20,16 +21,8 @@ class QSODetail extends React.Component {
             return null;
         } else {
             return (
-                <div>
-                     <Helmet
-                    title="SuperQSO"
-                    meta={[
-                        {property: 'og:title', content: 'SuperQSO'},
-                        {property:'og:type', content:'article'},
-                        {property:'og:image', content:this.props.qso.media[0].url},
-                        {property:"og:url", content:window.location.href},
-                        {property:'og:description', content:"SuperQSO QSO record created by " + this.props.qso.qra }
-                    ]} />
+                
+                      <Page >
 
 
                     <Grid>
@@ -43,7 +36,7 @@ class QSODetail extends React.Component {
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>
-                </div>
+               </Page>
             );
         }
     }
