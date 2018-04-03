@@ -5,6 +5,7 @@ import QRAProfileQsos from './QRAProfileQsos'
 import QRAProfileBio from './QRAProfileBio'
 import QRAProfileInfo from './QRAProfileInfo'
 import {Helmet} from 'react-helmet'
+import Page from './page';
 import {
     Button,
     Grid,
@@ -45,54 +46,9 @@ const QRAProfile = (props) => {
         buttonText = "Follow";
     }
     return (
-        <div>
-            <Helmet
-                title={props.qraInfo.qra}
-                meta={[
-                {
-                    name: 'author',
-                    content: "SuperQSO.com"
-                }, {
-                    name: 'twitter:site',
-                    content: "SuperQSO.com"
-                }, {
-                    name: 'twitter:creator',
-                    content: "SuperQSO.com"
-                }, {
-                    name: 'twitter:title',
-                    content: props.qraInfo.qra
-                }, {
-                    name: 'twitter:image',
-                    content: props.qraInfo.profilepic
-                }, {
-                    name: 'og:title',
-                    content: props.qraInfo.qra
-                }, {
-                    name: 'og:site_name',
-                    content: "SuperQSO.com"
-                }, {
-                    name: 'og:type',
-                    content: "website"
-                }, {
-                    name: 'og:url',
-                    content: "http://superqso.com/" + props.qraInfo.qra
-                }, {
-                    name: 'og:description',
-                    content: props.qraInfo.qra
-                }, {
-                    name: 'og:image',
-                    content: props.qraInfo.profilepic
-                }, {
-                    name: 'og:site_name',
-                    content: "SuperQSO.com"
-                }, {
-                    name: 'viewport',
-                    content: 'width=device-width, maximum-scale=1'
-                }, {
-                    name: 'apple-itunes-app',
-                    content: 'app-id=1125423676'
-                }
-            ]}/> {props.qraInfo
+
+        <Page title={props.qraInfo.qra} id={props.qraInfo.qra}>
+            {props.qraInfo
                 ? <div>
                         <Segment>
                             <Grid columns={4}>
@@ -131,7 +87,7 @@ const QRAProfile = (props) => {
                 : "QRA Not Found"
 }
 
-        </div>
+        </Page>
 
     )
 };
