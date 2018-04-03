@@ -65,25 +65,25 @@ const QRAProfile = (props) => {
                     name: 'twitter:image',
                     content: props.qraInfo.profilepic
                 }, {
-                    property: 'og:title',
+                    name: 'og:title',
                     content: props.qraInfo.qra
                 }, {
-                    property: 'og:site_name',
+                    name: 'og:site_name',
                     content: "SuperQSO.com"
                 }, {
-                    property: 'og:type',
+                    name: 'og:type',
                     content: "website"
                 }, {
-                    property: 'og:url',
+                    name: 'og:url',
                     content: "http://superqso.com/" + props.qraInfo.qra
                 }, {
-                    property: 'og:description',
+                    name: 'og:description',
                     content: props.qraInfo.qra
                 }, {
-                    property: 'og:image',
+                    name: 'og:image',
                     content: props.qraInfo.profilepic
                 }, {
-                    property: 'og:site_name',
+                    name: 'og:site_name',
                     content: "SuperQSO.com"
                 }, {
                     name: 'viewport',
