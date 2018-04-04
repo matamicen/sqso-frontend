@@ -20,7 +20,7 @@ class QSODetail extends React.Component {
         } else {
             return (
 
-                <Page >
+              
 
                     <Grid>
                         <Grid.Row columns={1}>
@@ -33,7 +33,7 @@ class QSODetail extends React.Component {
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>
-                </Page>
+               
             );
         }
     }
