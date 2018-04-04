@@ -57,9 +57,7 @@ const universalLoader = (req, res) => {
         helmet.link.toString(),
       body: routeMarkup
     });
-  console.log(prepHTML(htmlData,   {
-    head: helmet.meta.toString()    }
-  ));
+  console.log(html);
     // Up, up, and away...
     res.send(html);
   });

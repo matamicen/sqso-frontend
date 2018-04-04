@@ -15,6 +15,7 @@ import QSODetail from "./QSODetail"
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../actions/Actions';
+import Page from './Profile/page'
 class App extends Component {
     constructor() {
         super();
@@ -83,6 +84,7 @@ class App extends Component {
 
         return (
             <div> 
+                <Page >
                 <AppNavigation/>
 
                 <Container text style={{ marginTop: '5em' }}>
@@ -98,6 +100,7 @@ class App extends Component {
                         <Route path="/qso/:idqso" component={() => <QSODetail/>}/>
                     </Switch>
               </Container>
+              </Page>
             </div>
 
         );
