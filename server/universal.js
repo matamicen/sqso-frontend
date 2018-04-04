@@ -14,7 +14,7 @@ import App from '../src/components/App';
 
 // A simple helper function to prepare the HTML markup
 const prepHTML = (data, { html, head, body }) => {
-  data = data.replace('<html lang="en">', `<html ${html}`);
+  data = data.replace('<html lang="en">', `<html ${html}>`);
   data = data.replace('</head>', `${head}</head>`);
   data = data.replace('<div id="root"></div>', `<div id="root">${body}</div>`);
 
@@ -47,7 +47,8 @@ const universalLoader = (req, res) => {
 
     // Let Helmet know to insert the right tags
     const helmet = Helmet.renderStatic();
-
+    console.log(prepHTML(htmlData, {
+      html: helmet.htmlAttributes.toString()}));
     // Form the final HTML response
     const html = prepHTML(htmlData, {
       html: helmet.htmlAttributes.toString(),
@@ -57,7 +58,7 @@ const universalLoader = (req, res) => {
         helmet.link.toString(),
       body: routeMarkup
     });
-  console.log(html);
+
     // Up, up, and away...
     res.send(html);
   });

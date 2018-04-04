@@ -47,7 +47,7 @@ const QRAProfile = (props) => {
     console.log(props.qraInfo.profilepic)
     return (
          
-        <Page title={props.qraInfo.qra} image={props.qraInfo.profilepic}>
+        <Page title={props.qraInfo.qra} id={props.qraInfo.qra} image={props.qraInfo.profilepic}>
             {props.qraInfo
                 ? <div>
                         <Segment>
