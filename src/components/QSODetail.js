@@ -5,7 +5,6 @@ import {bindActionCreators} from 'redux';
 import * as Actions from '../actions/Actions';
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
-import Helmet from 'react-helmet';
 import Page from './Profile/page'
 
 class QSODetail extends React.Component {
@@ -16,14 +15,12 @@ class QSODetail extends React.Component {
         }
     
     render() {
-
         if (!this.props.qso) {
             return null;
         } else {
             return (
-                
-                      <Page >
 
+                <Page >
 
                     <Grid>
                         <Grid.Row columns={1}>
@@ -36,7 +33,7 @@ class QSODetail extends React.Component {
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>
-               </Page>
+                </Page>
             );
         }
     }

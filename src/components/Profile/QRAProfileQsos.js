@@ -1,10 +1,9 @@
 import React from 'react'
-import {Feed} from 'semantic-ui-react'
+import {Feed} from 'semantic-ui-react'; 
 import FeedItem from "../Feed/FeedItem";
 
 const QRAProfileQsos = (props) => (
-    <div>   
-        { console.table(props.qsos) }
+    <div>        
         {   props.qsos && <Feed>
             {props
                 .qsos

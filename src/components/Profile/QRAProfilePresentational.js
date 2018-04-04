@@ -4,7 +4,6 @@ import QRAProfileFollowing from './QRAProfileFollowing'
 import QRAProfileQsos from './QRAProfileQsos'
 import QRAProfileBio from './QRAProfileBio'
 import QRAProfileInfo from './QRAProfileInfo'
-import {Helmet} from 'react-helmet'
 import Page from './page';
 import {
     Button,
@@ -45,9 +44,10 @@ const QRAProfile = (props) => {
     } else {
         buttonText = "Follow";
     }
+    console.log(props.qraInfo.profilepic)
     return (
-
-        <Page title={props.qraInfo.qra} id={props.qraInfo.qra}>
+         
+        <Page title={props.qraInfo.qra} image={props.qraInfo.profilepic}>
             {props.qraInfo
                 ? <div>
                         <Segment>

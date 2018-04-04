@@ -48,7 +48,7 @@ class Page extends Component {
       { name: 'og:title', content: theTitle },
       { name: 'og:type', content: contentType || 'website' },
       { name: 'og:url', content: defaultUrl + pathname },
-      { name: 'og:image', content: 'https://cra-ssr.herokuapp.com/images/logo.jpg' },
+      { name: 'og:image', content: theImage },
       
       { property: 'og:description', content: theDescription },
       { property: 'og:site_name', content: defaultTitle },
