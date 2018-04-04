@@ -83,24 +83,26 @@ class App extends Component {
     render() {
 
         return (
-            <div> 
-            
+            <div>
+
                 <AppNavigation/>
 
-                <Container text style={{ marginTop: '5em' }}>
+                <Container
+                    text
+                    style={{
+                    marginTop: '5em'
+                }}>
                     <Switch>
                         <Route exact path="/" component={() => <Home/>}/>
 
                         <Route exact path="/signup" component={SignUp}/>
                         <Route exact path="/login" component={() => <LogIn/>}/>
                         <Route exact path="/logout" component={() => <Logout/>}/> {/*<Route name="recover-password" path="/recover-password" component={RecoverPassword} />*/}
-                        {/*<Route name="reset-password" path="/reset-password/:token" component={ResetPassword} />*/}
-                        {/*<Route component={NotFound} />*/}
                         <Route exact path="/:qra" component={() => <QRAProfileContainer/>}/>
                         <Route path="/qso/:idqso" component={() => <QSODetail/>}/>
                     </Switch>
-              </Container>
-            
+                </Container>
+
             </div>
 
         );

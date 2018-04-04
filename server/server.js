@@ -20,7 +20,7 @@ app.use(morgan('dev'));
 
 // Set up route handling, include static assets and an optional API
 app.use('/', index);
-app.use('/', express.static(path.resolve(__dirname, '../build')));
+app.use(express.static(path.resolve(__dirname, '../build')));
 app.use('/api', api);
 app.use('/', universalLoader);
 
