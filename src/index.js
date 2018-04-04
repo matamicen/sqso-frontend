@@ -8,6 +8,8 @@ import {ConnectedRouter} from 'react-router-redux'
 //import {applyMiddleware, combineReducers, createStore} from 'redux';
 import {Provider} from 'react-redux'
 import store, { history } from './store';
+// import registerServiceWorker from './registerServiceWorker';
+import { unregister } from './registerServiceWorker';
 
 // Create a history of your choosing (we're using a browser history in this case)
 // const history = createHistory()
@@ -38,4 +40,5 @@ ReactDOM.render((
         </Provider>
     </div>
 ), document.getElementById('root'))
-
+// registerServiceWorker()
+unregister();
