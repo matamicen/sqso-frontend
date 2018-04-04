@@ -3,7 +3,7 @@ import { withRouter } from 'react-router';
 import Helmet from 'react-helmet';
 
 const defaultUrl = 'https://cra-ssr.herokuapp.com';
-const defaultTitle = 'SSR Website';
+const defaultTitle = 'SuperQSO.com';
 const defaultDescription =
   'Here is a pretty awesome meta tag description for my website.';
 const defaultImage = `https://cra-ssr.herokuapp.com/images/logo.jpg`;
