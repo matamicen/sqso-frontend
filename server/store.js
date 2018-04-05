@@ -18,7 +18,7 @@ const createServerStore = (path = '/') => {
 
   // Store it all
   const store = createStore(rootReducer, initialState, composedEnhancers);
-console.log(rootReducer)
+
   // Return all that I need
   return {
     history,
