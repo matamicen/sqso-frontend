@@ -73,7 +73,7 @@ class App extends Component {
 
     }
 
-    componentWillMount() {
+    componentDidMount() {
 
         this.loadAuthenticatedUser()
 
@@ -84,7 +84,6 @@ class App extends Component {
 
         return (
             <div>
-
                 <AppNavigation/>
 
                 <Container
@@ -94,10 +93,9 @@ class App extends Component {
                 }}>
                     <Switch>
                         <Route exact path="/" component={() => <Home/>}/>
-
                         <Route exact path="/signup" component={SignUp}/>
                         <Route exact path="/login" component={() => <LogIn/>}/>
-                        <Route exact path="/logout" component={() => <Logout/>}/> {/*<Route name="recover-password" path="/recover-password" component={RecoverPassword} />*/}
+                        <Route exact path="/logout" component={() => <Logout/>}/> 
                         <Route exact path="/:qra" component={() => <QRAProfileContainer/>}/>
                         <Route path="/qso/:idqso" component={() => <QSODetail/>}/>
                     </Switch>
