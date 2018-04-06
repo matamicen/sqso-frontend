@@ -77,7 +77,7 @@ class Page extends Component {
 
   render() {
     const { children, id, className, ...rest } = this.props;
-
+console.log(this.getMetaTags(rest, this.props.location.pathname))
     return (
       <div id={id} className={className}>
         <Helmet

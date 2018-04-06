@@ -8,6 +8,7 @@
 
 # production
 /build
+build/
 
 # misc
 .DS_Store
@@ -30,3 +31,7 @@ yarn-error.log*
 
 !.elasticbeanstalk/*.global.yml
 
+build/asset-manifest.json
+build/asset-manifest.json
+build/service-worker.js
+build/index.html

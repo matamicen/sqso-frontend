@@ -9,7 +9,7 @@ import Page from './Profile/page'
 
 class QSODetail extends React.Component {
 
-    componentWillMount() {
+    componentDidMount() {
         if (!this.props.FetchingQSO) 
             this.props.actions.doFetchQSO(this.props.match.params.idqso);
         }

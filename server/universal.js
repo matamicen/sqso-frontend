@@ -1,22 +1,22 @@
 import path from 'path';
 import fs from 'fs';
 
-import React from 'react';
-import { renderToString } from 'react-dom/server';
-import Helmet from 'react-helmet';
+// import React from 'react';
+// import { renderToString } from 'react-dom/server';
+// import Helmet from 'react-helmet';
 
-import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
-import { Route } from 'react-router-dom';
-import createServerStore from './store';
+// import { Provider } from 'react-redux';
+// import { ConnectedRouter } from 'react-router-redux';
+// import { Route } from 'react-router-dom';
+// import createServerStore from './store';
 
-import App from '../src/components/App';
+// import App from '../src/components/App';
 
 // A simple helper function to prepare the HTML markup
 const prepHTML = (data, { html, head, body }) => {
-  data = data.replace('<html lang="en">', `<html ${html}`);
+  // data = data.replace('<html lang="en">', `<html ${html}`);
   data = data.replace('</head>', `${head}</head>`);
-  data = data.replace('<div id="root"></div>', `<div id="root">${body}</div>`);
+  // data = data.replace('<div id="root"></div>', `<div id="root">${body}</div>`);
 
   return data;
 };
@@ -34,30 +34,33 @@ const universalLoader = (req, res) => {
     }
 
     // Create a store and sense of history based on the current path
-    const { store, history } = createServerStore(req.path);
+    // const { store, history } = createServerStore(req.path);
 
     // Render App in React
-    const routeMarkup = renderToString(
-      <Provider store={store}>
-        <ConnectedRouter history={history}>
-          <Route component={App} />
-        </ConnectedRouter>
-      </Provider>
-    );
+    // const routeMarkup = renderToString(
+    //   <Provider store={store}>
+    //     <ConnectedRouter history={history}>
+    //       <Route component={App} />
+    //     </ConnectedRouter>
+    //   </Provider>
+    // );
 
     // Let Helmet know to insert the right tags
-    const helmet = Helmet.renderStatic();
-   
+    // const helmet = Helmet.renderStatic();
+
     // Form the final HTML response
     const html = prepHTML(htmlData, {
-      html: helmet.htmlAttributes.toString(),
+      // html: helmet.htmlAttributes.toString(),
       head:
-        helmet.title.toString() +
-        helmet.meta.toString() +
-        helmet.link.toString(),
-      body: routeMarkup
+        // helmet.title.toString() +
+        '<meta name="og:title" content="Facebook Open Graph META Tags"/>' + 
+        '<meta property="og:image" content="https://s3.amazonaws.com/sqso/us-east-1:cc508f7e-92fb-41f5-b0ef-8ba6831ce09c/images/2018-04-06T135017.jpg"/>' +
+        '<meta property="og:site_name" content="SuperQSO.com"/>' +
+        '<meta property="og:description" content="SuperQSO.com"/>',
+        // helmet.link.toString(),
+      // body: routeMarkup
     });
-    
+    console.log(req.body);
     // Up, up, and away...
     res.send(html);
   });

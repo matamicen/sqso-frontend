@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+
 import {Route, Switch, withRouter} from "react-router-dom";
 import "../styles/App.css";
 import Home from "./Home/Home";
@@ -46,8 +47,7 @@ class App extends Component {
                         .actions
                         .doLogin(token, cognitoUser.username.toUpperCase());
 
-                    // this.props.actions.doFetchUserFeed(token);
-                    // this.props.actions.doFetchUserInfo(token);
+       
 
                     var creds = new AWS.CognitoIdentityCredentials({
                         IdentityPoolId: 'us-east-1:051d18f6-a6bf-4237-af95-33c0f3a45cc1', // your identity pool id here
@@ -69,17 +69,17 @@ class App extends Component {
 
                 }.bind(this));
         }
-        //else this.props.actions.doFetchPublicFeed();
+        
 
     }
 
     componentDidMount() {
 
-        this.loadAuthenticatedUser()
+          this.loadAuthenticatedUser()
 
     }
 
-    componentWillUnmount() {}
+
     render() {
 
         return (

@@ -46,8 +46,8 @@ const QRAProfile = (props) => {
     }
     console.log(props.qraInfo.profilepic)
     return (
-         
-        <Page title={props.qraInfo.qra} id={props.qraInfo.qra} image={props.qraInfo.profilepic}>
+        <div>
+
             {props.qraInfo
                 ? <div>
                         <Segment>
@@ -87,8 +87,7 @@ const QRAProfile = (props) => {
                 : "QRA Not Found"
 }
 
-        </Page>
-
+        </div>
     )
 };
 

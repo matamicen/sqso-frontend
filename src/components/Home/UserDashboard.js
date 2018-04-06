@@ -20,7 +20,7 @@ class UserDashboard extends React.Component {
         this.state = {};
     }
 
-    componentWillMount() {}
+    componentDidMount() {}
     handleContextRef = contextRef => this.setState({contextRef})
     render() {
         const {contextRef} = this.state
