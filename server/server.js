@@ -7,6 +7,8 @@ import path from 'path';
 import index from './routes/index';
 import api from './routes/api';
 import universalLoader from './universal';
+import replace_qra_tags from './replace_qra_tags'
+import replace_qso_tags from './replace_qso_tags'
 
 // Create our express app (using the port optionally specified)
 const app = express();
@@ -15,14 +17,16 @@ const PORT = process.env.PORT || 3000;
 // Compress, parse, and log
 app.use(compression());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
 // Set up route handling, include static assets and an optional API
-app.use('/', index);
-app.use('/',express.static(path.resolve(__dirname, '../build')));
-app.use('/api', api);
-app.use('/', universalLoader);
+ 
+
+
+
+app.use(express.static(path.resolve(__dirname, '../build')));
+app.use('/',index)
 
 // Let's rock
 app.listen(PORT, () => {
