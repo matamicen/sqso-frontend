@@ -1,5 +1,5 @@
 import React from "react";
-import { Label} from "semantic-ui-react";
+import Label from 'semantic-ui-react/dist/commonjs/elements/Label'
 import {Link} from 'react-router-dom'
 
 export class QRA extends React.Component {

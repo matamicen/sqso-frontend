@@ -1,6 +1,6 @@
 import React from "react";
 import {Audio} from "./Audio";
-import {Item} from 'semantic-ui-react'
+import Item from 'semantic-ui-react/dist/commonjs/views/Item'
 export class AudioList extends React.Component {
     constructor() {
         super();

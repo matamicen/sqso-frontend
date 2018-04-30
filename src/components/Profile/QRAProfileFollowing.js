@@ -1,5 +1,6 @@
 import React from 'react'
-import {Image, List} from 'semantic-ui-react'
+import List from 'semantic-ui-react/dist/commonjs/elements/List'
+import Image from 'semantic-ui-react/dist/commonjs/elements/Image'
 import {Link} from 'react-router-dom'
 
 const QRAProfileFollowing = (props) => (

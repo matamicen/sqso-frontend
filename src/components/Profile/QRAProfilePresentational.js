@@ -4,15 +4,13 @@ import QRAProfileFollowing from './QRAProfileFollowing'
 import QRAProfileQsos from './QRAProfileQsos'
 import QRAProfileBio from './QRAProfileBio'
 import QRAProfileInfo from './QRAProfileInfo'
-import Page from './page';
-import {
-    Button,
-    Grid,
-    Header,
-    Image,
-    Segment,
-    Tab
-} from 'semantic-ui-react'
+
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
+import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid'
+import Header from 'semantic-ui-react/dist/commonjs/elements/Header'
+import Image from 'semantic-ui-react/dist/commonjs/elements/Image'
+import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
+import Tab from 'semantic-ui-react/dist/commonjs/modules/Tab'
 
 const QRAProfile = (props) => {
     const panes = [

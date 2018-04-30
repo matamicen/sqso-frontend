@@ -1,6 +1,8 @@
 import React from "react";
 import FeedQSO from "../Feed/NewsFeedContainer";
-import {Container, Grid} from 'semantic-ui-react'
+
+import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid'
+import Container from 'semantic-ui-react/dist/commonjs/elements/Container'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/Actions';

@@ -1,5 +1,8 @@
 import React from "react";
-import {Comment, Item, Button, Icon} from "semantic-ui-react";
+import  Icon from 'semantic-ui-react/dist/commonjs/elements/Icon'
+import Item from 'semantic-ui-react/dist/commonjs/views/Item'
+import Comment from 'semantic-ui-react/dist/commonjs/views/Comment'
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';

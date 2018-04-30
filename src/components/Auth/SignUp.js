@@ -1,21 +1,19 @@
 import React from "react";
 // ES Modules, e.g. transpiling with Babel
-import {Config, CognitoIdentityCredentials} from "aws-sdk";
+// import {Config, CognitoIdentityCredentials} from "aws-sdk";
 import {CognitoUserPool, CognitoUserAttribute} from "amazon-cognito-identity-js";
 import "../../styles/App.css";
 import appConfig from "./Config";
 import {Redirect} from "react-router-dom";
-import {
-    Form,
-    Grid,
-    Header,
-    Segment,
-    Message,
-    Button
-} from "semantic-ui-react";
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
+import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
+import Header from 'semantic-ui-react/dist/commonjs/elements/Header'
+import Form from 'semantic-ui-react/dist/commonjs/collections/Form'
+import Message from 'semantic-ui-react/dist/commonjs/collections/Message'
+import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid'
 
-Config.region = appConfig.region;
-Config.credentials = new CognitoIdentityCredentials({IdentityPoolId: appConfig.IdentityPoolId});
+// window.config.region = appConfig.region;
+// window.Config.credentials = new window.CognitoIdentityCredentials({IdentityPoolId: appConfig.IdentityPoolId});
 
 const userPool = new CognitoUserPool({UserPoolId: appConfig.UserPoolId, ClientId: appConfig.ClientId});
 

@@ -9,7 +9,13 @@ import {Link} from "react-router-dom";
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as Actions from '../../actions/Actions';
-import {Button, Form, Header, Message, Grid, Segment} from 'semantic-ui-react'
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
+import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
+import Header from 'semantic-ui-react/dist/commonjs/elements/Header'
+import Form from 'semantic-ui-react/dist/commonjs/collections/Form'
+import Message from 'semantic-ui-react/dist/commonjs/collections/Message'
+import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid'
+
 
 var poolData = {
     UserPoolId: appConfig.UserPoolId, // Your user pool id here

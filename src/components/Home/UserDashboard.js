@@ -1,14 +1,12 @@
 import React from "react";
 import NewsFeed from "../Feed/NewsFeedContainer";
-import {
-    Card,
-    Container,
-    Feed,
-    Grid,
-   
-    Segment,
-    Sticky
-} from "semantic-ui-react";
+
+import Card from 'semantic-ui-react/dist/commonjs/views/Card'
+import Container from 'semantic-ui-react/dist/commonjs/elements/Container'
+import Feed from 'semantic-ui-react/dist/commonjs/views/Feed'
+import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid'
+import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
+import  Sticky from 'semantic-ui-react/dist/commonjs/modules/Sticky'
 import {connect} from 'react-redux'
 import FeedUser from '../Feed/FeedUser'
 import {bindActionCreators} from 'redux';

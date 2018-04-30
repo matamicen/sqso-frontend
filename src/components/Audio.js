@@ -1,5 +1,6 @@
 import React from 'react';
-import {Button, Icon} from 'semantic-ui-react'
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
+import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
 import PropTypes from 'prop-types';
 
 export class Audio extends React.Component {

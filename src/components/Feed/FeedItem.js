@@ -2,14 +2,13 @@ import React from "react";
 import {AudioList} from "../AudioList";
 import {FeedImage} from './FeedImage'
 import QSOShareButtons from './QSOShareButtons'
-import {
-    Feed,
-    Icon,
-    Label,
-    Segment,
-    Button,
-    Item
-} from "semantic-ui-react";
+
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
+import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon'
+import Label from 'semantic-ui-react/dist/commonjs/elements/Label'
+import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
+import Item from 'semantic-ui-react/dist/commonjs/views/Item'
+import Feed from 'semantic-ui-react/dist/commonjs/views/Feed'
 import QSOComments from "../QSOComments";
 import QSOLikeButton from "./QSOLikeButton";
 import {QRAs} from "../QRAs";
@@ -128,5 +127,5 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(mapStateToProps, mapDispatchToProps, null, {pure: false})(FeedItem);
 FeedItem.propTypes = {
     qso: PropTypes.object.isRequired,
-   // measure: PropTypes.func.isRequired
+    // measure: PropTypes.func.isRequired
 }

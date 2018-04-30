@@ -1,6 +1,8 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import {Menu, Dropdown} from 'semantic-ui-react'
+
+import  Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown'
+import Menu from 'semantic-ui-react/dist/commonjs/collections/Menu'
 import NavigationSearch from './NavigationSearch'
 
 const PublicNavigation = () => (

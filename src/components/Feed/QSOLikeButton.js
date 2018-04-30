@@ -1,5 +1,7 @@
 import React from "react";
-import  {Button, Feed, Icon} from "semantic-ui-react";
+import  Icon from 'semantic-ui-react/dist/commonjs/elements/Icon'
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
+import Feed from 'semantic-ui-react/dist/commonjs/views/Feed'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/Actions';

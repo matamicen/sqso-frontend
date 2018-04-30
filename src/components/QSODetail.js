@@ -1,11 +1,14 @@
 import React from "react";
 import QSOFeedItem from "./Feed/FeedItem";
-import {Container, Feed, Grid} from 'semantic-ui-react'
+
+import Container from 'semantic-ui-react/dist/commonjs/elements/Container'
+import Feed from 'semantic-ui-react/dist/commonjs/views/Feed'
+import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../actions/Actions';
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
-import Page from './Profile/page'
+
 
 class QSODetail extends React.Component {
 

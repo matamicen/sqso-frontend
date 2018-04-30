@@ -7,16 +7,16 @@ import {SignUp} from "./Auth/SignUp";
 import Logout from "./Auth/Logout";
 import LogIn from "./Auth/LogIn";
 import AppNavigation from "./Home/AppNavigation";
-import AWS from "aws-sdk";
+// import AWS from "aws-sdk";
 import {CognitoUserPool} from "amazon-cognito-identity-js";
 import appConfig from "./Auth/Config";
-import {Container} from 'semantic-ui-react'
+import Container from 'semantic-ui-react/dist/commonjs/elements/Container'
 import QRAProfileContainer from "./Profile/QRAProfileContainer";
 import QSODetail from "./QSODetail"
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../actions/Actions';
-import Page from './Profile/page'
+
 class App extends Component {
     constructor() {
         super();
@@ -48,8 +48,8 @@ class App extends Component {
                         .doLogin(token, cognitoUser.username.toUpperCase());
 
        
-
-                    var creds = new AWS.CognitoIdentityCredentials({
+                    console.log(window.AWS)
+                    var creds = new window.AWS.CognitoIdentityCredentials({
                         IdentityPoolId: 'us-east-1:051d18f6-a6bf-4237-af95-33c0f3a45cc1', // your identity pool id here
                         Logins: {
                             // Change the key below according to the specific region your user pool is in.

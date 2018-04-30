@@ -1,14 +1,13 @@
 import FeedItem from './FeedItem'
 import React, {PureComponent} from 'react';
-import {
-    AutoSizer,
-    List,
-    InfiniteLoader,
-    WindowScroller,
-    CellMeasurer,
-    CellMeasurerCache
-} from 'react-virtualized'
-import {Grid} from 'semantic-ui-react'
+
+import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
+import List from 'react-virtualized/dist/commonjs/List'
+import InfiniteLoader from 'react-virtualized/dist/commonjs/InfiniteLoader'
+import WindowScroller from 'react-virtualized/dist/commonjs/WindowScroller'
+import {CellMeasurer} from 'react-virtualized/dist/commonjs/CellMeasurer'
+import {CellMeasurerCache} from 'react-virtualized/dist/commonjs/CellMeasurer'
+import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid'
 import PropTypes from "prop-types";
 export default class NewsFeed extends PureComponent {
     constructor(props) {

@@ -1,6 +1,8 @@
 import React from "react";
 
-import {Modal, Segment, Image} from 'semantic-ui-react'
+import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
+import Image from 'semantic-ui-react/dist/commonjs/elements/Image'
+import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal'
 
 export const FeedImage = ({img, measure}) => (
     <Modal

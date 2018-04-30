@@ -1,5 +1,7 @@
 import React from "react";
-import {Button, Comment, Form} from "semantic-ui-react";
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
+import Form from 'semantic-ui-react/dist/commonjs/collections/Form'
+import Comment from 'semantic-ui-react/dist/commonjs/views/Comment'
 import QSOCommentItem from "./QSOCommentItem";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
@@ -10,27 +12,27 @@ class QSOComments extends React.Component {
         super();
         this.state = {
             comments: [],
-            comment: null,
-
+            comment: null
         };
 
-        this.handleAddComment = this.handleAddComment.bind(this);
+        this.handleAddComment = this
+            .handleAddComment
+            .bind(this);
 
     }
 
     componentDidMount() {
-        if (this.props.qso.comments) this.setState({comments: this.props.qso.comments});
-
-
-        if (this.props.qso.comments) {
-
-        }
+        if (this.props.qso.comments) 
+            this.setState({comments: this.props.qso.comments});
+        
+        if (this.props.qso.comments) {}
     }
-
 
     doComment(c) {
 
-        var apigClient = window.apigClientFactory.newClient({});
+        var apigClient = window
+            .apigClientFactory
+            .newClient({});
 
         var params = {
             "Authorization": this.props.state.default.userData.token
@@ -41,7 +43,8 @@ class QSOComments extends React.Component {
             "datetime": c.datetime
         };
         var additionalParams = {};
-        apigClient.qsoCommentPost(params, body, additionalParams)
+        apigClient
+            .qsoCommentPost(params, body, additionalParams)
             .then(function (result) {
                 if (result.data.body.error > 0) {
                     console.error(result.data.body.message);
@@ -55,46 +58,61 @@ class QSOComments extends React.Component {
             });
     }
 
-
     handleAddComment(e) {
 
         e.preventDefault();
-        if (!e.target.comment.value) return;
-
+        if (!e.target.comment.value) 
+            return;
+        
         var datetime = new Date();
         var comment = {
-            qra: this.props.state.default.userData.qra.toUpperCase(),
+            qra: this
+                .props
+                .state
+                .default
+                .userData
+                .qra
+                .toUpperCase(),
             comment: e.target.comment.value,
             datetime: datetime
         };
         this.setState({comment: comment});
-        this.setState({comments: this.state.comments.concat(comment)});
+        this.setState({
+            comments: this
+                .state
+                .comments
+                .concat(comment)
+        });
         e.target.comment.value = null;
 
         this.doComment(comment);
     }
 
-
     render() {
         let comments = null;
         if (this.state.comments) {
-            comments = this.state.comments.map((comment, i) =>
-                <QSOCommentItem key={i} comment={comment}/>
-            )
-            this.props.recalculateRowHeight();
-        }
-        ;
+            comments = this
+                .state
+                .comments
+                .map((comment, i) => <QSOCommentItem key={i} comment={comment}/>)
+            this
+                .props
+                .recalculateRowHeight();
+        };
         let form = null;
         if (this.props.state.default.userData.isAuthenticated) {
-            form = <Form size="mini" reply onSubmit={this.handleAddComment.bind(this)}>
+            form = <Form
+                size="mini"
+                reply
+                onSubmit={this
+                .handleAddComment
+                .bind(this)}>
                 <Form.Group>
                     <input placeholder='Comment' name="comment"/>
                     <Button size="mini" content='Add'/>
                 </Form.Group>
             </Form>
-        }
-        ;
-
+        };
 
         return (
             <Comment.Group threaded>
@@ -105,16 +123,9 @@ class QSOComments extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({
-    state: state
-});
+const mapStateToProps = (state) => ({state: state});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 })
 
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(QSOComments);
-
+export default connect(mapStateToProps, mapDispatchToProps)(QSOComments);

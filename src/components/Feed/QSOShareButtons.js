@@ -1,6 +1,8 @@
 import React from "react";
 import {WhatsappShareButton, FacebookShareButton, TwitterShareButton} from 'react-share';
-import {Icon, Dropdown} from "semantic-ui-react";
+
+import  Icon from 'semantic-ui-react/dist/commonjs/elements/Icon'
+import  Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown'
 const QSOShareButtons = ({idqso}) => {
     return (
         <Dropdown upward text='Share' icon='share alternate' floating labeled className='icon'>
