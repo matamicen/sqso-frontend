@@ -3,7 +3,7 @@ import React from "react";
 import appConfig from "./Config";
 import "../../styles/App.css";
 import {Redirect} from "react-router-dom";
-// import {CognitoUserPool} from "amazon-cognito-identity-js";
+import {CognitoUserPool} from "amazon-cognito-identity-js";
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
 import * as Actions from '../../actions/Actions';
@@ -16,7 +16,7 @@ var poolData = {
 class Logout extends React.Component {
 
     componentDidMount() {
-        var userPool = new window.CognitoUserPool(poolData);
+        var userPool = new CognitoUserPool(poolData);
         var cognitoUser = userPool.getCurrentUser();
 
         if (cognitoUser != null) {

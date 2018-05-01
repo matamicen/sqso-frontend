@@ -3,7 +3,7 @@ import React, {PureComponent} from 'react';
 
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import List from 'react-virtualized/dist/commonjs/List'
-import InfiniteLoader from 'react-virtualized/dist/commonjs/InfiniteLoader'
+// import InfiniteLoader from 'react-virtualized/dist/commonjs/InfiniteLoader'
 import WindowScroller from 'react-virtualized/dist/commonjs/WindowScroller'
 import {CellMeasurer} from 'react-virtualized/dist/commonjs/CellMeasurer'
 import {CellMeasurerCache} from 'react-virtualized/dist/commonjs/CellMeasurer'
@@ -133,12 +133,12 @@ export default class NewsFeed extends PureComponent {
         const {rowCount, overscanRowCount} = this.state;
         return (
             <div className="WindowScrollerWrapper">
-                <InfiniteLoader
+                {/* <InfiniteLoader
                     isRowLoaded={this._isRowLoaded}
                     loadMoreRows={this._loadMoreRows}
                     rowCount={rowCount}
                     threshold={10}>
-                    {({onRowsRendered, registerChild}) => (
+                    {({onRowsRendered, registerChild}) => ( */}
                         <WindowScroller ref={(ref) => this._windowScroller = ref}>
                             {({height, isScrolling, onChildScroll, scrollTop}) => (
 
@@ -161,7 +161,7 @@ export default class NewsFeed extends PureComponent {
                             )}
                         </WindowScroller>
                     )}
-                </InfiniteLoader>
+                {/* </InfiniteLoader> */}
 
             </div>
         )

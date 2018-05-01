@@ -6,7 +6,7 @@ import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
-import * as Actions from '../actions/Actions';
+import * as Actions from '../../actions/Actions';
 
 export class QSOCommentItem extends React.Component {
     constructor() {
@@ -17,15 +17,7 @@ export class QSOCommentItem extends React.Component {
         };
     }
 
-    componentDidMount() {
-
-
-        if (this.props.comment) {
-
-
-        }
-    }
-
+    
 
     render() {
         var now = new Date();
@@ -49,7 +41,7 @@ export class QSOCommentItem extends React.Component {
 
             timestamp = timestamp + commentDate.getHours() + ":" + commentDate.getMinutes();
         }
-
+        
         return (
             <Comment>
 
@@ -77,8 +69,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 })
-
-
 export default connect(
     mapStateToProps,
     mapDispatchToProps

@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 
 import {Route, Switch, withRouter} from "react-router-dom";
+
 import "../styles/App.css";
 import Home from "./Home/Home";
 import {SignUp} from "./Auth/SignUp";
@@ -16,7 +17,10 @@ import QSODetail from "./QSODetail"
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../actions/Actions';
-
+// if (process.env.NODE_ENV !== 'production') {
+//     const {whyDidYouUpdate} = require('why-did-you-update')
+//     whyDidYouUpdate(React)
+//   }
 class App extends Component {
     constructor() {
         super();
@@ -47,15 +51,14 @@ class App extends Component {
                         .actions
                         .doLogin(token, cognitoUser.username.toUpperCase());
 
-       
-                    console.log(window.AWS)
+                           
                     var creds = new window.AWS.CognitoIdentityCredentials({
-                        IdentityPoolId: 'us-east-1:051d18f6-a6bf-4237-af95-33c0f3a45cc1', // your identity pool id here
+                        IdentityPoolId: appConfig.IdentityPoolId, // your identity pool id here
                         Logins: {
                             // Change the key below according to the specific region your user pool is in.
-                            'cognito-idp.us-east-1.amazonaws.com/us-east-1_dqZFpjJEt': token
+                            [appConfig.CognitoToken] : token
                         }
-                    }, {region: "us-east-1"});
+                    }, {region: appConfig.region});
 
                     creds.refresh(function (err, data) {
                         if (err) {
@@ -79,9 +82,9 @@ class App extends Component {
 
     }
 
-
+    
     render() {
-
+      
         return (
             <div>
                 <AppNavigation/>
@@ -90,9 +93,10 @@ class App extends Component {
                     text
                     style={{
                     marginTop: '5em'
-                }}>
+                 
+                }}   >
                     <Switch>
-                        <Route exact path="/" component={() => <Home/>}/>
+                        <Route exact path="/" component={() => <Home />}/>
                         <Route exact path="/signup" component={SignUp}/>
                         <Route exact path="/login" component={() => <LogIn/>}/>
                         <Route exact path="/logout" component={() => <Logout/>}/> 

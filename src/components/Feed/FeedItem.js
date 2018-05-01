@@ -9,7 +9,7 @@ import Label from 'semantic-ui-react/dist/commonjs/elements/Label'
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
 import Item from 'semantic-ui-react/dist/commonjs/views/Item'
 import Feed from 'semantic-ui-react/dist/commonjs/views/Feed'
-import QSOComments from "../QSOComments";
+import QSOComments from "./QSOComments";
 import QSOLikeButton from "./QSOLikeButton";
 import {QRAs} from "../QRAs";
 import {connect} from 'react-redux'
@@ -59,7 +59,7 @@ class FeedItem extends React.Component {
             .qso
             .media
             .filter((media) => media.type === 'audio');
-
+        const commentsCounter = '(' + this.props.qso.comments.length + ')'
         return (
             <Segment raised>
                 <Feed.Event>
@@ -98,6 +98,7 @@ class FeedItem extends React.Component {
                                         .bind(this)}>
                                         < Icon name='comment outline'/>
                                         Comment
+                                        {this.props.qso.comments.length > 0 && commentsCounter  }
                                     </Feed.Like>
                                 </Button>
                                 <Button>

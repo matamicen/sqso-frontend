@@ -5,7 +5,7 @@ import Comment from 'semantic-ui-react/dist/commonjs/views/Comment'
 import QSOCommentItem from "./QSOCommentItem";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
-import * as Actions from '../actions/Actions';
+import * as Actions from '../../actions/Actions';
 
 class QSOComments extends React.Component {
     constructor() {
@@ -89,6 +89,8 @@ class QSOComments extends React.Component {
     }
 
     render() {
+        console.log(this.state)
+        console.log(this.props)
         let comments = null;
         if (this.state.comments) {
             comments = this
@@ -106,7 +108,7 @@ class QSOComments extends React.Component {
                 reply
                 onSubmit={this
                 .handleAddComment
-                .bind(this)}>
+                }>
                 <Form.Group>
                     <input placeholder='Comment' name="comment"/>
                     <Button size="mini" content='Add'/>

@@ -6,32 +6,32 @@ import Container from 'semantic-ui-react/dist/commonjs/elements/Container'
 import Feed from 'semantic-ui-react/dist/commonjs/views/Feed'
 import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid'
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
-import  Sticky from 'semantic-ui-react/dist/commonjs/modules/Sticky'
+// import  Sticky from 'semantic-ui-react/dist/commonjs/modules/Sticky'
 import {connect} from 'react-redux'
 import FeedUser from '../Feed/FeedUser'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/Actions';
 
-class UserDashboard extends React.Component {
+class UserDashboard extends React.PureComponent {
     constructor() {
         super();
         this.state = {};
     }
 
     componentDidMount() {}
-    handleContextRef = contextRef => this.setState({contextRef})
+
     render() {
-        const {contextRef} = this.state
-        return (
-            <Segment attached='bottom'  ref={this.handleContextRef}>
-            
+   
+        return (            
+            <Segment attached='bottom' >
+      
                 <Grid>
                     <Grid.Row columns={3} only='computer'>
                         <Grid.Column width={3} only="computer">
 
-                            <Sticky context={contextRef}>
+                            {/* <Sticky active context={this.props.contextRef}> */}
                                 <FeedUser/>
-                            </Sticky>
+                            {/* </Sticky> */}
 
                         </Grid.Column>
 
@@ -42,7 +42,7 @@ class UserDashboard extends React.Component {
                         </Grid.Column>
 
                         <Grid.Column width={3} only="computer">
-                        <Sticky context={contextRef}>
+                        {/* <Sticky active context={this.props.contextRef}> */}
 
                                 <Card>
                                     <Card.Content>
@@ -98,7 +98,7 @@ class UserDashboard extends React.Component {
                                     </Card.Content>
                                 </Card>
 
-                            </Sticky>
+                            {/* </Sticky> */}
                         </Grid.Column>
                     </Grid.Row>
                     <Grid.Row columns={1} only='mobile tablet'>
@@ -109,7 +109,9 @@ class UserDashboard extends React.Component {
                         </Grid.Column>
                     </Grid.Row>
                 </Grid>
+        
             </Segment>
+           
         );
     }
 }
