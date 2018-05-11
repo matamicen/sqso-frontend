@@ -2,10 +2,10 @@ import React from "react";
 import FeedQSO from "../Feed/NewsFeedContainer";
 
 import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid'
-import Container from 'semantic-ui-react/dist/commonjs/elements/Container'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/Actions';
+import Feed from "semantic-ui-react/dist/commonjs/views/Feed";
 
 class PublicDashboard extends React.Component {
 
@@ -13,11 +13,11 @@ class PublicDashboard extends React.Component {
 
         return (
             <Grid>
-                <Grid.Row columns={1}>
+                <Grid.Row >
                     <Grid.Column>
-                        <Container fluid>
+                       
                             < FeedQSO/>
-                        </Container>
+                   
                     </Grid.Column>
                 </Grid.Row>
 

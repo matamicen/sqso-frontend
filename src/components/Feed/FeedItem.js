@@ -11,11 +11,14 @@ import Item from 'semantic-ui-react/dist/commonjs/views/Item'
 import Feed from 'semantic-ui-react/dist/commonjs/views/Feed'
 import QSOComments from "./QSOComments";
 import QSOLikeButton from "./QSOLikeButton";
-import {QRAs} from "../QRAs";
+import QRAs from "./QRAs";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/Actions';
 import PropTypes from 'prop-types';
+import Image from "semantic-ui-react/dist/commonjs/elements/Image";
+import {QRA} from "./QRA";
+import {Link} from 'react-router-dom'
 
 class FeedItem extends React.Component {
     constructor() {
@@ -62,23 +65,32 @@ class FeedItem extends React.Component {
         const commentsCounter = '(' + this.props.qso.comments.length + ')'
         return (
             <Segment raised>
+
+                {/* <Item.Extra>
+                    <Button icon floated='right' size='mini'>
+                        <Icon name='ellipsis vertical'/>
+                    </Button>
+                </Item.Extra> */}
+                
                 <Feed.Event>
-                    <Item.Extra>
-                        <Button icon floated='right' size='mini'>
-                            <Icon name='ellipsis vertical'/>
-                        </Button>
-                    </Item.Extra>
+                    <Feed.Label>                        
+                        <Link to={"/" + this.props.qso.qra}>
+                            <Image src={this.props.qso.profilepic} size='mini' avatar/> {this.props.qso.qra}                          
+                        </Link>
+                        {' '}started a QSO
+                    </Feed.Label>
                     <Feed.Content>
-                        <Feed.Summary>
-                            <QRAs
-                                profilepic={this.props.qso.profilepic}
-                                qso_owner={this.props.qso.qra}
-                                qras={this.props.qso.qras}/>
+                      
+                        <Feed.Extra text>
                             <Label>Mode:</Label>{this.props.qso.mode}
                             <Label>Band:</Label>{this.props.qso.band}
                             <Label>QSO:
                             </Label>{this.props.qso.idqsos}
-                        </Feed.Summary>
+                            <QRAs
+                                profilepic={this.props.qso.profilepic}
+                                qso_owner={this.props.qso.qra}
+                                qras={this.props.qso.qras}/>
+                        </Feed.Extra>
 
                         {picList.length > 0 && <FeedImage img={picList} measure={this.props.measure}/>
 }
@@ -97,8 +109,7 @@ class FeedItem extends React.Component {
                                         .handleOnComment
                                         .bind(this)}>
                                         < Icon name='comment outline'/>
-                                        Comment
-                                        {this.props.qso.comments.length > 0 && commentsCounter  }
+                                        Comment {this.props.qso.comments.length > 0 && commentsCounter}
                                     </Feed.Like>
                                 </Button>
                                 <Button>

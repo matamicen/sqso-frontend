@@ -49,8 +49,6 @@ export default class NewsFeed extends PureComponent {
     }
 
     _isRowLoaded({index}) {
-        // console.log("_isRowLoaded", index, !!this.props.list[index])    return
-        // !!this.props.list[index] // STATUS_LOADING or STATUS_LOADED
         return true;
     }
 
@@ -76,7 +74,8 @@ export default class NewsFeed extends PureComponent {
                 rowIndex={index}
                 parent={parent}>
                 {({measure}) => <div style={style} key={key}>
-                    <Grid centered>
+                
+                    <Grid >
                         <Grid.Row columns={1} only='large screen'>
                             <Grid.Column>
                                 <FeedItem

@@ -17,10 +17,8 @@ import QSODetail from "./QSODetail"
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../actions/Actions';
-// if (process.env.NODE_ENV !== 'production') {
-//     const {whyDidYouUpdate} = require('why-did-you-update')
-//     whyDidYouUpdate(React)
-//   }
+// if (process.env.NODE_ENV !== 'production') {     const {whyDidYouUpdate} =
+// require('why-did-you-update')     whyDidYouUpdate(React)   }
 class App extends Component {
     constructor() {
         super();
@@ -51,14 +49,15 @@ class App extends Component {
                         .actions
                         .doLogin(token, cognitoUser.username.toUpperCase());
 
-                           
-                    var creds = new window.AWS.CognitoIdentityCredentials({
-                        IdentityPoolId: appConfig.IdentityPoolId, // your identity pool id here
-                        Logins: {
-                            // Change the key below according to the specific region your user pool is in.
-                            [appConfig.CognitoToken] : token
-                        }
-                    }, {region: appConfig.region});
+                    var creds = new window
+                        .AWS
+                        .CognitoIdentityCredentials({
+                            IdentityPoolId: appConfig.IdentityPoolId, // your identity pool id here
+                            Logins: {
+                                // Change the key below according to the specific region your user pool is in.
+                                [appConfig.CognitoToken]: token
+                            }
+                        }, {region: appConfig.region});
 
                     creds.refresh(function (err, data) {
                         if (err) {
@@ -72,36 +71,34 @@ class App extends Component {
 
                 }.bind(this));
         }
-        
 
     }
 
     componentDidMount() {
 
-          this.loadAuthenticatedUser()
+        this.loadAuthenticatedUser()
 
     }
 
-    
     render() {
-      
+
         return (
             <div>
                 <AppNavigation/>
 
                 <Container
-                    text
+                    fluid
                     style={{
                     marginTop: '5em'
-                 
-                }}   >
+                }}>
+
                     <Switch>
-                        <Route exact path="/" component={() => <Home />}/>
+                        <Route exact path="/" component={() => <Home/>}/>
                         <Route exact path="/signup" component={SignUp}/>
                         <Route exact path="/login" component={() => <LogIn/>}/>
-                        <Route exact path="/logout" component={() => <Logout/>}/> 
+                        <Route exact path="/logout" component={() => <Logout/>}/>
                         <Route exact path="/:qra" component={() => <QRAProfileContainer/>}/>
-                        <Route path="/qso/:idqso" component={() => <QSODetail/>}/>
+                        <Route exact path="/qso/:idqso" component={() => <QSODetail/>}/>
                     </Switch>
                 </Container>
 
