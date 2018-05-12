@@ -70,7 +70,7 @@ const replace_qra_tags = (req, res) => {
               .status(404)
               .end();
           }
-          const title = result.data.message.qra.toUpperCase() + ' - ' + result.data.message.firstname + ' ' + result.data.message.lastname + ' - ' + "SuperQSO.com"
+          const title = result.data.message.qra.toUpperCase() + ' - ' + result.data.message.firstname + ' ' + result.data.message.lastname 
           const html = prepHTML(htmlData, {
       
             head:

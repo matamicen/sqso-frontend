@@ -1,8 +1,8 @@
 import React from "react";
-import {QRA} from "./QRA";
-import Label from 'semantic-ui-react/dist/commonjs/elements/Label'
-import Image from 'semantic-ui-react/dist/commonjs/elements/Image'
-import {Link} from 'react-router-dom'
+import QRA from "./QRA";
+
+
+
 export default class QRAs extends React.Component {
 
     render() {

@@ -3,7 +3,7 @@ import Label from 'semantic-ui-react/dist/commonjs/elements/Label'
 import Image from 'semantic-ui-react/dist/commonjs/elements/Image'
 import {Link} from 'react-router-dom'
 
-export class QRA extends React.Component {
+export default class QRA extends React.Component {
     render() {
 
         return (

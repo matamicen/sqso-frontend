@@ -1,7 +1,6 @@
 import React from "react";
 import  Icon from 'semantic-ui-react/dist/commonjs/elements/Icon'
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
-import Feed from 'semantic-ui-react/dist/commonjs/views/Feed'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/Actions';
@@ -120,14 +119,13 @@ class QSOLikeButton extends React.Component {
     render() {
 
         return (
-            <Button icon active={false}>
-                <Feed.Like
+            <Button icon active={false}
                     onClick={this
                     .handleOnLike
                     .bind(this)}>
                     < Icon name={this.state.icon}/> {this.state.likeCounter}
-                    {' '} Likes
-                </Feed.Like>
+                    {' '} 
+                
             </Button>
         );
     }

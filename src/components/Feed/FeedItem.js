@@ -6,8 +6,9 @@ import QSOShareButtons from './QSOShareButtons'
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon'
 import Label from 'semantic-ui-react/dist/commonjs/elements/Label'
+import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider'
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
-import Item from 'semantic-ui-react/dist/commonjs/views/Item'
+
 import Feed from 'semantic-ui-react/dist/commonjs/views/Feed'
 import QSOComments from "./QSOComments";
 import QSOLikeButton from "./QSOLikeButton";
@@ -17,7 +18,7 @@ import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/Actions';
 import PropTypes from 'prop-types';
 import Image from "semantic-ui-react/dist/commonjs/elements/Image";
-import {QRA} from "./QRA";
+
 import {Link} from 'react-router-dom'
 
 class FeedItem extends React.Component {
@@ -40,13 +41,13 @@ class FeedItem extends React.Component {
     }
 
     handleOnComment() {
-        console.log("Comment Pressed");
+
         this.setState({showComment: true});
         this.recalculateRowHeight();
     }
 
     recalculateRowHeight() {
-        console.log("recalculateRowHeight");
+
         if (this.props.recalculateRowHeight) 
             this.props.recalculateRowHeight(this.props.index);
         }
@@ -71,16 +72,15 @@ class FeedItem extends React.Component {
                         <Icon name='ellipsis vertical'/>
                     </Button>
                 </Item.Extra> */}
-                
+
                 <Feed.Event>
-                    <Feed.Label>                        
+                    <Feed.Label>
                         <Link to={"/" + this.props.qso.qra}>
-                            <Image src={this.props.qso.profilepic} size='mini' avatar/> {this.props.qso.qra}                          
+                            <Image src={this.props.qso.profilepic} size='mini' avatar/> {this.props.qso.qra}
                         </Link>
                         {' '}started a QSO
                     </Feed.Label>
                     <Feed.Content>
-                      
                         <Feed.Extra text>
                             <Label>Mode:</Label>{this.props.qso.mode}
                             <Label>Band:</Label>{this.props.qso.band}
@@ -98,28 +98,24 @@ class FeedItem extends React.Component {
                         {audioList.length > 0 && <AudioList mediaList={audioList}/>
 }
 
-                        <Feed.Meta>
-                            <Button.Group basic fluid>
-
+                        <Feed.Extra>
+                            <Divider/>
+                            <Button.Group widths='3'  basic size='small'>
                                 <QSOLikeButton qso={this.props.qso}/>
-
-                                <Button>
-                                    <Feed.Like
+                                <Button
                                         onClick={this
                                         .handleOnComment
                                         .bind(this)}>
                                         < Icon name='comment outline'/>
-                                        Comment {this.props.qso.comments.length > 0 && commentsCounter}
-                                    </Feed.Like>
+                                        {this.props.qso.comments.length > 0 && commentsCounter}
+                                   
                                 </Button>
-                                <Button>
-                                    <Feed.Like>
-                                        <QSOShareButtons idqso={this.props.qso.idqsos}/>
-                                    </Feed.Like>
-
-                                </Button>
+                            
+                                    <QSOShareButtons idqso={this.props.qso.idqsos}/> 
+                                    
                             </Button.Group>
-                        </Feed.Meta>
+
+                        </Feed.Extra>
                         <Feed.Extra>
                             {this.state.showComment && <QSOComments
                                 qso={this.props.qso}

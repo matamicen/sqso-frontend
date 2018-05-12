@@ -76,7 +76,7 @@ const replace_qso_tags = (req, res) => {
               .end();
           }
           
-          const title = result.data.qra.toUpperCase() + ' started a QSO with ' + result.data.qras[0].qra + ' - Band: ' + result.data.band + ' - Mode: ' + result.data.mode + " - SuperQSO.com"
+          const title = result.data.qra.toUpperCase() + ' started a QSO with ' + result.data.qras[0].qra + ' - Band: ' + result.data.band + ' - Mode: ' + result.data.mode
           var image = null ;
           if (result.data.media) {
             image = '<meta property="og:image" content="'+ result.data.media[0].url + '"/>'
