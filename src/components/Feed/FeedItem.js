@@ -100,7 +100,7 @@ class FeedItem extends React.Component {
 
                         <Feed.Extra>
                             <Divider/>
-                            <Button.Group widths='3'  basic size='small'>
+                            <Button.Group widths='3'  basic >
                                 <QSOLikeButton qso={this.props.qso}/>
                                 <Button
                                         onClick={this

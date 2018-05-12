@@ -8,10 +8,10 @@ import Button from "semantic-ui-react/dist/commonjs/elements/Button";
 
 const QSOShareButtons = ({idqso}) => {
     return (
-        <Button icon as='Dropdown'>
+        <Button icon >
             <Icon name='share alternate'/>
 
-            <Dropdown upward  >
+            <Dropdown upward >
 
                 <Dropdown.Menu>
                     <Dropdown.Item>
