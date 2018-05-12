@@ -74,9 +74,10 @@ const replace_qra_tags = (req, res) => {
           const html = prepHTML(htmlData, {
       
             head:
-            '<meta name="og:title" content="'+ title + '"/><meta property' +
-                '="og:image" content="'+ result.data.message.url + '"/><meta property="og:site_name" c' +
-                'ontent="SuperQSO.com"/><meta property="og:description" content="SuperQSO.com"/>',
+            '<meta name="og:title" content="'+ title + '"/>' +
+            '<meta property="og:image" content="'+ result.data.message.url + '"/>' +
+            '<meta property="og:site_name" content="SuperQSO.com"/>' +
+            '<meta property="og:description" content="SuperQSO.com"/>',
             // helmet.link.toString(), body: routeMarkup
           });
       
@@ -105,10 +106,9 @@ const replace_qra_tags = (req, res) => {
           const html = prepHTML(htmlData, {
       
             head:
-            '<meta name="og:title" content="QRAFacebook Open Graph META Tags"/><meta property' +
-                '="og:image" content="https://s3.amazonaws.com/sqso/us-east-1:cc508f7e-92fb-41f5-' +
-                'b0ef-8ba6831ce09c/images/2018-04-06T135017.jpg"/><meta property="og:site_name" c' +
-                'ontent="SuperQSO.com"/><meta property="og:description" content="SuperQSO.com"/>',
+            '<meta name="og:title" content="SuperQSO.com"/>' +
+            '<meta property="og:site_name" content="SuperQSO.com"/>' +
+            '<meta property="og:description" content="SuperQSO.com"/>',
             // helmet.link.toString(), body: routeMarkup
           });
       

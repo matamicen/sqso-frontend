@@ -1,6 +1,6 @@
 branch-defaults:
   master:
-    environment: sqso-dev
+    environment: sqsodev
     group_suffix: null
 global:
   application_name: sqso-frontend

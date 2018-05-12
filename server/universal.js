@@ -57,7 +57,6 @@ const universalLoader = (req, res) => {
       head:
         // helmet.title.toString() +
         '<meta name="og:title" content="SuperQSO HomePage"/>' + 
-        '<meta property="og:image" content="https://s3.amazonaws.com/sqso/us-east-1:cc508f7e-92fb-41f5-b0ef-8ba6831ce09c/images/2018-04-06T135017.jpg"/>' +
         '<meta property="og:site_name" content="SuperQSO.com"/>' +
         '<meta property="og:description" content="SuperQSO.com"/>',
         // helmet.link.toString(),
