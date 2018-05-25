@@ -91,7 +91,6 @@ class FeedItem extends React.Component {
                                         trigger={< Dropdown.Item icon = 'qrcode' text = 'Show QR Code' />}>
                                         <Modal.Header>QR Code</Modal.Header>
                                         <Modal.Content>
-
                                             <Grid centered>
                                                 <Segment raised>
                                                     <QRCode value={window.location.origin + '/qso/' + this.props.qso.idqsos}/>
