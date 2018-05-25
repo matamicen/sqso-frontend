@@ -26,18 +26,14 @@ const QSOShareButtons = ({idqso}) => {
                         <FacebookShareButton
                             quote="CheckOut this QSO"
                             url={window.location.origin + '/qso/' + idqso}>
-                            <Icon name='facebook'/>
-                         
+                            <Icon name='facebook'/>                         
                         </FacebookShareButton>
                     </Dropdown.Item>
                     <Dropdown.Item>
                         <TwitterShareButton
                             title="CheckOut this QSO"
                             url={window.location.origin + '/qso/' + idqso}>
-
-                            <Icon name='twitter'/>
-                          
-
+                            <Icon name='twitter'/>                         
                         </TwitterShareButton>
                     </Dropdown.Item>
                 </Dropdown.Menu>

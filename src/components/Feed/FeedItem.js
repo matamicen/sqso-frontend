@@ -8,8 +8,10 @@ import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon'
 import Label from 'semantic-ui-react/dist/commonjs/elements/Label'
 import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider'
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
+import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown'
 
 import Feed from 'semantic-ui-react/dist/commonjs/views/Feed'
+
 import QSOComments from "./QSOComments";
 import QSOLikeButton from "./QSOLikeButton";
 import QRAs from "./QRAs";
@@ -18,8 +20,10 @@ import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/Actions';
 import PropTypes from 'prop-types';
 import Image from "semantic-ui-react/dist/commonjs/elements/Image";
-
+import QRCode from "qrcode.react";
 import {Link} from 'react-router-dom'
+import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
+import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
 
 class FeedItem extends React.Component {
     constructor() {
@@ -64,23 +68,47 @@ class FeedItem extends React.Component {
             .media
             .filter((media) => media.type === 'audio');
         const commentsCounter = '(' + this.props.qso.comments.length + ')'
+
         return (
             <Segment raised>
-
-                {/* <Item.Extra>
-                    <Button icon floated='right' size='mini'>
-                        <Icon name='ellipsis vertical'/>
-                    </Button>
-                </Item.Extra> */}
 
                 <Feed.Event>
                     <Feed.Label>
                         <Link to={"/" + this.props.qso.qra}>
                             <Image src={this.props.qso.profilepic} size='mini' avatar/> {this.props.qso.qra}
                         </Link>
-                        {' '}started a QSO
+                        {'  '}started a QSO
+                        <div
+                            style={{
+                            float: 'right'
+                        }}>
+                            <Dropdown icon='ellipsis vertical' button className='icon' pointing="right">
+                                <Dropdown.Menu>
+
+                                    <Modal
+                                        size='tiny'
+                                        closeIcon
+                                        trigger={< Dropdown.Item icon = 'qrcode' text = 'Show QR Code' />}>
+                                        <Modal.Header>QR Code</Modal.Header>
+                                        <Modal.Content>
+
+                                            <Grid centered>
+                                                <Segment raised>
+                                                    <QRCode value={window.location.origin + '/qso/' + this.props.qso.idqsos}/>
+                                                </Segment>
+                                            </Grid>
+                                        </Modal.Content>
+                                    </Modal>
+
+                                    <Dropdown.Item icon='delete' text='Delete QSO'/>
+                                    <Dropdown.Item icon='warning' text='Abuse'/>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </div>
                     </Feed.Label>
+
                     <Feed.Content>
+                        <Divider hidden/>
                         <Feed.Extra text>
                             <Label>Mode:</Label>{this.props.qso.mode}
                             <Label>Band:</Label>{this.props.qso.band}
@@ -99,20 +127,19 @@ class FeedItem extends React.Component {
 }
 
                         <Feed.Extra>
-                            <Divider/>
-                            <Button.Group widths='3'  basic >
+                            <Divider hidden/>
+                            <Button.Group widths='3' basic>
                                 <QSOLikeButton qso={this.props.qso}/>
                                 <Button
-                                        onClick={this
-                                        .handleOnComment
-                                        .bind(this)}>
-                                        < Icon name='comment outline'/>
-                                        {this.props.qso.comments.length > 0 && commentsCounter}
-                                   
+                                    onClick={this
+                                    .handleOnComment
+                                    .bind(this)}>
+                                    < Icon name='comment outline'/> {this.props.qso.comments.length > 0 && commentsCounter}
+
                                 </Button>
-                            
-                                    <QSOShareButtons idqso={this.props.qso.idqsos}/> 
-                                    
+
+                                <QSOShareButtons idqso={this.props.qso.idqsos}/>
+
                             </Button.Group>
 
                         </Feed.Extra>
@@ -124,6 +151,7 @@ class FeedItem extends React.Component {
                         </Feed.Extra>
                     </Feed.Content>
                 </Feed.Event>
+
             </Segment>
         )
     }
