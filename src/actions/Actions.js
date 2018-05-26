@@ -149,10 +149,10 @@ export function doFetchPublicFeed() {
 
 
         dispatch(doRequestFeed());
-        console.log("RequestPublicFeed")
+        
         apigClient.qsoPublicListGet(params, body, additionalParams)
             .then(function (result) {
-                console.log("GetPublicFeed")
+                
                 dispatch(doReceiveFeed(result.data));
                 
 

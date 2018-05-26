@@ -15,7 +15,7 @@ import {
 const initialState = {
     userData: {
         token: null,
-        qra: 'LU2ACH',
+        qra: null,
         isAuthenticated: false,
         following: [],
         followers: [],
@@ -144,6 +144,7 @@ export default (state = initialState, action) => {
             let logoutUserData = {
                 ...state.userData,
                 token: "",
+                qra: null,
                 isAuthenticated: false
             };
             newStore = Object.assign({}, state,

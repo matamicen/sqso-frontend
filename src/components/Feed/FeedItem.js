@@ -8,22 +8,20 @@ import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon'
 import Label from 'semantic-ui-react/dist/commonjs/elements/Label'
 import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider'
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
-import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown'
 
 import Feed from 'semantic-ui-react/dist/commonjs/views/Feed'
 
 import QSOComments from "./QSOComments";
 import QSOLikeButton from "./QSOLikeButton";
+import QSOItemOptions from './QSOItemOptions'
 import QRAs from "./QRAs";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/Actions';
 import PropTypes from 'prop-types';
 import Image from "semantic-ui-react/dist/commonjs/elements/Image";
-import QRCode from "qrcode.react";
+
 import {Link} from 'react-router-dom'
-import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
-import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
 
 class FeedItem extends React.Component {
     constructor() {
@@ -82,27 +80,7 @@ class FeedItem extends React.Component {
                             style={{
                             float: 'right'
                         }}>
-                            <Dropdown icon='ellipsis vertical' button className='icon' pointing="right">
-                                <Dropdown.Menu>
-
-                                    <Modal
-                                        size='tiny'
-                                        closeIcon
-                                        trigger={< Dropdown.Item icon = 'qrcode' text = 'Show QR Code' />}>
-                                        <Modal.Header>QR Code</Modal.Header>
-                                        <Modal.Content>
-                                            <Grid centered>
-                                                <Segment raised>
-                                                    <QRCode value={window.location.origin + '/qso/' + this.props.qso.idqsos}/>
-                                                </Segment>
-                                            </Grid>
-                                        </Modal.Content>
-                                    </Modal>
-
-                                    <Dropdown.Item icon='delete' text='Delete QSO'/>
-                                    <Dropdown.Item icon='warning' text='Abuse'/>
-                                </Dropdown.Menu>
-                            </Dropdown>
+                            <QSOItemOptions idqso={this.props.qso.idqsos} currentQRA={this.props.currentQRA} qso_owner={this.props.qso.qra}/>
                         </div>
                     </Feed.Label>
 
@@ -136,9 +114,7 @@ class FeedItem extends React.Component {
                                     < Icon name='comment outline'/> {this.props.qso.comments.length > 0 && commentsCounter}
 
                                 </Button>
-
                                 <QSOShareButtons idqso={this.props.qso.idqsos}/>
-
                             </Button.Group>
 
                         </Feed.Extra>
@@ -155,7 +131,7 @@ class FeedItem extends React.Component {
         )
     }
 }
-const mapStateToProps = (state, qsos) => ({fetchingQSOS: state.default.FetchingQSOS, qsosFetched: state.default.qsosFetched});
+const mapStateToProps = (state, qsos) => ({fetchingQSOS: state.default.FetchingQSOS, qsosFetched: state.default.qsosFetched, currentQRA: state.default.userData.qra});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 });
