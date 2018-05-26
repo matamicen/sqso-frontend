@@ -35,7 +35,7 @@ class QSOComments extends React.Component {
             .newClient({});
 
         var params = {
-            "Authorization": this.props.state.default.userData.token
+            "Authorization": this.props.token
         };
         var body = {
             "qso": this.props.qso.idqsos,
@@ -102,7 +102,7 @@ class QSOComments extends React.Component {
                 .recalculateRowHeight();
         };
         let form = null;
-        if (this.props.state.default.userData.isAuthenticated) {
+        if (this.props.isAuthenticated) {
             form = <Form
                 size="mini"
                 reply
@@ -125,7 +125,8 @@ class QSOComments extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({state: state});
+const mapStateToProps = (state) => ({token: state.default.userData.token, 
+    isAuthenticated: state.default.userData.isAuthenticated});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 })

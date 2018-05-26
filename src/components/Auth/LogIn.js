@@ -32,8 +32,7 @@ class LogIn extends React.Component {
         };
 
     }
-    componentDidMount() {}
-
+   
     handleOnClickLogin(e) {
 
         e.preventDefault();
@@ -49,73 +48,7 @@ class LogIn extends React.Component {
             Pool: userPool
         };
 
-        /*     ///TEST NEW API
 
-        var authParams = {
-          AuthFlow: 'ADMIN_NO_SRP_AUTH',
-          ClientId: poolData.ClientId,
-          UserPoolId: poolData.UserPoolId,
-          AuthParameters: {
-            USERNAME: this.state.qra,
-            PASSWORD: this.state.password,
-          },
-        };
-        var cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider({
-            region: 'us-east-1' // Why do I need this? Its in .aws/config
-        });
-
-        cognitoidentityserviceprovider.adminInitiateAuth(authParams, function(err, sessionData) {
-
-            if (err) {
-                console.log(err, err.stack);
-            } else {
-
-                var cognitoidentity = new AWS.CognitoIdentity({
-                    region: 'us-east-1' // Why do I need this? Its in .aws/config
-                });
-
-                var getIdParams = {
-                    IdentityPoolId: 'us-east-1:051d18f6-a6bf-4237-af95-33c0f3a45cc1',
-                    Logins: {
-                        'cognito-idp.us-east-1.amazonaws.com/us-east-1_yznBlsoTx': sessionData.AuthenticationResult.IdToken
-                    }
-                }
-
-                cognitoidentity.getId(getIdParams, function(err, identity) {
-                    if (err)
-                    {
-                        console.log(err, err.stack);
-                    }
-                    else
-                    {
-
-                        var getCredentialsParams = {
-                            IdentityId: identity.IdentityId,
-                            Logins: {
-                                'cognito-idp.us-east-1.amazonaws.com/us-east-1_yznBlsoTx': sessionData.AuthenticationResult.IdToken
-                            }
-                        };
-
-                        cognitoidentity.getCredentialsForIdentity(getCredentialsParams, function(err, credentials) {
-                          if (err)
-                          {
-                              console.log(err, err.stack);
-                          }
-                          else
-                          {
-                              console.log(credentials); // SUCCESS!
-                          }
-                        });
-
-
-                    }
-                });
-
-
-            }
-        });
-
-        //END TEST NEW API */
         var cognitoUser = new CognitoUser(userData);
 
         cognitoUser.authenticateUser(authenticationDetails, {
@@ -171,7 +104,6 @@ class LogIn extends React.Component {
                         .bind(this)}>
                         <Segment stacked>
                             <Form.Field>
-
                                 <Form.Input
                                     fluid
                                     icon='user'

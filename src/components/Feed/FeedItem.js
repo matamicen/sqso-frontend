@@ -138,5 +138,5 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(mapStateToProps, mapDispatchToProps, null, {pure: false})(FeedItem);
 FeedItem.propTypes = {
     qso: PropTypes.object.isRequired,
-    // measure: PropTypes.func.isRequired
+    
 }
