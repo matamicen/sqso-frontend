@@ -119,10 +119,11 @@ class FeedItem extends React.Component {
 
                         </Feed.Extra>
                         <Feed.Extra>
+                            <div style={{ overflow: 'visible' }}>
                             {this.state.showComment && <QSOComments
                                 qso={this.props.qso}
-                                recalculateRowHeight={this.recalculateRowHeight}/>
-}
+                                recalculateRowHeight={this.recalculateRowHeight}/>}
+                            </div>
                         </Feed.Extra>
                     </Feed.Content>
                 </Feed.Event>

@@ -53,6 +53,7 @@ class QsoItemOptions extends Component {
 
     }
     openReportedContent = () => this.setState({showReportContent: true})
+    closeReportedContent = () => this.setState({showReportContent: false})
     open = () => this.setState({showMessage: true})
     close = () => {this.setState({showMessage: false})
                    this.setState({showReportContent:false})}
@@ -84,7 +85,8 @@ class QsoItemOptions extends Component {
                     {this.props.currentQRA === this.props.qso_owner && <Dropdown.Item icon='delete' text='Delete QSO'/>}
                     {this.props.currentQRA && this.props.currentQRA !== this.props.qso_owner && <Modal
                         open={showReportContent}          
-                        onOpen={this.openReportedContent}                        
+                        onOpen={this.openReportedContent}               
+                        onClose={this.closeReportedContent}         
                         size='tiny'
                         closeIcon
                         trigger={< Dropdown.Item icon = 'warning' text = 'Report Content' />}>

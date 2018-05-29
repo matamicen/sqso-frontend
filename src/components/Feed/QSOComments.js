@@ -68,9 +68,6 @@ class QSOComments extends React.Component {
         var comment = {
             qra: this
                 .props
-                .state
-                .default
-                .userData
                 .qra
                 .toUpperCase(),
             comment: e.target.comment.value,
@@ -89,8 +86,6 @@ class QSOComments extends React.Component {
     }
 
     render() {
-        console.log(this.state)
-        console.log(this.props)
         let comments = null;
         if (this.state.comments) {
             comments = this
@@ -125,7 +120,9 @@ class QSOComments extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({token: state.default.userData.token, 
+const mapStateToProps = (state) => (
+    {token: state.default.userData.token,
+        qra: state.default.userData.qra, 
     isAuthenticated: state.default.userData.isAuthenticated});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
