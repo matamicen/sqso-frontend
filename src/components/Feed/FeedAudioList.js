@@ -1,13 +1,14 @@
 import React from "react";
-import {Audio} from "./Audio";
+import FeedAudio from "./FeedAudio";
 import Item from 'semantic-ui-react/dist/commonjs/views/Item'
-export class AudioList extends React.Component {
+export default class FeedAudioList extends React.Component {
     constructor() {
         super();
         this.state = {};
     }
 
     render() {
+        
         if (this.props.mediaList.length > 0) {
             return (
 
@@ -15,8 +16,8 @@ export class AudioList extends React.Component {
                     {this.props.mediaList.map((m, i) =>
                         <Item key={i}>
                             <a>
-                                <Audio key={i}
-                                       url={m.url}/>
+                                <FeedAudio key={i}                                       
+                                       media={m}/>
                             </a>
                         </Item>
                     )}

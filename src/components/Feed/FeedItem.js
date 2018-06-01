@@ -1,5 +1,5 @@
 import React from "react";
-import {AudioList} from "../AudioList";
+import FeedAudioList from "./FeedAudioList";
 import FeedImage from './FeedImage'
 import QSOShareButtons from './QSOShareButtons'
 
@@ -55,6 +55,7 @@ class FeedItem extends React.Component {
         }
     
     render() {
+    
         let picList = this
             .props
             .qso
@@ -100,7 +101,7 @@ class FeedItem extends React.Component {
                         {picList.length > 0 && <FeedImage img={picList} measure={this.props.measure} idqso={this.props.qso.idqsos}/>
 }
 
-                        {audioList.length > 0 && <AudioList mediaList={audioList}/>
+                        {audioList.length > 0 && <FeedAudioList mediaList={audioList}/>
 }
 
                         <Feed.Extra>

@@ -1,21 +1,25 @@
-import React from "react";
-
-import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
-import Image from 'semantic-ui-react/dist/commonjs/elements/Image'
-import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal'
-
-import Button from "semantic-ui-react/dist/commonjs/elements/Button";
+import React from 'react';
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
+import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/Actions';
+import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
+import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
 import Form from "semantic-ui-react/dist/commonjs/collections/Form";
-import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown";
-class FeedImage extends React.Component {
-    state = {
-        showReportContent: false,
-        showMessage: false
+class FeedAudio extends React.Component {
 
-    } 
+    constructor() {
+        super();
+        this.state = {
+            showReportContent: false,
+            showMessage: false,
+            audioNotVisible: true
+        }
+        this.onClick = this.onClick.bind(this)
+    }
+
     openReportedContent = () => this.setState({showReportContent: true})
     closeReportedContent = () => this.setState({showReportContent: false})
     open = () => this.setState({showMessage: true})
@@ -26,7 +30,7 @@ class FeedImage extends React.Component {
     handleOnSubmit(e) {
     
         e.preventDefault()
-
+console.log(this.props)
         
         if (!e.target.comments.value) 
             return;
@@ -38,8 +42,8 @@ class FeedImage extends React.Component {
             "Authorization": this.props.token
         };
         var body = {
-            "idqso": this.props.idqso,          
-            "idmedia": e.target.idmedia.value,
+            "idqso": this.props.media.idqso,          
+            "idmedia": this.props.media.idqsos_media,
             "detail": e.target.comments.value,
             "datetime": datetime
         };
@@ -58,24 +62,30 @@ class FeedImage extends React.Component {
             });
 
     }
-    render() {  
+    onClick(){
+        this.setState({audioNotVisible:false})
+    }
+    render() {
+        console.log(this.props)
         const {showMessage, showReportContent} = this.state      
-        return (
-            <Modal                
-                closeIcon               
-                trigger=
-                { 
-                   <Image size = 'large' centered src = { this.props.img[0].url } onLoad = { this.props.measure } onClick={this.handleOpenModal}/>}
-                    >
-                  
-                
-                <Modal.Content image scrolling>
-                    <Modal.Description>
-                        {this
-                            .props
-                            .img
-                            .map(m => 
-                            <Segment key={m.idqsos_media} raised textAlign='center'>
+        if (this.props.media.url) {
+                    
+                        if (this.state.audioNotVisible) {
+                            return ( <Button icon onClick={this.onClick} >
+                                <Icon name='play'/>
+                            </Button> )
+                        }
+                        else {
+                            return ( <div>
+                                
+                                < audio
+                                    ref="audio_tag"
+                                    src={this.props.media.url}
+                                    controls
+                                    autoPlay
+                                    preload="none"
+                                />
+                             
                                 <div
                                             style={{
                                             float: 'right'
@@ -95,7 +105,7 @@ class FeedImage extends React.Component {
                                                         onClose={this.closeReportedContent}         
                                                         size='tiny'
                                                         closeIcon
-                                                        trigger={< Dropdown.Item icon = 'warning' text = 'Report Photo' />}>
+                                                        trigger={< Dropdown.Item icon = 'warning' text = 'Report Audio' />}>
                                                         <Modal.Header>
                                                             Help Us Understand What's Happening</Modal.Header>
                                                         <Modal.Content>
@@ -108,8 +118,8 @@ class FeedImage extends React.Component {
                                                                     required
                                                                     name='comments'
                                                                     label='Comments'
-                                                                    placeholder='Why do you think we should remove this photo?'/>
-                                                                    <Form.Input type='hidden' name='idmedia' value={m.idqsos_media} />
+                                                                    placeholder='Why do you think we should remove this audio?'/>
+                                                                  
                                                                 <Form.Button>Submit</Form.Button>
 
                                                                 <Modal
@@ -118,9 +128,9 @@ class FeedImage extends React.Component {
                                                                     onOpen={this.open}
                                                                     onClose={this.close}
                                                                     size='small'>
-                                                                    <Modal.Header>Report Photo</Modal.Header>
+                                                                    <Modal.Header>Report Audio</Modal.Header>
                                                                     <Modal.Content>
-                                                                        <p>Photo Reported!</p>
+                                                                        <p>Audio Reported!</p>
                                                                     </Modal.Content>
                                                                     <Modal.Actions>
                                                                         <Button icon='check' content='Close' onClick={this.close}/>
@@ -132,18 +142,19 @@ class FeedImage extends React.Component {
                                                 </Dropdown.Menu>
                                             </Dropdown >
                                         </div>
-                                <Image key={m.idqsos_media} wrapped centered src={m.url}/>
-                                
-                                <p>{m.description}</p>
-                            </Segment>)}
-                    </Modal.Description>
-                </Modal.Content>
-            </Modal>
+                                        </div>
+                            )
+                        }
+        }
+        else {
+            return null
+        }
 
-        )
     }
 }
-
+Audio.propTypes = {    
+    url: PropTypes.string.isRequired
+}
 const mapStateToProps = (state) => (
     
     {token: state.default.userData.token,  
@@ -151,5 +162,4 @@ const mapStateToProps = (state) => (
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 })
-export default connect(mapStateToProps, mapDispatchToProps, null, {pure: false})(FeedImage);
-
+export default connect(mapStateToProps, mapDispatchToProps, null, {pure: false})(FeedAudio);
