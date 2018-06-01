@@ -11,7 +11,7 @@ import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown";
 import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
 import Form from "semantic-ui-react/dist/commonjs/collections/Form";
 
-export class QSOCommentItem extends React.Component {
+class QSOCommentItem extends React.Component {
     state = {
         showReportContent: false,
         showMessage: false,
@@ -82,13 +82,13 @@ export class QSOCommentItem extends React.Component {
             timestamp = timestamp + commentDate.getHours() + ":" + commentDate.getMinutes();
         }
         const {showMessage, showReportContent} = this.state
-        console.log()
+        
         return (
             
             <Comment>
                 <Comment.Content>
                     <Item.Extra>
-                        { this.props.comment !== this.props.currentQRA && 
+                        { this.props.comment.qra !== this.props.currentQRA && 
                         <div
                             style={{
                             float: 'right'

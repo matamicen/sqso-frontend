@@ -1,6 +1,6 @@
 import React from "react";
 import {AudioList} from "../AudioList";
-import {FeedImage} from './FeedImage'
+import FeedImage from './FeedImage'
 import QSOShareButtons from './QSOShareButtons'
 
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
@@ -97,7 +97,7 @@ class FeedItem extends React.Component {
                                 qras={this.props.qso.qras}/>
                         </Feed.Extra>
 
-                        {picList.length > 0 && <FeedImage img={picList} measure={this.props.measure}/>
+                        {picList.length > 0 && <FeedImage img={picList} measure={this.props.measure} idqso={this.props.qso.idqsos}/>
 }
 
                         {audioList.length > 0 && <AudioList mediaList={audioList}/>
