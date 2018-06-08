@@ -74,7 +74,7 @@ class QSOLikeButton extends React.Component {
         apigClient
             .qsoLikeDelete(params, body, additionalParams)
             .then(function (result) {
-                console.log("updateCounter success");
+                
                 if (result.data.body.error > 0) {
                     console.error(result.data.body.message);
                 } else {

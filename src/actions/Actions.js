@@ -9,7 +9,43 @@ export const RECEIVE_QSO = 'RECEIVE_QSO';
 export const REQUEST_QRA = 'REQUEST_QRA';
 export const RECEIVE_QRA = 'RECEIVE_QRA';
 export const RECEIVE_FOLLOWERS = 'RECEIVE_FOLLOWERS';
+export const DELETE_MEDIA = 'DELETE_MEDIA';
 
+export function doDeleteMedia(idmedia = null, idqso = null, token){
+    return (dispatch) => {
+        var apigClient = window.apigClientFactory.newClient({});
+        var params;
+        var body = {"idmedia" : idmedia,
+                    "qso": idqso};
+        var additionalParams = {};
+
+
+        params = {
+            "Authorization": token
+        };
+
+        // dispatch(doRequestFeed());
+        apigClient.qsomediaaddDelete(params, body, additionalParams)
+            .then(function (result) {
+
+                result.data.error === '0' &&
+                dispatch(doDeleteMediaResponse(idmedia, idqso));
+
+            }).catch(function (error) {
+            console.log("error");
+            console.log(error);
+
+        });
+    };
+    
+}
+export function doDeleteMediaResponse(idmedia = null, idqso = null){
+    return {
+        type: DELETE_MEDIA,
+        idmedia: idmedia, 
+        idqso: idqso
+    }
+}
 export function doRequestUserInfo() {
     return {
         type: REQUEST_USERINFO,
@@ -108,8 +144,7 @@ export function doFetchUserInfo(token) {
                 }
             }).catch(function (error) {
             console.log("error");
-            console.log(error);
-            //alert(error);
+            console.log(error);            
         });
     }
 }

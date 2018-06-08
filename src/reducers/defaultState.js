@@ -1,4 +1,5 @@
 import {
+    DELETE_MEDIA,
     LOGIN,
     LOGOUT,
     RECEIVE_FEED,
@@ -35,21 +36,42 @@ const initialState = {
 };
 
 //define a reducer with an initialized state action
-export default (state = initialState, action) => {
+export default(state = initialState, action) => {
     let newStore;
     let userInfo;
-      switch (action.type) {
+    switch (action.type) {
+        case DELETE_MEDIA:
+            
+            console.log(action)
+            newStore = Object.assign({}, state, {
+                ...state,
+                qsos: state
+                    .qsos
+                    .map((qso) => {
+                      
+                        if (qso.idqsos === action.idqso) {
+                            qso.media = qso
+                                .media
+                                .filter((media) =>                                     
+                                    media.idqsos_media !== action.idmedia                                 
+                                )                                
+                        }                        
+                        return qso
+                    })
+
+            });
+            
+            return newStore;
         case REQUEST_USERINFO:
             userInfo = {
                 ...state.userData,
                 fetchingUser: action.fetchingUser,
                 userFetched: action.userFetched
             };
-            newStore = Object.assign({}, state,
-                {
-                    ...state,
-                    userData: userInfo
-                });
+            newStore = Object.assign({}, state, {
+                ...state,
+                userData: userInfo
+            });
             return newStore;
         case RECEIVE_USERINFO:
             userInfo = {
@@ -60,24 +82,22 @@ export default (state = initialState, action) => {
                 fetchingUser: action.fetchingUser,
                 userFetched: action.userFetched
             };
-            newStore = Object.assign({}, state,
-                {
-                    ...state,
-                    userData: userInfo
-                });
+            newStore = Object.assign({}, state, {
+                ...state,
+                userData: userInfo
+            });
             return newStore;
-          case RECEIVE_FOLLOWERS:
-              console.log("RECEIVE_FOLLOWERS");
-              userInfo = {
-                  ...state.userData,
-                  following: action.following
-              };
-              newStore = Object.assign({}, state,
-                  {
-                      ...state,
-                      userData: userInfo
-                  });
-              return newStore;
+        case RECEIVE_FOLLOWERS:
+            console.log("RECEIVE_FOLLOWERS");
+            userInfo = {
+                ...state.userData,
+                following: action.following
+            };
+            newStore = Object.assign({}, state, {
+                ...state,
+                userData: userInfo
+            });
+            return newStore;
         case REQUEST_FEED:
             newStore = Object.assign({}, state, {
                 ...state,
@@ -129,15 +149,14 @@ export default (state = initialState, action) => {
                 qra: action.qra
 
             };
-            newStore = Object.assign({}, state,
-                {
-                    ...state,
-                    userData: logInUserData,
-                    FetchingQSO: false,
-                    qsosFetched: false,
-                    FetchingQRA: false,
-                    QRAFetched: false
-                });
+            newStore = Object.assign({}, state, {
+                ...state,
+                userData: logInUserData,
+                FetchingQSO: false,
+                qsosFetched: false,
+                FetchingQRA: false,
+                QRAFetched: false
+            });
 
             return newStore;
         case LOGOUT:
@@ -147,16 +166,15 @@ export default (state = initialState, action) => {
                 qra: null,
                 isAuthenticated: false
             };
-            newStore = Object.assign({}, state,
-                {
-                    ...state,
-                    userData: logoutUserData,
-                    qsos: [],
-                    FetchingQSO: false,
-                    qsosFetched: false,
-                    FetchingQRA: false,
-                    QRAFetched: false
-                });
+            newStore = Object.assign({}, state, {
+                ...state,
+                userData: logoutUserData,
+                qsos: [],
+                FetchingQSO: false,
+                qsosFetched: false,
+                FetchingQRA: false,
+                QRAFetched: false
+            });
 
             return newStore;
         default:
@@ -164,4 +182,3 @@ export default (state = initialState, action) => {
     }
 
 };
-
