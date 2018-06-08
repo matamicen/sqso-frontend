@@ -81,7 +81,7 @@ class FeedImage extends React.Component {
                                             style={{
                                             float: 'right'
                                         }}>
-                                    { this.props.currentQRA !== this.props.qso_owner &&
+                                    { this.props.currentQRA && this.props.currentQRA !== this.props.qso_owner &&
                                             <Dropdown
                                                 icon='ellipsis vertical'
                                                 size='tiny'

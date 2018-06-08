@@ -88,7 +88,7 @@ class QSOCommentItem extends React.Component {
             <Comment>
                 <Comment.Content>
                     <Item.Extra>
-                        { this.props.comment.qra !== this.props.currentQRA && 
+                        { this.props.currentQRA && this.props.comment.qra !== this.props.currentQRA && 
                         <div
                             style={{
                             float: 'right'
@@ -130,9 +130,9 @@ class QSOCommentItem extends React.Component {
                                                     onOpen={this.open}
                                                     onClose={this.close}
                                                     size='small'>
-                                                    <Modal.Header>Report Content</Modal.Header>
+                                                    <Modal.Header>Report Comment</Modal.Header>
                                                     <Modal.Content>
-                                                        <p>Content Reported!</p>
+                                                        <p>Comment Reported!</p>
                                                     </Modal.Content>
                                                     <Modal.Actions>
                                                         <Button icon='check' content='Close' onClick={this.close}/>
