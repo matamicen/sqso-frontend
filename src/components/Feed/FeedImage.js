@@ -60,6 +60,7 @@ class FeedImage extends React.Component {
     }
     render() {  
         const {showMessage, showReportContent} = this.state      
+        
         return (
             <Modal                
                 closeIcon               
@@ -80,7 +81,7 @@ class FeedImage extends React.Component {
                                             style={{
                                             float: 'right'
                                         }}>
-                                    
+                                    { this.props.currentQRA !== this.props.qso_owner &&
                                             <Dropdown
                                                 icon='ellipsis vertical'
                                                 size='tiny'
@@ -131,6 +132,7 @@ class FeedImage extends React.Component {
                                                     </Modal>
                                                 </Dropdown.Menu>
                                             </Dropdown >
+                                    }
                                         </div>
                                 <Image key={m.idqsos_media} wrapped centered src={m.url}/>
                                 

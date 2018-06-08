@@ -81,17 +81,14 @@ class App extends Component {
     }
 
     render() {
-
         return (
             <div>
                 <AppNavigation/>
-
                 <Container
                     fluid
                     style={{
                     marginTop: '5em'
                 }}>
-
                     <Switch>
                         <Route exact path="/" component={() => <Home/>}/>
                         <Route exact path="/signup" component={SignUp}/>

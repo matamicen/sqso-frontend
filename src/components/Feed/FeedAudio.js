@@ -30,7 +30,7 @@ class FeedAudio extends React.Component {
     handleOnSubmit(e) {
     
         e.preventDefault()
-console.log(this.props)
+
         
         if (!e.target.comments.value) 
             return;
@@ -66,7 +66,7 @@ console.log(this.props)
         this.setState({audioNotVisible:false})
     }
     render() {
-        console.log(this.props)
+        
         const {showMessage, showReportContent} = this.state      
         if (this.props.media.url) {
                     
