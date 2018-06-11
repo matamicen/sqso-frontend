@@ -10,6 +10,42 @@ export const REQUEST_QRA = 'REQUEST_QRA';
 export const RECEIVE_QRA = 'RECEIVE_QRA';
 export const RECEIVE_FOLLOWERS = 'RECEIVE_FOLLOWERS';
 export const DELETE_MEDIA = 'DELETE_MEDIA';
+export const DELETE_QSO = 'DELETE_QSO';
+
+export function doDeleteQso( idqso = null, token){
+    return (dispatch) => {
+        var apigClient = window.apigClientFactory.newClient({});
+        var params;
+        var body = {
+                    "qso": idqso};
+        var additionalParams = {};
+
+
+        params = {
+            "Authorization": token
+        };
+
+        // dispatch(doRequestFeed());
+        apigClient.qsonewDelete(params, body, additionalParams)
+            .then(function (result) {
+
+                result.data.error === '0' &&
+                dispatch(doDeleteQsoResponse(idqso));
+
+            }).catch(function (error) {
+            console.log("error");
+            console.log(error);
+
+        });
+    };
+    
+}
+export function doDeleteQsoResponse( idqso = null){
+    return {
+        type: DELETE_QSO,        
+        idqso: idqso
+    }
+}
 
 export function doDeleteMedia(idmedia = null, idqso = null, token){
     return (dispatch) => {

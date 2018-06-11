@@ -1,5 +1,6 @@
 import {
     DELETE_MEDIA,
+    DELETE_QSO,
     LOGIN,
     LOGOUT,
     RECEIVE_FEED,
@@ -40,6 +41,17 @@ export default(state = initialState, action) => {
     let newStore;
     let userInfo;
     switch (action.type) {
+        case DELETE_QSO:
+            
+        console.log(action)
+        newStore = Object.assign({}, state, {
+            ...state,
+            qsos: state
+                .qsos
+                .filter((qso) => qso.idqsos !== action.idqso)
+
+        });        
+        return newStore;
         case DELETE_MEDIA:
             
             console.log(action)

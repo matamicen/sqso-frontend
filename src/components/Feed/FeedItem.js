@@ -13,7 +13,7 @@ import Feed from 'semantic-ui-react/dist/commonjs/views/Feed'
 
 import QSOComments from "./QSOComments";
 import QSOLikeButton from "./QSOLikeButton";
-import QSOItemOptions from './QSOItemOptions'
+
 import QRAs from "./QRAs";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
@@ -22,6 +22,7 @@ import PropTypes from 'prop-types';
 import Image from "semantic-ui-react/dist/commonjs/elements/Image";
 
 import {Link} from 'react-router-dom'
+import FeedOptionsMenu from "./FeedOptionsMenu";
 
 class FeedItem extends React.Component {
     constructor() {
@@ -81,7 +82,9 @@ class FeedItem extends React.Component {
                             style={{
                             float: 'right'
                         }}>
-                            <QSOItemOptions idqso={this.props.qso.idqsos} currentQRA={this.props.currentQRA} qso_owner={this.props.qso.qra}/>
+                        
+                           <FeedOptionsMenu  qso_owner={this.props.qso.qra} idqso={this.props.qso.idqsos} optionsCaller="FeedItem"/>                                    
+                        
                         </div>
                     </Feed.Label>
 

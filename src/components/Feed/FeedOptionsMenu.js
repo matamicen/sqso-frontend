@@ -3,10 +3,13 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/Actions';
 
+import QRCode from "qrcode.react";
 import Button from "semantic-ui-react/dist/commonjs/elements/Button";
 import Form from "semantic-ui-react/dist/commonjs/collections/Form";
 import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown";
 import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal'
+import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
+import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 
 class FeedOptionsMenu extends React.PureComponent {
     state = {
@@ -21,10 +24,47 @@ class FeedOptionsMenu extends React.PureComponent {
         this.setState({showMessage: false})
         this.setState({showReportContent: false})
     }
-    delete(){
+    deleteMedia(){
         this.props.actions.doDeleteMedia(this.props.idqsos_media, this.props.idqso, this.props.token)
     }
-    handleOnSubmit(e) {
+    deleteQso(){
+        this.props.actions.doDeleteQso( this.props.idqso, this.props.token)
+    }
+    handleOnSubmitReportQso(e) {
+
+        e.preventDefault();
+        if (!e.target.comments.value) 
+            return;
+        var apigClient = window
+            .apigClientFactory
+            .newClient({});
+        var datetime = new Date();
+        var params = {
+            "Authorization": this.props.token
+        };
+        var body = {
+            "idqso": this.props.idqso,
+            "detail": e.target.comments.value,
+            "datetime": datetime
+        };
+        var additionalParams = {};
+        apigClient
+            .contentReportedPost(params, body, additionalParams)
+            .then(function (result) {
+                
+                if (result.data.error > 0) {                 
+                  
+                } else {
+                    this.open()
+                }
+            }.bind(this))
+            .catch(function (error) {
+                console.log("error");
+                console.error(error);
+            });
+
+    }
+    handleOnSubmitReportMedia(e) {
 
         e.preventDefault()
 
@@ -62,8 +102,8 @@ class FeedOptionsMenu extends React.PureComponent {
     render() {
         const {showMessage, showReportContent} = this.state
         return (
-            <div>
-                {this.props.optionsCaller === 'FeedImage' && this.props.currentQRA &&
+           
+                
                 <Dropdown
                     icon='ellipsis vertical'
                     size='tiny'
@@ -85,7 +125,7 @@ class FeedOptionsMenu extends React.PureComponent {
 
                                 <Form
                                     onSubmit={this
-                                    .handleOnSubmit
+                                    .handleOnSubmitReportMedia
                                     .bind(this)}>
                                     <Form.TextArea
                                         required
@@ -117,15 +157,85 @@ class FeedOptionsMenu extends React.PureComponent {
                     }
                     {/* FEED IMAGE DELETE CONTENT */
                     }
-                    {
-                        this.props.optionsCaller === 'FeedImage' && this.props.currentQRA === this.props.qso_owner && 
-                        <Dropdown.Item icon='delete' text='Delete Photo' onClick={this.delete.bind(this)}/>
+                    {    this.props.optionsCaller === 'FeedImage' && this.props.currentQRA === this.props.qso_owner && 
+                        <Dropdown.Item icon='delete' text='Delete Photo' onClick={this.deleteMedia.bind(this)}/>
 
                     }
                     {/* END FEED IMAGE DELETE CONTENT */
-                    } </Dropdown.Menu>
+                    } 
+                    {/* FEED ITEM QR CODE */
+                    }
+                    { this.props.optionsCaller === 'FeedItem' &&
+                      <Modal         
+                        size='tiny'
+                        closeIcon
+                        trigger={< Dropdown.Item icon = 'qrcode' text = 'Show QR Code' />}>
+                        <Modal.Header>QR Code</Modal.Header>
+                        <Modal.Content>
+                            
+                            <Grid centered>
+                                <Segment raised>
+                                    <QRCode value={window.location.origin + '/qso/' + this.props.idqso}/>
+                                </Segment>
+                            </Grid>
+                        </Modal.Content>
+                    </Modal>
+                    }
+                    {/* END FEED ITEM QR CODE */
+                    }
+                    {/* FEED ITEM DELETE QSO*/
+                    }
+                    {this.props.optionsCaller === 'FeedItem' && this.props.currentQRA === this.props.qso_owner &&                     
+                    <Dropdown.Item icon='delete' text='Delete QSO' onClick={this.deleteQso.bind(this)}/>}
+                    {/* END FEED ITEM DELETE QSO*/
+                    }
+                    {/* FEED ITEM REPORT QSO*/
+                    }
+                    {this.props.optionsCaller === 'FeedItem' && 
+                     this.props.currentQRA && this.props.currentQRA !== this.props.qso_owner && <Modal
+                        open={showReportContent}          
+                        onOpen={this.openReportedContent}               
+                        onClose={this.closeReportedContent}         
+                        size='tiny'
+                        closeIcon
+                        trigger={< Dropdown.Item icon = 'warning' text = 'Report Content' />}>
+                        <Modal.Header>
+                            Help Us Understand What's Happening</Modal.Header>
+                        <Modal.Content>
+                            <Form
+                                onSubmit={this
+                                .handleOnSubmitReportQso
+                                .bind(this)}>
+                                <Form.TextArea
+                                    required
+                                    name='comments'
+                                    label='Comments'
+                                    placeholder='Why do you think we should remove this content?'/>
+                                <Form.Button>Submit</Form.Button>
+
+                                <Modal
+                                    dimmer={false}
+                                    open={showMessage}
+                                    onOpen={this.open}
+                                    onClose={this.close}
+                                    size='small'>
+                                    <Modal.Header>Report Content</Modal.Header>
+                                    <Modal.Content>
+                                        <p>Content Reported!</p>
+                                    </Modal.Content>
+                                    <Modal.Actions>
+                                        <Button icon='check' content='Close' onClick={this.close}/>
+                                    </Modal.Actions>
+                                </Modal>
+                            </Form>
+                        </Modal.Content>
+                    </Modal>
+                    }
+                    { /* END FEED ITEM REPORT QSO*/
+                    }
+                    </Dropdown.Menu>
              </Dropdown>
-            } </div>
+             
         )
     }
 
