@@ -11,7 +11,43 @@ export const RECEIVE_QRA = 'RECEIVE_QRA';
 export const RECEIVE_FOLLOWERS = 'RECEIVE_FOLLOWERS';
 export const DELETE_MEDIA = 'DELETE_MEDIA';
 export const DELETE_QSO = 'DELETE_QSO';
+export const DELETE_COMMENT = 'DELETE_COMMENT';
 
+export function doDeleteComment(idcomment = null, idqso = null, token){
+    return (dispatch) => {
+        var apigClient = window.apigClientFactory.newClient({});
+        var params;
+        var body = {"idcomment" : idcomment,
+                    "qso": idqso};
+        var additionalParams = {};
+
+
+        params = {
+            "Authorization": token
+        };
+
+        // dispatch(doRequestFeed());
+        apigClient.qsoCommentDelete(params, body, additionalParams)
+            .then(function (result) {
+                
+                result.data.error === '0' &&
+                dispatch(doDeleteCommentResponse(idcomment, idqso));
+
+            }).catch(function (error) {
+            console.log("error");
+            console.log(error);
+
+        });
+    };
+    
+}
+export function doDeleteCommentResponse(idcomment = null, idqso = null){
+    return {
+        type: DELETE_COMMENT,
+        idcomment: idcomment, 
+        idqso: idqso
+    }
+}
 export function doDeleteQso( idqso = null, token){
     return (dispatch) => {
         var apigClient = window.apigClientFactory.newClient({});

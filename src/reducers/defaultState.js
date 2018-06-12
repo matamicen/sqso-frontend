@@ -11,7 +11,8 @@ import {
     REQUEST_FEED,
     REQUEST_QRA,
     REQUEST_QSO,
-    REQUEST_USERINFO
+    REQUEST_USERINFO,
+    DELETE_COMMENT
 } from "../actions/Actions"
 
 const initialState = {
@@ -52,6 +53,28 @@ export default(state = initialState, action) => {
 
         });        
         return newStore;
+        case DELETE_COMMENT:
+            
+            
+            newStore = Object.assign({}, state, {
+                ...state,
+                qsos: state
+                    .qsos
+                    .map((qso) => {                      
+                        if (qso.idqsos === action.idqso) {
+                            
+                            qso.comments = qso
+                                .comments
+                                .filter((comment) =>                                     
+                                    comment.idqsos_comments !== action.idcomment                                
+                                )                                
+                        }                        
+                        return qso
+                    })
+
+            });
+            
+            return newStore;
         case DELETE_MEDIA:
             
             console.log(action)

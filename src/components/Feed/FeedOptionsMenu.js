@@ -27,8 +27,44 @@ class FeedOptionsMenu extends React.PureComponent {
     deleteMedia(){
         this.props.actions.doDeleteMedia(this.props.idqsos_media, this.props.idqso, this.props.token)
     }
-    deleteQso(){
+    deleteComment(){
+        this.props.actions.doDeleteComment(this.props.idcomment, this.props.idqso, this.props.token)
+    }
+    deleteQso(){        
         this.props.actions.doDeleteQso( this.props.idqso, this.props.token)
+    }
+    handleOnSubmitReportComment(e) {
+
+        e.preventDefault();
+        if (!e.target.comments.value) 
+            return;
+        var apigClient = window
+            .apigClientFactory
+            .newClient({});
+        var datetime = new Date();
+        var params = {
+            "Authorization": this.props.token
+        };
+        var body = {
+            "idqso": this.props.idqso,
+            "idcomment": this.props.idcomment,
+            "detail": e.target.comments.value,
+            "datetime": datetime
+        };
+        var additionalParams = {};
+        apigClient
+            .contentReportedPost(params, body, additionalParams)
+            .then(function (result) {
+
+                if (result.data.error > 0) {} else {
+                    this.open()
+                }
+            }.bind(this))
+            .catch(function (error) {
+                console.log("error");
+                console.error(error);
+            });
+
     }
     handleOnSubmitReportQso(e) {
 
@@ -232,6 +268,56 @@ class FeedOptionsMenu extends React.PureComponent {
                     </Modal>
                     }
                     { /* END FEED ITEM REPORT QSO*/
+                    }
+                    {/*  FEED ITEM REPORT COMMENT */}
+                    {this.props.optionsCaller === 'FeedComment' && this.props.currentQRA && this.props.comment_owner !== this.props.currentQRA && 
+                        <Modal
+                            open={showReportContent}
+                            onOpen={this.openReportedContent}
+                            onClose={this.closeReportedContent}         
+                            size='tiny'
+                            closeIcon
+                            trigger={< Dropdown.Item icon = 'warning' text = 'Report Content' />}>
+                            <Modal.Header>
+                                Help Us Understand What's Happening</Modal.Header>
+                            <Modal.Content>
+
+                                <Form
+                                    onSubmit={this
+                                    .handleOnSubmitReportComment
+                                    .bind(this)}>
+                                    <Form.TextArea
+                                        required
+                                        name='comments'
+                                        label='Comments'
+                                        placeholder='Why do you think we should remove this content?'/>
+                                    <Form.Button>Submit</Form.Button>
+
+                                    <Modal
+                                        dimmer={false}
+                                        open={showMessage}
+                                        onOpen={this.open}
+                                        onClose={this.close}
+                                        size='small'>
+                                        <Modal.Header>Report Comment</Modal.Header>
+                                        <Modal.Content>
+                                            <p>Comment Reported!</p>
+                                        </Modal.Content>
+                                        <Modal.Actions>
+                                            <Button icon='check' content='Close' onClick={this.close}/>
+                                        </Modal.Actions>
+                                    </Modal>
+                                </Form>
+                            </Modal.Content>
+                        </Modal>
+                     }
+                     {/* END FEED ITEM REPORT COMMENT */
+                    }
+                    {/* FEED ITEM DELETE COMMENT*/
+                    }
+                    {this.props.optionsCaller === 'FeedComment' && this.props.currentQRA === this.props.comment_owner &&                     
+                    <Dropdown.Item icon='delete' text='Delete QSO' onClick={this.deleteComment.bind(this)}/>}
+                    {/* END FEED ITEM DELETE COMMENT*/
                     }
                     </Dropdown.Menu>
              </Dropdown>
