@@ -48,6 +48,7 @@
     "dummy": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "coverage": "react-scripts test --env=jsdom coverage",
     "eject": "react-scripts eject",
     "serve": "NODE_ENV=development node server/index.js",
     "deploy": "git add . && eb deploy --stage",
