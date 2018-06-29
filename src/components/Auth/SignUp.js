@@ -1,9 +1,9 @@
 import React from "react";
-// ES Modules, e.g. transpiling with Babel
-// import {Config, CognitoIdentityCredentials} from "aws-sdk";
-import {CognitoUserPool, CognitoUserAttribute} from "amazon-cognito-identity-js";
+// ES Modules, e.g. transpiling with Babel import {Config,
+// CognitoIdentityCredentials} from "aws-sdk"; import {CognitoUserPool} from
+// "amazon-cognito-identity-js";
 import "../../styles/App.css";
-import appConfig from "./Config";
+// import appConfig from "./Config";
 import {Redirect} from "react-router-dom";
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
@@ -11,11 +11,10 @@ import Header from 'semantic-ui-react/dist/commonjs/elements/Header'
 import Form from 'semantic-ui-react/dist/commonjs/collections/Form'
 import Message from 'semantic-ui-react/dist/commonjs/collections/Message'
 import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid'
+import {Auth} from 'aws-amplify';
 
-// window.config.region = appConfig.region;
-// window.Config.credentials = new window.CognitoIdentityCredentials({IdentityPoolId: appConfig.IdentityPoolId});
-
-const userPool = new CognitoUserPool({UserPoolId: appConfig.UserPoolId, ClientId: appConfig.ClientId});
+// const userPool = new CognitoUserPool({UserPoolId: appConfig.UserPoolId,
+// ClientId: appConfig.ClientId});
 
 export class SignUp extends React.Component {
 
@@ -32,7 +31,7 @@ export class SignUp extends React.Component {
             userConfirmed: false,
             cognitoUser: '',
             signupError: '',
-            confirmError: '', 
+            confirmError: '',
             formErrors: {
                 email: '',
                 birthdate: '',
@@ -66,23 +65,15 @@ export class SignUp extends React.Component {
 
     }
 
-    handleUserCreated(err, result) {
-        if (err) {
-            this.setState({signupError: err})
-            alert(err);
-            return;
-        }
-        this.setState({cognitoUser: result.user});   
+    handleUserCreated(result) {
+
+        this.setState({cognitoUser: result.user.username});
         this.setState({userCreated: true});
 
     }
 
-    handleUserConfirmed(err, result) {
-        if (err) {
-            this.setState({confirmError: err})
-            alert(err);
-            return;
-        }
+    handleUserConfirmed(result) {
+      
         console.log('call result: ' + result);
         this.setState({userConfirmed: true});
 
@@ -103,36 +94,35 @@ export class SignUp extends React.Component {
         const qra = this
             .state
             .qra
-            .trim();
+            .trim()
+            .toUpperCase();
         const birthdate = this
             .state
             .birthdate
             .trim();
 
-        var attributeList = [];
-
-        var dataEmail = {
-            Name: 'email',
-            Value: email
-        };
-
-        var dataBirthdate = {
-            Name: 'birthdate',
-            value: birthdate
-        }
-        // Validate Email
         this.validateFields()
 
         if (!this.state.formErrors.password && !this.state.formErrors.email && !this.state.formErrors.passwordConfirm && !this.state.formErrors.qra && !this.state.formErrors.birthdate) {
 
-            var attributeEmail = new CognitoUserAttribute(dataEmail);
-            var attributeBirthdate = new CognitoUserAttribute(dataBirthdate);
+            console.log(qra)
+            Auth.signUp({
+                username: qra,
+                password: password,
+                attributes: {
+                    email: email, // optional
+                    birthdate: birthdate, // optional - E.164 number convention
+                    // other custom attributes
+                },
+                validationData: [] //optional
+            }).then(data => {
 
-            attributeList.push(attributeEmail);
-            attributeList.push(attributeBirthdate);
-            //attributeList.push(attributeUsername);
+                this.handleUserCreated(data)
 
-            userPool.signUp(qra, password, attributeList, null, this.handleUserCreated.bind(this));
+            }).catch(err => {
+                console.log(err);
+                this.setState({signupError: err})
+            });
         }
     }
     validateFields() {
@@ -140,6 +130,7 @@ export class SignUp extends React.Component {
         let fieldValidationErrors = this.state.formErrors;
 
         //email
+        console.log(this.state.email)
         let emailValid = this
             .state
             .email
@@ -182,10 +173,18 @@ export class SignUp extends React.Component {
             .code
             .trim();
 
-        this
-            .state
-            .cognitoUser
-            .confirmRegistration(code, true, this.handleUserConfirmed.bind(this));
+        Auth.confirmSignUp(this.state.qra.trim().toUpperCase(), code, {
+            // Optional. Force user confirmation irrespective of existing alias. By default
+            // set to True.
+            forceAliasCreation: true
+        }).then(data => {
+            console.log(data)
+            this.handleUserConfirmed(data)
+
+        }).catch(err => {
+            console.log(err);
+            this.setState({confirmError: err})
+        });
 
     }
 
@@ -292,7 +291,7 @@ export class SignUp extends React.Component {
                                     : false}
                                     name='birthdate'
                                     onChange={this
-                                    .handleEmailChange
+                                    .handleBirthdateChange
                                     .bind(this)}/> {this.state.formErrors.birthdate && <Message negative content={this.state.formErrors.birthdate}/>}
                             </Form.Field>
                             <Form.Field>

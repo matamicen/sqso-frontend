@@ -6,12 +6,15 @@ import {connect} from 'react-redux';
 import * as Actions from '../../actions/Actions';
 
 class Home extends React.Component {
-    shouldComponentUpdate(){
-        return !this.props.fetchingQSOS;
-    }
+    // shouldComponentUpdate(){
+    //     return !this.props.fetchingQSOS && this.props.qsosFetched;
+    // }
 
     render() {
-        if (this.props.fetchingQSOS) return null;
+        // console.log("home")
+        // console.log(this.props.fetchingQSOS)
+        // console.log(this.props.qsosFetched)
+        // if (this.props.fetchingQSOS || !this.props.qsosFetched) return null;
 
         return (
             this.props.isAuthenticated ? <UserDashboard/> : <PublicDashboard/>
@@ -20,8 +23,7 @@ class Home extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    isAuthenticated: state.default.userData.isAuthenticated,
-    fetchingQSOS: state.default.fetchingQSOS
+    isAuthenticated: state.default.userData.isAuthenticated    
 });
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)

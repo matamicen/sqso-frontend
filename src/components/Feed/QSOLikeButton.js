@@ -4,7 +4,7 @@ import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/Actions';
-
+import {API} from 'aws-amplify'
 class QSOLikeButton extends React.Component {
     constructor() {
         super();
@@ -30,60 +30,55 @@ class QSOLikeButton extends React.Component {
     }
 
     doLike() {
-
-        var apigClient = window
-            .apigClientFactory
-            .newClient({});
-
-        var params = {
-            "Authorization": this.props.state.default.userData.token
-        };
-        var body = {
-            "qso": this.props.qso.idqsos
-        };
-        var additionalParams = {};
-        apigClient
-            .qsoLikePost(params, body, additionalParams)
-            .then(function (result) {
-
-                if (result.data.body.error > 0) {
-                    console.error(result.data.body.message);
+        let apiName = 'superqso';
+        let path = '/qso-like';
+        let myInit = {
+            body: {
+                "qso": this.props.qso.idqsos
+            }, // replace this with attributes you need
+            headers: {
+                "Authorization": this.props.state.default.userData.token
+            } // OPTIONAL
+        }
+        API
+            .post(apiName, path, myInit)
+            .then(response => {
+                if (response.body.error > 0) {
+                    console.error(response.body.message);
                 } else {
-                    this.setState({likeCounter: result.data.body.message});
+                    this.setState({likeCounter: response.body.message});
                 }
-            }.bind(this))
-            .catch(function (error) {
-                console.log("error");
-                console.error(error);
+            })
+            .catch(error => {
+                console.log(error)
             });
+      
+       
     }
 
     doUnLike() {
 
-        var apigClient = window
-            .apigClientFactory
-            .newClient({});
-
-        var params = {
-            "Authorization": this.props.state.default.userData.token
-        };
-        var body = {
-            "qso": this.props.qso.idqsos
-        };
-        var additionalParams = {};
-        apigClient
-            .qsoLikeDelete(params, body, additionalParams)
-            .then(function (result) {
-                
-                if (result.data.body.error > 0) {
-                    console.error(result.data.body.message);
+        let apiName = 'superqso';
+        let path = '/qso-like';
+        let myInit = {
+            body: {
+                "qso": this.props.qso.idqsos
+            }, // replace this with attributes you need
+            headers: {
+                "Authorization": this.props.state.default.userData.token
+            } // OPTIONAL
+        }
+        API
+            .del(apiName, path, myInit)
+            .then(response => {
+                if (response.body.error > 0) {
+                    console.error(response.body.message);
                 } else {
-                    this.setState({likeCounter: result.data.body.message});
+                    this.setState({likeCounter: response.body.message});
                 }
-            }.bind(this))
-            .catch(function (error) {
-                console.log("error");
-                console.error(error);
+            })
+            .catch(error => {
+                console.log(error)
             });
     }
 

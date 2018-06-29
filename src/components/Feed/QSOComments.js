@@ -6,7 +6,7 @@ import QSOCommentItem from "./QSOCommentItem";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/Actions';
-
+import {API} from 'aws-amplify'
 class QSOComments extends React.Component {
     constructor() {
         super();
@@ -29,33 +29,32 @@ class QSOComments extends React.Component {
     }
 
     doComment(c) {
-
-        var apigClient = window
-            .apigClientFactory
-            .newClient({});
-
-        var params = {
-            "Authorization": this.props.token
-        };
-        var body = {
-            "qso": this.props.qso.idqsos,
-            "comment": c.comment,
-            "datetime": c.datetime
-        };
-        var additionalParams = {};
-        apigClient
-            .qsoCommentPost(params, body, additionalParams)
-            .then(function (result) {
-                if (result.data.body.error > 0) {
-                    console.error(result.data.body.message);
+        let apiName = 'superqso';
+        let path = '/qso-comment';
+        let myInit = {
+            body: {
+                "qso": this.props.qso.idqsos,
+                "comment": c.comment,
+                "datetime": c.datetime
+            
+            }, // replace this with attributes you need
+            headers: {
+                "Authorization": this.props.token
+            } // OPTIONAL
+        }
+        API
+            .post(apiName, path, myInit)
+            .then(response => {
+                if (response.body.error > 0) {
+                    console.error(response.body.message);
                 } else {
-                    this.setState({comments: result.data.body.message});
+                    this.setState({comments: response.body.message});
                 }
-            }.bind(this))
-            .catch(function (error) {
-                console.log("error");
-                console.error(error);
-            });
+            })
+            .catch(error => {
+                console.log(error)
+            });       
+      
     }
 
     handleAddComment(e) {

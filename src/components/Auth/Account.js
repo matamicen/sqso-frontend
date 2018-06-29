@@ -6,13 +6,13 @@ import {browserHistory} from "react-router";
 // import {Config, CognitoIdentityCredentials} from "aws-sdk";
 import {NavLink} from "react-router-dom";
 // ES Modules, e.g. transpiling with Babel
-import appConfig from "./Config";
-import PropTypes from 'prop-types';
+// import appConfig from "./Config";
+// import PropTypes from 'prop-types';
 
-Config.region = appConfig.region;
-Config.credentials = new window.CognitoIdentityCredentials({
-    IdentityPoolId: appConfig.IdentityPoolId
-});
+// Config.region = appConfig.region;
+// Config.credentials = new window.CognitoIdentityCredentials({
+//     IdentityPoolId: appConfig.IdentityPoolId
+// });
 
 
 export class Account extends React.Component {
@@ -88,6 +88,6 @@ export class Account extends React.Component {
 
     }
 }
-Account.propTypes = {
+// Account.propTypes = {
     
-}
+// }

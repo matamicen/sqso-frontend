@@ -1,3 +1,5 @@
+import {API} from 'aws-amplify';
+
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const REQUEST_FEED = 'REQUEST_FEED';
@@ -13,119 +15,93 @@ export const DELETE_MEDIA = 'DELETE_MEDIA';
 export const DELETE_QSO = 'DELETE_QSO';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 
-export function doDeleteComment(idcomment = null, idqso = null, token){
+export function doDeleteComment(idcomment = null, idqso = null, token) {
     return (dispatch) => {
-        var apigClient = window.apigClientFactory.newClient({});
-        var params;
-        var body = {"idcomment" : idcomment,
-                    "qso": idqso};
-        var additionalParams = {};
-
-
-        params = {
-            "Authorization": token
-        };
-
-        // dispatch(doRequestFeed());
-        apigClient.qsoCommentDelete(params, body, additionalParams)
-            .then(function (result) {
-                
-                result.data.error === '0' &&
-                dispatch(doDeleteCommentResponse(idcomment, idqso));
-
-            }).catch(function (error) {
-            console.log("error");
-            console.log(error);
-
-        });
+        let apiName = 'superqso';
+        let path = '/qso-comment';
+        let myInit = {
+            body: {
+                "idcomment": idcomment,
+                "qso": idqso
+            }, // replace this with attributes you need
+            headers: {
+                "Authorization": token
+            } // OPTIONAL
+        }
+        API
+            .del(apiName, path, myInit)
+            .then(response => {
+                response.error === '0' && dispatch(doDeleteCommentResponse(idcomment, idqso));
+            })
+            .catch(error => {
+                console.log(error)
+            });
     };
-    
+
 }
-export function doDeleteCommentResponse(idcomment = null, idqso = null){
-    return {
-        type: DELETE_COMMENT,
-        idcomment: idcomment, 
-        idqso: idqso
-    }
+export function doDeleteCommentResponse(idcomment = null, idqso = null) {
+    return {type: DELETE_COMMENT, idcomment: idcomment, idqso: idqso}
 }
-export function doDeleteQso( idqso = null, token){
+export function doDeleteQso(idqso = null, token) {
     return (dispatch) => {
-        var apigClient = window.apigClientFactory.newClient({});
-        var params;
-        var body = {
-                    "qso": idqso};
-        var additionalParams = {};
-
-
-        params = {
-            "Authorization": token
-        };
-
-        // dispatch(doRequestFeed());
-        apigClient.qsonewDelete(params, body, additionalParams)
-            .then(function (result) {
-
-                result.data.error === '0' &&
-                dispatch(doDeleteQsoResponse(idqso));
-
-            }).catch(function (error) {
-            console.log("error");
-            console.log(error);
-
-        });
+        let apiName = 'superqso';
+        let path = '/qsonew';
+        let myInit = {
+            body: {
+                "qso": idqso
+            }, // replace this with attributes you need
+            headers: {
+                "Authorization": token
+            } // OPTIONAL
+        }
+        API
+            .del(apiName, path, myInit)
+            .then(response => {
+                console.log(response)
+                response.error === '0' && dispatch(doDeleteQsoResponse(idqso));
+            })
+            .catch(error => {
+                console.log(error)
+            });
     };
-    
-}
-export function doDeleteQsoResponse( idqso = null){
-    return {
-        type: DELETE_QSO,        
-        idqso: idqso
-    }
 }
 
-export function doDeleteMedia(idmedia = null, idqso = null, token){
+export function doDeleteQsoResponse(idqso = null) {
+    return {type: DELETE_QSO, idqso: idqso}
+}
+
+export function doDeleteMedia(idmedia = null, idqso = null, token) {
     return (dispatch) => {
-        var apigClient = window.apigClientFactory.newClient({});
-        var params;
-        var body = {"idmedia" : idmedia,
-                    "qso": idqso};
-        var additionalParams = {};
+        let apiName = 'superqso';
+        let path = '/qsomediaadd';
+        let myInit = {
+            body: {
+                "idmedia": idmedia,
+                "qso": idqso
+            }, // replace this with attributes you need
+            headers: {
+                "Authorization": token
+            } // OPTIONAL
+        }
+        API
+            .del(apiName, path, myInit)
+            .then(response => {
+                console.log(response)
+                response.error === '0' && dispatch(doDeleteMediaResponse(idmedia, idqso));
 
-
-        params = {
-            "Authorization": token
-        };
-
-        // dispatch(doRequestFeed());
-        apigClient.qsomediaaddDelete(params, body, additionalParams)
-            .then(function (result) {
-
-                result.data.error === '0' &&
-                dispatch(doDeleteMediaResponse(idmedia, idqso));
-
-            }).catch(function (error) {
-            console.log("error");
-            console.log(error);
-
-        });
+            })
+            .catch(error => {
+                console.log(error)
+            });
     };
-    
+
 }
-export function doDeleteMediaResponse(idmedia = null, idqso = null){
-    return {
-        type: DELETE_MEDIA,
-        idmedia: idmedia, 
-        idqso: idqso
-    }
+export function doDeleteMediaResponse(idmedia = null, idqso = null) {
+    return {type: DELETE_MEDIA, idmedia: idmedia, idqso: idqso}
 }
 export function doRequestUserInfo() {
-    return {
-        type: REQUEST_USERINFO,
-        fetchingUser: true,
-        userFetched: false
-    }
+    return {type: REQUEST_USERINFO, fetchingUser: true, userFetched: false}
 }
-
 
 export function doReceiveUserInfo(followers = null, following = null, profilepic = null) {
     return {
@@ -168,6 +144,7 @@ export function doLogout() {
         FetchingQSOS: false,
         token: null,
         qra: null,
+        isAuthenticated: false,
         followers: null,
         following: null,
         profilepic: null,
@@ -179,234 +156,211 @@ export function doLogout() {
 }
 
 export function doRequestFeed() {
-    //   console.log("doRequestFeed")
-    return {
-        type: REQUEST_FEED,
-        FetchingQSOS: true,
-        qsosFetched: false
-    }
+    // console.log("doRequestFeed")
+    return {type: REQUEST_FEED, FetchingQSOS: true, qsosFetched: false}
 }
 
 export function doReceiveFeed(qsos) {
-    return {
-        type: RECEIVE_FEED,
-        qsos: qsos,
-        FetchingQSOS: false,
-        qsosFetched: true
-
-    }
+    // console.log("doReceiveFeed")
+    return {type: RECEIVE_FEED, qsos: qsos, FetchingQSOS: false, qsosFetched: true}
 }
 
 export function doFetchUserInfo(token) {
     return (dispatch) => {
-        var apigClient = window.apigClientFactory.newClient({});
-        var params;
-        var body = {};
-        var additionalParams = {};
-
-
-          params = {
-              "Authorization": token
-          };
         dispatch(doRequestUserInfo());
-        apigClient.userInfoGet(params, body, additionalParams)
-            .then(function (result) {
-                if (result.data.body.error === 0) {
-                    dispatch(doReceiveUserInfo(result.data.body.message.followers, result.data.body.message.following, result.data.body.message.profilepic));
+        let apiName = 'superqso';
+        let path = '/user-info';
+        let myInit = {
+            body: {
+                "Authorization": token
+            }, // replace this with attributes you need
+            headers: {} // OPTIONAL
+        }
+        API
+            .get(apiName, path, myInit)
+            .then(response => {
+                console.log(response)
+                if (response.body.error === 0) {
+                    dispatch(doReceiveUserInfo(response.body.message.followers, response.body.message.following, response.body.message.profilepic));
                 }
-            }).catch(function (error) {
-            console.log("error");
-            console.log(error);            
-        });
+            })
+            .catch(error => {
+                console.log(error.response)
+            });
     }
 }
 
 export function doFetchUserFeed(token) {
-    //  console.log("doFetchUserFeed");
+    // console.log("doFetchUserFeed");
+
     return (dispatch) => {
-        var apigClient = window.apigClientFactory.newClient({});
-        var params;
-        var body = {};
-        var additionalParams = {};
-
-
-        params = {
-            "Authorization": token
-        };
-
         dispatch(doRequestFeed());
-        apigClient.qsoGetUserFeedGet(params, body, additionalParams)
-            .then(function (result) {
-                dispatch(doReceiveFeed(result.data));
+        let apiName = 'superqso';
+        let path = '/qso-get-user-feed';
+        let myInit = {
+            body: {}, // replace this with attributes you need
+            headers: {
+                "Authorization": token
+            } // OPTIONAL
+        }
+        API
+            .get(apiName, path, myInit)
+            .then(response => {
 
-            }).catch(function (error) {
-            console.log("error");
-            console.log(error);
-
-        });
+                dispatch(doReceiveFeed(response));
+                // Add your code here
+            })
+            .catch(error => {
+                console.log(error.response)
+            });
     };
 }
 
 export function doFetchPublicFeed() {
+    // console.log("doFetchPublicFeed");
     return (dispatch) => {
-        var apigClient = window.apigClientFactory.newClient({});
-        var params = {};
-        var body = {};
-        var additionalParams = {};
-
-
         dispatch(doRequestFeed());
-        
-        apigClient.qsoPublicListGet(params, body, additionalParams)
-            .then(function (result) {
-                
-                dispatch(doReceiveFeed(result.data));
-                
+        let apiName = 'superqso';
+        let path = '/qso-public-list';
+        let myInit = {
+            body: {}, // replace this with attributes you need
+            headers: {} // OPTIONAL
+        }
+        API
+            .get(apiName, path, myInit)
+            .then(response => {
 
-            }).catch(function (error) {
-         //   alert(error);
-        });
+                dispatch(doReceiveFeed(response));
+                // Add your code here
+            })
+            .catch(error => {
+                console.log(error)
+            });
     };
 }
 
 export function doRequestQSO() {
-    return {
-        type: REQUEST_QSO,
-        FetchingQSO: true
-
-    }
+    return {type: REQUEST_QSO, FetchingQSO: true}
 }
 
 export function doReceiveQSO(qso) {
-    return {
-        type: RECEIVE_QSO,
-        qso: qso,
-        FetchingQSO: false
-
-
-    }
+    return {type: RECEIVE_QSO, qso: qso, FetchingQSO: false}
 }
 
 export function doFetchQSO(idqso) {
-    console.log("doFetchQSO");
+    // console.log("doFetchQSO");
     return (dispatch) => {
-        var apigClient = window.apigClientFactory.newClient({});
-        var params = {};
-        var body = {"qso": idqso};
-        var additionalParams = {};
+        let apiName = 'superqso';
+        let path = '/qso-detail';
+        let myInit = {
+            body: {
+                "qso": idqso
+            }, // replace this with attributes you need
+            headers: {} // OPTIONAL
+        }
+        API
+            .post(apiName, path, myInit)
+            .then(response => {
+                console.log(response)
+                dispatch(doReceiveQSO(response));
 
-
-        dispatch(doRequestQSO());
-        apigClient.qsoDetailPost(params, body, additionalParams)
-            .then(function (result) {
-                dispatch(doReceiveQSO(result.data));
-
-            }).catch(function (error) {
-            console.log("error");
-            console.log(error);
-            alert(error);
-        });
+            })
+            .catch(error => {
+                console.log(error)
+            });
     };
 }
 
 export function doFetchQRA(qra) {
 
     return (dispatch) => {
-        var apigClient = window.apigClientFactory.newClient({});
-        var params = {};
-        var body = {"qra": qra};
-        var additionalParams = {};
-
+        let apiName = 'superqso';
+        let path = '/qra-info';
+        let myInit = {
+            body: {
+                "qra": qra
+            }, // replace this with attributes you need
+            headers: {} // OPTIONAL
+        }
         dispatch(doRequestQRA());
-        apigClient.qraInfoPost(params, body, additionalParams)
-            .then(function (result) {
-                dispatch(doReceiveQRA(result.data.body.message));
-
-            }).catch(function (error) {
-            console.log("error");
-            console.log(error);
-            alert(error);
-        });
+        API
+            .post(apiName, path, myInit)
+            .then(response => {
+                console.log(response)
+                dispatch(doReceiveQRA(response.body.message));
+            })
+            .catch(error => {
+                console.log(error)
+            });
     };
 }
 
 export function doFollowQRA(token, follower) {
     return (dispatch) => {
-        var apigClient = window.apigClientFactory.newClient({});
-
-        var params = {
-            "Authorization": token
-        };
-        var body = {
-            "qra": follower,
-            "datetime": new Date()
-        };
-        var additionalParams = {};
-        apigClient.qraFollowerPost(params, body, additionalParams)
-            .then(function (result) {
-                if (result.data.body.error > 0) {
-                    console.error(result.data.body.message);
-                    alert(result.data.body.error);
+        let apiName = 'superqso';
+        let path = '/qra-follower';
+        let myInit = {
+            body: {
+                "qra": follower,
+                "datetime": new Date()
+            }, // replace this with attributes you need
+            headers: {
+                "Authorization": token
+            } // OPTIONAL
+        }
+        API
+            .post(apiName, path, myInit)
+            .then(response => {
+                if (response.body.error > 0) {
+                    console.error(response.body.message);
+                    alert(response.body.error);
                 } else {
-                    dispatch(doReceiveFollowers(result.data.body.message));
+                    dispatch(doReceiveFollowers(response.body.message));
                 }
             })
-            .catch(function (error) {
-                console.log("error");
-                console.error(error);
+            .catch(error => {
+                console.log(error)
             });
     };
 }
 
 export function doUnfollowQRA(token, follower) {
     return (dispatch) => {
-        var apigClient = window.apigClientFactory.newClient({});
-
-        var params = {
-            "Authorization": token
-        };
-        var body = {
-            "qra": follower
-        };
-        var additionalParams = {};
-        apigClient.qraFollowerDelete(params, body, additionalParams)
-            .then(function (result) {
-                if (result.data.body.error > 0) {
-                    console.error(result.data.body.message);
-                    alert(result.data.body.error);
+        let apiName = 'superqso';
+        let path = '/qra-follower';
+        let myInit = {
+            body: {
+                "qra": follower
+            }, // replace this with attributes you need
+            headers: {
+                "Authorization": token
+            } // OPTIONAL
+        }
+        API
+            .del(apiName, path, myInit)
+            .then(response => {
+                if (response.body.error > 0) {
+                    console.error(response.body.message);
+                    alert(response.body.error);
                 } else {
-                    dispatch(doReceiveFollowers(result.data.body.message));
+                    dispatch(doReceiveFollowers(response.body.message));
                 }
             })
-            .catch(function (error) {
-                console.log("error");
-                console.error(error);
+            .catch(error => {
+                console.log(error)
             });
     };
 }
 
 export function doRequestQRA() {
-    return {
-        type: REQUEST_QRA,
-        FetchingQRA: true,
-        QRAFetched: false
-
-    }
+    return {type: REQUEST_QRA, FetchingQRA: true, QRAFetched: false}
 }
 
 export function doReceiveQRA(qra) {
-    return {
-        type: RECEIVE_QRA,
-        qra: qra,
-        FetchingQRA: false,
-        QRAFetched: true
-    }
+    return {type: RECEIVE_QRA, qra: qra, FetchingQRA: false, QRAFetched: true}
 }
 
 export function doReceiveFollowers(following) {
     console.log("doReceiveFollowers");
-    return {
-        type: RECEIVE_FOLLOWERS,
-        following: following
-    }
+    return {type: RECEIVE_FOLLOWERS, following: following}
 }

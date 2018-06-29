@@ -8,10 +8,10 @@ import * as Actions from '../../actions/Actions';
 import 'react-virtualized/styles.css'; // only needs to be imported once
 
 class NewsFeedContainer extends React.Component {
-// This example assumes you have a way to know/load this information
+
 
     componentDidMount() {
-        if (!this.props.fetchingQSOS && !this.props.qsosFetched) {
+        if (!this.props.FetchingQSOS && !this.props.qsosFetched) {
             //  this.setState({fetchingData: true});
             this.props.isAuthenticated ?
                 this.props.actions.doFetchUserFeed(this.props.token)
@@ -21,13 +21,12 @@ class NewsFeedContainer extends React.Component {
     }
 
     shouldComponentUpdate(nextProps) {
-        //    console.log("shouldComponentUpdate FEEDQSO" + this.props.qsosFetched);
-        return this.props.qsosFetched;
+         return !nextProps.FetchingQSOS && nextProps.qsosFetched;
     }
 
-    render() {
+    render() {      
         
-        if (this.props.fetchingQSOS || !this.props.qsosFetched) return null;
+        if (this.props.FetchingQSOS || !this.props.qsosFetched || this.props.qsos.length === 0) return null;
         let qsos = Immutable.List(this.props.qsos);
         if (this.props.qsos && this.props.qsos.length > 0) {
             qsos = this.props.qsos.map((qso, i) =>
@@ -41,9 +40,9 @@ class NewsFeedContainer extends React.Component {
     }
 }
 
-const mapStateToProps = (state, qsos) => ({
+const mapStateToProps = (state) => ({
     qsos: state.default.qsos,
-    fetchingQSOS: state.default.FetchingQSOS,
+    FetchingQSOS: state.default.FetchingQSOS,
     qsosFetched: state.default.qsosFetched,
     isAuthenticated: state.default.userData.isAuthenticated,
     token: state.default.userData.token

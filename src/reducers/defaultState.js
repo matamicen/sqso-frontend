@@ -43,59 +43,53 @@ export default(state = initialState, action) => {
     let userInfo;
     switch (action.type) {
         case DELETE_QSO:
-            
-        console.log(action)
-        newStore = Object.assign({}, state, {
-            ...state,
-            qsos: state
-                .qsos
-                .filter((qso) => qso.idqsos !== action.idqso)
 
-        });        
-        return newStore;
-        case DELETE_COMMENT:
-            
-            
             newStore = Object.assign({}, state, {
                 ...state,
                 qsos: state
                     .qsos
-                    .map((qso) => {                      
-                        if (qso.idqsos === action.idqso) {
-                            
-                            qso.comments = qso
-                                .comments
-                                .filter((comment) =>                                     
-                                    comment.idqsos_comments !== action.idcomment                                
-                                )                                
-                        }                        
-                        return qso
-                    })
+                    .filter((qso) => qso.idqsos !== action.idqso)
 
             });
-            
             return newStore;
-        case DELETE_MEDIA:
-            
-            console.log(action)
+        case DELETE_COMMENT:
+
             newStore = Object.assign({}, state, {
                 ...state,
                 qsos: state
                     .qsos
                     .map((qso) => {
-                      
                         if (qso.idqsos === action.idqso) {
-                            qso.media = qso
-                                .media
-                                .filter((media) =>                                     
-                                    media.idqsos_media !== action.idmedia                                 
-                                )                                
-                        }                        
+
+                            qso.comments = qso
+                                .comments
+                                .filter((comment) => comment.idqsos_comments !== action.idcomment)
+                        }
                         return qso
                     })
 
             });
-            
+
+            return newStore;
+        case DELETE_MEDIA:
+
+            console.log(action);
+            newStore = Object.assign({}, state, {
+                ...state,
+                qsos: state
+                    .qsos
+                    .map((qso) => {
+
+                        if (qso.idqsos === action.idqso) {
+                            qso.media = qso
+                                .media
+                                .filter((media) => media.idqsos_media !== action.idmedia)
+                        }
+                        return qso
+                    })
+
+            });
+
             return newStore;
         case REQUEST_USERINFO:
             userInfo = {
@@ -195,6 +189,7 @@ export default(state = initialState, action) => {
 
             return newStore;
         case LOGOUT:
+            // console.log("LOGOUT");
             let logoutUserData = {
                 ...state.userData,
                 token: "",

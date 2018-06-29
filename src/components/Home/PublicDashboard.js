@@ -3,9 +3,6 @@ import FeedQSO from "../Feed/NewsFeedContainer";
 
 import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid'
 import Advertisement from 'semantic-ui-react/dist/commonjs/views/Advertisement'
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux';
-import * as Actions from '../../actions/Actions';
 
 class PublicDashboard extends React.Component {
 
@@ -14,7 +11,7 @@ class PublicDashboard extends React.Component {
         return (
 
             <Grid>
-                <Grid.Row columns={3} only='computer'>
+                {(navigator.maxTouchPoints === 0) && <Grid.Row columns={3} only='computer'>
 
                     <Grid.Column width={3} only="computer">
                         <Advertisement unit='wide skyscraper' test='Wide Skyscraper' centered/>
@@ -31,7 +28,8 @@ class PublicDashboard extends React.Component {
                     </Grid.Column>
 
                 </Grid.Row>
-                <Grid.Row columns={1} only='mobile tablet'>
+}
+                {(navigator.maxTouchPoints > 0) && <Grid.Row columns={1} only='mobile tablet'>
                     <Grid.Column>
 
                         < FeedQSO/>
@@ -39,15 +37,11 @@ class PublicDashboard extends React.Component {
                     </Grid.Column>
 
                 </Grid.Row>
+}
             </Grid>
 
         );
     }
 }
 
-const mapStateToProps = (state) => ({state: state});
-const mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators(Actions, dispatch)
-});
-
-export default connect(mapStateToProps, mapDispatchToProps, null, {pure: true})(PublicDashboard);
+export default(PublicDashboard);

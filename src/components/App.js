@@ -9,69 +9,65 @@ import Logout from "./Auth/Logout";
 import LogIn from "./Auth/LogIn";
 import AppNavigation from "./Home/AppNavigation";
 // import AWS from "aws-sdk";
-import {CognitoUserPool} from "amazon-cognito-identity-js";
-import appConfig from "./Auth/Config";
+import {Auth} from 'aws-amplify'
 import Container from 'semantic-ui-react/dist/commonjs/elements/Container'
 import QRAProfileContainer from "./Profile/QRAProfileContainer";
 import QSODetail from "./QSODetail"
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../actions/Actions';
+import Amplify from 'aws-amplify';
+import aws_exports from '../aws-exports';
+
 // if (process.env.NODE_ENV !== 'production') {     const {whyDidYouUpdate} =
 // require('why-did-you-update')     whyDidYouUpdate(React)   }
+
+Amplify.configure(aws_exports);
+
 class App extends Component {
     constructor() {
         super();
-        this.state = {};
+        this.state = {
+            loginValidated: false
+        };
     }
     loadAuthenticatedUser() {
-        var userPool = new CognitoUserPool(appConfig.poolData);
-        var cognitoUser = userPool.getCurrentUser();
+        
+        Auth
+            .currentSession()
+            .then(function (session) {
+                
+                Auth
+                    .currentAuthenticatedUser()
+                    .then(async function (user) {
+                 
+                        await this
+                            .props
+                            .actions
+                            .doLogin(session.idToken.jwtToken, user.username.toUpperCase());
+                        await this.setState({loginValidated: true});
+                        
 
-        if (cognitoUser != null) {
-
-            cognitoUser
-                .getSession(function (err, session) {
-                    if (err) {
-                        alert(err);
-                        this
+                    }.bind(this), async function (err) {
+                        console.log(err)
+                        console.log("User NOT Authenticated")
+                        await this
                             .props
                             .actions
                             .doLogout();
+                        await this.setState({loginValidated: true});
                         return;
-                    }
-                    let token = session
-                        .getIdToken()
-                        .getJwtToken();
-
-                    this
-                        .props
-                        .actions
-                        .doLogin(token, cognitoUser.username.toUpperCase());
-
-                    var creds = new window
-                        .AWS
-                        .CognitoIdentityCredentials({
-                            IdentityPoolId: appConfig.IdentityPoolId, // your identity pool id here
-                            Logins: {
-                                // Change the key below according to the specific region your user pool is in.
-                                [appConfig.CognitoToken]: token
-                            }
-                        }, {region: appConfig.region});
-
-                    creds.refresh(function (err, data) {
-                        if (err) {
-                            console.log(err);
-                            this
-                                .props
-                                .actions
-                                .doLogout()
-                        } else {}
                     }.bind(this));
-
-                }.bind(this));
-        }
-
+            }.bind(this), function (err) {
+                // console.log(err)
+            
+                this
+                    .props
+                    .actions
+                    .doLogout();
+                this.setState({loginValidated: true});
+                // return;
+            }.bind(this));
     }
 
     componentDidMount() {
@@ -81,6 +77,11 @@ class App extends Component {
     }
 
     render() {
+       
+        
+        if (!this.state.loginValidated) 
+            return null;
+        
         return (
             <div>
                 <AppNavigation/>
@@ -106,7 +107,7 @@ class App extends Component {
 
 }
 
-const mapStateToProps = (state) => ({state: state});
+const mapStateToProps = (state) => ({});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 });
