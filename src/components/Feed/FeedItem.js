@@ -20,9 +20,12 @@ import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/Actions';
 import PropTypes from 'prop-types';
 import Image from "semantic-ui-react/dist/commonjs/elements/Image";
-
+import QRCode from "qrcode.react";
 import {Link} from 'react-router-dom'
 import FeedOptionsMenu from "./FeedOptionsMenu";
+import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
+import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown";
+import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
 
 class FeedItem extends React.Component {
     constructor() {
@@ -56,7 +59,7 @@ class FeedItem extends React.Component {
         }
     
     render() {
-    
+
         let picList = this
             .props
             .qso
@@ -82,9 +85,31 @@ class FeedItem extends React.Component {
                             style={{
                             float: 'right'
                         }}>
-                        
-                           <FeedOptionsMenu  qso_owner={this.props.qso.qra} idqso={this.props.qso.idqsos} optionsCaller="FeedItem"/>                                    
-                        
+
+                            <FeedOptionsMenu  qso_owner={this.props.qso.qra} idqso={this.props.qso.idqsos} optionsCaller="FeedItem"/>                                    
+                            {/* <Dropdown
+                                icon='ellipsis vertical'
+                                size='tiny'
+                                button
+                                className='icon'
+                                pointing="right">
+                                <Dropdown.Menu>
+                                    <Modal
+                                        size='tiny'
+                                        closeIcon
+                                        trigger={< Dropdown.Item icon = 'qrcode' text = 'TEST' />}>
+                                        <Modal.Header>QR Code</Modal.Header>
+                                        <Modal.Content>
+                                            <Grid centered>
+                                                <Segment raised>
+                                                    <QRCode value={window.location.origin + '/qso/' + this.props.idqso}/>
+                                                </Segment>
+                                            </Grid>
+                                        </Modal.Content>
+                                    </Modal>
+                                     
+                                </Dropdown.Menu>
+                            </Dropdown> */}
                         </div>
                     </Feed.Label>
 
@@ -101,7 +126,11 @@ class FeedItem extends React.Component {
                                 qras={this.props.qso.qras}/>
                         </Feed.Extra>
 
-                        {picList.length > 0 && <FeedImage img={picList} measure={this.props.measure} idqso={this.props.qso.idqsos} qso_owner={this.props.qso.qra}/>
+                        {picList.length > 0 && <FeedImage
+                            img={picList}
+                            measure={this.props.measure}
+                            idqso={this.props.qso.idqsos}
+                            qso_owner={this.props.qso.qra}/>
 }
 
                         {audioList.length > 0 && <FeedAudioList mediaList={audioList}/>
@@ -123,10 +152,13 @@ class FeedItem extends React.Component {
 
                         </Feed.Extra>
                         <Feed.Extra>
-                            <div style={{ overflow: 'visible' }}>
-                            {this.state.showComment && <QSOComments
-                                qso={this.props.qso}
-                                recalculateRowHeight={this.recalculateRowHeight}/>}
+                            <div
+                                style={{
+                                overflow: 'visible'
+                            }}>
+                                {this.state.showComment && <QSOComments
+                                    qso={this.props.qso}
+                                    recalculateRowHeight={this.recalculateRowHeight}/>}
                             </div>
                         </Feed.Extra>
                     </Feed.Content>
@@ -142,6 +174,5 @@ const mapDispatchToProps = (dispatch) => ({
 });
 export default connect(mapStateToProps, mapDispatchToProps, null, {pure: false})(FeedItem);
 FeedItem.propTypes = {
-    qso: PropTypes.object.isRequired,
-    
+    qso: PropTypes.object.isRequired
 }

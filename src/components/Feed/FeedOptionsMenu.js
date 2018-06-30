@@ -201,16 +201,15 @@ class FeedOptionsMenu extends React.PureComponent {
                 }
                 {/* END FEED IMAGE DELETE CONTENT */
                 }
-                {/* FEED ITEM QR CODE */
+                {/* FEED ITEM QR CODE */                
                 }
                 {
                     this.props.optionsCaller === 'FeedItem' && <Modal
                             size='tiny'
                             closeIcon
                             trigger={< Dropdown.Item icon = 'qrcode' text = 'Show QR Code' />}>
-                            <Modal.Header>QR Code</Modal.Header>
+                            <Modal.Header>QR Code</Modal.Header>  
                             <Modal.Content>
-
                                 <Grid centered>
                                     <Segment raised>
                                         <QRCode value={window.location.origin + '/qso/' + this.props.idqso}/>
