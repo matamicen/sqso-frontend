@@ -63,7 +63,7 @@ class LogIn extends React.Component {
         }
 
         handleQraChange(e) {
-            this.setState({qra: e.target.value})
+            this.setState({qra: e.target.value.toUpperCase()})
 
         }
 
@@ -100,6 +100,7 @@ class LogIn extends React.Component {
                                         placeholder='QRA'
                                         error={this.state.loginError}
                                         name='QRA'
+                                        value={this.state.qra}
                                         onChange={this
                                         .handleQraChange
                                         .bind(this)}
