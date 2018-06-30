@@ -322,7 +322,7 @@ class FeedOptionsMenu extends React.PureComponent {
                 {
                     this.props.optionsCaller === 'FeedComment' && this.props.currentQRA === this.props.comment_owner && <Dropdown.Item
                         icon='delete'
-                        text='Delete QSO'
+                        text='Delete Comment'
                         onClick={this
                         .deleteComment
                         .bind(this)}/>
