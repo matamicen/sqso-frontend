@@ -79,7 +79,7 @@ class FeedAudio extends React.Component {
                 return (
                     <div>
 
-                        < audio ref="audio_tag" src={this.props.media.url} controls autoPlay preload="none"/>
+                        < audio ref="audio_tag" src={this.props.media.url} controls autoPlay preload="none" controlsList="nodownload"/>
 
                         <div
                             style={{
