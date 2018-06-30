@@ -167,19 +167,19 @@ export function doReceiveFeed(qsos) {
 
 export function doFetchUserInfo(token) {
     return (dispatch) => {
-        dispatch(doRequestUserInfo());
+        dispatch(doRequestUserInfo());        
         let apiName = 'superqso';
         let path = '/user-info';
         let myInit = {
             body: {
-                "Authorization": token
+              
             }, // replace this with attributes you need
-            headers: {} // OPTIONAL
+            headers: { "Authorization": token } // OPTIONAL
         }
         API
             .get(apiName, path, myInit)
             .then(response => {
-                console.log(response)
+                
                 if (response.body.error === 0) {
                     dispatch(doReceiveUserInfo(response.body.message.followers, response.body.message.following, response.body.message.profilepic));
                 }
@@ -274,19 +274,20 @@ export function doFetchQSO(idqso) {
 export function doFetchQRA(qra) {
 
     return (dispatch) => {
+        
         let apiName = 'superqso';
         let path = '/qra-info';
         let myInit = {
             body: {
                 "qra": qra
             }, // replace this with attributes you need
-            headers: {} // OPTIONAL
+            headers: { "Content-Type": "application/json" } // OPTIONAL
         }
         dispatch(doRequestQRA());
         API
             .post(apiName, path, myInit)
             .then(response => {
-                console.log(response)
+                
                 dispatch(doReceiveQRA(response.body.message));
             })
             .catch(error => {
