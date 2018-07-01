@@ -57,7 +57,7 @@ export function doDeleteQso(idqso = null, token) {
         API
             .del(apiName, path, myInit)
             .then(response => {
-                console.log(response)
+                // console.log(response)
                 response.error === '0' && dispatch(doDeleteQsoResponse(idqso));
             })
             .catch(error => {
@@ -206,7 +206,7 @@ export function doFetchUserFeed(token) {
         API
             .get(apiName, path, myInit)
             .then(response => {
-
+                // console.table(response)
                 dispatch(doReceiveFeed(response));
                 // Add your code here
             })

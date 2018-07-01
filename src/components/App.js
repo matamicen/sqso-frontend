@@ -40,7 +40,7 @@ class App extends Component {
                 Auth
                     .currentAuthenticatedUser()
                     .then(async function (user) {
-                 
+                        console.log(user)
                         await this
                             .props
                             .actions
