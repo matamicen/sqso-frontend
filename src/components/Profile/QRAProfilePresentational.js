@@ -42,7 +42,7 @@ const QRAProfile = (props) => {
     } else {
         buttonText = "Follow";
     }
-    console.log(props.qraInfo.profilepic)
+    // console.log(props.qraInfo.profilepic)
     return (
         <div>
 
