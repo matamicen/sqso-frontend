@@ -108,7 +108,8 @@ class FeedItem extends React.Component {
                             qso_owner={this.props.qso.qra}/>
 }
 
-                        {audioList.length > 0 && <FeedAudioList mediaList={audioList}/>
+                        {audioList.length > 0 && <FeedAudioList mediaList={audioList}  idqso={this.props.qso.idqsos}
+                            qso_owner={this.props.qso.qra}/>
 }
 
                         <Feed.Extra>

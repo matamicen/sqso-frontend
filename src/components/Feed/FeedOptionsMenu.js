@@ -135,6 +135,7 @@ class FeedOptionsMenu extends React.PureComponent {
     }
     render() {
         const {showMessage, showReportContent} = this.state
+        
         return (
 
             <Dropdown
@@ -200,6 +201,64 @@ class FeedOptionsMenu extends React.PureComponent {
 
                 }
                 {/* END FEED IMAGE DELETE CONTENT */
+                }
+                  {/* FEED AUDIO REPORT CONTENT */}
+                  
+                  {this.props.optionsCaller === 'FeedAudio' && this.props.currentQRA && this.props.currentQRA !== this.props.qso_owner && <Modal
+                        open={showReportContent}
+                        onOpen={this.openReportedContent}
+                        onClose={this.closeReportedContent}
+                        size='tiny'
+                        closeIcon
+                        trigger={< Dropdown.Item icon = 'warning' text = 'Report Audio' />}>
+                        <Modal.Header>
+                            Help Us Understand What's Happening</Modal.Header>
+                        <Modal.Content>
+
+                            <Form
+                                onSubmit={this
+                                .handleOnSubmitReportMedia
+                                .bind(this)}>
+                                <Form.TextArea
+                                    required
+                                    name='comments'
+                                    label='Comments'
+                                    placeholder='Why do you think we should remove this audio?'/>
+                                <Form.Input type='hidden' name='idmedia' value={this.props.idqsos_media}/>
+                                <Form.Button>Submit</Form.Button>
+
+                                <Modal
+                                    dimmer={false}
+                                    open={showMessage}
+                                    onOpen={this.open}
+                                    onClose={this.close}
+                                    size='small'>
+                                    <Modal.Header>Report Photo</Modal.Header>
+                                    <Modal.Content>
+                                        <p>Audio Reported!</p>
+                                    </Modal.Content>
+                                    <Modal.Actions>
+                                        <Button icon='check' content='Close' onClick={this.close}/>
+                                    </Modal.Actions>
+                                </Modal>
+                            </Form>
+                        </Modal.Content>
+                    </Modal>
+                }
+                {/* END FEED AUDIO REPORT CONTENT */
+                }
+                {/* FEED AUDIO DELETE CONTENT */
+                }
+                {
+                    this.props.optionsCaller === 'FeedAudio' && this.props.currentQRA === this.props.qso_owner && <Dropdown.Item
+                        icon='delete'
+                        text='Delete Audio'
+                        onClick={this
+                        .deleteMedia
+                        .bind(this)}/>
+
+                }
+                {/* END FEED AUDIO DELETE CONTENT */
                 }
                 {/* FEED ITEM QR CODE */                
                 }

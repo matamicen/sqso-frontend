@@ -9,6 +9,7 @@ import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
 import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
 import Form from "semantic-ui-react/dist/commonjs/collections/Form";
 import {API} from 'aws-amplify'
+import FeedOptionsMenu from './FeedOptionsMenu';
 class FeedAudio extends React.Component {
 
     constructor() {
@@ -23,50 +24,50 @@ class FeedAudio extends React.Component {
             .bind(this)
     }
 
-    openReportedContent = () => this.setState({showReportContent: true})
-    closeReportedContent = () => this.setState({showReportContent: false})
-    open = () => this.setState({showMessage: true})
-    close = () => {
-        this.setState({showMessage: false})
-        this.setState({showReportContent: false})
-    }
-    handleOnSubmit(e) {
-        var datetime = new Date();
-        e.preventDefault()
+    // openReportedContent = () => this.setState({showReportContent: true})
+    // closeReportedContent = () => this.setState({showReportContent: false})
+    // open = () => this.setState({showMessage: true})
+    // close = () => {
+    //     this.setState({showMessage: false})
+    //     this.setState({showReportContent: false})
+    // }
+    // handleOnSubmit(e) {
+    //     var datetime = new Date();
+    //     e.preventDefault()
 
-        if (!e.target.comments.value) 
-            return;
-        let apiName = 'superqso';
-        let path = '/content-reported';
-        let myInit = {
-            body: {
-                "idqso": this.props.media.idqso,
-                "idmedia": this.props.media.idqsos_media,
-                "detail": e.target.comments.value,
-                "datetime": datetime
-            }, // replace this with attributes you need
-            headers: {
-                "Authorization": this.props.token
-            } // OPTIONAL
-        }
-        API
-            .post(apiName, path, myInit)
-            .then(response => {
-                if (response.error > 0) {} else {
-                    this.open()
-                }
-            })
-            .catch(error => {
-                console.log(error)
-            });
+    //     if (!e.target.comments.value) 
+    //         return;
+    //     let apiName = 'superqso';
+    //     let path = '/content-reported';
+    //     let myInit = {
+    //         body: {
+    //             "idqso": this.props.media.idqso,
+    //             "idmedia": this.props.media.idqsos_media,
+    //             "detail": e.target.comments.value,
+    //             "datetime": datetime
+    //         }, // replace this with attributes you need
+    //         headers: {
+    //             "Authorization": this.props.token
+    //         } // OPTIONAL
+    //     }
+    //     API
+    //         .post(apiName, path, myInit)
+    //         .then(response => {
+    //             if (response.error > 0) {} else {
+    //                 this.open()
+    //             }
+    //         })
+    //         .catch(error => {
+    //             console.log(error)
+    //         });
 
-    }
+    // }
     onClick() {
         this.setState({audioNotVisible: false})
     }
     render() {
 
-        const {showMessage, showReportContent} = this.state
+        // const {showMessage, showReportContent} = this.state
         if (this.props.media.url) {
 
             if (this.state.audioNotVisible) {
@@ -85,8 +86,10 @@ class FeedAudio extends React.Component {
                             style={{
                             float: 'right'
                         }}>
-
-                            <Dropdown
+                                 
+                            <FeedOptionsMenu idqsos_media={this.props.media.idqsos_media} qso_owner={this.props.qso_owner} idqso={this.props.media.idqso} optionsCaller="FeedAudio"/>                                    
+                                        
+                            {/* <Dropdown
                                 icon='ellipsis vertical'
                                 size='tiny'
                                 button
@@ -135,7 +138,7 @@ class FeedAudio extends React.Component {
                                         </Modal.Content>
                                     </Modal>
                                 </Dropdown.Menu>
-                            </Dropdown >
+                            </Dropdown > */}
                         </div>
                     </div>
                 )

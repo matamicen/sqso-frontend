@@ -17,7 +17,8 @@ export default class FeedAudioList extends React.Component {
                         <Item key={i}>
                             <a>
                                 <FeedAudio key={i}                                       
-                                       media={m}/>
+                                       media={m}
+                                       qso_owner={this.props.qso_owner}/>
                             </a>
                         </Item>
                     )}

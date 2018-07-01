@@ -73,7 +73,7 @@ export default(state = initialState, action) => {
             return newStore;
         case DELETE_MEDIA:
 
-            console.log(action);
+            // console.log(action);
             newStore = Object.assign({}, state, {
                 ...state,
                 qsos: state
