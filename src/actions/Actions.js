@@ -256,12 +256,12 @@ export function doFetchQSO(idqso) {
             body: {
                 "qso": idqso
             }, // replace this with attributes you need
-            headers: {} // OPTIONAL
+            headers: { "Content-Type": "application/json" } // OPTIONAL
         }
         API
             .post(apiName, path, myInit)
             .then(response => {
-                console.log(response)
+                // console.log(response)
                 dispatch(doReceiveQSO(response));
 
             })
