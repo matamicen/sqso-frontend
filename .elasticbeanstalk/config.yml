@@ -1,11 +1,10 @@
 branch-defaults:
   master:
-    environment: sqsodev
-    group_suffix: null
+    environment: sqso
 global:
   application_name: sqso-frontend
   branch: null
-  default_ec2_keyname: sqso
+  default_ec2_keyname: null
   default_platform: Node.js
   default_region: us-east-1
   include_git_submodules: true

@@ -29,16 +29,21 @@
     "react-virtualized": "^9.12.0",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
-    "semantic-ui-css": "^2.2.14",
+    "semantic-ui-css": "2.2.14",
     "semantic-ui-react": "^0.78.2"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.0.0-beta.52",
     "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.0",
+    "babel-jest": "^23.2.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
     "enzyme": "^3.3.0",
     "jest": "^22.4.4",
     "json-loader": "^0.5.4",
     "react-scripts": "1.0.14",
+    "react-test-renderer": "^16.4.1",
+    "redux-mock-store": "^1.5.3",
     "rollup-plugin-commonjs": "^9.1.2",
     "rollup-plugin-replace": "^2.0.0",
     "rollup-plugin-uglify": "^3.0.0",
@@ -52,7 +57,7 @@
     "test": "react-scripts test --env=jsdom",
     "coverage": "react-scripts test --env=jsdom coverage",
     "eject": "react-scripts eject",
-    "serve": "NODE_ENV=development node server/index.js",
+    "serve": "set NODE_ENV=production&& npm run build && node app.js",
     "deploy": "git add . && eb deploy --stage",
     "analyze": "source-map-explorer build/static/js/main.* "
   }
