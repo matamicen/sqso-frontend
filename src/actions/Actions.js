@@ -167,19 +167,19 @@ export function doReceiveFeed(qsos) {
 
 export function doFetchUserInfo(token) {
     return (dispatch) => {
-        dispatch(doRequestUserInfo());        
+        dispatch(doRequestUserInfo());
         let apiName = 'superqso';
         let path = '/user-info';
         let myInit = {
-            body: {
-              
-            }, // replace this with attributes you need
-            headers: { "Authorization": token } // OPTIONAL
+            body: {}, // replace this with attributes you need
+            headers: {
+                "Authorization": token
+            } // OPTIONAL
         }
         API
             .get(apiName, path, myInit)
             .then(response => {
-                
+
                 if (response.body.error === 0) {
                     dispatch(doReceiveUserInfo(response.body.message.followers, response.body.message.following, response.body.message.profilepic));
                 }
@@ -248,7 +248,7 @@ export function doReceiveQSO(qso) {
 }
 
 export function doFetchQSO(idqso) {
-    // console.log("doFetchQSO");
+    // console.log("doFetchQSO"); console.log(idqso)
     return (dispatch) => {
         let apiName = 'superqso';
         let path = '/qso-detail';
@@ -256,14 +256,17 @@ export function doFetchQSO(idqso) {
             body: {
                 "qso": idqso
             }, // replace this with attributes you need
-            headers: { "Content-Type": "application/json" } // OPTIONAL
+            headers: {
+                "Content-Type": "application/json"
+            } // OPTIONAL
         }
         API
             .post(apiName, path, myInit)
             .then(response => {
                 // console.log(response)
-                dispatch(doReceiveQSO(response));
-
+                if (response.body.error === 0) {
+                    dispatch(doReceiveQSO(response.body.message));
+                }
             })
             .catch(error => {
                 console.log(error)
@@ -274,20 +277,22 @@ export function doFetchQSO(idqso) {
 export function doFetchQRA(qra) {
 
     return (dispatch) => {
-        
+
         let apiName = 'superqso';
         let path = '/qra-info';
         let myInit = {
             body: {
                 "qra": qra
             }, // replace this with attributes you need
-            headers: { "Content-Type": "application/json" } // OPTIONAL
+            headers: {
+                "Content-Type": "application/json"
+            } // OPTIONAL
         }
         dispatch(doRequestQRA());
         API
             .post(apiName, path, myInit)
             .then(response => {
-                
+
                 dispatch(doReceiveQRA(response.body.message));
             })
             .catch(error => {

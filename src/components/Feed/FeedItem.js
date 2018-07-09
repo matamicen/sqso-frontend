@@ -95,6 +95,8 @@ class FeedItem extends React.Component {
                             <Label>Band:</Label>{this.props.qso.band}
                             <Label>QSO:
                             </Label>{this.props.qso.idqsos}
+                            <Label>GUID:
+                            </Label>{this.props.qso.GUID_URL}
                             <QRAs
                                 profilepic={this.props.qso.profilepic}
                                 qso_owner={this.props.qso.qra}
@@ -123,7 +125,7 @@ class FeedItem extends React.Component {
                                     < Icon name='comment outline'/> {this.props.qso.comments.length > 0 && commentsCounter}
 
                                 </Button>
-                                <QSOShareButtons idqso={this.props.qso.idqsos}/>
+                                <QSOShareButtons idqso={this.props.qso.GUID_URL}/>
                             </Button.Group>
 
                         </Feed.Extra>
