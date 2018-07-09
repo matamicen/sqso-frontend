@@ -271,7 +271,7 @@ class FeedOptionsMenu extends React.PureComponent {
                             <Modal.Content>
                                 <Grid centered>
                                     <Segment raised>
-                                        <QRCode value={window.location.origin + '/qso/' + this.props.idqso}/>
+                                        <QRCode value={this.props.guid}/>
                                     </Segment>
                                 </Grid>
                             </Modal.Content>

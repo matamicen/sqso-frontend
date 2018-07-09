@@ -83,7 +83,7 @@ class FeedItem extends React.Component {
                             float: 'right'
                         }}>
 
-                            <FeedOptionsMenu  qso_owner={this.props.qso.qra} idqso={this.props.qso.idqsos} optionsCaller="FeedItem"/>                                    
+                            <FeedOptionsMenu  qso_owner={this.props.qso.qra} idqso={this.props.qso.idqsos} guid={this.props.qso.GUID_QR} optionsCaller="FeedItem"/>                                    
                             
                         </div>
                     </Feed.Label>
