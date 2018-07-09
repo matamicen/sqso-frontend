@@ -233,7 +233,7 @@ class FeedOptionsMenu extends React.PureComponent {
                                     onOpen={this.open}
                                     onClose={this.close}
                                     size='small'>
-                                    <Modal.Header>Report Photo</Modal.Header>
+                                    <Modal.Header>Report Audio</Modal.Header>
                                     <Modal.Content>
                                         <p>Audio Reported!</p>
                                     </Modal.Content>

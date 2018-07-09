@@ -22,6 +22,7 @@ import PropTypes from 'prop-types';
 import Image from "semantic-ui-react/dist/commonjs/elements/Image";
 import {Link} from 'react-router-dom'
 import FeedOptionsMenu from "./FeedOptionsMenu";
+import QSORePostButton from "./QSORePostButton";
 
 
 class FeedItem extends React.Component {
@@ -116,7 +117,7 @@ class FeedItem extends React.Component {
 
                         <Feed.Extra>
                             <Divider hidden/>
-                            <Button.Group widths='3' basic>
+                            <Button.Group widths='4' basic>
                                 <QSOLikeButton qso={this.props.qso}/>
                                 <Button
                                     onClick={this
@@ -125,6 +126,7 @@ class FeedItem extends React.Component {
                                     < Icon name='comment outline'/> {this.props.qso.comments.length > 0 && commentsCounter}
 
                                 </Button>
+                                <QSORePostButton qso={this.props.qso}/>
                                 <QSOShareButtons idqso={this.props.qso.GUID_URL}/>
                             </Button.Group>
 
