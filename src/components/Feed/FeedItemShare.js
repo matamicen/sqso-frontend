@@ -18,14 +18,13 @@ import QRAs from "./QRAs";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/Actions';
-import PropTypes from 'prop-types';
+
 import Image from "semantic-ui-react/dist/commonjs/elements/Image";
 import {Link} from 'react-router-dom'
 import FeedOptionsMenu from "./FeedOptionsMenu";
 import QSORePostButton from "./QSORePostButton";
 
-
-class FeedItem extends React.Component {
+class FeedItemShare extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -70,7 +69,7 @@ class FeedItem extends React.Component {
             .filter((media) => media.type === 'audio');
         const commentsCounter = '(' + this.props.qso.comments.length + ')'
 
-        
+        console.log(this.props.qso)
         return (
             <Segment raised>
 
@@ -79,43 +78,61 @@ class FeedItem extends React.Component {
                         <Link to={"/" + this.props.qso.qra}>
                             <Image src={this.props.qso.profilepic} size='mini' avatar/> {this.props.qso.qra}
                         </Link>
-                        {'  '}started a QSO
+                        {'  '}shared a QSO
                         <div
                             style={{
                             float: 'right'
                         }}>
 
-                            <FeedOptionsMenu  qso_owner={this.props.qso.qra} idqso={this.props.qso.idqsos} guid={this.props.qso.GUID_QR} optionsCaller="FeedItem"/>                                    
-                            
+                            <FeedOptionsMenu
+                                qso_owner={this.props.qso.qra}
+                                idqso={this.props.qso.idqsos}
+                                guid={this.props.qso.GUID_QR}
+                                optionsCaller="FeedItem"/>
+
                         </div>
                     </Feed.Label>
 
                     <Feed.Content>
                         <Divider hidden/>
-                        <Feed.Extra text>
-                            <Label>Mode:</Label>{this.props.qso.mode}
-                            <Label>Band:</Label>{this.props.qso.band}
-                            <Label>QSO:
-                            </Label>{this.props.qso.idqsos}
-                            <Label>GUID:
-                            </Label>{this.props.qso.GUID_URL}
-                            <QRAs
-                                profilepic={this.props.qso.profilepic}
-                                qso_owner={this.props.qso.qra}
-                                qras={this.props.qso.qras}/>
-                        </Feed.Extra>
+                        <Segment raised>
+                            <Feed.Label>
+                                <Link to={"/" + this.props.qso.original.qra}>
+                                    <Image src={this.props.qso.original.profilepic} size='mini' avatar/> {this.props.qso.original.qra}
+                                </Link>
+                                {'  '}started a QSO
+                                <div
+                                    style={{
+                                    float: 'right'
+                                }}></div>
+                            </Feed.Label>
+                            <Divider hidden/>
+                            <Feed.Extra text>
+                                <Label>Mode:</Label>{this.props.qso.original.mode}
+                                <Label>Band:</Label>{this.props.qso.original.band}
+                                <Label>QSO:
+                                </Label>{this.props.qso.original.idqsos}
+                                <Label>GUID:
+                                </Label>{this.props.qso.original.GUID_URL}
+                                <QRAs
+                                    profilepic={this.props.qso.original.profilepic}
+                                    qso_owner={this.props.qso.original.qra}
+                                    qras={this.props.qso.qras}/>
+                            </Feed.Extra>
 
-                        {picList.length > 0 && <FeedImage
-                            img={picList}
-                            measure={this.props.measure}
-                            idqso={this.props.qso.idqsos}
-                            qso_owner={this.props.qso.qra}/>
+                            {picList.length > 0 && <FeedImage
+                                img={picList}
+                                measure={this.props.measure}
+                                idqso={this.props.qso.idqsos}
+                                qso_owner={this.props.qso.qra}/>
 }
 
-                        {audioList.length > 0 && <FeedAudioList mediaList={audioList}  idqso={this.props.qso.idqsos}
-                            qso_owner={this.props.qso.qra}/>
+                            {audioList.length > 0 && <FeedAudioList
+                                mediaList={audioList}
+                                idqso={this.props.qso.idqsos}
+                                qso_owner={this.props.qso.qra}/>
 }
-
+                        </Segment>
                         <Feed.Extra>
                             <Divider hidden/>
                             <Button.Group widths='4' basic>
@@ -153,7 +170,4 @@ const mapStateToProps = (state, qsos) => ({fetchingQSOS: state.default.FetchingQ
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 });
-export default connect(mapStateToProps, mapDispatchToProps, null, {pure: false})(FeedItem);
-FeedItem.propTypes = {
-    qso: PropTypes.object.isRequired
-}
+export default connect(mapStateToProps, mapDispatchToProps, null, {pure: false})(FeedItemShare);

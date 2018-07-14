@@ -1,5 +1,6 @@
 import React from "react";
 import FeedItem from "./FeedItem";
+import FeedItemShare from "./FeedItemShare"
 import NewsFeed from './NewsFeedPresentational';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
@@ -28,12 +29,19 @@ class NewsFeedContainer extends React.Component {
         
         if (this.props.FetchingQSOS || !this.props.qsosFetched || this.props.qsos.length === 0) return null;
         let qsos = Immutable.List(this.props.qsos);
+        
         if (this.props.qsos && this.props.qsos.length > 0) {
             qsos = this.props.qsos.map((qso, i) =>
-
-                <FeedItem key={i} qso={qso}/>
+               { 
+                    switch (qso.type) {
+                        case "QSO": return <FeedItem key={i} qso={qso}/>;
+                        case "SHARE": return <FeedItemShare key={i} qso={qso}/>;
+                        default: return null; 
+                    }
+        } 
             )
         }
+        console.log(qsos)
         return (
             <NewsFeed list={qsos}/>
         )

@@ -1,4 +1,5 @@
 import FeedItem from './FeedItem'
+import FeedItemShare from "./FeedItemShare"
 import React, {PureComponent} from 'react';
 
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
@@ -75,26 +76,27 @@ export default class NewsFeed extends PureComponent {
                 parent={parent}>
                 {({measure}) => <div style={style} key={key}>
                 
-                    <Grid >
-                        <Grid.Row columns={1} only='large screen'>
+                    <Grid >                       
+                        <Grid.Row >
                             <Grid.Column>
+                                {
+                                 row.props.qso.type ==='QSO'    &&                                
                                 <FeedItem
                                     key={key}
                                     qso={row.props.qso}
                                     measure={measure}
                                     recalculateRowHeight={this.recalculateRowHeight}
                                     index={index}/>
-                                <div></div>
-                            </Grid.Column>
-                        </Grid.Row>
-                        <Grid.Row only='mobile'>
-                            <Grid.Column>
-                                <FeedItem
+                                }
+                                 {
+                                 row.props.qso.type ==='SHARE'    &&                                
+                                <FeedItemShare
                                     key={key}
                                     qso={row.props.qso}
                                     measure={measure}
                                     recalculateRowHeight={this.recalculateRowHeight}
                                     index={index}/>
+                                }
                                 <div></div>
                             </Grid.Column>
                         </Grid.Row>
