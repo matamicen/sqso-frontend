@@ -48,7 +48,8 @@ class QSORePostButton extends React.Component {
             });
 
     }
-    openConfirmationRequest = () => this.setState({showConfirmationRequest: true})
+    openConfirmationRequest = () => { if (this.props.isAuthenticated) 
+        this.setState({showConfirmationRequest: true}) }
     closeConfirmationRequest = () => this.setState({showConfirmationRequest: false})
     open = () => this.setState({showMessage: true})
     close = () => {
