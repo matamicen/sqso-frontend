@@ -40,7 +40,7 @@ class FeedItemShare extends React.Component {
 
     shouldComponentUpdate(nextProps) {
     
-        return this.props.qsosFetched;
+        return nextProps.qsosFetched;
     }
 
     handleOnComment() {
@@ -54,7 +54,9 @@ class FeedItemShare extends React.Component {
         if (this.props.recalculateRowHeight) 
             this.props.recalculateRowHeight(this.props.index);
         }
-    
+    componentDidMount(){
+        this.recalculateRowHeight();
+    }
     render() {
 
         let picList = this

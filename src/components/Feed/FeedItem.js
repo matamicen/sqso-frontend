@@ -38,7 +38,9 @@ class FeedItem extends React.Component {
             .recalculateRowHeight
             .bind(this);
     }
-
+    // componentDidMount(){
+    //     this.recalculateRowHeight(this.props.index)
+    // }
     shouldComponentUpdate(nextProps) {
         
         return this.props.qsosFetched;
@@ -52,8 +54,8 @@ class FeedItem extends React.Component {
 
     recalculateRowHeight() {
 
-        if (this.props.recalculateRowHeight) 
-            this.props.recalculateRowHeight(this.props.index);
+        // if (this.props.recalculateRowHeight) 
+        //     this.props.recalculateRowHeight(this.props.index);
         }
     
     render() {
@@ -110,8 +112,8 @@ class FeedItem extends React.Component {
                             measure={this.props.measure}
                             idqso={this.props.qso.idqsos}
                             qso_owner={this.props.qso.qra}/>
-}
-
+}   
+                      
                         {audioList.length > 0 && <FeedAudioList mediaList={audioList}  idqso={this.props.qso.idqsos}
                             qso_owner={this.props.qso.qra}/>
 }
@@ -149,7 +151,8 @@ class FeedItem extends React.Component {
         )
     }
 }
-const mapStateToProps = (state, qsos) => ({fetchingQSOS: state.default.FetchingQSOS, qsosFetched: state.default.qsosFetched, currentQRA: state.default.userData.qra});
+const mapStateToProps = (state, qsos) => ({fetchingQSOS: state.default.FetchingQSOS, 
+    qsosFetched: state.default.qsosFetched, currentQRA: state.default.userData.qra});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 });

@@ -1,6 +1,6 @@
 import FeedItem from './FeedItem'
 import FeedItemShare from "./FeedItemShare"
-import React, {PureComponent} from 'react';
+import React from 'react';
 
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import List from 'react-virtualized/dist/commonjs/List'
@@ -10,7 +10,8 @@ import {CellMeasurer} from 'react-virtualized/dist/commonjs/CellMeasurer'
 import {CellMeasurerCache} from 'react-virtualized/dist/commonjs/CellMeasurer'
 import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid'
 import PropTypes from "prop-types";
-export default class NewsFeed extends PureComponent {
+export default class NewsFeed extends React.Component {
+    
     constructor(props) {
         super(props)
 
@@ -23,7 +24,7 @@ export default class NewsFeed extends PureComponent {
             randomScrollToIndex: null,
             rowCount: this.props.list.length
         };
-
+      
         this._cache = new CellMeasurerCache({fixedWidth: true, minHeight: 100});
         this._setRef = this
             ._setRef
@@ -79,6 +80,7 @@ export default class NewsFeed extends PureComponent {
                     <Grid >                       
                         <Grid.Row >
                             <Grid.Column>
+                            <div></div>
                                 {
                                  row.props.qso.type ==='QSO'    &&                                
                                 <FeedItem
@@ -121,15 +123,20 @@ export default class NewsFeed extends PureComponent {
         }, 0);
 
     }
+    _setListRef = ref => {
+        this._list = ref;
+        
+      };
     recalculateRowHeight(index) {
         this
             ._cache
             .clear(index);
+            
         this
-            .list
+            ._list
             .recomputeRowHeights(index);
 
-    }
+    }   
     render() {
         const {rowCount, overscanRowCount} = this.state;
         return (
@@ -144,9 +151,10 @@ export default class NewsFeed extends PureComponent {
                             {({height, isScrolling, onChildScroll, scrollTop}) => (
 
                                 <AutoSizer disableHeight>
-                                    {({width}) => (<List
+                                    {({width}) => (
+                                    <List
                                         autoHeight
-                                        ref={(list) => this.list = list}
+                                        ref={this._setListRef}
                                         deferredMeasurementCache={this._cache}
                                         height={height}
                                         isScrolling={isScrolling}
