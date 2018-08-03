@@ -18,7 +18,7 @@ class QSORePostButton extends React.Component {
     doRePost() {
         if (!this.props.isAuthenticated) 
             return null;
-        console.log(this.props.qso);
+        
         let apiName = 'superqso';
         let path = '/qso-share';
         let qso = (this.props.qso.type === 'SHARE') ? this.props.qso.idqso_shared : this.props.qso.idqsos;

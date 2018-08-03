@@ -6,16 +6,9 @@ import {connect} from 'react-redux';
 import * as Actions from '../../actions/Actions';
 
 class Home extends React.Component {
-    // shouldComponentUpdate(){
-    //     return !this.props.fetchingQSOS && this.props.qsosFetched;
-    // }
+   
 
-    render() {
-        // console.log("home")
-        // console.log(this.props.fetchingQSOS)
-        // console.log(this.props.qsosFetched)
-        // if (this.props.fetchingQSOS || !this.props.qsosFetched) return null;
-
+    render() {       
         return (
             this.props.isAuthenticated ? <UserDashboard/> : <PublicDashboard/>
         )

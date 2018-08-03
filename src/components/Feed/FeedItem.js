@@ -40,7 +40,7 @@ class FeedItem extends React.Component {
     }
 
     shouldComponentUpdate(nextProps) {
-        //   console.log("shouldComponentUpdate QSOFEEDITEM" + this.props.qsosFetched);
+        
         return this.props.qsosFetched;
     }
 

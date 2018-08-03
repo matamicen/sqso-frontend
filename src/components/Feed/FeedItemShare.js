@@ -39,7 +39,7 @@ class FeedItemShare extends React.Component {
     }
 
     shouldComponentUpdate(nextProps) {
-        //   console.log("shouldComponentUpdate QSOFEEDITEM" + this.props.qsosFetched);
+    
         return this.props.qsosFetched;
     }
 
@@ -69,7 +69,7 @@ class FeedItemShare extends React.Component {
             .filter((media) => media.type === 'audio');
         const commentsCounter = '(' + this.props.qso.comments.length + ')'
 
-        console.log(this.props.qso)
+        
         return (
             <Segment raised>
 

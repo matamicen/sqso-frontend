@@ -51,7 +51,7 @@ class LogIn extends React.Component {
                     .doLogin(token, this.state.qra.toUpperCase());
             })
             .catch(err => {
-                console.log(err)
+                
                 console.error(err);
                 this.setState({loginError: true});
             });

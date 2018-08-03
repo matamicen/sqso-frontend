@@ -14,12 +14,7 @@ import {Auth} from 'aws-amplify'
 class Logout extends React.Component {
 
     componentDidMount() {
-        // var userPool = new CognitoUserPool(poolData); var cognitoUser =
-        // userPool.getCurrentUser(); if (cognitoUser != null) {
-        // cognitoUser.clearCachedTokens();     this.props.actions.doLogout();
-        // cognitoUser.signOut({         onSuccess: function (result) {
-        // console.log(result);         },         onFailure: function (err) {
-        // console.error(err);         }     }); }
+      
         this.logout()
     }
      logout() {

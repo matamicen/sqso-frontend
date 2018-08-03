@@ -23,7 +23,7 @@ class QRAProfileContainer extends React.Component {
         if ((!this.props.fetchingQRA && !this.props.QRAFetched) || (this.props.QRAFetched && ( this.props.match.params.qra !== qraInMemory) )) {
             this.props.actions.doFetchQRA(this.props.match.params.qra);
         }
-        // console.log(this.props)
+        
         this.setState({followed : this.props.following.some(o => o.qra === this.props.match.params.qra)});
 
     }
@@ -34,7 +34,7 @@ class QRAProfileContainer extends React.Component {
 
 
     handleButtonClick() {
-        console.log("handleButtonClick");
+        
         if (!this.props.token) return null;
         this.setState((prevState) => { return{followed: !prevState.followed}; });
         if (!this.state.followed) {

@@ -74,7 +74,7 @@ export class SignUp extends React.Component {
 
     handleUserConfirmed(result) {
       
-        console.log('call result: ' + result);
+        
         this.setState({userConfirmed: true});
 
     }
@@ -105,7 +105,7 @@ export class SignUp extends React.Component {
 
         if (!this.state.formErrors.password && !this.state.formErrors.email && !this.state.formErrors.passwordConfirm && !this.state.formErrors.qra && !this.state.formErrors.birthdate) {
 
-            console.log(qra)
+            
             Auth.signUp({
                 username: qra,
                 password: password,
@@ -130,7 +130,7 @@ export class SignUp extends React.Component {
         let fieldValidationErrors = this.state.formErrors;
 
         //email
-        console.log(this.state.email)
+        
         let emailValid = this
             .state
             .email
@@ -178,7 +178,7 @@ export class SignUp extends React.Component {
             // set to True.
             forceAliasCreation: true
         }).then(data => {
-            console.log(data)
+            
             this.handleUserConfirmed(data)
 
         }).catch(err => {

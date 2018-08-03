@@ -41,7 +41,7 @@ class NewsFeedContainer extends React.Component {
         } 
             )
         }
-        console.log(qsos)
+        
         return (
             <NewsFeed list={qsos}/>
         )

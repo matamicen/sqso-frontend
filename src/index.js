@@ -9,7 +9,7 @@ import { Route } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 import store, { history } from './store';
 import 'semantic-ui-css/semantic.css'
-import registerServiceWorker from './registerServiceWorker';
+// import registerServiceWorker from './registerServiceWorker';
 import App from "./components/App";
 
 render(
@@ -21,4 +21,4 @@ render(
     document.getElementById('root')
   );
   
-  registerServiceWorker();
+  // registerServiceWorker();

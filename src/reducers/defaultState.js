@@ -71,9 +71,7 @@ export default(state = initialState, action) => {
             });
 
             return newStore;
-        case DELETE_MEDIA:
-
-            // console.log(action);
+        case DELETE_MEDIA:            
             newStore = Object.assign({}, state, {
                 ...state,
                 qsos: state
@@ -117,7 +115,7 @@ export default(state = initialState, action) => {
             });
             return newStore;
         case RECEIVE_FOLLOWERS:
-            console.log("RECEIVE_FOLLOWERS");
+            
             userInfo = {
                 ...state.userData,
                 following: action.following
@@ -189,7 +187,7 @@ export default(state = initialState, action) => {
 
             return newStore;
         case LOGOUT:
-            // console.log("LOGOUT");
+            
             let logoutUserData = {
                 ...state.userData,
                 token: "",

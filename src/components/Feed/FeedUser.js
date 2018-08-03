@@ -26,7 +26,7 @@ class FeedUser extends React.Component {
         this.setState({fetchingData: false});
     }
     shouldComponentUpdate(){        
-      //  console.log(!this.state.fetchingData);
+      
         return !this.state.fetchingData;
     }
 

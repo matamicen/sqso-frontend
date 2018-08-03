@@ -33,7 +33,7 @@ class NavigationSearch extends Component {
         }
     }
     gotoUser(value, event) {
-        console.log(value);
+        
         window.open('https://github.com/' +value.html_url);
     }
     render() {
