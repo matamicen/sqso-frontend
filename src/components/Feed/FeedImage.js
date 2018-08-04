@@ -19,10 +19,17 @@ class FeedImage extends React.Component {
                 closeIcon               
                 trigger=
                 { 
-                   <Image size = 'large' centered 
+                   <Image  centered 
                    src = { this.props.img[0].url } 
-                   onLoad = { this.props.measure } 
+                //    onLoad = { this.props.measure } 
                    onClick={this.handleOpenModal}
+                   style={{
+                    'height':'70vh',
+                    'minHeight':'70vh',
+                    'width': 'auto'
+
+                    
+                    }}
                    />}
                     >
                   
