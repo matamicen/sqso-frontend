@@ -66,7 +66,7 @@ export default class NewsFeed extends React.Component {
     _rowRenderer({index, isScrolling, key, parent, style}) {
 
         let row = this.props.list[index];
-
+        if (row === null) return null;
         return (
             
             <CellMeasurer
@@ -169,7 +169,7 @@ export default class NewsFeed extends React.Component {
 
                             )}
                         </WindowScroller>
-                    )}
+                    {/* )} */}
                 {/* </InfiniteLoader> */}
 
             </div>
