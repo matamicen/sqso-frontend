@@ -9,27 +9,27 @@ class PublicDashboard extends React.Component {
     render() {
 
         return (
+           <div >
+            <Grid centered>
+                {(navigator.maxTouchPoints === 0) && <Grid.Row  >
 
-            <Grid columns='equal'>
-                {(navigator.maxTouchPoints === 0) && <Grid.Row >
-
-                    <Grid.Column width={3}>
-                        <Advertisement unit='wide skyscraper' test='Wide Skyscraper' centered/>
+                    <Grid.Column style={{ "minWidth": '180px'}}>
+                        <Advertisement unit='wide skyscraper' test='Wide Skyscraper'/>
                     </Grid.Column>
 
-                    <Grid.Column width={10}>
+                    <Grid.Column  style={{ "minWidth": '700px'}}>
 
                         < FeedQSO/>
 
                     </Grid.Column>
 
-                    <Grid.Column width={3} >
-                        <Advertisement unit='wide skyscraper' test='Wide Skyscraper' centered/>
+                    <Grid.Column  style={{ "minWidth": '180px'}}>
+                        <Advertisement unit='wide skyscraper' test='Wide Skyscraper' />
                     </Grid.Column>
 
                 </Grid.Row>
 }
-                {(navigator.maxTouchPoints > 0) && <Grid.Row columns={1} only='mobile tablet'>
+                {(navigator.maxTouchPoints > 0) && <Grid.Row columns={1} >
                     <Grid.Column>
 
                         < FeedQSO/>
@@ -38,8 +38,8 @@ class PublicDashboard extends React.Component {
 
                 </Grid.Row>
 }
-            </Grid>
-
+            </Grid>            
+            </div>
         );
     }
 }

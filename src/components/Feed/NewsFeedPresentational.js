@@ -140,7 +140,7 @@ export default class NewsFeed extends React.Component {
     render() {
         const {rowCount, overscanRowCount} = this.state;
         return (
-            <div className="WindowScrollerWrapper">
+            <div className="WindowScrollerWrapper" >
                 {/* <InfiniteLoader
                     isRowLoaded={this._isRowLoaded}
                     loadMoreRows={this._loadMoreRows}

@@ -121,12 +121,14 @@ class FeedItemShare extends React.Component {
                                     qso_owner={this.props.qso.original.qra}
                                     qras={this.props.qso.qras}/>
                             </Feed.Extra>
-
+                            
                             {picList.length > 0 && <FeedImage
                                 img={picList}
                                 measure={this.props.measure}
                                 idqso={this.props.qso.idqsos}
-                                qso_owner={this.props.qso.qra}/>
+                                qso_owner={this.props.qso.qra}
+                                />
+                                
 }
 
                             {audioList.length > 0 && <FeedAudioList
