@@ -13,22 +13,23 @@ import * as Actions from '../../actions/Actions';
 class FeedImage extends React.Component {
     
     render() {  
-        var height;
-        let elWidth = '700px';
-        console.log(this.props.img[0])
+        var height = '60vh';
+        let elWidth = '700';
+        
         if (this.props.img[0].width > 0) {      
         
-        let ratio = elWidth / this.props.img[0].width;      
+        let ratio = elWidth / this.props.img[0].width;     
+       
         height = this.props.img[0].height * ratio;
+      
         height = height + 'px';
-
         } 
-        height = '80vh';
-        console.log(elWidth + height)
+        
+     
         return (
             <div style={{            
-                width: {elWidth},                       
-                 minHeight: height
+                width: elWidth + 'px',                    
+                height: height
                
              }}>
             <Modal                
@@ -42,8 +43,8 @@ class FeedImage extends React.Component {
                 //    onLoad = { this.props.measure } 
                    onClick={this.handleOpenModal}
                    style={{            
-                    width:  {elWidth},                       
-                     minHeight : {height}
+                    width: elWidth + 'px',                    
+                    height: height
                    
                  }}
                    
