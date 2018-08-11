@@ -83,7 +83,7 @@ class App extends Component {
             return null;
         
         return (
-            <div>
+            <div >
                 <AppNavigation/>
                 <Container
                     fluid

@@ -14,7 +14,7 @@ class FeedImage extends React.Component {
     
     render() {  
         var height = '60vh';
-        let elWidth = '700';
+        let elWidth = '640';
         
         if (this.props.img[0].width > 0) {      
         
@@ -44,7 +44,8 @@ class FeedImage extends React.Component {
                    onClick={this.handleOpenModal}
                    style={{            
                     width: elWidth + 'px',                    
-                    height: height
+                    height: height,
+                    margin: '0'
                    
                  }}
                    
@@ -65,7 +66,12 @@ class FeedImage extends React.Component {
                                         }}>                                    
                                             <FeedOptionsMenu idqsos_media={m.idqsos_media} qso_owner={this.props.qso_owner} idqso={this.props.idqso} optionsCaller="FeedImage"/>                                    
                                         </div>
-                                <Image key={m.idqsos_media} wrapped centered src={m.url}/>
+                                <Image key={m.idqsos_media} wrapped centered src={m.url}
+                                style={{            
+                                    maxWidth: '100%',                    
+                                    height: 'auto'
+                                   
+                                 }}/>
                                 
                                 <p>{m.description}</p>
                             </Segment>)}

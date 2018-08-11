@@ -20,6 +20,7 @@
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-icons": "^2.2.5",
+    "react-measure": "^2.0.0",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.2",
     "react-router-redux": "^5.0.0-alpha.6",
