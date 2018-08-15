@@ -14,21 +14,26 @@ class FeedImage extends React.Component {
     
     render() {  
         var height = '60vh';
+        var onLoad = null;
         let elWidth = '640';
         
         if (this.props.img[0].width > 0) {      
         
         let ratio = elWidth / this.props.img[0].width;     
-       
+            
         height = this.props.img[0].height * ratio;
       
         height = height + 'px';
-        } 
-        
-     
+        elWidth = elWidth + 'px';
+        } else {
+            height= null;
+            elWidth = null;
+            onLoad = this.props.measure;
+        }
+             
         return (
             <div style={{            
-                width: elWidth + 'px',                    
+                width: elWidth,                    
                 height: height
                
              }}>
@@ -40,10 +45,10 @@ class FeedImage extends React.Component {
                    <Image  centered 
                   
                    src = {  this.props.img[0].url } 
-                //    onLoad = { this.props.measure } 
+                   onLoad = { onLoad } 
                    onClick={this.handleOpenModal}
                    style={{            
-                    width: elWidth + 'px',                    
+                    width: elWidth,                    
                     height: height,
                     margin: '0'
                    
