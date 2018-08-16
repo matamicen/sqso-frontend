@@ -26,8 +26,8 @@ class FeedImage extends React.Component {
         height = height + 'px';
         elWidth = elWidth + 'px';
         } else {
-            height= null;
-            elWidth = null;
+            height= 'auto';
+            // elWidth = null;
             onLoad = this.props.measure;
         }
              
@@ -71,9 +71,10 @@ class FeedImage extends React.Component {
                                         }}>                                    
                                             <FeedOptionsMenu idqsos_media={m.idqsos_media} qso_owner={this.props.qso_owner} idqso={this.props.idqso} optionsCaller="FeedImage"/>                                    
                                         </div>
-                                <Image key={m.idqsos_media} wrapped centered src={m.url}
+                                <Image key={m.idqsos_media} 
+                                    wrapped centered src={m.url}
                                 style={{            
-                                    maxWidth: '100%',                    
+                                    maxWidth: '750px',                    
                                     height: 'auto'
                                    
                                  }}/>
