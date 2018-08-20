@@ -11,11 +11,17 @@ import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/Actions';
 
 class FeedImage extends React.Component {
-    
+   
     render() {  
+        
+        console.log(navigator.maxTouchPoints, window.innerWidth);
         var height = '60vh';
         var onLoad = null;
-        let elWidth = '640';
+
+        let elWidth;
+        if (navigator.maxTouchPoints>0) 
+        {  elWidth = window.innerWidth - 60 }
+        else {elWidth = 640 }
         
         if (this.props.img[0].width > 0) {      
         
@@ -37,6 +43,7 @@ class FeedImage extends React.Component {
                 height: height
                
              }}>
+             
             <Modal                
                 closeIcon               
                 trigger=
@@ -50,7 +57,9 @@ class FeedImage extends React.Component {
                    style={{            
                     width: elWidth,                    
                     height: height,
-                    margin: '0'
+                    marginTop: '1vh',
+                    marginLeft: 0,
+                    marginRight: 0
                    
                  }}
                    

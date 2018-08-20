@@ -9,7 +9,7 @@ class PublicDashboard extends React.Component {
     render() {
 
         return (
-           <div      >
+           <div >
             <Grid style={{display: 'flex'}} centered>
                 {(navigator.maxTouchPoints === 0) &&
                     <Grid.Row 
@@ -40,7 +40,7 @@ class PublicDashboard extends React.Component {
 
                 </Grid.Row>
 }
-                {(navigator.maxTouchPoints > 0) && <Grid.Row columns={1} >
+                {(navigator.maxTouchPoints > 0) && <Grid.Row  >
                     <Grid.Column>
 
                         < FeedQSO/>
