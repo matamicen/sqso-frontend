@@ -14,7 +14,6 @@ class FeedImage extends React.Component {
    
     render() {  
         
-        console.log(navigator.maxTouchPoints, window.innerWidth);
         var height = '60vh';
         var onLoad = null;
 
