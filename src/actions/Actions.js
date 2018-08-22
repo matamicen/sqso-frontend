@@ -1,5 +1,5 @@
 import {API} from 'aws-amplify';
-
+import ReactGA from 'react-ga';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const REQUEST_FEED = 'REQUEST_FEED';
@@ -40,6 +40,10 @@ export function doDeleteComment(idcomment = null, idqso = null, token) {
 
 }
 export function doDeleteCommentResponse(idcomment = null, idqso = null) {
+    ReactGA.event({
+        category: 'QSO',
+        action: 'CommentDelete'
+      });
     return {type: DELETE_COMMENT, idcomment: idcomment, idqso: idqso}
 }
 export function doDeleteQso(idqso = null, token) {
@@ -67,6 +71,10 @@ export function doDeleteQso(idqso = null, token) {
 }
 
 export function doDeleteQsoResponse(idqso = null) {
+    ReactGA.event({
+        category: 'QSO',
+        action: 'Delete'
+      });
     return {type: DELETE_QSO, idqso: idqso}
 }
 
@@ -97,6 +105,10 @@ export function doDeleteMedia(idmedia = null, idqso = null, token) {
 
 }
 export function doDeleteMediaResponse(idmedia = null, idqso = null) {
+    ReactGA.event({
+        category: 'QSO',
+        action: 'MediaDelete'
+      });
     return {type: DELETE_MEDIA, idmedia: idmedia, idqso: idqso}
 }
 export function doRequestUserInfo() {
@@ -115,7 +127,11 @@ export function doReceiveUserInfo(followers = null, following = null, profilepic
 }
 
 export function doLogin(token, qra) {
-    // console.log("doLogin")
+    ReactGA.set({ userId: qra })
+    ReactGA.event({
+        category: 'User',
+        action: 'Login'
+      });
     return {
         type: LOGIN,
         token: token,
@@ -134,7 +150,10 @@ export function doLogin(token, qra) {
 }
 
 export function doLogout() {
-    // console.log("doLogout")
+    ReactGA.event({
+        category: 'User',
+        action: 'Logout'
+      });
     return {
         type: LOGOUT,
         qsos: null,
@@ -248,7 +267,11 @@ export function doReceiveQSO(qso) {
 }
 
 export function doFetchQSO(idqso) {
-    // console.log("doFetchQSO"); console.log(idqso)
+    ReactGA.set({ qso: idqso })    
+    ReactGA.event({
+        category: 'QSO',
+        action: 'getInfo'
+      });
     return (dispatch) => {
         let apiName = 'superqso';
         let path = '/qso-detail';
@@ -275,7 +298,11 @@ export function doFetchQSO(idqso) {
 }
 
 export function doFetchQRA(qra) {
-
+    ReactGA.set({ qra: qra })    
+    ReactGA.event({
+        category: 'QRA',
+        action: 'getInfo'
+      });
     return (dispatch) => {
 
         let apiName = 'superqso';
@@ -302,6 +329,11 @@ export function doFetchQRA(qra) {
 }
 
 export function doFollowQRA(token, follower) {
+    ReactGA.set({ follower: follower })    
+    ReactGA.event({
+        category: 'QRA',
+        action: 'follow'
+      });
     return (dispatch) => {
         let apiName = 'superqso';
         let path = '/qra-follower';
@@ -331,6 +363,11 @@ export function doFollowQRA(token, follower) {
 }
 
 export function doUnfollowQRA(token, follower) {
+    ReactGA.set({ follower: follower })    
+    ReactGA.event({
+        category: 'QRA',
+        action: 'unfollow'
+      });
     return (dispatch) => {
         let apiName = 'superqso';
         let path = '/qra-follower';

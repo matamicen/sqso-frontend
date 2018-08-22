@@ -7,6 +7,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/Actions';
 import {API} from 'aws-amplify'
+import ReactGA from 'react-ga';
 class QSOComments extends React.Component {
     constructor() {
         super();
@@ -49,6 +50,10 @@ class QSOComments extends React.Component {
                     console.error(response.body.message);
                 } else {
                     this.setState({comments: response.body.message});
+                    ReactGA.event({
+                        category: 'QSO',
+                        action: 'CommentAdd'
+                      });
                 }
             })
             .catch(error => {

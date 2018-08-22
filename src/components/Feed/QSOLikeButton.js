@@ -1,10 +1,11 @@
 import React from "react";
-import  Icon from 'semantic-ui-react/dist/commonjs/elements/Icon'
+import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon'
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/Actions';
 import {API} from 'aws-amplify'
+import ReactGA from 'react-ga';
 class QSOLikeButton extends React.Component {
     constructor() {
         super();
@@ -52,8 +53,7 @@ class QSOLikeButton extends React.Component {
             .catch(error => {
                 console.log(error)
             });
-      
-       
+
     }
 
     doUnLike() {
@@ -75,6 +75,8 @@ class QSOLikeButton extends React.Component {
                     console.error(response.body.message);
                 } else {
                     this.setState({likeCounter: response.body.message});
+
+                    ReactGA.event({category: 'QSO', action: 'liked'});
                 }
             })
             .catch(error => {
@@ -114,13 +116,15 @@ class QSOLikeButton extends React.Component {
     render() {
 
         return (
-            <Button icon active={false}
-                    onClick={this
-                    .handleOnLike
-                    .bind(this)}>
-                    < Icon name={this.state.icon}/> {this.state.likeCounter}
-                    {' '} 
-                
+            <Button
+                icon
+                active={false}
+                onClick={this
+                .handleOnLike
+                .bind(this)}>
+                < Icon name={this.state.icon}/> {this.state.likeCounter}
+                {' '}
+
             </Button>
         );
     }

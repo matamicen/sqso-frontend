@@ -11,6 +11,8 @@ import store, { history } from './store';
 import 'semantic-ui-css/semantic.css'
 // import registerServiceWorker from './registerServiceWorker';
 import App from "./components/App";
+import ReactGA from 'react-ga';
+ReactGA.initialize('UA-124438207-1')
 
 render(
     <Provider store={store}>
