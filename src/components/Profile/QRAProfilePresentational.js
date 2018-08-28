@@ -42,51 +42,112 @@ const QRAProfile = (props) => {
     } else {
         buttonText = "Follow";
     }
-    
+    if (!props.qraInfo) 
+        return "QRA Not Found";
+
+
     return (
-        <div>
+        
 
-            {props.qraInfo
-                ? <div>
+            <div>
+                <Grid style={{
+                    display: 'flex'
+                }} centered>
+
+                {(navigator.maxTouchPoints === 0) &&
+                    <Grid.Row
+                        style={{
+                        flexWrap: 'nowrap',
+                        justifyContent: 'center'
+                    }}>
+                        <Grid.Column
+                            style={{
+                            width: '1020px',
+                            marginLeft: 'auto',
+                            marginRight: 'auto',
+                            flexShrink: '0'
+                        }}>
+
+                            <Segment>
+                                <Grid columns={4}>
+                                    <Grid.Column>
+
+                                        {props.qraInfo.profilepic && <Image src={props.qraInfo.profilepic} centered size='small' circular/>
+}
+                                    </Grid.Column>
+                                    <Grid.Column floated="left">
+                                        <Header as='h1' icon textAlign='center'>
+                                            <Header.Content>
+                                                {props.qraInfo.qra}
+                                            </Header.Content>
+                                        </Header>
+                                        {(props.isAuthenticated && props.qraInfo.qra !== props.currentQRA) && <Button positive={!props.followed} onClick={() => props.onClick()}>
+                                            {buttonText}
+                                        </ Button>
+}
+                                        <Header as='h2' icon textAlign='center'>
+                                            <Header.Content>
+                                                {props.qraInfo.firstname && props.qraInfo.firstname + " "
+}
+                                                {props.qraInfo.lastname && props.qraInfo.lastname
+}
+                                            </Header.Content>
+                                        </Header>
+                                    </Grid.Column>
+                                </Grid>
+
+                            </Segment>
+
+                            <Segment raised>
+                                < Tab panes={panes}/>
+                            </Segment>
+                        </Grid.Column>
+                    </Grid.Row>
+                    }
+                    {(navigator.maxTouchPoints > 0) && <Grid.Row  >
+                    <Grid.Column>
+
                         <Segment>
-                            <Grid columns={4}>
-                                <Grid.Column>
+                                <Grid columns={4}>
+                                    <Grid.Column>
 
-                                    {props.qraInfo.profilepic && <Image src={props.qraInfo.profilepic} centered size='small' circular/>
+                                        {props.qraInfo.profilepic && <Image src={props.qraInfo.profilepic} centered size='small' circular/>
 }
-                                </Grid.Column>
-                                <Grid.Column floated="left">
-                                    <Header as='h1' icon textAlign='center'>
-                                        <Header.Content>
-                                            {props.qraInfo.qra}
-                                        </Header.Content>
-                                    </Header>
-                                    {(props.isAuthenticated && props.qraInfo.qra !== props.currentQRA) && <Button positive={!props.followed} onClick={() => props.onClick()}>
-                                        {buttonText}
-                                    </ Button>
+                                    </Grid.Column>
+                                    <Grid.Column floated="left">
+                                        <Header as='h1' icon textAlign='center'>
+                                            <Header.Content>
+                                                {props.qraInfo.qra}
+                                            </Header.Content>
+                                        </Header>
+                                        {(props.isAuthenticated && props.qraInfo.qra !== props.currentQRA) && <Button positive={!props.followed} onClick={() => props.onClick()}>
+                                            {buttonText}
+                                        </ Button>
 }
-                                    <Header as='h2' icon textAlign='center'>
-                                        <Header.Content>
-                                            {props.qraInfo.firstname && props.qraInfo.firstname + " "
+                                        <Header as='h2' icon textAlign='center'>
+                                            <Header.Content>
+                                                {props.qraInfo.firstname && props.qraInfo.firstname + " "
 }
-                                            {props.qraInfo.lastname && props.qraInfo.lastname
+                                                {props.qraInfo.lastname && props.qraInfo.lastname
 }
-                                        </Header.Content>
-                                    </Header>
-                                </Grid.Column>
-                            </Grid>
+                                            </Header.Content>
+                                        </Header>
+                                    </Grid.Column>
+                                </Grid>
 
-                        </Segment>
+                            </Segment>
 
-                        <Segment raised>
-                            < Tab panes={panes}/>
-                        </Segment>
-                    </div>
-                : "QRA Not Found"
+                            <Segment raised>
+                                < Tab panes={panes}/>
+                            </Segment>
+
+                    </Grid.Column>
+
+                </Grid.Row>
 }
-
-        </div>
+                </Grid>
+            </div>
     )
 };
 
-export default QRAProfile;
+export default QRAProfile
