@@ -23,7 +23,7 @@ const prepHTML = (data, { html, head, body }) => {
 
 const replace_qso_tags = (req, res) => {
 
-  if (req.params["idQSO"] != "empty") {
+  if (req.params["idQSO"] !== "empty") {
     var apigClientFactory = require('aws-api-gateway-client').default;
     // Set invokeUrl to config and create a client. For autholization, additional
     // information is required as explained below.
@@ -63,7 +63,7 @@ const replace_qso_tags = (req, res) => {
     apigClient
       .invokeApi(params, pathTemplate, method, additionalParams, body)
       .then(function (result) {
-        console.log(result.data.message)
+        
         const filePath = path.resolve(__dirname, '../build/index.html');
 
         fs.readFile(filePath, 'utf8', (err, htmlData) => {
@@ -75,11 +75,15 @@ const replace_qso_tags = (req, res) => {
               .status(404)
               .end();
           }
-          
-          const title = result.data.qra.toUpperCase() + ' started a QSO with ' + result.data.qras[0].qra + ' - Band: ' + result.data.band + ' - Mode: ' + result.data.mode
+          let qso = result.data.body.message;
+          let title; 
+          console.log(qso.qras)
+          if (qso.type === "QSO") {
+           title = qso.qra + ' started a QSO with ' + qso.qras[0].qra + ' - Band: ' + qso.band + ' - Mode: ' + qso.mode
+          }
           var image = null ;
-          if (result.data.media) {
-            image = '<meta property="og:image" content="'+ result.data.media[0].url + '"/>'
+          if (qso.media) {
+            image = '<meta property="og:image" content="'+ qso.media[0].url + '"/>'
           }
           const html = prepHTML(htmlData, {
       
