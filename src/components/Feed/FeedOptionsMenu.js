@@ -10,7 +10,7 @@ import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown";
 import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal'
 import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
-import {API} from 'aws-amplify'
+import API from '@aws-amplify/api';
 class FeedOptionsMenu extends React.PureComponent {
     state = {
         showReportContent: false,

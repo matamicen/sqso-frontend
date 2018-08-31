@@ -4,7 +4,7 @@ import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/Actions';
-import {API} from 'aws-amplify'
+import API from '@aws-amplify/api';
 import ReactGA from 'react-ga';
 class QSOLikeButton extends React.Component {
     constructor() {

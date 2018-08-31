@@ -9,15 +9,17 @@ import Logout from "./Auth/Logout";
 import LogIn from "./Auth/LogIn";
 import AppNavigation from "./Home/AppNavigation";
 // import AWS from "aws-sdk";
-import {Auth} from 'aws-amplify'
+
 import Container from 'semantic-ui-react/dist/commonjs/elements/Container'
 import QRAProfileContainer from "./Profile/QRAProfileContainer";
 import QSODetail from "./QSODetail"
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../actions/Actions';
-import Amplify from 'aws-amplify';
+
 import aws_exports from '../aws-exports';
+import Amplify from '@aws-amplify/core';
+import Auth from '@aws-amplify/auth';
 
 
 // if (process.env.NODE_ENV !== 'production') {     const {whyDidYouUpdate} =

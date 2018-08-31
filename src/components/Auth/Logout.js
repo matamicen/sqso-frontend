@@ -3,11 +3,11 @@ import React from "react";
 // import appConfig from "./Config";
 import "../../styles/App.css";
 import {Redirect} from "react-router-dom";
-// import {CognitoUserPool} from "amazon-cognito-identity-js";
+
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as Actions from '../../actions/Actions';
-import {Auth} from 'aws-amplify'
+import Auth from '@aws-amplify/auth';
 // var poolData = {     UserPoolId: appConfig.UserPoolId, // Your user pool id
 // here     ClientId: appConfig.ClientId // Your client id here };
 

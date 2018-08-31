@@ -1,4 +1,4 @@
-import {API} from 'aws-amplify';
+import API from '@aws-amplify/api';
 import ReactGA from 'react-ga';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
@@ -14,6 +14,8 @@ export const RECEIVE_FOLLOWERS = 'RECEIVE_FOLLOWERS';
 export const DELETE_MEDIA = 'DELETE_MEDIA';
 export const DELETE_QSO = 'DELETE_QSO';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
+
+
 
 export function doDeleteComment(idcomment = null, idqso = null, token) {
     return (dispatch) => {

@@ -15,7 +15,7 @@ import Header from 'semantic-ui-react/dist/commonjs/elements/Header'
 import Form from 'semantic-ui-react/dist/commonjs/collections/Form'
 import Message from 'semantic-ui-react/dist/commonjs/collections/Message'
 import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid'
-import { Auth } from 'aws-amplify';
+import Auth from '@aws-amplify/auth';
 
 
 

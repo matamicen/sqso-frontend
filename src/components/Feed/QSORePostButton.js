@@ -5,7 +5,7 @@ import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/Actions';
-import {API} from 'aws-amplify'
+import API from '@aws-amplify/api';
 import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
 import ReactGA from 'react-ga';
 import Header from "semantic-ui-react/dist/commonjs/elements/Header";

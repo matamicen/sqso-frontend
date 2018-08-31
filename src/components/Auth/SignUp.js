@@ -1,7 +1,7 @@
 import React from "react";
 // ES Modules, e.g. transpiling with Babel import {Config,
 // CognitoIdentityCredentials} from "aws-sdk"; import {CognitoUserPool} from
-// "amazon-cognito-identity-js";
+
 import "../../styles/App.css";
 // import appConfig from "./Config";
 import {Redirect} from "react-router-dom";
@@ -11,7 +11,7 @@ import Header from 'semantic-ui-react/dist/commonjs/elements/Header'
 import Form from 'semantic-ui-react/dist/commonjs/collections/Form'
 import Message from 'semantic-ui-react/dist/commonjs/collections/Message'
 import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid'
-import {Auth} from 'aws-amplify';
+import Auth from '@aws-amplify/auth';
 
 // const userPool = new CognitoUserPool({UserPoolId: appConfig.UserPoolId,
 // ClientId: appConfig.ClientId});
