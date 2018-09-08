@@ -1,6 +1,6 @@
 branch-defaults:
   master:
-    environment: Sqso-env
+    environment: Sqso-env-1
 environment-defaults:
   Sqso-env:
     branch: null

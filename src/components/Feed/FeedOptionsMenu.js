@@ -11,6 +11,10 @@ import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal'
 import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 import API from '@aws-amplify/api';
+import canvg from 'canvg'
+import jsPDF from 'jspdf';
+import ReactDOMServer from "react-dom/server"
+
 class FeedOptionsMenu extends React.PureComponent {
     state = {
         showReportContent: false,
@@ -30,6 +34,7 @@ class FeedOptionsMenu extends React.PureComponent {
             .actions
             .doDeleteMedia(this.props.idqsos_media, this.props.idqso, this.props.token)
     }
+
     deleteComment() {
         this
             .props
@@ -41,6 +46,22 @@ class FeedOptionsMenu extends React.PureComponent {
             .props
             .actions
             .doDeleteQso(this.props.idqso, this.props.token)
+    }
+    printQSLCard() {
+        const pdf = new jsPDF();
+        var svg = ReactDOMServer.renderToStaticMarkup(<QRCode renderAs='svg' value={this.props.guid}/>);
+        svg = svg
+          .replace(/\r?\n|\r/g, '')
+          .trim();
+        var canvas = document.createElement('canvas');
+        canvg(canvas, svg);
+        var imgData = canvas.toDataURL('image/png');
+        console.log(imgData)
+        pdf.setFontSize(40)
+        pdf.text(35, 25, 'dummy text')
+        pdf.addImage(imgData, 'PNG', 40, 40, 75, 75);
+        pdf.save('QSLCard.pdf');
+        //TEST in https://parall.ax/products/jspdf
     }
     handleOnSubmitReportComment(e) {
         var datetime = new Date();
@@ -65,10 +86,7 @@ class FeedOptionsMenu extends React.PureComponent {
             .then(response => {
                 if (response.error > 0) {} else {
                     this.open()
-                    ReactGA.event({
-                        category: 'QSO',
-                        action: 'contentReported'
-                      });
+                    ReactGA.event({category: 'QSO', action: 'contentReported'});
                 }
             })
             .catch(error => {
@@ -86,8 +104,8 @@ class FeedOptionsMenu extends React.PureComponent {
         let myInit = {
             body: {
                 "idqso": this.props.idqso,
-            "detail": e.target.comments.value,
-            "datetime": datetime
+                "detail": e.target.comments.value,
+                "datetime": datetime
             }, // replace this with attributes you need
             headers: {
                 "Authorization": this.props.token
@@ -103,7 +121,6 @@ class FeedOptionsMenu extends React.PureComponent {
             .catch(error => {
                 console.log(error)
             });
-      
 
     }
     handleOnSubmitReportMedia(e) {
@@ -134,12 +151,11 @@ class FeedOptionsMenu extends React.PureComponent {
             .catch(error => {
                 console.log(error)
             });
-      
-    
+
     }
     render() {
         const {showMessage, showReportContent} = this.state
-        
+
         return (
 
             <Dropdown
@@ -206,9 +222,11 @@ class FeedOptionsMenu extends React.PureComponent {
                 }
                 {/* END FEED IMAGE DELETE CONTENT */
                 }
-                  {/* FEED AUDIO REPORT CONTENT */}
-                  
-                  {this.props.optionsCaller === 'FeedAudio' && this.props.currentQRA && this.props.currentQRA !== this.props.qso_owner && <Modal
+                {/* FEED AUDIO REPORT CONTENT */
+                }
+
+                {
+                    this.props.optionsCaller === 'FeedAudio' && this.props.currentQRA && this.props.currentQRA !== this.props.qso_owner && <Modal
                         open={showReportContent}
                         onOpen={this.openReportedContent}
                         onClose={this.closeReportedContent}
@@ -247,58 +265,53 @@ class FeedOptionsMenu extends React.PureComponent {
                                 </Modal>
                             </Form>
                         </Modal.Content>
-                    </Modal>
-                }
-                {/* END FEED AUDIO REPORT CONTENT */
-                }
-                {/* FEED AUDIO DELETE CONTENT */
-                }
-                {
-                    this.props.optionsCaller === 'FeedAudio' && this.props.currentQRA === this.props.qso_owner && <Dropdown.Item
+                    </Modal>}
+                    {/* END FEED AUDIO REPORT CONTENT */}
+                    {/* FEED AUDIO DELETE CONTENT */}
+                    {this.props.optionsCaller === 'FeedAudio' && this.props.currentQRA === this.props.qso_owner && <Dropdown.Item
                         icon='delete'
                         text='Delete Audio'
                         onClick={this
                         .deleteMedia
                         .bind(this)}/>
-
-                }
-                {/* END FEED AUDIO DELETE CONTENT */
-                }
-                {/* FEED ITEM QR CODE */                
-                }
-                {
-                    this.props.optionsCaller === 'FeedItem' && <Modal
-                            size='tiny'
-                            closeIcon
-                            trigger={< Dropdown.Item icon = 'qrcode' text = 'Show QR Code' />}>
-                            <Modal.Header>QR Code</Modal.Header>  
-                            <Modal.Content>
-                                <Grid centered>
-                                    <Segment raised>
-                                        <QRCode value={this.props.guid}/>
-                                    </Segment>
-                                </Grid>
-                            </Modal.Content>
-                        </Modal>
-                }
-                {/* END FEED ITEM QR CODE */
-                }
-                {/* FEED ITEM DELETE QSO*/
-                }
-                {
-                    this.props.optionsCaller === 'FeedItem' && this.props.currentQRA === this.props.qso_owner && <Dropdown.Item
+}
+                    {/* END FEED AUDIO DELETE CONTENT */}
+                    {/* FEED ITEM QR CODE */}
+                    {this.props.optionsCaller === 'FeedItem' && <Modal
+                        size='tiny'
+                        closeIcon
+                        trigger={< Dropdown.Item icon = 'qrcode' text = 'Show QR Code' />}>
+                        <Modal.Header>QR Code</Modal.Header>
+                        <Modal.Content>
+                            <Grid centered>
+                                <Segment raised>
+                                    <QRCode value={this.props.guid}/>
+                                </Segment>
+                            </Grid>
+                        </Modal.Content>
+                    </Modal>
+}
+                    {/* END FEED ITEM QR CODE */}
+                    {/* FEED ITEM DELETE QSO*/}
+                    {this.props.optionsCaller === 'FeedItem' && this.props.currentQRA === this.props.qso_owner && <Dropdown.Item
                         icon='delete'
                         text='Delete QSO'
                         onClick={this
                         .deleteQso
                         .bind(this)}/>
-                }
-                {/* END FEED ITEM DELETE QSO*/
-                }
-                {/* FEED ITEM REPORT QSO*/
-                }
-                {
-                    this.props.optionsCaller === 'FeedItem' && this.props.currentQRA && this.props.currentQRA !== this.props.qso_owner && <Modal
+}
+                    {/* END FEED ITEM DELETE QSO*/}
+                    {/* FEED ITEM PRINT QSL CARD*/}
+                    {this.props.optionsCaller === 'FeedItem' && this.props.currentQRA === this.props.qso_owner && <Dropdown.Item
+                        icon='print'
+                        text='Print QSL Card'
+                        onClick={this
+                        .printQSLCard
+                        .bind(this)}/>
+}
+                    {/* END FEED ITEM QSL CARD*/}
+                    {/* FEED ITEM REPORT QSO*/}
+                    {this.props.optionsCaller === 'FeedItem' && this.props.currentQRA && this.props.currentQRA !== this.props.qso_owner && <Modal
                         open={showReportContent}
                         onOpen={this.openReportedContent}
                         onClose={this.closeReportedContent}
@@ -335,10 +348,14 @@ class FeedOptionsMenu extends React.PureComponent {
                                 </Modal>
                             </Form>
                         </Modal.Content>
-                    </Modal>}
-                    {/* END FEED ITEM REPORT QSO*/}
-                    {/*  FEED ITEM REPORT COMMENT */}
-                    {this.props.optionsCaller === 'FeedComment' && this.props.currentQRA && this.props.comment_owner !== this.props.currentQRA && <Modal
+                    </Modal>
+                }
+                {/* END FEED ITEM REPORT QSO*/
+                }
+                {/*  FEED ITEM REPORT COMMENT */
+                }
+                {
+                    this.props.optionsCaller === 'FeedComment' && this.props.currentQRA && this.props.comment_owner !== this.props.currentQRA && <Modal
                         open={showReportContent}
                         onOpen={this.openReportedContent}
                         onClose={this.closeReportedContent}
@@ -377,22 +394,19 @@ class FeedOptionsMenu extends React.PureComponent {
                             </Form>
                         </Modal.Content>
                     </Modal>
-                }
-                {/* END FEED ITEM REPORT COMMENT */
-                }
-                {/* FEED ITEM DELETE COMMENT*/
-                }
-                {
-                    this.props.optionsCaller === 'FeedComment' && this.props.currentQRA === this.props.comment_owner && <Dropdown.Item
+}
+                    {/* END FEED ITEM REPORT COMMENT */}
+                    {/* FEED ITEM DELETE COMMENT*/}
+                    {this.props.optionsCaller === 'FeedComment' && this.props.currentQRA === this.props.comment_owner && <Dropdown.Item
                         icon='delete'
                         text='Delete Comment'
                         onClick={this
                         .deleteComment
                         .bind(this)}/>
-                }
-                {/* END FEED ITEM DELETE COMMENT*/
-                } </Dropdown.Menu>
-             </Dropdown>
+}
+                    {/* END FEED ITEM DELETE COMMENT*/}
+                </Dropdown.Menu>
+            </Dropdown>
 
         )
     }
