@@ -1,6 +1,6 @@
 import React from "react";
 import FeedQSO from "../Feed/NewsFeedContainer";
-
+import {isMobile} from 'react-device-detect';
 import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid'
 import Advertisement from 'semantic-ui-react/dist/commonjs/views/Advertisement'
 
@@ -17,7 +17,7 @@ class UserDashboard extends React.PureComponent {
 
             <div >
             <Grid style={{display: 'flex'}} centered>
-                {(navigator.maxTouchPoints === 0) &&
+            {(!isMobile) &&
                     <Grid.Row 
                         style={{ 
                                                      
@@ -46,7 +46,7 @@ class UserDashboard extends React.PureComponent {
 
                 </Grid.Row>
 }
-                {(navigator.maxTouchPoints > 0) && <Grid.Row  >
+                {(isMobile) && <Grid.Row  >
                     <Grid.Column>
 
                         < FeedQSO/>
