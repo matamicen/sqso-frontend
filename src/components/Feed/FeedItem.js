@@ -24,7 +24,6 @@ import {Link} from 'react-router-dom'
 import FeedOptionsMenu from "./FeedOptionsMenu";
 import QSORePostButton from "./QSORePostButton";
 
-
 class FeedItem extends React.Component {
     constructor() {
         super();
@@ -38,11 +37,9 @@ class FeedItem extends React.Component {
             .recalculateRowHeight
             .bind(this);
     }
-    // componentDidMount(){
-    //     this.recalculateRowHeight(this.props.index)
-    // }
+    // componentDidMount(){     this.recalculateRowHeight(this.props.index) }
     shouldComponentUpdate(nextProps) {
-        
+
         return this.props.qsosFetched;
     }
 
@@ -72,7 +69,6 @@ class FeedItem extends React.Component {
             .filter((media) => media.type === 'audio');
         const commentsCounter = '(' + this.props.qso.comments.length + ')'
 
-        
         return (
             <Segment raised>
 
@@ -81,18 +77,27 @@ class FeedItem extends React.Component {
                         <Link to={"/" + this.props.qso.qra}>
                             <Image src={this.props.qso.profilepic} size='mini' avatar/> {this.props.qso.qra}
                         </Link>
-                        {'  '}started a QSO
+                        {'  '}worked a QSO with
                         <div
                             style={{
                             float: 'right'
                         }}>
 
-                            <FeedOptionsMenu  qso_owner={this.props.qso.qra} idqso={this.props.qso.idqsos} guid={this.props.qso.GUID_QR} optionsCaller="FeedItem"/>                                    
-                            
+                            <FeedOptionsMenu
+                                qso_owner={this.props.qso.qra}
+                                idqso={this.props.qso.idqsos}
+                                guid={this.props.qso.GUID_QR}
+                                optionsCaller="FeedItem"/>
+
                         </div>
                     </Feed.Label>
 
                     <Feed.Content>
+                        <Divider hidden/>
+                        <QRAs
+                            profilepic={this.props.qso.profilepic}
+                            qso_owner={this.props.qso.qra}
+                            qras={this.props.qso.qras}/>
                         <Divider hidden/>
                         <Feed.Extra text>
                             <Label>Mode:</Label>{this.props.qso.mode}
@@ -101,21 +106,20 @@ class FeedItem extends React.Component {
                             </Label>{this.props.qso.idqsos}
                             <Label>GUID:
                             </Label>{this.props.qso.GUID_URL}
-                            <QRAs
-                                profilepic={this.props.qso.profilepic}
-                                qso_owner={this.props.qso.qra}
-                                qras={this.props.qso.qras}/>
+
                         </Feed.Extra>
                         <div >
-                        {picList.length > 0 &&  <FeedImage
-                            img={picList}
-                            measure={this.props.measure}
+                            {picList.length > 0 && <FeedImage
+                                img={picList}
+                                measure={this.props.measure}
+                                idqso={this.props.qso.idqsos}
+                                qso_owner={this.props.qso.qra}/>
+}
+                        </div>
+
+                        {audioList.length > 0 && <FeedAudioList
+                            mediaList={audioList}
                             idqso={this.props.qso.idqsos}
-                            qso_owner={this.props.qso.qra}
-                          />
-}                       </div>
-                      
-                        {audioList.length > 0 && <FeedAudioList mediaList={audioList}  idqso={this.props.qso.idqsos}
                             qso_owner={this.props.qso.qra}/>
 }
 
@@ -152,8 +156,7 @@ class FeedItem extends React.Component {
         )
     }
 }
-const mapStateToProps = (state, qsos) => ({fetchingQSOS: state.default.FetchingQSOS, 
-    qsosFetched: state.default.qsosFetched, currentQRA: state.default.userData.qra});
+const mapStateToProps = (state, qsos) => ({fetchingQSOS: state.default.FetchingQSOS, qsosFetched: state.default.qsosFetched, currentQRA: state.default.userData.qra});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 });

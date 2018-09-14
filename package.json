@@ -31,11 +31,13 @@
     "react-router-redux": "^5.0.0-alpha.6",
     "react-select": "^1.0.0-rc.10",
     "react-share": "^2.0.0",
+    "react-slick": "^0.23.1",
     "react-virtualized": "^9.12.0",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "semantic-ui-css": "2.2.14",
-    "semantic-ui-react": "^0.78.2"
+    "semantic-ui-react": "^0.78.2",
+    "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.0.0-beta.52",
@@ -56,7 +58,7 @@
     "why-did-you-update": "^0.1.1"
   },
   "scripts": {
-    "start": "npm run build && node app",
+    "start": " npm run build && node app",
     "dummy": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

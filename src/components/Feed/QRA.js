@@ -7,13 +7,29 @@ export default class QRA extends React.Component {
     render() {
 
         return (
-            <Link to={"/" + this.props.qra}>
-                    <Image src={this.props.profilepic} size='mini' avatar/>
-                    <Label size='large' >
-                        {this.props.qra}
-                    </Label>
+
+            <div
+                style={{
+                width: '70px',
+                display: 'flex'
+           
+            }}>
+                <Link to={"/" + this.props.qra}>
+                    <div><Image
+                        style={{
+                width: '100%'
+            }}
+                        src={this.props.profilepic}
+                        size='mini'
+                        centered/>
+                    </div>
+                    <div centered>
+                        <Label size='large'>
+                            {this.props.qra}
+                        </Label>
+                    </div>
                 </Link>
-     
+            </div>
 
         )
     }
