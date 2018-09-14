@@ -5,13 +5,12 @@ import Slider from 'react-slick'
 export default class QRAs extends React.Component {
 
     render() {
-        var slidesToShow = Math.min(this
-            .props
-            .qras.length, 5);
+        var slidesToShow = Math.min(this.props.qras.length, 4);
         const settings = {
-            className: "center",
+            // className: "center",
             infinite: true,
-            centerPadding: "60px",
+            centerMode: true,
+            // centerPadding: "60px",
             slidesToShow: slidesToShow,
             swipeToSlide: true,
             afterChange: function (index) {
@@ -19,14 +18,22 @@ export default class QRAs extends React.Component {
             }
         };
         return (
-            <div>
-                <Slider {...settings}>
-                    {this
-                        .props
-                        .qras
-                        .map((qra, i) =><div><QRA key={i} profilepic={qra.profilepic} qra={qra.qra}/></div> )}
-                </Slider>
-            </div>
-        ); 
+
+            <Slider {...settings} >
+
+                {this
+                    .props
+                    .qras
+                    .map((qra, i) => <div
+                        style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}>< QRA key={i} profilepic={qra.profilepic} qra={qra.qra}/>
+                    </div>)}
+
+            </Slider>
+
+        );
     }
 }

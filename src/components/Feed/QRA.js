@@ -10,8 +10,9 @@ export default class QRA extends React.Component {
 
             <div
                 style={{
-                width: '70px',
+                width: '65px',
                 display: 'flex'
+                
            
             }}>
                 <Link to={"/" + this.props.qra}>
