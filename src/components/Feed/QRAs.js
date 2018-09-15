@@ -9,18 +9,15 @@ export default class QRAs extends React.Component {
         const settings = {
             // className: "center",
             infinite: true,
-            centerMode: true,
-            // centerPadding: "60px",
+
+            
             slidesToShow: slidesToShow,
-            swipeToSlide: true,
-            afterChange: function (index) {
-                console.log(`Slider Changed to: ${index + 1}, background: #222; color: #bada55`);
-            }
+            
+            
         };
         return (
 
             <Slider {...settings} >
-
                 {this
                     .props
                     .qras
@@ -29,7 +26,9 @@ export default class QRAs extends React.Component {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center'
-                    }}>< QRA key={i} profilepic={qra.profilepic} qra={qra.qra}/>
+                        
+                    }}>
+                            <QRA key={i} profilepic={qra.profilepic} qra={qra.qra}/>
                     </div>)}
 
             </Slider>
