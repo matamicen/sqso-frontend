@@ -25,11 +25,11 @@ export default class QRA extends React.Component {
                         }}
                         src={this.props.profilepic}
                         size='mini'
-                        centered/>
+                        />
                     </div>
                     <div style={{
                         display: 'flex'
-                    }} centered>
+                    }} >
                         <Label>
                             {this.props.qra}
                         </Label>

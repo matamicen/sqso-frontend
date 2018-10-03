@@ -75,7 +75,14 @@ class FeedItem extends React.Component {
                 <Feed.Event>
                     <Feed.Label>
                         <Link to={"/" + this.props.qso.qra}>
-                            <Image src={this.props.qso.profilepic} size='mini' avatar/> {this.props.qso.qra}
+                            <Image
+                                src={this.props.qso.profilepic}
+                                size='mini'
+                                avatar
+                                style={{
+                                width: '35px',
+                                height: '35px'
+                            }}/> {this.props.qso.qra}
                         </Link>
                         {'  '}worked a QSO with
                         <div

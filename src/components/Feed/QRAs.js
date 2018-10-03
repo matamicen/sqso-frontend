@@ -10,25 +10,22 @@ export default class QRAs extends React.Component {
             // className: "center",
             infinite: true,
 
-            
-            slidesToShow: slidesToShow,
-            
-            
+            slidesToShow: slidesToShow
         };
         return (
 
-            <Slider {...settings} >
+            <Slider {...settings}>
                 {this
                     .props
                     .qras
                     .map((qra, i) => <div
+                        key={i}
                         style={{
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center'
-                        
                     }}>
-                            <QRA key={i} profilepic={qra.profilepic} qra={qra.qra}/>
+                        <QRA key={i} profilepic={qra.profilepic} qra={qra.qra}/>
                     </div>)}
 
             </Slider>
