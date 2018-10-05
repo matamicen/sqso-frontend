@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/Actions';
-import FeedOptionsMenu from './FeedOptionsMenu';
+
 class FeedAudio extends React.Component {
 
     constructor() {

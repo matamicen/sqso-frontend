@@ -68,7 +68,7 @@ class FeedItem extends React.Component {
             .media
             .filter((media) => media.type === 'audio');
         const commentsCounter = '(' + this.props.qso.comments.length + ')'
-        console.log(this.props.qso)
+        
         return (
             <Segment raised>
 
@@ -162,7 +162,9 @@ class FeedItem extends React.Component {
         )
     }
 }
-const mapStateToProps = (state, qsos) => ({fetchingQSOS: state.default.FetchingQSOS, qsosFetched: state.default.qsosFetched, currentQRA: state.default.userData.qra});
+const mapStateToProps = (state, qsos) => ({fetchingQSOS: state.default.FetchingQSOS, 
+    qsosFetched: state.default.qsosFetched, 
+    currentQRA: state.default.userData.qra});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 });

@@ -43,7 +43,7 @@ export default(state = initialState, action) => {
     let userInfo;
     switch (action.type) {
         case DELETE_QSO:
-
+            console.log(action);
             newStore = Object.assign({}, state, {
                 ...state,
                 qsos: state
@@ -51,6 +51,7 @@ export default(state = initialState, action) => {
                     .filter((qso) => qso.idqsos !== action.idqso)
 
             });
+            console.log(newStore)
             return newStore;
         case DELETE_COMMENT:
 

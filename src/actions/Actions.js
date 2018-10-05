@@ -33,7 +33,7 @@ export function doDeleteComment(idcomment = null, idqso = null, token) {
         API
             .del(apiName, path, myInit)
             .then(response => {
-                response.error === '0' && dispatch(doDeleteCommentResponse(idcomment, idqso));
+                response.error === 0  && dispatch(doDeleteCommentResponse(idcomment, idqso));
             })
             .catch(error => {
                 console.log(error)
@@ -63,8 +63,9 @@ export function doDeleteQso(idqso = null, token) {
         API
             .del(apiName, path, myInit)
             .then(response => {
-                // console.log(response)
-                response.error === '0' && dispatch(doDeleteQsoResponse(idqso));
+              
+                response.error === 0 && dispatch(doDeleteQsoResponse(idqso));
+              
             })
             .catch(error => {
                 console.log(error)
@@ -73,6 +74,7 @@ export function doDeleteQso(idqso = null, token) {
 }
 
 export function doDeleteQsoResponse(idqso = null) {
+    console.log('doDeleteQsoResponse')
     ReactGA.event({
         category: 'QSO',
         action: 'Delete'
@@ -97,7 +99,7 @@ export function doDeleteMedia(idmedia = null, idqso = null, token) {
             .del(apiName, path, myInit)
             .then(response => {
                 // console.log(response)
-                response.error === '0' && dispatch(doDeleteMediaResponse(idmedia, idqso));
+                response.error === 0 && dispatch(doDeleteMediaResponse(idmedia, idqso));
 
             })
             .catch(error => {

@@ -4,7 +4,7 @@ import FeedItemShare from "./FeedItemShare"
 import NewsFeed from './NewsFeedPresentational';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
-import Immutable from 'immutable';
+
 import * as Actions from '../../actions/Actions';
 import 'react-virtualized/styles.css'; // only needs to be imported once
 
@@ -28,9 +28,10 @@ class NewsFeedContainer extends React.Component {
     render() {      
         
         if (this.props.FetchingQSOS || !this.props.qsosFetched || this.props.qsos.length === 0) return null;
-        let qsos = Immutable.List(this.props.qsos);
+        let qsos = []
         
         if (this.props.qsos && this.props.qsos.length > 0) {
+ 
             qsos = this.props.qsos.map((qso, i) =>
                { 
                     switch (qso.type) {
@@ -41,7 +42,6 @@ class NewsFeedContainer extends React.Component {
         } 
             )
         }
-        
         return (
             <NewsFeed list={qsos}/>
         )
