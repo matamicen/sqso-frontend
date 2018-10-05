@@ -68,7 +68,7 @@ class FeedItem extends React.Component {
             .media
             .filter((media) => media.type === 'audio');
         const commentsCounter = '(' + this.props.qso.comments.length + ')'
-
+        console.log(this.props.qso)
         return (
             <Segment raised>
 
@@ -115,14 +115,13 @@ class FeedItem extends React.Component {
                             </Label>{this.props.qso.GUID_URL}
 
                         </Feed.Extra>
-                        <div >
-                            {picList.length > 0 && <FeedImage
-                                img={picList}
-                                measure={this.props.measure}
-                                idqso={this.props.qso.idqsos}
-                                qso_owner={this.props.qso.qra}/>
+
+                        {picList.length > 0 && <FeedImage
+                            img={picList}
+                            measure={this.props.measure}
+                            idqso={this.props.qso.idqsos}
+                            qso_owner={this.props.qso.qra}/>
 }
-                        </div>
 
                         {audioList.length > 0 && <FeedAudioList
                             mediaList={audioList}

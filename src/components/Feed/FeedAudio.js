@@ -32,7 +32,7 @@ class FeedAudio extends React.Component {
             if (this.state.audioNotVisible) {
                 return (
                     <Button icon onClick={this.onClick}>
-                        <Icon name='play'/>
+                        <Icon name='play circle'/>
                     </Button>
                 )
             } else {
@@ -46,7 +46,7 @@ class FeedAudio extends React.Component {
                             float: 'right'
                         }}>
                                  
-                            <FeedOptionsMenu idqsos_media={this.props.media.idqsos_media} qso_owner={this.props.qso_owner} idqso={this.props.media.idqso} optionsCaller="FeedAudio"/>                                                   
+                            {/* <FeedOptionsMenu idqsos_media={this.props.media.idqsos_media} qso_owner={this.props.qso_owner} idqso={this.props.media.idqso} optionsCaller="FeedAudio"/>                                                    */}
                       </div>
                     </div>
                 )

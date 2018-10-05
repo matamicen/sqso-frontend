@@ -25,6 +25,9 @@ export class SignUp extends React.Component {
             password: '',
             passwordConfirm: null,
             birthdate: '',
+            firstname: '',
+            lastname: '',
+            country: '',
             qra: '',
             code: '',
             userCreated: false,
@@ -37,7 +40,10 @@ export class SignUp extends React.Component {
                 birthdate: '',
                 password: '',
                 passwordConfirm: '',
-                qra: ''
+                qra: '',
+                firstname: '',
+                lastname: '',
+                country: ''
             }
         };
 
@@ -57,6 +63,15 @@ export class SignUp extends React.Component {
     handlePasswordChange(e) {
         this.setState({password: e.target.value});
     }
+    handleFirstNameChange(e) {
+        this.setState({firstname: e.target.value});
+    }
+    handleLastNameChange(e) {
+        this.setState({lastname: e.target.value});
+    }
+    handleCountryChange(e) {
+        this.setState({country: e.target.value});
+    }
     handlePasswordConfirmChange(e) {
         this.setState({passwordConfirm: e.target.value});
     }
@@ -73,8 +88,7 @@ export class SignUp extends React.Component {
     }
 
     handleUserConfirmed(result) {
-      
-        
+
         this.setState({userConfirmed: true});
 
     }
@@ -100,18 +114,32 @@ export class SignUp extends React.Component {
             .state
             .birthdate
             .trim();
+        const firstname = this
+            .state
+            .firstname
+            .trim();
+        const lastname = this
+            .state
+            .lastname
+            .trim();
+        const country = this
+            .state
+            .country
+            .trim();
 
         this.validateFields()
 
-        if (!this.state.formErrors.password && !this.state.formErrors.email && !this.state.formErrors.passwordConfirm && !this.state.formErrors.qra && !this.state.formErrors.birthdate) {
+        if (!this.state.formErrors.password && !this.state.formErrors.email && !this.state.formErrors.passwordConfirm && !this.state.formErrors.qra && !this.state.formErrors.birthdate && !this.state.formErrors.firstname && !this.state.formErrors.lastname && !this.state.formErrors.country) {
 
-            
             Auth.signUp({
                 username: qra,
                 password: password,
                 attributes: {
                     email: email, // optional
                     birthdate: birthdate, // optional - E.164 number convention
+                    'custom:country': country,
+                    'custom:firstName': firstname,
+                    'custom:lastName': lastname
                     // other custom attributes
                 },
                 validationData: [] //optional
@@ -130,7 +158,7 @@ export class SignUp extends React.Component {
         let fieldValidationErrors = this.state.formErrors;
 
         //email
-        
+
         let emailValid = this
             .state
             .email
@@ -151,7 +179,7 @@ export class SignUp extends React.Component {
             : 'Password and Confirmation are not the same';
 
         //QRA
-        let qraValid = this.state.qra.length >= 6;
+        let qraValid = this.state.qra.length >= 4;
         fieldValidationErrors.qra = qraValid
             ? ''
             : 'QRA is too short';
@@ -161,6 +189,19 @@ export class SignUp extends React.Component {
             ? ''
             : 'Birthdate is not valid';
 
+        let countryValid = this.state.country !== ''
+        fieldValidationErrors.country = countryValid
+            ? ''
+            : 'Country is not Valid';
+
+        let firstNameValid = this.state.firstname !== ''
+        fieldValidationErrors.firstname = firstNameValid
+            ? ''
+            : 'FirstName is not Valid';
+        let lastNameValid = this.state.lastname !== ''
+        fieldValidationErrors.lastname = lastNameValid
+            ? ''
+            : 'LastName is not Valid';
         this.setState({formErrors: fieldValidationErrors});
     }
 
@@ -178,7 +219,7 @@ export class SignUp extends React.Component {
             // set to True.
             forceAliasCreation: true
         }).then(data => {
-            
+
             this.handleUserConfirmed(data)
 
         }).catch(err => {
@@ -264,6 +305,38 @@ export class SignUp extends React.Component {
                                     style={{
                                     'textTransform': 'uppercase'
                                 }}/> {this.state.formErrors.qra && <Message negative content={this.state.formErrors.qra}/>}
+                            </Form.Field>                            
+                            <Form.Field>
+                                <Form.Input
+                                    fluid                                    
+                                    iconPosition='left'
+                                    placeholder='First Name'
+                                    error={this.state.formErrors.firstname
+                                    ? true
+                                    : false}
+                                    name='firstName'
+                                    onChange={this
+                                    .handleFirstNameChange
+                                    .bind(this)}
+                                    style={{
+                                    'textTransform': 'uppercase'
+                                }}/> {this.state.formErrors.firstname && <Message negative content={this.state.formErrors.firstname}/>}
+                            </Form.Field>
+                            <Form.Field>
+                                <Form.Input
+                                    fluid                                    
+                                    iconPosition='left'
+                                    placeholder='Last Name'
+                                    error={this.state.formErrors.lastname
+                                    ? true
+                                    : false}
+                                    name='lastName'
+                                    onChange={this
+                                    .handleLastNameChange
+                                    .bind(this)}
+                                    style={{
+                                    'textTransform': 'uppercase'
+                                }}/> {this.state.formErrors.lastname && <Message negative content={this.state.formErrors.lastname}/>}
                             </Form.Field>
                             <Form.Field>
                                 <Form.Input
@@ -293,6 +366,20 @@ export class SignUp extends React.Component {
                                     onChange={this
                                     .handleBirthdateChange
                                     .bind(this)}/> {this.state.formErrors.birthdate && <Message negative content={this.state.formErrors.birthdate}/>}
+                            </Form.Field>
+                            <Form.Field>
+                                <Form.Input                                    
+                                    fluid
+                                    icon='world'
+                                    iconPosition='left'
+                                    placeholder='Country'
+                                    error={this.state.formErrors.country
+                                    ? true
+                                    : false}
+                                    name='country'
+                                    onChange={this
+                                    .handleCountryChange
+                                    .bind(this)}/> {this.state.formErrors.country && <Message negative content={this.state.formErrors.country}/>}
                             </Form.Field>
                             <Form.Field>
                                 <Form.Input

@@ -1,6 +1,7 @@
 import React from "react";
 import FeedAudio from "./FeedAudio";
 import Item from 'semantic-ui-react/dist/commonjs/views/Item'
+import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider'
 export default class FeedAudioList extends React.Component {
     constructor() {
         super();
@@ -8,26 +9,25 @@ export default class FeedAudioList extends React.Component {
     }
 
     render() {
-        
+
         if (this.props.mediaList.length > 0) {
             return (
+                <div>
+                    <Divider/>
+                    <Item.Group >
+                        {this
+                            .props
+                            .mediaList
+                            .map((m, i) => <Item key={i}>
+                                <a>
+                                    <FeedAudio key={i} media={m} qso_owner={this.props.qso_owner}/>
+                                </a>
+                            </Item>)}
+                    </Item.Group>
 
-                <Item.Group >
-                    {this.props.mediaList.map((m, i) =>
-                        <Item key={i}>
-                            <a>
-                                <FeedAudio key={i}                                       
-                                       media={m}
-                                       qso_owner={this.props.qso_owner}/>
-                            </a>
-                        </Item>
-                    )}
-                </Item.Group>
-
-
+                </div>
             )
-        }
-        else {
+        } else {
             return null
         }
 
