@@ -8,6 +8,7 @@ export const REQUEST_USERINFO = 'REQUEST_USERINFO';
 export const RECEIVE_USERINFO = 'RECEIVE_USERINFO';
 export const REQUEST_QSO = 'REQUEST_QSO';
 export const RECEIVE_QSO = 'RECEIVE_QSO';
+export const CLEAR_QSO = 'CLEAR_QSO';
 export const REQUEST_QRA = 'REQUEST_QRA';
 export const RECEIVE_QRA = 'RECEIVE_QRA';
 export const RECEIVE_FOLLOWERS = 'RECEIVE_FOLLOWERS';
@@ -269,6 +270,9 @@ export function doRequestQSO() {
 export function doReceiveQSO(qso) {
     return {type: RECEIVE_QSO, qso: qso, FetchingQSO: false}
 }
+export function doClearQSO() {
+    return {type: CLEAR_QSO, qso: "", FetchingQSO: false}
+}
 
 export function doFetchQSO(idqso) {
     ReactGA.set({ qso: idqso })    
@@ -290,7 +294,7 @@ export function doFetchQSO(idqso) {
         API
             .post(apiName, path, myInit)
             .then(response => {
-                // console.log(response)
+                
                 if (response.body.error === 0) {
                     dispatch(doReceiveQSO(response.body.message));
                 }

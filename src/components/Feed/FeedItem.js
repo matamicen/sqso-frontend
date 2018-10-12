@@ -1,7 +1,7 @@
 import React from "react";
 import FeedAudioList from "./FeedAudioList";
 import FeedImage from './FeedImage'
-import FeedLinks from './FeedLinks'
+import FeedLinkList from './FeedLinkList'
 import QSOShareButtons from './QSOShareButtons'
 
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
@@ -69,7 +69,7 @@ class FeedItem extends React.Component {
             .media
             .filter((media) => media.type === 'audio');
         const commentsCounter = '(' + this.props.qso.comments.length + ')'
-        console.log(this.props.qso)
+        
         return (
             <Segment raised>
 
@@ -129,8 +129,8 @@ class FeedItem extends React.Component {
                             idqso={this.props.qso.idqsos}
                             qso_owner={this.props.qso.qra}/>
 }
-                        console.log(this.props.qso)
-                        {this.props.qso.links && <FeedLinks links={this.props.qso.links}/>}
+                        
+                        {this.props.qso.links && <FeedLinkList links={this.props.qso.links}/>}
 
                         <Feed.Extra>
                             <Divider hidden/>

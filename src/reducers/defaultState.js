@@ -12,7 +12,8 @@ import {
     REQUEST_QRA,
     REQUEST_QSO,
     REQUEST_USERINFO,
-    DELETE_COMMENT
+    DELETE_COMMENT,
+    CLEAR_QSO
 } from "../actions/Actions"
 
 const initialState = {
@@ -51,7 +52,6 @@ export default(state = initialState, action) => {
                     .filter((qso) => qso.idqsos !== action.idqso)
 
             });
-            console.log(newStore)
             return newStore;
         case DELETE_COMMENT:
 
@@ -72,7 +72,7 @@ export default(state = initialState, action) => {
             });
 
             return newStore;
-        case DELETE_MEDIA:            
+        case DELETE_MEDIA:
             newStore = Object.assign({}, state, {
                 ...state,
                 qsos: state
@@ -116,7 +116,7 @@ export default(state = initialState, action) => {
             });
             return newStore;
         case RECEIVE_FOLLOWERS:
-            
+
             userInfo = {
                 ...state.userData,
                 following: action.following
@@ -162,7 +162,15 @@ export default(state = initialState, action) => {
                 FetchingQSO: true
             });
             return newStore;
+        case CLEAR_QSO:
+            newStore = Object.assign({}, state, {
+                ...state,
+                qso: null,
+                FetchingQSO: true
+            });
+            return newStore;
         case RECEIVE_QSO:
+
             newStore = Object.assign({}, state, {
                 ...state,
                 qso: action.qso,
@@ -188,7 +196,7 @@ export default(state = initialState, action) => {
 
             return newStore;
         case LOGOUT:
-            
+
             let logoutUserData = {
                 ...state.userData,
                 token: "",

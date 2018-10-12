@@ -1,14 +1,15 @@
 import React from "react";
 import Item from 'semantic-ui-react/dist/commonjs/views/Item'
 import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider'
-export default class FeedAudioList extends React.Component {
+import FeedLink from './FeedLink'
+export default class FeedLinkList extends React.Component {
     constructor() {
         super();
         this.state = {};
     }
 
     render() {
-console.log(this.props.links)
+        
         if (this.props.links.length > 0) {
             return (
                 <div>
@@ -18,9 +19,10 @@ console.log(this.props.links)
                             .props
                             .links
                             .map((l, i) => <Item key={i}>
-                               
-                                   {l}
-                               
+                                
+
+                                    <FeedLink key={i} link={l}/>
+                                
                             </Item>)}
                     </Item.Group>
 
