@@ -10,7 +10,7 @@ import * as Actions from '../../actions/Actions';
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import Dimmer from 'semantic-ui-react/dist/commonjs/modules/Dimmer';
-import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment';
+
 class FeedLink extends React.Component {
     state = {
         active: false,

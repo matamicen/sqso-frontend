@@ -12,15 +12,14 @@ import Form from 'semantic-ui-react/dist/commonjs/collections/Form'
 import Message from 'semantic-ui-react/dist/commonjs/collections/Message'
 import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid'
 import Auth from '@aws-amplify/auth';
-
-// const userPool = new CognitoUserPool({UserPoolId: appConfig.UserPoolId,
-// ClientId: appConfig.ClientId});
+import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
 
 export class SignUp extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            showModal: false,
             email: '',
             password: '',
             passwordConfirm: null,
@@ -84,6 +83,7 @@ export class SignUp extends React.Component {
 
         this.setState({cognitoUser: result.user.username});
         this.setState({userCreated: true});
+        this.setState({showModal: true})
 
     }
 
@@ -228,47 +228,16 @@ export class SignUp extends React.Component {
         });
 
     }
-
+    handleOnOpenModal() {
+        this.setState({showModal: true})
+    }
+    handleOnCloseModal() {
+        this.setState({showModal: false})
+    }
     render() {
         if (this.state.userConfirmed) {
             return (<Redirect to="/login"/>)
-        }
-        if (this.state.userCreated) {
-            return (
-                <Grid
-                    textAlign='center'
-                    style={{
-                    height: '100%'
-                }}
-                    verticalAlign='middle'>
-                    <Grid.Column
-                        style={{
-                        maxWidth: 450
-                    }}>
-                        <Header as='h2' color='teal' textAlign='center'>
-                            Confirmation Code
-                        </Header>
-                        <Form
-                            onSubmit={this
-                            .handleOnConfirm
-                            .bind(this)}>
-                            <Form.Field>
-
-                                <Form.Input
-                                    fluid
-                                    placeholder='Confirmation Code'
-                                    name='Code'
-                                    onChange={this
-                                    .handleCodeChange
-                                    .bind(this)}/>
-                            </Form.Field>
-                            {this.state.confirmError && <Message negative content={this.state.confirmError}/>}
-                            <Form.Button content='Confirm Code'/>
-                        </Form>
-                    </Grid.Column>
-                </Grid>
-            )
-        }
+        };
         return (
             <Grid
                 textAlign='center'
@@ -305,10 +274,10 @@ export class SignUp extends React.Component {
                                     style={{
                                     'textTransform': 'uppercase'
                                 }}/> {this.state.formErrors.qra && <Message negative content={this.state.formErrors.qra}/>}
-                            </Form.Field>                            
+                            </Form.Field>
                             <Form.Field>
                                 <Form.Input
-                                    fluid                                    
+                                    fluid
                                     iconPosition='left'
                                     placeholder='First Name'
                                     error={this.state.formErrors.firstname
@@ -324,7 +293,7 @@ export class SignUp extends React.Component {
                             </Form.Field>
                             <Form.Field>
                                 <Form.Input
-                                    fluid                                    
+                                    fluid
                                     iconPosition='left'
                                     placeholder='Last Name'
                                     error={this.state.formErrors.lastname
@@ -368,7 +337,7 @@ export class SignUp extends React.Component {
                                     .bind(this)}/> {this.state.formErrors.birthdate && <Message negative content={this.state.formErrors.birthdate}/>}
                             </Form.Field>
                             <Form.Field>
-                                <Form.Input                                    
+                                <Form.Input
                                     fluid
                                     icon='world'
                                     iconPosition='left'
@@ -413,15 +382,60 @@ export class SignUp extends React.Component {
                             </Form.Field>
 
                             {this.state.signupError && <Message negative content={this.state.signupError}/>}
+                            
+                            <Modal
+                                basic
+                                closeIcon
+                                open={this.state.showModal}
+                                onClose={this
+                                .handleOnCloseModal
+                                .bind(this)}
+                                trigger={< Button content = 'SignUp' />}>
+                                <Modal.Content>
 
-                            <Button content='SignUp'/>
+                                    <Modal.Description>
+
+                                        <Grid
+                                            textAlign='center'
+                                            style={{
+                                            height: '100%'
+                                        }}
+                                            verticalAlign='middle'>
+                                            <Grid.Column
+                                                style={{
+                                                maxWidth: 450
+                                            }}>
+                                                <Header as='h2' color='teal' textAlign='center'>
+                                                    Confirmation Code
+                                                </Header>
+                                                <Form
+                                                    onSubmit={this
+                                                    .handleOnConfirm
+                                                    .bind(this)}>
+                                                    <Form.Field>
+
+                                                        <Form.Input
+                                                            fluid
+                                                            placeholder='Confirmation Code'
+                                                            name='Code'
+                                                            onChange={this
+                                                            .handleCodeChange
+                                                            .bind(this)}/>
+                                                    </Form.Field>
+                                                    {this.state.confirmError && <Message negative content={this.state.confirmError}/>}
+                                                    <Form.Button content='Confirm Code'/>
+                                                </Form>
+                                            </Grid.Column>
+                                        </Grid>
+                                    </Modal.Description>
+                                </Modal.Content>
+                            </Modal>
+
                         </Segment>
                     </Form>
 
                 </Grid.Column>
             </Grid>
-
         );
-
     }
 }
