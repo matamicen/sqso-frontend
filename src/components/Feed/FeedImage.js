@@ -15,7 +15,7 @@ class FeedImage extends React.Component {
 
         var height = '60vh';
         var onLoad = null;
-        console.log(window.innerWidth)
+        
         let elWidth;
         if (navigator.maxTouchPoints > 0) {
             elWidth = window.innerWidth - 60
