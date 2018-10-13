@@ -31,7 +31,7 @@ class UserDashboard extends React.PureComponent {
 
                     <Grid.Column  
                         style={{ 
-                        width: '700px', 
+                        width: '500px', 
                         marginLeft: '30px', 
                         // marginRight: '-5px',
                         flexShrink: '0'}}>

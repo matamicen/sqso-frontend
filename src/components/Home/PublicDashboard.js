@@ -25,7 +25,7 @@ class PublicDashboard extends React.Component {
 
                     <Grid.Column  
                         style={{ 
-                        width: '700px', 
+                        width: '600px', 
                         marginLeft: '30px', 
                         // marginRight: '-5px',
                         flexShrink: '0'}}>
