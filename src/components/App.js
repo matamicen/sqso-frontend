@@ -7,6 +7,7 @@ import Home from "./Home/Home";
 import {SignUp} from "./Auth/SignUp";
 import Logout from "./Auth/Logout";
 import LogIn from "./Auth/LogIn";
+import ForgotPassword from './Auth/ForgotPassword'
 import AppNavigation from "./Home/AppNavigation";
 // import AWS from "aws-sdk";
 
@@ -98,6 +99,7 @@ class App extends Component {
                         <Route exact path="/signup" component={SignUp}/>
                         <Route exact path="/login" component={() => <LogIn/>}/>
                         <Route exact path="/logout" component={() => <Logout/>}/>
+                        <Route exact path="/forgot" component={() => <ForgotPassword/>}/>
                         <Route exact path="/:qra" component={() => <QRAProfileContainer/>}/>
                         <Route exact path="/qso/:idqso" component={() => <QSODetail/>}/>
                     </Switch>

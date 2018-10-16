@@ -136,6 +136,10 @@ class LogIn extends React.Component {
                             New to us?
                             <Link to='/signup'>{' '}Sign Up</Link>
                         </Message>
+                        <Message>
+                            Forgot Password?
+                            <Link to='/forgot'>{' '}Change Password</Link>
+                        </Message>
                     </Grid.Column>
                 </Grid>
 
