@@ -77,7 +77,7 @@ class FeedItem extends React.Component {
                     <Feed.Label>
                         <Link to={"/" + this.props.qso.qra}>
                             <Image
-                                src={this.props.qso.profilepic}
+                                src={this.props.qso.avatarpic}
                                 size='mini'
                                 avatar
                                 style={{width: '35px',
@@ -98,7 +98,7 @@ class FeedItem extends React.Component {
                     <Feed.Content>
                         <Divider hidden/>
                         <QRAs
-                            profilepic={this.props.qso.profilepic}
+                            avatarpic={this.props.qso.avatarpic}
                             qso_owner={this.props.qso.qra}
                             qras={this.props.qso.qras}/>
                         <Divider hidden/>

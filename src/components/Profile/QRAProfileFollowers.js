@@ -12,7 +12,7 @@ const QRAProfileFollowers = (props) => {
                 {props.followers ?
                     props.followers.map((qra, i) =>
                         <List.Item key={qra.qra}>
-                            {qra.profilepic ? <Image avatar src={qra.profilepic}/> : ""}
+                            {qra.avatarpic ? <Image avatar src={qra.avatarpic}/> : ""}
 
                             <List.Content>
                                 <List.Header><Link to={"/" + qra.qra}> {qra.qra}</Link></List.Header>

@@ -26,6 +26,7 @@ const initialState = {
         following: [],
         followers: [],
         profilepic: null,
+        avatarpic: null,
         fetchingUser: false,
         userFetched: false
     },
@@ -109,6 +110,7 @@ export default(state = initialState, action) => {
                 following: action.following,
                 followers: action.followers,
                 profilepic: action.profilepic,
+                avatarpic: action.avatarpic,
                 fetchingUser: action.fetchingUser,
                 userFetched: action.userFetched
             };

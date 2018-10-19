@@ -22,7 +22,7 @@ class AuthenticatedNavigation extends React.Component {
         
         return (
             
-            <Menu fixed='top' stackable>
+            <Menu fixed='top'>
                 <Menu.Item>
                     <Link to='/'>
                         SuperQSO

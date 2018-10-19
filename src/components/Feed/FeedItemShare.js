@@ -117,7 +117,7 @@ class FeedItemShare extends React.Component {
                                 <Label>GUID:
                                 </Label>{this.props.qso.original.GUID_URL}
                                 <QRAs
-                                    profilepic={this.props.qso.original.profilepic}
+                                    avatarpic={this.props.qso.original.avatarpic}
                                     qso_owner={this.props.qso.original.qra}
                                     qras={this.props.qso.qras}/>
                             </Feed.Extra>

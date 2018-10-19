@@ -23,7 +23,7 @@ export default class QRA extends React.Component {
                         style={{
                              width: '100%'
                         }}
-                        src={this.props.profilepic}
+                        src={this.props.avatarpic}
                         size='mini'
                         />
                     </div>

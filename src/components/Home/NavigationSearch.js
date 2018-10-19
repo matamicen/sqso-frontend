@@ -42,8 +42,6 @@ class NavigationSearch extends Component {
         if (window.innerWidth <= 380){
             custWidth =  "137px" 
         }
-        console.log(window.innerWidth)
-        console.log(custWidth)
         return (
             <div style={{width: custWidth}}>
                 <AsyncComponent multi={false}

@@ -25,7 +25,7 @@ export default class QRAs extends React.Component {
                         alignItems: 'center',
                         justifyContent: 'center'
                     }}>
-                        <QRA key={i} profilepic={qra.profilepic} qra={qra.qra}/>
+                        <QRA key={i} avatarpic={qra.avatarpic} qra={qra.qra}/>
                     </div>)}
 
             </Slider>

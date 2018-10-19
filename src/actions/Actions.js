@@ -121,12 +121,13 @@ export function doRequestUserInfo() {
     return {type: REQUEST_USERINFO, fetchingUser: true, userFetched: false}
 }
 
-export function doReceiveUserInfo(followers = null, following = null, profilepic = null) {
+export function doReceiveUserInfo(followers = null, following = null, profilepic = null, avatarpic = null) {
     return {
         type: RECEIVE_USERINFO,
         followers: followers,
         following: following,
         profilepic: profilepic,
+        avatarpic: avatarpic,
         fetchingUser: false,
         userFetched: true
     }
@@ -208,9 +209,9 @@ export function doFetchUserInfo(token) {
         API
             .get(apiName, path, myInit)
             .then(response => {
-
+                console.log(response.body)
                 if (response.body.error === 0) {
-                    dispatch(doReceiveUserInfo(response.body.message.followers, response.body.message.following, response.body.message.profilepic));
+                    dispatch(doReceiveUserInfo(response.body.message.followers, response.body.message.following, response.body.message.qra.profilepic, response.body.message.qra.avatarpic));
                 }
             })
             .catch(error => {
