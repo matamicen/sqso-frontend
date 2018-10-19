@@ -41,13 +41,7 @@ class FeedAudio extends React.Component {
 
                         < audio ref="audio_tag" src={this.props.media.url} controls autoPlay preload="none" controlsList="nodownload"/>
 
-                        <div
-                            style={{
-                            float: 'right'
-                        }}>
-                                 
-                            {/* <FeedOptionsMenu idqsos_media={this.props.media.idqsos_media} qso_owner={this.props.qso_owner} idqso={this.props.media.idqso} optionsCaller="FeedAudio"/>                                                    */}
-                      </div>
+                       
                     </div>
                 )
             }

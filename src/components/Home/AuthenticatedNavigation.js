@@ -21,7 +21,7 @@ class AuthenticatedNavigation extends React.Component {
     render() {
         
         return (
-            <div>
+            
             <Menu fixed='top'>
                 <Menu.Item>
                     <Link to='/'>
@@ -47,7 +47,7 @@ class AuthenticatedNavigation extends React.Component {
                 </Menu.Menu>
 
             </Menu>
-            </div>
+            
         );
     }
 };

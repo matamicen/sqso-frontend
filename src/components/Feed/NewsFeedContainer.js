@@ -9,7 +9,7 @@ import * as Actions from '../../actions/Actions';
 import 'react-virtualized/styles.css'; // only needs to be imported once
 import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
 import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
-
+import "./style.css";
 class NewsFeedContainer extends React.Component {
 
     state = {
@@ -38,7 +38,6 @@ class NewsFeedContainer extends React.Component {
 
     render() {
 
-
         let qsos = []
 
         if (this.props.qsos && this.props.qsos.length > 0) {
@@ -58,27 +57,25 @@ class NewsFeedContainer extends React.Component {
                 })
         }
 
-        
         return (
             <div>
-
-                <Dimmer active={this.state.active} page>
+                {!this.props.qsos && <Dimmer active={this.state.active} page>
                     <Loader>Loading</Loader>
-                </Dimmer>
-                {this.props.qsos && this.props.qsos.length > 0 && <NewsFeed list={qsos}/>
-}
+        </Dimmer> }
+                {this.props.qsos && this.props.qsos.length > 0 && <NewsFeed list={qsos}/>}
             </div>
         )
     }
 }
 
 const mapStateToProps = (state) => ({
-    qsos: state.default.qsos, 
-    FetchingQSOS: state.default.FetchingQSOS, 
-    qsosFetched: state.default.qsosFetched, 
-    autheticating: state.default.userData.autheticating, 
-    isAuthenticated: state.default.userData.isAuthenticated, 
-    token: state.default.userData.token});
+    qsos: state.default.qsos,
+    FetchingQSOS: state.default.FetchingQSOS,
+    qsosFetched: state.default.qsosFetched,
+    autheticating: state.default.userData.autheticating,
+    isAuthenticated: state.default.userData.isAuthenticated,
+    token: state.default.userData.token
+});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 });

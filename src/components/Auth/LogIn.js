@@ -2,7 +2,6 @@ import React from "react";
 
 // ES Modules, e.g. transpiling with Babel
 
-
 import "../../styles/App.css";
 import {Redirect} from "react-router-dom";
 import {Link} from "react-router-dom";
@@ -20,7 +19,6 @@ import "./style.css";
 import Advertisement from 'semantic-ui-react/dist/commonjs/views/Advertisement'
 import AppNavigation from '../Home/AppNavigation'
 
-
 class LogIn extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -35,11 +33,14 @@ class LogIn extends React.Component {
     handleOnClickLogin(e) {
 
         e.preventDefault();
-        this.props.actions.doStartingLogin()
+        this
+            .props
+            .actions
+            .doStartingLogin()
         Auth
             .signIn(this.state.qra, this.state.password)
             .then(user => {
-                
+
                 let token = user.signInUserSession.idToken.jwtToken;
                 this
                     .props
@@ -47,118 +48,122 @@ class LogIn extends React.Component {
                     .doLogin(token, this.state.qra.toUpperCase());
             })
             .catch(err => {
-                
+
                 console.error(err);
                 this.setState({loginError: true});
             });
 
+    }
+
+    handlePasswordChange(e) {
+        this.setState({password: e.target.value});
+    }
+
+    handleQraChange(e) {
+        this.setState({
+            qra: e
+                .target
+                .value
+                .toUpperCase()
+        })
+
+    }
+
+    render() {
+        if (this.props.isAuthenticated) {
+            return <Redirect to="/"/>
         }
 
-        handlePasswordChange(e) {
-            this.setState({password: e.target.value});
-        }
-
-        handleQraChange(e) {
-            this.setState({qra: e.target.value.toUpperCase()})
-
-        }
-
-        render() {
-            if (this.props.isAuthenticated) {
-                return <Redirect to="/"/>
-            }
-
-            return (
-                <container>
-                <header>
+        return (
+            <div className='global-container'>
+                <div className='site-header'>
                     <AppNavigation/>
-                </header>
-                <left>
+                </div>
+                <div className='site-left'>
                     <Advertisement className="left" unit='wide skyscraper' test='Wide Skyscraper'/>
-                </left>
+                </div>
 
-                <main >
-                <Grid
-                    textAlign='center'
-                    style={{
-                    height: '100%'
-                }}
-                    verticalAlign='middle'>
-                    <Grid.Column
+                <div className='site-main'>
+                    <Grid
+                        textAlign='center'
                         style={{
-                        maxWidth: 450
-                    }}>
-                        <Header as='h2' color='teal' textAlign='center'>
-                            Sign-in to your account
-                        </Header>
-                        <Form
-                            size='large'
-                            onSubmit={this
-                            .handleOnClickLogin
-                            .bind(this)}>
-                            <Segment stacked>
-                                <Form.Field>
-                                    <Form.Input
-                                        fluid
-                                        icon='user'
-                                        iconPosition='left'
-                                        placeholder='QRA'
-                                        error={this.state.loginError}
-                                        name='QRA'
-                                        value={this.state.qra}
-                                        onChange={this
-                                        .handleQraChange
-                                        .bind(this)}
-                                        style={{
-                                        'textTransform': 'uppercase'
-                                    }}/>
-                                </Form.Field>
-                                <Form.Field>
+                        height: '100%'
+                    }}
+                        verticalAlign='middle'>
+                        <Grid.Column
+                            style={{
+                            maxWidth: 450
+                        }}>
+                            <Header as='h2' color='teal' textAlign='center'>
+                                Sign-in to your account
+                            </Header>
+                            <Form
+                                size='large'
+                                onSubmit={this
+                                .handleOnClickLogin
+                                .bind(this)}>
+                                <Segment stacked>
+                                    <Form.Field>
+                                        <Form.Input
+                                            fluid
+                                            icon='user'
+                                            iconPosition='left'
+                                            placeholder='QRA'
+                                            error={this.state.loginError}
+                                            name='QRA'
+                                            value={this.state.qra}
+                                            onChange={this
+                                            .handleQraChange
+                                            .bind(this)}
+                                            style={{
+                                            'textTransform': 'uppercase'
+                                        }}/>
+                                    </Form.Field>
+                                    <Form.Field>
 
-                                    <Form.Input
-                                        fluid
-                                        icon='lock'
-                                        iconPosition='left'
-                                        type='password'
-                                        error={this.state.loginError}
-                                        placeholder='Password'
-                                        name='password'
-                                        onChange={this
-                                        .handlePasswordChange
-                                        .bind(this)}/>
+                                        <Form.Input
+                                            fluid
+                                            icon='lock'
+                                            iconPosition='left'
+                                            type='password'
+                                            error={this.state.loginError}
+                                            placeholder='Password'
+                                            name='password'
+                                            onChange={this
+                                            .handlePasswordChange
+                                            .bind(this)}/>
 
-                                </Form.Field>
+                                    </Form.Field>
 
-                                {this.state.loginError && <Message>
-                                    <Message.List>
-                                        <Message.Item>User or Password invalid</Message.Item>
-                                    </Message.List>
-                                </Message>}
-                                <Button content='SignIn'/>
-                            </Segment>
-                        </Form>
-                        <Message>
-                            New to us?
-                            <Link to='/signup'>{' '}Sign Up</Link>
-                        </Message>
-                        <Message>
-                            Forgot Password?
-                            <Link to='/forgot'>{' '}Change Password</Link>
-                        </Message>
-                    </Grid.Column>
-                </Grid>
-                </main>
+                                    {this.state.loginError && <Message>
+                                        <Message.List>
+                                            <Message.Item>User or Password invalid</Message.Item>
+                                        </Message.List>
+                                    </Message>}
+                                    <Button content='SignIn'/>
+                                </Segment>
+                            </Form>
+                            <Message>
+                                New to us?
+                                <Link to='/signup'>{' '}Sign Up</Link>
+                            </Message>
+                            <Message>
+                                Forgot Password?
+                                <Link to='/forgot'>{' '}Change Password</Link>
+                            </Message>
+                        </Grid.Column>
+                    </Grid>
+                </div>
 
-                <right>
+                <div className='site-right'>
                     <Advertisement unit='wide skyscraper' test='Wide Skyscraper'/>
-                </right>
+                </div>
 
-            </container>
-               
+            </div>
 
-            );
+        );
 
-        }
+    }
 }
 
 const mapStateToProps = (state) => ({isAuthenticated: state.default.userData.isAuthenticated});

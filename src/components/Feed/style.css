@@ -1,0 +1,14 @@
+.feed-container{
+    display: grid;
+    grid-template-columns:  100%;
+    /* grid-gap: 1em; */
+    grid-template-rows: auto;
+
+        justify-content: space-evenly   ;    
+}
+
+
+
+.feed-item-comments{
+    overflow: 'visible';
+}

@@ -4,26 +4,25 @@ import AppNavigation from './AppNavigation'
 import FeedQSO from "../Feed/NewsFeedContainer";
 import "./style.css";
 
+
 const Home = (props) => (
-               <container>
-                <header>
-                    <AppNavigation/>
-                </header>
-                <left>
-                    <Advertisement className="left" unit='wide skyscraper' test='Wide Skyscraper'/>
-                </left>
+    <div className='global-container'>
+        <div className='site-header'>
+            <AppNavigation/>
+        </div>
+        <div className='site-left'>
+            <Advertisement className="left" unit='wide skyscraper' test='Wide Skyscraper'/>
+        </div>
 
-                <main >
-                    < FeedQSO/>
-                </main>
+        <div className='site-main'>
+            <FeedQSO/>
+        </div>
 
-                <right>
-                    <Advertisement unit='wide skyscraper' test='Wide Skyscraper'/>
-                </right>
+        <div className='site-right'>
+            <Advertisement unit='wide skyscraper' test='Wide Skyscraper'/>
+        </div>
 
-            </container>
+    </div>
 
 );
 export default Home
-
-

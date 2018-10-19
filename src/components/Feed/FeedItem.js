@@ -24,7 +24,7 @@ import Image from "semantic-ui-react/dist/commonjs/elements/Image";
 import {Link} from 'react-router-dom'
 import FeedOptionsMenu from "./FeedOptionsMenu";
 import QSORePostButton from "./QSORePostButton";
-
+import "./style.css";
 class FeedItem extends React.Component {
     constructor() {
         super();
@@ -38,7 +38,7 @@ class FeedItem extends React.Component {
             .recalculateRowHeight
             .bind(this);
     }
-    // componentDidMount(){     this.recalculateRowHeight(this.props.index) }
+
     shouldComponentUpdate(nextProps) {
 
         return this.props.qsosFetched;
@@ -69,10 +69,10 @@ class FeedItem extends React.Component {
             .media
             .filter((media) => media.type === 'audio');
         const commentsCounter = '(' + this.props.qso.comments.length + ')'
-        
-        return (
-            <Segment raised>
 
+        return (
+
+            <Segment raised>
                 <Feed.Event>
                     <Feed.Label>
                         <Link to={"/" + this.props.qso.qra}>
@@ -80,16 +80,11 @@ class FeedItem extends React.Component {
                                 src={this.props.qso.profilepic}
                                 size='mini'
                                 avatar
-                                style={{
-                                width: '35px',
-                                height: '35px'
-                            }}/> {this.props.qso.qra}
+                                style={{width: '35px',
+                                height: '35px'}}/> {this.props.qso.qra}
                         </Link>
                         {'  '}worked a QSO with
-                        <div
-                            style={{
-                            float: 'right'
-                        }}>
+                        <div style={{float: 'right'}}>
 
                             <FeedOptionsMenu
                                 qso_owner={this.props.qso.qra}
@@ -129,7 +124,7 @@ class FeedItem extends React.Component {
                             idqso={this.props.qso.idqsos}
                             qso_owner={this.props.qso.qra}/>
 }
-                        
+
                         {this.props.qso.links && <FeedLinkList links={this.props.qso.links}/>}
 
                         <Feed.Extra>
@@ -149,10 +144,7 @@ class FeedItem extends React.Component {
 
                         </Feed.Extra>
                         <Feed.Extra>
-                            <div
-                                style={{
-                                overflow: 'visible'
-                            }}>
+                            <div className="feed-item-comments">
                                 {this.state.showComment && <QSOComments
                                     qso={this.props.qso}
                                     recalculateRowHeight={this.recalculateRowHeight}/>}
@@ -162,12 +154,11 @@ class FeedItem extends React.Component {
                 </Feed.Event>
 
             </Segment>
+
         )
     }
 }
-const mapStateToProps = (state, qsos) => ({fetchingQSOS: state.default.FetchingQSOS, 
-    qsosFetched: state.default.qsosFetched, 
-    currentQRA: state.default.userData.qra});
+const mapStateToProps = (state, qsos) => ({fetchingQSOS: state.default.FetchingQSOS, qsosFetched: state.default.qsosFetched, currentQRA: state.default.userData.qra});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 });

@@ -1,66 +1,84 @@
-container{
+.global-container{
     display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
-    grid-gap: 1em;
+    grid-template-columns:  160px 570px 160px;
+    /* grid-gap: 1em; */
     grid-template-rows: 60px auto;
     grid-template-areas:
-        "pageHeader pageHeader pageHeader "
+        "pageHeader pageHeader pageHeader"
         "leftSection mainSection rightSection";
-        justify-content: space-evenly;
+        justify-content: space-evenly   ;    
 }
 
-header{
-    /*grid-column: span 6;*/
+.site-header{    
     grid-area: pageHeader;    
-    
+    position: fixed;
     /* grid-column: 1 / 4;
     grid-row: 1; */
     z-index: 1;
     
 }
 
-main{
+.site-main{
     /*grid-column: span 4;*/
     grid-area: mainSection;
     /* grid-column: 2;
     grid-row: 2; */
     
-    
+    max-width: 570px;
 }
-
-left{
+.site-left{
     
     grid-area: leftSection;    
-    /* grid-column: 1;
-    grid-row: 2;     */
-    justify-self: center;
+
+    
     position: sticky;
-    top: 70px;
+    top: 60px;
     left: 0;
     height: 100vh;
 
 }
 
 
-right{
+.site-right{
     
     grid-area: rightSection;
     /* grid-column: 3;
     grid-row: 2; */
-    justify-self: center;
+  
     position: sticky;
-    top: 70px;
+    top: 60px;
     left: 0;
     height: 100vh;
 }
 
-@media only screen and (max-width: 700px) {
-	container {
-		grid-template-areas: "pageHeader"
-		                     "mainSection";
-		                    
-		grid-template-columns: 100%;
+@media (max-width: 910px){
+    .global-container{
+        grid-template-columns: repeat(1, 100%);
         grid-template-rows: 60px auto;
-	}
+        grid-template-areas:
+        "pageHeader"
+        "mainSection";
+        justify-content: space-between;
+    }
+    .site-header{
+        grid-area: pageHeader;    
+        position: fixed;
+        width: 100%
+    }
+    .site-main{
+        /*grid-column: span 4;*/
+        grid-area: mainSection;
+        /* grid-column: 2;
+        grid-row: 2; */
+        
+        max-width: 570px;
+    }
+    .site-left{
+        display: none;
+    }
+    .site-right{
+        display: none;
+    }
 }
+
 

@@ -240,14 +240,15 @@ export class SignUp extends React.Component {
             return (<Redirect to="/login"/>)
         };
         return (
-            <container>
-                <header>
+            <div className='global-container'>
+                <div className='site-header'>
                     <AppNavigation/>
-                </header>
-                <left>
+                </div>
+                <div className='site-left'>
                     <Advertisement className="left" unit='wide skyscraper' test='Wide Skyscraper'/>
-                </left>
-                < main >
+                </div>
+
+                <div className='site-main'>
                     <Grid
                         textAlign='center'
                         style={{
@@ -446,12 +447,13 @@ export class SignUp extends React.Component {
 
                         </Grid.Column>
                     </Grid>
-                </main>
+                </div>
 
-                <right>
+                <div className='site-right'>
                     <Advertisement unit='wide skyscraper' test='Wide Skyscraper'/>
-                </right>
-            </container>
+                </div>
+
+            </div>
         );
     }
 }

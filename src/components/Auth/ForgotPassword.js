@@ -168,15 +168,15 @@ export default class ForgotPassword extends React.Component {
             return (<Redirect to="/login"/>)
         };
         return (
-            <container>
-                <header>
+            <div className='global-container'>
+                <div className='site-header'>
                     <AppNavigation/>
-                </header>
-                <left>
+                </div>
+                <div className='site-left'>
                     <Advertisement className="left" unit='wide skyscraper' test='Wide Skyscraper'/>
-                </left>
+                </div>
 
-                <main >
+                <div className='site-main'>
 
                     <Grid
                         textAlign='center'
@@ -301,13 +301,13 @@ export default class ForgotPassword extends React.Component {
 
                         </Grid.Column>
                     </Grid>
-                </main>
+                </div>
 
-                <right>
+                <div className='site-right'>
                     <Advertisement unit='wide skyscraper' test='Wide Skyscraper'/>
-                </right>
+                </div>
 
-            </container>
+            </div>
         );
     }
 }

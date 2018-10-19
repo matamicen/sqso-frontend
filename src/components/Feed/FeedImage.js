@@ -17,12 +17,11 @@ class FeedImage extends React.Component {
         var onLoad = null;
         
         let elWidth;
-        if (navigator.maxTouchPoints > 0) {
-            elWidth = window.innerWidth - 60
+        if (window.innerWidth < 542) {
+            elWidth = window.innerWidth - 30
         } else {
             elWidth = 542
         }
-
         if (this.props.img[0].width > 0) {
 
             let ratio = elWidth / this.props.img[0].width;
@@ -32,8 +31,7 @@ class FeedImage extends React.Component {
             height = height + 'px';
             elWidth = elWidth + 'px';
         } else {
-            height = 'auto';
-            // elWidth = null;
+            height = 'auto';            
             onLoad = this.props.measure;
         }
 
@@ -45,11 +43,11 @@ class FeedImage extends React.Component {
                     width: elWidth,
                     height: height
                 }}>
-
                     <Modal
                         closeIcon
                         trigger=
-                        { <Image centered src = { this.props.img[0].url } onLoad = { onLoad } onClick={this.handleOpenModal} style={{ width: elWidth, height: height, marginTop: '1vh', marginLeft: 0, marginRight: 0 }} />}>
+                        { 
+                            <Image centered src = { this.props.img[0].url } onLoad = { onLoad } onClick={this.handleOpenModal} style={{ width: elWidth, height: height, marginTop: '1vh', marginLeft: 0, marginRight: 0 }} />}>
 
                         <Modal.Content image scrolling>
                             <Modal.Description>
@@ -73,7 +71,7 @@ class FeedImage extends React.Component {
                                             centered
                                             src={m.url}
                                             style={{
-                                            maxWidth: '750px',
+                                            maxWidth: elWidth,
                                             height: 'auto'
                                         }}/>
 
