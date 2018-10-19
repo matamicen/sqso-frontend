@@ -5,13 +5,12 @@ import {Route, Switch, withRouter} from "react-router-dom";
 import "../styles/App.css";
 import Home from "./Home/Home";
 import {SignUp} from "./Auth/SignUp";
-import Logout from "./Auth/Logout";
+
 import LogIn from "./Auth/LogIn";
 import ForgotPassword from './Auth/ForgotPassword'
-import AppNavigation from "./Home/AppNavigation";
-// import AWS from "aws-sdk";
 
-import Container from 'semantic-ui-react/dist/commonjs/elements/Container'
+
+
 import QRAProfileContainer from "./Profile/QRAProfileContainer";
 import QSODetail from "./QSODetail"
 import {connect} from 'react-redux'
@@ -21,7 +20,6 @@ import * as Actions from '../actions/Actions';
 import aws_exports from '../aws-exports';
 import Amplify from '@aws-amplify/core';
 import Auth from '@aws-amplify/auth';
-
 
 // if (process.env.NODE_ENV !== 'production') {     const {whyDidYouUpdate} =
 // require('why-did-you-update')     whyDidYouUpdate(React)   }
@@ -36,21 +34,20 @@ class App extends Component {
         };
     }
     loadAuthenticatedUser() {
-        
+
         Auth
             .currentSession()
             .then(function (session) {
-                
+
                 Auth
                     .currentAuthenticatedUser()
                     .then(async function (user) {
-                        
+
                         await this
                             .props
                             .actions
                             .doLogin(session.idToken.jwtToken, user.username.toUpperCase());
                         await this.setState({loginValidated: true});
-                        
 
                     }.bind(this), async function (err) {
                         console.log(err)
@@ -63,8 +60,7 @@ class App extends Component {
                         return;
                     }.bind(this));
             }.bind(this), function (err) {
-                
-            
+
                 this
                     .props
                     .actions
@@ -81,29 +77,20 @@ class App extends Component {
     }
 
     render() {
-       
-        
+
         if (!this.state.loginValidated) 
             return null;
         
         return (
             <div >
-                <AppNavigation/>
-                <Container
-                    fluid
-                    style={{
-                    marginTop: '5em'
-                }}>
-                    <Switch>
-                        <Route exact path="/" component={() => <Home/>}/>
-                        <Route exact path="/signup" component={SignUp}/>
-                        <Route exact path="/login" component={() => <LogIn/>}/>
-                        <Route exact path="/logout" component={() => <Logout/>}/>
-                        <Route exact path="/forgot" component={() => <ForgotPassword/>}/>
-                        <Route exact path="/:qra" component={() => <QRAProfileContainer/>}/>
-                        <Route exact path="/qso/:idqso" component={() => <QSODetail/>}/>
-                    </Switch>
-                </Container>
+                <Switch>
+                    <Route exact path="/" component={() => <Home/>}/>
+                    <Route exact path="/signup" component={SignUp}/>
+                    <Route exact path="/login" component={() => <LogIn/>}/>                    
+                    <Route exact path="/forgot" component={() => <ForgotPassword/>}/>
+                    <Route exact path="/:qra" component={() => <QRAProfileContainer/>}/>
+                    <Route exact path="/qso/:idqso" component={() => <QSODetail/>}/>
+                </Switch>
 
             </div>
 

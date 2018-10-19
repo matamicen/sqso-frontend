@@ -1,5 +1,6 @@
 import API from '@aws-amplify/api';
 import ReactGA from 'react-ga';
+export const PREPARE_LOGIN = 'PREPARE_LOGIN';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const REQUEST_FEED = 'REQUEST_FEED';
@@ -130,7 +131,11 @@ export function doReceiveUserInfo(followers = null, following = null, profilepic
         userFetched: true
     }
 }
-
+export function doStartingLogin(){
+    return {
+        type: PREPARE_LOGIN
+    }
+}
 export function doLogin(token, qra) {
     ReactGA.set({ userId: qra })
     ReactGA.event({

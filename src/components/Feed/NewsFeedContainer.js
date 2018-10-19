@@ -21,11 +21,10 @@ class NewsFeedContainer extends React.Component {
         if (nextProps.qsosFetched) {
             this.setState({active: false})
         }
-    }
-    componentDidMount() {
-        if (!this.props.FetchingQSOS && !this.props.qsosFetched) {
+
+        if (!nextProps.FetchingQSOS && !nextProps.qsosFetched && !nextProps.autheticating) {
             //  this.setState({fetchingData: true});
-            this.props.isAuthenticated
+            nextProps.isAuthenticated
                 ? this
                     .props
                     .actions
@@ -37,14 +36,9 @@ class NewsFeedContainer extends React.Component {
         }
     }
 
-    // shouldComponentUpdate(nextProps) {
-    //     return !nextProps.FetchingQSOS && nextProps.qsosFetched;
-    // }
-
     render() {
 
-        // if (this.props.FetchingQSOS || !this.props.qsosFetched ||
-        // this.props.qsos.length === 0)     return null;
+
         let qsos = []
 
         if (this.props.qsos && this.props.qsos.length > 0) {
@@ -63,6 +57,8 @@ class NewsFeedContainer extends React.Component {
                     }
                 })
         }
+
+        
         return (
             <div>
 
@@ -76,7 +72,13 @@ class NewsFeedContainer extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({qsos: state.default.qsos, FetchingQSOS: state.default.FetchingQSOS, qsosFetched: state.default.qsosFetched, isAuthenticated: state.default.userData.isAuthenticated, token: state.default.userData.token});
+const mapStateToProps = (state) => ({
+    qsos: state.default.qsos, 
+    FetchingQSOS: state.default.FetchingQSOS, 
+    qsosFetched: state.default.qsosFetched, 
+    autheticating: state.default.userData.autheticating, 
+    isAuthenticated: state.default.userData.isAuthenticated, 
+    token: state.default.userData.token});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 });

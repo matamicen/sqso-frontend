@@ -56,7 +56,7 @@ class FeedOptionsMenu extends React.PureComponent {
         var canvas = document.createElement('canvas');
         canvg(canvas, svg);
         var imgData = canvas.toDataURL('image/png');
-        console.log(imgData)
+        
         pdf.setFontSize(40)
         pdf.text(35, 25, 'dummy text')
         pdf.addImage(imgData, 'PNG', 40, 40, 75, 75);

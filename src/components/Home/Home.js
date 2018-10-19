@@ -1,30 +1,29 @@
-import React from "react";
-import PublicDashboard from "./PublicDashboard";
-import UserDashboard from "./UserDashboard";
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import * as Actions from '../../actions/Actions';
+import React from 'react'
+import Advertisement from 'semantic-ui-react/dist/commonjs/views/Advertisement'
+import AppNavigation from './AppNavigation'
+import FeedQSO from "../Feed/NewsFeedContainer";
+import "./style.css";
 
-class Home extends React.Component {
-   
+const Home = (props) => (
+               <container>
+                <header>
+                    <AppNavigation/>
+                </header>
+                <left>
+                    <Advertisement className="left" unit='wide skyscraper' test='Wide Skyscraper'/>
+                </left>
 
-    render() {       
-        return (
-            this.props.isAuthenticated ? <UserDashboard/> : <PublicDashboard/>
-        )
-    }
-}
+                <main >
+                    < FeedQSO/>
+                </main>
 
-const mapStateToProps = (state) => ({
-    isAuthenticated: state.default.userData.isAuthenticated    
-});
-const mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators(Actions, dispatch)
-});
+                <right>
+                    <Advertisement unit='wide skyscraper' test='Wide Skyscraper'/>
+                </right>
 
+            </container>
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,  null, { pure: true }
-)(Home);
+);
+export default Home
+
 

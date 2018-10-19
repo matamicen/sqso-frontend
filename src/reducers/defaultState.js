@@ -1,6 +1,7 @@
 import {
     DELETE_MEDIA,
     DELETE_QSO,
+    PREPARE_LOGIN,
     LOGIN,
     LOGOUT,
     RECEIVE_FEED,
@@ -20,6 +21,7 @@ const initialState = {
     userData: {
         token: null,
         qra: null,
+        authenticating: false,
         isAuthenticated: false,
         following: [],
         followers: [],
@@ -177,10 +179,31 @@ export default(state = initialState, action) => {
                 FetchingQSO: true
             });
             return newStore;
+        case PREPARE_LOGIN:
+            let preparelogInUserData = {
+                ...state.userData,
+                token: null,
+                authenticating: false,
+                isAuthenticated: false,
+                qra: null
+
+            };
+            newStore = Object.assign({}, state, {
+                ...state,
+                userData: preparelogInUserData,
+                FetchingQSO: false,
+                qsos: [],
+                qsosFetched: false,
+                FetchingQRA: false,
+                QRAFetched: false
+            });
+
+            return newStore;
         case LOGIN:
             let logInUserData = {
                 ...state.userData,
                 token: action.token,
+                authenticating: true,
                 isAuthenticated: true,
                 qra: action.qra
 
@@ -189,6 +212,7 @@ export default(state = initialState, action) => {
                 ...state,
                 userData: logInUserData,
                 FetchingQSO: false,
+                qsos: [],
                 qsosFetched: false,
                 FetchingQRA: false,
                 QRAFetched: false

@@ -55,7 +55,7 @@ export default class NewsFeed extends React.Component {
     }
 
     _loadMoreRows({startIndex, stopIndex}) {
-        console.log('load more rows', startIndex, stopIndex);
+        // console.log('load more rows', startIndex, stopIndex);
 
     }
 

@@ -6,9 +6,20 @@ import * as Actions from '../../actions/Actions';
 import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown'
 import Menu from 'semantic-ui-react/dist/commonjs/collections/Menu'
 import NavigationSearch from './NavigationSearch'
-
+import Auth from '@aws-amplify/auth';
 class AuthenticatedNavigation extends React.Component {
+    logout() {
+        Auth
+            .signOut()
+            .then(data => this
+                .props
+                .actions
+                .doLogout())
+            .catch(err => console.log(err));
+        
+    }
     render() {
+        
         return (
             <div>
             <Menu fixed='top'>
@@ -25,10 +36,10 @@ class AuthenticatedNavigation extends React.Component {
                         <Dropdown.Menu>
                         <Dropdown.Header content={this.props.currentQRA}/>
                         <Dropdown.Divider/>
-                            <Dropdown.Item>
-                                <Link to='/logout'>
+                            <Dropdown.Item onClick={this.logout.bind(this)}>
+                               
                                     Signout
-                                </Link>
+                               
                             </Dropdown.Item>
 
                         </Dropdown.Menu>

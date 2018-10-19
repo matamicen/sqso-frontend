@@ -16,15 +16,10 @@ import Form from 'semantic-ui-react/dist/commonjs/collections/Form'
 import Message from 'semantic-ui-react/dist/commonjs/collections/Message'
 import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid'
 import Auth from '@aws-amplify/auth';
+import "./style.css";
+import Advertisement from 'semantic-ui-react/dist/commonjs/views/Advertisement'
+import AppNavigation from '../Home/AppNavigation'
 
-
-
-// Amplify.configure(aws_exports);
-
-// var poolData = {
-//     UserPoolId: appConfig.UserPoolId, // Your user pool id here
-//     ClientId: appConfig.ClientId // Your client id here
-// };
 
 class LogIn extends React.Component {
     constructor(props, context) {
@@ -40,6 +35,7 @@ class LogIn extends React.Component {
     handleOnClickLogin(e) {
 
         e.preventDefault();
+        this.props.actions.doStartingLogin()
         Auth
             .signIn(this.state.qra, this.state.password)
             .then(user => {
@@ -73,6 +69,15 @@ class LogIn extends React.Component {
             }
 
             return (
+                <container>
+                <header>
+                    <AppNavigation/>
+                </header>
+                <left>
+                    <Advertisement className="left" unit='wide skyscraper' test='Wide Skyscraper'/>
+                </left>
+
+                <main >
                 <Grid
                     textAlign='center'
                     style={{
@@ -142,6 +147,14 @@ class LogIn extends React.Component {
                         </Message>
                     </Grid.Column>
                 </Grid>
+                </main>
+
+                <right>
+                    <Advertisement unit='wide skyscraper' test='Wide Skyscraper'/>
+                </right>
+
+            </container>
+               
 
             );
 
