@@ -22,13 +22,13 @@ class AuthenticatedNavigation extends React.Component {
         
         return (
             
-            <Menu fixed='top'>
+            <Menu fixed='top' stackable>
                 <Menu.Item>
                     <Link to='/'>
                         SuperQSO
                     </Link>
                 </Menu.Item>
-                <Menu.Item>
+                <Menu.Item >
                     <NavigationSearch/>
                 </Menu.Item>
                 <Menu.Menu position='right'>
@@ -36,10 +36,8 @@ class AuthenticatedNavigation extends React.Component {
                         <Dropdown.Menu>
                         <Dropdown.Header content={this.props.currentQRA}/>
                         <Dropdown.Divider/>
-                            <Dropdown.Item onClick={this.logout.bind(this)}>
-                               
-                                    Signout
-                               
+                            <Dropdown.Item onClick={this.logout.bind(this)}>                               
+                                    Signout                               
                             </Dropdown.Item>
 
                         </Dropdown.Menu>

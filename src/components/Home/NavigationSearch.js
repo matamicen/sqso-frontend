@@ -32,19 +32,20 @@ class NavigationSearch extends Component {
                 });
         }
     }
-    gotoUser(value, event) {
-        
-        window.open('https://github.com/' +value.html_url);
-    }
     render() {
+        let custWidth; 
         if (this.state.value) {
             this.setState({value: null});
             return <Redirect to={"/" + this.state.value.qra}/>
         }
         const AsyncComponent =  Select.Async;
-
+        if (window.innerWidth <= 380){
+            custWidth =  "137px" 
+        }
+        console.log(window.innerWidth)
+        console.log(custWidth)
         return (
-            <div>
+            <div style={{width: custWidth}}>
                 <AsyncComponent multi={false}
                                 value={this.state.value}
                                 onChange={this.onChange.bind(this)}
@@ -55,7 +56,7 @@ class NavigationSearch extends Component {
                                 autoload={false}
                                 autosize={false}
                                 autoclear={true}
-                                //style={{width:  '400px'}}
+                               
                                 backspaceRemoves={true}/>
 
             </div>
