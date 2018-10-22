@@ -82,7 +82,7 @@ export default class NewsFeed extends React.Component {
                             <Grid.Column>
                             <div></div>
                                 {
-                                 row.props.qso.type ==='QSO'    &&                                
+                                 row.props.qso.type !== 'SHARE'    &&                                
                                 <FeedItem
                                     key={key}
                                     qso={row.props.qso}

@@ -47,12 +47,10 @@ class NewsFeedContainer extends React.Component {
                 .qsos
                 .map((qso, i) => {
                     switch (qso.type) {
-                        case "QSO":
-                            return <FeedItem key={i} qso={qso}/>;
                         case "SHARE":
                             return <FeedItemShare key={i} qso={qso}/>;
                         default:
-                            return null;
+                            return <FeedItem key={i} qso={qso}/>;
                     }
                 })
         }
@@ -61,7 +59,7 @@ class NewsFeedContainer extends React.Component {
             <div>
                 {!this.props.qsos && <Dimmer active={this.state.active} page>
                     <Loader>Loading</Loader>
-        </Dimmer> }
+                </Dimmer>}
                 {this.props.qsos && this.props.qsos.length > 0 && <NewsFeed list={qsos}/>}
             </div>
         )

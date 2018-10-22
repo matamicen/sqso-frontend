@@ -69,7 +69,18 @@ class FeedItem extends React.Component {
             .media
             .filter((media) => media.type === 'audio');
         const commentsCounter = '(' + this.props.qso.comments.length + ')'
+        let text;
 
+        switch (this.props.qso.type) {
+            case "QSO":
+                text = ' worked a QSO with';
+                break;
+            case "LISTEN":
+                text = ' listened a QSO with';
+                break;
+            default:
+
+        }
         return (
 
             <Segment raised>
@@ -80,11 +91,16 @@ class FeedItem extends React.Component {
                                 src={this.props.qso.avatarpic}
                                 size='mini'
                                 avatar
-                                style={{width: '35px',
-                                height: '35px'}}/> {this.props.qso.qra}
+                                style={{
+                                width: '35px',
+                                height: '35px'
+                            }}/> {this.props.qso.qra}
                         </Link>
-                        {'  '}worked a QSO with
-                        <div style={{float: 'right'}}>
+                        {text}
+                        <div
+                            style={{
+                            float: 'right'
+                        }}>
 
                             <FeedOptionsMenu
                                 qso_owner={this.props.qso.qra}
