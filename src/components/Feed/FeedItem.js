@@ -90,6 +90,7 @@ class FeedItem extends React.Component {
                                 qso_owner={this.props.qso.qra}
                                 idqso={this.props.qso.idqsos}
                                 guid={this.props.qso.GUID_QR}
+                                qso={this.props.qso}
                                 optionsCaller="FeedItem"/>
 
                         </div>

@@ -11,9 +11,9 @@ import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal'
 import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 import API from '@aws-amplify/api';
-import canvg from 'canvg'
-import jsPDF from 'jspdf';
-import ReactDOMServer from "react-dom/server"
+
+import QslCardPrint from './qslCard';
+
 
 class FeedOptionsMenu extends React.PureComponent {
     state = {
@@ -48,20 +48,8 @@ class FeedOptionsMenu extends React.PureComponent {
             .doDeleteQso(this.props.idqso, this.props.token)
     }
     printQSLCard() {
-        const pdf = new jsPDF();
-        var svg = ReactDOMServer.renderToStaticMarkup(<QRCode renderAs='svg' value={this.props.guid}/>);
-        svg = svg
-          .replace(/\r?\n|\r/g, '')
-          .trim();
-        var canvas = document.createElement('canvas');
-        canvg(canvas, svg);
-        var imgData = canvas.toDataURL('image/png');
-        
-        pdf.setFontSize(40)
-        pdf.text(35, 25, 'dummy text')
-        pdf.addImage(imgData, 'PNG', 40, 40, 75, 75);
-        pdf.save('QSLCard.pdf');
-        //TEST in https://parall.ax/products/jspdf
+    
+       QslCardPrint( this.props );
     }
     handleOnSubmitReportComment(e) {
         var datetime = new Date();
