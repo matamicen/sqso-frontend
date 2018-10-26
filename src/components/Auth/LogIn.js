@@ -14,11 +14,13 @@ import Header from 'semantic-ui-react/dist/commonjs/elements/Header'
 import Form from 'semantic-ui-react/dist/commonjs/collections/Form'
 import Message from 'semantic-ui-react/dist/commonjs/collections/Message'
 import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid'
-import Auth from '@aws-amplify/auth';
+// import Auth from '@aws-amplify/auth';
 import "./style.css";
 import Advertisement from 'semantic-ui-react/dist/commonjs/views/Advertisement'
 import AppNavigation from '../Home/AppNavigation'
+import Amplify from '@aws-amplify/core'
 
+const Auth = Amplify.Auth;
 class LogIn extends React.Component {
     constructor(props, context) {
         super(props, context);
