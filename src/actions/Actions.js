@@ -215,14 +215,6 @@ export function doFetchUserFeed(token) {
             } // OPTIONAL
         }
         API
-            .get(apiName, '/qra-notification', myInit)
-            .then(response => {
-                console.table(response)
-            })
-            .catch(error => {
-                console.log(error.response)
-            });
-        API
             .get(apiName, path, myInit)
             .then(response => {
                 // console.table(response)
