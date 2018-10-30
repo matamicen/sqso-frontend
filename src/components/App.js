@@ -2,7 +2,7 @@ import React, {Component} from "react";
 
 import {Route, Switch, withRouter} from "react-router-dom";
 
-import "../styles/App.css";
+
 import Home from "./Home/Home";
 import {SignUp} from "./Auth/SignUp";
 

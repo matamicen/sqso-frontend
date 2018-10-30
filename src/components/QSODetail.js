@@ -11,7 +11,7 @@ import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
 import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
-import "./style.css";
+import "../styles/style.css";
 class QSODetail extends React.Component {
     state = {
         active: true,
@@ -33,7 +33,7 @@ class QSODetail extends React.Component {
     render() {
 
         return (
-            <div className='getdetail-container'>
+            <div className='qsoDetail-container'>
                 {!this.props.qso && <Dimmer active={this.state.active} page>
                     <Loader>Loading</Loader>
                 </Dimmer>}
@@ -45,20 +45,11 @@ class QSODetail extends React.Component {
                     <Advertisement className="left" unit='wide skyscraper' test='Wide Skyscraper'/>
                 </div>
 
-                <div className='site-main'>
-                    <Grid>
-                        <Grid.Row columns={1}>
-                            <Grid.Column>
-                                <Container fluid>
-                                    <Feed>
-                                    <div></div>
-                                        { this.props.qso && <QSOFeedItem key={this.props.match.params.idqso} qso={this.props.qso}/>
+                <div className='qsoDetail-main'>
+
+                    <div></div>
+                    {this.props.qso && <QSOFeedItem key={this.props.match.params.idqso} qso={this.props.qso}/>
 }
-                                    </Feed>
-                                </Container>
-                            </Grid.Column>
-                        </Grid.Row>
-                    </Grid>
 
                 </div>
 

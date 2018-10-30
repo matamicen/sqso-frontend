@@ -24,7 +24,7 @@ import Image from "semantic-ui-react/dist/commonjs/elements/Image";
 import {Link} from 'react-router-dom'
 import FeedOptionsMenu from "./FeedOptionsMenu";
 import QSORePostButton from "./QSORePostButton";
-import "./style.css";
+
 class FeedItem extends React.Component {
     constructor() {
         super();

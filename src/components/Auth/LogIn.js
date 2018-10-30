@@ -2,7 +2,7 @@ import React from "react";
 
 // ES Modules, e.g. transpiling with Babel
 
-import "../../styles/App.css";
+
 import {Redirect} from "react-router-dom";
 import {Link} from "react-router-dom";
 import {bindActionCreators} from 'redux';

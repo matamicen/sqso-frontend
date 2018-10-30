@@ -7,9 +7,9 @@ import {connect} from 'react-redux'
 import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
 import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
 import Advertisement from 'semantic-ui-react/dist/commonjs/views/Advertisement'
-import Container from 'semantic-ui-react/dist/commonjs/elements/Container'
+
 import AppNavigation from '../Home/AppNavigation'
-import "./style.css";
+import "../../styles/style.css";
 class QRAProfileContainer extends React.Component {
     constructor() {
         super();
