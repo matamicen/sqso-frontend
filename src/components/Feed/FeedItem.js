@@ -88,7 +88,7 @@ class FeedItem extends React.Component {
                     <Feed.Label>
                         <Link to={"/" + this.props.qso.qra}>
                             <Image
-                                src={this.props.qso.avatarpic}
+                                src={this.props.qso.avatarpic + '?' + Date.now()}
                                 size='mini'
                                 avatar
                                 style={{

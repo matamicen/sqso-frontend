@@ -47,7 +47,7 @@ class FeedImage extends React.Component {
                         closeIcon
                         trigger=
                         { 
-                            <Image centered src = { this.props.img[0].url } onLoad = { onLoad } onClick={this.handleOpenModal} style={{ width: elWidth, height: height, marginTop: '1vh', marginLeft: 0, marginRight: 0 }} />}>
+                            <Image centered rounded src = { this.props.img[0].url  + '?' + Date.now() } onLoad = { onLoad } onClick={this.handleOpenModal} style={{ width: elWidth, height: height, marginTop: '1vh', marginLeft: 0, marginRight: 0 }} />}>
 
                         <Modal.Content image scrolling>
                             <Modal.Description>
@@ -69,7 +69,8 @@ class FeedImage extends React.Component {
                                             key={m.idqsos_media}
                                             wrapped
                                             centered
-                                            src={m.url}
+                                            rounded
+                                            src={m.url  + '?' + Date.now()}
                                             style={{
                                             maxWidth: elWidth,
                                             height: 'auto'

@@ -1,41 +1,40 @@
 import React from "react";
-import Label from 'semantic-ui-react/dist/commonjs/elements/Label'
+
 import Image from 'semantic-ui-react/dist/commonjs/elements/Image'
 import {Link} from 'react-router-dom'
+
 
 export default class QRA extends React.Component {
     render() {
 
         return (
 
-            <div
-                style={{
-                width: '55px',
-                height: '65px',
-                display: 'flex'
-            }}>
-                <Link to={"/" + this.props.qra}>
+            <Link to={"/" + this.props.qra}>
+                
                     <div style={{
-                        display: 'flex',
-                        height: '40px',
+                        display: 'grid',
+                        justifyItems: 'center'
                     }}>
-                    <Image
-                        style={{
-                             width: '100%'
-                        }}
-                        src={this.props.avatarpic}
-                        size='mini'
-                        />
+                        <div
+                            style={{
+                            justifySelf: 'center',
+                            width: '60px',
+                            height: '60px'
+                        }}>
+                            <Image
+                               size='medium'
+                                src={this.props.avatarpic + '?' + Date.now()}
+                                circular/>
+                        </div>
+                        <div
+                            style={{
+                            justifySelf: 'center'
+                        }}>
+                            {this.props.qra}</div>
+
                     </div>
-                    <div style={{
-                        display: 'flex'
-                    }} >
-                        <Label>
-                            {this.props.qra}
-                        </Label>
-                    </div>
-                </Link>
-            </div>
+                
+            </Link>
 
         )
     }

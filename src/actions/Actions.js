@@ -17,8 +17,6 @@ export const DELETE_MEDIA = 'DELETE_MEDIA';
 export const DELETE_QSO = 'DELETE_QSO';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 
-
-
 export function doDeleteComment(idcomment = null, idqso = null, token) {
     return (dispatch) => {
         let apiName = 'superqso';
@@ -35,7 +33,7 @@ export function doDeleteComment(idcomment = null, idqso = null, token) {
         API
             .del(apiName, path, myInit)
             .then(response => {
-                response.error === 0  && dispatch(doDeleteCommentResponse(idcomment, idqso));
+                response.error === 0 && dispatch(doDeleteCommentResponse(idcomment, idqso));
             })
             .catch(error => {
                 console.log(error)
@@ -44,10 +42,7 @@ export function doDeleteComment(idcomment = null, idqso = null, token) {
 
 }
 export function doDeleteCommentResponse(idcomment = null, idqso = null) {
-    ReactGA.event({
-        category: 'QSO',
-        action: 'CommentDelete'
-      });
+    ReactGA.event({category: 'QSO', action: 'CommentDelete'});
     return {type: DELETE_COMMENT, idcomment: idcomment, idqso: idqso}
 }
 export function doDeleteQso(idqso = null, token) {
@@ -65,9 +60,9 @@ export function doDeleteQso(idqso = null, token) {
         API
             .del(apiName, path, myInit)
             .then(response => {
-              
+
                 response.error === 0 && dispatch(doDeleteQsoResponse(idqso));
-              
+
             })
             .catch(error => {
                 console.log(error)
@@ -77,10 +72,7 @@ export function doDeleteQso(idqso = null, token) {
 
 export function doDeleteQsoResponse(idqso = null) {
     console.log('doDeleteQsoResponse')
-    ReactGA.event({
-        category: 'QSO',
-        action: 'Delete'
-      });
+    ReactGA.event({category: 'QSO', action: 'Delete'});
     return {type: DELETE_QSO, idqso: idqso}
 }
 
@@ -111,10 +103,7 @@ export function doDeleteMedia(idmedia = null, idqso = null, token) {
 
 }
 export function doDeleteMediaResponse(idmedia = null, idqso = null) {
-    ReactGA.event({
-        category: 'QSO',
-        action: 'MediaDelete'
-      });
+    ReactGA.event({category: 'QSO', action: 'MediaDelete'});
     return {type: DELETE_MEDIA, idmedia: idmedia, idqso: idqso}
 }
 export function doRequestUserInfo() {
@@ -132,17 +121,12 @@ export function doReceiveUserInfo(followers = null, following = null, profilepic
         userFetched: true
     }
 }
-export function doStartingLogin(){
-    return {
-        type: PREPARE_LOGIN
-    }
+export function doStartingLogin() {
+    return {type: PREPARE_LOGIN}
 }
 export function doLogin(token, qra) {
-    ReactGA.set({ userId: qra })
-    ReactGA.event({
-        category: 'User',
-        action: 'Login'
-      });
+    ReactGA.set({userId: qra})
+    ReactGA.event({category: 'User', action: 'Login'});
     return {
         type: LOGIN,
         token: token,
@@ -161,10 +145,7 @@ export function doLogin(token, qra) {
 }
 
 export function doLogout() {
-    ReactGA.event({
-        category: 'User',
-        action: 'Logout'
-      });
+    ReactGA.event({category: 'User', action: 'Logout'});
     return {
         type: LOGOUT,
         qsos: null,
@@ -234,9 +215,18 @@ export function doFetchUserFeed(token) {
             } // OPTIONAL
         }
         API
+            .get(apiName, '/qra-notification', myInit)
+            .then(response => {
+                console.table(response)
+            })
+            .catch(error => {
+                console.log(error.response)
+            });
+        API
             .get(apiName, path, myInit)
             .then(response => {
                 // console.table(response)
+
                 dispatch(doReceiveFeed(response));
                 // Add your code here
             })
@@ -281,11 +271,8 @@ export function doClearQSO() {
 }
 
 export function doFetchQSO(idqso) {
-    ReactGA.set({ qso: idqso })    
-    ReactGA.event({
-        category: 'QSO',
-        action: 'getInfo'
-      });
+    ReactGA.set({qso: idqso})
+    ReactGA.event({category: 'QSO', action: 'getInfo'});
     return (dispatch) => {
         let apiName = 'superqso';
         let path = '/qso-detail';
@@ -300,7 +287,7 @@ export function doFetchQSO(idqso) {
         API
             .post(apiName, path, myInit)
             .then(response => {
-                
+
                 if (response.body.error === 0) {
                     dispatch(doReceiveQSO(response.body.message));
                 }
@@ -312,11 +299,8 @@ export function doFetchQSO(idqso) {
 }
 
 export function doFetchQRA(qra) {
-    ReactGA.set({ qra: qra })    
-    ReactGA.event({
-        category: 'QRA',
-        action: 'getInfo'
-      });
+    ReactGA.set({qra: qra})
+    ReactGA.event({category: 'QRA', action: 'getInfo'});
     return (dispatch) => {
 
         let apiName = 'superqso';
@@ -343,11 +327,8 @@ export function doFetchQRA(qra) {
 }
 
 export function doFollowQRA(token, follower) {
-    ReactGA.set({ follower: follower })    
-    ReactGA.event({
-        category: 'QRA',
-        action: 'follow'
-      });
+    ReactGA.set({follower: follower})
+    ReactGA.event({category: 'QRA', action: 'follow'});
     return (dispatch) => {
         let apiName = 'superqso';
         let path = '/qra-follower';
@@ -377,11 +358,8 @@ export function doFollowQRA(token, follower) {
 }
 
 export function doUnfollowQRA(token, follower) {
-    ReactGA.set({ follower: follower })    
-    ReactGA.event({
-        category: 'QRA',
-        action: 'unfollow'
-      });
+    ReactGA.set({follower: follower})
+    ReactGA.event({category: 'QRA', action: 'unfollow'});
     return (dispatch) => {
         let apiName = 'superqso';
         let path = '/qra-follower';
