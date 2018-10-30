@@ -149,7 +149,7 @@ class FeedOptionsMenu extends React.PureComponent {
             <Dropdown
                 icon='ellipsis vertical'
                 size='tiny'
-                button
+                
                 className='icon'
                 pointing="right">
                 <Dropdown.Menu>
