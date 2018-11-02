@@ -39,19 +39,20 @@ class QRAProfileContainer extends React.Component {
                 .doFetchQRA(this.props.match.params.qra);
         }
 
-        this.setState({
-            followed: this
-                .props
-                .following
-                .some(o => o.qra === this.props.match.params.qra)
-        });
-
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.QRAFetched) {
             this.setState({active: false})
         }
-    }
+        
+        if (nextProps.following) 
+       
+            this.setState({
+                followed: nextProps
+                    .following
+                    .some(o => o.qra === this.props.match.params.qra)
+            });
+        }
     // shouldComponentUpdate(nextProps) {          return nextProps.QRAFetched; }
 
     handleButtonClick() {
@@ -92,9 +93,9 @@ class QRAProfileContainer extends React.Component {
                 <div className='site-header'>
                     <AppNavigation/>
                 </div>
-                
+
                 <div className='profile-main'>
-                <div></div>
+                    <div></div>
                     {(this.props.QRAFetched) && <QRAProfile
                         qraInfo={qraInfo}
                         qra={this.props.qra}

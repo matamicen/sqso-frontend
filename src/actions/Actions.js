@@ -192,9 +192,9 @@ export function doFetchUserInfo(token) {
         API
             .get(apiName, path, myInit)
             .then(response => {
-                console.log(response.body)
+                
                 if (response.body.error === 0) {
-                    dispatch(doReceiveUserInfo(response.body.message.followers, response.body.message.following, response.body.message.qra.profilepic, response.body.message.qra.avatarpic));
+                    dispatch(doReceiveUserInfo(response.body.message.followers, response.body.message.followings, response.body.message.qra.profilepic, response.body.message.qra.avatarpic));
                 }
             })
             .catch(error => {
@@ -368,6 +368,7 @@ export function doFollowQRA(token, follower) {
         API
             .post(apiName, path, myInit)
             .then(response => {
+                
                 if (response.body.error > 0) {
                     console.error(response.body.message);
                     alert(response.body.error);
