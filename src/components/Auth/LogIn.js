@@ -2,7 +2,6 @@ import React from "react";
 
 // ES Modules, e.g. transpiling with Babel
 
-
 import {Redirect} from "react-router-dom";
 import {Link} from "react-router-dom";
 import {bindActionCreators} from 'redux';
@@ -32,28 +31,33 @@ class LogIn extends React.Component {
 
     }
 
-    handleOnClickLogin(e) {
-
+    async handleOnClickLogin(e) {
+        let token;
         e.preventDefault();
-        this
+        await this
             .props
             .actions
             .doStartingLogin()
-        Auth
+        await Auth
             .signIn(this.state.qra, this.state.password)
             .then(user => {
 
-                let token = user.signInUserSession.idToken.jwtToken;
+                token = user.signInUserSession.idToken.jwtToken;
                 this
                     .props
                     .actions
                     .doLogin(token, this.state.qra.toUpperCase());
+
             })
             .catch(err => {
 
                 console.error(err);
                 this.setState({loginError: true});
             });
+        await this
+            .props
+            .actions
+            .doFetchUserInfo(token);
 
     }
 

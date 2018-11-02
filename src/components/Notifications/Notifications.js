@@ -1,0 +1,72 @@
+import React from "react";
+
+import AppNavigation from '../Home/AppNavigation'
+import Advertisement from 'semantic-ui-react/dist/commonjs/views/Advertisement'
+import {bindActionCreators} from 'redux';
+import * as Actions from '../../actions/Actions';
+import {connect} from 'react-redux'
+import {withRouter} from 'react-router-dom'
+import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
+import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
+import "../../styles/style.css";
+import List from "semantic-ui-react/dist/commonjs/elements/List";
+import Notification from "./Notification";
+class Notifications extends React.Component {
+    state = {
+        active: true,
+        showModal: false
+
+    }
+    componentWillReceiveProps(nextProps) {
+
+        if (nextProps.notifications) {
+            this.setState({active: false})
+        }
+
+    }
+    componentDidMount() {
+        // if (!this.props.fetchingUser)
+        // this.props.actions.doFetchQSO(this.props.match.params.idqso); }
+    }
+    render() {
+
+        return (
+            <div className='notifications-container'>
+                {!this.props.notifications && <Dimmer active={this.state.active} page>
+                    <Loader>Loading</Loader>
+                </Dimmer>}
+
+                <div className='site-header'>
+                    <AppNavigation/>
+                </div>
+
+                <div className='site-left'>
+                    <Advertisement className="left" unit='wide skyscraper' test='Wide Skyscraper'/>
+                </div>
+                <div className='notifications-main'>
+                    <div></div>
+                    <List divided>
+                        {this
+                            .props
+                            .notifications
+                            .map(m => {
+                                return <Notification key={m.idqra_notification} notification={m}/>
+
+                            })}
+                    </List>
+                </div>
+
+                <div className='site-right'>
+                    <Advertisement unit='wide skyscraper' test='Wide Skyscraper'/>
+                </div>
+
+            </div>
+
+        );
+    }
+}
+const mapStateToProps = (state) => ({notifications: state.default.userData.notifications, fetchingUser: state.default.userData.fetchingUser, userFetched: state.default.userData.userFetched});
+const mapDispatchToProps = (dispatch) => ({
+    actions: bindActionCreators(Actions, dispatch)
+});
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Notifications));

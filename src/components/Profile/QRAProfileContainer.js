@@ -26,12 +26,7 @@ class QRAProfileContainer extends React.Component {
         let qraInMemory = this.props.qra
             ? this.props.qra.qra.qra
             : "";
-        if (!this.props.fetchingUser && !this.props.userFetched && this.props.token) {
-            this
-                .props
-                .actions
-                .doFetchUserInfo(this.props.token);
-        }
+        
         if ((!this.props.fetchingQRA && !this.props.QRAFetched) || (this.props.QRAFetched && (this.props.match.params.qra !== qraInMemory))) {
             this
                 .props
@@ -44,9 +39,8 @@ class QRAProfileContainer extends React.Component {
         if (nextProps.QRAFetched) {
             this.setState({active: false})
         }
-        
+
         if (nextProps.following) 
-       
             this.setState({
                 followed: nextProps
                     .following

@@ -93,6 +93,25 @@
     
     max-width: 730px;
 }
+.notifications-container{
+    display: grid;
+    grid-template-columns:  160px 570px 160px;
+    /* grid-gap: 1em; */
+    grid-template-rows: 60px auto;
+    grid-template-areas:
+        "pageHeader pageHeader pageHeader"
+        "leftSection mainSection rightSection";
+        justify-content: space-evenly   ;    
+}
+
+.notifications-main{
+    /*grid-column: span 4;*/
+    grid-area: mainSection;
+    /* grid-column: 2;
+    grid-row: 2; */
+    
+    max-width: 730px;
+}
 
 @media (max-width: 910px){
     .global-container{

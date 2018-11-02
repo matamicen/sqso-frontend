@@ -10,6 +10,13 @@ import Auth from '@aws-amplify/auth';
 
 import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
 class AuthenticatedNavigation extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            notif_icon: 'bell'
+        };
+
+    }
     logout() {
         Auth
             .signOut()
@@ -33,15 +40,11 @@ class AuthenticatedNavigation extends React.Component {
 
                 <Menu.Menu position='right'>
                     <Menu.Item position='right'>
-                    
-                        <Icon.Group size='large'>
-                            <Icon name='bell'/>
-                            <Icon corner name='attention'/>
-                        </Icon.Group>
-                        <Icon.Group size='large'>
-                            <Icon name='bell outline'/>
-                         
-                        </Icon.Group>
+                        <Link to='/notifications'>
+                            <Icon.Group size='large'>
+                                <Icon name={this.state.notif_icon}/> {this.state.notif_icon === 'bell' && <Icon corner name='attention'/>}
+                            </Icon.Group>
+                        </Link>
                     </Menu.Item>
                     <Dropdown item icon='setting'>
                         <Dropdown.Menu>

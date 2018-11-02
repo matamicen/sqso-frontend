@@ -112,11 +112,12 @@ export function doRequestUserInfo() {
     return {type: REQUEST_USERINFO, fetchingUser: true, userFetched: false}
 }
 
-export function doReceiveUserInfo(followers = null, following = null, profilepic = null, avatarpic = null) {
+export function doReceiveUserInfo(followers = null, following = null, profilepic = null, avatarpic = null, notifications = null) {
     return {
         type: RECEIVE_USERINFO,
         followers: followers,
         following: following,
+        notifications: notifications,
         profilepic: profilepic,
         avatarpic: avatarpic,
         fetchingUser: false,
@@ -129,6 +130,7 @@ export function doStartingLogin() {
 export function doLogin(token, qra) {
     ReactGA.set({userId: qra})
     ReactGA.event({category: 'User', action: 'Login'});
+ 
     return {
         type: LOGIN,
         token: token,
@@ -138,8 +140,6 @@ export function doLogin(token, qra) {
         qsos: null,
         qso: null,
         qra: qra,
-        followers: null,
-        following: null,
         profilepic: null,
         FetchingUser: false,
         userFetched: false
@@ -160,6 +160,7 @@ export function doLogout() {
         isAuthenticated: false,
         followers: null,
         following: null,
+        notifications: null, 
         profilepic: null,
         FetchingUser: false,
         userFetched: false,
@@ -179,6 +180,7 @@ export function doReceiveFeed(qsos) {
 }
 
 export function doFetchUserInfo(token) {
+    
     return (dispatch) => {
         dispatch(doRequestUserInfo());
         let apiName = 'superqso';
@@ -194,7 +196,7 @@ export function doFetchUserInfo(token) {
             .then(response => {
                 
                 if (response.body.error === 0) {
-                    dispatch(doReceiveUserInfo(response.body.message.followers, response.body.message.followings, response.body.message.qra.profilepic, response.body.message.qra.avatarpic));
+                    dispatch(doReceiveUserInfo(response.body.message.followers, response.body.message.following, response.body.message.qra.profilepic, response.body.message.qra.avatarpic, response.body.message.notifications));
                 }
             })
             .catch(error => {
@@ -341,7 +343,7 @@ export function doFetchQRA(qra) {
         API
             .post(apiName, path, myInit)
             .then(response => {
-
+                response.body &&
                 dispatch(doReceiveQRA(response.body.message));
             })
             .catch(error => {
@@ -369,10 +371,7 @@ export function doFollowQRA(token, follower) {
             .post(apiName, path, myInit)
             .then(response => {
                 
-                if (response.body.error > 0) {
-                    console.error(response.body.message);
-                    alert(response.body.error);
-                } else {
+                if (response.body.error === 0) {
                     dispatch(doReceiveFollowers(response.body.message));
                 }
             })

@@ -17,6 +17,7 @@ import * as Actions from '../actions/Actions';
 import aws_exports from '../aws-exports';
 import Amplify from '@aws-amplify/core';
 import Auth from '@aws-amplify/auth';
+import Notifications from "./Notifications/Notifications";
 
 // if (process.env.NODE_ENV !== 'production') {     const {whyDidYouUpdate} =
 // require('why-did-you-update')     whyDidYouUpdate(React)   }
@@ -30,16 +31,18 @@ class App extends Component {
             loginValidated: false
         };
     }
-    loadAuthenticatedUser() {
-
-        Auth
+    async loadAuthenticatedUser() {
+        let token;
+        await Auth
             .currentAuthenticatedUser()
-            .then(async function (user) {
-                await this
+            .then(function (user) {
+                token = user.signInUserSession.idToken.jwtToken;
+                this
                     .props
                     .actions
-                    .doLogin(user.signInUserSession.idToken.jwtToken, user.username.toUpperCase());
-                await this.setState({loginValidated: true});
+                    .doLogin(token, user.username.toUpperCase());
+
+                this.setState({loginValidated: true});
 
             }.bind(this), async function (err) {
                 console.log(err)
@@ -51,7 +54,10 @@ class App extends Component {
                 await this.setState({loginValidated: true});
                 return;
             }.bind(this));
-
+        await this
+            .props
+            .actions
+            .doFetchUserInfo(token);
     }
 
     componentDidMount() {
@@ -72,8 +78,10 @@ class App extends Component {
                     <Route exact path="/signup" component={SignUp}/>
                     <Route exact path="/login" component={() => <LogIn/>}/>
                     <Route exact path="/forgot" component={() => <ForgotPassword/>}/>
+                    <Route exact path="/notifications" component={() => <Notifications/>}/>
                     <Route exact path="/:qra" component={() => <QRAProfileContainer/>}/>
                     <Route exact path="/qso/:idqso" component={() => <QSODetail/>}/>
+
                 </Switch>
 
             </div>
