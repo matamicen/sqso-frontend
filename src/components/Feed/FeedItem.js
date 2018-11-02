@@ -10,12 +10,10 @@ import Label from 'semantic-ui-react/dist/commonjs/elements/Label'
 import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider'
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
 
-import Feed from 'semantic-ui-react/dist/commonjs/views/Feed'
-
 import QSOComments from "./QSOComments";
 import QSOLikeButton from "./QSOLikeButton";
-
 import QRAs from "./QRAs";
+
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/Actions';
@@ -24,7 +22,7 @@ import Image from "semantic-ui-react/dist/commonjs/elements/Image";
 import {Link} from 'react-router-dom'
 import FeedOptionsMenu from "./FeedOptionsMenu";
 import QSORePostButton from "./QSORePostButton";
-
+import "../../styles/style.css";
 class FeedItem extends React.Component {
     constructor() {
         super();
@@ -82,93 +80,78 @@ class FeedItem extends React.Component {
 
         }
         return (
-
             <Segment raised>
-                <Feed.Event>
-                    <Feed.Label>
-                        <Link to={"/" + this.props.qso.qra}>
-                            <Image
-                                src={this.props.qso.avatarpic + '?' + Date.now()}
-                                size='mini'
-                                avatar
-                                style={{
-                                width: '35px',
-                                height: '35px'
-                            }}/> {this.props.qso.qra}
-                        </Link>
-                        {text}
-                        <div
-                            style={{
-                            float: 'right'
-                        }}>
 
-                            <FeedOptionsMenu
-                                qso_owner={this.props.qso.qra}
-                                idqso={this.props.qso.idqsos}
-                                guid={this.props.qso.GUID_QR}
-                                qso={this.props.qso}
-                                optionsCaller="FeedItem"/>
+                <Link to={"/" + this.props.qso.qra}>
+                    <Image
+                        src={this.props.qso.avatarpic + '?' + Date.now()}
+                        size='mini'
+                        avatar
+                        style={{
+                        width: '35px',
+                        height: '35px'
+                    }}/> {this.props.qso.qra}
+                </Link>
+                {text}
+                <div style={{
+                    float: 'right'
+                }}>
 
-                        </div>
-                    </Feed.Label>
+                    <FeedOptionsMenu
+                        qso_owner={this.props.qso.qra}
+                        idqso={this.props.qso.idqsos}
+                        guid={this.props.qso.GUID_QR}
+                        qso={this.props.qso}
+                        optionsCaller="FeedItem"/>
 
-                    <Feed.Content>
-                        <Divider hidden/>
-                        <QRAs
-                            avatarpic={this.props.qso.avatarpic}
-                            qso_owner={this.props.qso.qra}
-                            qras={this.props.qso.qras}/>
-                        <Divider hidden/>
-                        <Feed.Extra text>
-                            <Label>Mode:</Label>{this.props.qso.mode}
-                            <Label>Band:</Label>{this.props.qso.band}
-                            <Label>QSO:
-                            </Label>{this.props.qso.idqsos}
-                            <Label>GUID:
-                            </Label>{this.props.qso.GUID_URL}
+                </div>
 
-                        </Feed.Extra>
+                <Divider hidden/>
+                <QRAs
+                    avatarpic={this.props.qso.avatarpic}
+                    qso_owner={this.props.qso.qra}
+                    qras={this.props.qso.qras}/>
+                <Divider hidden/>
 
-                        {picList.length > 0 && <FeedImage
-                            img={picList}
-                            measure={this.props.measure}
-                            idqso={this.props.qso.idqsos}
-                            qso_owner={this.props.qso.qra}/>
+                <Label>Mode:</Label>{this.props.qso.mode}
+                <Label>Band:</Label>{this.props.qso.band}
+                <Label>QSO:
+                </Label>{this.props.qso.idqsos}
+                <Label>GUID:
+                </Label>{this.props.qso.GUID_URL} {picList.length > 0 && <FeedImage
+                    img={picList}
+                    measure={this.props.measure}
+                    idqso={this.props.qso.idqsos}
+                    qso_owner={this.props.qso.qra}/>
 }
 
-                        {audioList.length > 0 && <FeedAudioList
-                            mediaList={audioList}
-                            idqso={this.props.qso.idqsos}
-                            qso_owner={this.props.qso.qra}/>
+                {audioList.length > 0 && <FeedAudioList
+                    mediaList={audioList}
+                    idqso={this.props.qso.idqsos}
+                    qso_owner={this.props.qso.qra}/>
 }
 
-                        {this.props.qso.links && <FeedLinkList links={this.props.qso.links}/>}
+                {this.props.qso.links && <FeedLinkList links={this.props.qso.links}/>}
 
-                        <Feed.Extra>
-                            <Divider hidden/>
-                            <Button.Group widths='4' basic>
-                                <QSOLikeButton qso={this.props.qso}/>
-                                <Button
-                                    onClick={this
-                                    .handleOnComment
-                                    .bind(this)}>
-                                    < Icon name='comment outline'/> {this.props.qso.comments.length > 0 && commentsCounter}
+                <Divider hidden/>
+                <Button.Group widths='4' basic>
+                    <QSOLikeButton qso={this.props.qso}/>
+                    <Button
+                        onClick={this
+                        .handleOnComment
+                        .bind(this)}>
+                        < Icon name='comment outline'/> {this.props.qso.comments.length > 0 && commentsCounter}
 
-                                </Button>
-                                <QSORePostButton qso={this.props.qso}/>
-                                <QSOShareButtons idqso={this.props.qso.GUID_URL}/>
-                            </Button.Group>
+                    </Button>
+                    <QSORePostButton qso={this.props.qso}/>
+                    <QSOShareButtons idqso={this.props.qso.GUID_URL}/>
+                </Button.Group>
 
-                        </Feed.Extra>
-                        <Feed.Extra>
-                            <div className="feed-item-comments">
-                                {this.state.showComment && <QSOComments
-                                    qso={this.props.qso}
-                                    recalculateRowHeight={this.recalculateRowHeight}/>}
-                            </div>
-                        </Feed.Extra>
-                    </Feed.Content>
-                </Feed.Event>
+                <div className="feed-item-comments">
+                    {this.state.showComment && <QSOComments
+                        qso={this.props.qso}
+                        recalculateRowHeight={this.recalculateRowHeight}/>}
+                </div>
 
             </Segment>
 

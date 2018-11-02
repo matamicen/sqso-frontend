@@ -40,8 +40,9 @@ class FeedImage extends React.Component {
                 <Divider/>
                 <div
                     style={{
-                    width: elWidth,
-                    height: height
+                   display: 'flex',
+                   justifyContent: 'center'
+                    
                 }}>
                     <Modal
                         closeIcon

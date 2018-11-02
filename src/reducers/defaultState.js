@@ -8,13 +8,15 @@ import {
     RECEIVE_FOLLOWERS,
     RECEIVE_QRA,
     RECEIVE_QSO,
+    RECEIVE_QSO_LINK,
     RECEIVE_USERINFO,
     REQUEST_FEED,
     REQUEST_QRA,
     REQUEST_QSO,
     REQUEST_USERINFO,
     DELETE_COMMENT,
-    CLEAR_QSO
+    CLEAR_QSO,
+    CLEAR_QSO_LINK
 } from "../actions/Actions"
 
 const initialState = {
@@ -34,6 +36,7 @@ const initialState = {
     FetchingQSOS: false,
     qsosFetched: false,
     qso: null,
+    qso_link: null,
     FetchingQSO: false,
     qra: null,
     FetchingQRA: false,
@@ -173,11 +176,26 @@ export default(state = initialState, action) => {
                 FetchingQSO: true
             });
             return newStore;
+        case CLEAR_QSO_LINK:
+            newStore = Object.assign({}, state, {
+                ...state,
+                qso_link: null,
+                FetchingQSO: true
+            });
+            return newStore;
         case RECEIVE_QSO:
 
             newStore = Object.assign({}, state, {
                 ...state,
                 qso: action.qso,
+                FetchingQSO: true
+            });
+            return newStore;
+        case RECEIVE_QSO_LINK:
+
+            newStore = Object.assign({}, state, {
+                ...state,
+                qso_link: action.qso_link,
                 FetchingQSO: true
             });
             return newStore;

@@ -2,14 +2,11 @@ import React, {Component} from "react";
 
 import {Route, Switch, withRouter} from "react-router-dom";
 
-
 import Home from "./Home/Home";
 import {SignUp} from "./Auth/SignUp";
 
 import LogIn from "./Auth/LogIn";
 import ForgotPassword from './Auth/ForgotPassword'
-
-
 
 import QRAProfileContainer from "./Profile/QRAProfileContainer";
 import QSODetail from "./QSODetail"
@@ -36,38 +33,25 @@ class App extends Component {
     loadAuthenticatedUser() {
 
         Auth
-            .currentSession()
-            .then(function (session) {
+            .currentAuthenticatedUser()
+            .then(async function (user) {
+                await this
+                    .props
+                    .actions
+                    .doLogin(user.signInUserSession.idToken.jwtToken, user.username.toUpperCase());
+                await this.setState({loginValidated: true});
 
-                Auth
-                    .currentAuthenticatedUser()
-                    .then(async function (user) {
-
-                        await this
-                            .props
-                            .actions
-                            .doLogin(session.idToken.jwtToken, user.username.toUpperCase());
-                        await this.setState({loginValidated: true});
-
-                    }.bind(this), async function (err) {
-                        console.log(err)
-                        console.log("User NOT Authenticated")
-                        await this
-                            .props
-                            .actions
-                            .doLogout();
-                        await this.setState({loginValidated: true});
-                        return;
-                    }.bind(this));
-            }.bind(this), function (err) {
-
-                this
+            }.bind(this), async function (err) {
+                console.log(err)
+                console.log("User NOT Authenticated")
+                await this
                     .props
                     .actions
                     .doLogout();
-                this.setState({loginValidated: true});
-                // return;
+                await this.setState({loginValidated: true});
+                return;
             }.bind(this));
+
     }
 
     componentDidMount() {
@@ -86,7 +70,7 @@ class App extends Component {
                 <Switch>
                     <Route exact path="/" component={() => <Home/>}/>
                     <Route exact path="/signup" component={SignUp}/>
-                    <Route exact path="/login" component={() => <LogIn/>}/>                    
+                    <Route exact path="/login" component={() => <LogIn/>}/>
                     <Route exact path="/forgot" component={() => <ForgotPassword/>}/>
                     <Route exact path="/:qra" component={() => <QRAProfileContainer/>}/>
                     <Route exact path="/qso/:idqso" component={() => <QSODetail/>}/>

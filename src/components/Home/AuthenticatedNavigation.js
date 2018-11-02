@@ -7,21 +7,20 @@ import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown'
 import Menu from 'semantic-ui-react/dist/commonjs/collections/Menu'
 import NavigationSearch from './NavigationSearch'
 import Auth from '@aws-amplify/auth';
+
+import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
 class AuthenticatedNavigation extends React.Component {
     logout() {
         Auth
             .signOut()
-            .then(data => this
-                .props
-                .actions
-                .doLogout())
+            .then(data => this.props.actions.doLogout())
             .catch(err => console.log(err));
-        
+
     }
     render() {
-        
+
         return (
-            
+
             <Menu fixed='top'>
                 <Menu.Item>
                     <Link to='/'>
@@ -31,13 +30,28 @@ class AuthenticatedNavigation extends React.Component {
                 <Menu.Item >
                     <NavigationSearch/>
                 </Menu.Item>
+
                 <Menu.Menu position='right'>
-                    <Dropdown item icon='setting'>                        
+                    <Menu.Item position='right'>
+                    
+                        <Icon.Group size='large'>
+                            <Icon name='bell'/>
+                            <Icon corner name='attention'/>
+                        </Icon.Group>
+                        <Icon.Group size='large'>
+                            <Icon name='bell outline'/>
+                         
+                        </Icon.Group>
+                    </Menu.Item>
+                    <Dropdown item icon='setting'>
                         <Dropdown.Menu>
-                        <Dropdown.Header content={this.props.currentQRA}/>
-                        <Dropdown.Divider/>
-                            <Dropdown.Item onClick={this.logout.bind(this)}>                               
-                                    Signout                               
+                            <Dropdown.Header content={this.props.currentQRA}/>
+                            <Dropdown.Divider/>
+                            <Dropdown.Item
+                                onClick={this
+                                .logout
+                                .bind(this)}>
+                                Signout
                             </Dropdown.Item>
 
                         </Dropdown.Menu>
@@ -45,7 +59,7 @@ class AuthenticatedNavigation extends React.Component {
                 </Menu.Menu>
 
             </Menu>
-            
+
         );
     }
 };

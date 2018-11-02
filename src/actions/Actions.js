@@ -9,7 +9,9 @@ export const REQUEST_USERINFO = 'REQUEST_USERINFO';
 export const RECEIVE_USERINFO = 'RECEIVE_USERINFO';
 export const REQUEST_QSO = 'REQUEST_QSO';
 export const RECEIVE_QSO = 'RECEIVE_QSO';
+export const RECEIVE_QSO_LINK = 'RECEIVE_QSO_LINK';
 export const CLEAR_QSO = 'CLEAR_QSO';
+export const CLEAR_QSO_LINK = 'CLEAR_QSO_LINK';
 export const REQUEST_QRA = 'REQUEST_QRA';
 export const RECEIVE_QRA = 'RECEIVE_QRA';
 export const RECEIVE_FOLLOWERS = 'RECEIVE_FOLLOWERS';
@@ -258,8 +260,11 @@ export function doRequestQSO() {
 export function doReceiveQSO(qso) {
     return {type: RECEIVE_QSO, qso: qso, FetchingQSO: false}
 }
-export function doClearQSO() {
-    return {type: CLEAR_QSO, qso: "", FetchingQSO: false}
+export function doReceiveQsoLink(qso) {
+    return {type: RECEIVE_QSO_LINK, qso_link: qso, FetchingQSO: false}
+}
+export function doClearQsoLink() {
+    return {type: CLEAR_QSO_LINK, qso_link: "", FetchingQSO: false}
 }
 
 export function doFetchQSO(idqso) {
@@ -282,6 +287,33 @@ export function doFetchQSO(idqso) {
 
                 if (response.body.error === 0) {
                     dispatch(doReceiveQSO(response.body.message));
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            });
+    };
+}
+export function doFetchQsoLink(idqso) {
+    ReactGA.set({qso: idqso})
+    ReactGA.event({category: 'QSO', action: 'getInfo'});
+    return (dispatch) => {
+        let apiName = 'superqso';
+        let path = '/qso-detail';
+        let myInit = {
+            body: {
+                "qso": idqso
+            }, // replace this with attributes you need
+            headers: {
+                "Content-Type": "application/json"
+            } // OPTIONAL
+        }
+        API
+            .post(apiName, path, myInit)
+            .then(response => {
+
+                if (response.body.error === 0) {
+                    dispatch(doReceiveQsoLink(response.body.message));
                 }
             })
             .catch(error => {

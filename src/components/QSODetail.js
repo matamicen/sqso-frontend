@@ -2,9 +2,6 @@ import React from "react";
 import QSOFeedItem from "./Feed/FeedItem";
 import AppNavigation from './Home/AppNavigation'
 import Advertisement from 'semantic-ui-react/dist/commonjs/views/Advertisement'
-import Container from 'semantic-ui-react/dist/commonjs/elements/Container'
-import Feed from 'semantic-ui-react/dist/commonjs/views/Feed'
-import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../actions/Actions';
 import {connect} from 'react-redux'
@@ -19,7 +16,7 @@ class QSODetail extends React.Component {
 
     }
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps)
+        
         if (nextProps.qso) {
             this.setState({active: false})
         }

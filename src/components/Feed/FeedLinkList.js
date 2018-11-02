@@ -9,7 +9,7 @@ export default class FeedLinkList extends React.Component {
     }
 
     render() {
-        
+
         if (this.props.links.length > 0) {
             return (
                 <div>
@@ -19,10 +19,9 @@ export default class FeedLinkList extends React.Component {
                             .props
                             .links
                             .map((l, i) => <Item key={i}>
-                                
 
-                                    <FeedLink key={i} link={l}/>
-                                
+                                <FeedLink key={i} link={l}/>
+
                             </Item>)}
                     </Item.Group>
 

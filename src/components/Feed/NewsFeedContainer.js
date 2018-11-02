@@ -9,7 +9,7 @@ import * as Actions from '../../actions/Actions';
 import 'react-virtualized/styles.css'; // only needs to be imported once
 import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
 import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
-import "./style.css";
+import "../../styles/style.css";
 class NewsFeedContainer extends React.Component {
 
     state = {
