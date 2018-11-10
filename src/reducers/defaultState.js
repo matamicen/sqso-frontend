@@ -16,7 +16,9 @@ import {
     REQUEST_USERINFO,
     DELETE_COMMENT,
     CLEAR_QSO,
-    CLEAR_QSO_LINK
+    CLEAR_QSO_LINK,
+    NOTIFICATION_READ,
+    RECEIVE_NOTIFICATIONS
 } from "../actions/Actions"
 
 const initialState = {
@@ -50,6 +52,19 @@ export default(state = initialState, action) => {
     let newStore;
     let userInfo;
     switch (action.type) {
+        case NOTIFICATION_READ:
+            userInfo = {
+                ...state.userData,
+                notifications: state
+                    .userData
+                    .notifications
+                    .filter((n) => n.idqra_notifications !== action.idnotif)
+            }
+            newStore = Object.assign({}, state, {
+                ...state,
+                userData: userInfo
+            });
+            return newStore;
         case DELETE_QSO:
             console.log(action);
             newStore = Object.assign({}, state, {
@@ -118,6 +133,16 @@ export default(state = initialState, action) => {
                 avatarpic: action.avatarpic,
                 fetchingUser: action.fetchingUser,
                 userFetched: action.userFetched
+            };
+            newStore = Object.assign({}, state, {
+                ...state,
+                userData: userInfo
+            });
+            return newStore;
+        case RECEIVE_NOTIFICATIONS:
+            userInfo = {
+                ...state.userData,
+                notifications: action.notifications
             };
             newStore = Object.assign({}, state, {
                 ...state,

@@ -72,7 +72,7 @@ class FeedOptionsMenu extends React.PureComponent {
         API
             .post(apiName, path, myInit)
             .then(response => {
-                if (response.error > 0) {} else {
+                if (response.body.error > 0) {} else {
                     this.open()
                     ReactGA.event({category: 'QSO', action: 'contentReported'});
                 }
@@ -132,7 +132,7 @@ class FeedOptionsMenu extends React.PureComponent {
         API
             .post(apiName, path, myInit)
             .then(response => {
-                if (response.error > 0) {} else {
+                if (response.body.error > 0) {} else {
                     this.open()
                 }
             })

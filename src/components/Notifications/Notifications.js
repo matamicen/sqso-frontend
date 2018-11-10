@@ -25,11 +25,13 @@ class Notifications extends React.Component {
 
     }
     componentDidMount() {
-        // if (!this.props.fetchingUser)
-        // this.props.actions.doFetchQSO(this.props.match.params.idqso); }
+
+        this
+            .props
+            .actions
+            .doFetchNotifications(this.props.token);
     }
     render() {
-
         return (
             <div className='notifications-container'>
                 {!this.props.notifications && <Dimmer active={this.state.active} page>
@@ -44,13 +46,17 @@ class Notifications extends React.Component {
                     <Advertisement className="left" unit='wide skyscraper' test='Wide Skyscraper'/>
                 </div>
                 <div className='notifications-main'>
-                    <div></div>
+                    
                     <List divided>
                         {this
                             .props
                             .notifications
                             .map(m => {
-                                return <Notification key={m.idqra_notification} notification={m}/>
+                                return <Notification
+                                    key={m.idqra_notifications}
+                                    notification={m}
+                                    token={this.props.token}
+                                    doNotificationRead={this.props.actions.doNotificationRead}/>
 
                             })}
                     </List>
@@ -65,7 +71,7 @@ class Notifications extends React.Component {
         );
     }
 }
-const mapStateToProps = (state) => ({notifications: state.default.userData.notifications, fetchingUser: state.default.userData.fetchingUser, userFetched: state.default.userData.userFetched});
+const mapStateToProps = (state) => ({notifications: state.default.userData.notifications, token: state.default.userData.token});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 });

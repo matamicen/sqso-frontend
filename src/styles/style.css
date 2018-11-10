@@ -176,6 +176,22 @@
         
         max-width: 730px;
     }
+    .notifications-container{
+        grid-template-columns: repeat(1, 100%);
+        grid-template-rows: 70px auto;
+        grid-template-areas:
+        "pageHeader"
+        "mainSection";
+        justify-content: space-between;
+    }
+    .notifications-main{
+        /*grid-column: span 4;*/
+        grid-area: mainSection;
+        /* grid-column: 2;
+        grid-row: 2; */
+        
+        max-width: 730px;
+    }
 }
 
 

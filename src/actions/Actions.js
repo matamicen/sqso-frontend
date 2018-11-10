@@ -18,7 +18,32 @@ export const RECEIVE_FOLLOWERS = 'RECEIVE_FOLLOWERS';
 export const DELETE_MEDIA = 'DELETE_MEDIA';
 export const DELETE_QSO = 'DELETE_QSO';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
+export const NOTIFICATION_READ = 'NOTIFICATION_READ';
+export const RECEIVE_NOTIFICATIONS = 'RECEIVE_NOTIFICATIONS';
 
+export function doNotificationRead(idnotif = null, token) {
+    return (dispatch) => {
+        let apiName = 'superqso';
+        let path = '/qra-notification/set-read';
+        let myInit = {
+            body: {
+                "idqra_notifications": idnotif
+            }, // replace this with attributes you need
+            headers: {
+                "Authorization": token
+            } // OPTIONAL
+        }
+        API
+            .post(apiName, path, myInit)
+            .then(response => {
+                response.body.error === 0 && dispatch(doNotificationReadResponse(idnotif));
+            })
+            .catch(error => {
+                console.log(error)
+            });
+    };
+
+}
 export function doDeleteComment(idcomment = null, idqso = null, token) {
     return (dispatch) => {
         let apiName = 'superqso';
@@ -35,7 +60,7 @@ export function doDeleteComment(idcomment = null, idqso = null, token) {
         API
             .del(apiName, path, myInit)
             .then(response => {
-                response.error === 0 && dispatch(doDeleteCommentResponse(idcomment, idqso));
+                response.body.error === 0 && dispatch(doDeleteCommentResponse(idcomment, idqso));
             })
             .catch(error => {
                 console.log(error)
@@ -46,6 +71,10 @@ export function doDeleteComment(idcomment = null, idqso = null, token) {
 export function doDeleteCommentResponse(idcomment = null, idqso = null) {
     ReactGA.event({category: 'QSO', action: 'CommentDelete'});
     return {type: DELETE_COMMENT, idcomment: idcomment, idqso: idqso}
+}
+export function doNotificationReadResponse(idnotif) {
+    ReactGA.event({category: 'QRA', action: 'CommentRead'});
+    return {type: NOTIFICATION_READ, idnotif: idnotif}
 }
 export function doDeleteQso(idqso = null, token) {
     return (dispatch) => {
@@ -63,7 +92,7 @@ export function doDeleteQso(idqso = null, token) {
             .del(apiName, path, myInit)
             .then(response => {
 
-                response.error === 0 && dispatch(doDeleteQsoResponse(idqso));
+                response.body.error === 0 && dispatch(doDeleteQsoResponse(idqso));
 
             })
             .catch(error => {
@@ -95,7 +124,7 @@ export function doDeleteMedia(idmedia = null, idqso = null, token) {
             .del(apiName, path, myInit)
             .then(response => {
                 // console.log(response)
-                response.error === 0 && dispatch(doDeleteMediaResponse(idmedia, idqso));
+                response.body.error === 0 && dispatch(doDeleteMediaResponse(idmedia, idqso));
 
             })
             .catch(error => {
@@ -130,7 +159,7 @@ export function doStartingLogin() {
 export function doLogin(token, qra) {
     ReactGA.set({userId: qra})
     ReactGA.event({category: 'User', action: 'Login'});
- 
+
     return {
         type: LOGIN,
         token: token,
@@ -160,7 +189,7 @@ export function doLogout() {
         isAuthenticated: false,
         followers: null,
         following: null,
-        notifications: null, 
+        notifications: null,
         profilepic: null,
         FetchingUser: false,
         userFetched: false,
@@ -174,13 +203,17 @@ export function doRequestFeed() {
     return {type: REQUEST_FEED, FetchingQSOS: true, qsosFetched: false}
 }
 
+export function doReceiveNotifications(notifications) {
+    // console.log("doReceiveFeed")
+    return {type: RECEIVE_NOTIFICATIONS, notifications: notifications}
+}
 export function doReceiveFeed(qsos) {
     // console.log("doReceiveFeed")
     return {type: RECEIVE_FEED, qsos: qsos, FetchingQSOS: false, qsosFetched: true}
 }
 
 export function doFetchUserInfo(token) {
-    
+
     return (dispatch) => {
         dispatch(doRequestUserInfo());
         let apiName = 'superqso';
@@ -194,7 +227,7 @@ export function doFetchUserInfo(token) {
         API
             .get(apiName, path, myInit)
             .then(response => {
-                
+
                 if (response.body.error === 0) {
                     dispatch(doReceiveUserInfo(response.body.message.followers, response.body.message.following, response.body.message.qra.profilepic, response.body.message.qra.avatarpic, response.body.message.notifications));
                 }
@@ -225,6 +258,31 @@ export function doFetchUserFeed(token) {
 
                 dispatch(doReceiveFeed(response));
                 // Add your code here
+            })
+            .catch(error => {
+                console.log(error.response)
+            });
+    };
+}
+
+export function doFetchNotifications(token) {
+
+    return (dispatch) => {
+        dispatch(doRequestFeed());
+        let apiName = 'superqso';
+        let path = '/qra-notification';
+        let myInit = {
+            body: {}, // replace this with attributes you need
+            headers: {
+                "Authorization": token
+            } // OPTIONAL
+        }
+        API
+            .get(apiName, path, myInit)
+            .then(response => {
+                if (response.body.error === 0) {                    
+                    dispatch(doReceiveNotifications(response.body.message));
+                }
             })
             .catch(error => {
                 console.log(error.response)
@@ -343,8 +401,7 @@ export function doFetchQRA(qra) {
         API
             .post(apiName, path, myInit)
             .then(response => {
-                response.body &&
-                dispatch(doReceiveQRA(response.body.message));
+                response.body && dispatch(doReceiveQRA(response.body.message));
             })
             .catch(error => {
                 console.log(error)
@@ -370,7 +427,7 @@ export function doFollowQRA(token, follower) {
         API
             .post(apiName, path, myInit)
             .then(response => {
-                
+
                 if (response.body.error === 0) {
                     dispatch(doReceiveFollowers(response.body.message));
                 }
@@ -420,6 +477,6 @@ export function doReceiveQRA(qra) {
 }
 
 export function doReceiveFollowers(following) {
-    console.log("doReceiveFollowers");
+    
     return {type: RECEIVE_FOLLOWERS, following: following}
 }

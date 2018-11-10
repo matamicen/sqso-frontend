@@ -33,6 +33,23 @@ class AuthenticatedNavigation extends React.Component {
             .catch(err => console.log(err));
 
     }
+    notificationIcon() {        
+        if (this.props.notifications.length > 0) {
+            return (
+                <Icon.Group size='large'>
+                    <Icon name='bell'/>
+                    <Icon corner name='attention'/>
+                </Icon.Group>
+            )
+        } else {
+            return (
+                <Icon.Group size='large'>
+                    <Icon name='bell outline'/>
+                </Icon.Group>
+            )
+        }
+
+    }
     render() {
 
         return (
@@ -50,9 +67,9 @@ class AuthenticatedNavigation extends React.Component {
                 <Menu.Menu position='right'>
                     <Menu.Item position='right'>
                         <Link to='/notifications'>
-                            <Icon.Group size='large'>
-                                <Icon name={this.state.notif_icon}/> {this.state.notif_icon === 'bell' && <Icon corner name='attention'/>}
-                            </Icon.Group>
+
+                            {this.notificationIcon()}
+
                         </Link>
                     </Menu.Item>
                     <Dropdown item icon='setting'>
@@ -76,7 +93,7 @@ class AuthenticatedNavigation extends React.Component {
     }
 };
 
-const mapStateToProps = (state) => ({currentQRA: state.default.userData.qra});
+const mapStateToProps = (state) => ({currentQRA: state.default.userData.qra, notifications: state.default.userData.notifications});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 })
