@@ -1,9 +1,8 @@
 import React from "react";
 
-// ES Modules, e.g. transpiling with Babel
 
-import {Redirect} from "react-router-dom";
-import {Link} from "react-router-dom";
+
+import {Link, withRouter} from "react-router-dom";
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as Actions from '../../actions/Actions';
@@ -47,7 +46,10 @@ class LogIn extends React.Component {
                     .props
                     .actions
                     .doLogin(token, this.state.qra.toUpperCase());
-
+                    this
+                    .props
+                    .history
+                    .push("/");
             })
             .catch(err => {
 
@@ -76,10 +78,6 @@ class LogIn extends React.Component {
     }
 
     render() {
-        if (this.props.isAuthenticated) {
-            return <Redirect to="/"/>
-        }
-
         return (
             <div className='global-container'>
                 <div className='site-header'>
@@ -177,4 +175,4 @@ const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LogIn);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LogIn));

@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router-dom";
+
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/Actions';
@@ -7,7 +7,7 @@ import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown'
 import Menu from 'semantic-ui-react/dist/commonjs/collections/Menu'
 import NavigationSearch from './NavigationSearch'
 import Auth from '@aws-amplify/auth';
-
+import {Link, withRouter} from "react-router-dom";
 import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
 class AuthenticatedNavigation extends React.Component {
     constructor() {
@@ -20,7 +20,16 @@ class AuthenticatedNavigation extends React.Component {
     logout() {
         Auth
             .signOut()
-            .then(data => this.props.actions.doLogout())
+            .then(data => {
+                this
+                    .props
+                    .actions
+                    .doLogout()
+                this
+                    .props
+                    .history
+                    .push("/");
+            })
             .catch(err => console.log(err));
 
     }
@@ -71,4 +80,4 @@ const mapStateToProps = (state) => ({currentQRA: state.default.userData.qra});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 })
-export default connect(mapStateToProps, mapDispatchToProps, null, {pure: false})(AuthenticatedNavigation);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps, null, {pure: false})(AuthenticatedNavigation));
