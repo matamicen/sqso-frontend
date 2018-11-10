@@ -17,7 +17,7 @@ export default class Notification extends React.Component {
         this
             .props
             .doNotificationRead(this.props.notification.idqra_notifications, this.props.token);
-        console.log(this.props.notification.idqra_notifications);
+        
     }
     formatNotification() {
         let notif = this.props.notification;
