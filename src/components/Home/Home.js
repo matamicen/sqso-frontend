@@ -2,7 +2,7 @@ import React from 'react'
 import Advertisement from 'semantic-ui-react/dist/commonjs/views/Advertisement'
 import AppNavigation from './AppNavigation'
 import FeedQSO from "../Feed/NewsFeedContainer";
-import "./style.css";
+import "../../styles/style.css";
 
 
 const Home = (props) => (

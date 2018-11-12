@@ -93,6 +93,7 @@
     
     max-width: 730px;
 }
+/* Notifications */
 .notifications-container{
     display: grid;
     grid-template-columns:  160px 570px 160px;

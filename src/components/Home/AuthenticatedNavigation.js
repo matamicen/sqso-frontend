@@ -33,7 +33,7 @@ class AuthenticatedNavigation extends React.Component {
             .catch(err => console.log(err));
 
     }
-    notificationIcon() {        
+    notificationIcon() {
         if (this.props.notifications.length > 0) {
             return (
                 <Icon.Group size='large'>
@@ -54,7 +54,9 @@ class AuthenticatedNavigation extends React.Component {
 
         return (
 
-            <Menu fixed='top'>
+            <Menu fixed='top' style={{
+                height: '50px'
+            }}>
                 <Menu.Item>
                     <Link to='/'>
                         SuperQSO

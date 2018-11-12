@@ -1,12 +1,13 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-import  Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown'
+import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown'
 import Menu from 'semantic-ui-react/dist/commonjs/collections/Menu'
 import NavigationSearch from './NavigationSearch'
-
+import "../../styles/style.css";
 const PublicNavigation = () => (
-    <Menu fixed='top'>
+
+    <Menu fixed='top' style={{height: '50px'}}>
         <Menu.Item>
             <Link to='/'>
                 SuperQSO
@@ -34,6 +35,7 @@ const PublicNavigation = () => (
         </Menu.Menu>
 
     </Menu>
+
 );
 
 export default PublicNavigation;

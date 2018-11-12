@@ -13,7 +13,7 @@ export class Header extends React.Component{
     }
     render() {
         return (
-            <div className="Home">
+            
                 <Grid fluid={true}>
                     <Row>
                       <Col xs={6} md={6}>< Search/></Col>
@@ -21,7 +21,7 @@ export class Header extends React.Component{
                     </Row>
 
                 </Grid>
-            </div>
+            
         );
     }
 }
