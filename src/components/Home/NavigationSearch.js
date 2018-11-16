@@ -50,6 +50,7 @@ class NavigationSearch extends Component {
                                // onValueClick={this.gotoUser.bind(this)}
                                 valueKey="qra"
                                 labelKey="name"
+                                placeholder={'Search a QRA'}
                                 loadOptions={this.getUsers.bind(this)}
                                 autoload={false}
                                 autosize={false}

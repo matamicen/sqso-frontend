@@ -19,9 +19,9 @@ export default class FeedAudioList extends React.Component {
                             .props
                             .mediaList
                             .map((m, i) => <Item key={i}>
-                                <a>
+                               
                                     <FeedAudio key={i} media={m} qso_owner={this.props.qso_owner}/>
-                                </a>
+                                
                             </Item>)}
                     </Item.Group>
 

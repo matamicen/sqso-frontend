@@ -6,10 +6,11 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { Route } from 'react-router-dom';
-import { ConnectedRouter } from 'react-router-redux';
+// import { ConnectedRouter } from 'react-router-redux';
+import { ConnectedRouter } from 'connected-react-router'
 import store, { history } from './store';
 import 'semantic-ui-css/semantic.css'
-// import registerServiceWorker from './registerServiceWorker';
+
 import App from "./components/App";
 import ReactGA from 'react-ga';
 ReactGA.initialize('UA-124438207-1')
@@ -23,4 +24,4 @@ render(
     document.getElementById('root')
   );
   
-  // registerServiceWorker();
+  

@@ -8,13 +8,12 @@ import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/Actions';
-
 class FeedImage extends React.Component {
 
     render() {
 
         var height = '60vh';
-        var onLoad = null;
+        
         
         let elWidth;
         if (window.innerWidth < 542) {
@@ -32,7 +31,7 @@ class FeedImage extends React.Component {
             elWidth = elWidth + 'px';
         } else {
             height = 'auto';            
-            onLoad = this.props.measure;
+            // onLoad = this.props.measure;
         }
 
         return (
@@ -48,7 +47,7 @@ class FeedImage extends React.Component {
                         closeIcon
                         trigger=
                         { 
-                            <Image centered rounded src = { this.props.img[0].url  + '?' + Date.now() } onLoad = { onLoad } onClick={this.handleOpenModal} style={{ width: elWidth, height: height, marginTop: '1vh', marginLeft: 0, marginRight: 0 }} />}>
+                            <Image centered rounded src = { this.props.img[0].url }   style={{ width: elWidth, height: height, marginTop: '1vh', marginLeft: 0, marginRight: 0 }} />}>
 
                         <Modal.Content image scrolling>
                             <Modal.Description>
@@ -56,7 +55,7 @@ class FeedImage extends React.Component {
                                     .props
                                     .img
                                     .map(m => <Segment key={m.idqsos_media} raised textAlign='center'>
-                                        <div
+                                        {this.props.isAuthenticated && <div
                                             style={{
                                             float: 'right'
                                         }}>
@@ -66,16 +65,14 @@ class FeedImage extends React.Component {
                                                 idqso={this.props.idqso}
                                                 optionsCaller="FeedImage"/>
                                         </div>
+                                        }
                                         <Image
                                             key={m.idqsos_media}
                                             wrapped
                                             centered
                                             rounded
-                                            src={m.url  + '?' + Date.now()}
-                                            style={{
-                                            maxWidth: elWidth,
-                                            height: 'auto'
-                                        }}/>
+                                            src={m.url}
+                                           />
 
                                         <p>{m.description}</p>
                                     </Segment>)}
@@ -88,7 +85,9 @@ class FeedImage extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({token: state.default.userData.token, currentQRA: state.default.userData.qra});
+const mapStateToProps = (state) => ({token: state.default.userData.token,     
+    isAuthenticated: state.default.userData.isAuthenticated,
+    currentQRA: state.default.userData.qra});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 })

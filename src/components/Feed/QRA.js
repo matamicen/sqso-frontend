@@ -23,7 +23,7 @@ export default class QRA extends React.Component {
                         }}>
                             <Image
                                size='medium'
-                                src={this.props.avatarpic + '?' + Date.now()}
+                                src={this.props.avatarpic}
                                 circular/>
                         </div>
                         <div

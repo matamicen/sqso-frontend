@@ -8,7 +8,7 @@ import List from 'react-virtualized/dist/commonjs/List'
 import WindowScroller from 'react-virtualized/dist/commonjs/WindowScroller'
 import {CellMeasurer} from 'react-virtualized/dist/commonjs/CellMeasurer'
 import {CellMeasurerCache} from 'react-virtualized/dist/commonjs/CellMeasurer'
-import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid'
+
 import PropTypes from "prop-types";
 export default class NewsFeed extends React.Component {
     
@@ -77,9 +77,7 @@ export default class NewsFeed extends React.Component {
                 parent={parent}>
                 {({measure}) => <div style={style} key={key}>
                 
-                    <Grid >                       
-                        <Grid.Row >
-                            <Grid.Column>
+                    
                             <div></div>
                                 {
                                  row.props.qso.type !== 'SHARE'    &&                                
@@ -100,9 +98,7 @@ export default class NewsFeed extends React.Component {
                                     index={index}/>
                                 }
                                 <div></div>
-                            </Grid.Column>
-                        </Grid.Row>
-                    </Grid>
+                         
                 </div>
 }
             </CellMeasurer>

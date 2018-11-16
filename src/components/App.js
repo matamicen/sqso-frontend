@@ -32,32 +32,34 @@ class App extends Component {
         };
     }
     async loadAuthenticatedUser() {
-        let token;
-        await Auth
-            .currentAuthenticatedUser()
-            .then(function (user) {
-                token = user.signInUserSession.idToken.jwtToken;
+        let session = await Auth
+            .currentSession()
+            .catch(err => {
+                // console.log(err)
+                // console.log("User NOT Authenticated")
                 this
                     .props
                     .actions
-                    .doLogin(token, user.username.toUpperCase());
-
-                this.setState({loginValidated: true});
-
-            }.bind(this), async function (err) {
-                console.log(err)
-                console.log("User NOT Authenticated")
-                await this
-                    .props
-                    .actions
                     .doLogout();
-                await this.setState({loginValidated: true});
-                return;
-            }.bind(this));
-        await this
-            .props
-            .actions
-            .doFetchUserInfo(token);
+                this.setState({loginValidated: true});                
+               
+            });
+            
+        if (session) {      
+            
+             this.setState({loginValidated: true});
+             this
+                .props
+                .actions
+                .doFetchUserInfo(session.idToken.jwtToken);
+             this
+                .props
+                .actions
+                .doLogin(session.idToken.jwtToken, session.idToken.payload["cognito:username"].toUpperCase());
+
+            
+        }
+
     }
 
     componentDidMount() {

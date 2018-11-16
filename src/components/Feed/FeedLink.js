@@ -49,9 +49,9 @@ class FeedLink extends React.Component {
                     onOpen={this
                     .onOpenModal
                     .bind(this)}
-                    trigger={< a > QSO link created by {
+                    trigger={< p > QSO link created by {
                     this.props.link.qra
-                }. Click here for more details. </a>}>
+                }. Click here for more details. </p>}>
                     {!this.props.qso_link && <Loader/>}
                     <Modal.Content>
                         <Modal.Description>
