@@ -40,7 +40,7 @@ class NavigationSearch extends Component {
         }
         const AsyncComponent =  Select.Async;
         if (window.innerWidth <= 380){
-            custWidth =  "130px" 
+            custWidth =  "120px" 
         }
         return (
             <div style={{width: custWidth}}>

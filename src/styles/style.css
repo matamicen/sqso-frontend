@@ -70,10 +70,94 @@
 .profile-main{
     /*grid-column: span 4;*/
     grid-area: mainSection;
-    /* grid-column: 2;
-    grid-row: 2; */
-    
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-align-content: stretch;
+    -ms-flex-line-pack: stretch;    
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: stretch;
+    align-content: center;
     max-width: 730px;
+}
+.profile-header{
+    -webkit-order: 0;
+    -ms-flex-order: 0;
+    order: 0;
+    -webkit-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;  
+}
+.profile-header .inner{
+        display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: center;
+	align-content: center;
+}
+.profile-header .inner .pic{
+    -webkit-order: 1;
+    -ms-flex-order: 1;
+    order: 1;
+    -webkit-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;   
+}
+.profile-header .inner .detail{
+    -webkit-order: 2;
+    -ms-flex-order: 2;
+    order: 2;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;   
+    margin-left: 30%;
+    align-self: flex-start;
+}
+.profile-header .inner .detail .qra{
+    font-size: xx-large
+}
+.profile-header .inner .detail .name{
+    font-size: x-large
+}
+.profile-buttons{
+    -webkit-order: 1;
+    -ms-flex-order: 1;
+    order: 1;
+    -webkit-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;    
+}
+.profile-buttons .inner{
+    display: flex;
+flex-direction: row;
+flex-wrap: nowrap;
+justify-content: flex-start;
+align-items: center;
+align-content: center;
+}
+.profile-detail{
+    -webkit-order: 2;
+    -ms-flex-order: 2;
+    order: 2;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+  
+    
+    
+    
+    
 }
 /* QSO DETAIL */
 .qsoDetail-container{
@@ -193,6 +277,16 @@
         grid-row: 2; */
         
         max-width: 730px;
+    }
+    .profile-header .inner .detail{
+        -webkit-order: 2;
+        -ms-flex-order: 2;
+        order: 2;
+        -webkit-flex: 1 1 auto;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;   
+        margin-left: 10%;
+        align-self: flex-start;
     }
 }
 

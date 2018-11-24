@@ -1,24 +1,24 @@
-import React from "react";
+import React, {Fragment} from "react";
 import {bindActionCreators} from 'redux';
 import QRAProfile from './QRAProfilePresentational'
 import * as Actions from '../../actions/Actions';
 import {withRouter} from "react-router-dom";
 import {connect} from 'react-redux'
-import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
-import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
-import Advertisement from 'semantic-ui-react/dist/commonjs/views/Advertisement'
 
-import AppNavigation from '../Home/AppNavigation'
 import "../../styles/style.css";
 class QRAProfileContainer extends React.Component {
     constructor() {
         super();
         this.state = {
             active: true,
-            followed: false
+            followed: false,
+            tab: 1
         };
         this.handleButtonClick = this
             .handleButtonClick
+            .bind(this);
+        this.handleTabClick = this
+            .handleTabClick
             .bind(this);
     }
 
@@ -26,7 +26,7 @@ class QRAProfileContainer extends React.Component {
         let qraInMemory = this.props.qra
             ? this.props.qra.qra.qra
             : "";
-        
+
         if ((!this.props.fetchingQRA && !this.props.QRAFetched) || (this.props.QRAFetched && (this.props.match.params.qra !== qraInMemory))) {
             this
                 .props
@@ -48,7 +48,10 @@ class QRAProfileContainer extends React.Component {
             });
         }
     // shouldComponentUpdate(nextProps) {          return nextProps.QRAFetched; }
-
+    handleTabClick(i) {
+        //  e.preventDefault();
+        this.setState({tab: i});
+    }
     handleButtonClick() {
 
         if (!this.props.token) 
@@ -79,31 +82,36 @@ class QRAProfileContainer extends React.Component {
         if (this.props.qra) 
             qraInfo = this.props.qra.qra;
         return (
-            <div className='profile-container'>
-
-                <Dimmer active={this.state.active} page>
-                    <Loader>Loading</Loader>
-                </Dimmer>
-                <div className='site-header'>
-                    <AppNavigation/>
-                </div>
-
-                <div className='profile-main'>
-                    <div></div>
-                    {(this.props.QRAFetched) && <QRAProfile
-                        qraInfo={qraInfo}
-                        qra={this.props.qra}
-                        onClick={this.handleButtonClick}
-                        isAuthenticated={this.props.isAuthenticated}
-                        currentQRA={this.props.currentQRA}
-                        followed={this.state.followed}/>
+            <Fragment>
+                {< QRAProfile
+                qraInfo = {
+                    qraInfo
+                }
+                active = {
+                    this.state.active
+                }
+                qra = {
+                    this.props.qra
+                }
+                onClick = {
+                    this.handleButtonClick
+                }
+                isAuthenticated = {
+                    this.props.isAuthenticated
+                }
+                currentQRA = {
+                    this.props.currentQRA
+                }
+                followed = {
+                    this.state.followed
+                }
+                handleTabClick = {
+                    this.handleTabClick
+                } 
+                tab = {this.state.tab}/>
 }
-                </div>
-
-                <div className='site-right'>
-                    <Advertisement unit='wide skyscraper' test='Wide Skyscraper'/>
-                </div>
-            </div>
+               
+            </Fragment>
         )
 
     }

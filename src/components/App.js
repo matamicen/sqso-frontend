@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component, Fragment} from "react";
 
 import {Route, Switch, withRouter} from "react-router-dom";
 
@@ -74,7 +74,7 @@ class App extends Component {
             return null;
         
         return (
-            <div >
+            <Fragment>
                 <Switch>
                     <Route exact path="/" component={() => <Home/>}/>
                     <Route exact path="/signup" component={SignUp}/>
@@ -86,7 +86,7 @@ class App extends Component {
 
                 </Switch>
 
-            </div>
+            </Fragment>
 
         );
     }

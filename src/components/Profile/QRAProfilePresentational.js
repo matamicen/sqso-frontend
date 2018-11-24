@@ -1,138 +1,67 @@
-import React from "react";
-import QRAProfileFollowers from './QRAProfileFollowers'
+import React, {Fragment} from "react";
+
 import QRAProfileFollowing from './QRAProfileFollowing'
 import QRAProfileQsos from './QRAProfileQsos'
 import QRAProfileBio from './QRAProfileBio'
-import QRAProfileInfo from './QRAProfileInfo'
 
-import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
-import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid'
-import Header from 'semantic-ui-react/dist/commonjs/elements/Header'
-import Image from 'semantic-ui-react/dist/commonjs/elements/Image'
+import QRAProfileHeader from './QRAProfileHeader'
+
+import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
+import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
+import Advertisement from 'semantic-ui-react/dist/commonjs/views/Advertisement'
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
-import Tab from 'semantic-ui-react/dist/commonjs/modules/Tab'
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
+import AppNavigation from '../Home/AppNavigation'
+import "../../styles/style.css";
 
 const QRAProfile = (props) => {
-    const panes = [
-        {
-            menuItem: 'QSOs',
-            render: () => <Tab.Pane><QRAProfileQsos qsos={props.qra.qsos}/></Tab.Pane>
-        }, {
-            menuItem: 'Biography',
-            render: () => <Tab.Pane><QRAProfileBio qraInfo={props.qraInfo}/></Tab.Pane>
-        }, {
-            menuItem: 'Information',
-            render: () => <Tab.Pane><QRAProfileInfo qraInfo={props.qraInfo}/></Tab.Pane>
-        }, {
-            menuItem: 'Following',
-            render: () => <Tab.Pane><QRAProfileFollowing following={props.qra.following}/></Tab.Pane>
-        }, {
-            menuItem: 'Followers',
-            render: () => <Tab.Pane><QRAProfileFollowers followers={props.qra.followers}/></Tab.Pane>
-            //       },       {           menuItem: 'Awards',           render: () =>
-            // <Tab.Pane><QRAProfileFollowers/></Tab.Pane>
-        }
-
-    ];
-
-    let buttonText;
-
-    if (props.followed) {
-        buttonText = "Unfollow";
-    } else {
-        buttonText = "Follow";
-    }
-    if (!props.qraInfo) 
-        return "QRA Not Found";
     
     return (
+        <div className='profile-container'>
 
-        <div >
-            <Grid style={{
-                display: 'flex'
-            }} centered>
+            <Dimmer active={props.active} page>
+                <Loader>Loading</Loader>
+            </Dimmer>
 
-                {(navigator.maxTouchPoints === 0) && <div>
+            <div className='site-header'>
+                <AppNavigation/>
+            </div>
 
-                    <Segment>
-                        <Grid columns={4}>
-                            <Grid.Column>
-
-                                {props.qraInfo.profilepic && <Image src={props.qraInfo.profilepic} centered size='small' circular/>
-}
-                            </Grid.Column>
-                            <Grid.Column floated="left">
-                                <Header as='h1' icon textAlign='center'>
-                                    <Header.Content>
-                                        {props.qraInfo.qra}
-                                    </Header.Content>
-                                </Header>
-                                {(props.isAuthenticated && props.qraInfo.qra !== props.currentQRA) && <Button positive={!props.followed} onClick={() => props.onClick()}>
-                                    {buttonText}
-                                </ Button>
-}
-                                <Header as='h2' icon textAlign='center'>
-                                    <Header.Content>
-                                        {props.qraInfo.firstname && props.qraInfo.firstname + " "
-}
-                                        {props.qraInfo.lastname && props.qraInfo.lastname
-}
-                                    </Header.Content>
-                                </Header>
-                            </Grid.Column>
-                        </Grid>
-
-                    </Segment>
-
-                    <Segment raised>
-                        < Tab panes={panes}/>
-                    </Segment>
-                </div>
-}
-                {(navigator.maxTouchPoints > 0) && <Grid.Row >
-                    <Grid.Column>
-
+            {!props.active && <Fragment>
+                <div className='profile-main'>
+                    <QRAProfileHeader
+                        qraInfo={props.qraInfo}
+                        isAuthenticated={props.isAuthenticated}
+                        followed={props.followed}
+                        onClick={props.onClick}
+                        currentQRA={props.currentQRA}/>
+                    <div className='profile-buttons'>
                         <Segment>
-                            <Grid columns={4}>
-                                <Grid.Column>
 
-                                    {props.qraInfo.profilepic && <Image src={props.qraInfo.profilepic} centered size='small' circular/>
-}
-                                </Grid.Column>
-                                <Grid.Column floated="left">
-                                    <Header as='h1' icon textAlign='center'>
-                                        <Header.Content>
-                                            {props.qraInfo.qra}
-                                        </Header.Content>
-                                    </Header>
-                                    {(props.isAuthenticated && props.qraInfo.qra !== props.currentQRA) && <Button positive={!props.followed} onClick={() => props.onClick()}>
-                                        {buttonText}
-                                    </ Button>
-}
-                                    <Header as='h2' icon textAlign='center'>
-                                        <Header.Content>
-                                            {props.qraInfo.firstname && props.qraInfo.firstname + " "
-}
-                                            {props.qraInfo.lastname && props.qraInfo.lastname
-}
-                                        </Header.Content>
-                                    </Header>
-                                </Grid.Column>
-                            </Grid>
+                            <Button.Group widths='3'>
+                                <Button onClick={()=>props.handleTabClick(1)}>QSO's</Button>
+                                <Button onClick={()=>props.handleTabClick(2)}>Info</Button>
+                                <Button onClick={()=>props.handleTabClick(3)}>Following</Button>
+                            </Button.Group>
 
                         </Segment>
-
-                        <Segment raised>
-                            < Tab panes={panes}/>
+                    </div>
+                    <div className='profile-detail'>
+                    <Segment>
+                    {{
+                            1: <QRAProfileQsos qsos={props.qra.qsos}/>,
+                            2: <QRAProfileBio qraInfo={props.qraInfo}/>,
+                            3: <QRAProfileFollowing following={props.qra.following} />,
+                        }[props.tab]}
                         </Segment>
-
-                    </Grid.Column>
-
-                </Grid.Row>
-}
-            </Grid>
-        </div>
-    )
-};
-
-export default QRAProfile
+                    </div>
+                </div>
+            </Fragment>
+        } 
+            < div className = 'site-right' > 
+                <Advertisement unit='wide skyscraper' test='Wide Skyscraper'/> 
+            </div>
+        </div >);
+    };
+   
+    export default QRAProfile;
