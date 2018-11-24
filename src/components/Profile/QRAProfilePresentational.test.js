@@ -1,7 +1,6 @@
 import React from "react";
 import {shallow} from 'enzyme';
 import QRAProfile from "./QRAProfilePresentational";
-import store from '../../store';
 
 describe('App', () => {
     beforeEach(() => {
