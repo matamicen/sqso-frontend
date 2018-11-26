@@ -1,5 +1,7 @@
 import React from "react";
-import QSOFeedItem from "./Feed/FeedItem";
+import FeedItem from './Feed/FeedItem'
+import FeedItemShare from "./Feed/FeedItemShare"
+import NewsFeed from './Feed/NewsFeedPresentational';
 import AppNavigation from './Home/AppNavigation'
 import Advertisement from 'semantic-ui-react/dist/commonjs/views/Advertisement'
 import {bindActionCreators} from 'redux';
@@ -8,6 +10,7 @@ import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
 import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
+import Immutable from 'immutable';
 import "../styles/style.css";
 class QSODetail extends React.Component {
     state = {
@@ -16,7 +19,7 @@ class QSODetail extends React.Component {
 
     }
     componentWillReceiveProps(nextProps) {
-        
+
         if (nextProps.qso) {
             this.setState({active: false})
         }
@@ -28,6 +31,28 @@ class QSODetail extends React.Component {
         }
     
     render() {
+        let  qsos_aux = [];
+        let qsos = Immutable.List([]);
+        if (this.props.qso) {
+            qsos_aux.push(this.props.qso);
+            qsos = Immutable.List(qsos_aux);
+            
+            
+            qsos = 
+                qsos_aux
+                .map((qso, i) => {
+                    switch (qso.type) {
+                        case "QSO":
+                            return <FeedItem key={i} qso={qso}/>;
+                        case "SHARE":
+                            return <FeedItemShare key={i} qso={qso}/>;
+                        default:
+                            return null;
+                    }
+                })
+                
+               
+        }
 
         return (
             <div className='qsoDetail-container'>
@@ -45,8 +70,7 @@ class QSODetail extends React.Component {
                 <div className='qsoDetail-main'>
 
                     <div></div>
-                    {this.props.qso && <QSOFeedItem key={this.props.match.params.idqso} qso={this.props.qso}/>
-}
+                    {this.props.qso && <NewsFeed list={qsos}/>}
 
                 </div>
 

@@ -75,7 +75,9 @@ export default class NewsFeed extends React.Component {
                 key={key}
                 rowIndex={index}
                 parent={parent}>
-                {({measure}) => <div style={style} key={key}>
+                {({measure}) => {
+                    this.measure = measure.bind(this);
+                return (<div style={style} key={key}>
                 
                     
                             <div></div>
@@ -99,7 +101,7 @@ export default class NewsFeed extends React.Component {
                                 }
                                 <div></div>
                          
-                </div>
+                </div>)}
 }
             </CellMeasurer>
 
@@ -124,6 +126,7 @@ export default class NewsFeed extends React.Component {
         
       };
     recalculateRowHeight(index) {
+        
         this
             ._cache
             .clear(index);
@@ -131,10 +134,12 @@ export default class NewsFeed extends React.Component {
         this
             ._list
             .recomputeRowHeights(index);
+            // this._list.forceUpdate()
 
     }   
     render() {
         const {rowCount, overscanRowCount} = this.state;
+        
         return (
             <div className="WindowScrollerWrapper" >
                 {/* <InfiniteLoader

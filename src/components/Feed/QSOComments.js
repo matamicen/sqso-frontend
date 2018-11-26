@@ -23,10 +23,15 @@ class QSOComments extends React.Component {
     }
 
     componentDidMount() {
-        if (this.props.qso.comments) 
-            this.setState({comments: this.props.qso.comments});
         
-        if (this.props.qso.comments) {}
+        if (this.props.qso.comments) {
+            this.setState({comments: this.props.qso.comments});
+
+           
+        }
+    }
+    componentDidUpdate(){
+     
     }
 
     doComment(c) {
@@ -37,7 +42,7 @@ class QSOComments extends React.Component {
                 "qso": this.props.qso.idqsos,
                 "comment": c.comment,
                 "datetime": c.datetime
-            
+
             }, // replace this with attributes you need
             headers: {
                 "Authorization": this.props.token
@@ -50,16 +55,13 @@ class QSOComments extends React.Component {
                     console.error(response.body.message);
                 } else {
                     this.setState({comments: response.body.message});
-                    ReactGA.event({
-                        category: 'QSO',
-                        action: 'CommentAdd'
-                      });
+                    ReactGA.event({category: 'QSO', action: 'CommentAdd'});
                 }
             })
             .catch(error => {
                 console.log(error)
-            });       
-      
+            });
+
     }
 
     handleAddComment(e) {
@@ -90,24 +92,23 @@ class QSOComments extends React.Component {
     }
 
     render() {
+
         let comments = null;
         if (this.state.comments) {
             comments = this
                 .state
                 .comments
                 .map((comment, i) => <QSOCommentItem key={i} comment={comment}/>)
-            this
-                .props
-                .recalculateRowHeight();
+
         };
+        // this
+        // .props
+        // .recalculateRowHeight();
         let form = null;
+
         if (this.props.isAuthenticated) {
-            form = <Form
-                size="mini"
-                reply
-                onSubmit={this
-                .handleAddComment
-                }>
+
+            form = <Form size="mini" reply onSubmit={this.handleAddComment}>
                 <Form.Group>
                     <input placeholder='Comment' name="comment"/>
                     <Button size="mini" content='Add'/>
@@ -124,10 +125,7 @@ class QSOComments extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => (
-    {token: state.default.userData.token,
-        qra: state.default.userData.qra, 
-    isAuthenticated: state.default.userData.isAuthenticated});
+const mapStateToProps = (state) => ({token: state.default.userData.token, qra: state.default.userData.qra, isAuthenticated: state.default.userData.isAuthenticated});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 })

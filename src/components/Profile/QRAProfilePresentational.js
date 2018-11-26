@@ -15,7 +15,7 @@ import AppNavigation from '../Home/AppNavigation'
 import "../../styles/style.css";
 
 const QRAProfile = (props) => {
-    console.log(props)
+    
     return (
         <div className='profile-container'>
 

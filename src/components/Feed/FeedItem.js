@@ -37,23 +37,22 @@ class FeedItem extends React.Component {
             .bind(this);
     }
 
-    shouldComponentUpdate(nextProps) {
-
-        return this.props.qsosFetched;
-    }
+    // shouldComponentUpdate(nextProps) {     // return this.props.qsosFetched; }
 
     handleOnComment() {
-
         this.setState({showComment: true});
-        this.recalculateRowHeight();
+        // this.recalculateRowHeight(); this.props.recalculateRowHeight()
     }
 
     recalculateRowHeight() {
-
         if (this.props.recalculateRowHeight) 
             this.props.recalculateRowHeight(this.props.index);
         }
-    
+    componentDidUpdate(prevProps, prevState) {
+        if ((this.state.showComment !== prevState.showComment) && (this.props.recalculateRowHeight)) 
+            this.props.recalculateRowHeight(this.props.index);
+
+        }
     render() {
 
         let picList = this
@@ -67,6 +66,7 @@ class FeedItem extends React.Component {
             .media
             .filter((media) => media.type === 'audio');
         const commentsCounter = '(' + this.props.qso.comments.length + ')'
+
         let text;
 
         switch (this.props.qso.type) {
@@ -79,6 +79,7 @@ class FeedItem extends React.Component {
             default:
 
         }
+
         return (
             <Segment raised>
 
@@ -136,22 +137,16 @@ class FeedItem extends React.Component {
                 <Divider hidden/>
                 <Button.Group widths='4' basic>
                     <QSOLikeButton qso={this.props.qso}/>
-                    <Button
-                        onClick={this
-                        .handleOnComment
-                        .bind(this)}>
+                    <Button onClick={(e) => this.handleOnComment(e)}>
                         < Icon name='comment outline'/> {this.props.qso.comments.length > 0 && commentsCounter}
 
                     </Button>
                     <QSORePostButton qso={this.props.qso}/>
                     <QSOShareButtons idqso={this.props.qso.GUID_URL}/>
                 </Button.Group>
-
-                <div className="feed-item-comments">
-                    {this.state.showComment && <QSOComments
-                        qso={this.props.qso}
-                        recalculateRowHeight={this.recalculateRowHeight}/>}
-                </div>
+                {(this.state.showComment) && <QSOComments
+                    qso={this.props.qso}
+                    recalculateRowHeight={this.recalculateRowHeight}/>}
 
             </Segment>
 
