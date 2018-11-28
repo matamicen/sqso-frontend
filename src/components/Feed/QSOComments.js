@@ -23,16 +23,13 @@ class QSOComments extends React.Component {
     }
 
     componentDidMount() {
-        
+
         if (this.props.qso.comments) {
             this.setState({comments: this.props.qso.comments});
 
-           
         }
     }
-    componentDidUpdate(){
-     
-    }
+    componentDidUpdate() {}
 
     doComment(c) {
         let apiName = 'superqso';
@@ -56,6 +53,7 @@ class QSOComments extends React.Component {
                 } else {
                     this.setState({comments: response.body.message});
                     ReactGA.event({category: 'QSO', action: 'CommentAdd'});
+                   
                 }
             })
             .catch(error => {
@@ -87,7 +85,9 @@ class QSOComments extends React.Component {
                 .concat(comment)
         });
         e.target.comment.value = null;
-
+        this
+        .props
+        .recalculateRowHeight();
         this.doComment(comment);
     }
 
@@ -101,9 +101,7 @@ class QSOComments extends React.Component {
                 .map((comment, i) => <QSOCommentItem key={i} comment={comment}/>)
 
         };
-        // this
-        // .props
-        // .recalculateRowHeight();
+
         let form = null;
 
         if (this.props.isAuthenticated) {
