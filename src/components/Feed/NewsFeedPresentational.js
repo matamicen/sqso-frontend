@@ -80,7 +80,7 @@ export default class NewsFeed extends React.Component {
                 return (<div style={style} key={key}>
                 
                     
-                            <div></div>
+                            
                                 {
                                  row.props.qso.type !== 'SHARE'    &&                                
                                 <FeedItem
@@ -99,7 +99,7 @@ export default class NewsFeed extends React.Component {
                                     recalculateRowHeight={this.recalculateRowHeight}
                                     index={index}/>
                                 }
-                                <div></div>
+                                <br/>
                          
                 </div>)}
 }

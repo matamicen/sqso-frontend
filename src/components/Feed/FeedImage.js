@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 import FeedOptionsMenu from './FeedOptionsMenu'
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
 import Image from 'semantic-ui-react/dist/commonjs/elements/Image'
@@ -35,7 +35,7 @@ class FeedImage extends React.Component {
         }
 
         return (
-            <div>
+            <Fragment>
                 <Divider/>
                 <div
                     style={{
@@ -80,7 +80,7 @@ class FeedImage extends React.Component {
                         </Modal.Content>
                     </Modal>
                 </div>
-            </div>
+            </Fragment>
         )
     }
 }

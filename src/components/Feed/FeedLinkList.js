@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 import Item from 'semantic-ui-react/dist/commonjs/views/Item'
 import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider'
 import FeedLink from './FeedLink'
@@ -12,7 +12,7 @@ export default class FeedLinkList extends React.Component {
 
         if (this.props.links.length > 0) {
             return (
-                <div>
+                <Fragment>
                     <Divider/>
                     <Item.Group >
                         {this
@@ -25,7 +25,7 @@ export default class FeedLinkList extends React.Component {
                             </Item>)}
                     </Item.Group>
 
-                </div>
+                </Fragment>
             )
         } else {
             return null

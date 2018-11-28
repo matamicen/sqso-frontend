@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 import FeedAudio from "./FeedAudio";
 import Item from 'semantic-ui-react/dist/commonjs/views/Item'
 import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider'
@@ -12,7 +12,7 @@ export default class FeedAudioList extends React.Component {
 
         if (this.props.mediaList.length > 0) {
             return (
-                <div>
+                <Fragment>
                     <Divider/>
                     <Item.Group >
                         {this
@@ -25,7 +25,7 @@ export default class FeedAudioList extends React.Component {
                             </Item>)}
                     </Item.Group>
 
-                </div>
+                </Fragment>
             )
         } else {
             return null

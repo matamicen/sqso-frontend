@@ -1,25 +1,24 @@
-import React from "react";
+import React, {Fragment} from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/css/bootstrap-theme.css";
 import {Row, Col, FormControl, Form, Button} from "react-bootstrap";
 import {browserHistory} from "react-router";
 // import {Config, CognitoIdentityCredentials} from "aws-sdk";
 import {NavLink} from "react-router-dom";
-// ES Modules, e.g. transpiling with Babel
-// import appConfig from "./Config";
-// import PropTypes from 'prop-types';
-
-// Config.region = appConfig.region;
+// ES Modules, e.g. transpiling with Babel import appConfig from "./Config";
+// import PropTypes from 'prop-types'; Config.region = appConfig.region;
 // Config.credentials = new window.CognitoIdentityCredentials({
-//     IdentityPoolId: appConfig.IdentityPoolId
-// });
-
+// IdentityPoolId: appConfig.IdentityPoolId });
 
 export class Account extends React.Component {
     constructor(props) {
         super(props);
-        this.handleLoginClick = this.handleLoginClick.bind(this);
-        this.handleLogoutClick = this.handleLogoutClick.bind(this);
+        this.handleLoginClick = this
+            .handleLoginClick
+            .bind(this);
+        this.handleLogoutClick = this
+            .handleLogoutClick
+            .bind(this);
         this.state = {
             isLoggedIn: false,
             password: '',
@@ -27,10 +26,7 @@ export class Account extends React.Component {
         };
     }
 
-    handleLoginClick() {
-
-
-    }
+    handleLoginClick() {}
 
     handleLogoutClick() {
         this.setState({isLoggedIn: false});
@@ -47,12 +43,18 @@ export class Account extends React.Component {
             <Form onSubmit={this.handleLoginClick}>
                 <Row className="show-grid">
                     <Col xs={2} md={2}>
-                        <FormControl bsSize="small" type="qra" placeholder="QRA"
-                                     ref={input => this.setState({qra: input})}/>
+                        <FormControl
+                            bsSize="small"
+                            type="qra"
+                            placeholder="QRA"
+                            ref={input => this.setState({qra: input})}/>
                     </Col>
                     <Col xs={2} md={2}>
-                        <FormControl bsSize="small" type="password" placeholder="Password"
-                                     ref={input => this.setState({password: input})}/>
+                        <FormControl
+                            bsSize="small"
+                            type="password"
+                            placeholder="Password"
+                            ref={input => this.setState({password: input})}/>
                     </Col>
                     <Col xs={2} md={2}>
                         <Button type="submit">
@@ -60,13 +62,15 @@ export class Account extends React.Component {
                         </Button>
                     </Col>
                     <Col xs={3} md={3}>
-                        <NavLink to="/signup" activeClassName="active"><Button type="submit"> Sign Up
-                        </Button></NavLink>
+                        <NavLink to="/signup" activeClassName="active">
+                            <Button type="submit">
+                                Sign Up
+                            </Button>
+                        </NavLink>
 
                     </Col>
                 </Row>
             </Form>
-
 
         );
         const formLogOut = (
@@ -81,13 +85,13 @@ export class Account extends React.Component {
             </Form>
         );
         return (
-            <div>
-                {isLoggedIn ? formLogOut : formLogIn}
-            </div>
+            <Fragment>
+                {isLoggedIn
+                    ? formLogOut
+                    : formLogIn}
+            </Fragment>
         );
 
     }
 }
-// Account.propTypes = {
-    
-// }
+// Account.propTypes = { }

@@ -69,7 +69,7 @@ class QSODetail extends React.Component {
 
                 <div className='qsoDetail-main'>
 
-                    <div></div>
+                    
                     {this.props.qso && <NewsFeed list={qsos}/>}
 
                 </div>

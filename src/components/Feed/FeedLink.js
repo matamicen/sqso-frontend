@@ -38,7 +38,7 @@ class FeedLink extends React.Component {
     }
     render() {
         return (
-            <div>
+            
                 <Modal
                     
                     closeIcon
@@ -63,7 +63,7 @@ class FeedLink extends React.Component {
                         </Modal.Description>
                     </Modal.Content>
                 </Modal>
-            </div>
+            
         )
 
     }

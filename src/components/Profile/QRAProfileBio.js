@@ -1,11 +1,11 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 import Form from 'semantic-ui-react/dist/commonjs/collections/Form'
 import Container from 'semantic-ui-react/dist/commonjs/elements/Container'
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
 import Header from 'semantic-ui-react/dist/commonjs/elements/Header'
 import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider'
 const QRAProfileBio = (props) => (
-    <div>
+    <Fragment>
         <Segment>
             <Container fluid>
                 <Header as='h2'>Bio</Header>
@@ -156,7 +156,7 @@ const QRAProfileBio = (props) => (
             />
         </Form>
         </Segment>
-    </div>
+    </Fragment>
 
 );
 export default QRAProfileBio

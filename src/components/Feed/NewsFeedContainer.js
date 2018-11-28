@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 import FeedItem from "./FeedItem";
 import FeedItemShare from "./FeedItemShare"
 import NewsFeed from './NewsFeedPresentational';
@@ -56,12 +56,12 @@ class NewsFeedContainer extends React.Component {
         }
 
         return (
-            <div>
+            <Fragment>
                 {!this.props.qsos && <Dimmer active={this.state.active} page>
                     <Loader>Loading</Loader>
                 </Dimmer>}
                 {this.props.qsos && this.props.qsos.length > 0 && <NewsFeed list={qsos}/>}
-            </div>
+            </Fragment>
         )
     }
 }

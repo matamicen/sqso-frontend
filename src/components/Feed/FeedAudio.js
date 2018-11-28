@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
 import PropTypes from 'prop-types';
@@ -37,12 +37,12 @@ class FeedAudio extends React.Component {
                 )
             } else {
                 return (
-                    <div>
+                    <Fragment>
 
                         < audio ref="audio_tag" src={this.props.media.url} controls autoPlay preload="none" controlsList="nodownload"/>
 
                        
-                    </div>
+                    </Fragment>
                 )
             }
         } else {
