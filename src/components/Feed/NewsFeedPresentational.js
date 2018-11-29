@@ -11,20 +11,22 @@ import {CellMeasurerCache} from 'react-virtualized/dist/commonjs/CellMeasurer'
 
 import PropTypes from "prop-types";
 export default class NewsFeed extends React.Component {
-    
-    constructor(props) {
-        super(props)
 
+    constructor(props) {
+        
+        super(props)
+        let list = this.props.list;
         this.state = {
             loadedRowCount: 0,
             loadedRowsMap: {},
             scrollToIndex: undefined,
             loadingRowCount: 0,
             overscanRowCount: 10,
+            list: list,
             randomScrollToIndex: null,
-            rowCount: this.props.list.length
+            rowCount: list.length
         };
-      
+
         this._cache = new CellMeasurerCache({fixedWidth: true, minHeight: 100});
         this._setRef = this
             ._setRef
@@ -65,10 +67,11 @@ export default class NewsFeed extends React.Component {
 
     _rowRenderer({index, isScrolling, key, parent, style}) {
 
-        let row = this.props.list[index];
-        if (row === null) return null;
+        let row = this.state.list[index];
+        if (row === null) 
+            return null;
         return (
-            
+
             <CellMeasurer
                 cache={this._cache}
                 columnIndex={0}
@@ -77,31 +80,28 @@ export default class NewsFeed extends React.Component {
                 parent={parent}>
                 {({measure}) => {
                     this.measure = measure.bind(this);
-                return (<div style={style} key={key}>
-                
-                    
-                            
-                                {
-                                 row.props.qso.type !== 'SHARE'    &&                                
-                                <FeedItem
-                                    key={key}
-                                    qso={row.props.qso}
-                                    measure={measure}
-                                    recalculateRowHeight={this.recalculateRowHeight}
-                                    index={index}/>
-                                }
-                                 {
-                                 row.props.qso.type ==='SHARE'    &&                                
-                                <FeedItemShare
-                                    key={key}
-                                    qso={row.props.qso}
-                                    measure={measure}
-                                    recalculateRowHeight={this.recalculateRowHeight}
-                                    index={index}/>
-                                }
-                                <br/>
-                         
-                </div>)}
+                    return (
+                        <div style={style} key={key}>
+
+                            {row.props.qso.type !== 'SHARE' && <FeedItem
+                                key={key}
+                                qso={row.props.qso}
+                                measure={measure}
+                                recalculateRowHeight={this.recalculateRowHeight}
+                                index={index}/>
+}
+                            {row.props.qso.type === 'SHARE' && <FeedItemShare
+                                key={key}
+                                qso={row.props.qso}
+                                measure={measure}
+                                recalculateRowHeight={this.recalculateRowHeight}
+                                index={index}/>
+}
+                            <br/>
+
+                        </div>
+                    )
+                }
 }
             </CellMeasurer>
 
@@ -110,7 +110,7 @@ export default class NewsFeed extends React.Component {
 
     _onScrollToRowChange(event) {
 
-        const {list} = this.props.list;
+        const {list} = this.state.list;
         let scrollToIndex = Math.min(list.length - 1, parseInt(event.target.value, 10),);
 
         if (isNaN(scrollToIndex)) {
@@ -123,55 +123,62 @@ export default class NewsFeed extends React.Component {
     }
     _setListRef = ref => {
         this._list = ref;
-        
-      };
+
+    };
     recalculateRowHeight(index) {
-        
+
         this
             ._cache
             .clear(index);
-            
+
         this
             ._list
             .recomputeRowHeights(index);
-            // this._list.forceUpdate()
 
-    }   
+    }
+    componentWillReceiveProps(nextProps) {
+
+        this.setState({list: nextProps.list});
+
+    }
+    componentDidUpdate(prevProps, prevState) {
+        this
+            ._list
+            .forceUpdateGrid();
+
+    }
+    componentWillUnmount() {
+
+        this.setState({list: []});
+
+    }
     render() {
         const {rowCount, overscanRowCount} = this.state;
-        
+
         return (
-            <div className="WindowScrollerWrapper" >
-                {/* <InfiniteLoader
-                    isRowLoaded={this._isRowLoaded}
-                    loadMoreRows={this._loadMoreRows}
-                    rowCount={rowCount}
-                    threshold={10}>
-                    {({onRowsRendered, registerChild}) => ( */}
-                        <WindowScroller ref={(ref) => this._windowScroller = ref}>
-                            {({height, isScrolling, onChildScroll, scrollTop}) => (
+            <div className="WindowScrollerWrapper">
 
-                                <AutoSizer disableHeight>
-                                    {({width}) => (
-                                    <List
-                                        autoHeight
-                                        ref={this._setListRef}
-                                        deferredMeasurementCache={this._cache}
-                                        height={height}
-                                        isScrolling={isScrolling}
-                                        scrollTop={scrollTop}
-                                        onScroll={onChildScroll}
-                                        overscanRowCount={overscanRowCount}
-                                        rowCount={rowCount}
-                                        rowHeight={this._cache.rowHeight}
-                                        rowRenderer={this._rowRenderer}
-                                        width={width}/>)}
-                                </AutoSizer>
+                <WindowScroller ref={(ref) => this._windowScroller = ref}>
+                    {({height, isScrolling, onChildScroll, scrollTop}) => (
 
-                            )}
-                        </WindowScroller>
-                    {/* )} */}
-                {/* </InfiniteLoader> */}
+                        <AutoSizer disableHeight>
+                            {({width}) => (<List
+                                autoHeight
+                                ref={this._setListRef}
+                                deferredMeasurementCache={this._cache}
+                                height={height}
+                                isScrolling={isScrolling}
+                                scrollTop={scrollTop}
+                                onScroll={onChildScroll}
+                                overscanRowCount={overscanRowCount}
+                                rowCount={rowCount}
+                                rowHeight={this._cache.rowHeight}
+                                rowRenderer={this._rowRenderer}
+                                width={width}/>)}
+                        </AutoSizer>
+
+                    )}
+                </WindowScroller>
 
             </div>
         )

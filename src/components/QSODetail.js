@@ -15,45 +15,46 @@ import "../styles/style.css";
 class QSODetail extends React.Component {
     state = {
         active: true,
-        showModal: false
+        showModal: false,
+        idqso: null
 
     }
     componentWillReceiveProps(nextProps) {
-
         if (nextProps.qso) {
             this.setState({active: false})
         }
+        // console.log(nextProps.FetchingQSO)
+        // if (!nextProps.FetchingQSO) 
+        //     this.props.actions.doFetchQSO(this.props.match.params.idqso);
 
-    }
+        }
     componentDidMount() {
+        
+        this.setState({idqso: this.props.match.params.idqso})
         if (!this.props.FetchingQSO) 
             this.props.actions.doFetchQSO(this.props.match.params.idqso);
         }
     
     render() {
-        let  qsos_aux = [];
-        let qsos = Immutable.List([]);
+        let qsos_aux = [];
+        let qsos = Immutable.List([]);     
         if (this.props.qso) {
             qsos_aux.push(this.props.qso);
             qsos = Immutable.List(qsos_aux);
-            
-            
-            qsos = 
-                qsos_aux
-                .map((qso, i) => {
-                    switch (qso.type) {
-                        case "QSO":
-                            return <FeedItem key={i} qso={qso}/>;
-                        case "SHARE":
-                            return <FeedItemShare key={i} qso={qso}/>;
-                        default:
-                            return null;
-                    }
-                })
-                
-               
-        }
 
+            qsos = qsos_aux.map((qso, i) => {
+                switch (qso.type) {
+                    case "QSO":
+                        return <FeedItem key={i} qso={qso}/>;
+                    case "SHARE":
+                        return <FeedItemShare key={i} qso={qso}/>;
+                    default:
+                        return null;
+                }
+            })
+
+        }
+      
         return (
             <div className='qsoDetail-container'>
                 {!this.props.qso && <Dimmer active={this.state.active} page>
@@ -69,7 +70,6 @@ class QSODetail extends React.Component {
 
                 <div className='qsoDetail-main'>
 
-                    
                     {this.props.qso && <NewsFeed list={qsos}/>}
 
                 </div>

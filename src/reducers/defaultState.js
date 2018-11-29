@@ -63,6 +63,7 @@ export default(state = initialState, action) => {
             newStore = Object.assign({}, state, {
                 ...state,
                 userData: userInfo
+                
             });
             return newStore;
         case DELETE_QSO:
@@ -146,7 +147,8 @@ export default(state = initialState, action) => {
             };
             newStore = Object.assign({}, state, {
                 ...state,
-                userData: userInfo
+                userData: userInfo,
+                qso: null
             });
             return newStore;
         case RECEIVE_FOLLOWERS:
@@ -215,7 +217,7 @@ export default(state = initialState, action) => {
             newStore = Object.assign({}, state, {
                 ...state,
                 qso: action.qso,
-                FetchingQSO: true
+                FetchingQSO : action.FetchingQso
             });
             return newStore;
         case RECEIVE_QSO_LINK:
