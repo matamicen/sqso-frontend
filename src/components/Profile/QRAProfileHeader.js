@@ -29,11 +29,11 @@ const QRAProfileHeader = (props) => {
                         <span className='qra'>
                             {props.qraInfo.qra}
                         </span><br/>
-                        <span className='name'>
+                        <div className='name'>
                             {props.qraInfo.firstname && props.qraInfo.firstname + " "
 }
                             {props.qraInfo.lastname && props.qraInfo.lastname
-}</span><br/><br/>
+}</div><br/><br/>
                         <div className='follow'>{(props.isAuthenticated && props.qraInfo.qra !== props.currentQRA) && <Button size='mini' positive={!props.followed} onClick={() => props.onClick()}>
                                 {buttonText}
                             </ Button>}
