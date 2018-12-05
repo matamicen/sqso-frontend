@@ -8,31 +8,12 @@ export default class QRAs extends React.Component {
     render() {
         return (
             <div className='feed-item-qras'>
-
                 {this
                     .props
                     .qras
                     .map((qra, i) => <div className='feed-item-qras-qra' key={i} >
                         <QRA key={i} avatarpic={qra.avatarpic} qra={qra.qra}/>
-                    </div>)}
-                {this
-                    .props
-                    .qras
-                    .map((qra, i) => <div className='feed-item-qras-qra'key={i}>
-                        <QRA key={i} avatarpic={qra.avatarpic} qra={qra.qra}/>
-                    </div>)}
-                {this
-                    .props
-                    .qras
-                    .map((qra, i) => <div className='feed-item-qras-qra'key={i}>
-                        <QRA key={i} avatarpic={qra.avatarpic} qra={qra.qra}/>
-                    </div>)}
-{this
-    .props
-    .qras
-    .map((qra, i) => <div className='feed-item-qras-qra' key={i}>
-        <QRA key={i} avatarpic={qra.avatarpic} qra={qra.qra}/>
-    </div>)}
+                    </div>)}                
             </div>
         );
     }
