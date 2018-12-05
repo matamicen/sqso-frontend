@@ -1,35 +1,39 @@
 import React from "react";
 import QRA from "./QRA";
-import Slider from 'react-slick'
+
+import "../../styles/style.css";
 
 export default class QRAs extends React.Component {
 
     render() {
-        var slidesToShow = Math.min(this.props.qras.length, 4);
-        const settings = {
-            // className: "center",
-            infinite: true,
-
-            slidesToShow: slidesToShow
-        };
         return (
+            <div className='feed-item-qras'>
 
-            <Slider {...settings}>
                 {this
                     .props
                     .qras
-                    .map((qra, i) => <div
-                        key={i}
-                        style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                    }}>
+                    .map((qra, i) => <div className='feed-item-qras-qra' key={i} >
                         <QRA key={i} avatarpic={qra.avatarpic} qra={qra.qra}/>
                     </div>)}
-
-            </Slider>
-
+                {this
+                    .props
+                    .qras
+                    .map((qra, i) => <div className='feed-item-qras-qra'key={i}>
+                        <QRA key={i} avatarpic={qra.avatarpic} qra={qra.qra}/>
+                    </div>)}
+                {this
+                    .props
+                    .qras
+                    .map((qra, i) => <div className='feed-item-qras-qra'key={i}>
+                        <QRA key={i} avatarpic={qra.avatarpic} qra={qra.qra}/>
+                    </div>)}
+{this
+    .props
+    .qras
+    .map((qra, i) => <div className='feed-item-qras-qra' key={i}>
+        <QRA key={i} avatarpic={qra.avatarpic} qra={qra.qra}/>
+    </div>)}
+            </div>
         );
     }
 }

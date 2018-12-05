@@ -48,7 +48,19 @@
 .feed-item-comments {
     overflow: 'visible';
 }
-
+.feed-item-qras {
+    
+    display: flex;
+    overflow-x: auto;
+    justify-content: flex-start;
+}
+.feed-item-qras::before, .feed-item-qras::after {
+    content: '';  /* Insert pseudo-element */
+    margin: auto; /* Make it push flex items to the center */
+  }
+.feed-item-qras-qra {
+    margin-right: 15px;
+}
 /* QRA PROFILE */
 
 .profile-container {
