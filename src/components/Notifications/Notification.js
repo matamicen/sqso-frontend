@@ -23,43 +23,28 @@ export default class Notification extends React.Component {
         let notif = this.props.notification;
         let message;
         switch (this.props.notification.activity_type) {
-            case 1: //Follow
-                message = notif.QRA + " now follows " + notif.REF_QRA;
+            case 1: //Follow               
                 return (
                     <List.Description>
-                        <Link to={"/" + notif.REF_QRA} onClick={this.handleOnClick}>{message}</Link>
+                        <Link to={"/" + notif.REF_QRA} onClick={this.handleOnClick}>{notif.message}</Link>
                     </List.Description>
                 );
-            case 10: //new QSO
-                switch (notif.qso_type) {
-                    case 'QSO':
-                        message = notif.QRA + " worked a QSO on mode:" + notif.qso_mode + ", band: " + notif.qso_band;
-                        break;
-                    case 'LISTEN':
-                        message = notif.QRA + " listened a QSO on mode:" + notif.qso_mode + ", band: " + notif.qso_band;
-                        break;
-                    default:
-                        console.log(notif);
-                        break;
-                }
-
+            case 10: //new QSO               
                 return (
                     <List.Description>
-                        <Link to={"/qso/" + notif.QSO_GUID} onClick={this.handleOnClick}>{message}</Link>
+                        <Link to={"/qso/" + notif.QSO_GUID} onClick={this.handleOnClick}>{notif.message}</Link>
                     </List.Description>
                 );
-            case 12: //add QRA to QSO
-                message = notif.QRA + " included " + notif.REF_QRA + " on his new QSO" ;
+            case 12: //add QRA to QSO                
                 return (
                     <List.Description>
-                        <Link to={"/qso/" + notif.QSO_GUID} onClick={this.handleOnClick}>{message}</Link>
+                        <Link to={"/qso/" + notif.QSO_GUID} onClick={this.handleOnClick}>{notif.message}</Link>
                     </List.Description>
                 );
-            case 18: //add QSO Comment
-                message = notif.QRA + " commented a QSO created by " + notif.REF_QRA;
+            case 18: //add QSO Comment                
                 return (
                     <List.Description>
-                        <Link to={"/qso/" + notif.QSO_GUID} onClick={this.handleOnClick}>{message}</Link>
+                        <Link to={"/qso/" + notif.QSO_GUID} onClick={this.handleOnClick}>{notif.message}</Link>
                     </List.Description>
                 );
             case 20: //add QSO Link

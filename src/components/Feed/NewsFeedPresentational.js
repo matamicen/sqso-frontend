@@ -4,7 +4,6 @@ import React from 'react';
 
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import List from 'react-virtualized/dist/commonjs/List'
-// import InfiniteLoader from 'react-virtualized/dist/commonjs/InfiniteLoader'
 import WindowScroller from 'react-virtualized/dist/commonjs/WindowScroller'
 import {CellMeasurer} from 'react-virtualized/dist/commonjs/CellMeasurer'
 import {CellMeasurerCache} from 'react-virtualized/dist/commonjs/CellMeasurer'
