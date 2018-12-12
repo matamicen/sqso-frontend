@@ -54,10 +54,10 @@ export default class Notification extends React.Component {
                     </List.Description>
                 );
             case 23: //add QSO Like
-                message = notif.QRA + " liked a QSO created by " + notif.REF_QRA;
+                
                 return (
                     <List.Description>
-                        <Link to={"/qso/" + notif.QSO_GUID} onClick={this.handleOnClick}>{message}</Link>
+                        <Link to={"/qso/" + notif.QSO_GUID} onClick={this.handleOnClick}>{notif.message}</Link>
                     </List.Description>
                 );
             default:
