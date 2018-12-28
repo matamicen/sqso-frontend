@@ -1,27 +1,30 @@
-import React from "react";
+import React, {Fragment} from "react";
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon'
-
+import {withRouter} from "react-router-dom";
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/Actions';
 import API from '@aws-amplify/api';
-import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
+
 import ReactGA from 'react-ga';
-import Header from "semantic-ui-react/dist/commonjs/elements/Header";
+
+import Confirm from "semantic-ui-react/dist/commonjs/addons/Confirm"
 class QSORePostButton extends React.Component {
     state = {
         showConfirmationRequest: false,
-        showMessage: false
+        
+        openLogin: false
 
     }
     doRePost() {
-        if (!this.props.isAuthenticated) 
-            return null;
+        this.closeConfirmationRequest();
         
         let apiName = 'superqso';
         let path = '/qso-share';
-        let qso = (this.props.qso.type === 'SHARE') ? this.props.qso.idqso_shared : this.props.qso.idqsos;
+        let qso = (this.props.qso.type === 'SHARE')
+            ? this.props.qso.idqso_shared
+            : this.props.qso.idqsos;
         var datetime = new Date();
         let myInit = {
             body: {
@@ -38,13 +41,8 @@ class QSORePostButton extends React.Component {
             .then(response => {
                 if (response.body.error > 0) {
                     console.error(response.body.message);
-                } else {
-
-                   this.closeConfirmationRequest();
-                   ReactGA.event({
-                    category: 'QSO',
-                    action: 'repost'
-                  });
+                } else {                    
+                    ReactGA.event({category: 'QSO', action: 'repost'});
                 }
             })
             .catch(error => {
@@ -52,74 +50,53 @@ class QSORePostButton extends React.Component {
             });
 
     }
-    openConfirmationRequest = () => { if (this.props.isAuthenticated) 
-        this.setState({showConfirmationRequest: true}) }
+    openConfirmationRequest = () => {
+        if (this.props.isAuthenticated) {
+            this.setState({showConfirmationRequest: true})
+        } else {
+            this.setState({openLogin: true})
+        }
+    }
     closeConfirmationRequest = () => this.setState({showConfirmationRequest: false})
-    open = () => this.setState({showMessage: true})
+    
     close = () => {
-        this.setState({showMessage: false})
+        
         this.setState({showReportContent: false})
     }
+
     render() {
-        const {showMessage, showConfirmationRequest} = this.state
+        const {showConfirmationRequest} = this.state
         return (
-
-            <Modal
+            <Fragment>
+            
+            <Button icon onClick={() => this.setState({showConfirmationRequest: true})}>
+                < Icon name='retweet'/>
+            </Button>
+            <Confirm
+                size='mini'
+                open={this.state.openLogin}
+                onCancel={() => this.setState({openLogin: false})}
+                onConfirm={() => this.props.history.push("/login")}
+                cancelButton='Cancel'
+                confirmButton="Login"
+                content='Please Login to perform this action'/>
+            <Confirm
+                size="mini"
                 open={showConfirmationRequest}
-                onOpen={this.openConfirmationRequest}
-                onClose={this.closeConfirmationRequest}
-                basic
-                size='tiny'
-                closeIcon
-                trigger={< Button icon > < Icon name = 'retweet' /> </Button>}>
-                
-                <Header icon='retweet' content='RePost Content'/>
-                <Modal.Content>
-                    <p>
-                        Confirm RePost
-                    </p>
-                </Modal.Content>
-                <Modal.Actions>
-                    <Button basic color='red' inverted onClick={this.closeConfirmationRequest}>
-                        <Icon name='remove'/>
-                        No
-                    </Button>
-                    <Button
-                        color='green'
-                        inverted
-                        onClick={this
-                        .doRePost
-                        .bind(this)}>
-                        <Icon name='checkmark'/>
-                        Yes
-                    </Button>
-                </Modal.Actions>
+                onCancel={this.closeConfirmationRequest}
+                onConfirm={this
+                .doRePost
+                .bind(this)}
+                content='Confirm Repost'/>
 
-                <Modal
-                    dimmer={false}
-                    open={showMessage}
-                    onOpen={this.open}
-                    onClose={this.close}
-                    size='small'>
-                    <Modal.Header>RePost Confirmed</Modal.Header>
-                    <Modal.Content>
-                        <p>RePost Confirmed!</p>
-                    </Modal.Content>
-                    <Modal.Actions>
-                        <Button icon='check' content='Close' onClick={this.close}/>
-                    </Modal.Actions>
-                </Modal>
-
-            </Modal>
-
+         < /Fragment>
         );
     }
 }
 
-const mapStateToProps = (state) => ({token: state.default.userData.token, 
-                                    isAuthenticated: state.default.userData.isAuthenticated});
+const mapStateToProps = (state) => ({token: state.default.userData.token, isAuthenticated: state.default.userData.isAuthenticated});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(QSORePostButton);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(QSORePostButton));
