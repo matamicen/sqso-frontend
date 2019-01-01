@@ -13,13 +13,13 @@ import Confirm from "semantic-ui-react/dist/commonjs/addons/Confirm"
 class QSORePostButton extends React.Component {
     state = {
         showConfirmationRequest: false,
-        
+
         openLogin: false
 
     }
     doRePost() {
         this.closeConfirmationRequest();
-        
+
         let apiName = 'superqso';
         let path = '/qso-share';
         let qso = (this.props.qso.type === 'SHARE')
@@ -41,7 +41,7 @@ class QSORePostButton extends React.Component {
             .then(response => {
                 if (response.body.error > 0) {
                     console.error(response.body.message);
-                } else {                    
+                } else {
                     ReactGA.event({category: 'QSO', action: 'repost'});
                 }
             })
@@ -58,9 +58,9 @@ class QSORePostButton extends React.Component {
         }
     }
     closeConfirmationRequest = () => this.setState({showConfirmationRequest: false})
-    
+
     close = () => {
-        
+
         this.setState({showReportContent: false})
     }
 
@@ -68,28 +68,32 @@ class QSORePostButton extends React.Component {
         const {showConfirmationRequest} = this.state
         return (
             <Fragment>
-            
-            <Button icon onClick={() => this.setState({showConfirmationRequest: true})}>
-                < Icon name='retweet'/>
-            </Button>
-            <Confirm
-                size='mini'
-                open={this.state.openLogin}
-                onCancel={() => this.setState({openLogin: false})}
-                onConfirm={() => this.props.history.push("/login")}
-                cancelButton='Cancel'
-                confirmButton="Login"
-                content='Please Login to perform this action'/>
-            <Confirm
-                size="mini"
-                open={showConfirmationRequest}
-                onCancel={this.closeConfirmationRequest}
-                onConfirm={this
-                .doRePost
-                .bind(this)}
-                content='Confirm Repost'/>
 
-         < /Fragment>
+                <Button
+                    icon
+                    onClick={() => {
+                    this.setState(this.openConfirmationRequest)
+                }}>
+                    < Icon name='retweet'/>
+                </Button>
+                <Confirm
+                    size='mini'
+                    open={this.state.openLogin}
+                    onCancel={() => this.setState({openLogin: false})}
+                    onConfirm={() => this.props.history.push("/login")}
+                    cancelButton='Cancel'
+                    confirmButton="Login"
+                    content='Please Login to perform this action'/>
+                <Confirm
+                    size="mini"
+                    open={showConfirmationRequest}
+                    onCancel={this.closeConfirmationRequest}
+                    onConfirm={this
+                    .doRePost
+                    .bind(this)}
+                    content='Confirm Repost'/>
+
+            </Fragment>
         );
     }
 }
