@@ -1,6 +1,6 @@
 import React, {Fragment} from "react";
 import FeedItem from "./FeedItem";
-import FeedItemShare from "./FeedItemShare"
+
 import NewsFeed from './NewsFeedPresentational';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
@@ -46,12 +46,7 @@ class NewsFeedContainer extends React.Component {
                 .props
                 .qsos
                 .map((qso, i) => {
-                    switch (qso.type) {
-                        case "SHARE":
-                            return <FeedItemShare key={i} qso={qso}/>;
-                        default:
-                            return <FeedItem key={i} qso={qso}/>;
-                    }
+                    return <FeedItem key={i} qso={qso}/>
                 })
         }
 

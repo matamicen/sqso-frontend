@@ -1,6 +1,5 @@
 import React from "react";
 import FeedItem from './Feed/FeedItem'
-import FeedItemShare from "./Feed/FeedItemShare"
 import NewsFeed from './Feed/NewsFeedPresentational';
 import AppNavigation from './Home/AppNavigation'
 import Advertisement from 'semantic-ui-react/dist/commonjs/views/Advertisement'
@@ -43,14 +42,7 @@ class QSODetail extends React.Component {
             qsos = Immutable.List(qsos_aux);
 
             qsos = qsos_aux.map((qso, i) => {
-                switch (qso.type) {
-                    case "QSO":
-                        return <FeedItem key={i} qso={qso}/>;
-                    case "SHARE":
-                        return <FeedItemShare key={i} qso={qso}/>;
-                    default:
-                        return null;
-                }
+                return <FeedItem key={i} qso={qso}/>
             })
 
         }

@@ -24,7 +24,7 @@ import {Link} from 'react-router-dom'
 import FeedOptionsMenu from "./FeedOptionsMenu";
 import QSORePostButton from "./QSORePostButton";
 
-class FeedItemShare extends React.Component {
+class FeedItemRepost extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -71,6 +71,18 @@ class FeedItemShare extends React.Component {
             .filter((media) => media.type === 'audio');
         const commentsCounter = '(' + this.props.qso.comments.length + ')'
 
+        let text;
+
+        switch (this.props.qso.original[0].type) {
+            case "QSO":
+                text = ' worked a QSO with';
+                break;
+            case "LISTEN":
+                text = ' listened a QSO with';
+                break;
+            default:
+
+        }
         
         return (
             <Segment raised>
@@ -80,7 +92,7 @@ class FeedItemShare extends React.Component {
                         <Link to={"/" + this.props.qso.qra}>
                             <Image src={this.props.qso.profilepic} size='mini' avatar/> {this.props.qso.qra}
                         </Link>
-                        {'  '}shared a QSO
+                       {' reposted a QSO'}
                         <div
                             style={{
                             float: 'right'
@@ -99,10 +111,10 @@ class FeedItemShare extends React.Component {
                         <Divider hidden/>
                         <Segment raised>
                             <Feed.Label>
-                                <Link to={"/" + this.props.qso.original.qra}>
-                                    <Image src={this.props.qso.original.profilepic} size='mini' avatar/> {this.props.qso.original.qra}
+                                <Link to={"/" + this.props.qso.original[0].qra}>
+                                    <Image src={this.props.qso.original[0].profilepic} size='mini' avatar/> {this.props.qso.original[0].qra}
                                 </Link>
-                                {'  '}started a QSO
+                                {text}
                                 <div
                                     style={{
                                     float: 'right'
@@ -110,15 +122,15 @@ class FeedItemShare extends React.Component {
                             </Feed.Label>
                             <Divider hidden/>
                             <Feed.Extra text>
-                                <Label>Mode:</Label>{this.props.qso.original.mode}
-                                <Label>Band:</Label>{this.props.qso.original.band}
+                                <Label>Mode:</Label>{this.props.qso.original[0].mode}
+                                <Label>Band:</Label>{this.props.qso.original[0].band}
                                 <Label>QSO:
-                                </Label>{this.props.qso.original.idqsos}
+                                </Label>{this.props.qso.original[0].idqsos}
                                 <Label>GUID:
-                                </Label>{this.props.qso.original.GUID_URL}
+                                </Label>{this.props.qso.original[0].GUID_URL}
                                 <QRAs
-                                    avatarpic={this.props.qso.original.avatarpic}
-                                    qso_owner={this.props.qso.original.qra}
+                                    avatarpic={this.props.qso.original[0].avatarpic}
+                                    qso_owner={this.props.qso.original[0].qra}
                                     qras={this.props.qso.qras}/>
                             </Feed.Extra>
                             
@@ -126,7 +138,7 @@ class FeedItemShare extends React.Component {
                                 img={picList}
                                 measure={this.props.measure}
                                 idqso={this.props.qso.idqsos}
-                                qso_owner={this.props.qso.qra}
+                                qso_owner={this.props.qso.original[0].qra}
                                 />
                                 
 }
@@ -134,7 +146,7 @@ class FeedItemShare extends React.Component {
                             {audioList.length > 0 && <FeedAudioList
                                 mediaList={audioList}
                                 idqso={this.props.qso.idqsos}
-                                qso_owner={this.props.qso.qra}/>
+                                qso_owner={this.props.qso.original[0].qra}/>
 }
                         </Segment>
                         <Feed.Extra>
@@ -174,4 +186,4 @@ const mapStateToProps = (state, qsos) => ({fetchingQSOS: state.default.FetchingQ
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 });
-export default connect(mapStateToProps, mapDispatchToProps, null, {pure: false})(FeedItemShare);
+export default connect(mapStateToProps, mapDispatchToProps, null, {pure: false})(FeedItemRepost);

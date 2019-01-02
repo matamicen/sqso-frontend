@@ -335,7 +335,7 @@ export function doFetchQSO(idqso) {
         let path = '/qso-detail';
         let myInit = {
             body: {
-                "qso": idqso
+                "guid": idqso
             }, // replace this with attributes you need
             headers: {
                 "Content-Type": "application/json"
@@ -344,8 +344,9 @@ export function doFetchQSO(idqso) {
         API
             .post(apiName, path, myInit)
             .then(response => {
-
+console.log(response.body)
                 if (response.body.error === 0) {
+
                     dispatch(doReceiveQSO(response.body.message));
                 }
             })

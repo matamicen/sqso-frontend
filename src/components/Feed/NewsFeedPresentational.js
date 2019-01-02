@@ -1,5 +1,4 @@
 import FeedItem from './FeedItem'
-import FeedItemShare from "./FeedItemShare"
 import React from 'react';
 
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
@@ -82,20 +81,13 @@ export default class NewsFeed extends React.Component {
                     return (
                         <div style={style} key={key}>
 
-                            {row.props.qso.type !== 'SHARE' && <FeedItem
+                            <FeedItem
                                 key={key}
                                 qso={row.props.qso}
                                 measure={measure}
                                 recalculateRowHeight={this.recalculateRowHeight}
                                 index={index}/>
-}
-                            {row.props.qso.type === 'SHARE' && <FeedItemShare
-                                key={key}
-                                qso={row.props.qso}
-                                measure={measure}
-                                recalculateRowHeight={this.recalculateRowHeight}
-                                index={index}/>
-}
+
                             <br/>
 
                         </div>
