@@ -34,6 +34,7 @@ export default class ForgotPassword extends React.Component {
                 qra: '',
                 password: '',
                 passwordConfirm: ''
+
             }
         };
 
@@ -153,7 +154,7 @@ export default class ForgotPassword extends React.Component {
 
             }).catch(err => {
                 console.log(err);
-                this.setState({confirmError: err})
+                this.setState({confirmError: err.message})
             });
         }
     }
@@ -189,7 +190,7 @@ export default class ForgotPassword extends React.Component {
                             maxWidth: 450
                         }}>
                             <Header as='h2' color='teal' textAlign='center'>
-                                Forgot Password
+                                Recover Account
                             </Header>
                             <Form
                                 size='large'
@@ -241,7 +242,7 @@ export default class ForgotPassword extends React.Component {
                                                         maxWidth: 450
                                                     }}>
                                                         <Header as='h2' color='teal' textAlign='center'>
-                                                            Change Password
+                                                            Recover Account
                                                         </Header>
                                                         <Form
                                                             onSubmit={this
@@ -288,6 +289,7 @@ export default class ForgotPassword extends React.Component {
                                                                     .bind(this)}/> {this.state.formErrors.passwordConfirm && <Message negative content={this.state.formErrors.passwordConfirm}/>}
                                                             </Form.Field>
                                                             {this.state.forgotPasswordError && <Message negative content={this.state.forgotPasswordError}/>}
+                                                            {this.state.confirmError && <Message negative content={this.state.confirmError}/>}
                                                             <Form.Button content='Confirm Password'/>
                                                         </Form>
                                                     </Grid.Column>

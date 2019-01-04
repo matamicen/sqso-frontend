@@ -50,16 +50,16 @@ class LogIn extends React.Component {
                     .props
                     .history
                     .push("/");
+                    this
+                .props
+                .actions
+                .doFetchUserInfo(token)
             })
-            .catch(err => {
-
-                console.error(err);
-                this.setState({loginError: true});
+            
+            .catch(err => {                
+                this.setState({loginError: err.message});
             });
-        await this
-            .props
-            .actions
-            .doFetchUserInfo(token);
+            
 
     }
 
@@ -113,7 +113,7 @@ class LogIn extends React.Component {
                                             icon='user'
                                             iconPosition='left'
                                             placeholder='QRA'
-                                            error={this.state.loginError}
+                                            error={this.state.loginError? true:false}
                                             name='QRA'
                                             value={this.state.qra}
                                             onChange={this
@@ -130,7 +130,7 @@ class LogIn extends React.Component {
                                             icon='lock'
                                             iconPosition='left'
                                             type='password'
-                                            error={this.state.loginError}
+                                            error={this.state.loginError? true:false}
                                             placeholder='Password'
                                             name='password'
                                             onChange={this
@@ -139,11 +139,9 @@ class LogIn extends React.Component {
 
                                     </Form.Field>
 
-                                    {this.state.loginError && <Message>
-                                        <Message.List>
-                                            <Message.Item>User or Password invalid</Message.Item>
-                                        </Message.List>
-                                    </Message>}
+                                    {this.state.loginError && 
+                                        <Message negative content={this.state.loginError}/>
+                                       }
                                     <Button content='SignIn'/>
                                 </Segment>
                             </Form>
@@ -152,8 +150,8 @@ class LogIn extends React.Component {
                                 <Link to='/signup'>{' '}Sign Up</Link>
                             </Message>
                             <Message>
-                                Forgot Password?
-                                <Link to='/forgot'>{' '}Change Password</Link>
+                                
+                                <Link to='/forgot'>{' '}Forgot Password?</Link>
                             </Message>
                         </Grid.Column>
                     </Grid>
