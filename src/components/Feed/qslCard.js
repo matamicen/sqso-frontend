@@ -159,28 +159,36 @@ async function showImages(media, pdf) {
 async function getImage(url, own_profile) {
 
     var img;
-    var pathname = new URL(url).pathname;
-    pathname = url.split('/');
+    var newurl = new URL(url).pathname;
+    console.log(url)
+    console.log(newurl)
+    var pathname = newurl.split('/');
 console.log(pathname);
     var file = pathname[pathname.length - 2] + '/' + pathname[pathname.length - 1]
 console.log(file);
 console.log(own_profile);
     return new Promise(function (resolve, reject) {
         if (own_profile) {
-
-            Storage
-                .get(file, {level: pathname[4],
-                    identityId: decodeURIComponent(pathname[5])})
-                .then(result => {
-                    img = new Image();
-                    img.src = result;
+            img = new Image();
+                    img.src = url;
                     img.crossOrigin = 'Anonymous';
                     img.onload = function () {
 
                         resolve(img);
                     }
-                })
-                .catch(err => console.log(err));
+            // Storage
+            //     .get(file, {level: pathname[4],
+            //         identityId: decodeURIComponent(pathname[5])})
+            //     .then(result => {
+            //         img = new Image();
+            //         img.src = result;
+            //         img.crossOrigin = 'Anonymous';
+            //         img.onload = function () {
+
+            //             resolve(img);
+            //         }
+            //     })
+            //     .catch(err => console.log(err));
         } else {
 
             Storage.get(file, {

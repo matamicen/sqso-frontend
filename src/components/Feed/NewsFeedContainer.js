@@ -21,7 +21,7 @@ class NewsFeedContainer extends React.PureComponent {
         if (nextProps.qsosFetched) {
             this.setState({active: false})
         }
-
+        
         if (!nextProps.FetchingQSOS && !nextProps.qsosFetched && !nextProps.autheticating) {
 
             if (nextProps.isAuthenticated) 
@@ -47,7 +47,7 @@ class NewsFeedContainer extends React.PureComponent {
 
         return (
             <Fragment>
-                {!this.props.qsos && <Dimmer active={this.state.active} page>
+                {<Dimmer active={this.state.active} page>
                     <Loader>Loading</Loader>
                 </Dimmer>}
                 {this.props.qsos && this.props.qsos.length > 0 && <NewsFeed list={qsos}/>}
