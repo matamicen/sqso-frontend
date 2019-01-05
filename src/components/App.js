@@ -35,33 +35,34 @@ class App extends Component {
         let session = await Auth
             .currentSession()
             .catch(err => {
-                // console.log(err)
-                // console.log("User NOT Authenticated")
                 this
                     .props
                     .actions
                     .doLogout();
-                this.setState({loginValidated: true});                
-               
+                this.setState({loginValidated: true});
+
             });
-            
-        if (session) {      
-            
-             this.setState({loginValidated: true});
-             this
-                .props
-                .actions
-                .doFetchUserInfo(session.idToken.jwtToken);
-             this
+        
+        if (session) {
+            // console.log(session.idToken.jwtToken)
+            this.setState({loginValidated: true});
+            this
                 .props
                 .actions
                 .doLogin(session.idToken.jwtToken, session.idToken.payload["cognito:username"].toUpperCase());
+            this
+                .props
+                .actions
+                .doFetchUserInfo(session.idToken.jwtToken);
 
-            
+        } else 
+            this
+                .props
+                .actions
+                .doSetPublicSession();
+
         }
-
-    }
-
+    
     componentDidMount() {
 
         this.loadAuthenticatedUser()
@@ -93,7 +94,7 @@ class App extends Component {
 
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({isAuthenticated: state.default.userData.isAuthenticated, token: state.default.userData.token});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 });

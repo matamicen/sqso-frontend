@@ -1,7 +1,5 @@
 import React from "react";
 
-
-
 import {Link, withRouter} from "react-router-dom";
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -37,29 +35,31 @@ class LogIn extends React.Component {
             .props
             .actions
             .doStartingLogin()
-        await Auth
+        let user = await Auth
             .signIn(this.state.qra, this.state.password)
-            .then(user => {
-
-                token = user.signInUserSession.idToken.jwtToken;
-                this
-                    .props
-                    .actions
-                    .doLogin(token, this.state.qra.toUpperCase());
-                    this
-                    .props
-                    .history
-                    .push("/");
-                    this
-                .props
-                .actions
-                .doFetchUserInfo(token)
-            })
-            
-            .catch(err => {                
+            .catch(err => {
+                console.log(err);
                 this.setState({loginError: err.message});
             });
-            
+        token = user.signInUserSession.idToken.jwtToken;
+        if (token) {
+            this
+                .props
+                .actions
+                .doLogin(token, this.state.qra.toUpperCase());
+            this
+                .props
+                .actions
+                .doFetchUserInfo(token);
+            this
+                .props
+                .actions
+                .doFetchUserFeed(token);
+            await this
+                .props
+                .history
+                .push("/");
+        }
 
     }
 
@@ -113,7 +113,9 @@ class LogIn extends React.Component {
                                             icon='user'
                                             iconPosition='left'
                                             placeholder='QRA'
-                                            error={this.state.loginError? true:false}
+                                            error={this.state.loginError
+                                            ? true
+                                            : false}
                                             name='QRA'
                                             value={this.state.qra}
                                             onChange={this
@@ -130,7 +132,9 @@ class LogIn extends React.Component {
                                             icon='lock'
                                             iconPosition='left'
                                             type='password'
-                                            error={this.state.loginError? true:false}
+                                            error={this.state.loginError
+                                            ? true
+                                            : false}
                                             placeholder='Password'
                                             name='password'
                                             onChange={this
@@ -139,9 +143,8 @@ class LogIn extends React.Component {
 
                                     </Form.Field>
 
-                                    {this.state.loginError && 
-                                        <Message negative content={this.state.loginError}/>
-                                       }
+                                    {this.state.loginError && <Message negative content={this.state.loginError}/>
+}
                                     <Button content='SignIn'/>
                                 </Segment>
                             </Form>
@@ -150,7 +153,7 @@ class LogIn extends React.Component {
                                 <Link to='/signup'>{' '}Sign Up</Link>
                             </Message>
                             <Message>
-                                
+
                                 <Link to='/forgot'>{' '}Forgot Password?</Link>
                             </Message>
                         </Grid.Column>

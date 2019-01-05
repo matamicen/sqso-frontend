@@ -18,7 +18,8 @@ import {
     CLEAR_QSO,
     CLEAR_QSO_LINK,
     NOTIFICATION_READ,
-    RECEIVE_NOTIFICATIONS
+    RECEIVE_NOTIFICATIONS,
+    PUBLIC_SESSION
 } from "../actions/Actions"
 
 const initialState = {
@@ -63,7 +64,7 @@ export default(state = initialState, action) => {
             newStore = Object.assign({}, state, {
                 ...state,
                 userData: userInfo
-                
+
             });
             return newStore;
         case DELETE_QSO:
@@ -217,7 +218,7 @@ export default(state = initialState, action) => {
             newStore = Object.assign({}, state, {
                 ...state,
                 qso: action.qso,
-                FetchingQSO : action.FetchingQso
+                FetchingQSO: action.FetchingQso
             });
             return newStore;
         case RECEIVE_QSO_LINK:
@@ -234,12 +235,34 @@ export default(state = initialState, action) => {
                 token: null,
                 authenticating: false,
                 isAuthenticated: false,
-                qra: null
+                qra: null, 
+                public:false
 
             };
             newStore = Object.assign({}, state, {
                 ...state,
                 userData: preparelogInUserData,
+                FetchingQSO: false,
+                qsos: [],
+                qsosFetched: false,
+                FetchingQRA: false,
+                QRAFetched: false
+            });
+
+            return newStore;
+        case PUBLIC_SESSION:
+            let publicSessionUserData = {
+                ...state.userData,
+                token: null,
+                authenticating: false,
+                isAuthenticated: false,
+                qra: null, 
+                public: true
+
+            };
+            newStore = Object.assign({}, state, {
+                ...state,
+                userData: publicSessionUserData,
                 FetchingQSO: false,
                 qsos: [],
                 qsosFetched: false,
@@ -254,7 +277,8 @@ export default(state = initialState, action) => {
                 token: action.token,
                 authenticating: true,
                 isAuthenticated: true,
-                qra: action.qra
+                qra: action.qra,
+                public:false
 
             };
             newStore = Object.assign({}, state, {
@@ -274,7 +298,8 @@ export default(state = initialState, action) => {
                 ...state.userData,
                 token: "",
                 qra: null,
-                isAuthenticated: false
+                isAuthenticated: false,
+                public:true
             };
             newStore = Object.assign({}, state, {
                 ...state,

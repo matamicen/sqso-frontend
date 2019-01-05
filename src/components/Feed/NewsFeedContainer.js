@@ -10,7 +10,7 @@ import 'react-virtualized/styles.css'; // only needs to be imported once
 import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
 import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
 import "../../styles/style.css";
-class NewsFeedContainer extends React.Component {
+class NewsFeedContainer extends React.PureComponent {
 
     state = {
         active: true,
@@ -18,23 +18,21 @@ class NewsFeedContainer extends React.Component {
 
     }
     componentWillReceiveProps(nextProps) {
+        console.log("public" + nextProps.public)
+        console.log("authenticating" + nextProps.autheticating)
+        console.log("isAuthenticated" + nextProps.isAuthenticated)
         if (nextProps.qsosFetched) {
             this.setState({active: false})
         }
 
         if (!nextProps.FetchingQSOS && !nextProps.qsosFetched && !nextProps.autheticating) {
-            //  this.setState({fetchingData: true});
-            nextProps.isAuthenticated
-                ? this
-                    .props
-                    .actions
-                    .doFetchUserFeed(this.props.token)
-                : this
-                    .props
-                    .actions
-                    .doFetchPublicFeed(this.props.token);
+
+            if (nextProps.isAuthenticated) 
+                this.props.actions.doFetchUserFeed(this.props.token)
+            if (nextProps.public) 
+                this.props.actions.doFetchPublicFeed(this.props.token);
+            }
         }
-    }
 
     render() {
 
@@ -67,7 +65,8 @@ const mapStateToProps = (state) => ({
     qsosFetched: state.default.qsosFetched,
     autheticating: state.default.userData.autheticating,
     isAuthenticated: state.default.userData.isAuthenticated,
-    token: state.default.userData.token
+    token: state.default.userData.token,
+    public: state.default.userData.public
 });
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)

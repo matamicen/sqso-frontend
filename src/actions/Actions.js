@@ -1,5 +1,6 @@
 import API from '@aws-amplify/api';
 import ReactGA from 'react-ga';
+export const PUBLIC_SESSION = 'PUBLIC_SESSION';
 export const PREPARE_LOGIN = 'PREPARE_LOGIN';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
@@ -156,6 +157,10 @@ export function doReceiveUserInfo(followers = null, following = null, profilepic
 export function doStartingLogin() {
     return {type: PREPARE_LOGIN}
 }
+export function doSetPublicSession() {
+    console.log("PUBLIC_SESSION");
+    return {type: PUBLIC_SESSION}
+}
 export function doLogin(token, qra) {
     ReactGA.set({userId: qra})
     ReactGA.event({category: 'User', action: 'Login'});
@@ -171,7 +176,9 @@ export function doLogin(token, qra) {
         qra: qra,
         profilepic: null,
         FetchingUser: false,
-        userFetched: false
+        userFetched: false,
+        public:false
+
     }
 }
 
@@ -194,7 +201,8 @@ export function doLogout() {
         FetchingUser: false,
         userFetched: false,
         QRAFetched: false,
-        FetchingQRA: false
+        FetchingQRA: false,
+        public:true
     }
 }
 
@@ -280,7 +288,7 @@ export function doFetchNotifications(token) {
         API
             .get(apiName, path, myInit)
             .then(response => {
-                if (response.body.error === 0) {                    
+                if (response.body.error === 0) {
                     dispatch(doReceiveNotifications(response.body.message));
                 }
             })
@@ -344,7 +352,7 @@ export function doFetchQSO(idqso) {
         API
             .post(apiName, path, myInit)
             .then(response => {
-console.log(response.body)
+
                 if (response.body.error === 0) {
 
                     dispatch(doReceiveQSO(response.body.message));
@@ -478,6 +486,6 @@ export function doReceiveQRA(qra) {
 }
 
 export function doReceiveFollowers(following) {
-    
+
     return {type: RECEIVE_FOLLOWERS, following: following}
 }
