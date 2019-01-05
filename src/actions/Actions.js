@@ -158,7 +158,7 @@ export function doStartingLogin() {
     return {type: PREPARE_LOGIN}
 }
 export function doSetPublicSession() {
-    console.log("PUBLIC_SESSION");
+    
     return {type: PUBLIC_SESSION}
 }
 export function doLogin(token, qra) {

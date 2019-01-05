@@ -17,10 +17,7 @@ class NewsFeedContainer extends React.PureComponent {
         showModal: false
 
     }
-    componentWillReceiveProps(nextProps) {
-        console.log("public" + nextProps.public)
-        console.log("authenticating" + nextProps.autheticating)
-        console.log("isAuthenticated" + nextProps.isAuthenticated)
+    componentWillReceiveProps(nextProps) {       
         if (nextProps.qsosFetched) {
             this.setState({active: false})
         }
