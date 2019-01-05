@@ -161,10 +161,9 @@ async function getImage(url, own_profile) {
     var img;
     var pathname = new URL(url).pathname;
     pathname = url.split('/');
-console.log(pathname);
+
     var file = pathname[pathname.length - 2] + '/' + pathname[pathname.length - 1]
-console.log(file);
-console.log(own_profile);
+
     return new Promise(function (resolve, reject) {
         if (own_profile) {
 
