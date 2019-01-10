@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from "react";
+import React, {PureComponent, Fragment} from "react";
 
 import {Route, Switch, withRouter} from "react-router-dom";
 
@@ -24,7 +24,7 @@ import Notifications from "./Notifications/Notifications";
 
 Amplify.configure(aws_exports);
 
-class App extends Component {
+class App extends PureComponent {
     constructor() {
         super();
         this.state = {
@@ -42,7 +42,7 @@ class App extends Component {
                 this.setState({loginValidated: true});
 
             });
-        
+
         if (session) {
             // console.log(session.idToken.jwtToken)
             this.setState({loginValidated: true});
@@ -70,7 +70,6 @@ class App extends Component {
     }
 
     render() {
-
         if (!this.state.loginValidated) 
             return null;
         
@@ -94,7 +93,7 @@ class App extends Component {
 
 }
 
-const mapStateToProps = (state) => ({isAuthenticated: state.default.userData.isAuthenticated, token: state.default.userData.token});
+const mapStateToProps = (state) => ({});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 });

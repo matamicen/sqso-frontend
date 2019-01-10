@@ -32,8 +32,9 @@ class AuthenticatedNavigation extends React.Component {
             })
             .catch(err => console.log(err));
 
-    }
+    }    
     notificationIcon() {
+        
         if (this.props.notifications.length > 0) {
             return (
                 <Icon.Group size='large'>

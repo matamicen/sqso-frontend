@@ -158,7 +158,7 @@ export function doStartingLogin() {
     return {type: PREPARE_LOGIN}
 }
 export function doSetPublicSession() {
-    
+
     return {type: PUBLIC_SESSION}
 }
 export function doLogin(token, qra) {
@@ -177,7 +177,7 @@ export function doLogin(token, qra) {
         profilepic: null,
         FetchingUser: false,
         userFetched: false,
-        public:false
+        public: false
 
     }
 }
@@ -202,7 +202,7 @@ export function doLogout() {
         userFetched: false,
         QRAFetched: false,
         FetchingQRA: false,
-        public:true
+        public: true
     }
 }
 
@@ -237,6 +237,7 @@ export function doFetchUserInfo(token) {
             .then(response => {
 
                 if (response.body.error === 0) {
+                    console.log(response.body.message);
                     dispatch(doReceiveUserInfo(response.body.message.followers, response.body.message.following, response.body.message.qra.profilepic, response.body.message.qra.avatarpic, response.body.message.notifications));
                 }
             })
@@ -322,6 +323,7 @@ export function doFetchPublicFeed() {
 }
 
 export function doRequestQSO() {
+    console.log("REQUEST_QSO")
     return {type: REQUEST_QSO, FetchingQSO: true}
 }
 
@@ -334,11 +336,12 @@ export function doReceiveQsoLink(qso) {
 export function doClearQsoLink() {
     return {type: CLEAR_QSO_LINK, qso_link: "", FetchingQSO: false}
 }
-
 export function doFetchQSO(idqso) {
+    console.log("doFetchQSO")
     ReactGA.set({qso: idqso})
     ReactGA.event({category: 'QSO', action: 'getInfo'});
-    return (dispatch) => {
+
+    return (dispatch) => {        
         let apiName = 'superqso';
         let path = '/qso-detail';
         let myInit = {
@@ -371,7 +374,7 @@ export function doFetchQsoLink(idqso) {
         let path = '/qso-detail';
         let myInit = {
             body: {
-                "qso": idqso
+                "guid": idqso
             }, // replace this with attributes you need
             headers: {
                 "Content-Type": "application/json"
@@ -381,10 +384,12 @@ export function doFetchQsoLink(idqso) {
             .post(apiName, path, myInit)
             .then(response => {
 
-                if (response.body.error === 0) {
+                if (response.body.error === 0) 
                     dispatch(doReceiveQsoLink(response.body.message));
+                else 
+                    console.log(response.body.message);
                 }
-            })
+            )
             .catch(error => {
                 console.log(error)
             });

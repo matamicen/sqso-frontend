@@ -42,6 +42,7 @@ const initialState = {
     qso: null,
     qso_link: null,
     FetchingQSO: false,
+    QSOFetched: false, 
     qra: null,
     FetchingQRA: false,
     QRAFetched: false
@@ -196,21 +197,24 @@ export default(state = initialState, action) => {
         case REQUEST_QSO:
             newStore = Object.assign({}, state, {
                 ...state,
-                FetchingQSO: true
+                FetchingQSO: true,
+                QSOFetched: false
             });
             return newStore;
         case CLEAR_QSO:
             newStore = Object.assign({}, state, {
                 ...state,
                 qso: null,
-                FetchingQSO: true
+                FetchingQSO: false,
+                QSOFetched: false
             });
             return newStore;
         case CLEAR_QSO_LINK:
             newStore = Object.assign({}, state, {
                 ...state,
                 qso_link: null,
-                FetchingQSO: true
+                FetchingQSO: true, 
+                QSOFetched: false
             });
             return newStore;
         case RECEIVE_QSO:
@@ -218,7 +222,8 @@ export default(state = initialState, action) => {
             newStore = Object.assign({}, state, {
                 ...state,
                 qso: action.qso,
-                FetchingQSO: action.FetchingQso
+                FetchingQSO: false,
+                QSOFetched: true
             });
             return newStore;
         case RECEIVE_QSO_LINK:

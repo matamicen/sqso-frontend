@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
 import Loader from 'semantic-ui-react/dist/commonjs/elements/Loader'
 
@@ -21,11 +21,12 @@ class FeedLink extends React.Component {
             .props
             .actions
             .doFetchQsoLink(this.props.link.GUID_URL);
-        this.setState({showModal: true});
+
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.qso_link) {
             this.setState({active: false})
+            this.setState({showModal: true});
         }
     }
     close = () => {
@@ -38,9 +39,11 @@ class FeedLink extends React.Component {
     }
     render() {
         return (
-            
+            <Fragment>
+                <Dimmer active={this.state.active} page>
+                    <Loader>Loading</Loader>
+                </Dimmer>
                 <Modal
-                    
                     closeIcon
                     open={this.state.showModal}
                     onClose={this
@@ -51,19 +54,17 @@ class FeedLink extends React.Component {
                     .bind(this)}
                     trigger={< p > QSO link created by {
                     this.props.link.qra
-                }. Click here for more details. </p>}>
-                    {!this.props.qso_link && <Loader/>}
+                }.Click here for more details. </p>}>
+
                     <Modal.Content>
                         <Modal.Description>
-                            <Dimmer active={this.state.active}>
-                                <Loader>Loading</Loader>
-                            </Dimmer>
+
                             {this.props.qso_link && <QSOFeedItem key={this.props.link.idqso_rel} qso={this.props.qso_link}/>
 }
                         </Modal.Description>
                     </Modal.Content>
                 </Modal>
-            
+            </Fragment>
         )
 
     }

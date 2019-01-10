@@ -11,7 +11,7 @@ import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
 import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
 import Immutable from 'immutable';
 import "../styles/style.css";
-class QSODetail extends React.Component {
+class QSODetail extends React.PureComponent {
     state = {
         active: true,
         showModal: false,
@@ -22,21 +22,30 @@ class QSODetail extends React.Component {
         if (nextProps.qso) {
             this.setState({active: false})
         }
-        // console.log(nextProps.FetchingQSO)
-        // if (!nextProps.FetchingQSO) 
-        //     this.props.actions.doFetchQSO(this.props.match.params.idqso);
+        // console.log(nextProps.FetchingQSO) if (!nextProps.FetchingQSO)
+        // this.props.actions.doFetchQSO(this.props.match.params.idqso);
 
-        }
+    }
     componentDidMount() {
         
-        this.setState({idqso: this.props.match.params.idqso})
-        if (!this.props.FetchingQSO) 
-            this.props.actions.doFetchQSO(this.props.match.params.idqso);
+        if (!this.props.FetchingQSO && !this.props.QSOFetched) {
+            
+            this
+                .props
+                .actions
+                .doRequestQSO()
+            this
+                .props
+                .actions
+                .doFetchQSO(this.props.match.params.idqso)
+            this.setState({idqso: this.props.match.params.idqso})
         }
-    
+    }
+
     render() {
+        
         let qsos_aux = [];
-        let qsos = Immutable.List([]);     
+        let qsos = Immutable.List([]);
         if (this.props.qso) {
             qsos_aux.push(this.props.qso);
             qsos = Immutable.List(qsos_aux);
@@ -46,7 +55,7 @@ class QSODetail extends React.Component {
             })
 
         }
-      
+
         return (
             <div className='qsoDetail-container'>
                 {!this.props.qso && <Dimmer active={this.state.active} page>
@@ -75,7 +84,8 @@ class QSODetail extends React.Component {
         );
     }
 }
-const mapStateToProps = (state) => ({qso: state.default.qso, FetchingQSO: state.default.FetchingQSO});
+const mapStateToProps = (state) => ({qso: state.default.qso, FetchingQSO: state.default.FetchingQSO, 
+QSOFetched: state.default.QSOFetched});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 });
