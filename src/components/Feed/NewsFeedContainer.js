@@ -25,9 +25,9 @@ class NewsFeedContainer extends React.PureComponent {
         if (!nextProps.FetchingQSOS && !nextProps.qsosFetched && !nextProps.autheticating) {
 
             if (nextProps.isAuthenticated) 
-                this.props.actions.doFetchUserFeed(this.props.token)
+                this.props.actions.doFetchUserFeed(nextProps.token)
             if (nextProps.public) 
-                this.props.actions.doFetchPublicFeed(this.props.token);
+                this.props.actions.doFetchPublicFeed();
             }
         }
 

@@ -9,8 +9,6 @@ import Label from 'semantic-ui-react/dist/commonjs/elements/Label'
 import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider'
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
 
-import Feed from 'semantic-ui-react/dist/commonjs/views/Feed'
-
 import QSOComments from "./QSOComments";
 import QSOLikeButton from "./QSOLikeButton";
 
@@ -38,23 +36,21 @@ class FeedItemRepost extends React.Component {
             .bind(this);
     }
 
-    shouldComponentUpdate(nextProps) {
-    
-        return nextProps.qsosFetched;
-    }
-
     handleOnComment() {
-
         this.setState({showComment: true});
-        this.recalculateRowHeight();
-    }
 
+    }
+    componentDidUpdate(prevProps, prevState) {
+        if ((this.state.showComment !== prevState.showComment) && (this.props.recalculateRowHeight)) 
+            this.props.recalculateRowHeight(this.props.index);
+
+        }
     recalculateRowHeight() {
 
         if (this.props.recalculateRowHeight) 
             this.props.recalculateRowHeight(this.props.index);
         }
-    componentDidMount(){
+    componentDidMount() {
         this.recalculateRowHeight();
     }
     render() {
@@ -83,100 +79,79 @@ class FeedItemRepost extends React.Component {
             default:
 
         }
-        
+
         return (
             <Segment raised>
 
-                <Feed.Event>
-                    <Feed.Label>
-                        <Link to={"/" + this.props.qso.qra}>
-                            <Image src={this.props.qso.profilepic} size='mini' avatar/> {this.props.qso.qra}
-                        </Link>
-                       {' reposted a QSO'}
-                        <div
-                            style={{
-                            float: 'right'
-                        }}>
+                <Link to={"/" + this.props.qso.qra}>
+                    <Image src={this.props.qso.profilepic} size='mini' avatar/> {this.props.qso.qra}
+                </Link>
+                {' reposted a QSO'}
+                <div style={{
+                    float: 'right'
+                }}>
 
-                            <FeedOptionsMenu
-                                qso_owner={this.props.qso.qra}
-                                idqso={this.props.qso.idqsos}
-                                guid={this.props.qso.GUID_QR}
-                                optionsCaller="FeedItem"/>
+                    <FeedOptionsMenu
+                        qso_owner={this.props.qso.qra}
+                        idqso={this.props.qso.idqsos}
+                        guid={this.props.qso.GUID_QR}
+                        optionsCaller="FeedItem"/>
 
-                        </div>
-                    </Feed.Label>
+                </div>
 
-                    <Feed.Content>
-                        <Divider hidden/>
-                        <Segment raised>
-                            <Feed.Label>
-                                <Link to={"/" + this.props.qso.original[0].qra}>
-                                    <Image src={this.props.qso.original[0].profilepic} size='mini' avatar/> {this.props.qso.original[0].qra}
-                                </Link>
-                                {text}
-                                <div
-                                    style={{
-                                    float: 'right'
-                                }}></div>
-                            </Feed.Label>
-                            <Divider hidden/>
-                            <Feed.Extra text>
-                                <Label>Mode:</Label>{this.props.qso.original[0].mode}
-                                <Label>Band:</Label>{this.props.qso.original[0].band}
-                                <Label>QSO:
-                                </Label>{this.props.qso.original[0].idqsos}
-                                <Label>GUID:
-                                </Label>{this.props.qso.original[0].GUID_URL}
-                                <QRAs
-                                    avatarpic={this.props.qso.original[0].avatarpic}
-                                    qso_owner={this.props.qso.original[0].qra}
-                                    qras={this.props.qso.qras}/>
-                            </Feed.Extra>
-                            
-                            {picList.length > 0 && <FeedImage
-                                img={picList}
-                                measure={this.props.measure}
-                                idqso={this.props.qso.idqsos}
-                                qso_owner={this.props.qso.original[0].qra}
-                                />
-                                
+                <Divider hidden/>
+                <Segment raised>
+
+                    <Link to={"/" + this.props.qso.original[0].qra}>
+                        <Image src={this.props.qso.original[0].profilepic} size='mini' avatar/> {this.props.qso.original[0].qra}
+                    </Link>
+                    {text}
+                    <div style={{
+                        float: 'right'
+                    }}></div>
+
+                    <Divider hidden/>
+
+                    <Label>Mode:</Label>{this.props.qso.original[0].mode}
+                    <Label>Band:</Label>{this.props.qso.original[0].band}
+                    <Label>QSO:
+                    </Label>{this.props.qso.original[0].idqsos}
+                    <Label>GUID:
+                    </Label>{this.props.qso.original[0].GUID_URL}
+                    <QRAs
+                        avatarpic={this.props.qso.original[0].avatarpic}
+                        qso_owner={this.props.qso.original[0].qra}
+                        qras={this.props.qso.qras}/> {picList.length > 0 && <FeedImage
+                        img={picList}
+                        measure={this.props.measure}
+                        idqso={this.props.qso.idqsos}
+                        qso_owner={this.props.qso.original[0].qra}/>
 }
 
-                            {audioList.length > 0 && <FeedAudioList
-                                mediaList={audioList}
-                                idqso={this.props.qso.idqsos}
-                                qso_owner={this.props.qso.original[0].qra}/>
+                    {audioList.length > 0 && <FeedAudioList
+                        mediaList={audioList}
+                        idqso={this.props.qso.idqsos}
+                        qso_owner={this.props.qso.original[0].qra}/>
 }
-                        </Segment>
-                        <Feed.Extra>
-                            <Divider hidden/>
-                            <Button.Group widths='4' basic>
-                                <QSOLikeButton qso={this.props.qso}/>
-                                <Button
-                                    onClick={this
-                                    .handleOnComment
-                                    .bind(this)}>
-                                    < Icon name='comment outline'/> {this.props.qso.comments.length > 0 && commentsCounter}
+                </Segment>
 
-                                </Button>
-                                <QSORePostButton qso={this.props.qso}/>
-                                <QSOShareButtons idqso={this.props.qso.GUID_URL}/>
-                            </Button.Group>
+                <Divider hidden/>
+                <Button.Group widths='4' basic>
+                    <QSOLikeButton qso={this.props.qso}/>
+                    <Button
+                        onClick={this
+                        .handleOnComment
+                        .bind(this)}>
+                        < Icon name='comment outline'/> {this.props.qso.comments.length > 0 && commentsCounter}
 
-                        </Feed.Extra>
-                        <Feed.Extra>
-                            <div
-                                style={{
-                                overflow: 'visible'
-                            }}>
-                                {this.state.showComment && <QSOComments
-                                    qso={this.props.qso}
-                                    recalculateRowHeight={this.recalculateRowHeight}/>}
-                            </div>
-                        </Feed.Extra>
-                    </Feed.Content>
-                </Feed.Event>
+                    </Button>
+                    <QSORePostButton qso={this.props.qso}/>
+                    <QSOShareButtons idqso={this.props.qso.GUID_URL}/>
+                </Button.Group>
+
+                {this.state.showComment && <QSOComments
+                    qso={this.props.qso}
+                    recalculateRowHeight={this.recalculateRowHeight}/>}
 
             </Segment>
         )

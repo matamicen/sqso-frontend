@@ -237,7 +237,7 @@ export function doFetchUserInfo(token) {
             .then(response => {
 
                 if (response.body.error === 0) {
-                    console.log(response.body.message);
+                    
                     dispatch(doReceiveUserInfo(response.body.message.followers, response.body.message.following, response.body.message.qra.profilepic, response.body.message.qra.avatarpic, response.body.message.notifications));
                 }
             })
@@ -322,8 +322,7 @@ export function doFetchPublicFeed() {
     };
 }
 
-export function doRequestQSO() {
-    console.log("REQUEST_QSO")
+export function doRequestQSO() {    
     return {type: REQUEST_QSO, FetchingQSO: true}
 }
 
@@ -336,8 +335,7 @@ export function doReceiveQsoLink(qso) {
 export function doClearQsoLink() {
     return {type: CLEAR_QSO_LINK, qso_link: "", FetchingQSO: false}
 }
-export function doFetchQSO(idqso) {
-    console.log("doFetchQSO")
+export function doFetchQSO(idqso) {    
     ReactGA.set({qso: idqso})
     ReactGA.event({category: 'QSO', action: 'getInfo'});
 

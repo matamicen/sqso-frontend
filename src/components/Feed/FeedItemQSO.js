@@ -37,7 +37,7 @@ class FeedItemQSO extends React.Component {
             .bind(this);
     }
 
-    // shouldComponentUpdate(nextProps) {     // return this.props.qsosFetched; }
+    
 
     handleOnComment() {
         this.setState({showComment: true});
