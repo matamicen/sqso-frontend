@@ -15,28 +15,25 @@ class QSOCommentItem extends React.Component {
     }
      
     render() {
-        var now = new Date();
-        var year;
-        var month;
-        var commentDate = new Date(this.props.comment.datetime);
+        var date = new Date(this.props.comment.datetime);
         var timestamp = "";
 
         if (this.props.comment.datetime) {
             // https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/
             // Date/toLocaleString
-            if (now.getMonth() !== commentDate.getMonth()) {
-                month = commentDate.toLocaleString('en-us', {month: "long"});
-                timestamp = commentDate.getDate() + " of " + month;
-            }
+            // if (now.getMonth() !== commentDate.getMonth()) {
+            //     month = commentDate.toLocaleString('en-us', {month: "long"});
+            //     timestamp = commentDate.getDate() + " of " + month;
+            // }
 
-            if (now.getYear() !== commentDate.getYear()) {
-                year = commentDate.getYear();
-                timestamp = timestamp + " of " + year;
-            }
-            if (timestamp) 
-                timestamp = timestamp + ' at ';
-            
-            timestamp = timestamp + commentDate.getHours() + ":" + commentDate.getMinutes();
+            // if (now.getYear() !== commentDate.getYear()) {
+            //     year = commentDate.getYear();
+            //     timestamp = timestamp + " of " + year;
+            // }
+            // if (timestamp) 
+            //     timestamp = timestamp + ' at ';
+            timestamp = date.toLocaleDateString("EN-US",{month:"short"}) + ' ' + date.getDate() + ', ' + date.getFullYear() + ' at ' + date.getUTCHours() + ':' + date.getMinutes();
+
         }
         
         
