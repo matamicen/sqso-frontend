@@ -1,10 +1,10 @@
 import React, {Fragment} from "react";
-import {bindActionCreators} from 'redux';
+
 import QRAProfile from './QRAProfilePresentational'
 import * as Actions from '../../actions/Actions';
 import {withRouter} from "react-router-dom";
 import {connect} from 'react-redux'
-
+import {bindActionCreators} from 'redux';
 import "../../styles/style.css";
 class QRAProfileContainer extends React.Component {
     constructor() {
@@ -20,6 +20,7 @@ class QRAProfileContainer extends React.Component {
         this.handleTabClick = this
             .handleTabClick
             .bind(this);
+           
     }
 
     componentDidMount() {
@@ -47,7 +48,7 @@ class QRAProfileContainer extends React.Component {
                     .some(o => o.qra === this.props.match.params.qra)
             });
         }
-    // shouldComponentUpdate(nextProps) {          return nextProps.QRAFetched; }
+    
     handleTabClick(i) {
         //  e.preventDefault();
         this.setState({tab: i});
@@ -75,12 +76,13 @@ class QRAProfileContainer extends React.Component {
                 .doUnfollowQRA(this.props.token, this.props.match.params.qra);
         }
     }
-
+ 
     render() {
 
         let qraInfo = null;
         if (this.props.qra) 
             qraInfo = this.props.qra.qra;
+        
         return (
             <Fragment>
                 {< QRAProfile
@@ -107,10 +109,12 @@ class QRAProfileContainer extends React.Component {
                 }
                 handleTabClick = {
                     this.handleTabClick
-                } 
-                tab = {this.state.tab}/>
+                }
+                tab = {
+                    this.state.tab
+                } />
 }
-               
+
             </Fragment>
         )
 

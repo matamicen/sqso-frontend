@@ -3,7 +3,7 @@ import React, {Fragment} from "react";
 import QRAProfileFollowing from './QRAProfileFollowing'
 import QRAProfileQsos from './QRAProfileQsos'
 import QRAProfileBio from './QRAProfileBio'
-
+import QRAProfileInfo from './QRAProfileInfo'
 import QRAProfileHeader from './QRAProfileHeader'
 
 import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
@@ -38,10 +38,11 @@ const QRAProfile = (props) => {
                     <div className='profile-buttons'>
                         <Segment>
 
-                            <Button.Group widths='3'>
+                            <Button.Group widths='5'>
                                 <Button onClick={()=>props.handleTabClick(1)}>QSO's</Button>
-                                <Button onClick={()=>props.handleTabClick(2)}>Info</Button>
-                                <Button onClick={()=>props.handleTabClick(3)}>Following</Button>
+                                <Button onClick={()=>props.handleTabClick(2)}>Bio</Button>
+                                <Button onClick={()=>props.handleTabClick(3)}>Info</Button>
+                                <Button onClick={()=>props.handleTabClick(4)}>Following</Button>
                             </Button.Group>
 
                         </Segment>
@@ -50,8 +51,9 @@ const QRAProfile = (props) => {
                     <Segment>
                     {{
                             1: <QRAProfileQsos qsos={props.qra.qsos}/>,
-                            2: <QRAProfileBio qraInfo={props.qraInfo}/>,
-                            3: <QRAProfileFollowing following={props.qra.following} />,
+                            2: <QRAProfileBio qraInfo={props.qraInfo} />,
+                            3: <QRAProfileInfo qraInfo={props.qraInfo} />,
+                            4: <QRAProfileFollowing following={props.qra.following} />,
                         }[props.tab]}
                         </Segment>
                     </div>

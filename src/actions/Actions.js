@@ -8,6 +8,7 @@ export const REQUEST_FEED = 'REQUEST_FEED';
 export const RECEIVE_FEED = 'RECEIVE_FEED';
 export const REQUEST_USERINFO = 'REQUEST_USERINFO';
 export const RECEIVE_USERINFO = 'RECEIVE_USERINFO';
+export const RECEIVE_USER_BIO = 'RECEIVE_USER_BIO';
 export const REQUEST_QSO = 'REQUEST_QSO';
 export const RECEIVE_QSO = 'RECEIVE_QSO';
 export const RECEIVE_QSO_LINK = 'RECEIVE_QSO_LINK';
@@ -237,7 +238,7 @@ export function doFetchUserInfo(token) {
             .then(response => {
 
                 if (response.body.error === 0) {
-                    
+
                     dispatch(doReceiveUserInfo(response.body.message.followers, response.body.message.following, response.body.message.qra.profilepic, response.body.message.qra.avatarpic, response.body.message.notifications));
                 }
             })
@@ -246,7 +247,38 @@ export function doFetchUserInfo(token) {
             });
     }
 }
+export function doSaveUserBio(token, bio) {
 
+    return (dispatch) => {
+        let apiName = 'superqso';
+        let path = '/qra-info/bio';
+        let myInit = {
+            body: {
+                "bio": bio
+            }, // replace this with attributes you need
+            headers: {
+                "Authorization": token
+            } // OPTIONAL
+        }
+
+        API
+            .post(apiName, path, myInit)
+            .then(response => {
+
+                if (response.body.error !== 0) 
+                    console.log(response.body.message)
+                else
+                dispatch(doReceiveUserBio(response.body.message));
+            })
+            .catch(error => {
+                console.log(error)
+            });
+    };
+}
+
+export function doReceiveUserBio(qra) {
+    return {type: RECEIVE_USER_BIO, qra: qra}
+}
 export function doFetchUserFeed(token) {
     // console.log("doFetchUserFeed");
 
@@ -322,7 +354,7 @@ export function doFetchPublicFeed() {
     };
 }
 
-export function doRequestQSO() {    
+export function doRequestQSO() {
     return {type: REQUEST_QSO, FetchingQSO: true}
 }
 
@@ -335,11 +367,11 @@ export function doReceiveQsoLink(qso) {
 export function doClearQsoLink() {
     return {type: CLEAR_QSO_LINK, qso_link: "", FetchingQSO: false}
 }
-export function doFetchQSO(idqso) {    
+export function doFetchQSO(idqso) {
     ReactGA.set({qso: idqso})
     ReactGA.event({category: 'QSO', action: 'getInfo'});
 
-    return (dispatch) => {        
+    return (dispatch) => {
         let apiName = 'superqso';
         let path = '/qso-detail';
         let myInit = {

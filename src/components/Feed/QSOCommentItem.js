@@ -13,40 +13,29 @@ class QSOCommentItem extends React.Component {
     state = {
         comment: null
     }
-     
+
     render() {
         var date = new Date(this.props.comment.datetime);
         var timestamp = "";
 
         if (this.props.comment.datetime) {
-            // https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/
-            // Date/toLocaleString
-            // if (now.getMonth() !== commentDate.getMonth()) {
-            //     month = commentDate.toLocaleString('en-us', {month: "long"});
-            //     timestamp = commentDate.getDate() + " of " + month;
-            // }
-
-            // if (now.getYear() !== commentDate.getYear()) {
-            //     year = commentDate.getYear();
-            //     timestamp = timestamp + " of " + year;
-            // }
-            // if (timestamp) 
-            //     timestamp = timestamp + ' at ';
-            timestamp = date.toLocaleDateString("EN-US",{month:"short"}) + ' ' + date.getDate() + ', ' + date.getFullYear() + ' at ' + date.getUTCHours() + ':' + date.getMinutes();
-
+            timestamp = date.toLocaleDateString("EN-US", {month: "short"}) + ' ' + date.getDate() + ', ' + date.getFullYear() + ' at ' + date.getUTCHours() + ':' + date.getMinutes();
         }
-        
-        
+
         return (
-            
+
             <Comment>
                 <Comment.Content>
                     <Item.Extra>
-                    <div
+                        <div
                             style={{
                             float: 'right'
                         }}>
-                    <FeedOptionsMenu  comment_owner={this.props.comment.qra} idqso={this.props.comment.idqso} idcomment={this.props.comment.idqsos_comments} optionsCaller="FeedComment"/>                                    
+                            <FeedOptionsMenu
+                                comment_owner={this.props.comment.qra}
+                                idqso={this.props.comment.idqso}
+                                idcomment={this.props.comment.idqsos_comments}
+                                optionsCaller="FeedComment"/>
                         </div>
                     </Item.Extra>
                     < Comment.Author >
@@ -70,7 +59,7 @@ class QSOCommentItem extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({token: state.default.userData.token,  currentQRA: state.default.userData.qra});
+const mapStateToProps = (state) => ({token: state.default.userData.token, currentQRA: state.default.userData.qra});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 })
