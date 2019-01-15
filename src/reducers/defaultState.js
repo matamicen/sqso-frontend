@@ -27,6 +27,7 @@ const initialState = {
     userData: {
         token: null,
         qra: null,
+        identityId: null,
         authenticating: false,
         isAuthenticated: false,
         following: [],
@@ -253,6 +254,7 @@ export default(state = initialState, action) => {
                 authenticating: false,
                 isAuthenticated: false,
                 qra: null,
+                identityId: null,
                 public: false
 
             };
@@ -274,6 +276,7 @@ export default(state = initialState, action) => {
                 authenticating: false,
                 isAuthenticated: false,
                 qra: null,
+                identityId: null,
                 public: true
 
             };
@@ -295,6 +298,7 @@ export default(state = initialState, action) => {
                 authenticating: true,
                 isAuthenticated: true,
                 qra: action.qra,
+                identityId: action.identityId,
                 public: false
 
             };
@@ -315,6 +319,7 @@ export default(state = initialState, action) => {
                 ...state.userData,
                 token: "",
                 qra: null,
+                identityId: null,
                 isAuthenticated: false,
                 public: true
             };

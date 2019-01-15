@@ -162,7 +162,7 @@ export function doSetPublicSession() {
 
     return {type: PUBLIC_SESSION}
 }
-export function doLogin(token, qra) {
+export function doLogin(token, qra, identityId) {
     ReactGA.set({userId: qra})
     ReactGA.event({category: 'User', action: 'Login'});
 
@@ -175,6 +175,7 @@ export function doLogin(token, qra) {
         qsos: null,
         qso: null,
         qra: qra,
+        identityId: identityId,
         profilepic: null,
         FetchingUser: false,
         userFetched: false,

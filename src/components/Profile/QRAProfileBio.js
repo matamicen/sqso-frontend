@@ -5,7 +5,6 @@ import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
 
 import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown";
-import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal'
 
 import * as Actions from '../../actions/Actions';
 import {withRouter} from "react-router-dom";
@@ -34,7 +33,12 @@ class QRAProfileBio extends React.Component {
             open: false,
             editorState: editorState
         };
-        this.handleOnSaveBio = this.handleOnSaveBio.bind(this);
+        this.handleOnSaveBio = this
+            .handleOnSaveBio
+            .bind(this);
+        this.uploadImageCallBack = this
+            .uploadImageCallBack
+            .bind(this);
     }
     getImage(path) {
         return new Promise((resolve, reject) => {
@@ -51,7 +55,7 @@ class QRAProfileBio extends React.Component {
         })
     }
     uploadImageCallBack(file) {
-        console.log(file)
+
         return new Promise((resolve, reject) => {
             let folder = 'bio/' + file.name;
             Storage
@@ -60,20 +64,13 @@ class QRAProfileBio extends React.Component {
                 contentType: 'image/png'
             })
                 .then(result => {
-                    Storage
-                        .get(folder, {level: 'protected'})
-                        .then(result => {
+                    let filepath = 'https://d3gbqmcrekpw4.cloudfront.net/protected/' + encodeURIComponent(this.props.identityId) + '/' + encodeURIComponent(result.key);
 
-                            resolve({
-                                data: {
-                                    link: result
-                                }
-                            })
-                        })
-                        .catch(err => {
-                            console.log(err);
-                            reject(err);
-                        })
+                    resolve({
+                        data: {
+                            link: filepath
+                        }
+                    })
                 })
                 .catch(err => {
                     console.log(err)
@@ -85,24 +82,48 @@ class QRAProfileBio extends React.Component {
     close = () => this.setState({open: false})
     open = () => this.setState({open: true})
     handleOnSaveBio = () => {
-        this.props.actions.doSaveUserBio(this.props.token,draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())))
+        this
+            .props
+            .actions
+            .doSaveUserBio(this.props.token, draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())))
         this.close();
     };
     onEditorStateChange = (editorState) => {
 
         this.setState({editorState: editorState});
-        
+
     }
     render() {
         const {open, editorState} = this.state
         return (
             <Fragment>
-                <Modal closeIcon open={open} onClose={this.close}>
-                    <Modal.Header>
-                        Edit Bio
-                    </Modal.Header>
-                    <Modal.Content>
+                <Segment raised>
 
+                    {this.props.isAuthenticated && this.props.currentQRA === this.props.qraInfo.qra && <div style={{
+                        float: 'right'
+                    }}>
+
+                        <Dropdown
+                            icon='ellipsis vertical'
+                            size='tiny'
+                            className='icon'
+                            pointing="right">
+                            <Dropdown.Menu>
+                                < Dropdown.Item text='Edit Bio' onClick={this.open}/>
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </div>
+}
+
+                    {(!open) && <Container >
+                        <div
+                            className='profile-bio'
+                            dangerouslySetInnerHTML={{
+                            __html: this.props.qraInfo.bio
+                        }}></div>
+                    </Container>
+}
+                    {open && <Container >
                         <Editor
                             editorState={editorState}
                             wrapperClassName="demo-wrapper"
@@ -133,43 +154,17 @@ class QRAProfileBio extends React.Component {
                                 }
                             }
                         }}/>
-
-                    </Modal.Content>
-                    <Modal.Actions>
-                        <Button negative onClick={() => this.close()}>Cancel</Button>
-                        <Button positive onClick={() => this.handleOnSaveBio()}>Save</Button>
-                    </Modal.Actions>
-                </Modal>
-                <Segment raised>
-                    
-                    {this.props.isAuthenticated && this.props.currentQRA === this.props.qraInfo.qra && <div style={{
-                        float: 'right'
-                    }}>
-
-                        <Dropdown
-                            icon='ellipsis vertical'
-                            size='tiny'
-                            className='icon'
-                            pointing="right">
-                            <Dropdown.Menu>
-                                < Dropdown.Item text='Edit Bio' onClick={this.open}/>
-                            </Dropdown.Menu>
-                        </Dropdown>
-                    </div>
-}
-
-                    
-                    <Container fluid>
                         <div
-                            className='profile-bio'
-                            dangerouslySetInnerHTML={{
-                            __html: this.props.qraInfo.bio
-                        }}></div>
+                            style={{
+                                textAlign: 'right'
+                        }}>
+                            <Button negative onClick={() => this.close()}>Cancel</Button>
+                            <Button positive onClick={() => this.handleOnSaveBio()}>Save</Button>
+                        </div>
                     </Container>
-
+}
                 </Segment>
-               
-                
+
             </Fragment>
         );
     }
@@ -177,6 +172,7 @@ class QRAProfileBio extends React.Component {
 const mapStateToProps = (state, ownProps) => ({
     //state: state,
     currentQRA: state.default.userData.qra,
+    identityId: state.default.userData.identityId,
     isAuthenticated: state.default.userData.isAuthenticated,
     token: state.default.userData.token
 });

@@ -57,11 +57,11 @@ class LogIn extends React.Component {
 
         if (user) {
             token = user.signInUserSession.idToken.jwtToken;
-
+            let credentials = await Auth.currentCredentials();            
             await this
                 .props
                 .actions
-                .doLogin(token, this.state.qra.toUpperCase());
+                .doLogin(token, this.state.qra.toUpperCase(),credentials.data.IdentityId);
             await this
                 .props
                 .actions

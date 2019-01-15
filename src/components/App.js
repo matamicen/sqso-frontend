@@ -44,12 +44,13 @@ class App extends PureComponent {
             });
 
         if (session) {
-            // console.log(session.idToken.jwtToken)
             this.setState({loginValidated: true});
+            let credentials = await Auth.currentCredentials();
+              
             this
                 .props
                 .actions
-                .doLogin(session.idToken.jwtToken, session.idToken.payload["cognito:username"].toUpperCase());
+                .doLogin(session.idToken.jwtToken, session.idToken.payload["cognito:username"].toUpperCase(), credentials.data.IdentityId);
             this
                 .props
                 .actions
