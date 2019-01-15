@@ -3,12 +3,8 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/css/bootstrap-theme.css";
 import {Row, Col, FormControl, Form, Button} from "react-bootstrap";
 import {browserHistory} from "react-router";
-// import {Config, CognitoIdentityCredentials} from "aws-sdk";
+
 import {NavLink} from "react-router-dom";
-// ES Modules, e.g. transpiling with Babel import appConfig from "./Config";
-// import PropTypes from 'prop-types'; Config.region = appConfig.region;
-// Config.credentials = new window.CognitoIdentityCredentials({
-// IdentityPoolId: appConfig.IdentityPoolId });
 
 export class Account extends React.Component {
     constructor(props) {

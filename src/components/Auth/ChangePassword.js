@@ -1,6 +1,6 @@
 import React from "react";
 // ES Modules, e.g. transpiling with Babel import {Config,
-// CognitoIdentityCredentials} from "aws-sdk"; import {CognitoUserPool} from
+
 // import appConfig from "./Config";
 import {Redirect} from "react-router-dom";
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button'

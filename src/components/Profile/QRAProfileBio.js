@@ -5,12 +5,12 @@ import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
 
 import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown";
-
+import Confirm from "semantic-ui-react/dist/commonjs/addons/Confirm"
 import * as Actions from '../../actions/Actions';
 import {withRouter} from "react-router-dom";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
-
+import API from '@aws-amplify/api';
 import {EditorState, convertToRaw, ContentState} from 'draft-js';
 import {Editor} from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
@@ -31,6 +31,7 @@ class QRAProfileBio extends React.Component {
         }
         this.state = {
             open: false,
+            openPornConfirm: false,
             editorState: editorState
         };
         this.handleOnSaveBio = this
@@ -65,12 +66,41 @@ class QRAProfileBio extends React.Component {
             })
                 .then(result => {
                     let filepath = 'https://d3gbqmcrekpw4.cloudfront.net/protected/' + encodeURIComponent(this.props.identityId) + '/' + encodeURIComponent(result.key);
+                    console.log(filepath)
+                    //CHECK NSFW
+                    let apiName = 'superqso';
+                    let path = '/nsfw-check';
+                    let myInit = {
+                        body: {
+                            "url": filepath
 
-                    resolve({
-                        data: {
-                            link: filepath
-                        }
-                    })
+                        }, // replace this with attributes you need
+                        headers: {
+                            "Authorization": this.props.token
+                        } // OPTIONAL
+                    }
+                    API
+                        .post(apiName, path, myInit)
+                        .then(response => {                            
+                            if (response.body.error > 0) {
+                                //NSFW
+                                Storage
+                                    .remove(result.key, {level: 'protected'})
+                                    .then(result => resolve(true))
+                                    .catch(err => reject(err));
+                                this.setState({openPornConfirm: true})
+                            } else 
+                                //SFW
+                                resolve({
+                                    data: {
+                                        link: filepath
+                                    }
+                                })
+                        })
+                        .catch(error => {
+                            reject(error);
+                        });
+
                 })
                 .catch(err => {
                     console.log(err)
@@ -97,6 +127,14 @@ class QRAProfileBio extends React.Component {
         const {open, editorState} = this.state
         return (
             <Fragment>
+                <Confirm
+                    size='mini'
+                    open={this.state.openPornConfirm}
+                    onCancel={() => this.setState({openPornConfirm: false})}
+                    onConfirm={() => this.setState({openPornConfirm: false})}
+                    cancelButton='Cancel'
+                    confirmButton="OK"
+                    content='The image you try to upload contain Nudity or sexual content.'/>
                 <Segment raised>
 
                     {this.props.isAuthenticated && this.props.currentQRA === this.props.qraInfo.qra && <div style={{
@@ -146,6 +184,7 @@ class QRAProfileBio extends React.Component {
                                 inDropdown: true
                             },
                             image: {
+                                urlEnabled: false,
                                 previewImage: true,
                                 uploadCallback: this.uploadImageCallBack,
                                 alt: {
@@ -156,7 +195,7 @@ class QRAProfileBio extends React.Component {
                         }}/>
                         <div
                             style={{
-                                textAlign: 'right'
+                            textAlign: 'right'
                         }}>
                             <Button negative onClick={() => this.close()}>Cancel</Button>
                             <Button positive onClick={() => this.handleOnSaveBio()}>Save</Button>
