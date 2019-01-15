@@ -9,7 +9,7 @@ import NavigationSearch from './NavigationSearch'
 import Auth from '@aws-amplify/auth';
 import {Link, withRouter} from "react-router-dom";
 import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
-class AuthenticatedNavigation extends React.Component {
+class AuthenticatedNavigation extends React.PureComponent {
     constructor() {
         super();
         this.state = {
@@ -52,7 +52,7 @@ class AuthenticatedNavigation extends React.Component {
 
     }
     render() {
-
+        
         return (
 
             <Menu fixed='top' style={{
@@ -78,6 +78,21 @@ class AuthenticatedNavigation extends React.Component {
                     <Dropdown item icon='setting'>
                         <Dropdown.Menu>
                             <Dropdown.Header content={this.props.currentQRA}/>
+                            <Dropdown.Divider/>
+                            <Dropdown.Item
+                                onClick={()=>this
+                                    .props
+                                    .history
+                                    .push('/'+this.props.currentQRA+'/bio')}>
+                                Edit My Bio
+                            </Dropdown.Item>
+                            <Dropdown.Item
+                                onClick={()=>this
+                                    .props
+                                    .history
+                                    .push('/'+this.props.currentQRA+'/info')}>
+                                Edit My Info
+                            </Dropdown.Item>
                             <Dropdown.Divider/>
                             <Dropdown.Item
                                 onClick={this

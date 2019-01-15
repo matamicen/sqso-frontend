@@ -39,10 +39,10 @@ const QRAProfile = (props) => {
                         <Segment>
 
                             <Button.Group widths='5'>
-                                <Button onClick={()=>props.handleTabClick(1)}>QSO's</Button>
-                                <Button onClick={()=>props.handleTabClick(2)}>Bio</Button>
-                                <Button onClick={()=>props.handleTabClick(3)}>Info</Button>
-                                <Button onClick={()=>props.handleTabClick(4)}>Following</Button>
+                                <Button onClick={()=>props.handleTabClick(1)} active={props.tab===1?true:false}>QSO's</Button>
+                                <Button onClick={()=>props.handleTabClick(2)} active={props.tab===2?true:false}>Bio</Button>
+                                <Button onClick={()=>props.handleTabClick(3)} active={props.tab===3?true:false}>Info</Button>
+                                <Button onClick={()=>props.handleTabClick(4)} active={props.tab===4?true:false}>Following</Button>
                             </Button.Group>
 
                         </Segment>

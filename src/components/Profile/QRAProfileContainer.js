@@ -12,7 +12,7 @@ class QRAProfileContainer extends React.Component {
         this.state = {
             active: true,
             followed: false,
-            tab: 1
+            tab: null
         };
         this.handleButtonClick = this
             .handleButtonClick
@@ -20,7 +20,7 @@ class QRAProfileContainer extends React.Component {
         this.handleTabClick = this
             .handleTabClick
             .bind(this);
-           
+
     }
 
     componentDidMount() {
@@ -34,9 +34,23 @@ class QRAProfileContainer extends React.Component {
                 .actions
                 .doFetchQRA(this.props.match.params.qra);
         }
-
+        switch (this.props.tab) {
+            case 'BIO':
+                this.setState({tab: 2});
+                break;
+            case 'INFO':
+                this.setState({tab: 3});
+                break;
+            case 'FOLLOWING':
+                this.setState({tab: 4});
+                break;
+            default:
+                this.setState({tab: 1});
+                break;
+        }
     }
     componentWillReceiveProps(nextProps) {
+
         if (nextProps.QRAFetched) {
             this.setState({active: false})
         }
@@ -50,7 +64,32 @@ class QRAProfileContainer extends React.Component {
         }
     
     handleTabClick(i) {
-        //  e.preventDefault();
+        switch (i) {
+            case 2:
+                this
+                    .props
+                    .history
+                    .push('/' + this.props.currentQRA + '/bio');
+                break;
+            case 3:
+                this
+                    .props
+                    .history
+                    .push('/' + this.props.currentQRA + '/info');
+                break;
+            case 4:
+                this
+                    .props
+                    .history
+                    .push('/' + this.props.currentQRA + '/following');
+                break;
+            default:
+                this
+                    .props
+                    .history
+                    .push('/' + this.props.currentQRA);
+                break;
+        }
         this.setState({tab: i});
     }
     handleButtonClick() {
@@ -76,7 +115,7 @@ class QRAProfileContainer extends React.Component {
                 .doUnfollowQRA(this.props.token, this.props.match.params.qra);
         }
     }
- 
+
     render() {
 
         let qraInfo = null;

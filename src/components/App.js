@@ -82,6 +82,18 @@ class App extends PureComponent {
                     <Route exact path="/forgot" component={() => <ForgotPassword/>}/>
                     <Route exact path="/notifications" component={() => <Notifications/>}/>
                     <Route exact path="/:qra" component={() => <QRAProfileContainer/>}/>
+                    <Route
+                        exact
+                        path="/:qra/bio"
+                        component={() => <QRAProfileContainer tab='BIO'/>}/>
+                    <Route
+                        exact
+                        path="/:qra/info"
+                        component={() => <QRAProfileContainer tab='INFO'/>}/>
+                        <Route
+                        exact
+                        path="/:qra/following"
+                        component={() => <QRAProfileContainer tab='FOLLOWING'/>}/>
                     <Route exact path="/qso/:idqso" component={() => <QSODetail/>}/>
 
                 </Switch>
