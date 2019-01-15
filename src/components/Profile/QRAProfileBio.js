@@ -74,10 +74,10 @@ class QRAProfileBio extends React.Component {
                         body: {
                             "url": filepath
 
-                        }, // replace this with attributes you need
+                        }, 
                         headers: {
                             "Authorization": this.props.token
-                        } // OPTIONAL
+                        } 
                     }
                     API
                         .post(apiName, path, myInit)
