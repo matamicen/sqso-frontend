@@ -69,25 +69,25 @@ class QRAProfileContainer extends React.Component {
                 this
                     .props
                     .history
-                    .push('/' + this.props.currentQRA + '/bio');
+                    .push('/' + this.props.match.params.qra + '/bio');
                 break;
             case 3:
                 this
                     .props
                     .history
-                    .push('/' + this.props.currentQRA + '/info');
+                    .push('/' + this.props.match.params.qra + '/info');
                 break;
             case 4:
                 this
                     .props
                     .history
-                    .push('/' + this.props.currentQRA + '/following');
+                    .push('/' + this.props.match.params.qra + '/following');
                 break;
             default:
                 this
                     .props
                     .history
-                    .push('/' + this.props.currentQRA);
+                    .push('/' + this.props.match.params.qra);
                 break;
         }
         this.setState({tab: i});
