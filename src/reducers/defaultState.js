@@ -20,7 +20,8 @@ import {
     NOTIFICATION_READ,
     RECEIVE_NOTIFICATIONS,
     PUBLIC_SESSION,
-    RECEIVE_USER_BIO
+    RECEIVE_USER_BIO,
+    RECEIVE_USER_DATA_INFO
 } from "../actions/Actions"
 
 const initialState = {
@@ -196,17 +197,27 @@ export default(state = initialState, action) => {
                 QRAFetched: action.QRAFetched
             });
             return newStore;
-        case RECEIVE_USER_BIO:
+        case RECEIVE_USER_DATA_INFO:
             let qra = {
                 ...state.qra,
-               qra: action.qra
+                qra: action.qra
             }
             newStore = Object.assign({}, state, {
                 ...state,
                 qra: qra
             });
             return newStore;
-            
+        case RECEIVE_USER_BIO:
+            qra = {
+                ...state.qra,
+                qra: action.qra
+            }
+            newStore = Object.assign({}, state, {
+                ...state,
+                qra: qra
+            });
+            return newStore;
+
         case REQUEST_QSO:
             newStore = Object.assign({}, state, {
                 ...state,

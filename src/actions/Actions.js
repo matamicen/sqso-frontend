@@ -9,6 +9,7 @@ export const RECEIVE_FEED = 'RECEIVE_FEED';
 export const REQUEST_USERINFO = 'REQUEST_USERINFO';
 export const RECEIVE_USERINFO = 'RECEIVE_USERINFO';
 export const RECEIVE_USER_BIO = 'RECEIVE_USER_BIO';
+export const RECEIVE_USER_DATA_INFO = 'RECEIVE_USER_DATA_INFO';
 export const REQUEST_QSO = 'REQUEST_QSO';
 export const RECEIVE_QSO = 'RECEIVE_QSO';
 export const RECEIVE_QSO_LINK = 'RECEIVE_QSO_LINK';
@@ -221,7 +222,6 @@ export function doReceiveFeed(qsos) {
     // console.log("doReceiveFeed")
     return {type: RECEIVE_FEED, qsos: qsos, FetchingQSOS: false, qsosFetched: true}
 }
-
 export function doFetchUserInfo(token) {
 
     return (dispatch) => {
@@ -247,6 +247,37 @@ export function doFetchUserInfo(token) {
                 console.log(error.response)
             });
     }
+}
+export function doSaveUserInfo(token, qra) {
+
+    return (dispatch) => {
+        dispatch(doRequestUserInfo());
+        let apiName = 'superqso';
+        let path = '/qra-info/info';
+        let myInit = {
+            body: {
+                "qra": qra
+            }, // replace this with attributes you need
+            headers: {
+                "Authorization": token
+            } // OPTIONAL
+        }
+        API
+            .post(apiName, path, myInit)
+            .then(response => {
+
+                if (response.body.error !== 0) 
+                    console.log(response.body.message)
+                else
+                dispatch(doReceiveUserDataInfo(response.body.message));
+            })
+            .catch(error => {
+                console.log(error.response)
+            });
+    }
+}
+export function doReceiveUserDataInfo(qra) {
+    return {type: RECEIVE_USER_DATA_INFO, qra: qra}
 }
 export function doSaveUserBio(token, bio) {
 

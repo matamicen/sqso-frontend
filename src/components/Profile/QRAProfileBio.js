@@ -2,7 +2,7 @@ import React, {Fragment} from 'react'
 
 import Container from 'semantic-ui-react/dist/commonjs/elements/Container'
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
-import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
+
 
 import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown";
 import Confirm from "semantic-ui-react/dist/commonjs/addons/Confirm"
@@ -30,7 +30,7 @@ class QRAProfileBio extends React.Component {
             }
         }
         this.state = {
-            open: false,
+            edit: false,
             openPornConfirm: false,
             editorState: editorState
         };
@@ -74,14 +74,14 @@ class QRAProfileBio extends React.Component {
                         body: {
                             "url": filepath
 
-                        }, 
+                        },
                         headers: {
                             "Authorization": this.props.token
-                        } 
+                        }
                     }
                     API
                         .post(apiName, path, myInit)
-                        .then(response => {                            
+                        .then(response => {
                             if (response.body.error > 0) {
                                 //NSFW
                                 Storage
@@ -109,8 +109,8 @@ class QRAProfileBio extends React.Component {
         });
     }
 
-    close = () => this.setState({open: false})
-    open = () => this.setState({open: true})
+    close = () => this.setState({edit: false})
+    open = () => this.setState({edit: true})
     handleOnSaveBio = () => {
         this
             .props
@@ -124,7 +124,7 @@ class QRAProfileBio extends React.Component {
 
     }
     render() {
-        const {open, editorState} = this.state
+        const {edit, editorState} = this.state
         return (
             <Fragment>
                 <Confirm
@@ -147,13 +147,18 @@ class QRAProfileBio extends React.Component {
                             className='icon'
                             pointing="right">
                             <Dropdown.Menu>
-                                < Dropdown.Item text='Edit Bio' onClick={this.open}/>
+                                {!edit && < Dropdown.Item text = 'Edit Bio' onClick = {
+                                    this.open
+                                } />}
+                                {edit && < Dropdown.Item text = 'Save Bio' onClick = {
+                                    this.handleOnSaveBio
+                                } />}
                             </Dropdown.Menu>
                         </Dropdown>
                     </div>
 }
 
-                    {(!open) && <Container >
+                    {(!edit) && <Container >
                         <div
                             className='profile-bio'
                             dangerouslySetInnerHTML={{
@@ -161,7 +166,7 @@ class QRAProfileBio extends React.Component {
                         }}></div>
                     </Container>
 }
-                    {open && <Container >
+                    {edit && <Container >
                         <Editor
                             editorState={editorState}
                             wrapperClassName="demo-wrapper"
@@ -193,13 +198,7 @@ class QRAProfileBio extends React.Component {
                                 }
                             }
                         }}/>
-                        <div
-                            style={{
-                            textAlign: 'right'
-                        }}>
-                            <Button negative onClick={() => this.close()}>Cancel</Button>
-                            <Button positive onClick={() => this.handleOnSaveBio()}>Save</Button>
-                        </div>
+
                     </Container>
 }
                 </Segment>
