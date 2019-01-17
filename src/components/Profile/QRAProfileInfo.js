@@ -19,8 +19,7 @@ class QRAProfileInfo extends React.Component {
             edit: false,
             qra: {
                 firstname: this.props.qraInfo.firstname,
-                lastname: this.props.qraInfo.lastname,
-                email: this.props.qraInfo.email,
+                lastname: this.props.qraInfo.lastname,                
                 mobile: this.props.qraInfo.mobile,
                 birthday: this.props.qraInfo.birthday,
                 address: this.props.qraInfo.address,
@@ -63,7 +62,7 @@ class QRAProfileInfo extends React.Component {
         const {
             firstname,
             lastname,
-            email,
+            
             mobile,
             city,
             birthday,
@@ -76,6 +75,7 @@ class QRAProfileInfo extends React.Component {
             licenseclass,
             qslinfo
         } = this.state.qra
+        
         return (
             <Fragment>
                 <Segment raised>
@@ -127,10 +127,8 @@ class QRAProfileInfo extends React.Component {
                                 name='email'
                                 label='Email'
                                 width={4}
-                                readOnly={!edit}
-                                onChange={this.changeHandler}
-                                value={email
-                                ? email
+                                value={this.props.qraInfo.email
+                                ? this.props.qraInfo.email
                                 : ""}/>
                             <Form.Input
                                 name='mobile'

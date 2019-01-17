@@ -279,14 +279,15 @@ export function doSaveUserInfo(token, qra) {
 export function doReceiveUserDataInfo(qra) {
     return {type: RECEIVE_USER_DATA_INFO, qra: qra}
 }
-export function doSaveUserBio(token, bio) {
+export function doSaveUserBio(token, bio, identityId) {
 
     return (dispatch) => {
         let apiName = 'superqso';
         let path = '/qra-info/bio';
         let myInit = {
             body: {
-                "bio": bio
+                "bio": bio,
+                "identityId": identityId
             }, // replace this with attributes you need
             headers: {
                 "Authorization": token

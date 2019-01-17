@@ -115,7 +115,7 @@ class QRAProfileBio extends React.Component {
         this
             .props
             .actions
-            .doSaveUserBio(this.props.token, draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())))
+            .doSaveUserBio(this.props.token, draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())),this.props.identityId)
         this.close();
     };
     onEditorStateChange = (editorState) => {
