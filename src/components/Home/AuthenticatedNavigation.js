@@ -95,10 +95,15 @@ class AuthenticatedNavigation extends React.PureComponent {
                             </Dropdown.Item>
                             <Dropdown.Divider/>
                             <Dropdown.Item
+                                onClick={()=> this.props.history.push('/changepassword')}>
+                                Change Password
+                            </Dropdown.Item>
+                            <Dropdown.Divider/>
+                            <Dropdown.Item
                                 onClick={this
                                 .logout
                                 .bind(this)}>
-                                Signout
+                                Log Out
                             </Dropdown.Item>
 
                         </Dropdown.Menu>

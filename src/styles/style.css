@@ -250,6 +250,21 @@
     max-width: 730px;
 }
 
+/* Auth */
+
+.changepassword-main {
+    grid-area: mainSection;
+    display: flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
+    text-align: center;
+    align-self: center;
+}
+
 @media (max-width: 910px) {
     .global-container {
         grid-template-columns: repeat(1, 100%);
@@ -347,5 +362,17 @@
         justify-items: center;
         align-items: center;
         
+    }
+    .changepassword-main {
+        grid-area: mainSection;
+        display: flex;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        align-content: stretch;
+        align-self: center;
+        text-align: center;
     }
 }

@@ -49,8 +49,7 @@ class LogIn extends React.Component {
 
         let user = await Auth
             .signIn(this.state.qra, this.state.password)
-            .catch(err => {
-                console.log(err);
+            .catch(err => {                
                 this.setState({loginError: err.message});
                 this.setState({active: false})
             });
@@ -166,7 +165,7 @@ class LogIn extends React.Component {
 
                                         {this.state.loginError && <Message negative content={this.state.loginError}/>
 }
-                                        <Button content='SignIn'/>
+                                        <Button content='Login'/>
                                     </Segment>
                                 </Form>
                                 <Message>

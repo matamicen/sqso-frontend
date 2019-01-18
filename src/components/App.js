@@ -7,7 +7,7 @@ import {SignUp} from "./Auth/SignUp";
 
 import LogIn from "./Auth/LogIn";
 import ForgotPassword from './Auth/ForgotPassword'
-
+import ChangePassword from './Auth/ChangePassword'
 import QRAProfileContainer from "./Profile/QRAProfileContainer";
 import QSODetail from "./QSODetail"
 import {connect} from 'react-redux'
@@ -81,6 +81,7 @@ class App extends PureComponent {
                     <Route exact path="/signup" component={SignUp}/>
                     <Route exact path="/login" component={() => <LogIn/>}/>
                     <Route exact path="/forgot" component={() => <ForgotPassword/>}/>
+                    <Route exact path="/changepassword" component={() => <ChangePassword/>}/>
                     <Route exact path="/notifications" component={() => <Notifications/>}/>
                     <Route exact path="/:qra" component={() => <QRAProfileContainer/>}/>
                     <Route
