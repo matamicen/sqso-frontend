@@ -23,12 +23,14 @@ class FeedLink extends React.Component {
             .doFetchQsoLink(this.props.link.GUID_URL);
 
     }
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.qso_link) {
-            this.setState({active: false})
-            this.setState({showModal: true});
-        }
+    static getDerivedStateFromProps(props, state) {
+        if (props.qso_link) 
+            return {active: false, showModal: true}
+        // Return null to indicate no change to state.
+        return null;
     }
+    // componentWillReceiveProps(nextProps) {     if (nextProps.qso_link) {
+    // this.setState({active: false})         this.setState({showModal: true}); } }
     close = () => {
         this.setState({showModal: false})
         this.setState({active: false})
@@ -54,7 +56,7 @@ class FeedLink extends React.Component {
                     .bind(this)}
                     trigger={< p > QSO link created by {
                     this.props.link.qra
-                }.Click here for more details. </p>}>
+                }.Click here for more details. < /p>}>
 
                     <Modal.Content>
                         <Modal.Description>

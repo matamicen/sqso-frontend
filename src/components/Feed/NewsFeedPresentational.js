@@ -11,7 +11,7 @@ import PropTypes from "prop-types";
 export default class NewsFeed extends React.Component {
 
     constructor(props) {
-        
+
         super(props)
         let list = this.props.list;
         this.state = {
@@ -127,11 +127,14 @@ export default class NewsFeed extends React.Component {
             .recomputeRowHeights(index);
 
     }
-    componentWillReceiveProps(nextProps) {
-
-        this.setState({list: nextProps.list});
-
+    static getDerivedStateFromProps(props, state) {
+        if (props.list) 
+            return {list: props.list}
+        //Default
+        return null;
     }
+    // componentWillReceiveProps(nextProps) {     this.setState({list:
+    // nextProps.list}); }
     componentDidUpdate(prevProps, prevState) {
         this
             ._list

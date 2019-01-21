@@ -18,18 +18,24 @@ class QSODetail extends React.PureComponent {
         idqso: null
 
     }
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.qso) {
-            this.setState({active: false})
+    static getDerivedStateFromProps(props, state) {
+        if (props.qso) {
+            return {active: false}
         }
-        // console.log(nextProps.FetchingQSO) if (!nextProps.FetchingQSO)
-        // this.props.actions.doFetchQSO(this.props.match.params.idqso);
-
+        return null;
     }
+    // componentWillReceiveProps(nextProps) {
+    //     if (nextProps.qso) {
+    //         this.setState({active: false})
+    //     }
+    //     // console.log(nextProps.FetchingQSO) if (!nextProps.FetchingQSO)
+    //     // this.props.actions.doFetchQSO(this.props.match.params.idqso);
+
+    // }
     componentDidMount() {
-        
+
         if (!this.props.FetchingQSO && !this.props.QSOFetched) {
-            
+
             this
                 .props
                 .actions
@@ -43,7 +49,7 @@ class QSODetail extends React.PureComponent {
     }
 
     render() {
-        
+
         let qsos_aux = [];
         let qsos = Immutable.List([]);
         if (this.props.qso) {
@@ -84,8 +90,7 @@ class QSODetail extends React.PureComponent {
         );
     }
 }
-const mapStateToProps = (state) => ({qso: state.default.qso, FetchingQSO: state.default.FetchingQSO, 
-QSOFetched: state.default.QSOFetched});
+const mapStateToProps = (state) => ({qso: state.default.qso, FetchingQSO: state.default.FetchingQSO, QSOFetched: state.default.QSOFetched});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 });

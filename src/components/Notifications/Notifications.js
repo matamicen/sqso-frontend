@@ -17,13 +17,19 @@ class Notifications extends React.Component {
         showModal: false
 
     }
-    componentWillReceiveProps(nextProps) {
-
-        if (nextProps.notifications) {
-            this.setState({active: false})
-        }
-
+    static getDerivedStateFromProps(props, state) {
+        if (props.notifications) 
+            return {active:false}
+        //Default
+        return null;
     }
+    // componentWillReceiveProps(nextProps) {
+
+    //     if (nextProps.notifications) {
+    //         this.setState({active: false})
+    //     }
+
+    // }
     componentDidMount() {
 
         this

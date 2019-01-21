@@ -49,19 +49,31 @@ class QRAProfileContainer extends React.Component {
                 break;
         }
     }
-    componentWillReceiveProps(nextProps) {
-
-        if (nextProps.QRAFetched) {
-            this.setState({active: false})
-        }
-
-        if (nextProps.following) 
-            this.setState({
-                followed: nextProps
+    static getDerivedStateFromProps(props, state) {
+        if (props.QRAFetched) 
+            return {active: false}
+        if (props.following) 
+            return {
+                followed: props
                     .following
                     .some(o => o.qra === this.props.match.params.qra)
-            });
-        }
+            }
+        //Default
+        return null;
+    }
+    // componentWillReceiveProps(nextProps) {
+
+    //     if (nextProps.QRAFetched) {
+    //         this.setState({active: false})
+    //     }
+
+    //     if (nextProps.following) 
+    //         this.setState({
+    //             followed: nextProps
+    //                 .following
+    //                 .some(o => o.qra === this.props.match.params.qra)
+    //         });
+    //     }
     
     handleTabClick(i) {
         switch (i) {

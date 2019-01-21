@@ -17,19 +17,34 @@ class NewsFeedContainer extends React.PureComponent {
         showModal: false
 
     }
-    componentWillReceiveProps(nextProps) {       
-        if (nextProps.qsosFetched) {
-            this.setState({active: false})
-        }
-        
-        if (!nextProps.FetchingQSOS && !nextProps.qsosFetched && !nextProps.autheticating) {
+    static getDerivedStateFromProps(props, state) {
+        if (props.qsosFetched) 
+            return {active: false, showModal: true}
+        if (!props.FetchingQSOS && !props.qsosFetched && !props.autheticating) {
 
-            if (nextProps.isAuthenticated) 
-                this.props.actions.doFetchUserFeed(nextProps.token)
-            if (nextProps.public) 
+            if (props.isAuthenticated) 
+                this.props.actions.doFetchUserFeed(props.token)
+            if (props.public) 
                 this.props.actions.doFetchPublicFeed();
             }
-        }
+        
+        // Return null to indicate no change to state.
+        return null;
+
+    }
+    // componentWillReceiveProps(nextProps) {
+    //     if (nextProps.qsosFetched) {
+    //         this.setState({active: false})
+    //     }
+
+    //     if (!nextProps.FetchingQSOS && !nextProps.qsosFetched && !nextProps.autheticating) {
+
+    //         if (nextProps.isAuthenticated) 
+    //             this.props.actions.doFetchUserFeed(nextProps.token)
+    //         if (nextProps.public) 
+    //             this.props.actions.doFetchPublicFeed();
+    //         }
+    //     }
 
     render() {
 
@@ -47,9 +62,10 @@ class NewsFeedContainer extends React.PureComponent {
 
         return (
             <Fragment>
-                {<Dimmer active={this.state.active} page>
-                    <Loader>Loading</Loader>
-                </Dimmer>}
+                {< Dimmer active = {
+                    this.state.active
+                }
+                page > <Loader>Loading</Loader> < /Dimmer>}
                 {this.props.qsos && this.props.qsos.length > 0 && <NewsFeed list={qsos}/>}
             </Fragment>
         )

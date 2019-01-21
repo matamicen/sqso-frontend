@@ -49,18 +49,18 @@ class LogIn extends React.Component {
 
         let user = await Auth
             .signIn(this.state.qra, this.state.password)
-            .catch(err => {                
+            .catch(err => {
                 this.setState({loginError: err.message});
                 this.setState({active: false})
             });
 
         if (user) {
             token = user.signInUserSession.idToken.jwtToken;
-            let credentials = await Auth.currentCredentials();            
+            let credentials = await Auth.currentCredentials();
             await this
                 .props
                 .actions
-                .doLogin(token, this.state.qra.toUpperCase(),credentials.data.IdentityId);
+                .doLogin(token, this.state.qra.toUpperCase(), credentials.data.IdentityId);
             await this
                 .props
                 .actions
@@ -72,10 +72,14 @@ class LogIn extends React.Component {
                 .push("/");
         }
     }
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.isAuthenticated) 
-            this.setState({active: false})
+    static getDerivedStateFromProps(props, state) {
+        if (props.isAuthenticated) 
+            return {active: false}
+        // Return null to indicate no change to state.
+        return null;
     }
+    // componentWillReceiveProps(nextProps) {     if (nextProps.isAuthenticated)
+    // this.setState({}) }
 
     handlePasswordChange(e) {
         this.setState({password: e.target.value});
