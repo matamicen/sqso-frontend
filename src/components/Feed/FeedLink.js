@@ -26,9 +26,9 @@ class FeedLink extends React.Component {
     static getDerivedStateFromProps(props, state) {
         if (props.qso_link) 
             return {active: false, showModal: true}
-        // Return null to indicate no change to state.
         return null;
     }
+
     // componentWillReceiveProps(nextProps) {     if (nextProps.qso_link) {
     // this.setState({active: false})         this.setState({showModal: true}); } }
     close = () => {

@@ -10,41 +10,42 @@ import 'react-virtualized/styles.css'; // only needs to be imported once
 import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
 import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
 import "../../styles/style.css";
-class NewsFeedContainer extends React.PureComponent {
+class NewsFeedContainer extends React.Component {
 
     state = {
         active: true,
         showModal: false
 
     }
-    static getDerivedStateFromProps(props, state) {
-        if (props.qsosFetched) 
-            return {active: false, showModal: true}
-        if (!props.FetchingQSOS && !props.qsosFetched && !props.autheticating) {
+    // static getDerivedStateFromProps(props, state) {
+    //     console.log(props)
+    //     if (props.qsosFetched) 
+    //         return {active: false, showModal: true}
 
-            if (props.isAuthenticated) 
-                this.props.actions.doFetchUserFeed(props.token)
-            if (props.public) 
-                this.props.actions.doFetchPublicFeed();
-            }
-        
-        // Return null to indicate no change to state.
-        return null;
-
-    }
-    // componentWillReceiveProps(nextProps) {
-    //     if (nextProps.qsosFetched) {
-    //         this.setState({active: false})
-    //     }
-
-    //     if (!nextProps.FetchingQSOS && !nextProps.qsosFetched && !nextProps.autheticating) {
-
-    //         if (nextProps.isAuthenticated) 
-    //             this.props.actions.doFetchUserFeed(nextProps.token)
-    //         if (nextProps.public) 
+    //     if (!props.FetchingQSOS && !props.qsosFetched && !props.autheticating) {
+    //         if (props.isAuthenticated) 
+    //             this.props.actions.doFetchUserFeed(props.token)
+    //         if (props.public) 
     //             this.props.actions.doFetchPublicFeed();
     //         }
-    //     }
+        
+    //     // Return null to indicate no change to state.
+    //     return null;
+
+    // }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.qsosFetched) {
+            this.setState({active: false})
+        }
+
+        if (!nextProps.FetchingQSOS && !nextProps.qsosFetched && !nextProps.autheticating) {
+
+            if (nextProps.isAuthenticated) 
+                this.props.actions.doFetchUserFeed(nextProps.token)
+            if (nextProps.public) 
+                this.props.actions.doFetchPublicFeed();
+            }
+        }
 
     render() {
 
@@ -65,7 +66,7 @@ class NewsFeedContainer extends React.PureComponent {
                 {< Dimmer active = {
                     this.state.active
                 }
-                page > <Loader>Loading</Loader> < /Dimmer>}
+                page > <Loader>Loading</Loader> </Dimmer>}
                 {this.props.qsos && this.props.qsos.length > 0 && <NewsFeed list={qsos}/>}
             </Fragment>
         )
@@ -85,4 +86,4 @@ const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps, null, {pure: false})(NewsFeedContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(NewsFeedContainer);
