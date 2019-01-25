@@ -262,7 +262,7 @@ export default(state = initialState, action) => {
             let preparelogInUserData = {
                 ...state.userData,
                 token: null,
-                authenticating: false,
+                authenticating: true,
                 isAuthenticated: false,
                 qra: null,
                 identityId: null,
@@ -306,7 +306,7 @@ export default(state = initialState, action) => {
             let logInUserData = {
                 ...state.userData,
                 token: action.token,
-                authenticating: true,
+                authenticating: false,
                 isAuthenticated: true,
                 qra: action.qra,
                 identityId: action.identityId,

@@ -19,17 +19,12 @@ class Notifications extends React.Component {
     }
     static getDerivedStateFromProps(props, state) {
         if (props.notifications) 
-            return {active:false}
+            return {active: false}
         //Default
         return null;
     }
-    // componentWillReceiveProps(nextProps) {
-
-    //     if (nextProps.notifications) {
-    //         this.setState({active: false})
-    //     }
-
-    // }
+    // componentWillReceiveProps(nextProps) {     if (nextProps.notifications) {
+    // this.setState({active: false})     } }
     componentDidMount() {
 
         this
@@ -49,10 +44,12 @@ class Notifications extends React.Component {
                 </div>
 
                 <div className='site-left'>
-                    <Advertisement className="left" unit='wide skyscraper' test='Wide Skyscraper'/>
+                    <Advertisement className="left" unit='wide skyscraper'>
+                        <img src="Wideskyscraper.png" alt='alt'/>
+                    </Advertisement>
                 </div>
                 <div className='notifications-main'>
-                    
+
                     <List divided>
                         {this
                             .props
@@ -69,7 +66,9 @@ class Notifications extends React.Component {
                 </div>
 
                 <div className='site-right'>
-                    <Advertisement unit='wide skyscraper' test='Wide Skyscraper'/>
+                    <Advertisement unit='wide skyscraper'>
+                        <img src="Wideskyscraper.png" alt='alt'/>
+                    </Advertisement>
                 </div>
 
             </div>

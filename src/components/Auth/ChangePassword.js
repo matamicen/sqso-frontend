@@ -114,7 +114,9 @@ class ChangePassword extends React.Component {
                     <AppNavigation/>
                 </div>
                 <div className='site-left'>
-                    <Advertisement className="left" unit='wide skyscraper' test='Wide Skyscraper'/>
+                    <Advertisement className="left" unit='wide skyscraper'>
+                        <img src="Wideskyscraper.png" alt='alt'/>
+                    </Advertisement>
                 </div>
 
                 <div className='changepassword-main'>
@@ -191,7 +193,9 @@ class ChangePassword extends React.Component {
                 </div>
 
                 <div className='site-right'>
-                    <Advertisement unit='wide skyscraper' test='Wide Skyscraper'/>
+                    <Advertisement unit='wide skyscraper'>
+                        <img src="Wideskyscraper.png" alt='alt'/>
+                    </Advertisement>
                 </div>
 
             </div>

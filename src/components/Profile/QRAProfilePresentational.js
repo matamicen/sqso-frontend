@@ -1,4 +1,4 @@
-import React, {Fragment} from "react";
+import React from "react";
 
 import QRAProfileFollowing from './QRAProfileFollowing'
 import QRAProfileQsos from './QRAProfileQsos'
@@ -27,7 +27,7 @@ const QRAProfile = (props) => {
                 <AppNavigation/>
             </div>
 
-            {!props.active && <Fragment>
+            {!props.active && 
                 <div className='profile-main'>
                     <QRAProfileHeader
                         qraInfo={props.qraInfo}
@@ -58,12 +58,15 @@ const QRAProfile = (props) => {
                         </Segment>
                     </div>
                 </div>
-            </Fragment>
+            
         } 
-            < div className = 'site-right' > 
-                <Advertisement unit='wide skyscraper' test='Wide Skyscraper'/> 
+            <div className = 'site-right' > 
+                 <Advertisement unit='wide skyscraper'>
+                        <img src="Wideskyscraper.png" alt='alt'/>
+                    </Advertisement>
             </div>
-        </div >);
+        </div
+        >);
     };
    
     export default QRAProfile;

@@ -84,6 +84,8 @@ export default class NewsFeed extends React.Component {
                             <FeedItem
                                 key={key}
                                 qso={row.props.qso}
+                                type={row.props.type}
+                                source={row.props.source}
                                 measure={measure}
                                 recalculateRowHeight={this.recalculateRowHeight}
                                 index={index}/>

@@ -9,7 +9,7 @@ import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
 import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
-import Immutable from 'immutable';
+
 import "../styles/style.css";
 class QSODetail extends React.PureComponent {
     state = {
@@ -24,14 +24,10 @@ class QSODetail extends React.PureComponent {
         }
         return null;
     }
-    // componentWillReceiveProps(nextProps) {
-    //     if (nextProps.qso) {
-    //         this.setState({active: false})
-    //     }
-    //     // console.log(nextProps.FetchingQSO) if (!nextProps.FetchingQSO)
-    //     // this.props.actions.doFetchQSO(this.props.match.params.idqso);
-
-    // }
+    // componentWillReceiveProps(nextProps) {     if (nextProps.qso) {
+    // this.setState({active: false})     }     //
+    // console.log(nextProps.FetchingQSO) if (!nextProps.FetchingQSO)     //
+    // this.props.actions.doFetchQSO(this.props.match.params.idqso); }
     componentDidMount() {
 
         if (!this.props.FetchingQSO && !this.props.QSOFetched) {
@@ -50,16 +46,15 @@ class QSODetail extends React.PureComponent {
 
     render() {
 
-        let qsos_aux = [];
-        let qsos = Immutable.List([]);
+        
+        let qsos = [];
         if (this.props.qso) {
-            qsos_aux.push(this.props.qso);
-            qsos = Immutable.List(qsos_aux);
+            
+            qsos.push(<FeedItem key={1} type='AD' source='QSODETAIL'/>)
 
-            qsos = qsos_aux.map((qso, i) => {
-                return <FeedItem key={i} qso={qso}/>
-            })
+            qsos.push(<FeedItem key={0} qso={this.props.qso} type={this.props.qso.type}/>)
 
+            
         }
 
         return (
@@ -72,7 +67,9 @@ class QSODetail extends React.PureComponent {
                     <AppNavigation/>
                 </div>
                 <div className='site-left'>
-                    <Advertisement className="left" unit='wide skyscraper' test='Wide Skyscraper'/>
+                    <Advertisement unit='wide skyscraper'>
+                        <img src="../Wideskyscraper.png" alt='alt'/>
+                    </Advertisement>
                 </div>
 
                 <div className='qsoDetail-main'>
@@ -82,7 +79,9 @@ class QSODetail extends React.PureComponent {
                 </div>
 
                 <div className='site-right'>
-                    <Advertisement unit='wide skyscraper' test='Wide Skyscraper'/>
+                    <Advertisement unit='wide skyscraper'>
+                        <img src="../Wideskyscraper.png" alt='alt'/>
+                    </Advertisement>
                 </div>
 
             </div>

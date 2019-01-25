@@ -13,10 +13,10 @@ import QSODetail from "./QSODetail"
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../actions/Actions';
-
+import Auth from '@aws-amplify/auth';
 import aws_exports from '../aws-exports';
 import Amplify from '@aws-amplify/core';
-import Auth from '@aws-amplify/auth';
+// import Auth from '@aws-amplify/auth';
 import Notifications from "./Notifications/Notifications";
 
 // if (process.env.NODE_ENV !== 'production') {     const {whyDidYouUpdate} =
@@ -25,13 +25,11 @@ import Notifications from "./Notifications/Notifications";
 Amplify.configure(aws_exports);
 
 class App extends PureComponent {
-    constructor() {
-        super();
-        this.state = {
-            loginValidated: false
-        };
-    }
-    async loadAuthenticatedUser() {
+    async componentDidMount() {
+        this
+            .props
+            .actions
+            .doStartingLogin();
         let session = await Auth
             .currentSession()
             .catch(err => {
@@ -39,14 +37,13 @@ class App extends PureComponent {
                     .props
                     .actions
                     .doLogout();
-                this.setState({loginValidated: true});
 
             });
 
         if (session) {
-            this.setState({loginValidated: true});
+
             let credentials = await Auth.currentCredentials();
-              
+
             this
                 .props
                 .actions
@@ -56,47 +53,81 @@ class App extends PureComponent {
                 .actions
                 .doFetchUserInfo(session.idToken.jwtToken);
 
-        } else 
+        } else {
             this
                 .props
                 .actions
                 .doSetPublicSession();
 
         }
-    
-    componentDidMount() {
-
-        this.loadAuthenticatedUser()
 
     }
-
     render() {
-        if (!this.state.loginValidated) 
-            return null;
-        
+
         return (
             <Fragment>
                 <Switch>
-                    <Route exact path="/" component={() => <Home/>}/>
+                    <Route
+                        exact
+                        path="/"
+                        component={() => {
+                        if (!this.props.authenticating && (this.props.isAuthenticated || this.props.public)) 
+                            return <Home/>
+                            else 
+                                return null;
+                            }}/>
                     <Route exact path="/signup" component={SignUp}/>
                     <Route exact path="/login" component={() => <LogIn/>}/>
                     <Route exact path="/forgot" component={() => <ForgotPassword/>}/>
                     <Route exact path="/changepassword" component={() => <ChangePassword/>}/>
                     <Route exact path="/notifications" component={() => <Notifications/>}/>
-                    <Route exact path="/:qra" component={() => <QRAProfileContainer/>}/>
+                    <Route
+                        exact
+                        path="/:qra"
+                        component={() => {
+                        if (!this.props.authenticating && (this.props.isAuthenticated || this.props.public)) 
+                            return <QRAProfileContainer/>
+                            else 
+                                return null;
+                            }}/>
                     <Route
                         exact
                         path="/:qra/bio"
-                        component={() => <QRAProfileContainer tab='BIO'/>}/>
+                        component={() => {
+                        if (!this.props.authenticating && (this.props.isAuthenticated || this.props.public)) 
+                            return <QRAProfileContainer tab='BIO'/>
+                            else 
+                                return null;
+                            }}/>
                     <Route
                         exact
                         path="/:qra/info"
-                        component={() => <QRAProfileContainer tab='INFO'/>}/>
-                        <Route
+                        component={() => {
+                        if (!this.props.authenticating && (this.props.isAuthenticated || this.props.public)) 
+                            return <QRAProfileContainer tab='INFO'/>
+                            else 
+                                return null;
+                            }}/>
+
+                    <Route
                         exact
                         path="/:qra/following"
-                        component={() => <QRAProfileContainer tab='FOLLOWING'/>}/>
-                    <Route exact path="/qso/:idqso" component={() => <QSODetail/>}/>
+                        component={() => {
+                        if (!this.props.authenticating && (this.props.isAuthenticated || this.props.public)) 
+                            return <QRAProfileContainer tab='FOLLOWING'/>
+                            else 
+                                return null;
+                            }}/>
+
+                    <Route
+                        exact
+                        path="/qso/:idqso"
+                        component={() => {
+                        if (!this.props.authenticating && (this.props.isAuthenticated || this.props.public)) 
+                            return <QSODetail/>
+                            else 
+                                return null;
+                            }}/>
 
                 </Switch>
 
@@ -107,7 +138,7 @@ class App extends PureComponent {
 
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({authenticating: state.default.userData.authenticating, public: state.default.userData.public, isAuthenticated: state.default.userData.isAuthenticated});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 });

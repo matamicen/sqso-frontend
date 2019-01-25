@@ -1,9 +1,6 @@
 import React from "react";
-// ES Modules, e.g. transpiling with Babel import {Config,
-
-
-
-// import appConfig from "./Config";
+// ES Modules, e.g. transpiling with Babel import {Config, import appConfig from
+// "./Config";
 import {Redirect} from "react-router-dom";
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
@@ -245,7 +242,9 @@ export class SignUp extends React.Component {
                     <AppNavigation/>
                 </div>
                 <div className='site-left'>
-                    <Advertisement className="left" unit='wide skyscraper' test='Wide Skyscraper'/>
+                    <Advertisement className="left" unit='wide skyscraper'>
+                        <img src="Wideskyscraper.png" alt='alt'/>
+                    </Advertisement>
                 </div>
 
                 <div className='site-main'>
@@ -450,7 +449,9 @@ export class SignUp extends React.Component {
                 </div>
 
                 <div className='site-right'>
-                    <Advertisement unit='wide skyscraper' test='Wide Skyscraper'/>
+                    <Advertisement unit='wide skyscraper'>
+                        <img src="Wideskyscraper.png" alt='alt'/>
+                    </Advertisement>
                 </div>
 
             </div>

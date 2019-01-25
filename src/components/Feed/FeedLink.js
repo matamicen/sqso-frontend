@@ -56,7 +56,7 @@ class FeedLink extends React.Component {
                     .bind(this)}
                     trigger={< p > QSO link created by {
                     this.props.link.qra
-                }.Click here for more details. < /p>}>
+                }.Click here for more details. </p>}>
 
                     <Modal.Content>
                         <Modal.Description>

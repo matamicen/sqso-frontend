@@ -6,7 +6,8 @@ import {withRouter} from "react-router-dom";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import "../../styles/style.css";
-class QRAProfileContainer extends React.Component {
+
+class QRAProfileContainer extends React.PureComponent {
     constructor() {
         super();
         this.state = {
@@ -23,7 +24,8 @@ class QRAProfileContainer extends React.Component {
 
     }
 
-    componentDidMount() {
+    componentDidMount() {  
+
         let qraInMemory = this.props.qra
             ? this.props.qra.qra.qra
             : "";
@@ -61,20 +63,12 @@ class QRAProfileContainer extends React.Component {
         //Default
         return null;
     }
-    // componentWillReceiveProps(nextProps) {
+    // componentWillReceiveProps(nextProps) {     if (nextProps.QRAFetched) {
+    //  this.setState({active: false})     }     if (nextProps.following)
+    // this.setState({             followed: nextProps                 .following
+    //              .some(o => o.qra === this.props.match.params.qra)         });
+    //  }
 
-    //     if (nextProps.QRAFetched) {
-    //         this.setState({active: false})
-    //     }
-
-    //     if (nextProps.following) 
-    //         this.setState({
-    //             followed: nextProps
-    //                 .following
-    //                 .some(o => o.qra === this.props.match.params.qra)
-    //         });
-    //     }
-    
     handleTabClick(i) {
         switch (i) {
             case 2:
