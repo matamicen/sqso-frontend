@@ -19,8 +19,12 @@ const FeedItem = (props) => {
                 recalculateRowHeight={props.recalculateRowHeight}
                 index={props.index}/>
         case 'AD':
-        
-            return <FeedItemAd source={props.source}/>
+
+            return <FeedItemAd
+                source={props.source}
+                measure={props.measure}
+                recalculateRowHeight={props.recalculateRowHeight}
+                index={props.index}/>
         default:
             return null;
     }

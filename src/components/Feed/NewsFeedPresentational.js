@@ -25,7 +25,7 @@ export default class NewsFeed extends React.Component {
             rowCount: list.length
         };
 
-        this._cache = new CellMeasurerCache({fixedWidth: true, minHeight: 100});
+        this._cache = new CellMeasurerCache({fixedWidth: true, minHeight: 40});
         this._setRef = this
             ._setRef
             .bind(this);
@@ -80,17 +80,16 @@ export default class NewsFeed extends React.Component {
                     this.measure = measure.bind(this);
                     return (
                         <div style={style} key={key}>
-
-                            <FeedItem
-                                key={key}
-                                qso={row.props.qso}
-                                type={row.props.type}
-                                source={row.props.source}
-                                measure={measure}
-                                recalculateRowHeight={this.recalculateRowHeight}
-                                index={index}/>
-
-                            <br/>
+                            
+                                <FeedItem
+                                    key={key}
+                                    qso={row.props.qso}
+                                    type={row.props.type}
+                                    source={row.props.source}
+                                    measure={measure}
+                                    recalculateRowHeight={this.recalculateRowHeight}
+                                    index={index}/>
+                            
 
                         </div>
                     )

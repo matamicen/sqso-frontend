@@ -4,17 +4,28 @@ import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
 import Image from 'semantic-ui-react/dist/commonjs/elements/Image'
 import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider'
 import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal'
+import Carousel from 'nuka-carousel';
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/Actions';
-class FeedImage extends React.Component {
 
+class FeedImage extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.state = {
+
+            showModal: false
+
+        };
+
+    }
+    close = () => this.setState({showModal: false})
+    open = () => this.setState({showModal: true})
     render() {
 
         var height = '60vh';
-        
-        
+
         let elWidth;
         if (window.innerWidth < 542) {
             elWidth = window.innerWidth - 30
@@ -30,8 +41,8 @@ class FeedImage extends React.Component {
             height = height + 'px';
             elWidth = elWidth + 'px';
         } else {
-            height = 'auto';            
-            // onLoad = this.props.measure;
+            height = 'auto';
+            
         }
 
         return (
@@ -39,15 +50,33 @@ class FeedImage extends React.Component {
                 <Divider/>
                 <div
                     style={{
-                   display: 'flex',
-                   justifyContent: 'center'
-                    
+                 
+                        display:'flex',
+                    textAlign: 'center',
+                    height: '50vh'
                 }}>
-                    <Modal
-                        closeIcon
-                        trigger=
-                        { 
-                            <Image centered rounded src = { this.props.img[0].url }   style={{ width: elWidth, height: height, marginTop: '1vh', marginLeft: 0, marginRight: 0 }} />}>
+
+                    <Carousel >
+                        {this
+                            .props
+                            .img
+                            .map((m) => <div key={m.idqsos_media}
+                                style={{
+                                display:'inline-flex',
+                                verticalAlign: 'middle',
+                                textAlign: 'center',
+                                
+                            }}>
+                                <img src={m.url} key={m.idqsos_media} alt={m.description}
+                                onClick={() => this.open()}
+                            style={{maxHeight: '50vh', 
+                            maxWidth: '100vw', objectFit: 'scale-down', fontFamily: "'object-fit: scale-down'"}}/>
+                            </div>)}
+
+                    </Carousel>
+
+                   
+                    <Modal closeIcon open={this.state.showModal} onClose={this.close}>
 
                         <Modal.Content image scrolling>
                             <Modal.Description>
@@ -65,14 +94,8 @@ class FeedImage extends React.Component {
                                                 idqso={this.props.idqso}
                                                 optionsCaller="FeedImage"/>
                                         </div>
-                                        }
-                                        <Image
-                                            key={m.idqsos_media}
-                                            wrapped
-                                            centered
-                                            rounded
-                                            src={m.url}
-                                           />
+}
+                                        <Image key={m.idqsos_media} wrapped centered rounded src={m.url}/>
 
                                         <p>{m.description}</p>
                                     </Segment>)}
@@ -85,9 +108,7 @@ class FeedImage extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({token: state.default.userData.token,     
-    isAuthenticated: state.default.userData.isAuthenticated,
-    currentQRA: state.default.userData.qra});
+const mapStateToProps = (state) => ({token: state.default.userData.token, isAuthenticated: state.default.userData.isAuthenticated, currentQRA: state.default.userData.qra});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 })
