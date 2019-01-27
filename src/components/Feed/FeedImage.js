@@ -23,28 +23,6 @@ class FeedImage extends React.Component {
     close = () => this.setState({showModal: false})
     open = () => this.setState({showModal: true})
     render() {
-
-        var height = '60vh';
-
-        let elWidth;
-        if (window.innerWidth < 542) {
-            elWidth = window.innerWidth - 30
-        } else {
-            elWidth = 542
-        }
-        if (this.props.img[0].width > 0) {
-
-            let ratio = elWidth / this.props.img[0].width;
-
-            height = this.props.img[0].height * ratio;
-
-            height = height + 'px';
-            elWidth = elWidth + 'px';
-        } else {
-            height = 'auto';
-            
-        }
-
         return (
             <Fragment>
                 <Divider/>
