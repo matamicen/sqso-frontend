@@ -12,6 +12,7 @@ import Auth from '@aws-amplify/auth';
 import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
 import Advertisement from 'semantic-ui-react/dist/commonjs/views/Advertisement'
 import AppNavigation from '../Home/AppNavigation'
+import Recaptcha from 'react-recaptcha'
 export class SignUp extends React.Component {
 
     constructor(props) {
@@ -27,6 +28,7 @@ export class SignUp extends React.Component {
             country: '',
             qra: '',
             code: '',
+            token: '',
             userCreated: false,
             userConfirmed: false,
             cognitoUser: '',
@@ -40,12 +42,18 @@ export class SignUp extends React.Component {
                 qra: '',
                 firstname: '',
                 lastname: '',
-                country: ''
+                country: '',
+                token: ''
             }
         };
-
+        this.verifyCallback = this
+            .verifyCallback
+            .bind(this);
     }
+    verifyCallback = function (response) {
 
+        this.setState({token: response});
+    }
     handleEmailChange(e) {
         this.setState({email: e.target.value});
     }
@@ -88,10 +96,9 @@ export class SignUp extends React.Component {
     handleUserConfirmed(result) {
 
         this.setState({userConfirmed: true});
-
     }
 
-    handleOnClick(e) {
+    handleOnClick = (e) => {
 
         e.preventDefault();
         const email = this
@@ -200,6 +207,11 @@ export class SignUp extends React.Component {
         fieldValidationErrors.lastname = lastNameValid
             ? ''
             : 'LastName is not Valid';
+
+        let recaptcha = this.state.token !== ''
+        fieldValidationErrors.token = recaptcha
+            ? ''
+            : 'Confirm Recaptcha';
         this.setState({formErrors: fieldValidationErrors});
     }
 
@@ -232,6 +244,7 @@ export class SignUp extends React.Component {
     handleOnCloseModal() {
         this.setState({showModal: false})
     }
+
     render() {
         if (this.state.userConfirmed) {
             return (<Redirect to="/login"/>)
@@ -258,6 +271,7 @@ export class SignUp extends React.Component {
                             style={{
                             maxWidth: 450
                         }}>
+
                             <Header as='h2' color='teal' textAlign='center'>
                                 Sign Up to SuperQSO
                             </Header>
@@ -391,59 +405,62 @@ export class SignUp extends React.Component {
                                             .bind(this)}/> {this.state.formErrors.passwordConfirm && <Message negative content={this.state.formErrors.passwordConfirm}/>}
                                     </Form.Field>
 
+                                    <Recaptcha
+                                        sitekey="6Lcloo0UAAAAAP8Ur4aiBVbIrU6dWOGKDMwFrWiD"
+                                        render="explicit"
+                                        verifyCallback={this.verifyCallback}/> {this.state.formErrors.token && <Message negative content={this.state.formErrors.token}/>}
                                     {this.state.signupError && <Message negative content={this.state.signupError}/>}
-
-                                    <Modal
-                                        basic
-                                        closeIcon
-                                        open={this.state.showModal}
-                                        onClose={this
-                                        .handleOnCloseModal
-                                        .bind(this)}
-                                        trigger={< Button content = 'SignUp' />}>
-                                        <Modal.Content>
-
-                                            <Modal.Description>
-
-                                                <Grid
-                                                    textAlign='center'
-                                                    style={{
-                                                    height: '100%'
-                                                }}
-                                                    verticalAlign='middle'>
-                                                    <Grid.Column
-                                                        style={{
-                                                        maxWidth: 450
-                                                    }}>
-                                                        <Header as='h2' color='teal' textAlign='center'>
-                                                            Confirmation Code
-                                                        </Header>
-                                                        <Form
-                                                            onSubmit={this
-                                                            .handleOnConfirm
-                                                            .bind(this)}>
-                                                            <Form.Field>
-
-                                                                <Form.Input
-                                                                    fluid
-                                                                    placeholder='Confirmation Code'
-                                                                    name='Code'
-                                                                    onChange={this
-                                                                    .handleCodeChange
-                                                                    .bind(this)}/>
-                                                            </Form.Field>
-                                                            {this.state.confirmError && <Message negative content={this.state.confirmError}/>}
-                                                            <Form.Button content='Confirm Code'/>
-                                                        </Form>
-                                                    </Grid.Column>
-                                                </Grid>
-                                            </Modal.Description>
-                                        </Modal.Content>
-                                    </Modal>
+                                    <Button content='SignUp'/>
 
                                 </Segment>
-                            </Form>
 
+                            </Form>
+                            <Modal
+                                basic
+                                closeIcon
+                                open={this.state.showModal}
+                                onClose={this
+                                .handleOnCloseModal
+                                .bind(this)}>
+                                <Modal.Content>
+
+                                    <Modal.Description>
+
+                                        <Grid
+                                            textAlign='center'
+                                            style={{
+                                            height: '100%'
+                                        }}
+                                            verticalAlign='middle'>
+                                            <Grid.Column
+                                                style={{
+                                                maxWidth: 450
+                                            }}>
+                                                <Header as='h2' color='teal' textAlign='center'>
+                                                    Confirmation Code
+                                                </Header>
+                                                <Form
+                                                    onSubmit={this
+                                                    .handleOnConfirm
+                                                    .bind(this)}>
+                                                    <Form.Field>
+
+                                                        <Form.Input
+                                                            fluid
+                                                            placeholder='Confirmation Code'
+                                                            name='Code'
+                                                            onChange={this
+                                                            .handleCodeChange
+                                                            .bind(this)}/>
+                                                    </Form.Field>
+                                                    {this.state.confirmError && <Message negative content={this.state.confirmError}/>}
+                                                    <Form.Button content='Confirm Code'/>
+                                                </Form>
+                                            </Grid.Column>
+                                        </Grid>
+                                    </Modal.Description>
+                                </Modal.Content>
+                            </Modal>
                         </Grid.Column>
                     </Grid>
                 </div>
