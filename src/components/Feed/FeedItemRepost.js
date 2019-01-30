@@ -79,7 +79,7 @@ class FeedItemRepost extends React.Component {
             default:
 
         }
-
+        var date = new Date(this.props.qso.original[0].datetime);
         return (
             <Segment raised>
 
@@ -111,13 +111,11 @@ class FeedItemRepost extends React.Component {
                     }}></div>
 
                     <Divider hidden/>
-
+                    <Label>Date:</Label>{date.toLocaleDateString("EN-US", {month: "short"}) + ' ' + date.getDate() + ', ' + date.getFullYear()}
+                <Label>QTR (UTC):</Label>{date.getUTCHours() + ':' + date.getMinutes()}
                     <Label>Mode:</Label>{this.props.qso.original[0].mode}
                     <Label>Band:</Label>{this.props.qso.original[0].band}
-                    <Label>QSO:
-                    </Label>{this.props.qso.original[0].idqsos}
-                    <Label>GUID:
-                    </Label>{this.props.qso.original[0].GUID_URL}
+ 
                     <QRAs
                         avatarpic={this.props.qso.original[0].avatarpic}
                         qso_owner={this.props.qso.original[0].qra}

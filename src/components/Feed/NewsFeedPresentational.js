@@ -79,7 +79,7 @@ export default class NewsFeed extends React.Component {
                 {({measure}) => {
                     this.measure = measure.bind(this);
                     return (
-                        <div style={style} key={key}>
+                        <div style={{marginBottom:'1vh'}} key={key}>
                             
                                 <FeedItem
                                     key={key}

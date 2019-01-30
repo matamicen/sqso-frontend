@@ -37,8 +37,6 @@ class FeedItemQSO extends React.Component {
             .bind(this);
     }
 
-    
-
     handleOnComment() {
         this.setState({showComment: true});
         // this.recalculateRowHeight(); this.props.recalculateRowHeight()
@@ -82,9 +80,10 @@ class FeedItemQSO extends React.Component {
             default:
 
         }
-
+        var date = new Date(this.props.qso.datetime);
+        
         return (
-            <Segment raised>
+            <Segment raised >
 
                 <Link to={"/" + this.props.qso.qra}>
                     <Image
@@ -116,13 +115,10 @@ class FeedItemQSO extends React.Component {
                     qso_owner={this.props.qso.qra}
                     qras={this.props.qso.qras}/>
                 <Divider hidden/>
-
+                <Label>Date:</Label>{date.toLocaleDateString("EN-US", {month: "short"}) + ' ' + date.getDate() + ', ' + date.getFullYear()}
+                <Label>QTR (UTC):</Label>{date.getUTCHours() + ':' + date.getMinutes()}
                 <Label>Mode:</Label>{this.props.qso.mode}
-                <Label>Band:</Label>{this.props.qso.band}
-                <Label>QSO:
-                </Label>{this.props.qso.idqsos}
-                <Label>GUID:
-                </Label>{this.props.qso.GUID_URL} {picList.length > 0 && <FeedImage
+                <Label>Band:</Label>{this.props.qso.band} {picList.length > 0 && <FeedImage
                     img={picList}
                     measure={this.props.measure}
                     idqso={this.props.qso.idqsos}
