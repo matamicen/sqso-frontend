@@ -79,8 +79,8 @@ export default class NewsFeed extends React.Component {
                 {({measure}) => {
                     this.measure = measure.bind(this);
                     return (
-                        <div style={{marginBottom:'1vh'}} key={key}>
-                            
+                        <div style={style} key={key}>
+                            <div style={{marginBottom:'1vh'}}>
                                 <FeedItem
                                     key={key}
                                     qso={row.props.qso}
@@ -90,7 +90,7 @@ export default class NewsFeed extends React.Component {
                                     recalculateRowHeight={this.recalculateRowHeight}
                                     index={index}/>
                             
-
+                            </div>
                         </div>
                     )
                 }
