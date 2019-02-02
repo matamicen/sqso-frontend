@@ -68,7 +68,7 @@ class FeedLink extends React.Component {
                     onClose={this.close.bind(this)}
                     >
 
-                    <Modal.Content>
+                    <Modal.Content image scrolling>
                         <Modal.Description>
 
                             {this.props.qso_link && <QSOFeedItem
