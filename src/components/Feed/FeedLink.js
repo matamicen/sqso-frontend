@@ -58,8 +58,8 @@ class FeedLink extends React.Component {
                         style={{
                         width: '35px',
                         height: '35px'
-                    }}/> {this.props.link.qra}
-                    created a linked QSO.
+                    }}/> {this.props.link.qra + ' '}
+                    created a linked QSO {' '}
                     <Button size='mini' onClick={() => this.onOpenModal()}>See Details</Button>
                     <Modal                    
                     

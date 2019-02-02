@@ -12,7 +12,7 @@ class QRAProfileContainer extends React.PureComponent {
         super();
         this.state = {
             active: true,
-            followed: false,
+            
             tab: null
         };
         this.handleButtonClick = this
@@ -54,12 +54,7 @@ class QRAProfileContainer extends React.PureComponent {
     static getDerivedStateFromProps(props, state) {
         if (props.QRAFetched) 
             return {active: false}
-        if (props.following) 
-            return {
-                followed: props
-                    .following
-                    .some(o => o.qra === this.props.match.params.qra)
-            }
+            
         //Default
         return null;
     }
@@ -123,6 +118,9 @@ class QRAProfileContainer extends React.PureComponent {
     }
 
     render() {
+        let followed= this.props
+        .following
+        .some(o => o.qra === this.props.match.params.qra);
 
         let qraInfo = null;
         if (this.props.qra) 
@@ -150,7 +148,7 @@ class QRAProfileContainer extends React.PureComponent {
                     this.props.currentQRA
                 }
                 followed = {
-                    this.state.followed
+                    followed
                 }
                 handleTabClick = {
                     this.handleTabClick

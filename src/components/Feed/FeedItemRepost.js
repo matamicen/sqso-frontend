@@ -2,7 +2,7 @@ import React from "react";
 import FeedAudioList from "./FeedAudioList";
 import FeedImage from './FeedImage'
 import QSOShareButtons from './QSOShareButtons'
-
+import PopupToFollow from '../PopupToFollow'
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon'
 import Label from 'semantic-ui-react/dist/commonjs/elements/Label'
@@ -82,10 +82,18 @@ class FeedItemRepost extends React.Component {
         var date = new Date(this.props.qso.original[0].datetime);
         return (
             <Segment raised>
-
-                <Link to={"/" + this.props.qso.qra}>
-                    <Image src={this.props.qso.profilepic} size='mini' avatar/> {this.props.qso.qra}
-                </Link>
+                <PopupToFollow qra={this.props.qso.qra}
+                           trigger={<Link to={"/" + this.props.qso.qra}>
+                                    <Image
+                                        src={this.props.qso.avatarpic}
+                                        size='mini'
+                                        avatar
+                                        style={{
+                                        width: '35px',
+                                        height: '35px'
+                                    }}/> {this.props.qso.qra}
+                                </Link>}/>        
+                
                 {' reposted a QSO'}
                 <div style={{
                     float: 'right'
@@ -101,10 +109,18 @@ class FeedItemRepost extends React.Component {
 
                 <Divider hidden/>
                 <Segment raised>
+                <PopupToFollow qra={this.props.qso.original[0].qra}
+                           trigger={<Link to={"/" + this.props.qso.original[0].qra}>
+                                    <Image
+                                        src={this.props.qso.original[0].avatarpic}
+                                        size='mini'
+                                        avatar
+                                        style={{
+                                        width: '35px',
+                                        height: '35px'
+                                    }}/> {this.props.qso.original[0].qra}
+                                </Link>}/>        
 
-                    <Link to={"/" + this.props.qso.original[0].qra}>
-                        <Image src={this.props.qso.original[0].profilepic} size='mini' avatar/> {this.props.qso.original[0].qra}
-                    </Link>
                     {text}
                     <div style={{
                         float: 'right'

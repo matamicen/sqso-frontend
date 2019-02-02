@@ -3,12 +3,13 @@ import FeedAudioList from "./FeedAudioList";
 import FeedImage from './FeedImage'
 import FeedLinkList from './FeedLinkList'
 import QSOShareButtons from './QSOShareButtons'
-
+import PopupToFollow from '../PopupToFollow'
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon'
 import Label from 'semantic-ui-react/dist/commonjs/elements/Label'
 import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider'
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
+import Image from "semantic-ui-react/dist/commonjs/elements/Image";
 
 import QSOComments from "./QSOComments";
 import QSOLikeButton from "./QSOLikeButton";
@@ -18,7 +19,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/Actions';
 import PropTypes from 'prop-types';
-import Image from "semantic-ui-react/dist/commonjs/elements/Image";
+
 import {Link} from 'react-router-dom'
 import FeedOptionsMenu from "./FeedOptionsMenu";
 import QSORePostButton from "./QSORePostButton";
@@ -84,17 +85,17 @@ class FeedItemQSO extends React.Component {
         
         return (
             <Segment raised >
-
-                <Link to={"/" + this.props.qso.qra}>
-                    <Image
-                        src={this.props.qso.avatarpic}
-                        size='mini'
-                        avatar
-                        style={{
-                        width: '35px',
-                        height: '35px'
-                    }}/> {this.props.qso.qra}
-                </Link>
+            <PopupToFollow qra={this.props.qso.qra}
+                           trigger={<Link to={"/" + this.props.qso.qra}>
+                                    <Image
+                                        src={this.props.qso.avatarpic}
+                                        size='mini'
+                                        avatar
+                                        style={{
+                                        width: '35px',
+                                        height: '35px'
+                                    }}/> {this.props.qso.qra}
+                                </Link>}/>                
                 {text}
                 <div style={{
                     float: 'right'

@@ -62,7 +62,7 @@ const QRAProfile = (props) => {
         } 
             <div className = 'site-right' > 
                  <Advertisement unit='wide skyscraper'>
-                        <img src="Wideskyscraper.png" alt='alt'/>
+                        <img src="../Wideskyscraper.png" alt='alt'/>
                     </Advertisement>
             </div>
         </div
