@@ -26,12 +26,16 @@ class QSOComments extends React.Component {
 
         if (this.props.qso.comments) {
             this.setState({comments: this.props.qso.comments});
-
+            
         }
     }
-    componentDidUpdate() {}
+    componentDidUpdate = () =>{
+        this
+        .props
+        .recalculateRowHeight();
+    }
 
-    doComment(c) {
+    doComment = (c) => {
         let apiName = 'superqso';
         let path = '/qso-comment';
         let myInit = {
@@ -62,14 +66,14 @@ class QSOComments extends React.Component {
 
     }
 
-    handleAddComment(e) {
+    handleAddComment = (e) => {
 
         e.preventDefault();
         if (!e.target.comment.value) 
             return;
         
-        var datetime = new Date();
-        var comment = {
+        let datetime = new Date();
+        let comment = {
             qra: this
                 .props
                 .qra
@@ -113,13 +117,15 @@ class QSOComments extends React.Component {
                 </Form.Group>
             </Form>
         };
-
-        return (
-            <Comment.Group threaded>
-                {comments}
-                {form}
-            </Comment.Group>
-        );
+        if (comments || form)
+            return (
+                <Comment.Group threaded>
+                    {comments}
+                    {form}
+                </Comment.Group>
+            )
+        else
+             return null;
     }
 }
 

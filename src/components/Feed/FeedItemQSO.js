@@ -26,10 +26,7 @@ import QSORePostButton from "./QSORePostButton";
 import "../../styles/style.css";
 class FeedItemQSO extends React.Component {
     constructor() {
-        super();
-        this.state = {
-            showComment: false
-        };
+        super();       
         this.handleOnComment = this
             .handleOnComment
             .bind(this);
@@ -38,8 +35,9 @@ class FeedItemQSO extends React.Component {
             .bind(this);
     }
 
-    handleOnComment() {
-        this.setState({showComment: true});
+    handleOnComment = () => {
+        
+        this.props.showComments(this.props.index);
         // this.recalculateRowHeight(); this.props.recalculateRowHeight()
     }
 
@@ -47,11 +45,8 @@ class FeedItemQSO extends React.Component {
         if (this.props.recalculateRowHeight) 
             this.props.recalculateRowHeight(this.props.index);
         }
-    componentDidUpdate(prevProps, prevState) {
-        if ((this.state.showComment !== prevState.showComment) && (this.props.recalculateRowHeight)) 
-            this.props.recalculateRowHeight(this.props.index);
 
-        }
+    //     }
     render() {
 
         let picList = this
@@ -82,6 +77,7 @@ class FeedItemQSO extends React.Component {
 
         }
         var date = new Date(this.props.qso.datetime);
+        
         
         return (
             <Segment raised >
@@ -144,7 +140,7 @@ class FeedItemQSO extends React.Component {
                     <QSORePostButton qso={this.props.qso}/>
                     <QSOShareButtons idqso={this.props.qso.GUID_URL}/>
                 </Button.Group>
-                {(this.state.showComment) && <QSOComments
+                {(this.props.qso.showComments) && <QSOComments
                     qso={this.props.qso}
                     recalculateRowHeight={this.recalculateRowHeight}/>}
 

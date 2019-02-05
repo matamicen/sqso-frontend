@@ -1,5 +1,5 @@
 import React, {Fragment} from "react";
-import FeedItem from "./FeedItem";
+
 
 import NewsFeed from './NewsFeedPresentational';
 import {connect} from 'react-redux'
@@ -18,43 +18,31 @@ class NewsFeedContainer extends React.PureComponent {
 
     }
     static getDerivedStateFromProps(props, state) {
-
         if (props.qsosFetched) 
-            return {active: false, showModal: true}
-        
-        // if (!props.FetchingQSOS && !props.qsosFetched && !props.authenticating) { if
-        // (props.isAuthenticated) this.props.actions.doFetchUserFeed(props.token) if
-        // (props.public) this.props.actions.doFetchPublicFeed();     } Return null to
-        // indicate no change to state.
+            return {active: false, showModal: true}       
         return null;
-
     }
-    // componentWillReceiveProps(nextProps) {     if (nextProps.qsosFetched) {
-    // this.setState({active: false})     }     if (!nextProps.FetchingQSOS &&
-    // !nextProps.qsosFetched && !nextProps.authenticating) {         if
-    // (nextProps.isAuthenticated)
-    // this.props.actions.doFetchUserFeed(nextProps.token)         if
-    // (nextProps.public)             this.props.actions.doFetchPublicFeed();  } }
+
 
     render() {
-
         let qsos = []
-
         if (this.props.qsos && this.props.qsos.length > 0) {
             for (let i = 0; i < this.props.qsos.length; i++) {
                 if (i % 2 === 0) 
-                    qsos.push(<FeedItem key={1} type='AD' source='FEED'/>)
-                qsos.push(<FeedItem key={i} qso={this.props.qsos[i]} type={this.props.qsos[i].type}/>)
+             
+                qsos.push({type:'AD',
+                            source:'FEED'});
+                qsos.push({qso:this.props.qsos[i],
+                             type:this.props.qsos[i].type})
+             
             }
-            // qsos = this     .props     .qsos     .map((qso, i) => {         return     })
         }
 
         return (
             <Fragment>
-                {< Dimmer active = {
-                    this.state.active
-                }
-                page > <Loader>Loading</Loader> < /Dimmer>}
+                <Dimmer active = {this.state.active} page> 
+                    <Loader>Loading</Loader> 
+                </Dimmer>
                 {this.props.qsos && this.props.qsos.length > 0 && <NewsFeed list={qsos}/>}
             </Fragment>
         )

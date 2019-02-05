@@ -10,12 +10,14 @@ const FeedItem = (props) => {
                 qso={props.qso}
                 measure={props.measure}
                 recalculateRowHeight={props.recalculateRowHeight}
+                showComments={props.showComments}
                 index={props.index}/>
         case "SHARE":
             return <FeedItemRepost
                 key={props.qso.idqsos}
                 qso={props.qso}
                 measure={props.measure}
+                showComments={props.showComments}
                 recalculateRowHeight={props.recalculateRowHeight}
                 index={props.index}/>
         case 'AD':

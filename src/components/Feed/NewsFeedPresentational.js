@@ -35,15 +35,16 @@ export default class NewsFeed extends React.Component {
         this._isRowLoaded = this
             ._isRowLoaded
             .bind(this)
-        this._loadMoreRows = this
-            ._loadMoreRows
-            .bind(this)
+        // this._loadMoreRows = this
+        //     ._loadMoreRows
+        //     .bind(this)
         this._rowRenderer = this
             ._rowRenderer
             .bind(this)
         this.recalculateRowHeight = this
             .recalculateRowHeight
             .bind(this)
+            this.showComments = this.showComments.bind(this);
     }
 
     _clearData() {
@@ -54,10 +55,10 @@ export default class NewsFeed extends React.Component {
         return true;
     }
 
-    _loadMoreRows({startIndex, stopIndex}) {
-        // console.log('load more rows', startIndex, stopIndex);
+    // _loadMoreRows({startIndex, stopIndex}) {
+    //     // console.log('load more rows', startIndex, stopIndex);
 
-    }
+    // }
 
     _setRef(windowScroller) {
         this._windowScroller = windowScroller;
@@ -68,6 +69,7 @@ export default class NewsFeed extends React.Component {
         let row = this.state.list[index];
         if (row === null) 
             return null;
+            
         return (
 
             <CellMeasurer
@@ -83,11 +85,12 @@ export default class NewsFeed extends React.Component {
                             <div style={{marginBottom:'1vh'}}>
                                 <FeedItem
                                     key={key}
-                                    qso={row.props.qso}
-                                    type={row.props.type}
-                                    source={row.props.source}
+                                    qso={row.qso}
+                                    type={row.type}
+                                    source={row.source}
                                     measure={measure}
                                     recalculateRowHeight={this.recalculateRowHeight}
+                                    showComments={(index) =>this.showComments(index)}
                                     index={index}/>
                             
                             </div>
@@ -117,6 +120,12 @@ export default class NewsFeed extends React.Component {
         this._list = ref;
 
     };
+    showComments = (index) => {
+        
+        let localList = this.state.list;
+        localList[index].qso.showComments = true;        
+        this.setState({list:localList})
+    }
     recalculateRowHeight(index) {
 
         this

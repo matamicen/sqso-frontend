@@ -25,9 +25,7 @@ import QSORePostButton from "./QSORePostButton";
 class FeedItemRepost extends React.Component {
     constructor() {
         super();
-        this.state = {
-            showComment: false
-        };
+        
         this.handleOnComment = this
             .handleOnComment
             .bind(this);
@@ -37,7 +35,7 @@ class FeedItemRepost extends React.Component {
     }
 
     handleOnComment() {
-        this.setState({showComment: true});
+        this.props.showComments(this.props.index);
 
     }
     componentDidUpdate(prevProps, prevState) {
@@ -50,9 +48,7 @@ class FeedItemRepost extends React.Component {
         if (this.props.recalculateRowHeight) 
             this.props.recalculateRowHeight(this.props.index);
         }
-    componentDidMount() {
-        this.recalculateRowHeight();
-    }
+   
     render() {
 
         let picList = this
@@ -163,7 +159,7 @@ class FeedItemRepost extends React.Component {
                     <QSOShareButtons idqso={this.props.qso.GUID_URL}/>
                 </Button.Group>
 
-                {this.state.showComment && <QSOComments
+                {this.props.qso.showComments && <QSOComments
                     qso={this.props.qso}
                     recalculateRowHeight={this.recalculateRowHeight}/>}
 

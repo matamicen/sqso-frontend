@@ -1,5 +1,5 @@
 import React from "react";
-import FeedItem from './Feed/FeedItem'
+
 import NewsFeed from './Feed/NewsFeedPresentational';
 import AppNavigation from './Home/AppNavigation'
 import Advertisement from 'semantic-ui-react/dist/commonjs/views/Advertisement'
@@ -49,10 +49,11 @@ class QSODetail extends React.PureComponent {
         
         let qsos = [];
         if (this.props.qso) {
-            
-            qsos.push(<FeedItem key={1} type='AD' source='QSODETAIL'/>)
-
-            qsos.push(<FeedItem key={0} qso={this.props.qso} type={this.props.qso.type}/>)
+            qsos.push({type:'AD',
+                    source:'QSODETAIL'});
+            qsos.push({qso:this.props.qso,
+                        type:this.props.qso.type})
+        
 
             
         }
