@@ -1,4 +1,5 @@
 import API from '@aws-amplify/api';
+import Auth from '@aws-amplify/auth';
 import ReactGA from 'react-ga';
 export const PUBLIC_SESSION = 'PUBLIC_SESSION';
 export const PREPARE_LOGIN = 'PREPARE_LOGIN';
@@ -334,7 +335,18 @@ export function doFetchUserFeed(token) {
                 // Add your code here
             })
             .catch(error => {
-                console.log(error.response)
+                Auth
+                .currentSession()
+                .then((session) =>
+                    dispatch(doFetchUserFeed(session.idToken.jwtToken))
+                )
+                .catch(err => {
+                   dispatch(doLogout());
+    
+                });
+    
+            
+                
             });
     };
 }

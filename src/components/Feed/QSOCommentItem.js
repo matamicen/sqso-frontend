@@ -1,5 +1,5 @@
 import React from "react";
-
+import PopupToFollow from '../PopupToFollow'
 import Item from 'semantic-ui-react/dist/commonjs/views/Item'
 import Comment from 'semantic-ui-react/dist/commonjs/views/Comment'
 import {Link} from 'react-router-dom'
@@ -39,11 +39,12 @@ class QSOCommentItem extends React.Component {
                         </div>
                     </Item.Extra>
                     < Comment.Author >
-                        <Link to={"/" + this.props.comment.qra}>{this
+                    <PopupToFollow qra={this.props.comment.qra}
+                           trigger={<Link to={"/" + this.props.comment.qra}>{this
                                 .props
                                 .comment
                                 .qra
-                                .toUpperCase()}</Link>
+                                .toUpperCase()}</Link>}/>
                     </Comment.Author>
                     <Comment.Metadata>
                         <span>{timestamp}
