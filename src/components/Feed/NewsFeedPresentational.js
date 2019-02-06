@@ -13,7 +13,7 @@ export default class NewsFeed extends React.Component {
     constructor(props) {
 
         super(props)
-        let list = this.props.list;
+        var list = this.props.list;
         this.state = {
             loadedRowCount: 0,
             loadedRowsMap: {},
@@ -25,16 +25,16 @@ export default class NewsFeed extends React.Component {
             rowCount: list.length
         };
 
-        this._cache = new CellMeasurerCache({fixedWidth: true, minHeight: 40});
+        this._cache = new CellMeasurerCache({fixedWidth: true, defaultHeight: 40});
         this._setRef = this
             ._setRef
             .bind(this);
         this._onScrollToRowChange = this
             ._onScrollToRowChange
             .bind(this);
-        this._isRowLoaded = this
-            ._isRowLoaded
-            .bind(this)
+        // this._isRowLoaded = this
+        //     ._isRowLoaded
+        //     .bind(this)
         // this._loadMoreRows = this
         //     ._loadMoreRows
         //     .bind(this)
@@ -45,15 +45,16 @@ export default class NewsFeed extends React.Component {
             .recalculateRowHeight
             .bind(this)
             this.showComments = this.showComments.bind(this);
+            this._setListRef = this._setListRef.bind(this);
     }
 
     _clearData() {
         this.setState({loadedRowCount: 0, loadedRowsMap: {}, loadingRowCount: 0})
     }
 
-    _isRowLoaded({index}) {
-        return true;
-    }
+    // _isRowLoaded({index}) {
+    //     return true;
+    // }
 
     // _loadMoreRows({startIndex, stopIndex}) {
     //     // console.log('load more rows', startIndex, stopIndex);
@@ -78,9 +79,7 @@ export default class NewsFeed extends React.Component {
                 key={key}
                 rowIndex={index}
                 parent={parent}>
-                {({measure}) => {
-                    this.measure = measure.bind(this);
-                    return (
+                {({measure}) => (
                         <div style={style} key={key}>
                             <div style={{marginBottom:'1vh'}}>
                                 <FeedItem
@@ -96,8 +95,8 @@ export default class NewsFeed extends React.Component {
                             </div>
                         </div>
                     )
+                
                 }
-}
             </CellMeasurer>
 
         )
@@ -121,20 +120,23 @@ export default class NewsFeed extends React.Component {
 
     };
     showComments = (index) => {
-        
+        console.log("showComments")
         let localList = this.state.list;
         localList[index].qso.showComments = true;        
         this.setState({list:localList})
+        
     }
+
     recalculateRowHeight(index) {
+        console.log("recalculateRowHeight" + index)
+        this._cache.clearAll();
 
-        this
-            ._cache
-            .clear(index);
-
-        this
+        // this
+        //     ._list
+        //     .recomputeRowHeights(index);
+            this
             ._list
-            .recomputeRowHeights(index);
+            .forceUpdateGrid();
 
     }
     static getDerivedStateFromProps(props, state) {
@@ -146,10 +148,12 @@ export default class NewsFeed extends React.Component {
     // componentWillReceiveProps(nextProps) {     this.setState({list:
     // nextProps.list}); }
     componentDidUpdate(prevProps, prevState) {
+        console.log('component updated');
+        this._cache.clearAll();
+        // this._list.recomputeRowHeights();
         this
-            ._list
-            .forceUpdateGrid();
-
+        ._list
+        .forceUpdateGrid();
     }
     componentWillUnmount() {
 

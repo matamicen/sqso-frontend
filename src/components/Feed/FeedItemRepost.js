@@ -38,11 +38,11 @@ class FeedItemRepost extends React.Component {
         this.props.showComments(this.props.index);
 
     }
-    componentDidUpdate(prevProps, prevState) {
-        if ((this.state.showComment !== prevState.showComment) && (this.props.recalculateRowHeight)) 
-            this.props.recalculateRowHeight(this.props.index);
+    // componentDidUpdate(prevProps, prevState) {
+    //     if ((this.state.showComment !== prevState.showComment) && (this.props.recalculateRowHeight)) 
+    //         this.props.recalculateRowHeight(this.props.index);
 
-        }
+    //     }
     recalculateRowHeight() {
 
         if (this.props.recalculateRowHeight) 

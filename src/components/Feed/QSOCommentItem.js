@@ -13,7 +13,11 @@ class QSOCommentItem extends React.Component {
     state = {
         comment: null
     }
-
+    componentDidUpdate = () =>{
+        this
+        .props
+        .recalculateRowHeight();
+    }
     render() {
         var date = new Date(this.props.comment.datetime);
         var timestamp = "";

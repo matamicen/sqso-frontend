@@ -23,13 +23,15 @@ class QSOComments extends React.Component {
     }
 
     componentDidMount() {
-
+        console.log("componentDidMount");
         if (this.props.qso.comments) {
             this.setState({comments: this.props.qso.comments});
             
         }
+      
     }
     componentDidUpdate = () =>{
+        console.log("componentDidUpdate");
         this
         .props
         .recalculateRowHeight();
@@ -89,9 +91,9 @@ class QSOComments extends React.Component {
                 .concat(comment)
         });
         e.target.comment.value = null;
-        this
-        .props
-        .recalculateRowHeight();
+        // this
+        // .props
+        // .recalculateRowHeight();
         this.doComment(comment);
     }
 
@@ -102,7 +104,8 @@ class QSOComments extends React.Component {
             comments = this
                 .state
                 .comments
-                .map((comment, i) => <QSOCommentItem key={i} comment={comment}/>)
+                .map((comment, i) => <QSOCommentItem key={i} comment={comment}
+                recalculateRowHeight={this.props.recalculateRowHeight}/>)
 
         };
 
