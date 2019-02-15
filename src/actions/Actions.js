@@ -389,9 +389,12 @@ export function doFetchPublicFeed() {
         API
             .get(apiName, path, myInit)
             .then(response => {
-
-                dispatch(doReceiveFeed(response));
-                // Add your code here
+                if (response.body.error === 0) {
+                    dispatch(doReceiveFeed(response.body.message));                
+                }
+                else{
+                    console.log(response.body.error)
+                }
             })
             .catch(error => {
                 console.log(error)
