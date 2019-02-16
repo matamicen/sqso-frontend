@@ -8,12 +8,13 @@ export default class FeedItemAd extends React.PureComponent {
     //     .props
     //     .recalculateRowHeight(this.props.index)}
     render() {
+        console.log(this.props)
         // return (<ins class="adsbygoogle" data-ad-client="ca-pub-XXXX"
         // data-ad-test="on" data-ad-slot="XXX" data-ad-format="auto"></ins>);
         switch (this.props.source) {
             case 'QSODETAIL':
                 return <img
-                    src="../Banner.png"
+                    src={this.props.ad.img}
                     alt='alt'
                     // onLoad = {this.props.measure}
                     style={{
@@ -25,12 +26,12 @@ export default class FeedItemAd extends React.PureComponent {
                 }}/>
             case 'FEED':
                 return <img
-                    src="Banner.png"
+                src={this.props.ad.img}
                     alt='alt'
                     // onLoad = {this.props.measure}
                     style={{
-                    height: '45px',
-                    // widht:'auto',
+                    height: this.props.ad.height,
+                     widht: this.props.ad.widht,
                     marginLeft: 'auto',
                     marginRight: 'auto',
                     display:'block'
