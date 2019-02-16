@@ -6,12 +6,12 @@ export default class QRAProfileQsos extends React.PureComponent {
     render() {
         let qsos = [];
         if (this.props.qsos && this.props.qsos.length > 0) {
-            for (let i = 0; i < this.props.qsos.length; i++) {
-                if (i % 3 === 0) 
-                qsos.push({type:'AD',
-                            source:'QRA'});
-                 qsos.push({qso:this.props.qsos[i],
-                    type:this.props.qsos[i].type})
+            for (let i = 0; i < this.props.qsos.length; i++) {              
+                
+                qsos.push({qso:this.props.qsos[i],
+                    type:this.props.qsos[i].type,
+                    source: this.props.qsos[i].source?this.props.qsos[i].source:null,
+                   ad: this.props.qsos[i].ad?this.props.qsos[i].ad: null})
                  
              
             }

@@ -149,7 +149,7 @@ export default class NewsFeed extends React.Component {
     // componentWillReceiveProps(nextProps) {     this.setState({list:
     // nextProps.list}); }
     componentDidUpdate(prevProps, prevState) {
-        console.log('component updated');
+        
         this._cache.clearAll();
         // this._list.recomputeRowHeights();
         this
