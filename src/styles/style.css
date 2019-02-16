@@ -66,10 +66,10 @@
 
 .profile-container {
     display: grid;
-    grid-template-columns: 730px 160px;
+    grid-template-columns: 160px 730px 160px;
     /* grid-gap: 1em; */
     grid-template-rows: 60px auto;
-    grid-template-areas: "pageHeader pageHeader" "mainSection rightSection";
+    grid-template-areas: "pageHeader pageHeader pageHeader" "leftSection mainSection rightSection";
     justify-content: space-evenly;
 }
 

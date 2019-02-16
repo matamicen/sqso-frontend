@@ -15,7 +15,7 @@ import AppNavigation from '../Home/AppNavigation'
 import "../../styles/style.css";
 
 const QRAProfile = (props) => {
-    
+    console.log(props)
     return (
         <div className='profile-container'>
 
@@ -26,7 +26,11 @@ const QRAProfile = (props) => {
             <div className='site-header'>
                 <AppNavigation/>
             </div>
-
+            <div className = 'site-left' > 
+                 <Advertisement unit='wide skyscraper'>
+                        <img src="../Wideskyscraper.png" alt='alt'/>
+                    </Advertisement>
+            </div>
             {!props.active && 
                 <div className='profile-main'>
                     <QRAProfileHeader
