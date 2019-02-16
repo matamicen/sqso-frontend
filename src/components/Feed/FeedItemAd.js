@@ -1,31 +1,33 @@
 import React from "react";
 
 import "../../styles/style.css";
+import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
+
+import Image from "semantic-ui-react/dist/commonjs/elements/Image";
 export default class FeedItemAd extends React.PureComponent {
     // componentDidMount() {     (window.adsbygoogle = window.adsbygoogle ||
     // []).push({}); }
     // componentDidUpdate(prevProps, prevState) {this
     //     .props
     //     .recalculateRowHeight(this.props.index)}
+   
     render() {
-        console.log(this.props)
-        // return (<ins class="adsbygoogle" data-ad-client="ca-pub-XXXX"
-        // data-ad-test="on" data-ad-slot="XXX" data-ad-format="auto"></ins>);
-        switch (this.props.source) {
-            case 'QSODETAIL':
-                return <img
-                    src={this.props.ad.img}
-                    alt='alt'
-                    // onLoad = {this.props.measure}
+        
+        return (
+        <Segment raised >
+        
+            <a href={this.props.ad.url}>
+                <Image
+                    src={this.props.ad.avatar}
+                    size='mini'
+                    avatar
                     style={{
-                        height: '45px',
-                        widht:'auto',
-                        marginLeft: 'auto',
-                        marginRight: 'auto',
-                        display:'block'
-                }}/>
-            case 'FEED':
-                return <img
+                    width: '35px',
+                    height: '35px'
+                }}/> {this.props.ad.name}
+            </a>                
+                
+             <img
                 src={this.props.ad.img}
                     alt='alt'
                     // onLoad = {this.props.measure}
@@ -39,19 +41,7 @@ export default class FeedItemAd extends React.PureComponent {
                     // maxHeight: '100%',
                     
                 }}/>
-            case 'QRA':
-                return <img
-                    src="Banner.png"
-                    alt='alt'
-                    style={{
-                        height: '45px',
-                        widht:'auto',
-                        marginLeft: 'auto',
-                        marginRight: 'auto',
-                        display:'block'
-                }}/>
-            default:
-                return null;
-        }
+          </Segment>
+        )
     }
 }

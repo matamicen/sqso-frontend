@@ -27,7 +27,7 @@ class NewsFeedContainer extends React.PureComponent {
     render() {
         let qsos = []
         if (this.props.qsos && this.props.qsos.length > 0) {
-            console.table(this.props.qsos);
+            
             for (let i = 0; i < this.props.qsos.length; i++) {  
 
                 qsos.push({qso:this.props.qsos[i],
@@ -37,7 +37,7 @@ class NewsFeedContainer extends React.PureComponent {
              
             }
         }
-console.table(qsos)
+
         return (
             <Fragment>
                 <Dimmer active = {this.state.active} page> 

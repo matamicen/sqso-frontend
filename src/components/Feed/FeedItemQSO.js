@@ -94,7 +94,7 @@ class FeedItemQSO extends React.Component {
                                     }}/> {this.props.qso.qra}
                                 </Link>}/>                
                 {text}
-                {date.toLocaleDateString("EN-US", {month: "short"}) + ' ' + date.getDate() + ', ' + date.getFullYear()}
+                {/* {date.toLocaleDateString("EN-US", {month: "short"}) + ' ' + date.getDate() + ', ' + date.getFullYear()} */}
                 <div style={{
                     float: 'right'
                 }}>
