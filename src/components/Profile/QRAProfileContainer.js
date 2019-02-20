@@ -1,10 +1,18 @@
-import React, {Fragment} from "react";
+import React, {
+    Fragment
+} from "react";
 
 import QRAProfile from './QRAProfilePresentational'
 import * as Actions from '../../actions/Actions';
-import {withRouter} from "react-router-dom";
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux';
+import {
+    withRouter
+} from "react-router-dom";
+import {
+    connect
+} from 'react-redux'
+import {
+    bindActionCreators
+} from 'redux';
 import "../../styles/style.css";
 
 class QRAProfileContainer extends React.PureComponent {
@@ -12,7 +20,7 @@ class QRAProfileContainer extends React.PureComponent {
         super();
         this.state = {
             active: true,
-            
+
             tab: null
         };
         this.handleButtonClick = this
@@ -23,14 +31,21 @@ class QRAProfileContainer extends React.PureComponent {
             .bind(this);
 
     }
+    componentWillUnmount() {
 
-    componentDidMount() {  
+        this
+            .props
+            .actions
+            .clearQRA();
+    }
+    componentDidMount() {
 
-        let qraInMemory = this.props.qra
-            ? this.props.qra.qra.qra
-            : "";
+        let qraInMemory = this.props.qra ?
+            this.props.qra.qra.qra :
+            "";
 
         if ((!this.props.fetchingQRA && !this.props.QRAFetched) || (this.props.QRAFetched && (this.props.match.params.qra !== qraInMemory))) {
+            console.log(this.props.match.params.qra)
             this
                 .props
                 .actions
@@ -38,23 +53,36 @@ class QRAProfileContainer extends React.PureComponent {
         }
         switch (this.props.tab) {
             case 'BIO':
-                this.setState({tab: 2});
+                this.setState({
+                    tab: 2
+                });
                 break;
             case 'INFO':
-                this.setState({tab: 3});
+                this.setState({
+                    tab: 3
+                });
                 break;
             case 'FOLLOWING':
-                this.setState({tab: 4});
+                this.setState({
+                    tab: 4
+                });
                 break;
             default:
-                this.setState({tab: 1});
+                this.setState({
+                    tab: 1
+                });
                 break;
         }
     }
     static getDerivedStateFromProps(props, state) {
-        if (props.QRAFetched) 
-            return {active: false}
-            
+        if (props.QRAFetched)
+            return {
+                active: false
+            }
+        if (!props.qra)
+            return {
+                active: true
+            }
         //Default
         return null;
     }
@@ -91,11 +119,13 @@ class QRAProfileContainer extends React.PureComponent {
                     .push('/' + this.props.match.params.qra);
                 break;
         }
-        this.setState({tab: i});
+        this.setState({
+            tab: i
+        });
     }
     handleButtonClick() {
 
-        if (!this.props.token) 
+        if (!this.props.token)
             return null;
         this.setState((prevState) => {
             return {
@@ -118,17 +148,17 @@ class QRAProfileContainer extends React.PureComponent {
     }
 
     render() {
-        let followed= this.props
-        .following
-        .some(o => o.qra === this.props.match.params.qra);
+        let followed = this.props
+            .following
+            .some(o => o.qra === this.props.match.params.qra);
 
         let qraInfo = null;
-        if (this.props.qra) 
+        if (this.props.qra)
             qraInfo = this.props.qra.qra;
-        
-        return (
-            <Fragment>
-                {< QRAProfile
+
+        return ( <
+            Fragment > {
+                < QRAProfile
                 qraInfo = {
                     qraInfo
                 }
@@ -155,10 +185,12 @@ class QRAProfileContainer extends React.PureComponent {
                 }
                 tab = {
                     this.state.tab
-                } />
-}
+                }
+                />
+            }
 
-            </Fragment>
+            <
+            /Fragment>
         )
 
     }
@@ -181,4 +213,6 @@ const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps, null, {pure: false})(QRAProfileContainer));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps, null, {
+    pure: false
+})(QRAProfileContainer));

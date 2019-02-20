@@ -15,7 +15,7 @@ import AppNavigation from '../Home/AppNavigation'
 import "../../styles/style.css";
 
 const QRAProfile = (props) => {
-    console.log(props)
+    
     return (
         <div className='profile-container'>
 
@@ -31,7 +31,7 @@ const QRAProfile = (props) => {
                         <img src="../Wideskyscraper.png" alt='alt'/>
                     </Advertisement>
             </div>
-            {!props.active && 
+            {!props.active && props.qra &&
                 <div className='profile-main'>
                     <QRAProfileHeader
                         qraInfo={props.qraInfo}
@@ -54,10 +54,10 @@ const QRAProfile = (props) => {
                     <div className='profile-detail'>
                     <Segment>
                     {{
-                            1: <QRAProfileQsos qsos={props.qra.qsos}/>,
+                            1: <QRAProfileQsos qsos={props.qra?props.qra.qsos:[]}/>,
                             2: <QRAProfileBio qraInfo={props.qraInfo} />,
                             3: <QRAProfileInfo qraInfo={props.qraInfo} />,
-                            4: <QRAProfileFollowing following={props.qra.following} />,
+                            4: <QRAProfileFollowing following={props.qra?props.qra.following:null } />,
                         }[props.tab]}
                         </Segment>
                     </div>

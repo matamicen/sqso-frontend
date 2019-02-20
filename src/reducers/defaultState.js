@@ -12,6 +12,7 @@ import {
     RECEIVE_USERINFO,
     REQUEST_FEED,
     REQUEST_QRA,
+    CLEAR_QRA,
     REQUEST_QSO,
     REQUEST_USERINFO,
     DELETE_COMMENT,
@@ -53,7 +54,7 @@ const initialState = {
 };
 
 //define a reducer with an initialized state action
-export default(state = initialState, action) => {
+export default (state = initialState, action) => {
     let newStore;
     let userInfo;
     switch (action.type) {
@@ -187,6 +188,14 @@ export default(state = initialState, action) => {
                 ...state,
                 FetchingQRA: action.FetchingQRA,
                 QRAFetched: action.QRAFetched
+            });
+            return newStore;
+        case CLEAR_QRA:
+            newStore = Object.assign({}, state, {
+                ...state,
+                qra: null,
+                FetchingQRA: false,
+                QRAFetched: false
             });
             return newStore;
         case RECEIVE_QRA:

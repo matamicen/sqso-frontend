@@ -39,7 +39,7 @@ class App extends PureComponent {
                     .doLogout();
 
             });
-
+            
         if (session) {
 
             let credentials = await Auth.currentCredentials();

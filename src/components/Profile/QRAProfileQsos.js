@@ -2,7 +2,8 @@ import React from 'react'
 import NewsFeed from '../Feed/NewsFeedPresentational';
 
 
-export default class QRAProfileQsos extends React.PureComponent {
+export default class QRAProfileQsos extends React.Component {
+    
     render() {
         let qsos = [];
         if (this.props.qsos && this.props.qsos.length > 0) {

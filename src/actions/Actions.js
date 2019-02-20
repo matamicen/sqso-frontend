@@ -18,6 +18,7 @@ export const CLEAR_QSO = 'CLEAR_QSO';
 export const CLEAR_QSO_LINK = 'CLEAR_QSO_LINK';
 export const REQUEST_QRA = 'REQUEST_QRA';
 export const RECEIVE_QRA = 'RECEIVE_QRA';
+export const CLEAR_QRA = 'CLEAR_QRA';
 export const RECEIVE_FOLLOWERS = 'RECEIVE_FOLLOWERS';
 export const DELETE_MEDIA = 'DELETE_MEDIA';
 export const DELETE_QSO = 'DELETE_QSO';
@@ -569,7 +570,9 @@ export function doRequestQRA() {
 export function doReceiveQRA(qra) {
     return {type: RECEIVE_QRA, qra: qra, FetchingQRA: false, QRAFetched: true}
 }
-
+export function clearQRA() {
+    return {type: CLEAR_QRA}
+}
 export function doReceiveFollowers(following) {
 
     return {type: RECEIVE_FOLLOWERS, following: following}
