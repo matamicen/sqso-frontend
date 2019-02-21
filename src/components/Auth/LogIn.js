@@ -23,7 +23,7 @@ class LogIn extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            active: false,
+            active: null,
             showModal: false,
             password: '',
             qra: '',
@@ -33,9 +33,9 @@ class LogIn extends React.Component {
 
     }
 
-    handleOnClickLogin(e) {
+    handleOnClickLogin = () => {
 
-        e.preventDefault();
+      
         this.setState({active: true});
         this.login();
 
@@ -65,7 +65,7 @@ class LogIn extends React.Component {
                 .props
                 .actions
                 .doFetchUserInfo(token);
-
+                
             await this
                 .props
                 .history
@@ -75,6 +75,8 @@ class LogIn extends React.Component {
     static getDerivedStateFromProps(props, state) {
         if (props.isAuthenticated) 
             return {active: false}
+        else if (props.authenticating)
+            return {active:true}
         // Return null to indicate no change to state.
         return null;
     }
@@ -82,10 +84,12 @@ class LogIn extends React.Component {
     // this.setState({}) }
 
     handlePasswordChange(e) {
+        
         this.setState({password: e.target.value});
     }
 
     handleQraChange(e) {
+        
         this.setState({
             qra: e
                 .target
@@ -96,10 +100,11 @@ class LogIn extends React.Component {
     }
 
     render() {
+        
         return (
             <Fragment>
                 <Dimmer active={this.state.active} page>
-                    <Loader>Loading</Loader>
+                    <Loader>Validating User...</Loader>
                 </Dimmer>
 
                 <div className='global-container'>
@@ -129,9 +134,7 @@ class LogIn extends React.Component {
                                 </Header>
                                 <Form
                                     size='large'
-                                    onSubmit={this
-                                    .handleOnClickLogin
-                                    .bind(this)}>
+                                    onSubmit={() => this.handleOnClickLogin()}>
                                     <Segment stacked>
                                         <Form.Field>
                                             <Form.Input
@@ -199,7 +202,8 @@ class LogIn extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({isAuthenticated: state.default.userData.isAuthenticated});
+const mapStateToProps = (state) => ({isAuthenticated: state.default.userData.isAuthenticated, 
+    authenticating: state.default.userData.authenticating});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 });

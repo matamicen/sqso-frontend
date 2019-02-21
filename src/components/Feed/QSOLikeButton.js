@@ -23,7 +23,7 @@ class QSOLikeButton extends React.Component {
 
             this.setState({likeCounter: this.props.qso.likes.length});
 
-            if (this.props.state.default.userData.isAuthenticated && (this.props.qso.likes.some(o => o.qra === this.props.state.default.userData.qra.toUpperCase()))) {
+            if (this.props.isAuthenticated && (this.props.qso.likes.some(o => o.qra === this.props.currentQRA.toUpperCase()))) {
                 this.setState({liked: true});
                 this.setState({icon: "thumbs up"})
             }
@@ -38,7 +38,7 @@ class QSOLikeButton extends React.Component {
                 "qso": this.props.qso.idqsos
             }, // replace this with attributes you need
             headers: {
-                "Authorization": this.props.state.default.userData.token
+                "Authorization": this.props.token
             } // OPTIONAL
         }
         API
@@ -65,7 +65,7 @@ class QSOLikeButton extends React.Component {
                 "qso": this.props.qso.idqsos
             }, // replace this with attributes you need
             headers: {
-                "Authorization": this.props.state.default.userData.token
+                "Authorization": this.props.token
             } // OPTIONAL
         }
         API
@@ -85,14 +85,14 @@ class QSOLikeButton extends React.Component {
     }
 
     handleOnLike() {
-        if (!this.props.state.default.userData.isAuthenticated) 
+        if (!this.props.isAuthenticated) 
             return null;
         
         if (!this.state.liked) {
             this.setState(previousState => ({
                 likeCounter: previousState.likeCounter + 1
             }));
-            if (this.props.state.default.userData.isAuthenticated) 
+            if (this.props.isAuthenticated) 
                 this.doLike();
             
             this.setState({icon: "thumbs up"})
@@ -101,7 +101,7 @@ class QSOLikeButton extends React.Component {
             this.setState(previousState => ({
                 likeCounter: previousState.likeCounter - 1
             }));
-            if (this.props.state.default.userData.isAuthenticated) 
+            if (this.props.isAuthenticated) 
                 this.doUnLike();
             
             this.setState({icon: "thumbs outline up"})
@@ -130,7 +130,10 @@ class QSOLikeButton extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({state: state});
+const mapStateToProps = (state) => ({    
+    isAuthenticated: state.default.userData.isAuthenticated,
+    currentQRA: state.default.userData.qra,
+    token: state.default.userData.token});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 })

@@ -45,7 +45,7 @@ class QRAProfileContainer extends React.PureComponent {
             "";
 
         if ((!this.props.fetchingQRA && !this.props.QRAFetched) || (this.props.QRAFetched && (this.props.match.params.qra !== qraInMemory))) {
-            console.log(this.props.match.params.qra)
+            
             this
                 .props
                 .actions
