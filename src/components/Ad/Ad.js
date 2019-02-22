@@ -1,21 +1,17 @@
 import React from 'react';
-
+import { DFPSlotsProvider, AdSlot } from 'react-dfp';
 export default class Ad extends React.Component {
-  componentDidMount () {
-    (window.adsbygoogle = window.adsbygoogle || []).push({});
-  }
+ 
 
 render () {
+  
     return (
-       <ins
-        className="adsbygoogle"
-        data-ad-client="ca-pub-4591861188995436"
-        data-ad-format="auto"
-        data-adtest="on"
-        data-ad-slot="4640466102"
-        style={{ display: "block" }}
-      />
-      
+      // <!-- /21799560237/Home/Home_Left -->
+
+       <DFPSlotsProvider dfpNetworkId={'21799560237'} adUnit={"Home/Home_Left"}  >
+       
+       <AdSlot adUnit={"Home/Home_Left"} sizes={[ [600, 160]]} />
+     </DFPSlotsProvider>
     );
   }
 }
