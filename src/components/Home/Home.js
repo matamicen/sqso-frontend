@@ -29,7 +29,7 @@ class Home extends React.PureComponent {
                 </div>
                 <div className='site-left'>
                     
-                    <AdSlot adUnit={"Home/Home_Left"} sizes={[ [160,600]]} />                     
+                    <AdSlot adUnit={"Home/Home_Left2"} sizes={[ [160,600]]} />                     
                     
                 </div>
 
