@@ -28,9 +28,9 @@ class Home extends React.PureComponent {
                     <AppNavigation/>
                 </div>
                 <div className='site-left'>
-                    <Advertisement unit='wide skyscraper'>
+                    
                     <AdSlot adUnit={"Home/Home_Left"} sizes={[ [160,600]]} />                     
-                    </Advertisement>
+                    
                 </div>
 
                 <div className='site-main'>
@@ -39,9 +39,9 @@ class Home extends React.PureComponent {
 
                 <div className='site-right'>
 
-                    <Advertisement unit='wide skyscraper'>
+                    
                     <AdSlot adUnit={"Home/Home_Right"} sizes={[ [160,600]]} />    
-                    </Advertisement>
+                    
                 </div>
 
             </div>
