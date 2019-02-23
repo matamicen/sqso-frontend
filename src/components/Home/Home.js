@@ -22,15 +22,15 @@ class Home extends React.PureComponent {
     render() {
 
         return (
-            <DFPSlotsProvider dfpNetworkId={'21799560237'}   >
+           
             <div className='global-container'>
                 <div className='site-header'>
                     <AppNavigation/>
                 </div>
                 <div className='site-left'>
-                    <Advertisement unit='wide skyscraper'>
+                <DFPSlotsProvider dfpNetworkId={'21799560237'}   >
                     <AdSlot adUnit={"Home/Home_Left2"} sizes={[ [160,600]]} />                     
-                    </Advertisement>
+                    </DFPSlotsProvider> 
                 </div>
 
                 <div className='site-main'>
@@ -38,15 +38,14 @@ class Home extends React.PureComponent {
                 </div>
 
                 <div className='site-right'>
-
-                    <Advertisement unit='wide skyscraper'>
+                <DFPSlotsProvider dfpNetworkId={'21799560237'}>
+                  
                     <AdSlot adUnit={"Home/Home_Right"} sizes={[ [160,600]]} />    
-                    </Advertisement>
+                    </DFPSlotsProvider> 
                 </div>
 
             </div>
-            </DFPSlotsProvider>
-        )
+          )
     }
 }
 const mapStateToProps = (state) => ({
