@@ -2,7 +2,7 @@ import React from "react";
 
 import "../../styles/style.css";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
-
+import { DFPSlotsProvider, AdSlot } from 'react-dfp';
 import Image from "semantic-ui-react/dist/commonjs/elements/Image";
 export default class FeedItemAd extends React.PureComponent {
     // componentDidMount() {     (window.adsbygoogle = window.adsbygoogle ||
@@ -27,7 +27,7 @@ export default class FeedItemAd extends React.PureComponent {
                 }}/> {this.props.ad.name}
             </a>                
                 
-             <img
+             {/* <img
                 src={this.props.ad.img}
                     alt='alt'
                     // onLoad = {this.props.measure}
@@ -40,7 +40,11 @@ export default class FeedItemAd extends React.PureComponent {
                     // height: '',
                     // maxHeight: '100%',
                     
-                }}/>
+                }}/> */}
+                 <DFPSlotsProvider dfpNetworkId={'21799560237'}   >
+                    <AdSlot adUnit={"Feed"}  />                     
+                    </DFPSlotsProvider> 
+                
           </Segment>
         )
     }
