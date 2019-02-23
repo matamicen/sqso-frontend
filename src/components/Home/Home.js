@@ -4,10 +4,10 @@ import AppNavigation from './AppNavigation'
 import FeedQSO from "../Feed/NewsFeedContainer";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
-// import Auth from '@aws-amplify/auth';
+import { DFPSlotsProvider, AdSlot } from 'react-dfp';
 import * as Actions from '../../actions/Actions';
 import "../../styles/style.css";
-import Ad from '../Ad/Ad'; 
+
 // import AdSense from "react-adsense";
 class Home extends React.PureComponent {
     componentDidMount() {
@@ -22,15 +22,14 @@ class Home extends React.PureComponent {
     render() {
 
         return (
+            <DFPSlotsProvider dfpNetworkId={'21799560237'}   >
             <div className='global-container'>
                 <div className='site-header'>
                     <AppNavigation/>
                 </div>
                 <div className='site-left'>
                     <Advertisement unit='wide skyscraper'>
-<Ad/>
-
-                        
+                    <AdSlot adUnit={"Home/Home_Left"} sizes={[ [160,600]]} />                     
                     </Advertisement>
                 </div>
 
@@ -41,11 +40,12 @@ class Home extends React.PureComponent {
                 <div className='site-right'>
 
                     <Advertisement unit='wide skyscraper'>
-                        <img src="Wideskyscraper.png" alt='alt'/>
+                    <AdSlot adUnit={"Home/Home_Right"} sizes={[ [160,600]]} />    
                     </Advertisement>
                 </div>
 
             </div>
+            </DFPSlotsProvider>
         )
     }
 }
