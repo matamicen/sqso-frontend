@@ -27,7 +27,7 @@ export default class FeedItemAd extends React.PureComponent {
                 }}/> {this.props.ad.name}
             </a>                
                 
-             {/* <img
+             <img
                 src={this.props.ad.img}
                     alt='alt'
                     // onLoad = {this.props.measure}
@@ -40,10 +40,10 @@ export default class FeedItemAd extends React.PureComponent {
                     // height: '',
                     // maxHeight: '100%',
                     
-                }}/> */}
-                 <DFPSlotsProvider dfpNetworkId={'21799560237'}   >
-                    <AdSlot adUnit={"Feed"}  />                     
-                    </DFPSlotsProvider> 
+                }}/>
+                 {/* <DFPSlotsProvider dfpNetworkId={'21799560237'}   >
+                    <AdSlot adUnit={"Feed"} sizes={[ [336,280]]} />                     
+                    </DFPSlotsProvider>  */}
                 
           </Segment>
         )
