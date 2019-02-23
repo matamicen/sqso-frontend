@@ -10,7 +10,7 @@ render () {
 
        <DFPSlotsProvider dfpNetworkId={'21799560237'} adUnit={"Home/Home_Left"}  >
        
-       <AdSlot adUnit={"Home/Home_Left"} sizes={[ [600, 160]]} />
+       <AdSlot sizes={[ [160,600]]} />
      </DFPSlotsProvider>
     );
   }
