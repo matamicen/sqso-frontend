@@ -10,7 +10,14 @@ export default class FeedItemAd extends React.PureComponent {
     // componentDidUpdate(prevProps, prevState) {this
     //     .props
     //     .recalculateRowHeight(this.props.index)}
-   
+    componentDidMount() {
+        window.googletag.cmd.push(function() {
+            window.googletag.defineSlot('21799560237/Feed-Item',  'div-1').addService(window.googletag.pubads());
+            window.googletag.pubads().enableSingleRequest();
+            window.googletag.enableServices();
+        });
+        window.googletag.cmd.push(function() { window.googletag.display('div-1'); });
+    }
     render() {
         
         return (
@@ -41,10 +48,13 @@ export default class FeedItemAd extends React.PureComponent {
                     // maxHeight: '100%',
                     
                 }}/> */}
-                 <DFPSlotsProvider dfpNetworkId={'21799560237'}   >
+                 {/* <DFPSlotsProvider dfpNetworkId={'21799560237'}   >
                     <AdSlot adUnit={"Feed-Item"}  />                     
                     </DFPSlotsProvider> 
-                
+                 */}
+                   <div id="banner">
+		<div id="div-1" style={{ height: '600px', width: '160px' }} />
+            </div>
         </Segment>
         )
     }
