@@ -14,7 +14,7 @@ export default class FeedItemAd extends React.PureComponent {
         
     
             <div id="application">
-        <AD path="21799560237/Feed/Feed-Item" />
+        <AD path="21799560237/Feed/Feed-Item2" />
         
       </div>
         </Segment>
