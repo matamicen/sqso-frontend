@@ -1,5 +1,5 @@
 import React from 'react'
-import Advertisement from 'semantic-ui-react/dist/commonjs/views/Advertisement'
+
 import AppNavigation from './AppNavigation'
 import FeedQSO from "../Feed/NewsFeedContainer";
 import {connect} from 'react-redux'
