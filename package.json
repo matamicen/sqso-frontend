@@ -34,6 +34,7 @@
     "react-draft-wysiwyg": "^1.12.19",
     "react-ga": "^2.5.3",
     "react-google-publisher-tag": "^1.0.5",
+    "react-gpt": "^2.0.1",
     "react-icons": "^2.2.5",
     "react-measure": "^2.0.0",
     "react-recaptcha": "^2.3.10",
