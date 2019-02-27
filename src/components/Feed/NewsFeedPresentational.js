@@ -19,7 +19,7 @@ export default class NewsFeed extends React.Component {
             loadedRowsMap: {},
             scrollToIndex: undefined,
             loadingRowCount: 0,
-            overscanRowCount: 10,
+            overscanRowCount: 20,
             list: list,
             randomScrollToIndex: null,
             rowCount: list.length
