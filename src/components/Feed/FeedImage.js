@@ -34,7 +34,7 @@ class FeedImage extends React.Component {
                     height: '50vh'
                 }}>
 
-                    <Carousel >
+                    <Carousel cellAlign="center">
                         {this
                             .props
                             .img
