@@ -15,7 +15,7 @@ export default class FeedItemAd extends React.PureComponent {
     render() {
         
         return (
-            <Segment raised secondary textAlign='center'>          
+            <Segment raised secondary >          
                 <Ad adslot='/21799560237/Feed/Feed-Item3' width={336} height={280} />
             </Segment>
         )

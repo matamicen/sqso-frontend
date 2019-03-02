@@ -30,7 +30,7 @@ const QRAProfile = (props) => {
             <div className = 'site-left' > 
                  <Advertisement unit='wide skyscraper'>                 
                  <Ad adslot='/21799560237/qraDetail/left' width={160} height={600}/>
-                    </Advertisement>
+                 </Advertisement>
             </div>
             {!props.active && props.qra &&
                 <div className='profile-main'>
