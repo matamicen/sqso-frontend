@@ -4,7 +4,7 @@ import NewsFeed from './Feed/NewsFeedPresentational';
 import AppNavigation from './Home/AppNavigation'
 import Advertisement from 'semantic-ui-react/dist/commonjs/views/Advertisement'
 import {bindActionCreators} from 'redux';
-import * as Actions from '../actions/Actions';
+import * as Actions from '../actions';
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";

@@ -3,10 +3,9 @@ import React, {Fragment} from 'react'
 import Container from 'semantic-ui-react/dist/commonjs/elements/Container'
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
 
-
 import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown";
 import Confirm from "semantic-ui-react/dist/commonjs/addons/Confirm"
-import * as Actions from '../../actions/Actions';
+import * as Actions from '../../actions';
 import {withRouter} from "react-router-dom";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
@@ -115,7 +114,7 @@ class QRAProfileBio extends React.Component {
         this
             .props
             .actions
-            .doSaveUserBio(this.props.token, draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())),this.props.identityId)
+            .doSaveUserBio(this.props.token, draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())), this.props.identityId)
         this.close();
     };
     onEditorStateChange = (editorState) => {

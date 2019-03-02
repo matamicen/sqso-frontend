@@ -4,7 +4,7 @@ import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
-import * as Actions from '../../actions/Actions';
+import * as Actions from '../../actions';
 
 class FeedAudio extends React.Component {
 

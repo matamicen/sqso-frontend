@@ -5,7 +5,7 @@ import Comment from 'semantic-ui-react/dist/commonjs/views/Comment'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
-import * as Actions from '../../actions/Actions';
+import * as Actions from '../../actions';
 
 import FeedOptionsMenu from "./FeedOptionsMenu";
 
@@ -13,10 +13,10 @@ class QSOCommentItem extends React.Component {
     state = {
         comment: null
     }
-    componentDidUpdate = () =>{
+    componentDidUpdate = () => {
         this
-        .props
-        .recalculateRowHeight();
+            .props
+            .recalculateRowHeight();
     }
     render() {
         var date = new Date(this.props.comment.datetime);
@@ -43,12 +43,17 @@ class QSOCommentItem extends React.Component {
                         </div>
                     </Item.Extra>
                     < Comment.Author >
-                    <PopupToFollow qra={this.props.comment.qra}
-                           trigger={<Link to={"/" + this.props.comment.qra}>{this
+                        <PopupToFollow
+                            qra={this.props.comment.qra}
+                            trigger={< Link to = {
+                            "/" + this.props.comment.qra
+                        } > {
+                            this
                                 .props
                                 .comment
                                 .qra
-                                .toUpperCase()}</Link>}/>
+                                .toUpperCase()
+                        } < /Link>}/>
                     </Comment.Author>
                     <Comment.Metadata>
                         <span>{timestamp}

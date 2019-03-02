@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
-import * as Actions from '../../actions/Actions';
+import * as Actions from '../../actions';
 import ReactGA from 'react-ga';
 import QRCode from "qrcode.react";
 import Button from "semantic-ui-react/dist/commonjs/elements/Button";
@@ -13,7 +13,6 @@ import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 import API from '@aws-amplify/api';
 
 import QslCardPrint from './qslCard';
-
 
 class FeedOptionsMenu extends React.PureComponent {
     state = {
@@ -48,8 +47,8 @@ class FeedOptionsMenu extends React.PureComponent {
             .doDeleteQso(this.props.idqso, this.props.token)
     }
     printQSLCard() {
-    
-       QslCardPrint( this.props );
+
+        QslCardPrint(this.props);
     }
     handleOnSubmitReportComment(e) {
         var datetime = new Date();
@@ -149,7 +148,6 @@ class FeedOptionsMenu extends React.PureComponent {
             <Dropdown
                 icon='ellipsis vertical'
                 size='tiny'
-                
                 className='icon'
                 pointing="right">
                 <Dropdown.Menu>

@@ -3,7 +3,7 @@ import React, {Fragment} from "react";
 import {Link, withRouter} from "react-router-dom";
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import * as Actions from '../../actions/Actions';
+import * as Actions from '../../actions';
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
 import Header from 'semantic-ui-react/dist/commonjs/elements/Header'

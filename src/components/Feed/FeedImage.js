@@ -8,7 +8,7 @@ import Carousel from 'nuka-carousel';
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
-import * as Actions from '../../actions/Actions';
+import * as Actions from '../../actions';
 
 class FeedImage extends React.Component {
     constructor(props, context) {

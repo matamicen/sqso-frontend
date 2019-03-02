@@ -1,18 +1,10 @@
-import React, {
-    Fragment
-} from "react";
+import React, {Fragment} from "react";
 
 import QRAProfile from './QRAProfilePresentational'
-import * as Actions from '../../actions/Actions';
-import {
-    withRouter
-} from "react-router-dom";
-import {
-    connect
-} from 'react-redux'
-import {
-    bindActionCreators
-} from 'redux';
+import * as Actions from '../../actions';
+import {withRouter} from "react-router-dom";
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux';
 import "../../styles/style.css";
 
 class QRAProfileContainer extends React.PureComponent {
@@ -40,12 +32,12 @@ class QRAProfileContainer extends React.PureComponent {
     }
     componentDidMount() {
 
-        let qraInMemory = this.props.qra ?
-            this.props.qra.qra.qra :
-            "";
+        let qraInMemory = this.props.qra
+            ? this.props.qra.qra.qra
+            : "";
 
         if ((!this.props.fetchingQRA && !this.props.QRAFetched) || (this.props.QRAFetched && (this.props.match.params.qra !== qraInMemory))) {
-            
+
             this
                 .props
                 .actions
@@ -53,44 +45,31 @@ class QRAProfileContainer extends React.PureComponent {
         }
         switch (this.props.tab) {
             case 'BIO':
-                this.setState({
-                    tab: 2
-                });
+                this.setState({tab: 2});
                 break;
             case 'INFO':
-                this.setState({
-                    tab: 3
-                });
+                this.setState({tab: 3});
                 break;
             case 'FOLLOWING':
-                this.setState({
-                    tab: 4
-                });
+                this.setState({tab: 4});
                 break;
             default:
-                this.setState({
-                    tab: 1
-                });
+                this.setState({tab: 1});
                 break;
         }
     }
     static getDerivedStateFromProps(props, state) {
-        if (props.QRAFetched)
-            return {
-                active: false
-            }
-        if (!props.qra)
-            return {
-                active: true
-            }
+        if (props.QRAFetched) 
+            return {active: false}
+        if (!props.qra) 
+            return {active: true}
         //Default
         return null;
     }
     // componentWillReceiveProps(nextProps) {     if (nextProps.QRAFetched) {
-    //  this.setState({active: false})     }     if (nextProps.following)
+    // this.setState({active: false})     }     if (nextProps.following)
     // this.setState({             followed: nextProps                 .following
-    //              .some(o => o.qra === this.props.match.params.qra)         });
-    //  }
+    //           .some(o => o.qra === this.props.match.params.qra)         });  }
 
     handleTabClick(i) {
         switch (i) {
@@ -119,13 +98,11 @@ class QRAProfileContainer extends React.PureComponent {
                     .push('/' + this.props.match.params.qra);
                 break;
         }
-        this.setState({
-            tab: i
-        });
+        this.setState({tab: i});
     }
     handleButtonClick() {
 
-        if (!this.props.token)
+        if (!this.props.token) 
             return null;
         this.setState((prevState) => {
             return {
@@ -148,49 +125,43 @@ class QRAProfileContainer extends React.PureComponent {
     }
 
     render() {
-        let followed = this.props
+        let followed = this
+            .props
             .following
             .some(o => o.qra === this.props.match.params.qra);
 
         let qraInfo = null;
-        if (this.props.qra)
+        if (this.props.qra) 
             qraInfo = this.props.qra.qra;
-
-        return ( <
-            Fragment > {
-                < QRAProfile
-                qraInfo = {
-                    qraInfo
-                }
-                active = {
-                    this.state.active
-                }
-                qra = {
-                    this.props.qra
-                }
-                onClick = {
-                    this.handleButtonClick
-                }
-                isAuthenticated = {
-                    this.props.isAuthenticated
-                }
-                currentQRA = {
-                    this.props.currentQRA
-                }
-                followed = {
-                    followed
-                }
-                handleTabClick = {
-                    this.handleTabClick
-                }
-                tab = {
-                    this.state.tab
-                }
-                />
+        
+        return ( < Fragment > { < QRAProfile qraInfo = {
+                qraInfo
             }
-
-            <
-            /Fragment>
+            active = {
+                this.state.active
+            }
+            qra = {
+                this.props.qra
+            }
+            onClick = {
+                this.handleButtonClick
+            }
+            isAuthenticated = {
+                this.props.isAuthenticated
+            }
+            currentQRA = {
+                this.props.currentQRA
+            }
+            followed = {
+                followed
+            }
+            handleTabClick = {
+                this.handleTabClick
+            }
+            tab = {
+                this.state.tab
+            } />
+        } < /Fragment>
         )
 
     }

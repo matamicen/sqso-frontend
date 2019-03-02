@@ -5,7 +5,7 @@ import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
 
 import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown";
 
-import * as Actions from '../../actions/Actions';
+import * as Actions from '../../actions';
 import {withRouter} from "react-router-dom";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
@@ -19,7 +19,7 @@ class QRAProfileInfo extends React.Component {
             edit: false,
             qra: {
                 firstname: this.props.qraInfo.firstname,
-                lastname: this.props.qraInfo.lastname,                
+                lastname: this.props.qraInfo.lastname,
                 mobile: this.props.qraInfo.mobile,
                 birthday: this.props.qraInfo.birthday,
                 address: this.props.qraInfo.address,
@@ -48,7 +48,7 @@ class QRAProfileInfo extends React.Component {
 
         const name = event.target.name;
         const value = event.target.value;
-        
+
         this.setState({
             qra: {
                 ...this.state.qra,
@@ -62,7 +62,7 @@ class QRAProfileInfo extends React.Component {
         const {
             firstname,
             lastname,
-            
+
             mobile,
             city,
             birthday,
@@ -75,7 +75,7 @@ class QRAProfileInfo extends React.Component {
             licenseclass,
             qslinfo
         } = this.state.qra
-        
+
         return (
             <Fragment>
                 <Segment raised>

@@ -3,7 +3,7 @@ import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon'
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
-import * as Actions from '../../actions/Actions';
+import * as Actions from '../../actions';
 import API from '@aws-amplify/api';
 import ReactGA from 'react-ga';
 class QSOLikeButton extends React.Component {
@@ -130,10 +130,7 @@ class QSOLikeButton extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({    
-    isAuthenticated: state.default.userData.isAuthenticated,
-    currentQRA: state.default.userData.qra,
-    token: state.default.userData.token});
+const mapStateToProps = (state) => ({isAuthenticated: state.default.userData.isAuthenticated, currentQRA: state.default.userData.qra, token: state.default.userData.token});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 })

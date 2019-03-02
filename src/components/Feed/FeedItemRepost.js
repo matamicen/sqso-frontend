@@ -15,7 +15,7 @@ import QSOLikeButton from "./QSOLikeButton";
 import QRAs from "./QRAs";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
-import * as Actions from '../../actions/Actions';
+import * as Actions from '../../actions';
 
 import Image from "semantic-ui-react/dist/commonjs/elements/Image";
 import {Link} from 'react-router-dom'

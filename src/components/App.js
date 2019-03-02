@@ -12,7 +12,7 @@ import QRAProfileContainer from "./Profile/QRAProfileContainer";
 import QSODetail from "./QSODetail"
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
-import * as Actions from '../actions/Actions';
+import * as Actions from '../actions';
 import Auth from '@aws-amplify/auth';
 import aws_exports from '../aws-exports';
 import Amplify from '@aws-amplify/core';

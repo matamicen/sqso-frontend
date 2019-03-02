@@ -4,7 +4,7 @@ import AppNavigation from './AppNavigation'
 import FeedQSO from "../Feed/NewsFeedContainer";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
-import * as Actions from '../../actions/Actions';
+import * as Actions from '../../actions';
 import "../../styles/style.css";
 import Ad from '../Ad/Ad';
 
@@ -22,7 +22,7 @@ class Home extends React.PureComponent {
     render() {
 
         return (
-           
+
             <div className='global-container'>
                 <div className='site-header'>
                     <AppNavigation/>
@@ -37,11 +37,11 @@ class Home extends React.PureComponent {
                 </div>
 
                 <div className='site-right'>
-                    <Ad adslot='Home/Home_Right' width={160} height={600}/>
+                    <Ad adslot='/21799560237/Home/Home_Right' width={160} height={600}/>
                 </div>
 
             </div>
-          )
+        )
     }
 }
 const mapStateToProps = (state) => ({

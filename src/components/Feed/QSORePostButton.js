@@ -4,7 +4,7 @@ import {withRouter} from "react-router-dom";
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
-import * as Actions from '../../actions/Actions';
+import * as Actions from '../../actions';
 import API from '@aws-amplify/api';
 
 import ReactGA from 'react-ga';

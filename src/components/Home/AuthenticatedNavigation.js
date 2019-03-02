@@ -2,7 +2,7 @@ import React from "react";
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
-import * as Actions from '../../actions/Actions';
+import * as Actions from '../../actions';
 import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown'
 import Menu from 'semantic-ui-react/dist/commonjs/collections/Menu'
 import NavigationSearch from './NavigationSearch'
@@ -32,9 +32,9 @@ class AuthenticatedNavigation extends React.PureComponent {
             })
             .catch(err => console.log(err));
 
-    }    
+    }
     notificationIcon() {
-        
+
         if (this.props.notifications.length > 0) {
             return (
                 <Icon.Group size='large'>
@@ -52,7 +52,7 @@ class AuthenticatedNavigation extends React.PureComponent {
 
     }
     render() {
-        
+
         return (
 
             <Menu fixed='top' style={{
@@ -80,22 +80,15 @@ class AuthenticatedNavigation extends React.PureComponent {
                             <Dropdown.Header content={this.props.currentQRA}/>
                             <Dropdown.Divider/>
                             <Dropdown.Item
-                                onClick={()=>this
-                                    .props
-                                    .history
-                                    .push('/'+this.props.currentQRA+'/bio')}>
+                                onClick={() => this.props.history.push('/' + this.props.currentQRA + '/bio')}>
                                 Edit My Bio
                             </Dropdown.Item>
                             <Dropdown.Item
-                                onClick={()=>this
-                                    .props
-                                    .history
-                                    .push('/'+this.props.currentQRA+'/info')}>
+                                onClick={() => this.props.history.push('/' + this.props.currentQRA + '/info')}>
                                 Edit My Info
                             </Dropdown.Item>
                             <Dropdown.Divider/>
-                            <Dropdown.Item
-                                onClick={()=> this.props.history.push('/changepassword')}>
+                            <Dropdown.Item onClick={() => this.props.history.push('/changepassword')}>
                                 Change Password
                             </Dropdown.Item>
                             <Dropdown.Divider/>

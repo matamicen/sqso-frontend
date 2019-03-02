@@ -5,7 +5,7 @@ import Comment from 'semantic-ui-react/dist/commonjs/views/Comment'
 import QSOCommentItem from "./QSOCommentItem";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
-import * as Actions from '../../actions/Actions';
+import * as Actions from '../../actions';
 import API from '@aws-amplify/api';
 import ReactGA from 'react-ga';
 class QSOComments extends React.Component {

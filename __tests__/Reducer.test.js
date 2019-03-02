@@ -1,4 +1,4 @@
-import * as Actions from '../src/actions/Actions';
+import * as Actions from '../src/actions';
 import reducer from '../src/reducer/';
 
 // describe('post reducer', () => {

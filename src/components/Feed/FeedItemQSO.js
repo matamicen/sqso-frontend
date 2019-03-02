@@ -17,7 +17,7 @@ import QRAs from "./QRAs";
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
-import * as Actions from '../../actions/Actions';
+import * as Actions from '../../actions';
 import PropTypes from 'prop-types';
 
 import {Link} from 'react-router-dom'

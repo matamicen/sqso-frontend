@@ -2,7 +2,7 @@ import React from "react";
 import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal'
 import Form from 'semantic-ui-react/dist/commonjs/collections/Form'
 import Message from 'semantic-ui-react/dist/commonjs/collections/Message'
-import * as Actions from '../../actions/Actions';
+import * as Actions from '../../actions';
 import Auth from '@aws-amplify/auth';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';

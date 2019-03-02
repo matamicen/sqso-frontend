@@ -23,7 +23,7 @@ import {
     PUBLIC_SESSION,
     RECEIVE_USER_BIO,
     RECEIVE_USER_DATA_INFO
-} from "../actions/Actions"
+} from "../actions"
 
 const initialState = {
     userData: {
