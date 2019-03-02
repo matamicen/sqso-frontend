@@ -33,6 +33,7 @@ class Ads extends React.Component {
           [this.props.width, this.props.height], 
           this.id
         )
+        .pubads().enableSingleRequest()
         .addService(window.googletag.pubads());
 
       // Start ad fetching
@@ -41,7 +42,8 @@ class Ads extends React.Component {
   }
   render() {
     return (
-      <div style={{width:this.props.width, height:this.props.height}}>
+        
+      <div style={{width:this.props.width, height:this.props.height, textAlign:'center'}}>
         <Waypoint onEnter={this.displayAd} />
         <div id={this.id}></div>
       </div>

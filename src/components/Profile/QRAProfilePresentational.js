@@ -13,6 +13,7 @@ import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
 import AppNavigation from '../Home/AppNavigation'
 import "../../styles/style.css";
+import Ad from '../Ad/Ad';
 
 const QRAProfile = (props) => {
     
@@ -27,8 +28,8 @@ const QRAProfile = (props) => {
                 <AppNavigation/>
             </div>
             <div className = 'site-left' > 
-                 <Advertisement unit='wide skyscraper'>
-                        <img src="../Wideskyscraper.png" alt='alt'/>
+                 <Advertisement unit='wide skyscraper'>                 
+                 <Ad adslot='/21799560237/qraDetail/left' width={160} height={600}/>
                     </Advertisement>
             </div>
             {!props.active && props.qra &&
@@ -66,7 +67,7 @@ const QRAProfile = (props) => {
         } 
             <div className = 'site-right' > 
                  <Advertisement unit='wide skyscraper'>
-                        <img src="../Wideskyscraper.png" alt='alt'/>
+                 <Ad adslot='/21799560237/qraDetail/right' width={160} height={600}/>
                     </Advertisement>
             </div>
         </div

@@ -9,7 +9,7 @@ import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
 import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
-
+import Ad from './Ad/Ad';
 import "../styles/style.css";
 class QSODetail extends React.PureComponent {
     state = {
@@ -69,7 +69,7 @@ class QSODetail extends React.PureComponent {
                 </div>
                 <div className='site-left'>
                     <Advertisement unit='wide skyscraper'>
-                        <img src="../Wideskyscraper.png" alt='alt'/>
+                    <Ad adslot='/21799560237/qsoDetail/left' width={160} height={600}/>
                     </Advertisement>
                 </div>
 
@@ -81,7 +81,7 @@ class QSODetail extends React.PureComponent {
 
                 <div className='site-right'>
                     <Advertisement unit='wide skyscraper'>
-                        <img src="../Wideskyscraper.png" alt='alt'/>
+                    <Ad adslot='/21799560237/qsoDetail/right' width={160} height={600}/>
                     </Advertisement>
                 </div>
 
