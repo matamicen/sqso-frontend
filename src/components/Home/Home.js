@@ -7,6 +7,7 @@ import {bindActionCreators} from 'redux';
 import { DFPSlotsProvider, AdSlot } from 'react-dfp';
 import * as Actions from '../../actions/Actions';
 import "../../styles/style.css";
+import Ad from '../Ad/Ad';
 
 // import AdSense from "react-adsense";
 class Home extends React.PureComponent {
@@ -28,9 +29,10 @@ class Home extends React.PureComponent {
                     <AppNavigation/>
                 </div>
                 <div className='site-left'>
-                <DFPSlotsProvider dfpNetworkId={'21799560237'}   >
+                {/* <DFPSlotsProvider dfpNetworkId={'21799560237'}   >
                     <AdSlot adUnit={"Home/Home_Left2"} sizes={[ [160,600]]} />                     
-                    </DFPSlotsProvider> 
+                    </DFPSlotsProvider>  */}
+                    <Ad adslot='/21799560237/Home/Home_Left2' width={160} height={600} id='div-gpt-ad-1551540470056-0'/>
                 </div>
 
                 <div className='site-main'>
