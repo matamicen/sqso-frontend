@@ -9,12 +9,13 @@ import {Bling as GPT} from "react-gpt";
 class AdUnit extends Component {
 
 	componentDidMount() {
-		this.beginGPTsetup();
+        // this.beginGPTsetup();
+        window.googletag.cmd.push(function() { window.googletag.display('div-gpt-ad-1551538079958-0'); });
 	}
 
 	beginGPTSetup = () => {
         // Begin GPT slot rendering, etc.
-        window.googletag.cmd.push(function() { window.googletag.display('div-gpt-ad-1551538079958-0'); });
+       
 	}
 
 	render() {
