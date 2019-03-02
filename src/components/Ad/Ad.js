@@ -44,7 +44,9 @@ class Ads extends React.Component {
         
       <div style={{width:this.props.width, height:this.props.height}}>
         <Waypoint onEnter={this.displayAd} />
+        <center>
         <div id={this.id} style={{textAlign:'center'}}></div>
+        </center>
       </div>
     );
   }
