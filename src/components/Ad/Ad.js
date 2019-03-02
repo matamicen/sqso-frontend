@@ -33,9 +33,8 @@ class Ads extends React.Component {
           [this.props.width, this.props.height], 
           this.id
         )
-      
-        .addService(window.googletag.pubads().enableSingleRequest());
-
+        .addService(window.googletag.pubads());
+        window.googletag.pubads().enableSingleRequest();
       // Start ad fetching
       window.googletag.enableServices();
     });
