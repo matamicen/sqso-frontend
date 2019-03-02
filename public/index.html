@@ -40,7 +40,13 @@
   var googletag = googletag || {};
   googletag.cmd = googletag.cmd || [];
 </script>
-
+<script>
+  googletag.cmd.push(function() {
+    googletag.defineSlot('/21799560237/Feed/Feed-Item3', [336, 280], 'div-gpt-ad-1551538079958-0').addService(googletag.pubads());
+    googletag.pubads().enableSingleRequest();
+    googletag.enableServices();
+  });
+</script>
 </head>
 
 <body style="overflow: scroll">
