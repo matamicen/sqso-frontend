@@ -319,7 +319,7 @@ class FeedOptionsMenu extends React.PureComponent {
                                 <Form.Button>Submit</Form.Button>
 
                                 <Modal
-                                    dimmer={false}
+                                    
                                     open={showMessage}
                                     onOpen={this.open}
                                     onClose={this.close}

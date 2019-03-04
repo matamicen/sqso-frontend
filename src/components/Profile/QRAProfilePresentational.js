@@ -21,7 +21,7 @@ const QRAProfile = (props) => {
         <div className='profile-container'>
 
             <Dimmer active={props.active} page>
-                <Loader>Loading</Loader>
+                <Loader>Loading QRA...</Loader>
             </Dimmer>
 
             <div className='site-header'>

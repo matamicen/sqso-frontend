@@ -24,20 +24,20 @@ class QRAProfileContainer extends React.PureComponent {
 
     }
     componentWillUnmount() {
-
-        this
-            .props
-            .actions
-            .clearQRA();
+        console.log("componentWillUnmount")
+     
     }
     componentDidMount() {
-
+        console.log("componentDidMount")
         let qraInMemory = this.props.qra
             ? this.props.qra.qra.qra
             : "";
 
         if ((!this.props.fetchingQRA && !this.props.QRAFetched) || (this.props.QRAFetched && (this.props.match.params.qra !== qraInMemory))) {
-
+            this
+                .props
+                .actions
+                .clearQRA();
             this
                 .props
                 .actions
@@ -59,6 +59,8 @@ class QRAProfileContainer extends React.PureComponent {
         }
     }
     static getDerivedStateFromProps(props, state) {
+
+        console.log(props)
         if (props.QRAFetched) 
             return {active: false}
         if (!props.qra) 
@@ -134,7 +136,9 @@ class QRAProfileContainer extends React.PureComponent {
         if (this.props.qra) 
             qraInfo = this.props.qra.qra;
         
-        return ( < Fragment > { < QRAProfile qraInfo = {
+            console.log(this.state.active)
+        return ( <Fragment> 
+             <QRAProfile qraInfo = {
                 qraInfo
             }
             active = {
@@ -161,7 +165,7 @@ class QRAProfileContainer extends React.PureComponent {
             tab = {
                 this.state.tab
             } />
-        } < /Fragment>
+         </Fragment>
         )
 
     }
