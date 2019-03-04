@@ -23,22 +23,7 @@ class Ads extends React.Component {
     return this.props.id || this.__id;
   }
 
-  componentDidMount() {
-    
-    window.googletag.cmd.push(() => {
-     
-      window.googletag
-        .defineSlot(
-            this.props.adslot, 
-          [this.props.width, this.props.height], 
-          this.id
-        )
-        .addService(window.googletag.pubads());
-        // window.googletag.pubads().enableSingleRequest();
-      // Start ad fetching
-      window.googletag.enableServices();
-    });
-  }
+  
   render() {
     return (
         
@@ -52,9 +37,21 @@ class Ads extends React.Component {
   }
   displayAd() {
     const id = this.id;
-    window.googletag.cmd.push(function() {
-        window.googletag.display(id);
+    window.googletag.cmd.push(() => {
+     
+      window.googletag
+        .defineSlot(
+            this.props.adslot, 
+          [this.props.width, this.props.height], 
+          this.id
+        )
+        .addService(window.googletag.pubads());
+        // window.googletag.pubads().enableSingleRequest();
+      // Start ad fetching
+      window.googletag.enableServices();
+      window.googletag.display(id);
     });
+
   }
 }
 
