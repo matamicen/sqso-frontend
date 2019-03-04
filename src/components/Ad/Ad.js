@@ -24,7 +24,7 @@ class Ads extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.id)
+  //   console.log(this.id)
     window.googletag.cmd.push(() => {
      
       window.googletag
@@ -35,14 +35,14 @@ class Ads extends React.Component {
         )
         .addService(window.googletag.pubads());
         window.googletag.enableServices();
-        window.googletag.display(this.id);
+        // window.googletag.display(this.id);
     });
   }
   render() {
     return (
         
       <div style={{width:this.props.width, height:this.props.height, margin: '0 auto'}}>
-        {/* <Waypoint onEnter={this.displayAd} /> */}
+        <Waypoint onEnter={this.displayAd} />
         
         <div id={this.id} ></div>
         
