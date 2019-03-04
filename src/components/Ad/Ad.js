@@ -23,20 +23,8 @@ class Ads extends React.Component {
     return this.props.id || this.__id;
   }
 
-  
-  render() {
-    return (
-        
-      <div style={{width:this.props.width, height:this.props.height, margin: '0 auto'}}>
-        <Waypoint onEnter={this.displayAd} />
-        
-        <div id={this.id} ></div>
-        
-      </div>
-    );
-  }
-  displayAd() {
-    const id = this.id;
+  componentDidMount() {
+    
     window.googletag.cmd.push(() => {
      
       window.googletag
@@ -49,9 +37,25 @@ class Ads extends React.Component {
         // window.googletag.pubads().enableSingleRequest();
       // Start ad fetching
       window.googletag.enableServices();
-      window.googletag.display(id);
+      window.googletag.display(this.id);
     });
-
+  }
+  render() {
+    return (
+        
+      <div style={{width:this.props.width, height:this.props.height, margin: '0 auto'}}>
+        {/* <Waypoint onEnter={this.displayAd} /> */}
+        
+        <div id={this.id} ></div>
+        
+      </div>
+    );
+  }
+  displayAd() {
+    const id = this.id;
+    window.googletag.cmd.push(function() {
+        window.googletag.display(id);
+    });
   }
 }
 
