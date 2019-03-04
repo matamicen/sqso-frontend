@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { Waypoint } from 'react-waypoint';
+import { Waypoint } from 'react-waypoint';
 
 let instance = 0;
 
@@ -14,17 +14,17 @@ class Ads extends React.Component {
 
   constructor(props) {
       super(props);
-    this.__id = 'ads-instance-' + ++instance;
+    this.__id = ++instance;
     this.displayAd = this.displayAd.bind(this);
    
   }
 
   get id() {
-    return this.props.id || this.__id;
+    return 'ads-instance-' + (this.props.id || this.__id);
   }
 
   componentDidMount() {
-    
+    console.log(this.id)
     window.googletag.cmd.push(() => {
      
       window.googletag
@@ -34,10 +34,8 @@ class Ads extends React.Component {
           this.id
         )
         .addService(window.googletag.pubads());
-        // window.googletag.pubads().enableSingleRequest();
-      // Start ad fetching
-      window.googletag.enableServices();
-      window.googletag.display(this.id);
+        window.googletag.enableServices();
+        window.googletag.display(this.id);
     });
   }
   render() {
