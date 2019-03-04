@@ -16,7 +16,7 @@ export default class FeedItemAd extends React.PureComponent {
         
         return (
             <Segment raised secondary >          
-                <Ad adslot='/21799560237/Feed/Feed-Item3' width={336} height={280} />
+                <Ad adslot='/21799560237/Feed/Feed-Item3' width={336} height={280} id={this.props.index} />
             </Segment>
         )
     }
