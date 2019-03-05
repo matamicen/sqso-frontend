@@ -12,13 +12,15 @@ import Dimmer from 'semantic-ui-react/dist/commonjs/modules/Dimmer';
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment';
 class FeedLink extends React.PureComponent {
+ 
 
-    state = {
-        active: false,
-        showModal: false,
-        qso_link: null
+        state = {
+                active: false,
+                showModal: false,
+                qso_link: this.props.qso_link
 
-    }
+            }
+      
     onOpenModal = () => {
         this
             .props
@@ -27,11 +29,14 @@ class FeedLink extends React.PureComponent {
         this.setState({active: true})
     }
     static getDerivedStateFromProps(props, state) {
-        if (props.qso_link && !state.qso_link) 
-            return {active: false, showModal: true, qso_link: props.qso_link}
-        if (!props.qso_link && state.qso_link) 
+        if (props.qso_link !== state.qso_link) 
+            return {active: false, 
+                    showModal: true, 
+                    qso_link: props.qso_link,};
+        else if (!props.qso_link && state.qso_link) 
             return {active: false, showModal: false, qso_link: null}
         return null;
+        
     }
 
     close = () => {
@@ -42,18 +47,38 @@ class FeedLink extends React.PureComponent {
             .doClearQsoLink()
     }
     render() {
-        let qsos = [];
+        let qsos = [];      
         if (this.props.qso_link) {
             qsos.push({qso: this.props.qso_link, type: this.props.qso_link.type})
         }
 
         return (
             <Fragment>
+               
+                
                 <Dimmer active={this.state.active} page>
                     <Loader>Loading QSO Link</Loader>
                 </Dimmer>
-
+                
                 <Segment>
+                <Modal
+                       
+                       closeIcon
+                       open={(this.state.showModal && this.props.qso_link)
+                       ? true
+                       : false}
+                       onClose={() => this
+                       .close()
+                       }>
+
+                       <Modal.Content image scrolling>
+                           <Modal.Description>
+
+                               {this.props.qso_link && <NewsFeed list={qsos}/>
+}
+                           </Modal.Description>
+                       </Modal.Content>
+                   </Modal>
                     <Image
                         src={this.props.link.avatarpic}
                         size='mini'
@@ -64,23 +89,7 @@ class FeedLink extends React.PureComponent {
                     }}/> {this.props.link.qra + ' '}
                     created a linked QSO {' '}
                     <Button size='mini' onClick={() => this.onOpenModal()}>See Details</Button>
-                    <Modal
-                        closeIcon
-                        open={(this.state.showModal && this.props.qso_link)
-                        ? true
-                        : false}
-                        onClose={this
-                        .close
-                        .bind(this)}>
-
-                        <Modal.Content image scrolling>
-                            <Modal.Description>
-
-                                {this.props.qso_link && <NewsFeed list={qsos}/>
-}
-                            </Modal.Description>
-                        </Modal.Content>
-                    </Modal>
+                    
                 </Segment>
 
             </Fragment>

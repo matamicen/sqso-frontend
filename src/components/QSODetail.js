@@ -49,11 +49,10 @@ class QSODetail extends React.PureComponent {
         
         let qsos = [];
         if (this.props.qso) {
-            qsos.push({type:'AD',
-                    source:'QSODETAIL'});
+          
             qsos.push({qso:this.props.qso,
                         type:this.props.qso.type})
-        
+                       
 
             
         }
