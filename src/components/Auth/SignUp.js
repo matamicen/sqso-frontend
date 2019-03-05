@@ -13,6 +13,7 @@ import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
 import Advertisement from 'semantic-ui-react/dist/commonjs/views/Advertisement'
 import AppNavigation from '../Home/AppNavigation'
 import Recaptcha from 'react-recaptcha'
+import Ad from "../Ad/Ad";
 export class SignUp extends React.Component {
 
     constructor(props) {
@@ -255,9 +256,10 @@ export class SignUp extends React.Component {
                     <AppNavigation/>
                 </div>
                 <div className='site-left'>
-                    <Advertisement className="left" unit='wide skyscraper'>
-                        <img src="Wideskyscraper.png" alt='alt'/>
-                    </Advertisement>
+                <Advertisement unit='wide skyscraper'>
+                    
+                    <Ad adslot='/21799560237/Signup/left' width={160} height={600}/>
+                  </Advertisement>
                 </div>
 
                 <div className='site-main'>
@@ -466,9 +468,10 @@ export class SignUp extends React.Component {
                 </div>
 
                 <div className='site-right'>
-                    <Advertisement unit='wide skyscraper'>
-                        <img src="Wideskyscraper.png" alt='alt'/>
-                    </Advertisement>
+                <Advertisement unit='wide skyscraper'>
+                    
+                    <Ad adslot='/21799560237/Signup/left' width={160} height={600}/>
+                  </Advertisement>
                 </div>
 
             </div>
