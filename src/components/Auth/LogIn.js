@@ -17,6 +17,7 @@ import AppNavigation from '../Home/AppNavigation'
 import Amplify from '@aws-amplify/core'
 import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
 import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
+import Ad from "../Ad/Ad";
 
 const Auth = Amplify.Auth;
 class LogIn extends React.Component {
@@ -113,9 +114,10 @@ class LogIn extends React.Component {
                         <AppNavigation/>
                     </div>
                     <div className='site-left'>
-                        <Advertisement className="left" unit='wide skyscraper'>
-                            <img src="Wideskyscraper.png" alt='alt'/>
-                        </Advertisement>
+                    <Advertisement unit='wide skyscraper'>
+                    
+                      <Ad adslot='/21799560237/Login/left' width={160} height={600}/>
+                    </Advertisement>
                     </div>
 
                     <div className='site-main'>
@@ -190,9 +192,9 @@ class LogIn extends React.Component {
                     </div>
 
                     <div className='site-right'>
-                        <Advertisement unit='wide skyscraper'>
-                            <img src="Wideskyscraper.png" alt='alt'/>
-                        </Advertisement>
+                    <Advertisement unit='wide skyscraper'>
+                <Ad adslot='/21799560237/Login/left' width={160} height={600}/>
+                    </Advertisement>
                     </div>
 
                 </div>
