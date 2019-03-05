@@ -12,6 +12,7 @@ import Auth from '@aws-amplify/auth';
 import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
 import Advertisement from 'semantic-ui-react/dist/commonjs/views/Advertisement'
 import AppNavigation from '../Home/AppNavigation'
+import Ad from "../Ad/Ad";
 export default class ForgotPassword extends React.Component {
 
     constructor(props) {
@@ -172,7 +173,7 @@ export default class ForgotPassword extends React.Component {
                 </div>
                 <div className='site-left'>
                     <Advertisement className="left" unit='wide skyscraper'>
-                        <img src="Wideskyscraper.png" alt='alt'/>
+                    <Ad adslot='/21799560237/ForgotPassword/left' width={160} height={600}/>
                     </Advertisement>
                 </div>
 
@@ -306,7 +307,7 @@ export default class ForgotPassword extends React.Component {
 
                 <div className='site-right'>
                     <Advertisement unit='wide skyscraper'>
-                        <img src="Wideskyscraper.png" alt='alt'/>
+                    <Ad adslot='/21799560237/ForgotPassword/left' width={160} height={600}/>
                     </Advertisement>
                 </div>
 

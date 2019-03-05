@@ -14,6 +14,7 @@ import "../../styles/style.css";
 import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
 import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
 import Header from "semantic-ui-react/dist/commonjs/elements/Header";
+import Ad from "../Ad/Ad";
 class ChangePassword extends React.Component {
 
     constructor(props) {
@@ -115,7 +116,7 @@ class ChangePassword extends React.Component {
                 </div>
                 <div className='site-left'>
                     <Advertisement className="left" unit='wide skyscraper'>
-                        <img src="Wideskyscraper.png" alt='alt'/>
+                    <Ad adslot='/21799560237/ChangePassword/left' width={160} height={600}/>
                     </Advertisement>
                 </div>
 
@@ -194,7 +195,7 @@ class ChangePassword extends React.Component {
 
                 <div className='site-right'>
                     <Advertisement unit='wide skyscraper'>
-                        <img src="Wideskyscraper.png" alt='alt'/>
+                    <Ad adslot='/21799560237/ChangePassword/right' width={160} height={600}/>
                     </Advertisement>
                 </div>
 
