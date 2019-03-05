@@ -11,6 +11,7 @@ import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
 import "../../styles/style.css";
 import List from "semantic-ui-react/dist/commonjs/elements/List";
 import Notification from "./Notification";
+import Ad from '../Ad/Ad';
 class Notifications extends React.Component {
     state = {
         active: true,
@@ -44,9 +45,12 @@ class Notifications extends React.Component {
                 </div>
 
                 <div className='site-left'>
-                    <Advertisement className="left" unit='wide skyscraper'>
-                        <img src="Wideskyscraper.png" alt='alt'/>
+                <Advertisement unit='wide skyscraper'>
+                <Ad adslot='/21799560237/Notifications/left' width={160} height={600}/>
                     </Advertisement>
+                   
+
+                    
                 </div>
                 <div className='notifications-main'>
 
@@ -66,8 +70,8 @@ class Notifications extends React.Component {
                 </div>
 
                 <div className='site-right'>
-                    <Advertisement unit='wide skyscraper'>
-                        <img src="Wideskyscraper.png" alt='alt'/>
+                <Advertisement unit='wide skyscraper'>
+                <Ad adslot='/21799560237/Notifications/right' width={160} height={600}/>
                     </Advertisement>
                 </div>
 
