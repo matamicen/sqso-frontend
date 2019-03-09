@@ -230,6 +230,7 @@ export default (state = initialState, action) => {
         case REQUEST_QSO:
             newStore = Object.assign({}, state, {
                 ...state,
+                qso: null,
                 FetchingQSO: true,
                 QSOFetched: false
             });

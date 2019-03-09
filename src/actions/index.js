@@ -486,11 +486,11 @@ export function doFetchPublicFeed() {
 }
 
 export function doRequestQSO() {
-    return {type: REQUEST_QSO, FetchingQSO: true}
+    return {type: REQUEST_QSO}
 }
 
 export function doReceiveQSO(qso) {
-    return {type: RECEIVE_QSO, qso: qso, FetchingQSO: false}
+    return {type: RECEIVE_QSO, qso: qso}
 }
 export function doReceiveQsoLink(qso) {
     return {type: RECEIVE_QSO_LINK, qso_link: qso, FetchingQSO: false}
@@ -672,6 +672,9 @@ export function doReceiveQRA(qra) {
 }
 export function clearQRA() {
     return {type: CLEAR_QRA}
+}
+export function clearQSO() {
+    return {type: CLEAR_QSO}
 }
 export function doReceiveFollowers(following) {
 

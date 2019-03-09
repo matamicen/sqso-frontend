@@ -30,7 +30,13 @@ class QSODetail extends React.PureComponent {
     // this.props.actions.doFetchQSO(this.props.match.params.idqso); }
     componentDidMount() {
 
-        if (!this.props.FetchingQSO && !this.props.QSOFetched) {
+        let qsoInMemory =  this.props.qso 
+        ? this.props.qso.GUID_URL
+        : "";
+
+
+        if ((!this.props.FetchingQSO && !this.props.QSOFetched) || (this.props.QSOFetched && (this.props.match.params.idqso !== qsoInMemory))) {
+            
 
             this
                 .props
