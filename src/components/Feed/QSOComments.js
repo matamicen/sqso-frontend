@@ -23,18 +23,18 @@ class QSOComments extends React.Component {
     }
 
     componentDidMount() {
-        console.log("componentDidMount");
+
         if (this.props.qso.comments) {
             this.setState({comments: this.props.qso.comments});
-            
+
         }
-      
+
     }
-    componentDidUpdate = () =>{
-        console.log("componentDidUpdate");
+    componentDidUpdate = () => {
+
         this
-        .props
-        .recalculateRowHeight();
+            .props
+            .recalculateRowHeight();
     }
 
     doComment = (c) => {
@@ -59,7 +59,7 @@ class QSOComments extends React.Component {
                 } else {
                     this.setState({comments: response.body.message});
                     ReactGA.event({category: 'QSO', action: 'CommentAdd'});
-                   
+
                 }
             })
             .catch(error => {
@@ -91,9 +91,7 @@ class QSOComments extends React.Component {
                 .concat(comment)
         });
         e.target.comment.value = null;
-        // this
-        // .props
-        // .recalculateRowHeight();
+        // this .props .recalculateRowHeight();
         this.doComment(comment);
     }
 
@@ -104,8 +102,10 @@ class QSOComments extends React.Component {
             comments = this
                 .state
                 .comments
-                .map((comment, i) => <QSOCommentItem key={i} comment={comment}
-                recalculateRowHeight={this.props.recalculateRowHeight}/>)
+                .map((comment, i) => <QSOCommentItem
+                    key={i}
+                    comment={comment}
+                    recalculateRowHeight={this.props.recalculateRowHeight}/>)
 
         };
 
@@ -120,17 +120,17 @@ class QSOComments extends React.Component {
                 </Form.Group>
             </Form>
         };
-        if (comments || form)
+        if (comments || form) 
             return (
                 <Comment.Group threaded>
                     {comments}
                     {form}
                 </Comment.Group>
             )
-        else
-             return null;
+        else 
+            return null;
+        }
     }
-}
 
 const mapStateToProps = (state) => ({token: state.default.userData.token, qra: state.default.userData.qra, isAuthenticated: state.default.userData.isAuthenticated});
 const mapDispatchToProps = (dispatch) => ({

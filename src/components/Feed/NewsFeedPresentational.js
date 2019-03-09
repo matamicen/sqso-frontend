@@ -121,7 +121,7 @@ export default class NewsFeed extends React.Component {
 
     };
     showComments = (index) => {
-        console.log("showComments")
+        
         let localList = this.state.list;
         localList[index].qso.showComments = true;        
         this.setState({list:localList})
@@ -129,7 +129,7 @@ export default class NewsFeed extends React.Component {
     }
 
     recalculateRowHeight(index) {
-        console.log("recalculateRowHeight" + index)
+        
         this._cache.clearAll();
 
         // this

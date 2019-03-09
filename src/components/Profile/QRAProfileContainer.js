@@ -24,7 +24,7 @@ class QRAProfileContainer extends React.PureComponent {
 
     }
     componentDidMount() {
-        
+
         let qraInMemory = this.props.qra
             ? this.props.qra.qra.qra
             : "";
@@ -56,7 +56,6 @@ class QRAProfileContainer extends React.PureComponent {
     }
     static getDerivedStateFromProps(props, state) {
 
-        
         if (props.QRAFetched) 
             return {active: false}
         if (!props.qra) 
@@ -67,7 +66,7 @@ class QRAProfileContainer extends React.PureComponent {
     // componentWillReceiveProps(nextProps) {     if (nextProps.QRAFetched) {
     // this.setState({active: false})     }     if (nextProps.following)
     // this.setState({             followed: nextProps                 .following
-    //           .some(o => o.qra === this.props.match.params.qra)         });  }
+    //        .some(o => o.qra === this.props.match.params.qra)         });  }
 
     handleTabClick(i) {
         switch (i) {
@@ -132,36 +131,19 @@ class QRAProfileContainer extends React.PureComponent {
         if (this.props.qra) 
             qraInfo = this.props.qra.qra;
         
-            
-        return ( <Fragment> 
-             <QRAProfile qraInfo = {
-                qraInfo
-            }
-            active = {
-                this.state.active
-            }
-            qra = {
-                this.props.qra
-            }
-            onClick = {
-                this.handleButtonClick
-            }
-            isAuthenticated = {
-                this.props.isAuthenticated
-            }
-            currentQRA = {
-                this.props.currentQRA
-            }
-            followed = {
-                followed
-            }
-            handleTabClick = {
-                this.handleTabClick
-            }
-            tab = {
-                this.state.tab
-            } />
-         </Fragment>
+        return (
+            <Fragment>
+                <QRAProfile
+                    qraInfo={qraInfo}
+                    active={this.state.active}
+                    qra={this.props.qra}
+                    onClick={this.handleButtonClick}
+                    isAuthenticated={this.props.isAuthenticated}
+                    currentQRA={this.props.currentQRA}
+                    followed={followed}
+                    handleTabClick={this.handleTabClick}
+                    tab={this.state.tab}/>
+            </Fragment>
         )
 
     }
@@ -184,6 +166,4 @@ const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps, null, {
-    pure: false
-})(QRAProfileContainer));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps, null, {pure: false})(QRAProfileContainer));

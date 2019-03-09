@@ -22,7 +22,7 @@ const QRAProfileHeader = (props) => {
             <Segment>
                 <div className='inner'>
                     <div className='pic'>
-                        {props.qraInfo.profilepic && <Image src={props.qraInfo.profilepic} centered size='small' circular/>
+                        {props.qraInfo.avatarpic && <Image src={props.qraInfo.avatarpic} centered size='small' circular/>
 }
                     </div>
                     <div className='detail'>

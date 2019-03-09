@@ -45,7 +45,7 @@ class QRAProfileBio extends React.Component {
             Storage
                 .get(path, {level: 'protected'})
                 .then(result => {
-                    console.log(result);
+
                     resolve(result)
                 })
                 .catch(err => {
@@ -65,7 +65,7 @@ class QRAProfileBio extends React.Component {
             })
                 .then(result => {
                     let filepath = 'https://d3gbqmcrekpw4.cloudfront.net/protected/' + encodeURIComponent(this.props.identityId) + '/' + encodeURIComponent(result.key);
-                    console.log(filepath)
+
                     //CHECK NSFW
                     let apiName = 'superqso';
                     let path = '/nsfw-check';

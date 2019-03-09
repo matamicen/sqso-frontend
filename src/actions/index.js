@@ -44,12 +44,22 @@ export function doNotificationRead(idnotif = null, token) {
                 response.body.error === 0 && dispatch(doNotificationReadResponse(idnotif));
             })
             .catch(error => {
-                console.log(error)
+                Auth
+                .currentSession()
+                .then((session) => {
+                    token = session.idToken.jwtToken
+                    dispatch(doNotificationRead(idnotif, token))
+		}
+                )
+                .catch(err => {
+                    console.log(err);
+                   dispatch(doLogout());    
+                }); 
             });
     };
 
 }
-export function doDeleteComment(idcomment = null, idqso = null, token) {
+export function doDeleteComment(idcomment, idqso, token) {
     return (dispatch) => {
         let apiName = 'superqso';
         let path = '/qso-comment';
@@ -68,7 +78,17 @@ export function doDeleteComment(idcomment = null, idqso = null, token) {
                 response.body.error === 0 && dispatch(doDeleteCommentResponse(idcomment, idqso));
             })
             .catch(error => {
-                console.log(error)
+                Auth
+                .currentSession()
+                .then((session) => {
+                    token = session.idToken.jwtToken
+                    dispatch(doDeleteComment(idcomment, idqso, token))
+		}
+                )
+                .catch(err => {
+                    console.log(err);
+                   dispatch(doLogout());    
+                }); 
             });
     };
 
@@ -81,7 +101,7 @@ export function doNotificationReadResponse(idnotif) {
     ReactGA.event({category: 'QRA', action: 'CommentRead'});
     return {type: NOTIFICATION_READ, idnotif: idnotif}
 }
-export function doDeleteQso(idqso = null, token) {
+export function doDeleteQso(idqso, token) {
     return (dispatch) => {
         let apiName = 'superqso';
         let path = '/qsonew';
@@ -101,7 +121,17 @@ export function doDeleteQso(idqso = null, token) {
 
             })
             .catch(error => {
-                console.log(error)
+                Auth
+                .currentSession()
+                .then((session) => {
+                    token = session.idToken.jwtToken
+                    dispatch(doDeleteQso(idqso, token))
+		}
+                )
+                .catch(err => {
+                    console.log(err);
+                   dispatch(doLogout());    
+                }); 
             });
     };
 }
@@ -112,7 +142,7 @@ export function doDeleteQsoResponse(idqso = null) {
     return {type: DELETE_QSO, idqso: idqso}
 }
 
-export function doDeleteMedia(idmedia = null, idqso = null, token) {
+export function doDeleteMedia(idmedia, idqso, token) {
     return (dispatch) => {
         let apiName = 'superqso';
         let path = '/qsomediaadd';
@@ -133,7 +163,17 @@ export function doDeleteMedia(idmedia = null, idqso = null, token) {
 
             })
             .catch(error => {
-                console.log(error)
+                Auth
+                .currentSession()
+                .then((session) => {
+                    token = session.idToken.jwtToken
+                    dispatch(doDeleteMedia(idmedia, idqso, token))
+		}
+                )
+                .catch(err => {
+                    console.log(err);
+                   dispatch(doLogout());    
+                }); 
             });
     };
 
@@ -246,7 +286,17 @@ export function doFetchUserInfo(token) {
                 }
             })
             .catch(error => {
-                console.log(error.response)
+                Auth
+                .currentSession()
+                .then((session) => {
+                    token = session.idToken.jwtToken
+                    dispatch(doFetchUserInfo(token))
+		}
+                )
+                .catch(err => {
+                    console.log(err);
+                   dispatch(doLogout());    
+                }); 
             });
     }
 }
@@ -274,7 +324,17 @@ export function doSaveUserInfo(token, qra) {
                 dispatch(doReceiveUserDataInfo(response.body.message));
             })
             .catch(error => {
-                console.log(error.response)
+                Auth
+                .currentSession()
+                .then((session) =>{
+                    token = session.idToken.jwtToken
+                    dispatch(doSaveUserInfo(token, qra))
+                }
+                )
+                .catch(err => {
+                    console.log(err);
+                   dispatch(doLogout());    
+                }); 
             });
     }
 }
@@ -306,7 +366,17 @@ export function doSaveUserBio(token, bio, identityId) {
                 dispatch(doReceiveUserBio(response.body.message));
             })
             .catch(error => {
-                console.log(error)
+                Auth
+                .currentSession()
+                .then((session) =>{
+                    token = session.idToken.jwtToken
+                    dispatch(doSaveUserBio(token, bio, identityId))
+                }
+                )
+                .catch(err => {
+                    console.log(err);
+                   dispatch(doLogout());    
+                }); 
             });
     };
 }
@@ -374,7 +444,17 @@ export function doFetchNotifications(token) {
                 }
             })
             .catch(error => {
-                console.log(error.response)
+                Auth
+                .currentSession()
+                .then((session) => {
+                    token = session.idToken.jwtToken
+                    dispatch(doFetchNotifications(token))
+		}
+                )
+                .catch(err => {
+                    console.log(err);
+                   dispatch(doLogout());    
+                }); 
             });
     };
 }
@@ -528,7 +608,17 @@ export function doFollowQRA(token, follower) {
                 }
             })
             .catch(error => {
-                console.log(error)
+                Auth
+                .currentSession()
+                .then((session) => {
+                    token = session.idToken.jwtToken
+                    dispatch(doFollowQRA(token, follower))
+		}
+                )
+                .catch(err => {
+                    console.log(err);
+                   dispatch(doLogout());    
+                }); 
             });
     };
 }
@@ -558,7 +648,17 @@ export function doUnfollowQRA(token, follower) {
                 }
             })
             .catch(error => {
-                console.log(error)
+                Auth
+                .currentSession()
+                .then((session) => {
+                    token = session.idToken.jwtToken
+                    dispatch(doUnfollowQRA(token, follower))
+		}
+                )
+                .catch(err => {
+                    console.log(err);
+                   dispatch(doLogout());    
+                }); 
             });
     };
 }
