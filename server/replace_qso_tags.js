@@ -55,7 +55,7 @@ const replace_qso_tags = (req, res) => {
         // param0: '', param1: ''
       }
     };
-    var body = {
+    let body = {
       //This is where you define the body of the request
       "qso": req.params["idQSO"]
     };
@@ -77,12 +77,13 @@ const replace_qso_tags = (req, res) => {
           }
           let qso = result.data.body.message;
           let title; 
-          console.log(qso.qras)
+          
           if (qso.type === "QSO") {
            title = qso.qra + ' started a QSO with ' + qso.qras[0].qra + ' - Band: ' + qso.band + ' - Mode: ' + qso.mode
           }
-          var image = null ;
-          if (qso.media) {
+          let image = null ;
+          
+          if (qso.media.length > 0) {
             image = '<meta property="og:image" content="'+ qso.media[0].url + '"/>'
           }
           const html = prepHTML(htmlData, {
