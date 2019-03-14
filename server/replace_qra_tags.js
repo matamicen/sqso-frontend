@@ -7,7 +7,11 @@ import fs from 'fs';
 // ConnectedRouter } from 'react-router-redux'; import { Route } from
 // 'react-router-dom'; import createServerStore from './store'; import App from
 // '../src/components/App'; A simple helper function to prepare the HTML markup
-const prepHTML = (data, {html, head, body}) => {
+const prepHTML = (data, {
+  html,
+  head,
+  body
+}) => {
   // data = data.replace('<html lang="en">', `<html ${html}`);
   data = data.replace('</head>', `${head}</head>`);
   // data = data.replace('<div id="root"></div>', `<div id="root">${body}</div>`);
@@ -16,7 +20,7 @@ const prepHTML = (data, {html, head, body}) => {
 };
 
 const replace_qra_tags = (req, res) => {
-console.log(req.params)
+  console.log(req.params)
 
   if (req.params["idQRA"] !== "empty") {
     var apigClientFactory = require('aws-api-gateway-client').default;
@@ -47,7 +51,7 @@ console.log(req.params)
         // param1: ''
       },
       queryParams: {
-        
+
       }
     };
     var body = {
@@ -60,38 +64,39 @@ console.log(req.params)
     apigClient
       .invokeApi(params, pathTemplate, method, additionalParams, body)
       .then(function (result) {
-        
+
         const filePath = path.resolve(__dirname, '../build/index.html');
 
         fs.readFile(filePath, 'utf8', (err, htmlData) => {
           // If there's an error... serve up something nasty
           if (err) {
             console.error('Read error', err);
-      
+
             return res
               .status(404)
               .end();
           }
-          if (result.data.body.error === 0)
-          title = result.data.body.message.qra.toUpperCase() + ' - ' + 
-              result.data.body.message.firstname + ' ' + 
+          console.log(result.data)
+          if (!result.data.errorMessage && result.data.body.error === 0) {
+            title = result.data.body.message.qra.toUpperCase() + ' - ' +
+              result.data.body.message.firstname + ' ' +
               result.data.body.message.lastname;
-              url =  result.data.body.message.avatarpic
+            url = result.data.body.message.avatarpic
+          }
           const html = prepHTML(htmlData, {
-      
-            head:
-            '<meta name="og:title" content="'+ title + '"/>' +
-            '<meta property="og:image" content="'+ url + '"/>' +
-            '<meta property="og:site_name" content="SuperQSO.com"/>' +
-            '<meta property="og:description" content="SuperQSO.com"/>',
+
+            head: '<meta name="og:title" content="' + title + '"/>' +
+              '<meta property="og:image" content="' + url + '"/>' +
+              '<meta property="og:site_name" content="SuperQSO.com"/>' +
+              '<meta property="og:description" content="SuperQSO.com"/>',
             // helmet.link.toString(), body: routeMarkup
           });
-      
+
           // Up, up, and away...
           res.send(html);
-      
+
         });
-       
+
         //This is where you would put a success callback
       })
       .catch(function (result) {
@@ -103,24 +108,23 @@ console.log(req.params)
           // If there's an error... serve up something nasty
           if (err) {
             console.error('Read error', err);
-      
+
             return res
               .status(404)
               .end();
           }
-      
+
           const html = prepHTML(htmlData, {
-      
-            head:
-            '<meta name="og:title" content="SuperQSO.com"/>' +
-            '<meta property="og:site_name" content="SuperQSO.com"/>' +
-            '<meta property="og:description" content="SuperQSO.com"/>',
+
+            head: '<meta name="og:title" content="SuperQSO.com"/>' +
+              '<meta property="og:site_name" content="SuperQSO.com"/>' +
+              '<meta property="og:description" content="SuperQSO.com"/>',
             // helmet.link.toString(), body: routeMarkup
           });
-      
+
           // Up, up, and away...
           res.send(html);
-      
+
         });
       });
   }

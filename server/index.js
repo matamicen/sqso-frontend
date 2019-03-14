@@ -1,4 +1,3 @@
-Error.stackTraceLimit = 500;
 // Ignore those pesky styles
 require('ignore-styles');
 

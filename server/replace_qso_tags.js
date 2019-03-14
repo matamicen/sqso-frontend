@@ -75,6 +75,7 @@ const replace_qso_tags = (req, res) => {
               .status(404)
               .end();
           }
+          console.log(result.data);
           let qso = result.data.body.message;
           let title; 
           
