@@ -23,7 +23,7 @@
     "immutable": "^3.8.2",
     "jspdf": "^1.4.1",
     "morgan": "^1.9.0",
-    "nodemon": "^1.18.10",
+    
     "nuka-carousel": "^4.4.7",
     "prop-types": "^15.6.0",
     "qrcode.react": "^0.8.0",

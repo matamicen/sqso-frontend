@@ -31,7 +31,7 @@ class FeedImage extends React.Component {
                  
                         display:'flex',
                     textAlign: 'center',
-                    height: '50vh'
+                    height: '300px'
                 }}>
 
                     <Carousel cellAlign="center">
@@ -47,8 +47,10 @@ class FeedImage extends React.Component {
                             }}>
                                 <img src={m.url} key={m.idqsos_media} alt={m.description}
                                 onClick={() => this.open()}
-                            style={{maxHeight: '50vh', 
-                            maxWidth: '100vw', objectFit: 'scale-down', fontFamily: "'object-fit: scale-down'"}}/>
+                            style={{
+                                // maxHeight: '50vh', 
+                            // maxWidth: '500px', 
+                            objectFit: 'scale-down', fontFamily: "'object-fit: scale-down'"}}/>
                             </div>)}
 
                     </Carousel>
