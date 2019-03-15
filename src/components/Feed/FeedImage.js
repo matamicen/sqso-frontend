@@ -48,9 +48,11 @@ class FeedImage extends React.Component {
                                 <img src={m.url} key={m.idqsos_media} alt={m.description}
                                 onClick={() => this.open()}
                             style={{
-                                // maxHeight: '50vh', 
-                            // maxWidth: '500px', 
-                            objectFit: 'scale-down', fontFamily: "'object-fit: scale-down'"}}/>
+                            
+                            height: '300px',
+                            objectFit: 'cover', 
+                            
+                            }}/>
                             </div>)}
 
                     </Carousel>
