@@ -1,13 +1,16 @@
 branch-defaults:
   master:
-    environment: miqso
+    environment: sqso
     group_suffix: null
 environment-defaults:
   Sqso-env:
     branch: null
     repository: null
+  sqso:
+    branch: null
+    repository: null
 global:
-  application_name: miqso
+  application_name: sqso
   branch: null
   default_ec2_keyname: null
   default_platform: arn:aws:elasticbeanstalk:us-east-1::platform/Node.js running on
