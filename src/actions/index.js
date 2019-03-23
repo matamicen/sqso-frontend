@@ -3,6 +3,7 @@ import Auth from '@aws-amplify/auth';
 import ReactGA from 'react-ga';
 export const PUBLIC_SESSION = 'PUBLIC_SESSION';
 export const PREPARE_LOGIN = 'PREPARE_LOGIN';
+export const REFRESH_TOKEN = 'REFRESH_TOKEN';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const REQUEST_FEED = 'REQUEST_FEED';
@@ -45,16 +46,16 @@ export function doNotificationRead(idnotif = null, token) {
             })
             .catch(error => {
                 Auth
-                .currentSession()
-                .then((session) => {
-                    token = session.idToken.jwtToken
-                    dispatch(doNotificationRead(idnotif, token))
-		}
-                )
-                .catch(err => {
-                    console.log(err);
-                   dispatch(doLogout());    
-                }); 
+                    .currentSession()
+                    .then((session) => {
+                        token = session.idToken.jwtToken;
+                        dispatch(refreshToken(token));
+                        dispatch(doNotificationRead(idnotif, token))
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        dispatch(doLogout());
+                    });
             });
     };
 
@@ -79,27 +80,46 @@ export function doDeleteComment(idcomment, idqso, token) {
             })
             .catch(error => {
                 Auth
-                .currentSession()
-                .then((session) => {
-                    token = session.idToken.jwtToken
-                    dispatch(doDeleteComment(idcomment, idqso, token))
-		}
-                )
-                .catch(err => {
-                    console.log(err);
-                   dispatch(doLogout());    
-                }); 
+                    .currentSession()
+                    .then((session) => {
+                        token = session.idToken.jwtToken;
+                        dispatch(refreshToken(token));
+                        dispatch(doDeleteComment(idcomment, idqso, token))
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        dispatch(doLogout());
+                    });
             });
     };
 
 }
+export function refreshToken(token) {
+    return {
+        type: REFRESH_TOKEN,
+        token: token
+    }
+}
 export function doDeleteCommentResponse(idcomment = null, idqso = null) {
-    ReactGA.event({category: 'QSO', action: 'CommentDelete'});
-    return {type: DELETE_COMMENT, idcomment: idcomment, idqso: idqso}
+    ReactGA.event({
+        category: 'QSO',
+        action: 'CommentDelete'
+    });
+    return {
+        type: DELETE_COMMENT,
+        idcomment: idcomment,
+        idqso: idqso
+    }
 }
 export function doNotificationReadResponse(idnotif) {
-    ReactGA.event({category: 'QRA', action: 'CommentRead'});
-    return {type: NOTIFICATION_READ, idnotif: idnotif}
+    ReactGA.event({
+        category: 'QRA',
+        action: 'CommentRead'
+    });
+    return {
+        type: NOTIFICATION_READ,
+        idnotif: idnotif
+    }
 }
 export function doDeleteQso(idqso, token) {
     return (dispatch) => {
@@ -122,24 +142,30 @@ export function doDeleteQso(idqso, token) {
             })
             .catch(error => {
                 Auth
-                .currentSession()
-                .then((session) => {
-                    token = session.idToken.jwtToken
-                    dispatch(doDeleteQso(idqso, token))
-		}
-                )
-                .catch(err => {
-                    console.log(err);
-                   dispatch(doLogout());    
-                }); 
+                    .currentSession()
+                    .then((session) => {
+                        token = session.idToken.jwtToken;
+                        dispatch(refreshToken(token));
+                        dispatch(doDeleteQso(idqso, token))
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        dispatch(doLogout());
+                    });
             });
     };
 }
 
 export function doDeleteQsoResponse(idqso = null) {
     console.log('doDeleteQsoResponse')
-    ReactGA.event({category: 'QSO', action: 'Delete'});
-    return {type: DELETE_QSO, idqso: idqso}
+    ReactGA.event({
+        category: 'QSO',
+        action: 'Delete'
+    });
+    return {
+        type: DELETE_QSO,
+        idqso: idqso
+    }
 }
 
 export function doDeleteMedia(idmedia, idqso, token) {
@@ -164,26 +190,37 @@ export function doDeleteMedia(idmedia, idqso, token) {
             })
             .catch(error => {
                 Auth
-                .currentSession()
-                .then((session) => {
-                    token = session.idToken.jwtToken
-                    dispatch(doDeleteMedia(idmedia, idqso, token))
-		}
-                )
-                .catch(err => {
-                    console.log(err);
-                   dispatch(doLogout());    
-                }); 
+                    .currentSession()
+                    .then((session) => {
+                        token = session.idToken.jwtToken;
+                        dispatch(refreshToken(token));
+                        dispatch(doDeleteMedia(idmedia, idqso, token))
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        dispatch(doLogout());
+                    });
             });
     };
 
 }
 export function doDeleteMediaResponse(idmedia = null, idqso = null) {
-    ReactGA.event({category: 'QSO', action: 'MediaDelete'});
-    return {type: DELETE_MEDIA, idmedia: idmedia, idqso: idqso}
+    ReactGA.event({
+        category: 'QSO',
+        action: 'MediaDelete'
+    });
+    return {
+        type: DELETE_MEDIA,
+        idmedia: idmedia,
+        idqso: idqso
+    }
 }
 export function doRequestUserInfo() {
-    return {type: REQUEST_USERINFO, fetchingUser: true, userFetched: false}
+    return {
+        type: REQUEST_USERINFO,
+        fetchingUser: true,
+        userFetched: false
+    }
 }
 
 export function doReceiveUserInfo(followers = null, following = null, profilepic = null, avatarpic = null, notifications = null) {
@@ -199,15 +236,24 @@ export function doReceiveUserInfo(followers = null, following = null, profilepic
     }
 }
 export function doStartingLogin() {
-    return {type: PREPARE_LOGIN}
+    return {
+        type: PREPARE_LOGIN
+    }
 }
 export function doSetPublicSession() {
 
-    return {type: PUBLIC_SESSION}
+    return {
+        type: PUBLIC_SESSION
+    }
 }
 export function doLogin(token, qra, identityId) {
-    ReactGA.set({userId: qra})
-    ReactGA.event({category: 'User', action: 'Login'});
+    ReactGA.set({
+        userId: qra
+    })
+    ReactGA.event({
+        category: 'User',
+        action: 'Login'
+    });
 
     return {
         type: LOGIN,
@@ -228,7 +274,10 @@ export function doLogin(token, qra, identityId) {
 }
 
 export function doLogout() {
-    ReactGA.event({category: 'User', action: 'Logout'});
+    ReactGA.event({
+        category: 'User',
+        action: 'Logout'
+    });
     return {
         type: LOGOUT,
         qsos: null,
@@ -253,16 +302,28 @@ export function doLogout() {
 
 export function doRequestFeed() {
     // console.log("doRequestFeed")
-    return {type: REQUEST_FEED, FetchingQSOS: true, qsosFetched: false}
+    return {
+        type: REQUEST_FEED,
+        FetchingQSOS: true,
+        qsosFetched: false
+    }
 }
 
 export function doReceiveNotifications(notifications) {
     // console.log("doReceiveFeed")
-    return {type: RECEIVE_NOTIFICATIONS, notifications: notifications}
+    return {
+        type: RECEIVE_NOTIFICATIONS,
+        notifications: notifications
+    }
 }
 export function doReceiveFeed(qsos) {
     // console.log("doReceiveFeed")
-    return {type: RECEIVE_FEED, qsos: qsos, FetchingQSOS: false, qsosFetched: true}
+    return {
+        type: RECEIVE_FEED,
+        qsos: qsos,
+        FetchingQSOS: false,
+        qsosFetched: true
+    }
 }
 export function doFetchUserInfo(token) {
 
@@ -287,16 +348,16 @@ export function doFetchUserInfo(token) {
             })
             .catch(error => {
                 Auth
-                .currentSession()
-                .then((session) => {
-                    token = session.idToken.jwtToken
-                    dispatch(doFetchUserInfo(token))
-		}
-                )
-                .catch(err => {
-                    console.log(err);
-                   dispatch(doLogout());    
-                }); 
+                    .currentSession()
+                    .then((session) => {
+                        token = session.idToken.jwtToken;
+                        dispatch(refreshToken(token));
+                        dispatch(doFetchUserInfo(token))
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        dispatch(doLogout());
+                    });
             });
     }
 }
@@ -318,28 +379,31 @@ export function doSaveUserInfo(token, qra) {
             .post(apiName, path, myInit)
             .then(response => {
 
-                if (response.body.error !== 0) 
+                if (response.body.error !== 0)
                     console.log(response.body.message)
                 else
-                dispatch(doReceiveUserDataInfo(response.body.message));
+                    dispatch(doReceiveUserDataInfo(response.body.message));
             })
             .catch(error => {
                 Auth
-                .currentSession()
-                .then((session) =>{
-                    token = session.idToken.jwtToken
-                    dispatch(doSaveUserInfo(token, qra))
-                }
-                )
-                .catch(err => {
-                    console.log(err);
-                   dispatch(doLogout());    
-                }); 
+                    .currentSession()
+                    .then((session) => {
+                        token = session.idToken.jwtToken;
+                        dispatch(refreshToken(token));
+                        dispatch(doSaveUserInfo(token, qra))
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        dispatch(doLogout());
+                    });
             });
     }
 }
 export function doReceiveUserDataInfo(qra) {
-    return {type: RECEIVE_USER_DATA_INFO, qra: qra}
+    return {
+        type: RECEIVE_USER_DATA_INFO,
+        qra: qra
+    }
 }
 export function doSaveUserBio(token, bio, identityId) {
 
@@ -360,29 +424,32 @@ export function doSaveUserBio(token, bio, identityId) {
             .post(apiName, path, myInit)
             .then(response => {
 
-                if (response.body.error !== 0) 
+                if (response.body.error !== 0)
                     console.log(response.body.message)
                 else
-                dispatch(doReceiveUserBio(response.body.message));
+                    dispatch(doReceiveUserBio(response.body.message));
             })
             .catch(error => {
                 Auth
-                .currentSession()
-                .then((session) =>{
-                    token = session.idToken.jwtToken
-                    dispatch(doSaveUserBio(token, bio, identityId))
-                }
-                )
-                .catch(err => {
-                    console.log(err);
-                   dispatch(doLogout());    
-                }); 
+                    .currentSession()
+                    .then((session) => {
+                        token = session.idToken.jwtToken;
+                        dispatch(refreshToken(token));
+                        dispatch(doSaveUserBio(token, bio, identityId))
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        dispatch(doLogout());
+                    });
             });
     };
 }
 
 export function doReceiveUserBio(qra) {
-    return {type: RECEIVE_USER_BIO, qra: qra}
+    return {
+        type: RECEIVE_USER_BIO,
+        qra: qra
+    }
 }
 export function doFetchUserFeed(token) {
     // console.log("doFetchUserFeed");
@@ -401,25 +468,26 @@ export function doFetchUserFeed(token) {
             .get(apiName, path, myInit)
             .then(response => {
                 if (response.body.error === 0) {
-                    dispatch(doReceiveFeed(response.body.message));                
-                }
-                else{
+                    dispatch(doReceiveFeed(response.body.message));
+                } else {
                     console.log(response.body.error)
                 }
             })
             .catch(error => {
                 Auth
-                .currentSession()
-                .then((session) =>
-                    dispatch(doFetchUserFeed(session.idToken.jwtToken))
-                )
-                .catch(err => {
-                   dispatch(doLogout());
-    
-                });
-    
-            
-                
+                    .currentSession()
+                    .then((session) => {
+                        token = session.idToken.jwtToken;
+                        dispatch(refreshToken(token));
+                        dispatch(doFetchUserFeed(token))
+                    })
+                    .catch(err => {
+                        dispatch(doLogout());
+
+                    });
+
+
+
             });
     };
 }
@@ -444,17 +512,19 @@ export function doFetchNotifications(token) {
                 }
             })
             .catch(error => {
+
                 Auth
-                .currentSession()
-                .then((session) => {
-                    token = session.idToken.jwtToken
-                    dispatch(doFetchNotifications(token))
-		}
-                )
-                .catch(err => {
-                    console.log(err);
-                   dispatch(doLogout());    
-                }); 
+                    .currentSession()
+                    .then((session) => {
+                        console.log(session)
+                        token = session.idToken.jwtToken;
+                        dispatch(refreshToken(token));
+                        dispatch(doFetchNotifications(token))
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        dispatch(doLogout());
+                    });
             });
     };
 }
@@ -473,9 +543,8 @@ export function doFetchPublicFeed() {
             .get(apiName, path, myInit)
             .then(response => {
                 if (response.body.error === 0) {
-                    dispatch(doReceiveFeed(response.body.message));                
-                }
-                else{
+                    dispatch(doReceiveFeed(response.body.message));
+                } else {
                     console.log(response.body.error)
                 }
             })
@@ -486,21 +555,39 @@ export function doFetchPublicFeed() {
 }
 
 export function doRequestQSO() {
-    return {type: REQUEST_QSO}
+    return {
+        type: REQUEST_QSO
+    }
 }
 
 export function doReceiveQSO(qso) {
-    return {type: RECEIVE_QSO, qso: qso}
+    return {
+        type: RECEIVE_QSO,
+        qso: qso
+    }
 }
 export function doReceiveQsoLink(qso) {
-    return {type: RECEIVE_QSO_LINK, qso_link: qso, FetchingQSO: false}
+    return {
+        type: RECEIVE_QSO_LINK,
+        qso_link: qso,
+        FetchingQSO: false
+    }
 }
 export function doClearQsoLink() {
-    return {type: CLEAR_QSO_LINK, qso_link: "", FetchingQSO: false}
+    return {
+        type: CLEAR_QSO_LINK,
+        qso_link: "",
+        FetchingQSO: false
+    }
 }
 export function doFetchQSO(idqso) {
-    ReactGA.set({qso: idqso})
-    ReactGA.event({category: 'QSO', action: 'getInfo'});
+    ReactGA.set({
+        qso: idqso
+    })
+    ReactGA.event({
+        category: 'QSO',
+        action: 'getInfo'
+    });
 
     return (dispatch) => {
         let apiName = 'superqso';
@@ -528,8 +615,13 @@ export function doFetchQSO(idqso) {
     };
 }
 export function doFetchQsoLink(idqso) {
-    ReactGA.set({qso: idqso})
-    ReactGA.event({category: 'QSO', action: 'getInfo'});
+    ReactGA.set({
+        qso: idqso
+    })
+    ReactGA.event({
+        category: 'QSO',
+        action: 'getInfo'
+    });
     return (dispatch) => {
         let apiName = 'superqso';
         let path = '/qso-detail';
@@ -545,12 +637,11 @@ export function doFetchQsoLink(idqso) {
             .post(apiName, path, myInit)
             .then(response => {
 
-                if (response.body.error === 0) 
+                if (response.body.error === 0)
                     dispatch(doReceiveQsoLink(response.body.message));
-                else 
+                else
                     console.log(response.body.message);
-                }
-            )
+            })
             .catch(error => {
                 console.log(error)
             });
@@ -558,8 +649,13 @@ export function doFetchQsoLink(idqso) {
 }
 
 export function doFetchQRA(qra) {
-    ReactGA.set({qra: qra})
-    ReactGA.event({category: 'QRA', action: 'getInfo'});
+    ReactGA.set({
+        qra: qra
+    })
+    ReactGA.event({
+        category: 'QRA',
+        action: 'getInfo'
+    });
     return (dispatch) => {
 
         let apiName = 'superqso';
@@ -585,8 +681,13 @@ export function doFetchQRA(qra) {
 }
 
 export function doFollowQRA(token, follower) {
-    ReactGA.set({follower: follower})
-    ReactGA.event({category: 'QRA', action: 'follow'});
+    ReactGA.set({
+        follower: follower
+    })
+    ReactGA.event({
+        category: 'QRA',
+        action: 'follow'
+    });
     return (dispatch) => {
         let apiName = 'superqso';
         let path = '/qra-follower';
@@ -609,23 +710,28 @@ export function doFollowQRA(token, follower) {
             })
             .catch(error => {
                 Auth
-                .currentSession()
-                .then((session) => {
-                    token = session.idToken.jwtToken
-                    dispatch(doFollowQRA(token, follower))
-		}
-                )
-                .catch(err => {
-                    console.log(err);
-                   dispatch(doLogout());    
-                }); 
+                    .currentSession()
+                    .then((session) => {
+                        token = session.idToken.jwtToken;
+                        dispatch(refreshToken(token));
+                        dispatch(doFollowQRA(token, follower))
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        dispatch(doLogout());
+                    });
             });
     };
 }
 
 export function doUnfollowQRA(token, follower) {
-    ReactGA.set({follower: follower})
-    ReactGA.event({category: 'QRA', action: 'unfollow'});
+    ReactGA.set({
+        follower: follower
+    })
+    ReactGA.event({
+        category: 'QRA',
+        action: 'unfollow'
+    });
     return (dispatch) => {
         let apiName = 'superqso';
         let path = '/qra-follower';
@@ -649,34 +755,50 @@ export function doUnfollowQRA(token, follower) {
             })
             .catch(error => {
                 Auth
-                .currentSession()
-                .then((session) => {
-                    token = session.idToken.jwtToken
-                    dispatch(doUnfollowQRA(token, follower))
-		}
-                )
-                .catch(err => {
-                    console.log(err);
-                   dispatch(doLogout());    
-                }); 
+                    .currentSession()
+                    .then((session) => {
+                        token = session.idToken.jwtToken;
+                        dispatch(refreshToken(token));
+                        dispatch(doUnfollowQRA(token, follower))
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        dispatch(doLogout());
+                    });
             });
     };
 }
 
 export function doRequestQRA() {
-    return {type: REQUEST_QRA, FetchingQRA: true, QRAFetched: false}
+    return {
+        type: REQUEST_QRA,
+        FetchingQRA: true,
+        QRAFetched: false
+    }
 }
 
 export function doReceiveQRA(qra) {
-    return {type: RECEIVE_QRA, qra: qra, FetchingQRA: false, QRAFetched: true}
+    return {
+        type: RECEIVE_QRA,
+        qra: qra,
+        FetchingQRA: false,
+        QRAFetched: true
+    }
 }
 export function clearQRA() {
-    return {type: CLEAR_QRA}
+    return {
+        type: CLEAR_QRA
+    }
 }
 export function clearQSO() {
-    return {type: CLEAR_QSO}
+    return {
+        type: CLEAR_QSO
+    }
 }
 export function doReceiveFollowers(following) {
 
-    return {type: RECEIVE_FOLLOWERS, following: following}
+    return {
+        type: RECEIVE_FOLLOWERS,
+        following: following
+    }
 }

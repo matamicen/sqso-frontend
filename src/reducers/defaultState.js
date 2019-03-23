@@ -2,6 +2,7 @@ import {
     DELETE_MEDIA,
     DELETE_QSO,
     PREPARE_LOGIN,
+    REFRESH_TOKEN,
     LOGIN,
     LOGOUT,
     RECEIVE_FEED,
@@ -331,6 +332,20 @@ export default (state = initialState, action) => {
                 qsosFetched: false,
                 FetchingQRA: false,
                 QRAFetched: false
+            });
+
+            return newStore;
+
+        case REFRESH_TOKEN:
+            let tokenData = {
+                ...state.userData,
+                token: action.token
+
+
+            };
+            newStore = Object.assign({}, state, {
+                ...state,
+                userData: tokenData
             });
 
             return newStore;
