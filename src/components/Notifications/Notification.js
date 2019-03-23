@@ -24,11 +24,19 @@ export default class Notification extends React.Component {
         let message;
         switch (this.props.notification.activity_type) {
             case 1: //Follow
-                return (
-                    <List.Description>
-                        <Link to={"/" + notif.REF_QRA} onClick={this.handleOnClick}>{notif.message}</Link>
-                    </List.Description>
-                );
+          
+                if (this.props.currentQRA === notif.REF_QRA)
+                    return (
+                        <List.Description>
+                            <Link to={"/" + notif.QRA} onClick={this.handleOnClick}>{notif.message}</Link>
+                        </List.Description>
+                    );
+                else
+                    return (
+                        <List.Description>
+                            <Link to={"/" + notif.REF_QRA} onClick={this.handleOnClick}>{notif.message}</Link>
+                        </List.Description>
+                    );
             case 10: //new QSO
                 return (
                     <List.Description>

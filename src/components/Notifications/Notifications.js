@@ -63,6 +63,7 @@ class Notifications extends React.Component {
                                     key={m.idqra_notifications}
                                     notification={m}
                                     token={this.props.token}
+                                    currentQRA={this.props.currentQRA}
                                     doNotificationRead={this.props.actions.doNotificationRead}/>
 
                             })}
@@ -80,7 +81,7 @@ class Notifications extends React.Component {
         );
     }
 }
-const mapStateToProps = (state) => ({notifications: state.default.userData.notifications, token: state.default.userData.token});
+const mapStateToProps = (state) => ({notifications: state.default.userData.notifications, token: state.default.userData.token, currentQRA: state.default.userData.qra});
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 });
