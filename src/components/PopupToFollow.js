@@ -9,29 +9,42 @@ import "../styles/style.css";
 
 class PopupToFollow extends React.Component {
     state = {
+        isFollowing: this
+            .props
+            .following
+            .some(o => o.qra === this.props.qra),
         following: this
             .props
             .following
-            .some(o => o.qra === this.props.qra)
     }
     follow = () => {
-        this.setState({following: true})
+        this.setState({isFollowing: true})
         this
             .props
             .actions
             .doFollowQRA(this.props.token, this.props.qra);
     }
     unfollow = () => {
-        this.setState({following: false})
+        this.setState({isFollowing: false})
         this
             .props
             .actions
             .doUnfollowQRA(this.props.token, this.props.qra);
     }
+    static getDerivedStateFromProps(props, state) {
+        if (props.following !== state.following) 
+            return { 
+                    following: props.following,
+                    isFollowing: props
+                    .following
+                    .some(o => o.qra === props.qra)};
+       
+        return null;
+        
+    }
     render = () => {
-
         let button;
-        if (this.state.following) 
+        if (this.state.isFollowing) 
             button = <Button icon='remove user' onClick={() => this.unfollow()} content='Unfollow'/>
         else 
             button = <Button icon='add user' onClick={() => this.follow()} content='Follow'/>
