@@ -43,19 +43,22 @@ class LogIn extends React.Component {
     }
     async login() {
         let token;
-        await this
-            .props
-            .actions
-            .doStartingLogin()
+        this.setState({active: true})
 
         let user = await Auth
             .signIn(this.state.qra, this.state.password)
             .catch(err => {
-                this.setState({loginError: err.message});
+                
                 this.setState({active: false})
+                this.setState({loginError: err.message});
+               
             });
 
         if (user) {
+            await this
+            .props
+            .actions
+            .doStartingLogin()
             token = user.signInUserSession.idToken.jwtToken;
             let credentials = await Auth.currentCredentials();
             await this
@@ -74,9 +77,10 @@ class LogIn extends React.Component {
         }
     }
     static getDerivedStateFromProps(props, state) {
-        if (props.isAuthenticated) 
+        
+        if (props.isAuthenticated || state.loginError) 
             return {active: false}
-        else if (props.authenticating)
+        else if (props.authenticating && !state.loginError)
             return {active:true}
         // Return null to indicate no change to state.
         return null;
