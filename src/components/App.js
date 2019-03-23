@@ -80,7 +80,13 @@ class App extends PureComponent {
                     <Route exact path="/login" component={() => <LogIn/>}/>
                     <Route exact path="/forgot" component={() => <ForgotPassword/>}/>
                     <Route exact path="/changepassword" component={() => <ChangePassword/>}/>
-                    <Route exact path="/notifications" component={() => <Notifications/>}/>
+                    <Route exact path="/notifications" component={ () => {
+                          if (!this.props.authenticating && (this.props.isAuthenticated || this.props.public)) 
+                          return <Notifications/>
+                          else 
+                              return null;
+                          }}/>
+                      
                     <Route
                         exact
                         path="/:qra"
