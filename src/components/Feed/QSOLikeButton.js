@@ -1,18 +1,18 @@
-import React, { Fragment } from 'react';
-import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
-import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as Actions from '../../actions';
-import API from '@aws-amplify/api';
-import ReactGA from 'react-ga';
-import Confirm from 'semantic-ui-react/dist/commonjs/addons/Confirm';
-import { withRouter } from 'react-router-dom';
+import React, { Fragment } from "react";
+import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
+import Button from "semantic-ui-react/dist/commonjs/elements/Button";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import * as Actions from "../../actions";
+import API from "@aws-amplify/api";
+import ReactGA from "react-ga";
+import Confirm from "semantic-ui-react/dist/commonjs/addons/Confirm";
+import { withRouter } from "react-router-dom";
 class QSOLikeButton extends React.Component {
   constructor() {
     super();
     this.state = {
-      icon: 'thumbs outline up',
+      icon: "thumbs outline up",
       liked: false,
       likeCounter: 0,
       openLogin: false
@@ -30,14 +30,14 @@ class QSOLikeButton extends React.Component {
         )
       ) {
         this.setState({ liked: true });
-        this.setState({ icon: 'thumbs up' });
+        this.setState({ icon: "thumbs up" });
       }
     }
   }
 
   doLike() {
-    let apiName = 'superqso';
-    let path = '/qso-like';
+    let apiName = "superqso";
+    let path = "/qso-like";
     let myInit = {
       body: {
         qso: this.props.qso.idqsos
@@ -60,8 +60,8 @@ class QSOLikeButton extends React.Component {
   }
 
   doUnLike() {
-    let apiName = 'superqso';
-    let path = '/qso-like';
+    let apiName = "superqso";
+    let path = "/qso-like";
     let myInit = {
       body: {
         qso: this.props.qso.idqsos
@@ -77,7 +77,7 @@ class QSOLikeButton extends React.Component {
         } else {
           this.setState({ likeCounter: response.body.message });
 
-          ReactGA.event({ category: 'QSO', action: 'liked' });
+          ReactGA.event({ category: "QSO", action: "liked" });
         }
       })
       .catch(error => {
@@ -94,14 +94,14 @@ class QSOLikeButton extends React.Component {
         }));
         if (this.props.isAuthenticated) this.doLike();
 
-        this.setState({ icon: 'thumbs up' });
+        this.setState({ icon: "thumbs up" });
       } else {
         this.setState(previousState => ({
           likeCounter: previousState.likeCounter - 1
         }));
         if (this.props.isAuthenticated) this.doUnLike();
 
-        this.setState({ icon: 'thumbs outline up' });
+        this.setState({ icon: "thumbs outline up" });
       }
 
       this.setState({
@@ -114,16 +114,16 @@ class QSOLikeButton extends React.Component {
     return (
       <Fragment>
         <Confirm
-          size='mini'
+          size="mini"
           open={this.state.openLogin}
           onCancel={() => this.setState({ openLogin: false })}
-          onConfirm={() => this.props.history.push('/login')}
-          cancelButton='Cancel'
-          confirmButton='Login'
-          content='Please Login to perform this action'
+          onConfirm={() => this.props.history.push("/login")}
+          cancelButton="Cancel"
+          confirmButton="Login"
+          content="Please Login to perform this action"
         />
         <Button icon active={false} onClick={this.handleOnLike.bind(this)}>
-          <Icon name={this.state.icon} /> {this.state.likeCounter}{' '}
+          <Icon name={this.state.icon} /> {this.state.likeCounter}{" "}
         </Button>
       </Fragment>
     );
@@ -131,9 +131,9 @@ class QSOLikeButton extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.default.userData.isAuthenticated,
-  currentQRA: state.default.userData.qra,
-  token: state.default.userData.token
+  isAuthenticated: state.userData.isAuthenticated,
+  currentQRA: state.userData.qra,
+  token: state.userData.token
 });
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(Actions, dispatch)
