@@ -35,7 +35,10 @@ class QSODetail extends React.PureComponent {
       (this.props.QSOFetched && this.props.match.params.idqso !== qsoInMemory)
     ) {
       this.props.actions.doRequestQSO();
-      this.props.actions.doFetchQSO(this.props.match.params.idqso);
+      this.props.actions.doFetchQSO(
+        this.props.match.params.idqso,
+        this.props.token
+      );
       this.setState({ idqso: this.props.match.params.idqso });
     }
   }
@@ -83,7 +86,8 @@ class QSODetail extends React.PureComponent {
 const mapStateToProps = state => ({
   qso: state.qso,
   FetchingQSO: state.FetchingQSO,
-  QSOFetched: state.QSOFetched
+  QSOFetched: state.QSOFetched,
+  token: state.userData.token
 });
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(Actions, dispatch)

@@ -26,7 +26,7 @@ class QRAProfileContainer extends React.PureComponent {
       (this.props.QRAFetched && this.props.match.params.qra !== qraInMemory)
     ) {
       this.props.actions.clearQRA();
-      this.props.actions.doFetchQRA(this.props.match.params.qra);
+      this.props.actions.doFetchQRA(this.props.match.params.qra, this.props.token);
     }
     switch (this.props.tab) {
       case "BIO":
