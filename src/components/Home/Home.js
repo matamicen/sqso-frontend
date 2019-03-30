@@ -28,7 +28,8 @@ class Home extends React.PureComponent {
     return (
       <Fragment>
         <Dimmer active={this.state.active} page>
-          <Loader>Loading...</Loader>
+          {/* <Loader>Loading...</Loader> */}
+          <Ad adslot="/21799560237/Home/Intersitial" width={800} height={600} />
         </Dimmer>
         <div className="global-container">
           <div className="site-header">
