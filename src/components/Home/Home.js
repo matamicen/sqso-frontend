@@ -9,16 +9,47 @@ import "../../styles/style.css";
 import Ad from "../Ad/Ad";
 import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
 import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
-// import AdSense from "react-adsense";
-class Home extends React.PureComponent {
+
+class Home extends React.Component {
   state = {
-    active: true
+    adActive: true,
+    active: null
   };
   componentDidMount() {
     if (this.props.isAuthenticated)
       this.props.actions.doFetchUserFeed(this.props.token);
     else this.props.actions.doFetchPublicFeed();
+
+    window.googletag.cmd.push(function() {
+      window.googletag
+        .defineSlot(
+          "/21799560237/Home/Home_Left2",
+          [160, 600],
+          "div-ads-instance-home-left"
+        )
+        .addService(window.googletag.pubads());
+      // .setTargeting("interests", ["sports", "music", "movies"]);
+      window.window.googletag
+        .defineSlot(
+          "/21799560237/Home/Home_Intersitial",
+          [640, 480],
+          "div-ads-instance-home-intersitial"
+        )
+        .addService(window.googletag.pubads());
+      window.googletag
+        .defineSlot(
+          "/21799560237/Home/Home_Right",
+          [160, 600],
+          "div-ads-instance-home-right"
+        )
+        .addService(window.googletag.pubads());
+      window.googletag.pubads().enableSingleRequest();
+      window.googletag.enableServices();
+    });
   }
+  handleOpen = () => this.setState({ adActive: true });
+  handleClose = () => this.setState({ adActive: false });
+
   static getDerivedStateFromProps(props, state) {
     if (props.qsosFetched) return { active: false };
     if (!props.qsosFetched) return { active: true };
@@ -28,8 +59,21 @@ class Home extends React.PureComponent {
     return (
       <Fragment>
         <Dimmer active={this.state.active} page>
-          {/* <Loader>Loading...</Loader> */}
-          <Ad adslot="/21799560237/Home/Intersitial" width={800} height={600} />
+          <Loader>Loading</Loader>
+        </Dimmer>
+        <Dimmer
+          active={this.state.adActive}
+          onClick={this.handleClose}
+          page
+          // verticalAlign="center"
+        >
+          <Ad
+            adslot="/21799560237/Home/Home_Intersitial"
+            width={640}
+            height={480}
+            id="home-intersitial"
+            displayOnly={true}
+          />
         </Dimmer>
         <div className="global-container">
           <div className="site-header">
@@ -40,6 +84,8 @@ class Home extends React.PureComponent {
               adslot="/21799560237/Home/Home_Left2"
               width={160}
               height={600}
+              id="home-left"
+              displayOnly={true}
             />
           </div>
 
@@ -49,9 +95,11 @@ class Home extends React.PureComponent {
 
           <div className="site-right">
             <Ad
-              adslot="/21799560237/Home/Home_Right"
+              adslot="/21799560237/21799560237/Home/Home_Right"
               width={160}
               height={600}
+              id="home-right"
+              displayOnly={true}
             />
           </div>
         </div>

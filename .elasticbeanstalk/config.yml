@@ -1,26 +1,20 @@
 branch-defaults:
   master:
-    environment: sqso
-    group_suffix: null
+    environment: miqso
 environment-defaults:
-  Sqso-env:
-    branch: null
-    repository: null
-  sqso:
+  miqso:
     branch: null
     repository: null
 global:
-  application_name: sqso
-  branch: null
+  application_name: miqso
   default_ec2_keyname: null
   default_platform: arn:aws:elasticbeanstalk:us-east-1::platform/Node.js running on
-    64bit Amazon Linux/4.5.3
+    64bit Amazon Linux/4.8.1
   default_region: us-east-1
   include_git_submodules: true
   instance_profile: null
   platform_name: null
   platform_version: null
   profile: null
-  repository: null
   sc: git
   workspace_type: Application

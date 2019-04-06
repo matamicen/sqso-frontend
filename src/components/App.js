@@ -43,6 +43,29 @@ class App extends PureComponent {
     } else {
       this.props.actions.doSetPublicSession();
     }
+    // window.googletag.cmd.push(() => {
+    //   window.googletag
+    //     .defineSlot(
+    //       "/21799560237/Home/Home_Right",
+    //       [160, 600],
+    //       "div-home-right"
+    //     )
+    //     .addService(window.googletag.pubads());
+    //   window.googletag
+    //     .defineSlot(
+    //       "/21799560237/Home/Home_Intersitial",
+    //       [700, 700],
+    //       "div-home-intersitial"
+    //     )
+    //     .addService(window.googletag.pubads());
+    //   window.googletag
+    //     .defineSlot("/21799560237/Home/Home_Left2", [160, 600], "div-home-left")
+    //     .addService(window.googletag.pubads());
+    //   window.googletag.pubads().enableAsyncRendering();
+    //   window.googletag.pubads().enableSingleRequest();
+    //   window.googletag.enableServices();
+    //   // window.googletag.display(this.id);
+    // });
   }
   render() {
     return (

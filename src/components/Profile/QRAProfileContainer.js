@@ -12,7 +12,7 @@ class QRAProfileContainer extends React.PureComponent {
     super();
     this.state = {
       active: true,
-
+      adActive: true,
       tab: null
     };
     this.handleButtonClick = this.handleButtonClick.bind(this);
@@ -26,7 +26,10 @@ class QRAProfileContainer extends React.PureComponent {
       (this.props.QRAFetched && this.props.match.params.qra !== qraInMemory)
     ) {
       this.props.actions.clearQRA();
-      this.props.actions.doFetchQRA(this.props.match.params.qra, this.props.token);
+      this.props.actions.doFetchQRA(
+        this.props.match.params.qra,
+        this.props.token
+      );
     }
     switch (this.props.tab) {
       case "BIO":
@@ -42,18 +45,41 @@ class QRAProfileContainer extends React.PureComponent {
         this.setState({ tab: 1 });
         break;
     }
+    window.googletag.cmd.push(function() {
+      window.googletag
+        .defineSlot(
+          "/21799560237/qraDetail/left",
+          [160, 600],
+          "div-ads-instance-qradetail-left"
+        )
+        .addService(window.googletag.pubads());
+      // .setTargeting("interests", ["sports", "music", "movies"]);
+      window.window.googletag
+        .defineSlot(
+          "/21799560237/qraDetail/intersitial",
+          [640, 480],
+          "div-ads-instance-qradetail-intersitial"
+        )
+        .addService(window.googletag.pubads());
+      window.googletag
+        .defineSlot(
+          "/21799560237/qraDetail/right",
+          [160, 600],
+          "div-ads-instance-qradetail-right"
+        )
+        .addService(window.googletag.pubads());
+      window.googletag.pubads().enableSingleRequest();
+      window.googletag.enableServices();
+    });
   }
+  handleOpen = () => this.setState({ adActive: true });
+  handleClose = () => this.setState({ adActive: false });
   static getDerivedStateFromProps(props, state) {
     if (props.QRAFetched) return { active: false };
     if (!props.qra) return { active: true };
     //Default
     return null;
   }
-  // componentWillReceiveProps(nextProps) {     if (nextProps.QRAFetched) {
-  // this.setState({active: false})     }     if (nextProps.following)
-  // this.setState({             followed: nextProps                 .following
-  //        .some(o => o.qra === this.props.match.params.qra)         });  }
-
   handleTabClick(i) {
     switch (i) {
       case 2:
@@ -115,6 +141,8 @@ class QRAProfileContainer extends React.PureComponent {
           followed={followed}
           handleTabClick={this.handleTabClick}
           tab={this.state.tab}
+          adActive={this.state.adActive}
+          handleClose={this.handleClose}
         />
       </Fragment>
     );
