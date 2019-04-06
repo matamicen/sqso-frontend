@@ -52,8 +52,7 @@ class Home extends React.Component {
 
   static getDerivedStateFromProps(props, state) {
     if (props.qsosFetched) return { active: false };
-    if (!props.qsosFetched) return { active: true };
-    return null;
+    else if (!props.qsosFetched) return { active: true };
   }
   render() {
     return (
@@ -62,7 +61,11 @@ class Home extends React.Component {
           <Loader>Loading</Loader>
         </Dimmer>
         <Dimmer
-          active={this.state.adActive}
+          active={
+            this.state.adActive &&
+            this.props.account_type &&
+            this.props.account_type.web_home_intersitial !== ""
+          }
           onClick={this.handleClose}
           page
           // verticalAlign="center"
@@ -113,6 +116,7 @@ const mapStateToProps = state => ({
   authenticating: state.userData.authenticating,
   isAuthenticated: state.userData.isAuthenticated,
   token: state.userData.token,
+  account_type: state.userData.account_type,
   public: state.userData.public
 });
 const mapDispatchToProps = dispatch => ({

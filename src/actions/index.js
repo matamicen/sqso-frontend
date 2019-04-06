@@ -41,8 +41,9 @@ export function doNotificationRead(idnotif = null, token) {
     };
     API.post(apiName, path, myInit)
       .then(response => {
-        response.body.error === 0 &&
+        if (response.body.error === 0)
           dispatch(doNotificationReadResponse(idnotif));
+        else console.log(response.body.message);
       })
       .catch(error => {
         Auth.currentSession()
@@ -73,8 +74,9 @@ export function doDeleteComment(idcomment, idqso, token) {
     };
     API.del(apiName, path, myInit)
       .then(response => {
-        response.body.error === 0 &&
+        if (response.body.error === 0)
           dispatch(doDeleteCommentResponse(idcomment, idqso));
+        else console.log(response.body.message);
       })
       .catch(error => {
         Auth.currentSession()
@@ -131,7 +133,8 @@ export function doDeleteQso(idqso, token) {
     };
     API.del(apiName, path, myInit)
       .then(response => {
-        response.body.error === 0 && dispatch(doDeleteQsoResponse(idqso));
+        if (response.body.error === 0) dispatch(doDeleteQsoResponse(idqso));
+        else console.log(response.body.message);
       })
       .catch(error => {
         Auth.currentSession()
@@ -176,8 +179,9 @@ export function doDeleteMedia(idmedia, idqso, token) {
     API.del(apiName, path, myInit)
       .then(response => {
         // console.log(response)
-        response.body.error === 0 &&
+        if (response.body.error === 0)
           dispatch(doDeleteMediaResponse(idmedia, idqso));
+        else console.log(response.body.message);
       })
       .catch(error => {
         Auth.currentSession()
@@ -217,7 +221,8 @@ export function doReceiveUserInfo(
   following = null,
   profilepic = null,
   avatarpic = null,
-  notifications = null
+  notifications = null,
+  account_type = null
 ) {
   return {
     type: RECEIVE_USERINFO,
@@ -227,7 +232,8 @@ export function doReceiveUserInfo(
     profilepic: profilepic,
     avatarpic: avatarpic,
     fetchingUser: false,
-    userFetched: true
+    userFetched: true,
+    account_type: account_type
   };
 }
 export function doStartingLogin() {
@@ -331,19 +337,21 @@ export function doFetchUserInfo(token) {
     };
     API.get(apiName, path, myInit)
       .then(response => {
-        if (response.body.error === 0) {
+        if (response.body.error === 0)
           dispatch(
             doReceiveUserInfo(
               response.body.message.followers,
               response.body.message.following,
               response.body.message.qra.profilepic,
               response.body.message.qra.avatarpic,
-              response.body.message.notifications
+              response.body.message.notifications,
+              response.body.message.qra.account_type
             )
           );
-        }
+        else console.log(response.body.message);
       })
       .catch(error => {
+        console.log(error);
         Auth.currentSession()
           .then(session => {
             token = session.idToken.jwtToken;
@@ -450,11 +458,9 @@ export function doFetchUserFeed(token) {
     };
     API.get(apiName, path, myInit)
       .then(response => {
-        if (response.body.error === 0) {
+        if (response.body.error === 0)
           dispatch(doReceiveFeed(response.body.message));
-        } else {
-          console.log(response.body.error);
-        }
+        else console.log(response.body.message);
       })
       .catch(error => {
         Auth.currentSession()
@@ -483,9 +489,9 @@ export function doFetchNotifications(token) {
     };
     API.get(apiName, path, myInit)
       .then(response => {
-        if (response.body.error === 0) {
+        if (response.body.error === 0)
           dispatch(doReceiveNotifications(response.body.message));
-        }
+        else console.log(response.body.message);
       })
       .catch(error => {
         Auth.currentSession()
@@ -515,11 +521,9 @@ export function doFetchPublicFeed() {
     };
     API.get(apiName, path, myInit)
       .then(response => {
-        if (response.body.error === 0) {
+        if (response.body.error === 0)
           dispatch(doReceiveFeed(response.body.message));
-        } else {
-          console.log(response.body.error);
-        }
+        else console.log(response.body.message);
       })
       .catch(error => {
         console.log(error);
@@ -575,9 +579,9 @@ export function doFetchQSO(idqso, token = null) {
       };
       API.post(apiName, path, myInit)
         .then(response => {
-          if (response.body.error === 0) {
+          if (response.body.error === 0)
             dispatch(doReceiveQSO(response.body.message));
-          }
+          else console.log(response.body.message);
         })
         .catch(error => {
           console.log(error);
@@ -597,9 +601,9 @@ export function doFetchQSO(idqso, token = null) {
       };
       API.post(apiName, path, myInit)
         .then(response => {
-          if (response.body.error === 0) {
+          if (response.body.error === 0)
             dispatch(doReceiveQSO(response.body.message));
-          }
+          else console.log(response.body.message);
         })
         .catch(error => {
           console.log(error);
@@ -713,9 +717,9 @@ export function doFollowQRA(token, follower) {
     };
     API.post(apiName, path, myInit)
       .then(response => {
-        if (response.body.error === 0) {
+        if (response.body.error === 0)
           dispatch(doReceiveFollowers(response.body.message));
-        }
+        else console.log(response.body.message);
       })
       .catch(error => {
         Auth.currentSession()
@@ -753,12 +757,8 @@ export function doUnfollowQRA(token, follower) {
     };
     API.del(apiName, path, myInit)
       .then(response => {
-        if (response.body.error > 0) {
-          console.error(response.body.message);
-          alert(response.body.error);
-        } else {
-          dispatch(doReceiveFollowers(response.body.message));
-        }
+        if (response.body.error > 0) console.error(response.body.message);
+        else dispatch(doReceiveFollowers(response.body.message));
       })
       .catch(error => {
         Auth.currentSession()

@@ -65,7 +65,11 @@ class Notifications extends React.Component {
         </Dimmer>
 
         <Dimmer
-          active={this.state.adActive}
+          active={
+            this.state.adActive &&
+            this.props.account_type &&
+            this.props.account_type.web_notifications_intersitial !== ""
+          }
           onClick={this.handleClose}
           page
           // verticalAlign="center"
@@ -124,7 +128,8 @@ class Notifications extends React.Component {
 const mapStateToProps = state => ({
   notifications: state.userData.notifications,
   token: state.userData.token,
-  currentQRA: state.userData.qra
+  currentQRA: state.userData.qra,
+  account_type: state.userData.account_type
 });
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(Actions, dispatch)

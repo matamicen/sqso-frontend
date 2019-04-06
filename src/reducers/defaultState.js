@@ -39,7 +39,8 @@ const initialState = {
     profilepic: null,
     avatarpic: null,
     fetchingUser: false,
-    userFetched: false
+    userFetched: false,
+    account_type: null
   },
   qsos: [],
   FetchingQSOS: false,
@@ -125,7 +126,8 @@ function generalReducers(state = initialState, action) {
         profilepic: action.profilepic,
         avatarpic: action.avatarpic,
         fetchingUser: action.fetchingUser,
-        userFetched: action.userFetched
+        userFetched: action.userFetched,
+        account_type: action.account_type
       };
       newStore = Object.assign({}, state, {
         ...state,
