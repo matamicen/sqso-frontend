@@ -67,8 +67,8 @@ class Notifications extends React.Component {
         <Dimmer
           active={
             this.state.adActive &&
-            this.props.account_type &&
-            this.props.account_type.web_notifications_intersitial !== ""
+            this.props.accountType &&
+            this.props.accountType.web_notifications_intersitial !== ""
           }
           onClick={this.handleClose}
           page
@@ -125,12 +125,14 @@ class Notifications extends React.Component {
     );
   }
 }
-const mapStateToProps = state => ({
-  notifications: state.userData.notifications,
-  token: state.userData.token,
-  currentQRA: state.userData.qra,
-  account_type: state.userData.account_type
-});
+const mapStateToProps = state => {
+  return {
+    notifications: state.userData.notifications,
+    token: state.userData.token,
+    currentQRA: state.userData.currentQRA,
+    accountType: state.userData.qra.accountType
+  };
+};
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(Actions, dispatch)
 });

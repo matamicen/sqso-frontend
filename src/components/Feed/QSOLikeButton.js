@@ -132,7 +132,7 @@ class QSOLikeButton extends React.Component {
 
 const mapStateToProps = state => ({
   isAuthenticated: state.userData.isAuthenticated,
-  currentQRA: state.userData.qra,
+  currentQRA: state.userData.currentQRA,
   token: state.userData.token
 });
 const mapDispatchToProps = dispatch => ({

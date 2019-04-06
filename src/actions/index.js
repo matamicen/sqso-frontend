@@ -219,21 +219,17 @@ export function doRequestUserInfo() {
 export function doReceiveUserInfo(
   followers = null,
   following = null,
-  profilepic = null,
-  avatarpic = null,
-  notifications = null,
-  account_type = null
+  qra = null,
+  notifications = null
 ) {
   return {
     type: RECEIVE_USERINFO,
     followers: followers,
     following: following,
     notifications: notifications,
-    profilepic: profilepic,
-    avatarpic: avatarpic,
+    qra: qra,
     fetchingUser: false,
-    userFetched: true,
-    account_type: account_type
+    userFetched: true
   };
 }
 export function doStartingLogin() {
@@ -258,17 +254,8 @@ export function doLogin(token, qra, identityId) {
   return {
     type: LOGIN,
     token: token,
-    qsosFetched: false,
-    FetchingQSO: false,
-    FetchingQSOS: false,
-    qsos: null,
-    qso: null,
     qra: qra,
-    identityId: identityId,
-    profilepic: null,
-    FetchingUser: false,
-    userFetched: false,
-    public: false
+    identityId: identityId
   };
 }
 
@@ -278,24 +265,7 @@ export function doLogout() {
     action: "Logout"
   });
   return {
-    type: LOGOUT,
-    qsos: null,
-    qso: null,
-    qsosFetched: false,
-    FetchingQSO: false,
-    FetchingQSOS: false,
-    token: null,
-    qra: null,
-    isAuthenticated: false,
-    followers: null,
-    following: null,
-    notifications: null,
-    profilepic: null,
-    FetchingUser: false,
-    userFetched: false,
-    QRAFetched: false,
-    FetchingQRA: false,
-    public: true
+    type: LOGOUT
   };
 }
 
@@ -342,10 +312,8 @@ export function doFetchUserInfo(token) {
             doReceiveUserInfo(
               response.body.message.followers,
               response.body.message.following,
-              response.body.message.qra.profilepic,
-              response.body.message.qra.avatarpic,
-              response.body.message.notifications,
-              response.body.message.qra.account_type
+              response.body.message.qra,
+              response.body.message.notifications
             )
           );
         else console.log(response.body.message);

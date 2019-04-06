@@ -73,7 +73,7 @@ class QSOCommentItem extends React.Component {
 
 const mapStateToProps = state => ({
   token: state.userData.token,
-  currentQRA: state.userData.qra
+  currentQRA: state.userData.currentQRA
 });
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(Actions, dispatch)

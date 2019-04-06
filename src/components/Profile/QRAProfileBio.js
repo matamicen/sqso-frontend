@@ -211,7 +211,7 @@ class QRAProfileBio extends React.Component {
 }
 const mapStateToProps = (state, ownProps) => ({
   //state: state,
-  currentQRA: state.userData.qra,
+  currentQRA: state.userData.currentQRA,
   identityId: state.userData.identityId,
   isAuthenticated: state.userData.isAuthenticated,
   token: state.userData.token

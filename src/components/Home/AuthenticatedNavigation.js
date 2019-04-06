@@ -96,7 +96,7 @@ class AuthenticatedNavigation extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
-  currentQRA: state.userData.qra,
+  currentQRA: state.userData.currentQRA,
   notifications: state.userData.notifications
 });
 const mapDispatchToProps = dispatch => ({

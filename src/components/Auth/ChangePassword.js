@@ -203,7 +203,7 @@ class ChangePassword extends React.Component {
 }
 const mapStateToProps = (state, ownProps) => ({
   //state: state,
-  currentQRA: state.userData.qra
+  currentQRA: state.userData.currentQRA
 });
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(Actions, dispatch)

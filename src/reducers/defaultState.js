@@ -28,19 +28,22 @@ import {
 
 const initialState = {
   userData: {
+    currentQRA: null,
     token: null,
-    qra: null,
+    qra: {
+      accountType: null,
+      profilepic: null,
+      avatarpic: null
+    },
     identityId: null,
     authenticating: false,
     isAuthenticated: false,
     following: [],
     followers: [],
     notifications: [],
-    profilepic: null,
-    avatarpic: null,
+
     fetchingUser: false,
-    userFetched: false,
-    account_type: null
+    userFetched: false
   },
   qsos: [],
   FetchingQSOS: false,
@@ -123,11 +126,9 @@ function generalReducers(state = initialState, action) {
         following: action.following,
         followers: action.followers,
         notifications: action.notifications,
-        profilepic: action.profilepic,
-        avatarpic: action.avatarpic,
+        qra: action.qra,
         fetchingUser: action.fetchingUser,
-        userFetched: action.userFetched,
-        account_type: action.account_type
+        userFetched: action.userFetched
       };
       newStore = Object.assign({}, state, {
         ...state,
@@ -260,7 +261,11 @@ function generalReducers(state = initialState, action) {
         token: null,
         authenticating: false,
         isAuthenticated: false,
-        qra: null,
+        qra: {
+          accountType: null,
+          profilepic: null,
+          avatarpic: null
+        },
         identityId: null,
         public: true
       };
@@ -281,7 +286,7 @@ function generalReducers(state = initialState, action) {
         token: action.token,
         authenticating: false,
         isAuthenticated: true,
-        qra: action.qra,
+        currentQRA: action.qra,
         identityId: action.identityId,
         public: false
       };
@@ -315,7 +320,12 @@ function generalReducers(state = initialState, action) {
         token: null,
         authenticating: true,
         isAuthenticated: false,
-        qra: null,
+        qra: {
+          accountType: null,
+          profilepic: null,
+          avatarpic: null
+        },
+        currentQRA: null,
         identityId: null,
         public: false
       };
@@ -334,7 +344,12 @@ function generalReducers(state = initialState, action) {
       let logoutUserData = {
         ...state.userData,
         token: "",
-        qra: null,
+        qra: {
+          accountType: null,
+          profilepic: null,
+          avatarpic: null
+        },
+        currentQRA: null,
         identityId: null,
         isAuthenticated: false,
         public: true

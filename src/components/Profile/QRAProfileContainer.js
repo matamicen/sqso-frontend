@@ -74,9 +74,9 @@ class QRAProfileContainer extends React.PureComponent {
   }
   handleOpen = () => this.setState({ adActive: true });
   handleClose = () => this.setState({ adActive: false });
-  static getDerivedStateFromProps(props, state) {
-    if (props.QRAFetched) return { active: false };
-    if (!props.qra) return { active: true };
+  static getDerivedStateFromProps(props, prevState) {
+    if (props.QRAFetched && prevState.active) return { active: false };
+    if (!props.qra && !prevState.active) return { active: true };
     //Default
     return null;
   }
@@ -129,6 +129,7 @@ class QRAProfileContainer extends React.PureComponent {
     let qraInfo = null;
     if (this.props.qra) qraInfo = this.props.qra.qra;
 
+    console.log(this.props.qraUserData);
     return (
       <Fragment>
         <QRAProfile
@@ -150,14 +151,14 @@ class QRAProfileContainer extends React.PureComponent {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  //state: state,
-  currentQRA: state.userData.qra,
+  currentQRA: state.userData.currentQRA,
   isAuthenticated: state.userData.isAuthenticated,
   following: state.userData.following,
   token: state.userData.token,
   fetchingQRA: state.FetchingQRA,
   QRAFetched: state.QRAFetched,
   qra: state.qra,
+  qraUserData: state.userData.qra,
   fetchingUser: state.userData.fetchingUser,
   userFetched: state.userData.userFetched
 });

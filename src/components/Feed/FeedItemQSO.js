@@ -158,7 +158,7 @@ class FeedItemQSO extends React.Component {
 const mapStateToProps = (state, qsos) => ({
   fetchingQSOS: state.FetchingQSOS,
   qsosFetched: state.qsosFetched,
-  currentQRA: state.userData.qra
+  currentQRA: state.userData.currentQRA
 });
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(Actions, dispatch)

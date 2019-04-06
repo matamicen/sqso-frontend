@@ -111,7 +111,7 @@ class QSOComments extends React.Component {
 
 const mapStateToProps = state => ({
   token: state.userData.token,
-  qra: state.userData.qra,
+  qra: state.userData.currentQRA,
   isAuthenticated: state.userData.isAuthenticated
 });
 const mapDispatchToProps = dispatch => ({

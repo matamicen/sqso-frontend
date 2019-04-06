@@ -116,7 +116,7 @@ const mapStateToProps = state => ({
   authenticating: state.userData.authenticating,
   isAuthenticated: state.userData.isAuthenticated,
   token: state.userData.token,
-  account_type: state.userData.account_type,
+  account_type: state.userData.qra.account_type,
   public: state.userData.public
 });
 const mapDispatchToProps = dispatch => ({

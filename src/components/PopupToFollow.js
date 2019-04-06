@@ -63,7 +63,7 @@ class PopupToFollow extends React.Component {
 
 const mapStateToProps = (state, ownProps) => ({
   //state: state,
-  currentQRA: state.userData.qra,
+  currentQRA: state.userData.currentQRA,
   isAuthenticated: state.userData.isAuthenticated,
   following: state.userData.following,
   token: state.userData.token
