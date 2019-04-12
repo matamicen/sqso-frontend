@@ -7,13 +7,42 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import "../../styles/style.css";
 
+window.googletag.cmd.push(function() {
+  window.googletag
+    .defineSlot(
+      "/21799560237/qraDetail/left",
+      [160, 600],
+      "div-ads-instance-qradetail-left"
+    )
+    .addService(window.googletag.pubads());
+  // .setTargeting("interests", ["sports", "music", "movies"]);
+  window.window.googletag
+    .defineSlot(
+      "/21799560237/qraDetail/intersitial",
+      [640, 480],
+      "div-ads-instance-qradetail-intersitial"
+    )
+    .addService(window.googletag.pubads());
+  window.googletag
+    .defineSlot(
+      "/21799560237/qraDetail/right",
+      [160, 600],
+      "div-ads-instance-qradetail-right"
+    )
+    .addService(window.googletag.pubads());
+  window.googletag.pubads().enableSingleRequest();
+  window.googletag.enableServices();
+});
 class QRAProfileContainer extends React.PureComponent {
   constructor() {
     super();
     this.state = {
       active: true,
-      adActive: true,
-      tab: null
+      adActive: false,
+      adClosed: false,
+      tab: null,
+      qra: null,
+      monthly_qra_views: null
     };
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.handleTabClick = this.handleTabClick.bind(this);
@@ -45,38 +74,43 @@ class QRAProfileContainer extends React.PureComponent {
         this.setState({ tab: 1 });
         break;
     }
-    window.googletag.cmd.push(function() {
-      window.googletag
-        .defineSlot(
-          "/21799560237/qraDetail/left",
-          [160, 600],
-          "div-ads-instance-qradetail-left"
-        )
-        .addService(window.googletag.pubads());
-      // .setTargeting("interests", ["sports", "music", "movies"]);
-      window.window.googletag
-        .defineSlot(
-          "/21799560237/qraDetail/intersitial",
-          [640, 480],
-          "div-ads-instance-qradetail-intersitial"
-        )
-        .addService(window.googletag.pubads());
-      window.googletag
-        .defineSlot(
-          "/21799560237/qraDetail/right",
-          [160, 600],
-          "div-ads-instance-qradetail-right"
-        )
-        .addService(window.googletag.pubads());
-      window.googletag.pubads().enableSingleRequest();
-      window.googletag.enableServices();
-    });
   }
   handleOpen = () => this.setState({ adActive: true });
-  handleClose = () => this.setState({ adActive: false });
+  handleClose = () => this.setState({ adActive: false, adClosed: true });
   static getDerivedStateFromProps(props, prevState) {
-    if (props.QRAFetched && prevState.active) return { active: false };
-    if (!props.qra && !prevState.active) return { active: true };
+    console.log(props.qraUserData.monthly_qra_views);
+    console.log(prevState.monthly_qra_views);
+    if (props.QRAFetched && prevState.active) {
+      if (
+        !prevState.adClosed &&
+        props.qraUserData &&
+        props.qraUserData.account_type &&
+        props.qraUserData.monthly_qra_views >
+          props.qraUserData.account_type.web_qra_profile_view
+      ) {
+        return {
+          adActive: true,
+          monthly_qra_views: props.qraUserData.monthly_qra_views,
+          active: false
+        };
+      } else return { active: false };
+    }
+    if (!props.qra && !prevState.active) {
+      return { active: true };
+    }
+    if (
+      !prevState.adClosed &&
+      props.qraUserData &&
+      props.qraUserData.account_type &&
+      props.qraUserData.monthly_qra_views >
+        props.qraUserData.account_type.web_qra_profile_view
+    ) {
+      return {
+        adActive: true,
+        monthly_qra_views: props.qraUserData.monthly_qra_views
+      };
+    }
+
     //Default
     return null;
   }
@@ -122,6 +156,7 @@ class QRAProfileContainer extends React.PureComponent {
   }
 
   render() {
+    console.log(this.state.monthly_qra_views);
     let followed = this.props.following.some(
       o => o.qra === this.props.match.params.qra
     );
@@ -129,7 +164,6 @@ class QRAProfileContainer extends React.PureComponent {
     let qraInfo = null;
     if (this.props.qra) qraInfo = this.props.qra.qra;
 
-    console.log(this.props.qraUserData);
     return (
       <Fragment>
         <QRAProfile

@@ -152,7 +152,6 @@ export function doDeleteQso(idqso, token) {
 }
 
 export function doDeleteQsoResponse(idqso = null) {
-  console.log("doDeleteQsoResponse");
   ReactGA.event({
     category: "QSO",
     action: "Delete"
@@ -270,7 +269,6 @@ export function doLogout() {
 }
 
 export function doRequestFeed() {
-  // console.log("doRequestFeed")
   return {
     type: REQUEST_FEED,
     FetchingQSOS: true,
@@ -279,14 +277,12 @@ export function doRequestFeed() {
 }
 
 export function doReceiveNotifications(notifications) {
-  // console.log("doReceiveFeed")
   return {
     type: RECEIVE_NOTIFICATIONS,
     notifications: notifications
   };
 }
 export function doReceiveFeed(qsos) {
-  // console.log("doReceiveFeed")
   return {
     type: RECEIVE_FEED,
     qsos: qsos,
@@ -412,8 +408,6 @@ export function doReceiveUserBio(qra) {
   };
 }
 export function doFetchUserFeed(token) {
-  // console.log("doFetchUserFeed");
-
   return dispatch => {
     dispatch(doRequestFeed());
     let apiName = "superqso";
@@ -633,7 +627,9 @@ export function doFetchQRA(qra, token = null) {
       dispatch(doRequestQRA());
       API.post(apiName, path, myInit)
         .then(response => {
-          response.body && dispatch(doReceiveQRA(response.body.message));
+          if (response.body.error === 0)
+            dispatch(doReceiveQRA(response.body.message));
+          else console.log(response.body.message);
         })
         .catch(error => {
           console.log(error);
@@ -654,7 +650,9 @@ export function doFetchQRA(qra, token = null) {
       dispatch(doRequestQRA());
       API.post(apiName, path, myInit)
         .then(response => {
-          response.body && dispatch(doReceiveQRA(response.body.message));
+          if (response.body.error === 0)
+            dispatch(doReceiveQRA(response.body.message));
+          else console.log(response.body.message);
         })
         .catch(error => {
           console.log(error);
@@ -751,11 +749,13 @@ export function doRequestQRA() {
   };
 }
 
-export function doReceiveQRA(qra) {
+export function doReceiveQRA(data) {
+  let { monthly_qra_views, ...qraData } = data;
   return {
     type: RECEIVE_QRA,
-    qra: qra,
+    qra: qraData,
     FetchingQRA: false,
+    monthly_qra_views: monthly_qra_views,
     QRAFetched: true
   };
 }

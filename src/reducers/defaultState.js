@@ -191,8 +191,16 @@ function generalReducers(state = initialState, action) {
         ...state,
         qra: action.qra,
         FetchingQRA: action.FetchingQRA,
-        QRAFetched: action.QRAFetched
+        QRAFetched: action.QRAFetched,
+        userData: {
+          ...state.userData,
+          qra: {
+            ...state.userData.qra,
+            monthly_qra_views: action.monthly_qra_views
+          }
+        }
       });
+
       return newStore;
     case RECEIVE_USER_DATA_INFO:
       let qra = {
