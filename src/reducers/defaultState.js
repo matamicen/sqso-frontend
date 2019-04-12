@@ -1,4 +1,5 @@
 import {
+  RECEIVE_QSO_MEDIA_COUNTER,
   DELETE_MEDIA,
   DELETE_QSO,
   PREPARE_LOGIN,
@@ -258,6 +259,18 @@ function generalReducers(state = initialState, action) {
           qra: {
             ...state.userData.qra,
             monthly_qso_views: action.monthly_qso_views
+          }
+        }
+      });
+      return newStore;
+    case RECEIVE_QSO_MEDIA_COUNTER:
+      newStore = Object.assign({}, state, {
+        ...state,
+        userData: {
+          ...state.userData,
+          qra: {
+            ...state.userData.qra,
+            monthly_audio_play: action.monthly_audio_play
           }
         }
       });

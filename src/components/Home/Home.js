@@ -21,6 +21,7 @@ class Home extends React.Component {
     else this.props.actions.doFetchPublicFeed();
 
     window.googletag.cmd.push(function() {
+      window.googletag.destroySlots();
       window.googletag
         .defineSlot(
           "/21799560237/Home/Home_Left2",

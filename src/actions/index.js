@@ -21,6 +21,7 @@ export const REQUEST_QRA = "REQUEST_QRA";
 export const RECEIVE_QRA = "RECEIVE_QRA";
 export const CLEAR_QRA = "CLEAR_QRA";
 export const RECEIVE_FOLLOWERS = "RECEIVE_FOLLOWERS";
+export const RECEIVE_QSO_MEDIA_COUNTER = "RECEIVE_QSO_MEDIA_COUNTER";
 export const DELETE_MEDIA = "DELETE_MEDIA";
 export const DELETE_QSO = "DELETE_QSO";
 export const DELETE_COMMENT = "DELETE_COMMENT";
@@ -775,5 +776,44 @@ export function doReceiveFollowers(following) {
   return {
     type: RECEIVE_FOLLOWERS,
     following: following
+  };
+}
+
+export function doQsoMediaPlay(idMedia, token) {
+  return dispatch => {
+    let apiName = "superqso";
+    let path = "/qso/media-play";
+    let myInit = {
+      body: {
+        idmedia: idMedia
+      }, // replace this with attributes you need
+      headers: {
+        Authorization: token
+      } // OPTIONAL
+    };
+    API.del(apiName, path, myInit)
+      .then(response => {
+        if (response.body.error > 0) console.error(response.body.message);
+        else dispatch(doReceiveMediaCounter(response.body.message));
+      })
+      .catch(error => {
+        Auth.currentSession()
+          .then(session => {
+            token = session.idToken.jwtToken;
+            dispatch(refreshToken(token));
+            dispatch(doQsoMediaPlay(idMedia, token));
+          })
+          .catch(err => {
+            console.log(err);
+            dispatch(doLogout());
+          });
+      });
+  };
+}
+
+export function doReceiveMediaCounter(data) {
+  return {
+    type: RECEIVE_QSO_MEDIA_COUNTER,
+    monthly_audio_play: data
   };
 }

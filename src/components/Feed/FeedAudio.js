@@ -38,6 +38,7 @@ class FeedAudio extends React.Component {
               autoPlay
               preload="none"
               controlsList="nodownload"
+              onPlay={() => alert("played")}
             />
           </Fragment>
         );
