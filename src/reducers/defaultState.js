@@ -252,7 +252,14 @@ function generalReducers(state = initialState, action) {
         ...state,
         qso: action.qso,
         FetchingQSO: false,
-        QSOFetched: true
+        QSOFetched: true,
+        userData: {
+          ...state.userData,
+          qra: {
+            ...state.userData.qra,
+            monthly_qso_views: action.monthly_qso_views
+          }
+        }
       });
       return newStore;
     case RECEIVE_QSO_LINK:

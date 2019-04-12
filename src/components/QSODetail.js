@@ -15,12 +15,38 @@ class QSODetail extends React.PureComponent {
   state = {
     active: true,
     showModal: false,
-    adActive: true,
-    idqso: null
+    adActive: false,
+    idqso: null,
+    adClosed: false
   };
-  static getDerivedStateFromProps(props, state) {
-    if (props.qso) return { active: false };
-    else if (!props.qso) return { active: false };
+  static getDerivedStateFromProps(props, prevState) {
+    if (props.qso && prevState.active) {
+      if (
+        !prevState.adClosed &&
+        props.qraUserData &&
+        props.qraUserData.account_type &&
+        props.qraUserData.monthly_qso_views >
+          props.qraUserData.account_type.web_qso_detail
+      ) {
+        return {
+          adActive: true,
+
+          active: false
+        };
+      } else return { active: false };
+    }
+    if (!props.qso && !prevState.active) return { active: true };
+    if (
+      !prevState.adClosed &&
+      props.qraUserData &&
+      props.qraUserData.account_type &&
+      props.qraUserData.monthly_qso_views >
+        props.qraUserData.account_type.web_qso_detail
+    ) {
+      return {
+        adActive: true
+      };
+    }
     return null;
   }
   componentDidMount() {
@@ -38,6 +64,7 @@ class QSODetail extends React.PureComponent {
       this.setState({ idqso: this.props.match.params.idqso });
     }
     window.googletag.cmd.push(function() {
+      window.googletag.destroySlots();
       window.googletag
         .defineSlot(
           "/21799560237/qsoDetail/left",
@@ -65,7 +92,7 @@ class QSODetail extends React.PureComponent {
     });
   }
   handleOpen = () => this.setState({ adActive: true });
-  handleClose = () => this.setState({ adActive: false });
+  handleClose = () => this.setState({ adActive: false, adClosed: true });
   render() {
     let qsos = [];
     if (this.props.qso) {
@@ -75,7 +102,7 @@ class QSODetail extends React.PureComponent {
     return (
       <div className="qsoDetail-container">
         <Dimmer active={this.state.active} page>
-          <Loader>Loading</Loader>
+          <Loader>Loading QSO...</Loader>
         </Dimmer>
 
         <Dimmer
@@ -127,7 +154,8 @@ const mapStateToProps = state => ({
   qso: state.qso,
   FetchingQSO: state.FetchingQSO,
   QSOFetched: state.QSOFetched,
-  token: state.userData.token
+  token: state.userData.token,
+  qraUserData: state.userData.qra
 });
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(Actions, dispatch)

@@ -499,10 +499,12 @@ export function doRequestQSO() {
   };
 }
 
-export function doReceiveQSO(qso) {
+export function doReceiveQSO(data) {
+  let { monthly_qso_views, ...qsoData } = data;
   return {
     type: RECEIVE_QSO,
-    qso: qso
+    qso: qsoData,
+    monthly_qso_views: monthly_qso_views
   };
 }
 export function doReceiveQsoLink(qso) {

@@ -14,9 +14,7 @@ class QRAProfileContainer extends React.PureComponent {
       active: true,
       adActive: false,
       adClosed: false,
-      tab: null,
-      qra: null,
-      monthly_qra_views: null
+      tab: null
     };
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.handleTabClick = this.handleTabClick.bind(this);
@@ -79,8 +77,6 @@ class QRAProfileContainer extends React.PureComponent {
   handleOpen = () => this.setState({ adActive: true });
   handleClose = () => this.setState({ adActive: false, adClosed: true });
   static getDerivedStateFromProps(props, prevState) {
-    console.log(props.qraUserData.monthly_qra_views);
-    console.log(prevState.monthly_qra_views);
     if (props.QRAFetched && prevState.active) {
       if (
         !prevState.adClosed &&
@@ -91,7 +87,7 @@ class QRAProfileContainer extends React.PureComponent {
       ) {
         return {
           adActive: true,
-          monthly_qra_views: props.qraUserData.monthly_qra_views,
+
           active: false
         };
       } else return { active: false };
@@ -107,8 +103,7 @@ class QRAProfileContainer extends React.PureComponent {
         props.qraUserData.account_type.web_qra_profile_view
     ) {
       return {
-        adActive: true,
-        monthly_qra_views: props.qraUserData.monthly_qra_views
+        adActive: true
       };
     }
 
@@ -157,7 +152,6 @@ class QRAProfileContainer extends React.PureComponent {
   }
 
   render() {
-    console.log(this.state.monthly_qra_views);
     let followed = this.props.following.some(
       o => o.qra === this.props.match.params.qra
     );
