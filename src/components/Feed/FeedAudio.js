@@ -39,7 +39,7 @@ class FeedAudio extends React.Component {
               preload="none"
               controlsList="nodownload"
               onPlay={() =>
-                this.props.doQsoMediaPlay(
+                this.props.actions.doQsoMediaPlay(
                   this.props.media.idqsos_media,
                   this.props.token
                 )
