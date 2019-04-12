@@ -7,32 +7,6 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import "../../styles/style.css";
 
-window.googletag.cmd.push(function() {
-  window.googletag
-    .defineSlot(
-      "/21799560237/qraDetail/left",
-      [160, 600],
-      "div-ads-instance-qradetail-left"
-    )
-    .addService(window.googletag.pubads());
-  // .setTargeting("interests", ["sports", "music", "movies"]);
-  window.window.googletag
-    .defineSlot(
-      "/21799560237/qraDetail/intersitial",
-      [640, 480],
-      "div-ads-instance-qradetail-intersitial"
-    )
-    .addService(window.googletag.pubads());
-  window.googletag
-    .defineSlot(
-      "/21799560237/qraDetail/right",
-      [160, 600],
-      "div-ads-instance-qradetail-right"
-    )
-    .addService(window.googletag.pubads());
-  window.googletag.pubads().enableSingleRequest();
-  window.googletag.enableServices();
-});
 class QRAProfileContainer extends React.PureComponent {
   constructor() {
     super();
@@ -48,6 +22,33 @@ class QRAProfileContainer extends React.PureComponent {
     this.handleTabClick = this.handleTabClick.bind(this);
   }
   componentDidMount() {
+    window.googletag.cmd.push(function() {
+      window.googletag.destroySlots();
+      window.googletag
+        .defineSlot(
+          "/21799560237/qraDetail/left",
+          [160, 600],
+          "div-ads-instance-qradetail-left"
+        )
+        .addService(window.googletag.pubads());
+      // .setTargeting("interests", ["sports", "music", "movies"]);
+      window.googletag
+        .defineSlot(
+          "/21799560237/qraDetail/intersitial",
+          [640, 480],
+          "div-ads-instance-qradetail-intersitial"
+        )
+        .addService(window.googletag.pubads());
+      window.googletag
+        .defineSlot(
+          "/21799560237/qraDetail/right",
+          [160, 600],
+          "div-ads-instance-qradetail-right"
+        )
+        .addService(window.googletag.pubads());
+      window.googletag.pubads().enableSingleRequest();
+      window.googletag.enableServices();
+    });
     let qraInMemory = this.props.qra ? this.props.qra.qra.qra : "";
 
     if (
