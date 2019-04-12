@@ -791,7 +791,7 @@ export function doQsoMediaPlay(idMedia, token) {
         Authorization: token
       } // OPTIONAL
     };
-    API.del(apiName, path, myInit)
+    API.post(apiName, path, myInit)
       .then(response => {
         if (response.body.error > 0) console.error(response.body.message);
         else dispatch(doReceiveMediaCounter(response.body.message));

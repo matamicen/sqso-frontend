@@ -38,7 +38,12 @@ class FeedAudio extends React.Component {
               autoPlay
               preload="none"
               controlsList="nodownload"
-              onPlay={() => alert("played")}
+              onPlay={() =>
+                this.props.doQsoMediaPlay(
+                  this.props.media.idqsos_media,
+                  this.props.token
+                )
+              }
             />
           </Fragment>
         );
