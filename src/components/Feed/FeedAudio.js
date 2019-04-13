@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as Actions from "../../actions";
 import { Confirm } from "semantic-ui-react";
-
+import { Link } from "react-router-dom";
 class FeedAudio extends React.Component {
   constructor() {
     super();
@@ -28,7 +28,8 @@ class FeedAudio extends React.Component {
   }
   render() {
     let date = new Date(this.props.media.datetime);
-
+    let onlyForRegistered =
+      this.props.index > 0 && !this.props.isAuthenticated ? true : false;
     if (this.props.media.url) {
       if (this.state.audioNotVisible) {
         return (
@@ -50,7 +51,8 @@ class FeedAudio extends React.Component {
               date.getDate() +
               ", " +
               date.getFullYear()}{" "}
-            {date.getUTCHours() + ":" + date.getMinutes()}
+            {date.getUTCHours() + ":" + date.getMinutes()}{" "}
+            {onlyForRegistered && <Link to="/login">Login Required</Link>}
           </Fragment>
         );
       } else {
