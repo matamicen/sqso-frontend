@@ -5,8 +5,12 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as Actions from "../../actions";
-import { Confirm } from "semantic-ui-react";
+import { Confirm, Modal } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+
+Audio.propTypes = {
+  url: PropTypes.string.isRequired
+};
 class FeedAudio extends React.Component {
   constructor() {
     super();
@@ -14,14 +18,21 @@ class FeedAudio extends React.Component {
       showReportContent: false,
       showMessage: false,
       audioNotVisible: true,
-      promptLogin: false
+      promptLogin: false,
+      promptPremium: false
     };
     this.onClick = this.onClick.bind(this);
   }
 
   onClick() {
-    if (this.props.isAuthenticated) this.setState({ audioNotVisible: false });
-    else {
+    if (this.props.isAuthenticated) {
+      if (
+        this.props.qraUserData.monthly_audio_play >
+        this.props.qraUserData.account_type.web_qso_audio_play
+      )
+        this.setState({ promptPremium: true });
+      else this.setState({ audioNotVisible: false });
+    } else {
       if (this.props.index > 0) this.setState({ promptLogin: true });
       else this.setState({ audioNotVisible: false });
     }
@@ -34,6 +45,23 @@ class FeedAudio extends React.Component {
       if (this.state.audioNotVisible) {
         return (
           <Fragment>
+            <Modal
+              closeIcon
+              open={this.state.promptPremium}
+              onClose={() => this.setState({ promptPremium: false })}
+              header="Upgrade to Premium"
+              content="You've reached the maximum allowed for free users. Upgrade to Premium in our APP"
+              actions={["OK"]}
+            />
+            <Confirm
+              size="mini"
+              open={this.state.promptLogin}
+              onCancel={() => this.setState({ promptLogin: false })}
+              onConfirm={() => this.props.history.push("/login")}
+              cancelButton="Cancel"
+              confirmButton="Login"
+              content="Please Login to perform this action"
+            />
             <Confirm
               size="mini"
               open={this.state.promptLogin}
@@ -66,6 +94,7 @@ class FeedAudio extends React.Component {
               preload="none"
               controlsList="nodownload"
               onPlay={() =>
+                this.props.isAuthenticated &&
                 this.props.actions.doQsoMediaPlay(
                   this.props.media.idqsos_media,
                   this.props.token,
@@ -81,13 +110,12 @@ class FeedAudio extends React.Component {
     }
   }
 }
-Audio.propTypes = {
-  url: PropTypes.string.isRequired
-};
+
 const mapStateToProps = state => ({
   token: state.userData.token,
   isAuthenticated: state.userData.isAuthenticated,
-  currentQRA: state.userData.currentQRA
+  currentQRA: state.userData.currentQRA,
+  qraUserData: state.userData.qra
 });
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(Actions, dispatch)

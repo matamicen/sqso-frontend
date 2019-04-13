@@ -33,7 +33,13 @@ class QSODetail extends React.PureComponent {
 
           active: false
         };
-      } else return { active: false };
+      } else if (!props.isAuthenticated)
+        return {
+          adActive: true,
+
+          active: false
+        };
+      else return { active: false };
     }
     if (!props.qso && !prevState.active) return { active: true };
     if (
@@ -155,7 +161,8 @@ const mapStateToProps = state => ({
   FetchingQSO: state.FetchingQSO,
   QSOFetched: state.QSOFetched,
   token: state.userData.token,
-  qraUserData: state.userData.qra
+  qraUserData: state.userData.qra,
+  isAuthenticated: state.userData.isAuthenticated
 });
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(Actions, dispatch)

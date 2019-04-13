@@ -84,13 +84,18 @@ class QRAProfileContainer extends React.PureComponent {
         props.qraUserData.account_type &&
         props.qraUserData.monthly_qra_views >
           props.qraUserData.account_type.web_qra_profile_view
-      ) {
+      )
         return {
           adActive: true,
 
           active: false
         };
-      } else return { active: false };
+      else if (!props.isAuthenticated)
+        return {
+          adActive: true,
+          active: false
+        };
+      else return { active: false };
     }
     if (!props.qra && !prevState.active) {
       return { active: true };
