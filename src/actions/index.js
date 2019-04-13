@@ -433,6 +433,7 @@ export function doFetchUserFeed(token) {
             dispatch(doFetchUserFeed(token));
           })
           .catch(err => {
+            console.log(err);
             dispatch(doLogout());
           });
       });
@@ -488,9 +489,7 @@ export function doFetchPublicFeed() {
           dispatch(doReceiveFeed(response.body.message));
         else console.log(response.body.message);
       })
-      .catch(error => {
-        console.log(error);
-      });
+      .catch(error => console.log(error));
   };
 }
 
@@ -548,9 +547,7 @@ export function doFetchQSO(idqso, token = null) {
             dispatch(doReceiveQSO(response.body.message));
           else console.log(response.body.message);
         })
-        .catch(error => {
-          console.log(error);
-        });
+        .catch(error => console.log(error));
     };
   } else {
     return dispatch => {
@@ -570,9 +567,7 @@ export function doFetchQSO(idqso, token = null) {
             dispatch(doReceiveQSO(response.body.message));
           else console.log(response.body.message);
         })
-        .catch(error => {
-          console.log(error);
-        });
+        .catch(error => console.log(error));
     };
   }
 }
@@ -601,9 +596,7 @@ export function doFetchQsoLink(idqso) {
           dispatch(doReceiveQsoLink(response.body.message));
         else console.log(response.body.message);
       })
-      .catch(error => {
-        console.log(error);
-      });
+      .catch(error => console.log(error));
   };
 }
 
@@ -634,9 +627,7 @@ export function doFetchQRA(qra, token = null) {
             dispatch(doReceiveQRA(response.body.message));
           else console.log(response.body.message);
         })
-        .catch(error => {
-          console.log(error);
-        });
+        .catch(error => console.log(error));
     };
   } else {
     return dispatch => {
@@ -657,9 +648,7 @@ export function doFetchQRA(qra, token = null) {
             dispatch(doReceiveQRA(response.body.message));
           else console.log(response.body.message);
         })
-        .catch(error => {
-          console.log(error);
-        });
+        .catch(error => console.log(error));
     };
   }
 }
@@ -802,7 +791,7 @@ export function doQsoMediaPlay(idMedia, token, idqso) {
           .then(session => {
             token = session.idToken.jwtToken;
             dispatch(refreshToken(token));
-            dispatch(doQsoMediaPlay(idMedia, token));
+            dispatch(doQsoMediaPlay(idMedia, token, idqso));
           })
           .catch(err => {
             console.log(err);
@@ -816,5 +805,36 @@ export function doReceiveMediaCounter(data) {
   return {
     type: RECEIVE_QSO_MEDIA_COUNTER,
     monthly_audio_play: data
+  };
+}
+
+export function doQslCardPrint(idqso, token) {
+  return dispatch => {
+    let apiName = "superqso";
+    let path = "/qso/qslcard-print";
+    let myInit = {
+      body: {
+        idqso: idqso
+      }, // replace this with attributes you need
+      headers: {
+        Authorization: token
+      } // OPTIONAL
+    };
+    API.post(apiName, path, myInit)
+      .then(response => {
+        if (response.body.error > 0) console.error(response.body.message);
+      })
+      .catch(error => {
+        Auth.currentSession()
+          .then(session => {
+            token = session.idToken.jwtToken;
+            dispatch(refreshToken(token));
+            dispatch(doQslCardPrint(token, idqso));
+          })
+          .catch(err => {
+            console.log(err);
+            dispatch(doLogout());
+          });
+      });
   };
 }

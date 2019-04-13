@@ -45,6 +45,7 @@ class FeedOptionsMenu extends React.PureComponent {
     this.props.actions.doDeleteQso(this.props.idqso, this.props.token);
   }
   printQSLCard() {
+    this.props.actions.doQslCardPrint(this.props.idqso, this.props.token);
     QslCardPrint(this.props);
   }
   handleOnSubmitReportComment(e) {

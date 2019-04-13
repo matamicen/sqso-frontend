@@ -76,7 +76,6 @@ function generalReducers(state = initialState, action) {
       });
       return newStore;
     case DELETE_QSO:
-      console.log(action);
       newStore = Object.assign({}, state, {
         ...state,
         qsos: state.qsos.filter(qso => qso.idqsos !== action.idqso)
