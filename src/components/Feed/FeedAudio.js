@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as Actions from "../../actions";
+import { Confirm } from "semantic-ui-react";
 
 class FeedAudio extends React.Component {
   constructor() {
@@ -12,21 +13,45 @@ class FeedAudio extends React.Component {
     this.state = {
       showReportContent: false,
       showMessage: false,
-      audioNotVisible: true
+      audioNotVisible: true,
+      promptLogin: false
     };
     this.onClick = this.onClick.bind(this);
   }
 
   onClick() {
-    this.setState({ audioNotVisible: false });
+    if (this.props.isAuthenticated) this.setState({ audioNotVisible: false });
+    else {
+      if (this.props.index > 0) this.setState({ promptLogin: true });
+      else this.setState({ audioNotVisible: false });
+    }
   }
   render() {
+    let date = new Date(this.props.media.datetime);
+
     if (this.props.media.url) {
       if (this.state.audioNotVisible) {
         return (
-          <Button icon onClick={this.onClick}>
-            <Icon name="play circle" />
-          </Button>
+          <Fragment>
+            <Confirm
+              size="mini"
+              open={this.state.promptLogin}
+              onCancel={() => this.setState({ promptLogin: false })}
+              onConfirm={() => this.props.history.push("/login")}
+              cancelButton="Cancel"
+              confirmButton="Login"
+              content="Please Login to perform this action"
+            />
+            <Button icon onClick={this.onClick}>
+              <Icon name="play circle" />
+            </Button>
+            {date.toLocaleDateString("EN-US", { month: "short" }) +
+              " " +
+              date.getDate() +
+              ", " +
+              date.getFullYear()}{" "}
+            {date.getUTCHours() + ":" + date.getMinutes()}
+          </Fragment>
         );
       } else {
         return (
@@ -59,6 +84,7 @@ Audio.propTypes = {
 };
 const mapStateToProps = state => ({
   token: state.userData.token,
+  isAuthenticated: state.userData.isAuthenticated,
   currentQRA: state.userData.currentQRA
 });
 const mapDispatchToProps = dispatch => ({
