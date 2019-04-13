@@ -779,13 +779,14 @@ export function doReceiveFollowers(following) {
   };
 }
 
-export function doQsoMediaPlay(idMedia, token) {
+export function doQsoMediaPlay(idMedia, token, idqso) {
   return dispatch => {
     let apiName = "superqso";
     let path = "/qso/media-play";
     let myInit = {
       body: {
-        idmedia: idMedia
+        idmedia: idMedia,
+        idqso: idqso
       }, // replace this with attributes you need
       headers: {
         Authorization: token

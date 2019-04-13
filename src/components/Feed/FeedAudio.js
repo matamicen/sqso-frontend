@@ -41,7 +41,8 @@ class FeedAudio extends React.Component {
               onPlay={() =>
                 this.props.actions.doQsoMediaPlay(
                   this.props.media.idqsos_media,
-                  this.props.token
+                  this.props.token,
+                  this.props.media.idqso
                 )
               }
             />
