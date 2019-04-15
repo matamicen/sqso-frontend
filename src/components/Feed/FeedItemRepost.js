@@ -93,6 +93,7 @@ class FeedItemRepost extends React.Component {
             idqso={this.props.qso.idqsos}
             guid={this.props.qso.GUID_QR}
             optionsCaller="FeedItem"
+            QslCard={false}
           />
         </div>
 

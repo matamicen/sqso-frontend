@@ -298,6 +298,7 @@ class FeedOptionsMenu extends React.PureComponent {
           {/* END FEED ITEM DELETE QSO*/}
           {/* FEED ITEM PRINT QSL CARD*/}
           {this.props.optionsCaller === "FeedItem" &&
+            this.props.QslCard &&
             this.props.currentQRA === this.props.qso_owner && (
               <Dropdown.Item
                 icon="print"

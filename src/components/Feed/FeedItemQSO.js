@@ -98,6 +98,7 @@ class FeedItemQSO extends React.Component {
             guid={this.props.qso.GUID_QR}
             qso={this.props.qso}
             optionsCaller="FeedItem"
+            QslCard={true}
           />
         </div>
         <Divider hidden />
