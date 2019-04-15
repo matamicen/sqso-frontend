@@ -12,7 +12,8 @@ import { Route, BrowserRouter } from "react-router-dom";
 
 import { googleAnalytics } from "./reactGAMiddlewares";
 import "semantic-ui-css/semantic.css";
-
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import App from "./components/App";
 import ReactGA from "react-ga";
 ReactGA.initialize("UA-124438207-1");
