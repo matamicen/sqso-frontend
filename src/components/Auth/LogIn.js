@@ -58,8 +58,10 @@ class LogIn extends React.Component {
         credentials.data.IdentityId
       );
       await this.props.actions.doFetchUserInfo(token);
+      console.log("push2history");
+      console.log(this.props);
 
-      await this.props.history.push("/");
+      this.props.history.goBack();
     }
   }
   static getDerivedStateFromProps(props, state) {
