@@ -10,6 +10,21 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as Actions from "../../actions";
 
+function SampleArrow(props) {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={className}
+      style={{
+        ...style,
+        color: "black",
+        display: "block",
+        background: "black"
+      }}
+      onClick={onClick}
+    />
+  );
+}
 class FeedImage extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -24,9 +39,11 @@ class FeedImage extends React.Component {
       className: "center",
       infinite: true,
       dots: true,
-      arrows: true,
+      // arrows: true,
       speed: 150,
-      centerMode: true
+      centerMode: true,
+      prevArrow: <SampleArrow />,
+      nextArrow: <SampleArrow />
     };
     return (
       <Fragment>
