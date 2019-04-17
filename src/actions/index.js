@@ -549,13 +549,12 @@ export function doFetchQSO(idqso, token = null) {
             dispatch(doReceiveQSO(response.body.message));
           else console.log(response.body.message);
         })
-        .catch(error =>
-          Sentry.withScope(scope => {
-            scope.setExtras(error);
-            // const eventId = Sentry.captureException(error);
-            // this.setState({ eventId });
-          })
-        );
+        .catch(error => {
+          if (process.env.NODE_ENV !== "production") {
+            console.log(error);
+          }
+          Sentry.captureException(error);
+        });
     };
   } else {
     return dispatch => {

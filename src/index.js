@@ -17,9 +17,13 @@ import "slick-carousel/slick/slick-theme.css";
 import App from "./components/App";
 import ReactGA from "react-ga";
 import * as Sentry from "@sentry/browser";
-Sentry.init({
-  dsn: "https://2f1b1ed20458466ab2c6c66716678605@sentry.io/1441458"
-});
+const RELEASE = "0.1.0";
+if (process.env.NODE_ENV === "production") {
+  Sentry.init({
+    dsn: "https://2f1b1ed20458466ab2c6c66716678605@sentry.io/1441458",
+    release: RELEASE
+  });
+}
 ReactGA.initialize("UA-124438207-1");
 
 const store = createStore(reducer, applyMiddleware(thunk, googleAnalytics));
