@@ -1,6 +1,7 @@
 import API from "@aws-amplify/api";
 import Auth from "@aws-amplify/auth";
 import ReactGA from "react-ga";
+import * as Sentry from "@sentry/browser";
 export const PUBLIC_SESSION = "PUBLIC_SESSION";
 export const PREPARE_LOGIN = "PREPARE_LOGIN";
 export const REFRESH_TOKEN = "REFRESH_TOKEN";
@@ -543,11 +544,18 @@ export function doFetchQSO(idqso, token = null) {
       };
       API.post(apiName, path, myInit)
         .then(response => {
+          console.log(response);
           if (response.body.error === 0)
             dispatch(doReceiveQSO(response.body.message));
           else console.log(response.body.message);
         })
-        .catch(error => console.log(error));
+        .catch(error =>
+          Sentry.withScope(scope => {
+            scope.setExtras(error);
+            // const eventId = Sentry.captureException(error);
+            // this.setState({ eventId });
+          })
+        );
     };
   } else {
     return dispatch => {
