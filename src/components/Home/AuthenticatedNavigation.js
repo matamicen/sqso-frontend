@@ -9,6 +9,7 @@ import NavigationSearch from "./NavigationSearch";
 import Auth from "@aws-amplify/auth";
 import { Link, withRouter } from "react-router-dom";
 import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
+import * as Sentry from "@sentry/browser";
 class AuthenticatedNavigation extends React.PureComponent {
   constructor() {
     super();
@@ -22,7 +23,12 @@ class AuthenticatedNavigation extends React.PureComponent {
         this.props.actions.doLogout();
         this.props.history.push("/");
       })
-      .catch(err => console.log(err));
+      .catch(error => {
+        if (process.env.NODE_ENV !== "production") {
+          console.log(error);
+        }
+        Sentry.captureException(error);
+      });
   }
   notificationIcon() {
     if (this.props.notifications.length > 0) {

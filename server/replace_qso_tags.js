@@ -1,6 +1,7 @@
-import path from 'path';
-import fs from 'fs';
+import path from "path";
+import fs from "fs";
 
+import * as Sentry from "@sentry/browser";
 // import React from 'react';
 // import { renderToString } from 'react-dom/server';
 // import Helmet from 'react-helmet';
@@ -13,28 +14,23 @@ import fs from 'fs';
 // import App from '../src/components/App';
 
 // A simple helper function to prepare the HTML markup
-const prepHTML = (data, {
-  html,
-  head,
-  body
-}) => {
+const prepHTML = (data, { html, head, body }) => {
   // data = data.replace('<html lang="en">', `<html ${html}`);
-  data = data.replace('</head>', `${head}</head>`);
+  data = data.replace("</head>", `${head}</head>`);
   // data = data.replace('<div id="root"></div>', `<div id="root">${body}</div>`);
 
   return data;
 };
 
 const replace_qso_tags = (req, res) => {
-
   if (req.params["idQSO"] !== "empty") {
-    var apigClientFactory = require('aws-api-gateway-client').default;
+    var apigClientFactory = require("aws-api-gateway-client").default;
     // Set invokeUrl to config and create a client. For autholization, additional
     // information is required as explained below.
 
     var config = {
-      invokeUrl: 'https://bvi2z1683m.execute-api.us-east-1.amazonaws.com'
-    }
+      invokeUrl: "https://bvi2z1683m.execute-api.us-east-1.amazonaws.com"
+    };
     var apigClient = apigClientFactory.newClient(config);
     // Calls to an API take the form outlined below. Each API call returns a
     // promise, that invokes either a success and failure callback
@@ -45,13 +41,13 @@ const replace_qso_tags = (req, res) => {
     };
     // Template syntax follows url-template
     // https://www.npmjs.com/package/url-template
-    var pathTemplate = '/reactWeb/qso-metadata-get'
-    var method = 'POST';
+    var pathTemplate = "/reactWeb/qso-metadata-get";
+    var method = "POST";
     var additionalParams = {
       // If there are any unmodeled query parameters or headers that need to be sent
       // with the request you can add them here
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*"
         // param1: ''
       },
@@ -61,82 +57,88 @@ const replace_qso_tags = (req, res) => {
     };
     let body = {
       //This is where you define the body of the request
-      "qso": req.params["idQSO"]
+      qso: req.params["idQSO"]
     };
-    console.log(body)
+    console.log(body);
     apigClient
       .invokeApi(params, pathTemplate, method, additionalParams, body)
-      .then(function (result) {
+      .then(function(result) {
+        const filePath = path.resolve(__dirname, "../build/index.html");
 
-        const filePath = path.resolve(__dirname, '../build/index.html');
-
-        fs.readFile(filePath, 'utf8', (err, htmlData) => {
+        fs.readFile(filePath, "utf8", (err, htmlData) => {
           // If there's an error... serve up something nasty
           if (err) {
-            console.error('Read error', err);
+            console.error("Read error", err);
 
-            return res
-              .status(404)
-              .end();
+            return res.status(404).end();
           }
           console.log(result.data);
-          
+
           let title;
           let image = null;
           if (!result.data.errorMessage && result.data.body.error === 0) {
             let qso = result.data.body.message;
             if (qso.type === "QSO" && qso.qras.length > 0) {
-              title = qso.qra + ' started a QSO with ' + qso.qras[0].qra + 
-              ' - Band: ' + qso.band + ' - Mode: ' + qso.mode
+              title =
+                qso.qra +
+                " started a QSO with " +
+                qso.qras[0].qra +
+                " - Band: " +
+                qso.band +
+                " - Mode: " +
+                qso.mode;
             }
-           
 
             if (qso.media.length > 0) {
-              image = '<meta property="og:image" content="' + qso.media[0].url + '"/>'
+              image =
+                '<meta property="og:image" content="' +
+                qso.media[0].url +
+                '"/>';
             }
           }
           const html = prepHTML(htmlData, {
-
-            head: '<meta name="og:title" content="' + title + '"/>' +
+            head:
+              '<meta name="og:title" content="' +
+              title +
+              '"/>' +
               image +
               '<meta property="og:site_name" content="SuperQSO.com"/>' +
-              '<meta property="og:description" content="SuperQSO.com"/>',
+              '<meta property="og:description" content="SuperQSO.com"/>'
             // helmet.link.toString(), body: routeMarkup
           });
 
           // Up, up, and away...
           res.send(html);
-
         });
 
         //This is where you would put a success callback
       })
-      .catch(function (result) {
-        console.log(result)
+      .catch(function(result) {
+        if (process.env.NODE_ENV !== "production") {
+          console.log(result);
+        }
+        Sentry.captureException(result);
         //This is where you would put an error callback
-        const filePath = path.resolve(__dirname, '../build/index.html');
+        const filePath = path.resolve(__dirname, "../build/index.html");
 
-        fs.readFile(filePath, 'utf8', (err, htmlData) => {
+        fs.readFile(filePath, "utf8", (err, htmlData) => {
           // If there's an error... serve up something nasty
           if (err) {
-            console.error('Read error', err);
+            console.error("Read error", err);
 
-            return res
-              .status(404)
-              .end();
+            return res.status(404).end();
           }
 
           const html = prepHTML(htmlData, {
-
-            head: '<meta name="og:title" content="SuperQSO.com"/>' +
+            head:
+              '<meta name="og:title" content="SuperQSO.com"/>' +
               '<meta property="og:site_name" content="SuperQSO.com"/>' +
-              '<meta property="og:description" content="SuperQSO.com"/>',
+              '<meta property="og:description" content="SuperQSO.com"/>'
             // helmet.link.toString(), body: routeMarkup
           });
 
           // Up, up, and away...
           res.send(html);
-
         });
       });
   }
@@ -174,7 +176,7 @@ const replace_qso_tags = (req, res) => {
   //     // html: helmet.htmlAttributes.toString(),
   //     head:
   //       // helmet.title.toString() +
-  //       '<meta name="og:title" content="QSOFacebook Open Graph META Tags"/>' + 
+  //       '<meta name="og:title" content="QSOFacebook Open Graph META Tags"/>' +
   //       '<meta property="og:image" content="https://s3.amazonaws.com/sqso/us-east-1:cc508f7e-92fb-41f5-b0ef-8ba6831ce09c/images/2018-04-06T135017.jpg"/>' +
   //       '<meta property="og:site_name" content="SuperQSO.com"/>' +
   //       '<meta property="og:description" content="SuperQSO.com"/>',

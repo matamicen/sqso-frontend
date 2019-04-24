@@ -1,4 +1,5 @@
 import path from "path";
+import * as Sentry from "@sentry/browser";
 import fs from "fs";
 // import universalLoader from './universal';
 // import apigClientFactory from '../build/apigClient' import React from
@@ -97,7 +98,12 @@ const replace_qra_tags = (req, res) => {
         //This is where you would put a success callback
       })
       .catch(function(result) {
-        console.log(result);
+        
+          if (process.env.NODE_ENV !== "production") {
+            console.log(result);
+          }
+          Sentry.captureException(result);          
+        });
         //This is where you would put an error callback
         const filePath = path.resolve(__dirname, "../build/index.html");
 

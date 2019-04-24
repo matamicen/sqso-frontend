@@ -11,7 +11,7 @@ import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
 import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 import API from "@aws-amplify/api";
-
+import * as Sentry from "@sentry/browser";
 import QslCardPrint from "./qslCard";
 
 class FeedOptionsMenu extends React.PureComponent {
@@ -74,7 +74,10 @@ class FeedOptionsMenu extends React.PureComponent {
         }
       })
       .catch(error => {
-        console.log(error);
+        if (process.env.NODE_ENV !== "production") {
+          console.log(error);
+        }
+        Sentry.captureException(error);
       });
   }
   handleOnSubmitReportQso(e) {
@@ -101,7 +104,10 @@ class FeedOptionsMenu extends React.PureComponent {
         }
       })
       .catch(error => {
-        console.log(error);
+        if (process.env.NODE_ENV !== "production") {
+          console.log(error);
+        }
+        Sentry.captureException(error);
       });
   }
   handleOnSubmitReportMedia(e) {
@@ -129,7 +135,10 @@ class FeedOptionsMenu extends React.PureComponent {
         }
       })
       .catch(error => {
-        console.log(error);
+        if (process.env.NODE_ENV !== "production") {
+          console.log(error);
+        }
+        Sentry.captureException(error);
       });
   }
   render() {

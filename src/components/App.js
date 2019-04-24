@@ -5,6 +5,7 @@ import { Route, Switch, withRouter } from "react-router-dom";
 import Home from "./Home/Home";
 import { SignUp } from "./Auth/SignUp";
 
+import * as Sentry from "@sentry/browser";
 import LogIn from "./Auth/LogIn";
 import ForgotPassword from "./Auth/ForgotPassword";
 import ChangePassword from "./Auth/ChangePassword";
@@ -27,7 +28,11 @@ Amplify.configure(aws_exports);
 class App extends PureComponent {
   async componentDidMount() {
     this.props.actions.doStartingLogin();
-    let session = await Auth.currentSession().catch(err => {
+    let session = await Auth.currentSession().catch(error => {
+      if (process.env.NODE_ENV !== "production") {
+        console.log(error);
+      }
+      Sentry.captureException(error);
       this.props.actions.doLogout();
     });
 
@@ -42,7 +47,6 @@ class App extends PureComponent {
     } else {
       this.props.actions.doSetPublicSession();
     }
-
   }
   render() {
     return (

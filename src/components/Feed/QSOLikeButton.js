@@ -8,6 +8,7 @@ import API from "@aws-amplify/api";
 import ReactGA from "react-ga";
 import Confirm from "semantic-ui-react/dist/commonjs/addons/Confirm";
 import { withRouter } from "react-router-dom";
+import * as Sentry from "@sentry/browser";
 class QSOLikeButton extends React.Component {
   constructor() {
     super();
@@ -55,7 +56,10 @@ class QSOLikeButton extends React.Component {
         }
       })
       .catch(error => {
-        console.log(error);
+        if (process.env.NODE_ENV !== "production") {
+          console.log(error);
+        }
+        Sentry.captureException(error);
       });
   }
 
@@ -81,7 +85,10 @@ class QSOLikeButton extends React.Component {
         }
       })
       .catch(error => {
-        console.log(error);
+        if (process.env.NODE_ENV !== "production") {
+          console.log(error);
+        }
+        Sentry.captureException(error);
       });
   }
 

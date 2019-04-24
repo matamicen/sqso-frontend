@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as Actions from "../../actions";
 import API from "@aws-amplify/api";
-
+import * as Sentry from "@sentry/browser";
 import ReactGA from "react-ga";
 
 import Confirm from "semantic-ui-react/dist/commonjs/addons/Confirm";
@@ -45,7 +45,10 @@ class QSORePostButton extends React.Component {
         }
       })
       .catch(error => {
-        console.log(error);
+        if (process.env.NODE_ENV !== "production") {
+          console.log(error);
+        }
+        Sentry.captureException(error);
       });
   }
   openConfirmationRequest = () => {

@@ -54,8 +54,11 @@ export function doNotificationRead(idnotif = null, token) {
             dispatch(refreshToken(token));
             dispatch(doNotificationRead(idnotif, token));
           })
-          .catch(err => {
-            console.log(err);
+          .catch(error => {
+            if (process.env.NODE_ENV !== "production") {
+              console.log(error);
+            }
+            Sentry.captureException(error);
             dispatch(doLogout());
           });
       });
@@ -87,8 +90,11 @@ export function doDeleteComment(idcomment, idqso, token) {
             dispatch(refreshToken(token));
             dispatch(doDeleteComment(idcomment, idqso, token));
           })
-          .catch(err => {
-            console.log(err);
+          .catch(error => {
+            if (process.env.NODE_ENV !== "production") {
+              console.log(error);
+            }
+            Sentry.captureException(error);
             dispatch(doLogout());
           });
       });
@@ -145,8 +151,11 @@ export function doDeleteQso(idqso, token) {
             dispatch(refreshToken(token));
             dispatch(doDeleteQso(idqso, token));
           })
-          .catch(err => {
-            console.log(err);
+          .catch(error => {
+            if (process.env.NODE_ENV !== "production") {
+              console.log(error);
+            }
+            Sentry.captureException(error);
             dispatch(doLogout());
           });
       });
@@ -191,8 +200,11 @@ export function doDeleteMedia(idmedia, idqso, token) {
             dispatch(refreshToken(token));
             dispatch(doDeleteMedia(idmedia, idqso, token));
           })
-          .catch(err => {
-            console.log(err);
+          .catch(error => {
+            if (process.env.NODE_ENV !== "production") {
+              console.log(error);
+            }
+            Sentry.captureException(error);
             dispatch(doLogout());
           });
       });
@@ -324,8 +336,11 @@ export function doFetchUserInfo(token) {
             dispatch(refreshToken(token));
             dispatch(doFetchUserInfo(token));
           })
-          .catch(err => {
-            console.log(err);
+          .catch(error => {
+            if (process.env.NODE_ENV !== "production") {
+              console.log(error);
+            }
+            Sentry.captureException(error);
             dispatch(doLogout());
           });
       });
@@ -356,8 +371,11 @@ export function doSaveUserInfo(token, qra) {
             dispatch(refreshToken(token));
             dispatch(doSaveUserInfo(token, qra));
           })
-          .catch(err => {
-            console.log(err);
+          .catch(error => {
+            if (process.env.NODE_ENV !== "production") {
+              console.log(error);
+            }
+            Sentry.captureException(error);
             dispatch(doLogout());
           });
       });
@@ -395,8 +413,11 @@ export function doSaveUserBio(token, bio, identityId) {
             dispatch(refreshToken(token));
             dispatch(doSaveUserBio(token, bio, identityId));
           })
-          .catch(err => {
-            console.log(err);
+          .catch(error => {
+            if (process.env.NODE_ENV !== "production") {
+              console.log(error);
+            }
+            Sentry.captureException(error);
             dispatch(doLogout());
           });
       });
@@ -433,8 +454,11 @@ export function doFetchUserFeed(token) {
             dispatch(refreshToken(token));
             dispatch(doFetchUserFeed(token));
           })
-          .catch(err => {
-            console.log(err);
+          .catch(error => {
+            if (process.env.NODE_ENV !== "production") {
+              console.log(error);
+            }
+            Sentry.captureException(error);
             dispatch(doLogout());
           });
       });
@@ -466,8 +490,11 @@ export function doFetchNotifications(token) {
             dispatch(refreshToken(token));
             dispatch(doFetchNotifications(token));
           })
-          .catch(err => {
-            console.log(err);
+          .catch(error => {
+            if (process.env.NODE_ENV !== "production") {
+              console.log(error);
+            }
+            Sentry.captureException(error);
             dispatch(doLogout());
           });
       });
@@ -490,7 +517,12 @@ export function doFetchPublicFeed() {
           dispatch(doReceiveFeed(response.body.message));
         else console.log(response.body.message);
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        if (process.env.NODE_ENV !== "production") {
+          console.log(error);
+        }
+        Sentry.captureException(error);
+      });
   };
 }
 
@@ -574,7 +606,12 @@ export function doFetchQSO(idqso, token = null) {
             dispatch(doReceiveQSO(response.body.message));
           else console.log(response.body.message);
         })
-        .catch(error => console.log(error));
+        .catch(error => {
+          if (process.env.NODE_ENV !== "production") {
+            console.log(error);
+          }
+          Sentry.captureException(error);
+        });
     };
   }
 }
@@ -603,7 +640,12 @@ export function doFetchQsoLink(idqso) {
           dispatch(doReceiveQsoLink(response.body.message));
         else console.log(response.body.message);
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        if (process.env.NODE_ENV !== "production") {
+          console.log(error);
+        }
+        Sentry.captureException(error);
+      });
   };
 }
 
@@ -634,7 +676,12 @@ export function doFetchQRA(qra, token = null) {
             dispatch(doReceiveQRA(response.body.message));
           else console.log(response.body.message);
         })
-        .catch(error => console.log(error));
+        .catch(error => {
+          if (process.env.NODE_ENV !== "production") {
+            console.log(error);
+          }
+          Sentry.captureException(error);
+        });
     };
   } else {
     return dispatch => {
@@ -655,7 +702,12 @@ export function doFetchQRA(qra, token = null) {
             dispatch(doReceiveQRA(response.body.message));
           else console.log(response.body.message);
         })
-        .catch(error => console.log(error));
+        .catch(error => {
+          if (process.env.NODE_ENV !== "production") {
+            console.log(error);
+          }
+          Sentry.captureException(error);
+        });
     };
   }
 }
@@ -693,8 +745,11 @@ export function doFollowQRA(token, follower) {
             dispatch(refreshToken(token));
             dispatch(doFollowQRA(token, follower));
           })
-          .catch(err => {
-            console.log(err);
+          .catch(error => {
+            if (process.env.NODE_ENV !== "production") {
+              console.log(error);
+            }
+            Sentry.captureException(error);
             dispatch(doLogout());
           });
       });
@@ -732,8 +787,11 @@ export function doUnfollowQRA(token, follower) {
             dispatch(refreshToken(token));
             dispatch(doUnfollowQRA(token, follower));
           })
-          .catch(err => {
-            console.log(err);
+          .catch(error => {
+            if (process.env.NODE_ENV !== "production") {
+              console.log(error);
+            }
+            Sentry.captureException(error);
             dispatch(doLogout());
           });
       });
@@ -800,8 +858,11 @@ export function doQsoMediaPlay(idMedia, token, idqso) {
             dispatch(refreshToken(token));
             dispatch(doQsoMediaPlay(idMedia, token, idqso));
           })
-          .catch(err => {
-            console.log(err);
+          .catch(error => {
+            if (process.env.NODE_ENV !== "production") {
+              console.log(error);
+            }
+            Sentry.captureException(error);
             dispatch(doLogout());
           });
       });
@@ -838,8 +899,11 @@ export function doQslCardPrint(idqso, token) {
             dispatch(refreshToken(token));
             dispatch(doQslCardPrint(token, idqso));
           })
-          .catch(err => {
-            console.log(err);
+          .catch(error => {
+            if (process.env.NODE_ENV !== "production") {
+              console.log(error);
+            }
+            Sentry.captureException(error);
             dispatch(doLogout());
           });
       });

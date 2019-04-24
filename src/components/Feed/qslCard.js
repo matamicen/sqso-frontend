@@ -4,7 +4,7 @@ import ReactDOMServer from "react-dom/server";
 import QRCode from "qrcode.react";
 import React from "react";
 import Storage from "@aws-amplify/storage";
-
+import * as Sentry from "@sentry/browser";
 export default async function QslCardPrint(props) {
   const pdf = new jsPDF("l", "in", [5.5, 3.5]);
   /* Card Frame Begin*/
@@ -185,7 +185,12 @@ async function getImage(url, own_profile) {
             resolve(img);
           };
         })
-        .catch(err => console.log(err));
+        .catch(error => {
+          if (process.env.NODE_ENV !== "production") {
+            console.log(error);
+          }
+          Sentry.captureException(error);
+        });
     } else {
       Storage.get(file, {
         level: pathname[3],
@@ -199,7 +204,12 @@ async function getImage(url, own_profile) {
             resolve(img);
           };
         })
-        .catch(err => console.log(err));
+        .catch(error => {
+          if (process.env.NODE_ENV !== "production") {
+            console.log(error);
+          }
+          Sentry.captureException(error);
+        });
     }
   });
 }

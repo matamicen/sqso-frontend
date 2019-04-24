@@ -8,6 +8,7 @@ import { bindActionCreators } from "redux";
 import * as Actions from "../../actions";
 import API from "@aws-amplify/api";
 import ReactGA from "react-ga";
+import * as Sentry from "@sentry/browser";
 class QSOComments extends React.Component {
   constructor() {
     super();
@@ -51,7 +52,10 @@ class QSOComments extends React.Component {
         }
       })
       .catch(error => {
-        console.log(error);
+        if (process.env.NODE_ENV !== "production") {
+          console.log(error);
+        }
+        Sentry.captureException(error);
       });
   };
 

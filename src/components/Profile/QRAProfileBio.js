@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 
 import Container from "semantic-ui-react/dist/commonjs/elements/Container";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
-
+import * as Sentry from "@sentry/browser";
 import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown";
 import Confirm from "semantic-ui-react/dist/commonjs/addons/Confirm";
 import * as Actions from "../../actions";
@@ -44,9 +44,12 @@ class QRAProfileBio extends React.Component {
         .then(result => {
           resolve(result);
         })
-        .catch(err => {
-          console.log(err);
-          reject(err);
+        .catch(error => {
+          if (process.env.NODE_ENV !== "production") {
+            console.log(error);
+          }
+          Sentry.captureException(error);
+          reject(error);
         });
     });
   }
@@ -81,7 +84,13 @@ class QRAProfileBio extends React.Component {
                 //NSFW
                 Storage.remove(result.key, { level: "protected" })
                   .then(result => resolve(true))
-                  .catch(err => reject(err));
+                  .catch(error => {
+                    if (process.env.NODE_ENV !== "production") {
+                      console.log(error);
+                    }
+                    Sentry.captureException(error);
+                    reject(error);
+                  });
                 this.setState({ openPornConfirm: true });
               }
               //SFW
@@ -93,12 +102,19 @@ class QRAProfileBio extends React.Component {
                 });
             })
             .catch(error => {
+              if (process.env.NODE_ENV !== "production") {
+                console.log(error);
+              }
+              Sentry.captureException(error);
               reject(error);
             });
         })
-        .catch(err => {
-          console.log(err);
-          reject(err);
+        .catch(error => {
+          if (process.env.NODE_ENV !== "production") {
+            console.log(error);
+          }
+          Sentry.captureException(error);
+          reject(error);
         });
     });
   }
