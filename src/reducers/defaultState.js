@@ -10,6 +10,7 @@ import {
   RECEIVE_FOLLOWERS,
   RECEIVE_QRA,
   RECEIVE_QSO,
+  RECEIVE_QSO_ERROR,
   RECEIVE_QSO_LINK,
   RECEIVE_USERINFO,
   REQUEST_FEED,
@@ -53,6 +54,7 @@ const initialState = {
   qso_link: null,
   FetchingQSO: false,
   QSOFetched: false,
+  qsoError: null,
   qra: null,
   FetchingQRA: false,
   QRAFetched: false
@@ -253,6 +255,7 @@ function generalReducers(state = initialState, action) {
         qso: action.qso,
         FetchingQSO: false,
         QSOFetched: true,
+
         userData: {
           ...state.userData,
           qra: {
@@ -260,6 +263,15 @@ function generalReducers(state = initialState, action) {
             monthly_qso_views: action.monthly_qso_views
           }
         }
+      });
+      return newStore;
+    case RECEIVE_QSO_ERROR:
+      newStore = Object.assign({}, state, {
+        ...state,
+
+        FetchingQSO: false,
+        QSOFetched: true,
+        qsoError: action.error
       });
       return newStore;
     case RECEIVE_QSO_MEDIA_COUNTER:

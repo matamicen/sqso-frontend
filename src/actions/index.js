@@ -15,6 +15,7 @@ export const RECEIVE_USER_BIO = "RECEIVE_USER_BIO";
 export const RECEIVE_USER_DATA_INFO = "RECEIVE_USER_DATA_INFO";
 export const REQUEST_QSO = "REQUEST_QSO";
 export const RECEIVE_QSO = "RECEIVE_QSO";
+export const RECEIVE_QSO_ERROR = "RECEIVE_QSO_ERROR";
 export const RECEIVE_QSO_LINK = "RECEIVE_QSO_LINK";
 export const CLEAR_QSO = "CLEAR_QSO";
 export const CLEAR_QSO_LINK = "CLEAR_QSO_LINK";
@@ -532,13 +533,20 @@ export function doRequestQSO() {
   };
 }
 
-export function doReceiveQSO(data) {
+export function doReceiveQSO(data, error) {
   let { monthly_qso_views, ...qsoData } = data;
-  return {
-    type: RECEIVE_QSO,
-    qso: qsoData,
-    monthly_qso_views: monthly_qso_views
-  };
+  if (error === 0)
+    return {
+      type: RECEIVE_QSO,
+      qso: qsoData,
+      monthly_qso_views: monthly_qso_views
+    };
+  else {
+    return {
+      type: RECEIVE_QSO_ERROR,
+      error: data
+    };
+  }
 }
 export function doReceiveQsoLink(qso) {
   return {
@@ -576,10 +584,7 @@ export function doFetchQSO(idqso, token = null) {
       };
       API.post(apiName, path, myInit)
         .then(response => {
-          console.log(response);
-          if (response.body.error === 0)
-            dispatch(doReceiveQSO(response.body.message));
-          else console.log(response.body.message);
+          dispatch(doReceiveQSO(response.body.message, response.body.error));
         })
         .catch(error => {
           if (process.env.NODE_ENV !== "production") {
@@ -602,9 +607,7 @@ export function doFetchQSO(idqso, token = null) {
       };
       API.post(apiName, path, myInit)
         .then(response => {
-          if (response.body.error === 0)
-            dispatch(doReceiveQSO(response.body.message));
-          else console.log(response.body.message);
+          dispatch(doReceiveQSO(response.body.message, response.body.error));
         })
         .catch(error => {
           if (process.env.NODE_ENV !== "production") {

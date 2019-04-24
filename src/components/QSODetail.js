@@ -12,6 +12,7 @@ import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
 import Ad from "./Ad/Ad";
 import "../styles/style.css";
 import * as Sentry from "@sentry/browser";
+import { Modal } from "semantic-ui-react";
 class QSODetail extends React.PureComponent {
   state = {
     error: null,
@@ -31,6 +32,11 @@ class QSODetail extends React.PureComponent {
     });
   }
   static getDerivedStateFromProps(props, prevState) {
+    if (props.qsoError && prevState.active)
+      return {
+        qsoError: props.qsoError,
+        active: false
+      };
     if (props.qso && prevState.active) {
       if (
         !prevState.adClosed &&
@@ -41,13 +47,11 @@ class QSODetail extends React.PureComponent {
       ) {
         return {
           adActive: true,
-
           active: false
         };
       } else if (!props.isAuthenticated)
         return {
           adActive: true,
-
           active: false
         };
       else return { active: false };
@@ -111,6 +115,19 @@ class QSODetail extends React.PureComponent {
   handleOpen = () => this.setState({ adActive: true });
   handleClose = () => this.setState({ adActive: false, adClosed: true });
   render() {
+    if (this.state.qsoError) {
+      return (
+        <Modal
+          open={this.state.qsoError ? true : false}
+          onClose={() => this.props.history.push("/")}
+          size="small"
+        >
+          <Modal.Content>
+            <p align="center">{this.state.qsoError}</p>
+          </Modal.Content>
+        </Modal>
+      );
+    }
     let qsos = [];
     if (this.props.qso) {
       qsos.push({ qso: this.props.qso, type: this.props.qso.type });
@@ -168,6 +185,7 @@ class QSODetail extends React.PureComponent {
   }
 }
 const mapStateToProps = state => ({
+  qsoError: state.qsoError,
   qso: state.qso,
   FetchingQSO: state.FetchingQSO,
   QSOFetched: state.QSOFetched,
