@@ -1,6 +1,6 @@
 {
   "name": "sqso-frontend",
-  "version": "0.1.01",
+  "version": "0.1.1",
   "private": true,
   "homepage": "https://cra-ssr.herokuapp.com/",
   "dependencies": {
