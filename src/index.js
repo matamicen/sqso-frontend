@@ -17,7 +17,8 @@ import "slick-carousel/slick/slick-theme.css";
 import App from "./components/App";
 import ReactGA from "react-ga";
 import * as Sentry from "@sentry/browser";
-const RELEASE = "0.1.0";
+import packageJson from "../package.json";
+const RELEASE = packageJson.version;
 if (process.env.NODE_ENV === "production") {
   Sentry.init({
     dsn: "https://2f1b1ed20458466ab2c6c66716678605@sentry.io/1441458",
