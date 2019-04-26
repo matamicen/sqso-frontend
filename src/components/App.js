@@ -29,11 +29,7 @@ class App extends PureComponent {
   async componentDidMount() {
     this.props.actions.doStartingLogin();
     let session = await Auth.currentSession().catch(error => {
-      if (process.env.NODE_ENV !== "production") {
-        console.log(error);
-      }
-      console.log(error);
-      Sentry.captureException(error);
+      // No Current User Message
       this.props.actions.doLogout();
     });
 
