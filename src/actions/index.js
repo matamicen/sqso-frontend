@@ -21,6 +21,7 @@ export const CLEAR_QSO = "CLEAR_QSO";
 export const CLEAR_QSO_LINK = "CLEAR_QSO_LINK";
 export const REQUEST_QRA = "REQUEST_QRA";
 export const RECEIVE_QRA = "RECEIVE_QRA";
+export const RECEIVE_QRA_ERROR = "RECEIVE_QRA_ERROR";
 export const CLEAR_QRA = "CLEAR_QRA";
 export const RECEIVE_FOLLOWERS = "RECEIVE_FOLLOWERS";
 export const RECEIVE_QSO_MEDIA_COUNTER = "RECEIVE_QSO_MEDIA_COUNTER";
@@ -674,11 +675,9 @@ export function doFetchQRA(qra, token = null) {
       };
       dispatch(doRequestQRA());
       API.post(apiName, path, myInit)
-        .then(response => {
-          if (response.body.error === 0)
-            dispatch(doReceiveQRA(response.body.message));
-          else console.log(response.body.message);
-        })
+        .then(response =>
+          dispatch(doReceiveQRA(response.body.message, response.body.error))
+        )
         .catch(error => {
           if (process.env.NODE_ENV !== "production") {
             console.log(error);
@@ -809,15 +808,22 @@ export function doRequestQRA() {
   };
 }
 
-export function doReceiveQRA(data) {
+export function doReceiveQRA(data, error) {
   let { monthly_qra_views, ...qraData } = data;
-  return {
-    type: RECEIVE_QRA,
-    qra: qraData,
-    FetchingQRA: false,
-    monthly_qra_views: monthly_qra_views,
-    QRAFetched: true
-  };
+  if (error === 0)
+    return {
+      type: RECEIVE_QRA,
+      qra: qraData,
+      FetchingQRA: false,
+      monthly_qra_views: monthly_qra_views,
+      QRAFetched: true
+    };
+  else {
+    return {
+      type: RECEIVE_QRA_ERROR,
+      error: data
+    };
+  }
 }
 export function clearQRA() {
   return {

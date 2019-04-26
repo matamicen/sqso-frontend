@@ -6,6 +6,8 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import "../../styles/style.css";
+import * as Sentry from "@sentry/browser";
+import { Modal } from "semantic-ui-react";
 
 class QRAProfileContainer extends React.PureComponent {
   constructor() {
@@ -14,10 +16,19 @@ class QRAProfileContainer extends React.PureComponent {
       active: true,
       adActive: false,
       adClosed: false,
-      tab: null
+      tab: null,
+      qraError: null
     };
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.handleTabClick = this.handleTabClick.bind(this);
+  }
+  componentDidCatch(error, errorInfo) {
+    this.setState({ error });
+    Sentry.withScope(scope => {
+      scope.setExtras(errorInfo);
+      const eventId = Sentry.captureException(error);
+      this.setState({ eventId });
+    });
   }
   componentDidMount() {
     window.googletag.cmd.push(function() {
@@ -77,6 +88,11 @@ class QRAProfileContainer extends React.PureComponent {
   handleOpen = () => this.setState({ adActive: true });
   handleClose = () => this.setState({ adActive: false, adClosed: true });
   static getDerivedStateFromProps(props, prevState) {
+    if (props.qraError && prevState.active)
+      return {
+        qraError: props.qraError,
+        active: false
+      };
     if (props.QRAFetched && prevState.active) {
       if (
         !prevState.adClosed &&
@@ -163,7 +179,19 @@ class QRAProfileContainer extends React.PureComponent {
 
     let qraInfo = null;
     if (this.props.qra) qraInfo = this.props.qra.qra;
-
+    if (this.state.qraError) {
+      return (
+        <Modal
+          open={this.state.qraError ? true : false}
+          onClose={() => this.props.history.push("/")}
+          size="small"
+        >
+          <Modal.Content>
+            <p align="center">{this.state.qraError}</p>
+          </Modal.Content>
+        </Modal>
+      );
+    }
     return (
       <Fragment>
         <QRAProfile
@@ -194,7 +222,8 @@ const mapStateToProps = (state, ownProps) => ({
   qra: state.qra,
   qraUserData: state.userData.qra,
   fetchingUser: state.userData.fetchingUser,
-  userFetched: state.userData.userFetched
+  userFetched: state.userData.userFetched,
+  qraError: state.qraError
 });
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(Actions, dispatch)

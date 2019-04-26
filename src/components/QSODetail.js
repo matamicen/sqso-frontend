@@ -21,7 +21,8 @@ class QSODetail extends React.PureComponent {
     showModal: false,
     adActive: false,
     idqso: null,
-    adClosed: false
+    adClosed: false,
+    qsoError: null
   };
   componentDidCatch(error, errorInfo) {
     this.setState({ error });

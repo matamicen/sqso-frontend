@@ -9,6 +9,7 @@ import {
   RECEIVE_FEED,
   RECEIVE_FOLLOWERS,
   RECEIVE_QRA,
+  RECEIVE_QRA_ERROR,
   RECEIVE_QSO,
   RECEIVE_QSO_ERROR,
   RECEIVE_QSO_LINK,
@@ -57,7 +58,8 @@ const initialState = {
   qsoError: null,
   qra: null,
   FetchingQRA: false,
-  QRAFetched: false
+  QRAFetched: false,
+  qraError: null
 };
 
 //define a reducer with an initialized state action
@@ -203,6 +205,15 @@ function generalReducers(state = initialState, action) {
         }
       });
 
+      return newStore;
+    case RECEIVE_QRA_ERROR:
+      newStore = Object.assign({}, state, {
+        ...state,
+
+        FetchingQRA: false,
+        QRAFetched: true,
+        qraError: action.error
+      });
       return newStore;
     case RECEIVE_USER_DATA_INFO:
       let qra = {
