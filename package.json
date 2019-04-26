@@ -1,6 +1,6 @@
 {
   "name": "sqso-frontend",
-  "version": "0.1.0",
+  "version": "0.1.01",
   "private": true,
   "homepage": "https://cra-ssr.herokuapp.com/",
   "dependencies": {
@@ -80,7 +80,7 @@
   "scripts": {
     "start": "yarn install && yarn build && node app",
     "dummy": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "node generate-build-id.js && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "coverage": "react-scripts test --env=jsdom coverage",
     "eject": "react-scripts eject",
