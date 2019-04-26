@@ -14,8 +14,19 @@ class AuthenticatedNavigation extends React.PureComponent {
   constructor() {
     super();
     this.state = {
-      notif_icon: "bell"
+      notif_icon: "bell",
+      error: null
     };
+  }
+  componentDidCatch(error, errorInfo) {
+    if (process.env.NODE_ENV === "production") {
+      this.setState({ error });
+      Sentry.withScope(scope => {
+        scope.setExtras(errorInfo);
+        const eventId = Sentry.captureException(error);
+        this.setState({ eventId });
+      });
+    }
   }
   logout() {
     Auth.signOut()
@@ -26,8 +37,7 @@ class AuthenticatedNavigation extends React.PureComponent {
       .catch(error => {
         if (process.env.NODE_ENV !== "production") {
           console.log(error);
-        }
-        Sentry.captureException(error);
+        } else Sentry.captureException(error);
       });
   }
   notificationIcon() {

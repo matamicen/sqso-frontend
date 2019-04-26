@@ -8,11 +8,22 @@ import { bindActionCreators } from "redux";
 import * as Actions from "../../actions";
 
 import FeedOptionsMenu from "./FeedOptionsMenu";
-
+import * as Sentry from "@sentry/browser";
 class QSOCommentItem extends React.Component {
   state = {
-    comment: null
+    comment: null,
+    error: null
   };
+  componentDidCatch(error, errorInfo) {
+    if (process.env.NODE_ENV === "production") {
+      this.setState({ error });
+      Sentry.withScope(scope => {
+        scope.setExtras(errorInfo);
+        const eventId = Sentry.captureException(error);
+        this.setState({ eventId });
+      });
+    }
+  }
   componentDidUpdate = () => {
     this.props.recalculateRowHeight();
   };

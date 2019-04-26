@@ -17,18 +17,21 @@ class QRAProfileContainer extends React.PureComponent {
       adActive: false,
       adClosed: false,
       tab: null,
-      qraError: null
+      qraError: null,
+      error: null
     };
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.handleTabClick = this.handleTabClick.bind(this);
   }
   componentDidCatch(error, errorInfo) {
-    this.setState({ error });
-    Sentry.withScope(scope => {
-      scope.setExtras(errorInfo);
-      const eventId = Sentry.captureException(error);
-      this.setState({ eventId });
-    });
+    if (process.env.NODE_ENV === "production") {
+      this.setState({ error });
+      Sentry.withScope(scope => {
+        scope.setExtras(errorInfo);
+        const eventId = Sentry.captureException(error);
+        this.setState({ eventId });
+      });
+    }
   }
   componentDidMount() {
     window.googletag.cmd.push(function() {

@@ -11,8 +11,19 @@ export default class NavigationSearch extends Component {
     super(props);
 
     this.state = {
-      value: null
+      value: null,
+      error: null
     };
+  }
+  componentDidCatch(error, errorInfo) {
+    if (process.env.NODE_ENV === "production") {
+      this.setState({ error });
+      Sentry.withScope(scope => {
+        scope.setExtras(errorInfo);
+        const eventId = Sentry.captureException(error);
+        this.setState({ eventId });
+      });
+    }
   }
   onChange(value) {
     this.setState({ value: value });
@@ -45,8 +56,7 @@ export default class NavigationSearch extends Component {
         .catch(error => {
           if (process.env.NODE_ENV !== "production") {
             console.log(error);
-          }
-          Sentry.captureException(error);
+          } else Sentry.captureException(error);
           return [];
         });
 

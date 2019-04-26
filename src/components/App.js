@@ -5,7 +5,6 @@ import { Route, Switch, withRouter } from "react-router-dom";
 import Home from "./Home/Home";
 import { SignUp } from "./Auth/SignUp";
 
-import * as Sentry from "@sentry/browser";
 import LogIn from "./Auth/LogIn";
 import ForgotPassword from "./Auth/ForgotPassword";
 import ChangePassword from "./Auth/ChangePassword";

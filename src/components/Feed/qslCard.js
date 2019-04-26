@@ -188,8 +188,7 @@ async function getImage(url, own_profile) {
         .catch(error => {
           if (process.env.NODE_ENV !== "production") {
             console.log(error);
-          }
-          Sentry.captureException(error);
+          } else Sentry.captureException(error);
         });
     } else {
       Storage.get(file, {
@@ -207,8 +206,7 @@ async function getImage(url, own_profile) {
         .catch(error => {
           if (process.env.NODE_ENV !== "production") {
             console.log(error);
-          }
-          Sentry.captureException(error);
+          } else Sentry.captureException(error);
         });
     }
   });

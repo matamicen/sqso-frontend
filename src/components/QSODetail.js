@@ -25,12 +25,14 @@ class QSODetail extends React.PureComponent {
     qsoError: null
   };
   componentDidCatch(error, errorInfo) {
-    this.setState({ error });
-    Sentry.withScope(scope => {
-      scope.setExtras(errorInfo);
-      const eventId = Sentry.captureException(error);
-      this.setState({ eventId });
-    });
+    if (process.env.NODE_ENV === "production") {
+      this.setState({ error });
+      Sentry.withScope(scope => {
+        scope.setExtras(errorInfo);
+        const eventId = Sentry.captureException(error);
+        this.setState({ eventId });
+      });
+    }
   }
   static getDerivedStateFromProps(props, prevState) {
     if (props.qsoError && prevState.active)

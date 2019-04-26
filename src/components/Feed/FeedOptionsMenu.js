@@ -17,8 +17,19 @@ import QslCardPrint from "./qslCard";
 class FeedOptionsMenu extends React.PureComponent {
   state = {
     showReportContent: false,
-    showMessage: false
+    showMessage: false,
+    error: null
   };
+  componentDidCatch(error, errorInfo) {
+    if (process.env.NODE_ENV === "production") {
+      this.setState({ error });
+      Sentry.withScope(scope => {
+        scope.setExtras(errorInfo);
+        const eventId = Sentry.captureException(error);
+        this.setState({ eventId });
+      });
+    }
+  }
   openReportedContent = () => this.setState({ showReportContent: true });
   closeReportedContent = () => this.setState({ showReportContent: false });
   open = () => this.setState({ showMessage: true });
@@ -76,8 +87,7 @@ class FeedOptionsMenu extends React.PureComponent {
       .catch(error => {
         if (process.env.NODE_ENV !== "production") {
           console.log(error);
-        }
-        Sentry.captureException(error);
+        } else Sentry.captureException(error);
       });
   }
   handleOnSubmitReportQso(e) {
@@ -106,8 +116,7 @@ class FeedOptionsMenu extends React.PureComponent {
       .catch(error => {
         if (process.env.NODE_ENV !== "production") {
           console.log(error);
-        }
-        Sentry.captureException(error);
+        } else Sentry.captureException(error);
       });
   }
   handleOnSubmitReportMedia(e) {
@@ -137,8 +146,7 @@ class FeedOptionsMenu extends React.PureComponent {
       .catch(error => {
         if (process.env.NODE_ENV !== "production") {
           console.log(error);
-        }
-        Sentry.captureException(error);
+        } else Sentry.captureException(error);
       });
   }
   render() {

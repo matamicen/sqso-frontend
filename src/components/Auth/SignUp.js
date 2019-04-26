@@ -45,9 +45,20 @@ export class SignUp extends React.Component {
         lastname: "",
         country: "",
         token: ""
-      }
+      },
+      error: null
     };
     this.verifyCallback = this.verifyCallback.bind(this);
+  }
+  componentDidCatch(error, errorInfo) {
+    if (process.env.NODE_ENV === "production") {
+      this.setState({ error });
+      Sentry.withScope(scope => {
+        scope.setExtras(errorInfo);
+        const eventId = Sentry.captureException(error);
+        this.setState({ eventId });
+      });
+    }
   }
   verifyCallback = function(response) {
     this.setState({ token: response });
@@ -134,8 +145,7 @@ export class SignUp extends React.Component {
         .catch(err => {
           if (process.env.NODE_ENV !== "production") {
             console.log(err);
-          }
-          Sentry.captureException(err);
+          } else Sentry.captureException(err);
           this.setState({ signupError: err });
         });
     }
@@ -204,8 +214,7 @@ export class SignUp extends React.Component {
       .catch(err => {
         if (process.env.NODE_ENV !== "production") {
           console.log(err);
-        }
-        Sentry.captureException(err);
+        } else Sentry.captureException(err);
         this.setState({ confirmError: err });
       });
   }

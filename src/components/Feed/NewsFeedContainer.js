@@ -6,9 +6,20 @@ import { bindActionCreators } from "redux";
 
 import * as Actions from "../../actions";
 import "react-virtualized/styles.css"; // only needs to be imported once
-
+import * as Sentry from "@sentry/browser";
 import "../../styles/style.css";
 class NewsFeedContainer extends React.PureComponent {
+  state = { error: null };
+  componentDidCatch(error, errorInfo) {
+    if (process.env.NODE_ENV === "production") {
+      this.setState({ error });
+      Sentry.withScope(scope => {
+        scope.setExtras(errorInfo);
+        const eventId = Sentry.captureException(error);
+        this.setState({ eventId });
+      });
+    }
+  }
   render() {
     let qsos = [];
     if (this.props.qsos && this.props.qsos.length > 0) {

@@ -16,10 +16,20 @@ class QSOLikeButton extends React.Component {
       icon: "thumbs outline up",
       liked: false,
       likeCounter: 0,
-      openLogin: false
+      openLogin: false,
+      error: null
     };
   }
-
+  componentDidCatch(error, errorInfo) {
+    if (process.env.NODE_ENV === "production") {
+      this.setState({ error });
+      Sentry.withScope(scope => {
+        scope.setExtras(errorInfo);
+        const eventId = Sentry.captureException(error);
+        this.setState({ eventId });
+      });
+    }
+  }
   componentDidMount() {
     if (this.props.qso.likes) {
       this.setState({ likeCounter: this.props.qso.likes.length });
@@ -58,8 +68,7 @@ class QSOLikeButton extends React.Component {
       .catch(error => {
         if (process.env.NODE_ENV !== "production") {
           console.log(error);
-        }
-        Sentry.captureException(error);
+        } else Sentry.captureException(error);
       });
   }
 
@@ -87,8 +96,7 @@ class QSOLikeButton extends React.Component {
       .catch(error => {
         if (process.env.NODE_ENV !== "production") {
           console.log(error);
-        }
-        Sentry.captureException(error);
+        } else Sentry.captureException(error);
       });
   }
 

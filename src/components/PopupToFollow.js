@@ -6,12 +6,23 @@ import * as Actions from "../actions";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import "../styles/style.css";
-
+import * as Sentry from "@sentry/browser";
 class PopupToFollow extends React.Component {
   state = {
     isFollowing: this.props.following.some(o => o.qra === this.props.qra),
-    following: this.props.following
+    following: this.props.following,
+    error: null
   };
+  componentDidCatch(error, errorInfo) {
+    if (process.env.NODE_ENV === "production") {
+      this.setState({ error });
+      Sentry.withScope(scope => {
+        scope.setExtras(errorInfo);
+        const eventId = Sentry.captureException(error);
+        this.setState({ eventId });
+      });
+    }
+  }
   follow = () => {
     this.setState({ isFollowing: true });
     this.props.actions.doFollowQRA(this.props.token, this.props.qra);

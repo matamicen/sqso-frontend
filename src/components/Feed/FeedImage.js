@@ -4,7 +4,7 @@ import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 import Image from "semantic-ui-react/dist/commonjs/elements/Image";
 import Divider from "semantic-ui-react/dist/commonjs/elements/Divider";
 import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
-
+import * as Sentry from "@sentry/browser";
 import Slider from "react-slick";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -29,8 +29,19 @@ class FeedImage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      showModal: false
+      showModal: false,
+      error: null
     };
+  }
+  componentDidCatch(error, errorInfo) {
+    if (process.env.NODE_ENV === "production") {
+      this.setState({ error });
+      Sentry.withScope(scope => {
+        scope.setExtras(errorInfo);
+        const eventId = Sentry.captureException(error);
+        this.setState({ eventId });
+      });
+    }
   }
   close = () => this.setState({ showModal: false });
   open = () => this.setState({ showModal: true });

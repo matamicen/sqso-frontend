@@ -2,7 +2,7 @@
   "name": "sqso-frontend",
   "version": "1.0.3",
   "private": true,
-  "homepage": "https://cra-ssr.herokuapp.com/",
+  "homepage": "https://www.miqso.com.ar/",
   "dependencies": {
     "@aws-amplify/api": "^1.0.11",
     "@aws-amplify/auth": "^1.2.7",
@@ -80,7 +80,7 @@
   "scripts": {
     "start": "yarn install && yarn build && node app",
     "dummy": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "yarn version && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "coverage": "react-scripts test --env=jsdom coverage",
     "eject": "react-scripts eject",

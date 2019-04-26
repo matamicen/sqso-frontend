@@ -33,10 +33,22 @@ class QRAProfileBio extends React.Component {
     this.state = {
       edit: false,
       openPornConfirm: false,
-      editorState: editorState
+      editorState: editorState,
+      error: null
     };
+
     this.handleOnSaveBio = this.handleOnSaveBio.bind(this);
     this.uploadImageCallBack = this.uploadImageCallBack.bind(this);
+  }
+  componentDidCatch(error, errorInfo) {
+    if (process.env.NODE_ENV === "production") {
+      this.setState({ error });
+      Sentry.withScope(scope => {
+        scope.setExtras(errorInfo);
+        const eventId = Sentry.captureException(error);
+        this.setState({ eventId });
+      });
+    }
   }
   getImage(path) {
     return new Promise((resolve, reject) => {
@@ -47,8 +59,7 @@ class QRAProfileBio extends React.Component {
         .catch(error => {
           if (process.env.NODE_ENV !== "production") {
             console.log(error);
-          }
-          Sentry.captureException(error);
+          } else Sentry.captureException(error);
           reject(error);
         });
     });
@@ -87,8 +98,7 @@ class QRAProfileBio extends React.Component {
                   .catch(error => {
                     if (process.env.NODE_ENV !== "production") {
                       console.log(error);
-                    }
-                    Sentry.captureException(error);
+                    } else Sentry.captureException(error);
                     reject(error);
                   });
                 this.setState({ openPornConfirm: true });
@@ -104,16 +114,14 @@ class QRAProfileBio extends React.Component {
             .catch(error => {
               if (process.env.NODE_ENV !== "production") {
                 console.log(error);
-              }
-              Sentry.captureException(error);
+              } else Sentry.captureException(error);
               reject(error);
             });
         })
         .catch(error => {
           if (process.env.NODE_ENV !== "production") {
             console.log(error);
-          }
-          Sentry.captureException(error);
+          } else Sentry.captureException(error);
           reject(error);
         });
     });

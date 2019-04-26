@@ -9,12 +9,24 @@ import "../../styles/style.css";
 import Ad from "../Ad/Ad";
 import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
 import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
+import * as Sentry from "@sentry/browser";
 
 class Home extends React.Component {
   state = {
     adActive: true,
-    active: null
+    active: null,
+    error: null
   };
+  componentDidCatch(error, errorInfo) {
+    if (process.env.NODE_ENV === "production") {
+      this.setState({ error });
+      Sentry.withScope(scope => {
+        scope.setExtras(errorInfo);
+        const eventId = Sentry.captureException(error);
+        this.setState({ eventId });
+      });
+    }
+  }
   componentDidMount() {
     if (this.props.isAuthenticated)
       this.props.actions.doFetchUserFeed(this.props.token);

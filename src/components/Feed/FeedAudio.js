@@ -7,7 +7,7 @@ import { bindActionCreators } from "redux";
 import * as Actions from "../../actions";
 import { Confirm, Modal } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-
+import * as Sentry from "@sentry/browser";
 Audio.propTypes = {
   url: PropTypes.string.isRequired
 };
@@ -19,11 +19,21 @@ class FeedAudio extends React.Component {
       showMessage: false,
       audioNotVisible: true,
       promptLogin: false,
-      promptPremium: false
+      promptPremium: false,
+      error: null
     };
     this.onClick = this.onClick.bind(this);
   }
-
+  componentDidCatch(error, errorInfo) {
+    if (process.env.NODE_ENV === "production") {
+      this.setState({ error });
+      Sentry.withScope(scope => {
+        scope.setExtras(errorInfo);
+        const eventId = Sentry.captureException(error);
+        this.setState({ eventId });
+      });
+    }
+  }
   onClick() {
     if (this.props.isAuthenticated) {
       if (

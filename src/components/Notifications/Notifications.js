@@ -12,12 +12,25 @@ import "../../styles/style.css";
 import List from "semantic-ui-react/dist/commonjs/elements/List";
 import Notification from "./Notification";
 import Ad from "../Ad/Ad";
+import * as Sentry from "@sentry/browser";
+
 class Notifications extends React.Component {
   state = {
     active: true,
     adActive: true,
-    showModal: false
+    showModal: false,
+    error: null
   };
+  componentDidCatch(error, errorInfo) {
+    if (process.env.NODE_ENV === "production") {
+      this.setState({ error });
+      Sentry.withScope(scope => {
+        scope.setExtras(errorInfo);
+        const eventId = Sentry.captureException(error);
+        this.setState({ eventId });
+      });
+    }
+  }
   static getDerivedStateFromProps(props, state) {
     if (props.notifications) return { active: false };
     else if (!props.notifications) return { active: true };

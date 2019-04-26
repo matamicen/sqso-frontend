@@ -59,8 +59,7 @@ export function doNotificationRead(idnotif = null, token) {
           .catch(error => {
             if (process.env.NODE_ENV !== "production") {
               console.log(error);
-            }
-            Sentry.captureException(error);
+            } else Sentry.captureException(error);
             dispatch(doLogout());
           });
       });
@@ -95,8 +94,7 @@ export function doDeleteComment(idcomment, idqso, token) {
           .catch(error => {
             if (process.env.NODE_ENV !== "production") {
               console.log(error);
-            }
-            Sentry.captureException(error);
+            } else Sentry.captureException(error);
             dispatch(doLogout());
           });
       });
@@ -156,8 +154,7 @@ export function doDeleteQso(idqso, token) {
           .catch(error => {
             if (process.env.NODE_ENV !== "production") {
               console.log(error);
-            }
-            Sentry.captureException(error);
+            } else Sentry.captureException(error);
             dispatch(doLogout());
           });
       });
@@ -205,8 +202,7 @@ export function doDeleteMedia(idmedia, idqso, token) {
           .catch(error => {
             if (process.env.NODE_ENV !== "production") {
               console.log(error);
-            }
-            Sentry.captureException(error);
+            } else Sentry.captureException(error);
             dispatch(doLogout());
           });
       });
@@ -341,8 +337,7 @@ export function doFetchUserInfo(token) {
           .catch(error => {
             if (process.env.NODE_ENV !== "production") {
               console.log(error);
-            }
-            Sentry.captureException(error);
+            } else Sentry.captureException(error);
             dispatch(doLogout());
           });
       });
@@ -376,8 +371,7 @@ export function doSaveUserInfo(token, qra) {
           .catch(error => {
             if (process.env.NODE_ENV !== "production") {
               console.log(error);
-            }
-            Sentry.captureException(error);
+            } else Sentry.captureException(error);
             dispatch(doLogout());
           });
       });
@@ -418,8 +412,7 @@ export function doSaveUserBio(token, bio, identityId) {
           .catch(error => {
             if (process.env.NODE_ENV !== "production") {
               console.log(error);
-            }
-            Sentry.captureException(error);
+            } else Sentry.captureException(error);
             dispatch(doLogout());
           });
       });
@@ -459,8 +452,7 @@ export function doFetchUserFeed(token) {
           .catch(error => {
             if (process.env.NODE_ENV !== "production") {
               console.log(error);
-            }
-            Sentry.captureException(error);
+            } else Sentry.captureException(error);
             dispatch(doLogout());
           });
       });
@@ -495,8 +487,7 @@ export function doFetchNotifications(token) {
           .catch(error => {
             if (process.env.NODE_ENV !== "production") {
               console.log(error);
-            }
-            Sentry.captureException(error);
+            } else Sentry.captureException(error);
             dispatch(doLogout());
           });
       });
@@ -522,8 +513,7 @@ export function doFetchPublicFeed() {
       .catch(error => {
         if (process.env.NODE_ENV !== "production") {
           console.log(error);
-        }
-        Sentry.captureException(error);
+        } else Sentry.captureException(error);
       });
   };
 }
@@ -590,8 +580,7 @@ export function doFetchQSO(idqso, token = null) {
         .catch(error => {
           if (process.env.NODE_ENV !== "production") {
             console.log(error);
-          }
-          Sentry.captureException(error);
+          } else Sentry.captureException(error);
         });
     };
   } else {
@@ -613,8 +602,7 @@ export function doFetchQSO(idqso, token = null) {
         .catch(error => {
           if (process.env.NODE_ENV !== "production") {
             console.log(error);
-          }
-          Sentry.captureException(error);
+          } else Sentry.captureException(error);
         });
     };
   }
@@ -647,8 +635,7 @@ export function doFetchQsoLink(idqso) {
       .catch(error => {
         if (process.env.NODE_ENV !== "production") {
           console.log(error);
-        }
-        Sentry.captureException(error);
+        } else Sentry.captureException(error);
       });
   };
 }
@@ -681,8 +668,7 @@ export function doFetchQRA(qra, token = null) {
         .catch(error => {
           if (process.env.NODE_ENV !== "production") {
             console.log(error);
-          }
-          Sentry.captureException(error);
+          } else Sentry.captureException(error);
         });
     };
   } else {
@@ -707,8 +693,7 @@ export function doFetchQRA(qra, token = null) {
         .catch(error => {
           if (process.env.NODE_ENV !== "production") {
             console.log(error);
-          }
-          Sentry.captureException(error);
+          } else Sentry.captureException(error);
         });
     };
   }
@@ -750,8 +735,7 @@ export function doFollowQRA(token, follower) {
           .catch(error => {
             if (process.env.NODE_ENV !== "production") {
               console.log(error);
-            }
-            Sentry.captureException(error);
+            } else Sentry.captureException(error);
             dispatch(doLogout());
           });
       });
@@ -792,8 +776,7 @@ export function doUnfollowQRA(token, follower) {
           .catch(error => {
             if (process.env.NODE_ENV !== "production") {
               console.log(error);
-            }
-            Sentry.captureException(error);
+            } else Sentry.captureException(error);
             dispatch(doLogout());
           });
       });
@@ -870,8 +853,7 @@ export function doQsoMediaPlay(idMedia, token, idqso) {
           .catch(error => {
             if (process.env.NODE_ENV !== "production") {
               console.log(error);
-            }
-            Sentry.captureException(error);
+            } else Sentry.captureException(error);
             dispatch(doLogout());
           });
       });
@@ -911,8 +893,7 @@ export function doQslCardPrint(idqso, token) {
           .catch(error => {
             if (process.env.NODE_ENV !== "production") {
               console.log(error);
-            }
-            Sentry.captureException(error);
+            } else Sentry.captureException(error);
             dispatch(doLogout());
           });
       });

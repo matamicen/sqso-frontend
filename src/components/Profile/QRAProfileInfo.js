@@ -9,7 +9,7 @@ import * as Actions from "../../actions";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-
+import * as Sentry from "@sentry/browser";
 import "../../styles/style.css";
 class QRAProfileInfo extends React.Component {
   constructor(props) {
@@ -17,6 +17,7 @@ class QRAProfileInfo extends React.Component {
 
     this.state = {
       edit: false,
+      error: null,
       qra: {
         firstname: this.props.qraInfo.firstname,
         lastname: this.props.qraInfo.lastname,
@@ -34,7 +35,16 @@ class QRAProfileInfo extends React.Component {
       }
     };
   }
-
+  componentDidCatch(error, errorInfo) {
+    if (process.env.NODE_ENV === "production") {
+      this.setState({ error });
+      Sentry.withScope(scope => {
+        scope.setExtras(errorInfo);
+        const eventId = Sentry.captureException(error);
+        this.setState({ eventId });
+      });
+    }
+  }
   close = () => this.setState({ edit: false });
   open = () => this.setState({ edit: true });
   handleOnSaveInfo = e => {

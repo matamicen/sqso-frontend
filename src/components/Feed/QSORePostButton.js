@@ -13,9 +13,19 @@ import Confirm from "semantic-ui-react/dist/commonjs/addons/Confirm";
 class QSORePostButton extends React.Component {
   state = {
     showConfirmationRequest: false,
-
+    error: null,
     openLogin: false
   };
+  componentDidCatch(error, errorInfo) {
+    if (process.env.NODE_ENV === "production") {
+      this.setState({ error });
+      Sentry.withScope(scope => {
+        scope.setExtras(errorInfo);
+        const eventId = Sentry.captureException(error);
+        this.setState({ eventId });
+      });
+    }
+  }
   doRePost() {
     this.closeConfirmationRequest();
 
@@ -47,8 +57,7 @@ class QSORePostButton extends React.Component {
       .catch(error => {
         if (process.env.NODE_ENV !== "production") {
           console.log(error);
-        }
-        Sentry.captureException(error);
+        } else Sentry.captureException(error);
       });
   }
   openConfirmationRequest = () => {

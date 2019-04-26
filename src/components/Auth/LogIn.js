@@ -18,7 +18,7 @@ import Amplify from "@aws-amplify/core";
 import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
 import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
 import Ad from "../Ad/Ad";
-
+import * as Sentry from "@sentry/browser";
 const Auth = Amplify.Auth;
 class LogIn extends React.Component {
   constructor(props, context) {
@@ -28,11 +28,20 @@ class LogIn extends React.Component {
       showModal: false,
       password: "",
       qra: "",
-
+      error: null,
       loginError: false
     };
   }
-
+  componentDidCatch(error, errorInfo) {
+    if (process.env.NODE_ENV === "production") {
+      this.setState({ error });
+      Sentry.withScope(scope => {
+        scope.setExtras(errorInfo);
+        const eventId = Sentry.captureException(error);
+        this.setState({ eventId });
+      });
+    }
+  }
   handleOnClickLogin = () => {
     this.setState({ active: true });
     this.login();

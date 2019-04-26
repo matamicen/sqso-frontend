@@ -18,6 +18,7 @@ export default class ForgotPassword extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      error: null,
       showModal: false,
       password: "",
       passwordConfirm: null,
@@ -35,7 +36,16 @@ export default class ForgotPassword extends React.Component {
       }
     };
   }
-
+  componentDidCatch(error, errorInfo) {
+    if (process.env.NODE_ENV === "production") {
+      this.setState({ error });
+      Sentry.withScope(scope => {
+        scope.setExtras(errorInfo);
+        const eventId = Sentry.captureException(error);
+        this.setState({ eventId });
+      });
+    }
+  }
   handleCodeChange(e) {
     this.setState({ code: e.target.value });
   }
@@ -76,8 +86,8 @@ export default class ForgotPassword extends React.Component {
         .catch(err => {
           if (process.env.NODE_ENV !== "production") {
             console.log(err);
-          }
-          Sentry.captureException(err);
+            return;
+          } else Sentry.captureException(err);
           this.setState({ forgotPasswordError: err });
         });
     }
@@ -138,8 +148,7 @@ export default class ForgotPassword extends React.Component {
         .catch(err => {
           if (process.env.NODE_ENV !== "production") {
             console.log(err);
-          }
-          Sentry.captureException(err);
+          } else Sentry.captureException(err);
           this.setState({ confirmError: err.message });
         });
     }

@@ -14,12 +14,22 @@ class QSOComments extends React.Component {
     super();
     this.state = {
       comments: [],
-      comment: null
+      comment: null,
+      error: null
     };
 
     this.handleAddComment = this.handleAddComment.bind(this);
   }
-
+  componentDidCatch(error, errorInfo) {
+    if (process.env.NODE_ENV === "production") {
+      this.setState({ error });
+      Sentry.withScope(scope => {
+        scope.setExtras(errorInfo);
+        const eventId = Sentry.captureException(error);
+        this.setState({ eventId });
+      });
+    }
+  }
   componentDidMount() {
     if (this.props.qso.comments) {
       this.setState({ comments: this.props.qso.comments });
@@ -54,8 +64,7 @@ class QSOComments extends React.Component {
       .catch(error => {
         if (process.env.NODE_ENV !== "production") {
           console.log(error);
-        }
-        Sentry.captureException(error);
+        } else Sentry.captureException(error);
       });
   };
 
