@@ -80,7 +80,7 @@
   "scripts": {
     "start": "yarn install && yarn build && node app",
     "dummy": "react-scripts start",
-    "build": "yarn version && react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "coverage": "react-scripts test --env=jsdom coverage",
     "eject": "react-scripts eject",

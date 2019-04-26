@@ -32,6 +32,7 @@ class App extends PureComponent {
       if (process.env.NODE_ENV !== "production") {
         console.log(error);
       }
+      console.log(error);
       Sentry.captureException(error);
       this.props.actions.doLogout();
     });
