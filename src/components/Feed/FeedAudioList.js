@@ -16,7 +16,7 @@ export default class FeedAudioList extends React.Component {
         const eventId = Sentry.captureException(error);
         this.setState({ eventId });
       });
-    }
+    } else console.log(error, errorInfo);
   }
   render() {
     if (this.props.mediaList.length > 0) {

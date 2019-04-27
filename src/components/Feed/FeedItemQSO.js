@@ -41,7 +41,7 @@ class FeedItemQSO extends React.Component {
         const eventId = Sentry.captureException(error);
         this.setState({ eventId });
       });
-    }
+    } else console.log(error, errorInfo);
   }
   handleOnComment = () => {
     if (this.props.currentQRA || this.props.qso.comments.length > 0)

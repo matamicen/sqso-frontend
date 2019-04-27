@@ -19,7 +19,7 @@ export default class Notification extends React.Component {
         const eventId = Sentry.captureException(error);
         this.setState({ eventId });
       });
-    }
+    } else console.log(error, errorInfo);
   }
   handleOnClick(e) {
     this.props.doNotificationRead(

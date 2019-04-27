@@ -28,7 +28,7 @@ class FeedOptionsMenu extends React.PureComponent {
         const eventId = Sentry.captureException(error);
         this.setState({ eventId });
       });
-    }
+    } else console.log(error, errorInfo);
   }
   openReportedContent = () => this.setState({ showReportContent: true });
   closeReportedContent = () => this.setState({ showReportContent: false });

@@ -44,7 +44,7 @@ export default class ForgotPassword extends React.Component {
         const eventId = Sentry.captureException(error);
         this.setState({ eventId });
       });
-    }
+    } else console.log(error, errorInfo);
   }
   handleCodeChange(e) {
     this.setState({ code: e.target.value });

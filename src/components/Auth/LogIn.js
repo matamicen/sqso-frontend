@@ -40,7 +40,7 @@ class LogIn extends React.Component {
         const eventId = Sentry.captureException(error);
         this.setState({ eventId });
       });
-    }
+    } else console.log(error, errorInfo);
   }
   handleOnClickLogin = () => {
     this.setState({ active: true });

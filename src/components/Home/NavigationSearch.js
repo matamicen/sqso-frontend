@@ -23,7 +23,7 @@ export default class NavigationSearch extends Component {
         const eventId = Sentry.captureException(error);
         this.setState({ eventId });
       });
-    }
+    } else console.log(error, errorInfo);
   }
   onChange(value) {
     this.setState({ value: value });

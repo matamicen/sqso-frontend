@@ -41,7 +41,7 @@ class FeedImage extends React.Component {
         const eventId = Sentry.captureException(error);
         this.setState({ eventId });
       });
-    }
+    } else console.log(error, errorInfo);
   }
   close = () => this.setState({ showModal: false });
   open = () => this.setState({ showModal: true });

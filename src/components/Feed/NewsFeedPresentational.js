@@ -49,7 +49,7 @@ export default class NewsFeed extends React.Component {
         const eventId = Sentry.captureException(error);
         this.setState({ eventId });
       });
-    }
+    } else console.log(error, errorInfo);
   }
   _clearData() {
     this.setState({ loadedRowCount: 0, loadedRowsMap: {}, loadingRowCount: 0 });

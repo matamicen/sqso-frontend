@@ -16,7 +16,7 @@ export default class FeedItemAd extends React.PureComponent {
         const eventId = Sentry.captureException(error);
         this.setState({ eventId });
       });
-    }
+    } else console.log(error, errorInfo);
   }
   render() {
     return (

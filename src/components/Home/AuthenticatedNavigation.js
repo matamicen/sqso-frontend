@@ -26,7 +26,7 @@ class AuthenticatedNavigation extends React.PureComponent {
         const eventId = Sentry.captureException(error);
         this.setState({ eventId });
       });
-    }
+    } else console.log(error, errorInfo);
   }
   logout() {
     Auth.signOut()

@@ -31,7 +31,7 @@ class QRAProfileContainer extends React.PureComponent {
         const eventId = Sentry.captureException(error);
         this.setState({ eventId });
       });
-    }
+    } else console.log(error, errorInfo);
   }
   componentDidMount() {
     window.googletag.cmd.push(function() {

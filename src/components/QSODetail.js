@@ -32,7 +32,7 @@ class QSODetail extends React.PureComponent {
         const eventId = Sentry.captureException(error);
         this.setState({ eventId });
       });
-    }
+    } else console.log(error, errorInfo);
   }
   static getDerivedStateFromProps(props, prevState) {
     if (props.qsoError && prevState.active)

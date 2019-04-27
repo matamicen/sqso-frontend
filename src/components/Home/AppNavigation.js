@@ -16,7 +16,7 @@ class AppNavigation extends Component {
         const eventId = Sentry.captureException(error);
         this.setState({ eventId });
       });
-    }
+    } else console.log(error, errorInfo);
   }
   renderNavigation() {
     return this.props.isAuthenticated ? (

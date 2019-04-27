@@ -38,7 +38,7 @@ class FeedItemRepost extends React.Component {
         const eventId = Sentry.captureException(error);
         this.setState({ eventId });
       });
-    }
+    } else console.log(error, errorInfo);
   }
   handleOnComment() {
     this.props.showComments(this.props.index);

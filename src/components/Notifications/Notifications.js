@@ -29,7 +29,7 @@ class Notifications extends React.Component {
         const eventId = Sentry.captureException(error);
         this.setState({ eventId });
       });
-    }
+    } else console.log(error, errorInfo);
   }
   static getDerivedStateFromProps(props, state) {
     if (props.notifications) return { active: false };

@@ -21,7 +21,7 @@ class PopupToFollow extends React.Component {
         const eventId = Sentry.captureException(error);
         this.setState({ eventId });
       });
-    }
+    } else console.log(error, errorInfo);
   }
   follow = () => {
     this.setState({ isFollowing: true });

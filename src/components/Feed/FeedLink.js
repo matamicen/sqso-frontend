@@ -27,7 +27,7 @@ class FeedLink extends React.PureComponent {
         const eventId = Sentry.captureException(error);
         this.setState({ eventId });
       });
-    }
+    } else console.log(error, errorInfo);
   }
   onOpenModal = () => {
     this.props.actions.doFetchQsoLink(this.props.link.GUID_URL);

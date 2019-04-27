@@ -22,7 +22,7 @@ class QSOCommentItem extends React.Component {
         const eventId = Sentry.captureException(error);
         this.setState({ eventId });
       });
-    }
+    } else console.log(error, errorInfo);
   }
   componentDidUpdate = () => {
     this.props.recalculateRowHeight();

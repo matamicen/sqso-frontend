@@ -45,7 +45,7 @@ class ChangePassword extends React.Component {
         const eventId = Sentry.captureException(error);
         this.setState({ eventId });
       });
-    }
+    } else console.log(error, errorInfo);
   }
   changeHandler = event => {
     const name = event.target.name;

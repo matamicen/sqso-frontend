@@ -22,7 +22,8 @@ const RELEASE = packageJson.version;
 if (process.env.NODE_ENV === "production") {
   Sentry.init({
     dsn: "https://2f1b1ed20458466ab2c6c66716678605@sentry.io/1441458",
-    release: RELEASE
+    release: RELEASE,
+    environment: process.env.NODE_ENV
   });
 }
 ReactGA.initialize("UA-124438207-1");

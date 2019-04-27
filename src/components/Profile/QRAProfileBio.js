@@ -48,7 +48,7 @@ class QRAProfileBio extends React.Component {
         const eventId = Sentry.captureException(error);
         this.setState({ eventId });
       });
-    }
+    } else console.log(error, errorInfo);
   }
   getImage(path) {
     return new Promise((resolve, reject) => {
