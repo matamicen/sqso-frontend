@@ -11,20 +11,10 @@ export default class NavigationSearch extends Component {
     super(props);
 
     this.state = {
-      value: null,
-      error: null
+      value: null
     };
   }
-  componentDidCatch(error, errorInfo) {
-    if (process.env.NODE_ENV === "production") {
-      this.setState({ error });
-      Sentry.withScope(scope => {
-        scope.setExtras(errorInfo);
-        const eventId = Sentry.captureException(error);
-        this.setState({ eventId });
-      });
-    } else console.log(error, errorInfo);
-  }
+
   onChange(value) {
     this.setState({ value: value });
   }

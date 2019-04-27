@@ -15,7 +15,7 @@ import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
 import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
 import Header from "semantic-ui-react/dist/commonjs/elements/Header";
 import Ad from "../Ad/Ad";
-import * as Sentry from "@sentry/browser";
+
 class ChangePassword extends React.Component {
   constructor(props) {
     super(props);
@@ -37,16 +37,7 @@ class ChangePassword extends React.Component {
       this
     );
   }
-  componentDidCatch(error, errorInfo) {
-    if (process.env.NODE_ENV === "production") {
-      this.setState({ error });
-      Sentry.withScope(scope => {
-        scope.setExtras(errorInfo);
-        const eventId = Sentry.captureException(error);
-        this.setState({ eventId });
-      });
-    } else console.log(error, errorInfo);
-  }
+
   changeHandler = event => {
     const name = event.target.name;
     const value = event.target.value;

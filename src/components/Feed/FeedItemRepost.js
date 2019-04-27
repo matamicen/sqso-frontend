@@ -21,24 +21,13 @@ import Image from "semantic-ui-react/dist/commonjs/elements/Image";
 import { Link } from "react-router-dom";
 import FeedOptionsMenu from "./FeedOptionsMenu";
 import QSORePostButton from "./QSORePostButton";
-import * as Sentry from "@sentry/browser";
 
 class FeedItemRepost extends React.Component {
   constructor() {
     super();
-    this.state = { error: null };
+
     this.handleOnComment = this.handleOnComment.bind(this);
     this.recalculateRowHeight = this.recalculateRowHeight.bind(this);
-  }
-  componentDidCatch(error, errorInfo) {
-    if (process.env.NODE_ENV === "production") {
-      this.setState({ error });
-      Sentry.withScope(scope => {
-        scope.setExtras(errorInfo);
-        const eventId = Sentry.captureException(error);
-        this.setState({ eventId });
-      });
-    } else console.log(error, errorInfo);
   }
   handleOnComment() {
     this.props.showComments(this.props.index);

@@ -17,19 +17,9 @@ import QslCardPrint from "./qslCard";
 class FeedOptionsMenu extends React.PureComponent {
   state = {
     showReportContent: false,
-    showMessage: false,
-    error: null
+    showMessage: false
   };
-  componentDidCatch(error, errorInfo) {
-    if (process.env.NODE_ENV === "production") {
-      this.setState({ error });
-      Sentry.withScope(scope => {
-        scope.setExtras(errorInfo);
-        const eventId = Sentry.captureException(error);
-        this.setState({ eventId });
-      });
-    } else console.log(error, errorInfo);
-  }
+
   openReportedContent = () => this.setState({ showReportContent: true });
   closeReportedContent = () => this.setState({ showReportContent: false });
   open = () => this.setState({ showMessage: true });

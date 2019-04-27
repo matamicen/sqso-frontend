@@ -14,22 +14,12 @@ class QSOComments extends React.Component {
     super();
     this.state = {
       comments: [],
-      comment: null,
-      error: null
+      comment: null
     };
 
     this.handleAddComment = this.handleAddComment.bind(this);
   }
-  componentDidCatch(error, errorInfo) {
-    if (process.env.NODE_ENV === "production") {
-      this.setState({ error });
-      Sentry.withScope(scope => {
-        scope.setExtras(errorInfo);
-        const eventId = Sentry.captureException(error);
-        this.setState({ eventId });
-      });
-    } else console.log(error, errorInfo);
-  }
+
   componentDidMount() {
     if (this.props.qso.comments) {
       this.setState({ comments: this.props.qso.comments });

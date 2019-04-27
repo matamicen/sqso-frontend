@@ -14,20 +14,10 @@ class AuthenticatedNavigation extends React.PureComponent {
   constructor() {
     super();
     this.state = {
-      notif_icon: "bell",
-      error: null
+      notif_icon: "bell"
     };
   }
-  componentDidCatch(error, errorInfo) {
-    if (process.env.NODE_ENV === "production") {
-      this.setState({ error });
-      Sentry.withScope(scope => {
-        scope.setExtras(errorInfo);
-        const eventId = Sentry.captureException(error);
-        this.setState({ eventId });
-      });
-    } else console.log(error, errorInfo);
-  }
+
   logout() {
     Auth.signOut()
       .then(data => {

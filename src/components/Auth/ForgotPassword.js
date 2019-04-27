@@ -36,16 +36,6 @@ export default class ForgotPassword extends React.Component {
       }
     };
   }
-  componentDidCatch(error, errorInfo) {
-    if (process.env.NODE_ENV === "production") {
-      this.setState({ error });
-      Sentry.withScope(scope => {
-        scope.setExtras(errorInfo);
-        const eventId = Sentry.captureException(error);
-        this.setState({ eventId });
-      });
-    } else console.log(error, errorInfo);
-  }
   handleCodeChange(e) {
     this.setState({ code: e.target.value });
   }

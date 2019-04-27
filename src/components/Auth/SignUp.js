@@ -50,16 +50,6 @@ export class SignUp extends React.Component {
     };
     this.verifyCallback = this.verifyCallback.bind(this);
   }
-  componentDidCatch(error, errorInfo) {
-    if (process.env.NODE_ENV === "production") {
-      this.setState({ error });
-      Sentry.withScope(scope => {
-        scope.setExtras(errorInfo);
-        const eventId = Sentry.captureException(error);
-        this.setState({ eventId });
-      });
-    } else console.log(error, errorInfo);
-  }
   verifyCallback = function(response) {
     this.setState({ token: response });
   };

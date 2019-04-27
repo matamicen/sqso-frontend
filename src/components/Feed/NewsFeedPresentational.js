@@ -6,7 +6,7 @@ import List from "react-virtualized/dist/commonjs/List";
 import WindowScroller from "react-virtualized/dist/commonjs/WindowScroller";
 import { CellMeasurer } from "react-virtualized/dist/commonjs/CellMeasurer";
 import { CellMeasurerCache } from "react-virtualized/dist/commonjs/CellMeasurer";
-import * as Sentry from "@sentry/browser";
+
 import PropTypes from "prop-types";
 export default class NewsFeed extends React.Component {
   constructor(props) {
@@ -20,8 +20,7 @@ export default class NewsFeed extends React.Component {
       overscanRowCount: 10,
       list: list,
       randomScrollToIndex: null,
-      rowCount: list.length,
-      error: null
+      rowCount: list.length
     };
 
     this._cache = new CellMeasurerCache({
@@ -41,16 +40,7 @@ export default class NewsFeed extends React.Component {
     this.showComments = this.showComments.bind(this);
     this._setListRef = this._setListRef.bind(this);
   }
-  componentDidCatch(error, errorInfo) {
-    if (process.env.NODE_ENV === "production") {
-      this.setState({ error });
-      Sentry.withScope(scope => {
-        scope.setExtras(errorInfo);
-        const eventId = Sentry.captureException(error);
-        this.setState({ eventId });
-      });
-    } else console.log(error, errorInfo);
-  }
+
   _clearData() {
     this.setState({ loadedRowCount: 0, loadedRowsMap: {}, loadingRowCount: 0 });
   }

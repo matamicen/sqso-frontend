@@ -24,7 +24,6 @@ import { Link } from "react-router-dom";
 import FeedOptionsMenu from "./FeedOptionsMenu";
 import QSORePostButton from "./QSORePostButton";
 import "../../styles/style.css";
-import * as Sentry from "@sentry/browser";
 
 class FeedItemQSO extends React.Component {
   constructor() {
@@ -32,16 +31,6 @@ class FeedItemQSO extends React.Component {
     this.state = { error: null };
     this.handleOnComment = this.handleOnComment.bind(this);
     this.recalculateRowHeight = this.recalculateRowHeight.bind(this);
-  }
-  componentDidCatch(error, errorInfo) {
-    if (process.env.NODE_ENV === "production") {
-      this.setState({ error });
-      Sentry.withScope(scope => {
-        scope.setExtras(errorInfo);
-        const eventId = Sentry.captureException(error);
-        this.setState({ eventId });
-      });
-    } else console.log(error, errorInfo);
   }
   handleOnComment = () => {
     if (this.props.currentQRA || this.props.qso.comments.length > 0)

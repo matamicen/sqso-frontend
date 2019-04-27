@@ -16,20 +16,10 @@ class QSOLikeButton extends React.Component {
       icon: "thumbs outline up",
       liked: false,
       likeCounter: 0,
-      openLogin: false,
-      error: null
+      openLogin: false
     };
   }
-  componentDidCatch(error, errorInfo) {
-    if (process.env.NODE_ENV === "production") {
-      this.setState({ error });
-      Sentry.withScope(scope => {
-        scope.setExtras(errorInfo);
-        const eventId = Sentry.captureException(error);
-        this.setState({ eventId });
-      });
-    } else console.log(error, errorInfo);
-  }
+
   componentDidMount() {
     if (this.props.qso.likes) {
       this.setState({ likeCounter: this.props.qso.likes.length });

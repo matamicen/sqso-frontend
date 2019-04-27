@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from "react";
+import React, { Component, Fragment } from "react";
 
 import { Route, Switch, withRouter } from "react-router-dom";
 
@@ -16,15 +16,15 @@ import * as Actions from "../actions";
 import Auth from "@aws-amplify/auth";
 import aws_exports from "../aws-exports";
 import Amplify from "@aws-amplify/core";
-// import Auth from '@aws-amplify/auth';
+import * as Sentry from "@sentry/browser";
 import Notifications from "./Notifications/Notifications";
-
+import ErrorBoundary from "./ErrorBoundary";
 // if (process.env.NODE_ENV !== 'production') {     const {whyDidYouUpdate} =
 // require('why-did-you-update')     whyDidYouUpdate(React)   }
 
 Amplify.configure(aws_exports);
 
-class App extends PureComponent {
+class App extends Component {
   async componentDidMount() {
     this.props.actions.doStartingLogin();
     let session = await Auth.currentSession().catch(error => {
@@ -40,6 +40,11 @@ class App extends PureComponent {
         credentials.data.IdentityId
       );
       this.props.actions.doFetchUserInfo(session.idToken.jwtToken);
+      Sentry.configureScope(scope => {
+        scope.setUser({
+          qra: session.idToken.payload["cognito:username"].toUpperCase()
+        });
+      });
     } else {
       this.props.actions.doSetPublicSession();
     }
@@ -56,17 +61,33 @@ class App extends PureComponent {
                 !this.props.authenticating &&
                 (this.props.isAuthenticated || this.props.public)
               )
-                return <Home />;
+                return (
+                  <ErrorBoundary key="home">
+                    <Home />
+                  </ErrorBoundary>
+                );
               else return null;
             }}
           />
           <Route exact path="/signup" component={SignUp} />
-          <Route exact path="/login" component={() => <LogIn />} />
+          <Route
+            exact
+            path="/login"
+            component={() => (
+              <ErrorBoundary key="login">
+                <LogIn />
+              </ErrorBoundary>
+            )}
+          />
           <Route exact path="/forgot" component={() => <ForgotPassword />} />
           <Route
             exact
             path="/changepassword"
-            component={() => <ChangePassword />}
+            component={() => (
+              <ErrorBoundary key="changePassword">
+                <ChangePassword />
+              </ErrorBoundary>
+            )}
           />
           <Route
             exact
@@ -76,7 +97,11 @@ class App extends PureComponent {
                 !this.props.authenticating &&
                 (this.props.isAuthenticated || this.props.public)
               )
-                return <Notifications />;
+                return (
+                  <ErrorBoundary key="notifications">
+                    <Notifications />
+                  </ErrorBoundary>
+                );
               else return null;
             }}
           />
@@ -89,7 +114,11 @@ class App extends PureComponent {
                 !this.props.authenticating &&
                 (this.props.isAuthenticated || this.props.public)
               )
-                return <QRAProfileContainer />;
+                return (
+                  <ErrorBoundary key="qraProfile">
+                    <QRAProfileContainer />
+                  </ErrorBoundary>
+                );
               else return null;
             }}
           />
@@ -101,7 +130,11 @@ class App extends PureComponent {
                 !this.props.authenticating &&
                 (this.props.isAuthenticated || this.props.public)
               )
-                return <QRAProfileContainer tab="BIO" />;
+                return (
+                  <ErrorBoundary key="qraProfileBio">
+                    <QRAProfileContainer tab="BIO" />
+                  </ErrorBoundary>
+                );
               else return null;
             }}
           />
@@ -113,7 +146,11 @@ class App extends PureComponent {
                 !this.props.authenticating &&
                 (this.props.isAuthenticated || this.props.public)
               )
-                return <QRAProfileContainer tab="INFO" />;
+                return (
+                  <ErrorBoundary key="qraProfileInfo">
+                    <QRAProfileContainer tab="INFO" />{" "}
+                  </ErrorBoundary>
+                );
               else return null;
             }}
           />
@@ -126,7 +163,11 @@ class App extends PureComponent {
                 !this.props.authenticating &&
                 (this.props.isAuthenticated || this.props.public)
               )
-                return <QRAProfileContainer tab="FOLLOWING" />;
+                return (
+                  <ErrorBoundary key="qraProfileFollowing">
+                    <QRAProfileContainer tab="FOLLOWING" />{" "}
+                  </ErrorBoundary>
+                );
               else return null;
             }}
           />
@@ -139,7 +180,11 @@ class App extends PureComponent {
                 !this.props.authenticating &&
                 (this.props.isAuthenticated || this.props.public)
               )
-                return <QSODetail />;
+                return (
+                  <ErrorBoundary key="qsoDetail">
+                    <QSODetail />
+                  </ErrorBoundary>
+                );
               else return null;
             }}
           />

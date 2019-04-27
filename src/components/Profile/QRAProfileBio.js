@@ -33,23 +33,13 @@ class QRAProfileBio extends React.Component {
     this.state = {
       edit: false,
       openPornConfirm: false,
-      editorState: editorState,
-      error: null
+      editorState: editorState
     };
 
     this.handleOnSaveBio = this.handleOnSaveBio.bind(this);
     this.uploadImageCallBack = this.uploadImageCallBack.bind(this);
   }
-  componentDidCatch(error, errorInfo) {
-    if (process.env.NODE_ENV === "production") {
-      this.setState({ error });
-      Sentry.withScope(scope => {
-        scope.setExtras(errorInfo);
-        const eventId = Sentry.captureException(error);
-        this.setState({ eventId });
-      });
-    } else console.log(error, errorInfo);
-  }
+
   getImage(path) {
     return new Promise((resolve, reject) => {
       Storage.get(path, { level: "protected" })

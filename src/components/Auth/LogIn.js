@@ -32,16 +32,6 @@ class LogIn extends React.Component {
       loginError: false
     };
   }
-  componentDidCatch(error, errorInfo) {
-    if (process.env.NODE_ENV === "production") {
-      this.setState({ error });
-      Sentry.withScope(scope => {
-        scope.setExtras(errorInfo);
-        const eventId = Sentry.captureException(error);
-        this.setState({ eventId });
-      });
-    } else console.log(error, errorInfo);
-  }
   handleOnClickLogin = () => {
     this.setState({ active: true });
     this.login();
@@ -67,9 +57,11 @@ class LogIn extends React.Component {
         credentials.data.IdentityId
       );
       await this.props.actions.doFetchUserInfo(token);
-      console.log("push2history");
-      console.log(this.props);
-
+      Sentry.configureScope(scope => {
+        scope.setUser({
+          qra: this.state.qra
+        });
+      });
       this.props.history.goBack();
     }
   }

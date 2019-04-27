@@ -6,7 +6,6 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import "../../styles/style.css";
-import * as Sentry from "@sentry/browser";
 import { Modal } from "semantic-ui-react";
 
 class QRAProfileContainer extends React.PureComponent {
@@ -17,22 +16,12 @@ class QRAProfileContainer extends React.PureComponent {
       adActive: false,
       adClosed: false,
       tab: null,
-      qraError: null,
-      error: null
+      qraError: null
     };
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.handleTabClick = this.handleTabClick.bind(this);
   }
-  componentDidCatch(error, errorInfo) {
-    if (process.env.NODE_ENV === "production") {
-      this.setState({ error });
-      Sentry.withScope(scope => {
-        scope.setExtras(errorInfo);
-        const eventId = Sentry.captureException(error);
-        this.setState({ eventId });
-      });
-    } else console.log(error, errorInfo);
-  }
+
   componentDidMount() {
     window.googletag.cmd.push(function() {
       window.googletag.destroySlots();

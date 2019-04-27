@@ -3,7 +3,6 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/css/bootstrap-theme.css";
 import { Row, Col, FormControl, Form, Button } from "react-bootstrap";
 import { browserHistory } from "react-router";
-import * as Sentry from "@sentry/browser";
 import { NavLink } from "react-router-dom";
 
 export class Account extends React.Component {
@@ -18,16 +17,7 @@ export class Account extends React.Component {
       error: null
     };
   }
-  componentDidCatch(error, errorInfo) {
-    if (process.env.NODE_ENV === "production") {
-      this.setState({ error });
-      Sentry.withScope(scope => {
-        scope.setExtras(errorInfo);
-        const eventId = Sentry.captureException(error);
-        this.setState({ eventId });
-      });
-    } else console.log(error, errorInfo);
-  }
+
   handleLoginClick() {}
 
   handleLogoutClick() {

@@ -11,24 +11,13 @@ import { withRouter } from "react-router-dom";
 import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
 import Button from "semantic-ui-react/dist/commonjs/elements/Button";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
-import * as Sentry from "@sentry/browser";
+
 class FeedLink extends React.PureComponent {
   state = {
     active: false,
     showModal: false,
-    qso_link: this.props.qso_link,
-    error: null
+    qso_link: this.props.qso_link
   };
-  componentDidCatch(error, errorInfo) {
-    if (process.env.NODE_ENV === "production") {
-      this.setState({ error });
-      Sentry.withScope(scope => {
-        scope.setExtras(errorInfo);
-        const eventId = Sentry.captureException(error);
-        this.setState({ eventId });
-      });
-    } else console.log(error, errorInfo);
-  }
   onOpenModal = () => {
     this.props.actions.doFetchQsoLink(this.props.link.GUID_URL);
     this.setState({ active: true });

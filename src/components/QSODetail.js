@@ -11,11 +11,9 @@ import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
 import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
 import Ad from "./Ad/Ad";
 import "../styles/style.css";
-import * as Sentry from "@sentry/browser";
 import { Modal } from "semantic-ui-react";
 class QSODetail extends React.PureComponent {
   state = {
-    error: null,
     eventId: null,
     active: true,
     showModal: false,
@@ -24,16 +22,7 @@ class QSODetail extends React.PureComponent {
     adClosed: false,
     qsoError: null
   };
-  componentDidCatch(error, errorInfo) {
-    if (process.env.NODE_ENV === "production") {
-      this.setState({ error });
-      Sentry.withScope(scope => {
-        scope.setExtras(errorInfo);
-        const eventId = Sentry.captureException(error);
-        this.setState({ eventId });
-      });
-    } else console.log(error, errorInfo);
-  }
+
   static getDerivedStateFromProps(props, prevState) {
     if (props.qsoError && prevState.active)
       return {
