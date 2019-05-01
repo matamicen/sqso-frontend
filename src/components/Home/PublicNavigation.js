@@ -22,6 +22,10 @@ const PublicNavigation = () => (
           <Dropdown.Item>
             <Link to="/signup">Signup</Link>
           </Dropdown.Item>
+          <Dropdown.Divider />
+          <Dropdown.Item>
+            <Link to="/contact">Contact Us</Link>
+          </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     </Menu.Menu>

@@ -93,6 +93,10 @@ class AuthenticatedNavigation extends React.PureComponent {
               <Dropdown.Item onClick={this.logout.bind(this)}>
                 Log Out
               </Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item>
+                <Link to="/contact">Contact Us</Link>
+              </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </Menu.Menu>

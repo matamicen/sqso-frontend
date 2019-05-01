@@ -18,6 +18,7 @@ import aws_exports from "../aws-exports";
 import Amplify from "@aws-amplify/core";
 import * as Sentry from "@sentry/browser";
 import Notifications from "./Notifications/Notifications";
+import ContactForm from "./contactForm";
 import ErrorBoundary from "./ErrorBoundary";
 // if (process.env.NODE_ENV !== 'production') {     const {whyDidYouUpdate} =
 // require('why-did-you-update')     whyDidYouUpdate(React)   }
@@ -104,6 +105,15 @@ class App extends Component {
                 );
               else return null;
             }}
+          />
+          <Route
+            exact
+            path="/contact"
+            component={() => (
+              <ErrorBoundary key="contact">
+                <ContactForm />
+              </ErrorBoundary>
+            )}
           />
 
           <Route
