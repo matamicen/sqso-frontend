@@ -72,16 +72,20 @@ class FeedAudio extends React.Component {
               confirmButton="Login"
               content="Please Login to perform this action"
             />
-            <Button icon onClick={this.onClick}>
-              <Icon name="play circle" />
-            </Button>
-            {date.toLocaleDateString("EN-US", { month: "short" }) +
-              " " +
-              date.getDate() +
-              ", " +
-              date.getFullYear()}{" "}
-            {date.getUTCHours() + ":" + date.getMinutes()}{" "}
-            {onlyForRegistered && <Link to="/login">Login Required</Link>}
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <Button icon onClick={this.onClick}>
+                <Icon name="play circle" />
+              </Button>
+              {this.props.media.description}{" "}
+              {this.props.media.description && " - "}
+              {date.toLocaleDateString("EN-US", { month: "short" }) +
+                " " +
+                date.getDate() +
+                ", " +
+                date.getFullYear()}{" "}
+              {date.getUTCHours() + ":" + date.getMinutes()}
+              {onlyForRegistered && <Link to="/login">Login Required</Link>}
+            </div>
           </Fragment>
         );
       } else {

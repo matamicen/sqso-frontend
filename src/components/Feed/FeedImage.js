@@ -5,26 +5,17 @@ import Image from "semantic-ui-react/dist/commonjs/elements/Image";
 import Divider from "semantic-ui-react/dist/commonjs/elements/Divider";
 import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
 
+import "../../styles/style.css";
 import Slider from "react-slick";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as Actions from "../../actions";
 
-function SampleArrow(props) {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{
-        ...style,
-        color: "black",
-        display: "block",
-        background: "black"
-      }}
-      onClick={onClick}
-    />
-  );
-}
+const styles = {
+  textAlign: "center",
+  padding: "20px"
+};
+
 class FeedImage extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -38,39 +29,20 @@ class FeedImage extends React.Component {
   open = () => this.setState({ showModal: true });
   render() {
     var settings = {
-      className: "center",
       infinite: true,
       dots: true,
-      // arrows: true,
+      arrows: true,
       speed: 150,
-      centerMode: true,
-      prevArrow: <SampleArrow />,
-      nextArrow: <SampleArrow />
+      centerMode: true
     };
 
     return (
       <Fragment>
         <Divider />
-        <div
-        // style={{
-        //   display: "flex",
-        //   // textAlign: "center"
-        //   // height: "300px"
-        // }}
-        >
+        <div style={styles}>
           <Slider {...settings}>
-            {/* <style>.slick-next:before {{ color: "red!important;" }}</style> */}
             {this.props.img.map(m => (
-              <div
-                key={m.idqsos_media}
-                style={{
-                  display: "inline-flex",
-                  verticalAlign: "middle",
-                  textAlign: "center",
-                  alignItems: "center",
-                  justifyContent: "center"
-                }}
-              >
+              <div key={m.idqsos_media}>
                 <h3>
                   <img
                     src={m.url}
@@ -88,30 +60,6 @@ class FeedImage extends React.Component {
               </div>
             ))}
           </Slider>
-          {/* <Carousel cellAlign="center">
-            {this.props.img.map(m => (
-              <div
-                key={m.idqsos_media}
-                style={{
-                  display: "inline-flex",
-                  verticalAlign: "middle",
-                  textAlign: "center"
-                }}
-              >
-                <img
-                  src={m.url}
-                  key={m.idqsos_media}
-                  alt={m.description}
-                  onClick={() => this.open()}
-                  style={{
-                    height: "300px",
-                    objectFit: "cover"
-                  }}
-                />
-                <p>{m.url}</p>
-              </div>
-            ))}
-          </Carousel> */}
 
           <Modal closeIcon open={this.state.showModal} onClose={this.close}>
             <Modal.Content image scrolling>
