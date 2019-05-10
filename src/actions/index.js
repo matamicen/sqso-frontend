@@ -686,9 +686,7 @@ export function doFetchQRA(qra, token = null) {
       dispatch(doRequestQRA());
       API.post(apiName, path, myInit)
         .then(response => {
-          if (response.body.error === 0)
-            dispatch(doReceiveQRA(response.body.message));
-          else console.log(response.body.message);
+          dispatch(doReceiveQRA(response.body.message, response.body.error));
         })
         .catch(error => {
           if (process.env.NODE_ENV !== "production") {

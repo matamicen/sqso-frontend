@@ -171,6 +171,7 @@ class QRAProfileContainer extends React.PureComponent {
 
     let qraInfo = null;
     if (this.props.qra) qraInfo = this.props.qra.qra;
+
     if (this.state.qraError) {
       return (
         <Modal
