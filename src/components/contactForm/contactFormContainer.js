@@ -14,8 +14,8 @@ class contactForm extends React.Component {
     let myInit = {
       body: {
         email: values.email,
-        message: values.message,
-      }, // replace this with attributes you need
+        message: values.message
+      } // replace this with attributes you need
     };
     API.post(apiName, path, myInit)
       .then(response => {
@@ -37,7 +37,7 @@ class contactForm extends React.Component {
       email: Yup.string("Enter your email")
         .email("Enter a valid email")
         .required("Email is required"),
-      message: Yup.string().required("Enter Message"),
+      message: Yup.string().required("Enter Message")
     });
 
     return (
