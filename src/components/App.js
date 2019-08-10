@@ -3,7 +3,7 @@ import React, { Component, Fragment } from "react";
 import { Route, Switch, withRouter } from "react-router-dom";
 
 import Home from "./Home/Home";
-import { SignUp } from "./Auth/SignUp";
+import SignUp from "./Auth/SignUp";
 
 import LogIn from "./Auth/LogIn";
 import ForgotPassword from "./Auth/ForgotPassword";

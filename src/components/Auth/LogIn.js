@@ -12,38 +12,44 @@ import Message from "semantic-ui-react/dist/commonjs/collections/Message";
 import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
 // import Auth from '@aws-amplify/auth';
 import "./style.css";
-import Advertisement from "semantic-ui-react/dist/commonjs/views/Advertisement";
+
 import AppNavigation from "../Home/AppNavigation";
 import Amplify from "@aws-amplify/core";
 import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
 import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
 import Ad from "../Ad/Ad";
+import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
 import * as Sentry from "@sentry/browser";
 const Auth = Amplify.Auth;
 class LogIn extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      active: null,
+      dimmerActive: false,
+      dimmerLoginActive: false,
+      dimmerValCodeActive: false,
+
       showModal: false,
+      code: "",
       password: "",
       qra: "",
       error: null,
-      loginError: false
+      loginError: false,
+      confirmError: ""
     };
   }
   handleOnClickLogin = () => {
-    this.setState({ active: true });
+    this.setState({ dimmerActive: true });
     this.login();
   };
   async login() {
     let token;
-    this.setState({ active: true });
+    this.setState({ dimmerActive: true });
 
     let user = await Auth.signIn(this.state.qra, this.state.password).catch(
       err => {
-        this.setState({ active: false });
-        this.setState({ loginError: err.message });
+        this.setState({ dimmerActive: false });
+        this.setState({ loginError: err });
       }
     );
 
@@ -66,8 +72,10 @@ class LogIn extends React.Component {
     }
   }
   static getDerivedStateFromProps(props, state) {
-    if (props.isAuthenticated || state.loginError) return { active: false };
-    else if (props.authenticating && !state.loginError) return { active: true };
+    if (props.isAuthenticated || state.loginError)
+      return { dimmerActive: false };
+    else if (props.authenticating && !state.loginError)
+      return { dimmerActive: true };
     // Return null to indicate no change to state.
     return null;
   }
@@ -83,12 +91,60 @@ class LogIn extends React.Component {
       qra: e.target.value.toUpperCase()
     });
   }
-
+  async handleResendCode() {
+    await Auth.resendSignUp(this.state.qra.toUpperCase())
+      .then(() => {
+        this.setState({
+          loginError: {
+            code: "codeResent",
+            message: "Code Resent for " + this.state.qra.toUpperCase()
+          },
+          showModal: true
+        });
+      })
+      .catch(err => {
+        if (process.env.NODE_ENV !== "production") {
+          console.log(err);
+        } else Sentry.captureException(err);
+        this.setState({ confirmError: err });
+      });
+  }
+  handleOnConfirm(e) {
+    const code = this.state.code.trim();
+    this.setState({ dimmerValCodeActive: true });
+    Auth.confirmSignUp(this.state.qra.trim().toUpperCase(), code, {
+      // Optional. Force user confirmation irrespective of existing alias. By default
+      // set to True.
+      forceAliasCreation: true
+    })
+      .then(data => {
+        this.setState({
+          dimmerValCodeActive: false,
+          dimmerLoginActive: true
+        });
+        this.handleOnClickLogin();
+      })
+      .catch(err => {
+        if (process.env.NODE_ENV !== "production") {
+          console.log(err);
+        } else Sentry.captureException(err);
+        this.setState({ confirmError: err });
+      });
+  }
+  handleCodeChange(e) {
+    this.setState({ code: e.target.value });
+  }
   render() {
     return (
       <Fragment>
-        <Dimmer active={this.state.active} page>
+        <Dimmer active={this.state.dimmerLoginActive} page>
+          <Loader>Login User...</Loader>
+        </Dimmer>
+        <Dimmer active={this.state.dimmerActive} page>
           <Loader>Validating User...</Loader>
+        </Dimmer>
+        <Dimmer active={this.state.dimmerValCodeActive} page>
+          <Loader>Validating Code...</Loader>
         </Dimmer>
 
         <div className="global-container">
@@ -96,9 +152,7 @@ class LogIn extends React.Component {
             <AppNavigation />
           </div>
           <div className="site-left">
-            <Advertisement unit="wide skyscraper">
-              <Ad adslot="/21799560237/Login/left" width={160} height={600} />
-            </Advertisement>
+            <Ad adslot="/21799560237/Login/left" width={160} height={600} />
           </div>
 
           <div className="site-main">
@@ -117,7 +171,7 @@ class LogIn extends React.Component {
                 <Header as="h2" color="teal" textAlign="center">
                   Sign-in to your account
                 </Header>
-                <Form size="large" onSubmit={() => this.handleOnClickLogin()}>
+                <Form size="large">
                   <Segment stacked>
                     <Form.Field>
                       <Form.Input
@@ -148,9 +202,31 @@ class LogIn extends React.Component {
                     </Form.Field>
 
                     {this.state.loginError && (
-                      <Message negative content={this.state.loginError} />
+                      <Message
+                        negative
+                        content={this.state.loginError.message}
+                      />
                     )}
-                    <Button content="Login" />
+                    {this.state.loginError.code ===
+                      "UserNotConfirmedException" && (
+                      <div>
+                        <Button
+                          content="Resend Code"
+                          onClick={() => this.handleResendCode()}
+                        />
+                        <Button
+                          content="Confirm Code"
+                          onClick={() => this.setState({ showModal: true })}
+                        />
+                      </div>
+                    )}
+                    {this.state.loginError.code !==
+                      "UserNotConfirmedException" && (
+                      <Button
+                        content="Login"
+                        onClick={() => this.handleOnClickLogin()}
+                      />
+                    )}
                   </Segment>
                 </Form>
                 <Message>
@@ -165,11 +241,63 @@ class LogIn extends React.Component {
           </div>
 
           <div className="site-right">
-            <Advertisement unit="wide skyscraper">
-              <Ad adslot="/21799560237/Login/left" width={160} height={600} />
-            </Advertisement>
+            <Ad adslot="/21799560237/Login/left" width={160} height={600} />
           </div>
         </div>
+        <Modal
+          closeIcon
+          open={this.state.showModal}
+          onClose={() => this.setState({ showModal: false })}
+        >
+          <Modal.Content>
+            <Modal.Description>
+              <Grid
+                textAlign="center"
+                style={{
+                  height: "100%"
+                }}
+                verticalAlign="middle"
+              >
+                <Grid.Column
+                  style={{
+                    maxWidth: 450
+                  }}
+                >
+                  <Header as="h2" color="teal" textAlign="center">
+                    Confirmation Code
+                  </Header>
+                  <Header as="h3" color="teal" textAlign="center">
+                    Please verify your email inbox
+                  </Header>
+                  <Form>
+                    <Form.Field>
+                      <Form.Input
+                        fluid
+                        placeholder="Confirmation Code"
+                        name="Code"
+                        onChange={this.handleCodeChange.bind(this)}
+                      />
+                    </Form.Field>
+
+                    {this.state.confirmError && (
+                      <Message negative content={this.state.confirmError} />
+                    )}
+                    <div>
+                      <Button
+                        content="Resend Code"
+                        onClick={() => this.handleResendCode()}
+                      />
+                      <Button
+                        content="Confirm Code"
+                        onClick={() => this.handleOnConfirm()}
+                      />
+                    </div>
+                  </Form>
+                </Grid.Column>
+              </Grid>
+            </Modal.Description>
+          </Modal.Content>
+        </Modal>
       </Fragment>
     );
   }

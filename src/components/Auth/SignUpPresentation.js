@@ -7,10 +7,12 @@ import Form from "semantic-ui-react/dist/commonjs/collections/Form";
 import Message from "semantic-ui-react/dist/commonjs/collections/Message";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 import Recaptcha from "react-recaptcha";
-
+import Button from "semantic-ui-react/dist/commonjs/elements/Button";
 import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
+import { CountryDropdown } from "react-country-region-selector";
 const SignUpPresentation = props => {
   const {
+    values,
     errors,
     touched,
     handleChange,
@@ -23,6 +25,7 @@ const SignUpPresentation = props => {
     handleOnCloseModal,
     handleOnConfirm,
     handleCodeChange,
+    handleResendCode,
     confirmError
   } = props;
 
@@ -155,7 +158,14 @@ const SignUpPresentation = props => {
                     )}
                   </Form.Field>
                   <Form.Field>
-                    <Form.Input
+                    <CountryDropdown
+                      name="country"
+                      valueType="short"
+                      value={values.country}
+                      onChange={(_, e) => handleChange(e)}
+                      onBlur={handleBlur}
+                    />
+                    {/* <Form.Input
                       fluid
                       icon="world"
                       iconPosition="left"
@@ -163,7 +173,7 @@ const SignUpPresentation = props => {
                       error={touched.country && Boolean(errors.country)}
                       name="country"
                       onChange={change.bind(null, "country")}
-                    />{" "}
+                    /> */}{" "}
                     {touched.country && errors.country && (
                       <Message negative content={errors.country} />
                     )}
@@ -226,12 +236,7 @@ const SignUpPresentation = props => {
           <Ad adslot="/21799560237/Signup/left" width={160} height={600} />
         </div>
       </div>
-      <Modal
-        basic
-        closeIcon
-        open={showModal}
-        onClose={() => handleOnCloseModal()}
-      >
+      <Modal closeIcon open={showModal} onClose={() => handleOnCloseModal()}>
         <Modal.Content>
           <Modal.Description>
             <Grid
@@ -249,18 +254,30 @@ const SignUpPresentation = props => {
                 <Header as="h2" color="teal" textAlign="center">
                   Confirmation Code
                 </Header>
-                <Form onSubmit={() => handleOnConfirm()}>
+                <Header as="h3" color="teal" textAlign="center">
+                  Please verify your email inbox
+                </Header>
+                <Form>
                   <Form.Field>
                     <Form.Input
                       fluid
                       placeholder="Confirmation Code"
                       name="Code"
-                      onChange={() => handleCodeChange()}
+                      onChange={handleCodeChange.bind(this)}
                     />
                   </Form.Field>
 
                   {confirmError && <Message negative content={confirmError} />}
-                  <Form.Button content="Confirm Code" />
+                  <div>
+                    <Button
+                      content="Resend Code"
+                      onClick={() => handleResendCode()}
+                    />
+                    <Button
+                      content="Confirm Code"
+                      onClick={() => handleOnConfirm()}
+                    />
+                  </div>
                 </Form>
               </Grid.Column>
             </Grid>

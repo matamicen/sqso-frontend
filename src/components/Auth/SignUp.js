@@ -3,12 +3,24 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import SignUpPresentation from "./SignUpPresentation";
 import Auth from "@aws-amplify/auth";
-
+import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
+import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
+import { withRouter } from "react-router-dom";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import * as Actions from "../../actions";
 import * as Sentry from "@sentry/browser";
-export class SignUp extends React.Component {
+
+class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      dimmerActive: false,
+      dimmerLoginActive: false,
+      dimmerValCodeActive: false,
+      qra: "",
+      password: "",
+      code: "",
       showModal: false,
       userCreated: false,
       userConfirmed: false,
@@ -20,7 +32,6 @@ export class SignUp extends React.Component {
   }
 
   signUp(values) {
-    console.log("signUp");
     const email = values.email.trim();
     const password = values.password.trim();
     const qra = values.qra.trim().toUpperCase();
@@ -28,6 +39,8 @@ export class SignUp extends React.Component {
     const firstName = values.firstName.trim();
     const lastName = values.lastName.trim();
     const country = values.country.trim();
+
+    this.setState({ qra: qra, dimmerActive: true, password: password });
 
     Auth.signUp({
       username: qra,
@@ -43,28 +56,23 @@ export class SignUp extends React.Component {
       validationData: [] //optional
     })
       .then(data => {
-        this.setState({ cognitoUser: data.user.username });
-        this.setState({ userCreated: true });
-        this.setState({ showModal: true });
+        this.setState({
+          dimmerActive: false,
+          cognitoUser: data.user.username,
+          userCreated: true,
+          showModal: true
+        });
       })
       .catch(err => {
-        this.setState({ signUpError: err.message });
+        this.setState({ dimmerActive: false, signUpError: err.message });
       });
   }
-
-  handleOnConfirm(e) {
-    e.preventDefault();
-
-    const code = this.state.code.trim();
-
-    Auth.confirmSignUp(this.state.qra.trim().toUpperCase(), code, {
-      // Optional. Force user confirmation irrespective of existing alias. By default
-      // set to True.
-      forceAliasCreation: true
-    })
-      .then(data => {
-        this.props.history.push("/");
-      })
+  handleCodeChange(e) {
+    this.setState({ code: e.target.value });
+  }
+  async handleResendCode() {
+    await Auth.resendSignUp(this.state.qra.toUpperCase())
+      .then(() => {})
       .catch(err => {
         if (process.env.NODE_ENV !== "production") {
           console.log(err);
@@ -72,7 +80,59 @@ export class SignUp extends React.Component {
         this.setState({ confirmError: err });
       });
   }
+  handleOnConfirm() {
+    const code = this.state.code.trim();
+    this.setState({ dimmerValCodeActive: true });
 
+    Auth.confirmSignUp(this.state.qra.trim().toUpperCase(), code, {
+      // Optional. Force user confirmation irrespective of existing alias. By default
+      // set to True.
+      forceAliasCreation: true
+    })
+      .then(data => {
+        this.setState({
+          showModal: false,
+          dimmerValCodeActive: false,
+          dimmerLoginActive: true
+        });
+        this.login();
+      })
+      .catch(err => {
+        if (process.env.NODE_ENV !== "production") {
+          console.log(err);
+        } else Sentry.captureException(err);
+        this.setState({ dimmerValCodeActive: false, confirmError: err });
+      });
+  }
+  async login() {
+    let token;
+    this.setState({ active: true });
+
+    let user = await Auth.signIn(this.state.qra, this.state.password).catch(
+      err => {
+        console.log(err);
+      }
+    );
+
+    if (user) {
+      await this.props.actions.doStartingLogin();
+      token = user.signInUserSession.idToken.jwtToken;
+      let credentials = await Auth.currentCredentials();
+      await this.props.actions.doLogin(
+        token,
+        this.state.qra.toUpperCase(),
+        credentials.data.IdentityId
+      );
+      await this.props.actions.doFetchUserInfo(token);
+      Sentry.configureScope(scope => {
+        scope.setUser({
+          qra: this.state.qra
+        });
+      });
+      this.setState({ dimmerLoginActive: false });
+      this.props.history.push("/");
+    }
+  }
   render() {
     const values = {
       email: "",
@@ -100,7 +160,7 @@ export class SignUp extends React.Component {
         .oneOf([Yup.ref("password"), null], "Passwords must match"),
       qra: Yup.string("Enter your Callsign")
         .required("QRA is required")
-        .min(4, "QRA is too short"),
+        .min(3, "QRA is too short"),
       birthDate: Yup.date()
         .required("Enter your Date of Birth")
         .min(new Date(1900, 0, 1))
@@ -112,6 +172,15 @@ export class SignUp extends React.Component {
     });
     return (
       <Fragment>
+        <Dimmer active={this.state.dimmerLoginActive} page>
+          <Loader>Login User...</Loader>
+        </Dimmer>
+        <Dimmer active={this.state.dimmerActive} page>
+          <Loader>Validating User...</Loader>
+        </Dimmer>
+        <Dimmer active={this.state.dimmerValCodeActive} page>
+          <Loader>Validating Code...</Loader>
+        </Dimmer>
         <Formik
           render={props => (
             <SignUpPresentation
@@ -120,7 +189,8 @@ export class SignUp extends React.Component {
               showModal={this.state.showModal}
               handleOnCloseModal={() => this.setState({ showModal: false })}
               handleOnConfirm={() => this.handleOnConfirm()}
-              handleCodeChange={() => this.handleCodeChange()}
+              handleCodeChange={this.handleCodeChange.bind(this)}
+              handleResendCode={() => this.handleResendCode()}
               confirmError={this.state.confirmError}
             />
           )}
@@ -132,3 +202,17 @@ export class SignUp extends React.Component {
     );
   }
 }
+const mapStateToProps = state => ({
+  isAuthenticated: state.userData.isAuthenticated,
+  authenticating: state.userData.authenticating
+});
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(Actions, dispatch)
+});
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(SignUp)
+);
