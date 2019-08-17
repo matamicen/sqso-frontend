@@ -40,13 +40,16 @@ if (process.env.NODE_ENV === "production") {
 }
 ReactGA.initialize("UA-124438207-1");
 
-const store = createStore(
-  reducer,
-  compose(
-    applyMiddleware(thunk, googleAnalytics),
-    Reactotron.createEnhancer()
-  )
-);
+const store =
+  process.env.NODE_ENV !== "production"
+    ? createStore(
+        reducer,
+        compose(
+          applyMiddleware(thunk, googleAnalytics),
+          Reactotron.createEnhancer()
+        )
+      )
+    : createStore(reducer, compose(applyMiddleware(thunk, googleAnalytics)));
 
 render(
   <Provider store={store}>
