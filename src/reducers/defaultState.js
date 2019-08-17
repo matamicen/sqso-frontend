@@ -26,7 +26,10 @@ import {
   RECEIVE_NOTIFICATIONS,
   PUBLIC_SESSION,
   RECEIVE_USER_BIO,
-  RECEIVE_USER_DATA_INFO
+  RECEIVE_USER_DATA_INFO,
+  FOLLOW_CLEAR,
+  FOLLOW_REQUEST,
+  FOLLOW_RECEIVE
 } from "../actions";
 
 const initialState = {
@@ -59,7 +62,10 @@ const initialState = {
   qra: null,
   FetchingQRA: false,
   QRAFetched: false,
-  qraError: null
+  qraError: null,
+  followFetched: false,
+  followFetching: false,
+  follow: {}
 };
 
 //define a reducer with an initialized state action
@@ -124,6 +130,7 @@ function generalReducers(state = initialState, action) {
         userData: userInfo
       });
       return newStore;
+
     case RECEIVE_USERINFO:
       userInfo = {
         ...state.userData,
@@ -188,6 +195,26 @@ function generalReducers(state = initialState, action) {
         qra: null,
         FetchingQRA: false,
         QRAFetched: false
+      });
+      return newStore;
+    case FOLLOW_CLEAR:
+      newStore = Object.assign({}, state, {
+        ...state,
+        follow: {}
+      });
+      return newStore;
+    case FOLLOW_RECEIVE:
+      newStore = Object.assign({}, state, {
+        ...state,
+        follow: action.follow,
+        followFetched: true,
+        followFetching: false
+      });
+      return newStore;
+    case FOLLOW_REQUEST:
+      newStore = Object.assign({}, state, {
+        ...state,
+        followFetching: true
       });
       return newStore;
     case RECEIVE_QRA:

@@ -7,7 +7,7 @@ if (process.env.NODE_ENV !== "production") {
   Reactotron.configure({ name: "SuperQso Web", secure: false })
 
     .use(reactotronRedux())
-    .use(trackGlobalErrors({ offline: false }))
+    .use(trackGlobalErrors({ offline: true }))
 
     .connect();
 

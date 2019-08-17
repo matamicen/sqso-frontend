@@ -20,6 +20,7 @@ import * as Sentry from "@sentry/browser";
 import Notifications from "./Notifications/Notifications";
 import ContactForm from "./contactForm";
 import ErrorBoundary from "./ErrorBoundary";
+import Follow from "./follow";
 // if (process.env.NODE_ENV !== 'production') {     const {whyDidYouUpdate} =
 // require('why-did-you-update')     whyDidYouUpdate(React)   }
 
@@ -115,7 +116,15 @@ class App extends Component {
               </ErrorBoundary>
             )}
           />
-
+          <Route
+            exact
+            path="/follow"
+            component={() => (
+              <ErrorBoundary key="follow">
+                <Follow />
+              </ErrorBoundary>
+            )}
+          />
           <Route
             exact
             path="/:qra"

@@ -30,6 +30,10 @@ export const DELETE_QSO = "DELETE_QSO";
 export const DELETE_COMMENT = "DELETE_COMMENT";
 export const NOTIFICATION_READ = "NOTIFICATION_READ";
 export const RECEIVE_NOTIFICATIONS = "RECEIVE_NOTIFICATIONS";
+export const FOLLOW_CLEAR = "FOLLOW_CLEAR";
+export const FOLLOW_FETCH = "FOLLOW_FETCH";
+export const FOLLOW_REQUEST = "FOLLOW_REQUEST";
+export const FOLLOW_RECEIVE = "FOLLOW_RECEIVE";
 
 export function doNotificationRead(idnotif = null, token) {
   return dispatch => {
@@ -279,7 +283,11 @@ export function doLogout() {
     type: LOGOUT
   };
 }
-
+export function doFollowRequest() {
+  return {
+    type: FOLLOW_REQUEST
+  };
+}
 export function doRequestFeed() {
   return {
     type: REQUEST_FEED,
@@ -287,7 +295,12 @@ export function doRequestFeed() {
     qsosFetched: false
   };
 }
-
+export function doFollowReceive(follow) {
+  return {
+    type: FOLLOW_RECEIVE,
+    follow: follow
+  };
+}
 export function doReceiveNotifications(notifications) {
   return {
     type: RECEIVE_NOTIFICATIONS,
@@ -458,7 +471,40 @@ export function doFetchUserFeed(token) {
       });
   };
 }
-
+export function doFollowFetch(token) {
+  return dispatch => {
+    dispatch(doFollowRequest());
+    let apiName = "superqso";
+    let path = "/qra/getRecFollowers";
+    let myInit = {
+      body: {}, // replace this with attributes you need
+      headers: {
+        Authorization: token
+      } // OPTIONAL
+    };
+    API.get(apiName, path, myInit)
+      .then(response => {
+        if (response.body.error === 0)
+          dispatch(doFollowReceive(response.body.message));
+        else console.log(response.body.message);
+      })
+      .catch(error => {
+        Auth.currentSession()
+          .then(session => {
+            console.tron.log(error);
+            token = session.idToken.jwtToken;
+            dispatch(refreshToken(token));
+            dispatch(doFollowFetch(token));
+          })
+          .catch(error => {
+            if (process.env.NODE_ENV !== "production") {
+              console.log(error);
+            } else Sentry.captureException(error);
+            dispatch(doLogout());
+          });
+      });
+  };
+}
 export function doFetchNotifications(token) {
   return dispatch => {
     dispatch(doRequestFeed());
@@ -809,6 +855,11 @@ export function doReceiveQRA(data, error) {
 export function clearQRA() {
   return {
     type: CLEAR_QRA
+  };
+}
+export function followClear() {
+  return {
+    type: FOLLOW_CLEAR
   };
 }
 export function clearQSO() {
