@@ -31,6 +31,7 @@ class QSODetail extends React.PureComponent {
       };
     if (props.qso && prevState.active) {
       if (
+        process.env.NODE_ENV === "production" &&
         !prevState.adClosed &&
         props.qraUserData &&
         props.qraUserData.account_type &&
@@ -41,7 +42,10 @@ class QSODetail extends React.PureComponent {
           adActive: true,
           active: false
         };
-      } else if (!props.isAuthenticated)
+      } else if (
+        process.env.NODE_ENV === "production" &&
+        !props.isAuthenticated
+      )
         return {
           adActive: true,
           active: false
@@ -50,6 +54,7 @@ class QSODetail extends React.PureComponent {
     }
     if (!props.qso && !prevState.active) return { active: true };
     if (
+      process.env.NODE_ENV === "production" &&
       !prevState.adClosed &&
       props.qraUserData &&
       props.qraUserData.account_type &&
@@ -63,6 +68,8 @@ class QSODetail extends React.PureComponent {
     return null;
   }
   componentDidMount() {
+    if (process.env.NODE_ENV !== "production")
+      this.setState({ adActive: false });
     let qsoInMemory = this.props.qso ? this.props.qso.GUID_URL : "";
 
     if (
