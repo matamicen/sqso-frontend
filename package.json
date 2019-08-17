@@ -1,6 +1,6 @@
 {
   "name": "sqso-frontend",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "private": true,
   "homepage": "https://www.miqso.com.ar/",
   "dependencies": {
@@ -84,7 +84,7 @@
   },
   "scripts": {
     "start": "yarn install && yarn build && node app",
-    "dummy": "react-scripts start",
+    "static": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "coverage": "react-scripts test --env=jsdom coverage",
