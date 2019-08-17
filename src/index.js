@@ -5,7 +5,7 @@ import "core-js/es6/array";
 import React from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import reducer from "./reducers";
 import { Route, BrowserRouter } from "react-router-dom";
@@ -18,6 +18,10 @@ import App from "./components/App";
 import ReactGA from "react-ga";
 import * as Sentry from "@sentry/browser";
 import packageJson from "../package.json";
+
+import "./ReactotronConfig";
+import Reactotron from "./ReactotronConfig";
+
 const RELEASE = packageJson.version;
 if (process.env.NODE_ENV === "production") {
   Sentry.init({
@@ -31,12 +35,18 @@ if (process.env.NODE_ENV === "production") {
       }
       return event;
       // eslint-disable-next-line prettier/prettier
-    },
+    }
   });
 }
 ReactGA.initialize("UA-124438207-1");
 
-const store = createStore(reducer, applyMiddleware(thunk, googleAnalytics));
+const store = createStore(
+  reducer,
+  compose(
+    applyMiddleware(thunk, googleAnalytics),
+    Reactotron.createEnhancer()
+  )
+);
 
 render(
   <Provider store={store}>
