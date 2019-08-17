@@ -18,6 +18,9 @@ class Home extends React.Component {
   };
 
   componentDidMount() {
+    if (process.env.NODE_ENV !== "production")
+      this.setState({ adActive: false });
+
     if (this.props.isAuthenticated)
       this.props.actions.doFetchUserFeed(this.props.token);
     else this.props.actions.doFetchPublicFeed();

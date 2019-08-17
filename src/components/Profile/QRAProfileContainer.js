@@ -23,6 +23,8 @@ class QRAProfileContainer extends React.PureComponent {
   }
 
   componentDidMount() {
+    if (process.env.NODE_ENV !== "production")
+      this.setState({ adActive: false });
     window.googletag.cmd.push(function() {
       window.googletag.destroySlots();
       window.googletag
@@ -87,6 +89,7 @@ class QRAProfileContainer extends React.PureComponent {
       };
     if (props.QRAFetched && prevState.active) {
       if (
+        process.env.NODE_ENV === "production" &&
         !prevState.adClosed &&
         props.qraUserData &&
         props.qraUserData.account_type &&
@@ -98,7 +101,7 @@ class QRAProfileContainer extends React.PureComponent {
 
           active: false
         };
-      else if (!props.isAuthenticated)
+      else if (process.env.NODE_ENV === "production" && !props.isAuthenticated)
         return {
           adActive: true,
           active: false
@@ -109,6 +112,7 @@ class QRAProfileContainer extends React.PureComponent {
       return { active: true };
     }
     if (
+      process.env.NODE_ENV === "production" &&
       !prevState.adClosed &&
       props.qraUserData &&
       props.qraUserData.account_type &&
