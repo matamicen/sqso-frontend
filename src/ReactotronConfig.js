@@ -1,11 +1,17 @@
-import Reactotron from "reactotron-react-js";
-import { reactotronRedux } from "reactotron-redux";
+if (process.env.NODE_ENV !== "production") {
+  const Reactotron = require("reactotron-react-js").default;
+  const { trackGlobalErrors } = require("reactotron-react-js");
 
-const reactotron =
-  process.env.NODE_ENV !== "production"
-    ? Reactotron.configure({ name: "SuperQso Web" }) // we can use plugins here -- more on this later
-        .use(reactotronRedux())
-        .connect()
-    : null; // let's connect!
+  const { reactotronRedux } = require("reactotron-redux");
 
-export default reactotron;
+  Reactotron.configure({ name: "SuperQso Web", secure: false })
+
+    .use(reactotronRedux())
+    .use(trackGlobalErrors({ offline: false }))
+
+    .connect();
+
+  // Reactotron.clear()
+
+  console.tron = Reactotron;
+}

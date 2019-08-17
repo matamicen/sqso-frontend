@@ -85,11 +85,11 @@
   "scripts": {
     "start": "yarn install && yarn build && node app",
     "dummy": "react-scripts start",
-    "build": "yarn version && react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "coverage": "react-scripts test --env=jsdom coverage",
     "eject": "react-scripts eject",
-    "serve": "set NODE_ENV=production&& yarn build && node app.js",
+    "serve": "set NODE_ENV=production && yarn build && node app.js",
     "deploy": "yarn version && git add . && eb deploy --stage --timeout 30",
     "analyze": "npm run build && source-map-explorer build/static/js/main.* "
   },

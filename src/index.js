@@ -20,7 +20,6 @@ import * as Sentry from "@sentry/browser";
 import packageJson from "../package.json";
 
 import "./ReactotronConfig";
-import Reactotron from "./ReactotronConfig";
 
 const RELEASE = packageJson.version;
 if (process.env.NODE_ENV === "production") {
@@ -46,7 +45,7 @@ const store =
         reducer,
         compose(
           applyMiddleware(thunk, googleAnalytics),
-          Reactotron.createEnhancer()
+          console.tron.createEnhancer()
         )
       )
     : createStore(reducer, compose(applyMiddleware(thunk, googleAnalytics)));
