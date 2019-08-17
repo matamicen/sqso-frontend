@@ -33,7 +33,6 @@ if (process.env.NODE_ENV === "production") {
         Sentry.showReportDialog({ eventId: event.event_id });
       }
       return event;
-      // eslint-disable-next-line prettier/prettier
     }
   });
 }
