@@ -20,11 +20,24 @@ class QRAfollowRecommend extends React.PureComponent {
       this.props.actions.doFollowFetch(this.props.token);
     }
   }
-  // static getDerivedStateFromProps(props, prevState) {}
+  doFollow = param => {
+    if (this.props.isAuthenticated)
+      this.props.actions.doFollowQRA(this.props.token, param);
+  };
+  doUnfollow = param => {
+    if (this.props.isAuthenticated)
+      this.props.actions.doUnfollowQRA(this.props.token, param);
+  };
+
   render() {
     return (
       <Fragment>
-        <QraFollowRecommendPresentational follow={this.props.follow} />
+        <QraFollowRecommendPresentational
+          follow={this.props.follow}
+          following={this.props.following}
+          doFollow={e => this.doFollow(e)}
+          doUnfollow={e => this.doUnfollow(e)}
+        />
       </Fragment>
     );
   }
@@ -33,6 +46,7 @@ const mapStateToProps = (state, ownProps) => ({
   followFetched: state.followFetched,
   followFetching: state.followFetching,
   follow: state.follow,
+  following: state.userData.following,
   isAuthenticated: state.userData.isAuthenticated,
   token: state.userData.token
 });

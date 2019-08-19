@@ -74,20 +74,17 @@ class AuthenticatedNavigation extends React.PureComponent {
                   this.props.history.push("/" + this.props.currentQRA + "/bio")
                 }
               >
-                Edit My Bio
-              </Dropdown.Item>
-              <Dropdown.Item
-                onClick={() =>
-                  this.props.history.push("/" + this.props.currentQRA + "/info")
-                }
-              >
-                Edit My Info
+                Edit My Profile
               </Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Item
                 onClick={() => this.props.history.push("/changepassword")}
               >
                 Change Password
+              </Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item onClick={() => this.props.history.push("/follow")}>
+                Who to Follow
               </Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Item onClick={this.logout.bind(this)}>

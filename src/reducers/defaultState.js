@@ -374,7 +374,8 @@ function generalReducers(state = initialState, action) {
         qsos: [],
         qsosFetched: false,
         FetchingQRA: false,
-        QRAFetched: false
+        QRAFetched: false,
+        follow: {}
       });
 
       return newStore;
@@ -413,7 +414,10 @@ function generalReducers(state = initialState, action) {
         qsos: [],
         qsosFetched: false,
         FetchingQRA: false,
-        QRAFetched: false
+        QRAFetched: false,
+        follow: {},
+        followFetching: false,
+        followFetched: false
       });
 
       return newStore;
@@ -438,7 +442,10 @@ function generalReducers(state = initialState, action) {
         FetchingQSO: false,
         qsosFetched: false,
         FetchingQRA: false,
-        QRAFetched: false
+        QRAFetched: false,
+        follow: {},
+        followFetching: false,
+        followFetched: false
       });
 
       return newStore;
