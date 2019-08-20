@@ -837,7 +837,7 @@ export function doRequestQRA() {
 
 export function doReceiveQRA(data, error) {
   let { monthly_qra_views, ...qraData } = data;
-  if (error === 0)
+  if (error === 0 && qraData.qra.disabled === 0)
     return {
       type: RECEIVE_QRA,
       qra: qraData,
@@ -846,10 +846,16 @@ export function doReceiveQRA(data, error) {
       QRAFetched: true
     };
   else {
-    return {
-      type: RECEIVE_QRA_ERROR,
-      error: data
-    };
+    if (error === 1)
+      return {
+        type: RECEIVE_QRA_ERROR,
+        error: data
+      };
+    else
+      return {
+        type: RECEIVE_QRA_ERROR,
+        error: "QRA is disabled temporarily"
+      };
   }
 }
 export function clearQRA() {

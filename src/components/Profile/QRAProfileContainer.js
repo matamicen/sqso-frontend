@@ -176,15 +176,15 @@ class QRAProfileContainer extends React.PureComponent {
     let qraInfo = null;
     if (this.props.qra) qraInfo = this.props.qra.qra;
 
-    if (this.state.qraError) {
+    if (this.props.qraError) {
       return (
         <Modal
-          open={this.state.qraError ? true : false}
+          open={this.props.qraError ? true : false}
           onClose={() => this.props.history.push("/")}
           size="small"
         >
           <Modal.Content>
-            <p align="center">{this.state.qraError}</p>
+            <p align="center">{this.props.qraError}</p>
           </Modal.Content>
         </Modal>
       );

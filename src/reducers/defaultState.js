@@ -186,7 +186,8 @@ function generalReducers(state = initialState, action) {
       newStore = Object.assign({}, state, {
         ...state,
         FetchingQRA: action.FetchingQRA,
-        QRAFetched: action.QRAFetched
+        QRAFetched: action.QRAFetched,
+        qraError: null
       });
       return newStore;
     case CLEAR_QRA:
