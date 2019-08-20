@@ -89,7 +89,7 @@ const qraFollowRecommendPresentational = props => (
       <Header as="h1" attached="top" textAlign="center">
         Who to Follow
       </Header>
-      {props.follow.followingMe && (
+      {props.follow.followingMe.length > 0 && (
         <Segment>
           <Header as="h3" block>
             Callsigns that follow you
@@ -139,7 +139,7 @@ const qraFollowRecommendPresentational = props => (
           </Slider>
         </Segment>
       )}
-      {props.follow.taggedMe && (
+      {props.follow.taggedMe.length > 0 && (
         <Segment>
           <Header as="h3" block>
             Callsigns that already tagged you
@@ -199,7 +199,7 @@ const qraFollowRecommendPresentational = props => (
           </Slider>
         </Segment>
       )}
-      {props.follow.topFollowed && (
+      {props.follow.topFollowed.length > 0 && (
         <Segment>
           <Header as="h3" block>
             Callsigns most followed
@@ -233,12 +233,8 @@ const qraFollowRecommendPresentational = props => (
                   <Card.Content extra>
                     <div className="ui two buttons">
                       {props.following.some(o => o.qra === qra.qra) ? (
-                        <Button
-                          basic
-                          color="red"
-                          onClick={() => props.doUnfollow(qra.qra)}
-                        >
-                          Unfollow
+                        <Button basic color="gray">
+                          Following
                         </Button>
                       ) : (
                         <Button
