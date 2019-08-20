@@ -89,7 +89,7 @@ const qraFollowRecommendPresentational = props => (
       <Header as="h1" attached="top" textAlign="center">
         Who to Follow
       </Header>
-      {props.follow.followingMe.length > 0 && (
+      {props.follow.followingMe && props.follow.followingMe.length > 0 && (
         <Segment>
           <Header as="h3" block>
             Callsigns that follow you
@@ -139,7 +139,7 @@ const qraFollowRecommendPresentational = props => (
           </Slider>
         </Segment>
       )}
-      {props.follow.taggedMe.length > 0 && (
+      {props.follow.taggedMe && props.follow.taggedMe.length > 0 && (
         <Segment>
           <Header as="h3" block>
             Callsigns that already tagged you
@@ -199,7 +199,7 @@ const qraFollowRecommendPresentational = props => (
           </Slider>
         </Segment>
       )}
-      {props.follow.topFollowed.length > 0 && (
+      {props.follow.topFollowed && (
         <Segment>
           <Header as="h3" block>
             Callsigns most followed
