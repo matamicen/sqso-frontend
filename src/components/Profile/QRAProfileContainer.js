@@ -180,7 +180,7 @@ class QRAProfileContainer extends React.PureComponent {
       return (
         <Modal
           open={this.props.qraError ? true : false}
-          onClose={() => this.props.history.push("/")}
+          onClose={() => this.props.history.goBack()}
           size="small"
         >
           <Modal.Content>
