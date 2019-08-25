@@ -95,16 +95,18 @@ class App extends Component {
             exact
             path="/notifications"
             component={() => {
-              if (
-                !this.props.authenticating &&
-                (this.props.isAuthenticated || this.props.public)
-              )
+              if (this.props.isAuthenticated)
                 return (
                   <ErrorBoundary key="notifications">
                     <Notifications />
                   </ErrorBoundary>
                 );
-              else return null;
+              else
+                return (
+                  <ErrorBoundary key="login">
+                    <LogIn />
+                  </ErrorBoundary>
+                );
             }}
           />
           <Route
@@ -119,11 +121,20 @@ class App extends Component {
           <Route
             exact
             path="/follow"
-            component={() => (
-              <ErrorBoundary key="follow">
-                <Follow />
-              </ErrorBoundary>
-            )}
+            component={() => {
+              if (this.props.isAuthenticated)
+                return (
+                  <ErrorBoundary key="follow">
+                    <Follow />
+                  </ErrorBoundary>
+                );
+              else
+                return (
+                  <ErrorBoundary key="login">
+                    <LogIn />
+                  </ErrorBoundary>
+                );
+            }}
           />
           <Route
             exact

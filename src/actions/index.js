@@ -491,7 +491,6 @@ export function doFollowFetch(token) {
       .catch(error => {
         Auth.currentSession()
           .then(session => {
-            console.tron.log(error);
             token = session.idToken.jwtToken;
             dispatch(refreshToken(token));
             dispatch(doFollowFetch(token));

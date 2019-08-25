@@ -140,7 +140,7 @@ export default class NewsFeed extends React.Component {
   }
   render() {
     const { rowCount, overscanRowCount } = this.state;
-    console.tron.log(this.props);
+
     if (
       this.props.list.length === 0 &&
       this.props.qsosFetched &&

@@ -30,7 +30,6 @@ class QRAfollowRecommend extends React.PureComponent {
   };
 
   render() {
-    console.tron.log(this.props.follow.taggedMe);
     return (
       <Fragment>
         <QraFollowRecommendPresentational
