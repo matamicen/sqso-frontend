@@ -6,7 +6,8 @@ import List from "react-virtualized/dist/commonjs/List";
 import WindowScroller from "react-virtualized/dist/commonjs/WindowScroller";
 import { CellMeasurer } from "react-virtualized/dist/commonjs/CellMeasurer";
 import { CellMeasurerCache } from "react-virtualized/dist/commonjs/CellMeasurer";
-
+import Message from "semantic-ui-react/dist/commonjs/collections/Message";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 export default class NewsFeed extends React.Component {
   constructor(props) {
@@ -139,6 +140,25 @@ export default class NewsFeed extends React.Component {
   }
   render() {
     const { rowCount, overscanRowCount } = this.state;
+    console.tron.log(this.props);
+    if (
+      this.props.list.length === 0 &&
+      this.props.qsosFetched &&
+      !this.props.fetchingQsos
+    ) {
+      return (
+        <Message negative>
+          <Message.Header>Your feed is emtpy! :(</Message.Header>
+          <p>
+            You are not following any CallSign, so we dont have anything to show
+            you here.
+          </p>
+          <p>
+            To start following a Callsign click <Link to={"/follow"}>here</Link>
+          </p>
+        </Message>
+      );
+    }
 
     return (
       <div className="WindowScrollerWrapper">

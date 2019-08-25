@@ -1,3 +1,14 @@
+/* Follow */
+
+.slick-slide {
+    /* padding: 0 15px; */
+    padding-right: 1em
+}
+
+.slick-list {
+    padding: 1px;
+}
+
 /* HOME */
 
 .global-container {
@@ -79,6 +90,7 @@
     grid-template-rows: 60px auto;
     grid-template-areas: "pageHeader pageHeader pageHeader" "leftSection mainSection rightSection";
     justify-content: space-evenly;
+    margin: 1em;
 }
 
 .profile-main {

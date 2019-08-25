@@ -135,7 +135,7 @@ class SignUp extends React.Component {
       });
       this.setState({ dimmerLoginActive: false });
       ReactGA.event({ category: "QRA", action: "login" });
-      this.props.history.push("/");
+      this.props.history.push("/follow");
     }
   }
   render() {

@@ -23,8 +23,12 @@ class NewsFeedContainer extends React.PureComponent {
 
     return (
       <Fragment>
-        {this.props.qsos && this.props.qsos.length > 0 && (
-          <NewsFeed list={qsos} />
+        {this.props.qsos && (
+          <NewsFeed
+            list={qsos}
+            fetchingQSOS={this.props.fetchingQSOS}
+            qsosFetched={this.props.qsosFetched}
+          />
         )}
       </Fragment>
     );

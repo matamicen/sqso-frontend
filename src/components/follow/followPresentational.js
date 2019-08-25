@@ -14,14 +14,14 @@ import AppNavigation from "../Home/AppNavigation";
 import "../../styles/style.css";
 import Ad from "../Ad/Ad";
 import Slider from "react-slick";
-import "../../styles/style.css";
+
 var settings = {
   // dots: false,
-  // infinite: true,
+  infinite: false,
   // speed: 500,
   // adaptiveHeight: false,
   slidesToShow: 4,
-  centerPadding: 30,
+
   slidesToScroll: 4,
   // initialSlide: 0,
 
@@ -31,9 +31,8 @@ var settings = {
       settings: {
         slidesToShow: 3,
         slidesToScroll: 3,
-        infinite: true,
-        dots: true,
-        customPadding: "15px"
+        infinite: false,
+        dots: false
       }
     },
     {
@@ -97,7 +96,7 @@ const qraFollowRecommendPresentational = props => (
           <Slider {...settings}>
             {props.follow.followingMe.map((qra, i) => (
               <div key={i}>
-                <Card raised>
+                <Card raised style={{ height: "14em" }}>
                   <Card.Content>
                     <Image floated="right" size="mini" src={qra.avatarpic} />
                     <Card.Header>
@@ -115,13 +114,9 @@ const qraFollowRecommendPresentational = props => (
                   <Card.Content extra>
                     <div className="ui two buttons">
                       {props.following.some(o => o.qra === qra.qra) ? (
-                        <Button
-                          basic
-                          color="red"
-                          onClick={() => props.doUnfollow(qra.qra)}
-                        >
-                          Unfollow
-                        </Button>
+                        <Button basic color="grey">
+                        Following
+                      </Button>
                       ) : (
                         <Button
                           basic
@@ -146,6 +141,53 @@ const qraFollowRecommendPresentational = props => (
           </Header>
           <Slider {...settings}>
             {props.follow.taggedMe.map((qra, i) => (
+              <div key={i}>
+                <Card raised style={{ height: "14em" }}>
+                  <Card.Content>
+                    <Image floated="right" size="mini" src={qra.avatarpic} />
+                    <Card.Header>
+                      <Link to={"/" + qra.qra}>{qra.qra}</Link>
+                    </Card.Header>
+                    <Card.Meta>{qra.firstname + " " + qra.lastname}</Card.Meta>
+                    <Card.Description>
+                      <Icon name="microphone" />
+                      {qra.qsos_counter} Qsos Created
+                      <br />
+                      <Icon name="user" />
+                      {qra.followers_counter} Followers
+                    </Card.Description>
+                  </Card.Content>
+
+                  <Card.Content extra>
+                    <div className="ui two buttons">
+                      {props.following.some(o => o.qra === qra.qra) ? (
+                       <Button basic color="grey">
+                       Following
+                     </Button>
+                      ) : (
+                        <Button
+                          basic
+                          color="green"
+                          onClick={() => props.doFollow(qra.qra)}
+                        >
+                          Follow
+                        </Button>
+                      )}
+                    </div>
+                  </Card.Content>
+                </Card>
+              </div>
+            ))}
+          </Slider>
+        </Segment>
+      )}
+      {props.follow.taggedByMe && props.follow.taggedByMe.length > 0 && (
+        <Segment>
+          <Header as="h3" block>
+            Callsigns that you have already tagged
+          </Header>
+          <Slider {...settings}>
+            {props.follow.taggedByMe.map((qra, i) => (
               <div
                 key={i}
                 style={{
@@ -155,7 +197,7 @@ const qraFollowRecommendPresentational = props => (
                   padding: "5px"
                 }}
               >
-                <Card raised>
+                <Card raised style={{ height: "14em" }}>
                   <Card.Content>
                     <Image floated="right" size="mini" src={qra.avatarpic} />
                     <Card.Header>
@@ -175,13 +217,9 @@ const qraFollowRecommendPresentational = props => (
                   <Card.Content extra>
                     <div className="ui two buttons">
                       {props.following.some(o => o.qra === qra.qra) ? (
-                        <Button
-                          basic
-                          color="red"
-                          onClick={() => props.doUnfollow(qra.qra)}
-                        >
-                          Unfollow
-                        </Button>
+                        <Button basic color="grey">
+                        Following
+                      </Button>
                       ) : (
                         <Button
                           basic
@@ -210,12 +248,10 @@ const qraFollowRecommendPresentational = props => (
                 key={i}
                 style={{
                   marginTop: "1em",
-                  marginLeft: "1em",
-                  paddingRight: "1em",
-                  padding: "5px"
+                  marginLeft: "1em"
                 }}
               >
-                <Card raised>
+                <Card raised style={{ height: "14em" }}>
                   <Card.Content>
                     <Image floated="right" size="mini" src={qra.avatarpic} />
                     <Card.Header>
@@ -233,7 +269,7 @@ const qraFollowRecommendPresentational = props => (
                   <Card.Content extra>
                     <div className="ui two buttons">
                       {props.following.some(o => o.qra === qra.qra) ? (
-                        <Button basic color="gray">
+                        <Button basic color="grey">
                           Following
                         </Button>
                       ) : (
