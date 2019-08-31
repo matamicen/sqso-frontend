@@ -10,6 +10,7 @@ import Recaptcha from "react-recaptcha";
 import Button from "semantic-ui-react/dist/commonjs/elements/Button";
 import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
 import { CountryDropdown } from "react-country-region-selector";
+import { Link } from "react-router-dom";
 const SignUpPresentation = props => {
   const {
     values,
@@ -22,7 +23,10 @@ const SignUpPresentation = props => {
     setFieldValue,
     signUpError,
     showModal,
+    showModalTC,
     handleOnCloseModal,
+    handleOnAcceptModalTC,
+    handleOnCancelModalTC,
     handleOnConfirm,
     handleCodeChange,
     handleResendCode,
@@ -224,7 +228,7 @@ const SignUpPresentation = props => {
                     )}
                   </Form.Field>
                   {signUpError && <Message negative content={signUpError} />}
-                  <Form.Button content="Submit" type="submit" />
+                  <Form.Button content="Register" type="submit" />
                 </Form>
               </Segment>
               To claim your CallSign, send an email to support@superqso.com
@@ -236,6 +240,29 @@ const SignUpPresentation = props => {
           <Ad adslot="/21799560237/Signup/left" width={160} height={600} />
         </div>
       </div>
+      <Modal size="small" open={showModalTC}>
+        <Modal.Content>
+          <p>
+            By signing up, you agree to the{" "}
+            <Link to="/tos">Terms of Service</Link> and{" "}
+            <Link to="/privacy">Privacy Policy</Link>, including{" "}
+            <Link to="/cookie">Coockie Use</Link>. Others will be able to find
+            you by CallSign.
+          </p>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button negative onClick={() => handleOnCancelModalTC()}>
+            No
+          </Button>
+          <Button
+            positive
+            icon="checkmark"
+            labelPosition="right"
+            content="Yes"
+            onClick={() => handleOnAcceptModalTC()}
+          />
+        </Modal.Actions>
+      </Modal>
       <Modal closeIcon open={showModal} onClose={() => handleOnCloseModal()}>
         <Modal.Content>
           <Modal.Description>

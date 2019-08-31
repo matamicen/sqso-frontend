@@ -20,8 +20,14 @@ class SignUp extends React.Component {
       dimmerValCodeActive: false,
       qra: "",
       password: "",
+      email: "",
+      birthDate: "",
+      firstName: "",
+      lastName: "",
+      country: "",
       code: "",
       showModal: false,
+      showModalTC: false,
       userCreated: false,
       userConfirmed: false,
       cognitoUser: "",
@@ -30,17 +36,20 @@ class SignUp extends React.Component {
       error: null
     };
   }
-
+  handleAcceptTC() {
+    this.signUp();
+    this.setState({ showModalTC: false });
+  }
   signUp(values) {
-    const email = values.email.trim();
-    const password = values.password.trim();
-    const qra = values.qra.trim().toUpperCase();
-    const birthDate = values.birthDate.trim();
-    const firstName = values.firstName.trim();
-    const lastName = values.lastName.trim();
-    const country = values.country.trim();
+    const email = this.state.email;
+    const password = this.state.password;
+    const qra = this.state.qra;
+    const birthDate = this.state.birthDate;
+    const firstName = this.state.firstName;
+    const lastName = this.state.lastName;
+    const country = this.state.country;
 
-    this.setState({ qra: qra, dimmerActive: true, password: password });
+    this.setState({ dimmerActive: true });
 
     Auth.signUp({
       username: qra,
@@ -192,7 +201,12 @@ class SignUp extends React.Component {
               {...props}
               signUpError={this.state.signUpError}
               showModal={this.state.showModal}
+              showModalTC={this.state.showModalTC}
               handleOnCloseModal={() => this.setState({ showModal: false })}
+              handleOnAcceptModalTC={() => this.handleAcceptTC()}
+              handleOnCancelModalTC={() =>
+                this.setState({ showModalTC: false })
+              }
               handleOnConfirm={() => this.handleOnConfirm()}
               handleCodeChange={this.handleCodeChange.bind(this)}
               handleResendCode={() => this.handleResendCode()}
@@ -201,7 +215,18 @@ class SignUp extends React.Component {
           )}
           initialValues={values}
           validationSchema={validationSchema}
-          onSubmit={values => this.signUp(values)}
+          onSubmit={values => {
+            this.setState({
+              qra: values.qra.trim().toUpperCase(),
+              password: values.password.trim(),
+              email: values.email.trim(),
+              birthDate: values.birthDate.trim(),
+              firstName: values.firstName.trim(),
+              lastName: values.lastName.trim(),
+              country: values.country.trim(),
+              showModalTC: true
+            });
+          }}
         />
       </Fragment>
     );

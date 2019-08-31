@@ -21,6 +21,9 @@ import Notifications from "./Notifications/Notifications";
 import ContactForm from "./contactForm";
 import ErrorBoundary from "./ErrorBoundary";
 import Follow from "./follow";
+import TermsAndConditions from "./help/termsAndConditions";
+import PrivacyPolicy from "./help/privacyPolicy";
+import CookieUse from "./help/cookieUse";
 // if (process.env.NODE_ENV !== 'production') {     const {whyDidYouUpdate} =
 // require('why-did-you-update')     whyDidYouUpdate(React)   }
 
@@ -108,6 +111,33 @@ class App extends Component {
                   </ErrorBoundary>
                 );
             }}
+          />
+          <Route
+            exact
+            path="/tos"
+            component={() => (
+              <ErrorBoundary key="tos">
+                <TermsAndConditions />
+              </ErrorBoundary>
+            )}
+          />
+          <Route
+            exact
+            path="/cookie"
+            component={() => (
+              <ErrorBoundary key="cookie">
+                <CookieUse />
+              </ErrorBoundary>
+            )}
+          />
+          <Route
+            exact
+            path="/privacy"
+            component={() => (
+              <ErrorBoundary key="privacy">
+                <PrivacyPolicy />
+              </ErrorBoundary>
+            )}
           />
           <Route
             exact
