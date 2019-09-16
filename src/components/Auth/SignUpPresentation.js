@@ -24,8 +24,10 @@ const SignUpPresentation = props => {
     signUpError,
     showModal,
     showModalTC,
+    showModalMessage,
     handleOnCloseModal,
     handleOnAcceptModalTC,
+    handleAcceptMessageModal,
     handleOnCancelModalTC,
     handleOnConfirm,
     handleCodeChange,
@@ -260,6 +262,24 @@ const SignUpPresentation = props => {
             labelPosition="right"
             content="Yes"
             onClick={() => handleOnAcceptModalTC()}
+          />
+        </Modal.Actions>
+      </Modal>
+      <Modal size="small" open={showModalMessage}>
+        <Modal.Content>
+          <p>
+            You have 3 month of trial Premium Subscription! Enjoy SuperQso
+            59+100 !!! After the 3 month you can continue using SuperQso with
+            the FREE subscription.
+          </p>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button
+            positive
+            icon="checkmark"
+            labelPosition="right"
+            content="OK"
+            onClick={() => handleAcceptMessageModal()}
           />
         </Modal.Actions>
       </Modal>

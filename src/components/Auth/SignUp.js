@@ -28,6 +28,7 @@ class SignUp extends React.Component {
       code: "",
       showModal: false,
       showModalTC: false,
+      showModalMessage: false,
       userCreated: false,
       userConfirmed: false,
       cognitoUser: "",
@@ -35,6 +36,10 @@ class SignUp extends React.Component {
       confirmError: "",
       error: null
     };
+  }
+  handleAcceptMessageModal() {
+    this.login();
+    this.setState({ showModalMessage: false });
   }
   handleAcceptTC() {
     this.signUp();
@@ -94,7 +99,7 @@ class SignUp extends React.Component {
   }
   handleOnConfirm() {
     const code = this.state.code.trim();
-    this.setState({ dimmerValCodeActive: true });
+    this.setState({ dimmerValCodeActive: true, showModal: false });
 
     Auth.confirmSignUp(this.state.qra.trim().toUpperCase(), code, {
       // Optional. Force user confirmation irrespective of existing alias. By default
@@ -103,12 +108,11 @@ class SignUp extends React.Component {
     })
       .then(data => {
         this.setState({
-          showModal: false,
           dimmerValCodeActive: false,
-          dimmerLoginActive: true
+          dimmerLoginActive: true,
+          showModalMessage: true
         });
         ReactGA.event({ category: "QRA", action: "confirmCode" });
-        this.login();
       })
       .catch(err => {
         if (process.env.NODE_ENV !== "production") {
@@ -202,8 +206,10 @@ class SignUp extends React.Component {
               signUpError={this.state.signUpError}
               showModal={this.state.showModal}
               showModalTC={this.state.showModalTC}
+              showModalMessage={this.state.showModalMessage}
               handleOnCloseModal={() => this.setState({ showModal: false })}
               handleOnAcceptModalTC={() => this.handleAcceptTC()}
+              handleAcceptMessageModal={() => this.handleAcceptMessageModal()}
               handleOnCancelModalTC={() =>
                 this.setState({ showModalTC: false })
               }
