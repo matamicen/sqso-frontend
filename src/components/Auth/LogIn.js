@@ -80,8 +80,6 @@ class LogIn extends React.Component {
     // Return null to indicate no change to state.
     return null;
   }
-  // componentWillReceiveProps(nextProps) {     if (nextProps.isAuthenticated)
-  // this.setState({}) }
 
   handlePasswordChange(e) {
     this.setState({ password: e.target.value });

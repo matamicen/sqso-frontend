@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Async from "react-select/lib/Async";
+import Async from "react-select/async";
 // import 'react-select/dist/react-select.css';
 import API from "@aws-amplify/api";
 import { Redirect } from "react-router-dom";
