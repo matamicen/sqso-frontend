@@ -66,7 +66,7 @@ class Notifications extends React.Component {
           <Loader>Loading</Loader>
         </Dimmer>
 
-        <Dimmer
+        {/* <Dimmer
           active={
             this.state.adActive &&
             this.props.accountType &&
@@ -83,7 +83,7 @@ class Notifications extends React.Component {
             id="notifications-intersitial"
             displayOnly={true}
           />
-        </Dimmer>
+        </Dimmer> */}
 
         <div className="site-header">
           <AppNavigation />

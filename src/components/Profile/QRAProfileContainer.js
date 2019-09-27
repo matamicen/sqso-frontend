@@ -111,6 +111,8 @@ class QRAProfileContainer extends React.PureComponent {
     if (!props.qra && !prevState.active) {
       return { active: true };
     }
+    console.log(props.qraUserData);
+    console.log(process.env.NODE_ENV);
     if (
       process.env.NODE_ENV === "production" &&
       !prevState.adClosed &&

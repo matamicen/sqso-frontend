@@ -21,7 +21,7 @@ const QRAProfile = props => {
       <Dimmer active={props.active} page>
         <Loader>Loading QRA...</Loader>
       </Dimmer>
-      <Dimmer
+      {/* <Dimmer
         active={props.adActive}
         onClick={props.handleClose}
         page
@@ -34,7 +34,7 @@ const QRAProfile = props => {
           id="qradetail-intersitial"
           displayOnly={true}
         />
-      </Dimmer>
+      </Dimmer> */}
       <div className="site-header">
         <AppNavigation />
       </div>

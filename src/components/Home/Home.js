@@ -66,7 +66,7 @@ class Home extends React.Component {
         <Dimmer active={this.state.active} page>
           <Loader>Loading Qsos...</Loader>
         </Dimmer>
-        <Dimmer
+        {/* <Dimmer
           active={
             this.state.adActive &&
             this.props.account_type &&
@@ -83,7 +83,7 @@ class Home extends React.Component {
             id="home-intersitial"
             displayOnly={true}
           />
-        </Dimmer>
+        </Dimmer> */}
         <div className="global-container">
           <div className="site-header">
             <AppNavigation />

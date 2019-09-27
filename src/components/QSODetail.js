@@ -138,7 +138,7 @@ class QSODetail extends React.PureComponent {
           <Loader>Loading QSO...</Loader>
         </Dimmer>
 
-        <Dimmer
+        {/* <Dimmer
           active={this.state.adActive}
           onClick={this.handleClose}
           page
@@ -151,7 +151,7 @@ class QSODetail extends React.PureComponent {
             id="qsodetail-intersitial"
             displayOnly={true}
           />
-        </Dimmer>
+        </Dimmer> */}
 
         <div className="site-header">
           <AppNavigation />

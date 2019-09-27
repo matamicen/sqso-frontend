@@ -57,7 +57,7 @@ const qraFollowRecommendPresentational = props => (
     <Dimmer active={props.active} page>
       <Loader>Loading QRA...</Loader>
     </Dimmer>
-    <Dimmer
+    {/* <Dimmer
       active={props.adActive}
       onClick={props.handleClose}
       page
@@ -70,7 +70,7 @@ const qraFollowRecommendPresentational = props => (
         id="qradetail-intersitial"
         displayOnly={true}
       />
-    </Dimmer>
+    </Dimmer> */}
     <div className="site-header">
       <AppNavigation />
     </div>
@@ -115,8 +115,8 @@ const qraFollowRecommendPresentational = props => (
                     <div className="ui two buttons">
                       {props.following.some(o => o.qra === qra.qra) ? (
                         <Button basic color="grey">
-                        Following
-                      </Button>
+                          Following
+                        </Button>
                       ) : (
                         <Button
                           basic
@@ -161,9 +161,9 @@ const qraFollowRecommendPresentational = props => (
                   <Card.Content extra>
                     <div className="ui two buttons">
                       {props.following.some(o => o.qra === qra.qra) ? (
-                       <Button basic color="grey">
-                       Following
-                     </Button>
+                        <Button basic color="grey">
+                          Following
+                        </Button>
                       ) : (
                         <Button
                           basic
@@ -218,8 +218,8 @@ const qraFollowRecommendPresentational = props => (
                     <div className="ui two buttons">
                       {props.following.some(o => o.qra === qra.qra) ? (
                         <Button basic color="grey">
-                        Following
-                      </Button>
+                          Following
+                        </Button>
                       ) : (
                         <Button
                           basic
