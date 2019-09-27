@@ -55,7 +55,13 @@ class AuthenticatedNavigation extends React.PureComponent {
         }}
       >
         <Menu.Item>
-          <Link to="/">SuperQSO</Link>
+          <Link to="/">
+            img src="/logo.JPG" alt="SuperQSO.com" style=
+            {{
+              height: "50px"
+            }}
+            />
+          </Link>
         </Menu.Item>
         <Menu.Item>
           <NavigationSearch />

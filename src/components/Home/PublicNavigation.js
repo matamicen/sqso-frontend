@@ -8,7 +8,15 @@ import "../../styles/style.css";
 const PublicNavigation = () => (
   <Menu fixed="top" style={{ height: "50px" }}>
     <Menu.Item>
-      <Link to="/">SuperQSO</Link>
+      <Link to="/">
+        <img
+          src="/logo.JPG"
+          alt="SuperQSO.com"
+          style={{
+            height: "50px"
+          }}
+        />
+      </Link>
     </Menu.Item>
     <Menu.Item>
       <NavigationSearch />
