@@ -25,6 +25,8 @@ class QRAProfileContainer extends React.PureComponent {
   componentDidMount() {
     if (process.env.NODE_ENV !== "production")
       this.setState({ adActive: false });
+
+    /*        //Comentado Adsense
     window.googletag.cmd.push(function() {
       window.googletag.destroySlots();
       window.googletag
@@ -51,7 +53,7 @@ class QRAProfileContainer extends React.PureComponent {
         .addService(window.googletag.pubads());
       window.googletag.pubads().enableSingleRequest();
       window.googletag.enableServices();
-    });
+    }); */
     let qraInMemory = this.props.qra ? this.props.qra.qra.qra : "";
 
     if (

@@ -23,8 +23,9 @@ class Ads extends React.Component {
 
   async componentDidMount() {
     //   console.log(this.id)
+    /*   //Comentado Adsense
     if (!this.props.displayOnly)
-      await window.googletag.cmd.push(() => {
+       await window.googletag.cmd.push(() => {
         window.googletag
           .defineSlot(
             this.props.adslot,
@@ -32,10 +33,8 @@ class Ads extends React.Component {
             this.id
           )
           .addService(window.googletag.pubads());
-        // window.googletag.pubads().enableAsyncRendering();
-        // window.googletag.enableServices();
-        // window.googletag.display(this.id);
-      });
+      }); */
+    //Comentado Adsense
   }
   render() {
     return (

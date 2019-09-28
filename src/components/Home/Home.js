@@ -24,7 +24,7 @@ class Home extends React.Component {
     if (this.props.isAuthenticated)
       this.props.actions.doFetchUserFeed(this.props.token);
     else this.props.actions.doFetchPublicFeed();
-
+    /*  //Comentado Adsense
     window.googletag.cmd.push(function() {
       window.googletag.destroySlots();
       window.googletag
@@ -51,7 +51,7 @@ class Home extends React.Component {
         .addService(window.googletag.pubads());
       window.googletag.pubads().enableSingleRequest();
       window.googletag.enableServices();
-    });
+    });v*/
   }
   handleOpen = () => this.setState({ adActive: true });
   handleClose = () => this.setState({ adActive: false });

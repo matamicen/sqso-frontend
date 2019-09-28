@@ -83,6 +83,7 @@ class QSODetail extends React.PureComponent {
       );
       this.setState({ idqso: this.props.match.params.idqso });
     }
+    /*      //Comentado Adsense
     window.googletag.cmd.push(function() {
       window.googletag.destroySlots();
       window.googletag
@@ -109,7 +110,7 @@ class QSODetail extends React.PureComponent {
         .addService(window.googletag.pubads());
       window.googletag.pubads().enableSingleRequest();
       window.googletag.enableServices();
-    });
+    }); */
   }
   handleOpen = () => this.setState({ adActive: true });
   handleClose = () => this.setState({ adActive: false, adClosed: true });

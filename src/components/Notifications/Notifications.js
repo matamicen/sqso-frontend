@@ -29,7 +29,7 @@ class Notifications extends React.Component {
 
   componentDidMount() {
     this.props.actions.doFetchNotifications(this.props.token);
-
+    /*
     window.googletag.cmd.push(function() {
       window.googletag
         .defineSlot(
@@ -56,6 +56,7 @@ class Notifications extends React.Component {
       window.googletag.pubads().enableSingleRequest();
       window.googletag.enableServices();
     });
+    */ //Comentado para tener Adsense
   }
   handleOpen = () => this.setState({ adActive: true });
   handleClose = () => this.setState({ adActive: false });

@@ -60,7 +60,7 @@
     "@babel/polyfill": "^7.2.5",
     "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
-    "canvas-prebuilt": "^2.0.0-alpha.14",
+    "canvas": "^2.6.0",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.7.0",
     "enzyme-to-json": "^3.3.4",
@@ -70,6 +70,7 @@
     "prettier": "1.16.4",
     "react-router-sitemap": "^1.2.0",
     "react-test-renderer": "^16.4.1",
+    "reactotron-core-client": "^2.8.6",
     "reactotron-react-js": "^3.3.4",
     "reactotron-redux": "^3.1.2",
     "redux-mock-store": "^1.5.3",
@@ -82,7 +83,8 @@
     "why-did-you-update": "^0.1.1"
   },
   "scripts": {
-    "start": "yarn install && yarn build && node app",
+    "start": "yarn install --production && yarn build && node app",
+    "eb_test": "yarn install --production && yarn build && node app",
     "static": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
