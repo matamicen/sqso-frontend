@@ -7,6 +7,7 @@ import { bindActionCreators } from "redux";
 import * as Actions from "../../actions";
 import { Confirm, Modal } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 Audio.propTypes = {
   url: PropTypes.string.isRequired
@@ -57,17 +58,8 @@ class FeedAudio extends React.Component {
             <Confirm
               size="mini"
               open={this.state.promptLogin}
-              onCancel={() => this.setState({ promptLogin: false })}
               onConfirm={() => this.props.history.push("/login")}
-              cancelButton="Cancel"
-              confirmButton="Login"
-              content="Please Login to perform this action"
-            />
-            <Confirm
-              size="mini"
-              open={this.state.promptLogin}
               onCancel={() => this.setState({ promptLogin: false })}
-              onConfirm={() => this.props.history.push("/login")}
               cancelButton="Cancel"
               confirmButton="Login"
               content="Please Login to perform this action"
@@ -125,9 +117,11 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(Actions, dispatch)
 });
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-  null,
-  { pure: false }
-)(FeedAudio);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+    null,
+    { pure: false }
+  )(FeedAudio)
+);

@@ -10,7 +10,7 @@ const PublicNavigation = () => (
     <Menu.Item>
       <Link to="/">
         <img
-          src="/logo.JPG"
+          src="/logo.jpg"
           alt="SuperQSO.com"
           style={{
             height: "50px"
