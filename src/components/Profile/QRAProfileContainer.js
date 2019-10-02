@@ -16,6 +16,7 @@ class QRAProfileContainer extends React.PureComponent {
       adActive: false,
       adClosed: false,
       tab: null,
+      followed: false,
       qraError: null
     };
     this.handleButtonClick = this.handleButtonClick.bind(this);
@@ -84,6 +85,8 @@ class QRAProfileContainer extends React.PureComponent {
   handleOpen = () => this.setState({ adActive: true });
   handleClose = () => this.setState({ adActive: false, adClosed: true });
   static getDerivedStateFromProps(props, prevState) {
+    let followed;
+
     if (props.qraError && prevState.active)
       return {
         qraError: props.qraError,
@@ -97,13 +100,18 @@ class QRAProfileContainer extends React.PureComponent {
         props.qraUserData.account_type &&
         props.qraUserData.monthly_qra_views >
           props.qraUserData.account_type.web_qra_profile_view
-      )
+      ) {
+        followed = props.following.some(o => o.qra === props.match.params.qra);
+
         return {
           adActive: true,
-
+          followed: followed,
           active: false
         };
-      else if (process.env.NODE_ENV === "production" && !props.isAuthenticated)
+      } else if (
+        process.env.NODE_ENV === "production" &&
+        !props.isAuthenticated
+      )
         return {
           adActive: true,
           active: false
@@ -113,8 +121,7 @@ class QRAProfileContainer extends React.PureComponent {
     if (!props.qra && !prevState.active) {
       return { active: true };
     }
-    console.log(props.qraUserData);
-    console.log(process.env.NODE_ENV);
+
     if (
       process.env.NODE_ENV === "production" &&
       !prevState.adClosed &&
@@ -152,11 +159,6 @@ class QRAProfileContainer extends React.PureComponent {
   }
   handleButtonClick() {
     if (!this.props.token) return null;
-    this.setState(prevState => {
-      return {
-        followed: !prevState.followed
-      };
-    });
     if (!this.state.followed) {
       if (this.props.isAuthenticated) {
         this.props.actions.doFollowQRA(
@@ -165,18 +167,21 @@ class QRAProfileContainer extends React.PureComponent {
         );
       }
     } else {
-      this.props.actions.doUnfollowQRA(
-        this.props.token,
-        this.props.match.params.qra
-      );
+      if (this.props.isAuthenticated) {
+        this.props.actions.doUnfollowQRA(
+          this.props.token,
+          this.props.match.params.qra
+        );
+      }
     }
+    this.setState(prevState => {
+      return {
+        followed: !prevState.followed
+      };
+    });
   }
 
   render() {
-    let followed = this.props.following.some(
-      o => o.qra === this.props.match.params.qra
-    );
-
     let qraInfo = null;
     if (this.props.qra) qraInfo = this.props.qra.qra;
 
@@ -202,7 +207,7 @@ class QRAProfileContainer extends React.PureComponent {
           onClick={this.handleButtonClick}
           isAuthenticated={this.props.isAuthenticated}
           currentQRA={this.props.currentQRA}
-          followed={followed}
+          followed={this.state.followed}
           handleTabClick={this.handleTabClick}
           tab={this.state.tab}
           adActive={this.state.adActive}

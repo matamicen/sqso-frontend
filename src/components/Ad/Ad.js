@@ -52,10 +52,10 @@ class Ads extends React.Component {
     );
   }
   displayAd() {
-    const id = this.id;
-    window.googletag.cmd.push(function() {
-      window.googletag.display(id);
-    });
+    // const id = this.id;
+    // window.googletag.cmd.push(function() {
+    //   window.googletag.display(id);
+    // });
   }
 }
 
