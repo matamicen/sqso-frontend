@@ -246,10 +246,8 @@ const SignUpPresentation = props => {
         <Modal.Content>
           <p>
             By signing up, you agree to the{" "}
-            <Link to="/tos">Terms of Service</Link> and{" "}
-            <Link to="/privacy">Privacy Policy</Link>, including{" "}
-            <Link to="/cookie">Coockie Use</Link>. Others will be able to find
-            you by CallSign.
+            <Link to="/privacy">Privacy Policy</Link>. Others will be able to
+            find you by CallSign.
           </p>
         </Modal.Content>
         <Modal.Actions>

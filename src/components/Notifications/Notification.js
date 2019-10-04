@@ -20,7 +20,7 @@ export default class Notification extends React.Component {
   }
   formatNotification() {
     let notif = this.props.notification;
-    let message;
+
     switch (this.props.notification.activity_type) {
       case 1: //Follow
         if (this.props.currentQRA === notif.REF_QRA)
@@ -79,12 +79,19 @@ export default class Notification extends React.Component {
             </Link>
           </List.Description>
         );
+      case 50: //Bio updated
+        return (
+          <List.Description>
+            <Link to={"/" + notif.QRA} onClick={this.handleOnClick}>
+              {notif.message}
+            </Link>
+          </List.Description>
+        );
       default:
-        message = notif.idqra_notifications;
         return (
           <List.Description>
             <Link to={"/qso/" + notif.QSO_GUID} onClick={this.handleOnClick}>
-              {message}
+              {notif.message}
             </Link>
           </List.Description>
         );
