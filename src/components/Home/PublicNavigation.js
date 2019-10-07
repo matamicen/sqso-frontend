@@ -6,30 +6,27 @@ import Menu from "semantic-ui-react/dist/commonjs/collections/Menu";
 import NavigationSearch from "./NavigationSearch";
 import "../../styles/style.css";
 const PublicNavigation = () => (
-  <Menu fixed="top" style={{ height: "50px" }}>
-    <Menu.Item>
+  <Menu fixed="top" style={{ height: "50px", display: "flex" }}>
+    <Menu.Item
+      style={{ flex: "0 1 auto", justifyContent: "center", padding: "0" }}
+    >
       <Link to="/">
-        <img
-          src="/logo.jpg"
-          alt="SuperQSO.com"
-          style={{
-            height: "50px"
-          }}
-        />
+        <img src="/logoMobile.jpg" alt="SuperQSO.com" className="mobile" />
+        <img src="/logoDesk.jpg" alt="SuperQSO.com" className="desktop" />
       </Link>
     </Menu.Item>
-    <Menu.Item>
+    <Menu.Item style={{ flex: "1 1 auto", justifyContent: "center" }}>
       <NavigationSearch />
     </Menu.Item>
-    <Menu.Menu position="right">
-      <Dropdown item icon="setting">
+    <Menu.Menu style={{ flex: "0 1 auto" }}>
+      <Dropdown item icon="setting" direction="left" style={{ width: "50px" }}>
         <Dropdown.Menu>
-          <Dropdown.Item>
-            <Link to="/login">Login</Link>
-          </Dropdown.Item>
-          <Dropdown.Item>
-            <Link to="/signup">Signup</Link>
-          </Dropdown.Item>
+          <Link to="/login">
+            <Dropdown.Item>Login</Dropdown.Item>
+          </Link>
+          <Link to="/signup">
+            <Dropdown.Item>SignUp</Dropdown.Item>
+          </Link>
           <Dropdown.Divider />
           <Link to="/privacy">
             <Dropdown.Item>Privacy Policy</Dropdown.Item>

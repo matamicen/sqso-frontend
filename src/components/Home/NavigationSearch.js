@@ -6,6 +6,7 @@ import { Redirect } from "react-router-dom";
 import { components } from "react-select";
 import Avatar from "react-avatar";
 import * as Sentry from "@sentry/browser";
+import "../../styles/style.css";
 export default class NavigationSearch extends Component {
   constructor(props) {
     super(props);
@@ -57,23 +58,13 @@ export default class NavigationSearch extends Component {
     }
   }
   render() {
-    let custWidth;
     if (this.state.value) {
       this.setState({ value: null });
       return <Redirect to={"/" + this.state.value.qra} />;
     }
 
-    if (window.innerWidth <= 380) {
-      custWidth = "120px";
-    } else {
-      custWidth = "320px";
-    }
     return (
-      <div
-        style={{
-          width: custWidth
-        }}
-      >
+      <div className="NavBar">
         <Async
           multi={false}
           value={this.state.value}
