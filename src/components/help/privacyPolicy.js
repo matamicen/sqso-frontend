@@ -12,6 +12,7 @@ const PrivacyPolicy = props => (
         <Ad adslot="/21799560237/Signup/left" width={160} height={600} />
       </div>
       <div className="site-main">
+        <h2 dir="ltr">Privacy Policy</h2>
         <p dir="ltr">
           This policy explains what information we collect when you use SuperQSO
           sites, services, mobile applications, products, and content
@@ -19,9 +20,7 @@ const PrivacyPolicy = props => (
           use, transfer, and delete that information. Our aim is not just to
           comply with privacy law. It&rsquo;s to earn your trust.
         </p>
-        <p>&nbsp;</p>
         <h2 dir="ltr">Information We Collect &amp; How We Use It</h2>
-        <p>&nbsp;</p>
         <p dir="ltr">
           The tracking we do at SuperQSO is to make our product work as well as
           possible. So, to give you the best possible experience in using
@@ -54,7 +53,6 @@ const PrivacyPolicy = props => (
           </li>
         </ul>
         <h2 dir="ltr">Information Disclosure</h2>
-        <div>&nbsp;</div>
         <p dir="ltr">
           SuperQSO won&rsquo;t transfer information about you to third parties
           for the purpose of providing or facilitating third-party advertising
@@ -78,7 +76,6 @@ const PrivacyPolicy = props => (
           conduct. We will object to legal requests for information about users
           of our services that we believe are improper.
         </p>
-        <p dir="ltr">&nbsp;</p>
         <h2 dir="ltr">Public Data</h2>
         <p dir="ltr">
           Search engines may index your SuperQSO user profile page, public
@@ -88,36 +85,18 @@ const PrivacyPolicy = props => (
           services like Google, DuckDuckGo, or Bing. Users may also share links
           to your content on social media platforms such as Facebook or Twitter.
           Information posted about you by other user who use our services may
-          also be public. For example, other user may{" "}
-          <a
-            href="https://twitter.com/en/privacy#tooltip-chapter1.2.2"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-saferedirecturl="https://www.google.com/url?q=https://twitter.com/en/privacy%23tooltip-chapter1.2.2&amp;source=gmail&amp;ust=1570306043497000&amp;usg=AFQjCNFZmctp1fKT64tK9Bh7vfZhk3NUkQ"
-          >
-            tag you in a photo
-          </a>{" "}
-          or mention you in a Post (Qso, Listen or Post). Other user may take a
-          picture of you or record your voice from the radio&nbsp;during the QSO
-          and post that audio in SuperQSO.
+          also be public. For example, other user may tag you in a photo or
+          mention you in a Post (Qso, Listen or Post). Other user may take a
+          picture of you or record your voice from the radio during the QSO and
+          post that audio in SuperQSO.
         </p>
-        <h2 dir="ltr">&nbsp;</h2>
-        <h2 dir="ltr">&nbsp;</h2>
         <h2 dir="ltr">Data Storage</h2>
         <p dir="ltr">
           SuperQSO uses third-party vendors and hosting partners, such as
           Amazon, for hardware, software, networking, storage, and related
-          technology we need to run SuperQSO. We{" "}
-          <a
-            href="https://medium.com/policy/mediums-data-logs-4d2f799a7d52"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-saferedirecturl="https://www.google.com/url?q=https://medium.com/policy/mediums-data-logs-4d2f799a7d52&amp;source=gmail&amp;ust=1570306043497000&amp;usg=AFQjCNHjv0xEEmL4A36n-QxAVDceMbNrdg"
-          >
-            maintain two types of logs
-          </a>
-          : server logs and event logs. By using the Services, you authorize
-          SuperQSO&nbsp; to transfer, store, and use your information in United
+          technology we need to run SuperQSO. We maintain two types of logs :
+          server logs and event logs. By using the Services, you authorize
+          SuperQSO to transfer, store, and use your information in United
           States, and any other country where we operate.
         </p>
         <h2 dir="ltr">Third-Party Embeds</h2>
@@ -166,7 +145,6 @@ const PrivacyPolicy = props => (
           information. Failure to do so may lead SuperQSO to disable the post or
           take other action to limit or disable your account.
         </p>
-        <p dir="ltr">&nbsp;</p>
         <h2 dir="ltr">Tracking &amp; Cookies</h2>
         <p dir="ltr">
           We use browser cookies and similar technologies to recognize you when
@@ -185,49 +163,27 @@ const PrivacyPolicy = props => (
           interactions with our mobile application).
         </p>
         <p dir="ltr">
-          Some third-party services that we use to provide the Service, such as
+          Some third-party services that we use to provide the Service, such as{" "}
           <a
             href="http://www.google.com/policies/privacy/partners/"
             target="_blank"
             rel="noopener noreferrer"
             data-saferedirecturl="https://www.google.com/url?q=http://www.google.com/policies/privacy/partners/&amp;source=gmail&amp;ust=1570306043497000&amp;usg=AFQjCNEPSkyx6Tq3-9e-3Ipzw4IITXjDwA"
           >
-            {" "}
-            Google Analytics
-          </a>
+            &nbsp; Google Analytics&nbsp;
+          </a>{" "}
           , may place their own cookies in your browser. This Privacy Policy
           covers use of cookies by SuperQSO only and not the use of cookies by
           third parties.
         </p>
-        <h2 dir="ltr">&nbsp;</h2>
         <h2 dir="ltr">Location Information</h2>
-        <p>&nbsp;</p>
         <p dir="ltr">
           We require information about your signup and current location, which
           we get from signals such as your IP address or device settings, to
           securely and reliably set up and maintain your account and to provide
           our services to you.
         </p>
-        <p dir="ltr">
-          Subject to your settings, we may collect, use, and store additional
-          information about{" "}
-          <a
-            href="https://twitter.com/en/privacy#overlay-chapter2.1.1"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-saferedirecturl="https://www.google.com/url?q=https://twitter.com/en/privacy%23overlay-chapter2.1.1&amp;source=gmail&amp;ust=1570306043497000&amp;usg=AFQjCNG3MzNY4Xn_L8wgAtSv9CL4Uj0Psw"
-          >
-            your location
-          </a>{" "}
-          - such as your current precise position or places where you&rsquo;ve
-          previously used SuperQSO - to operate or personalize our services
-          including with more relevant content like local trends, posts, ads,
-          calculation of a QSO distance, suggestions for people to follow, and
-          futures features.&nbsp;
-        </p>
-        <p dir="ltr">&nbsp;</p>
         <h2 dir="ltr">Modifying or Deleting Your Personal Information</h2>
-        <div>&nbsp;</div>
         <p dir="ltr">
           If you have a SuperQSO account, you can access, modify or export your
           personal information, or delete your account.
@@ -240,7 +196,6 @@ const PrivacyPolicy = props => (
           and maintain copies of your information beyond this time period when
           required to do so by law.
         </p>
-        <h2 dir="ltr">&nbsp;</h2>
         <h2 dir="ltr">Data Security</h2>
         <p dir="ltr">
           We use encryption (HTTPS/TLS) to protect data transmitted to and from
@@ -249,44 +204,15 @@ const PrivacyPolicy = props => (
           your own risk, and you&rsquo;re responsible for taking reasonable
           measures to secure your account.
         </p>
-        <h2 dir="ltr">&nbsp;</h2>
         <h2 dir="ltr">Affiliates and Change of Ownership</h2>
         <p dir="ltr">
           In the event that we are involved in a bankruptcy, merger,
           acquisition, reorganization, or sale of assets, your personal data may
           be sold or transferred as part of that transaction. This Privacy
           Policy will apply to your personal data as transferred to the new
-          entity. We may also disclose personal data about you to our{" "}
-          <a
-            href="https://help.twitter.com/en/rules-and-policies/twitter-services-and-corporate-affiliates"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-saferedirecturl="https://www.google.com/url?q=https://help.twitter.com/en/rules-and-policies/twitter-services-and-corporate-affiliates&amp;source=gmail&amp;ust=1570306043497000&amp;usg=AFQjCNF4fQjSXNnVnOFdMlh_c542Uat8Cg"
-          >
-            corporate affiliates
-          </a>{" "}
-          in order to help operate our services and our affiliates&rsquo;
-          services, including the delivery of ads.
+          entity.&nbsp;
         </p>
-        <p dir="ltr">&nbsp;</p>
         <h2 dir="ltr">Email from SuperQSO</h2>
-        <p dir="ltr">
-          Sometimes we&rsquo;ll send you emails about your account, service
-          changes or new policies. You can&rsquo;t opt out of this type of
-          &ldquo;transactional&rdquo; email (unless you delete your account).
-          But, you can opt out of non-administrative emails such as digests,
-          newsletters, and activity notifications through your account&rsquo;s
-          <a
-            href="https://help.medium.com/hc/en-us/articles/115004745907-How-can-I-turn-off-emails-from-Medium-"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-saferedirecturl="https://www.google.com/url?q=https://help.medium.com/hc/en-us/articles/115004745907-How-can-I-turn-off-emails-from-Medium-&amp;source=gmail&amp;ust=1570306043497000&amp;usg=AFQjCNH5j5xAiwvu02xxQIC0lxv41rVYKQ"
-          >
-            {" "}
-            Settings
-          </a>{" "}
-          page.
-        </p>
         <p dir="ltr">
           When you interact with an email sent from SuperQSO (such as opening an
           email or clicking on a particular link in an email), we may receive
@@ -300,13 +226,11 @@ const PrivacyPolicy = props => (
             target="_blank"
             rel="noopener noreferrer"
           >
-            legal@superqso.com
+            &nbsp;legal@superqso.com&nbsp;
           </a>{" "}
           so we can investigate.
         </p>
-        <p dir="ltr">&nbsp;</p>
-        <p dir="ltr">&nbsp;&nbsp;</p>
-        <p dir="ltr">Children and our Service</p>
+        <h2 dir="ltr">Children and our Service</h2>
         <p dir="ltr">
           Our services are not directed to children, and you may not use our
           services if you are under the age of 13. You must also be old enough
@@ -314,29 +238,19 @@ const PrivacyPolicy = props => (
           some countries we may allow your parent or guardian to do so on your
           behalf)
         </p>
-        <p dir="ltr">&nbsp;</p>
         <h2 dir="ltr">Changes to this Policy</h2>
         <p>
           SuperQSO may periodically update this Policy. We&rsquo;ll notify you
           about significant changes to it. The most current version of the
           policy will always be{" "}
           <a
-            href="https://medium.com/policy/f03bf92035c9"
+            href="https://www.superqso.com/privacy"
             target="_blank"
             rel="noopener noreferrer"
             data-saferedirecturl="https://www.google.com/url?q=https://medium.com/policy/f03bf92035c9&amp;source=gmail&amp;ust=1570306043497000&amp;usg=AFQjCNHKyGsRWntsAVfsYLJiXZHZt2OAVw"
           >
-            here
+            &nbsp;here&nbsp;
           </a>{" "}
-          and we will archive former versions of the policy{" "}
-          <a
-            href="http://github.com/Medium/policy"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-saferedirecturl="https://www.google.com/url?q=http://github.com/Medium/policy&amp;source=gmail&amp;ust=1570306043497000&amp;usg=AFQjCNFJ7EP9MoCEcnvhpe27xlwszpY_9g"
-          >
-            here
-          </a>
           .
         </p>
       </div>

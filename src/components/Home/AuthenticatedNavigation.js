@@ -99,9 +99,15 @@ class AuthenticatedNavigation extends React.PureComponent {
                 Log Out
               </Dropdown.Item>
               <Dropdown.Divider />
-              <Dropdown.Item>
-                <Link to="/contact">Contact Us</Link>
-              </Dropdown.Item>
+              <Link to="/privacy">
+                <Dropdown.Item>Privacy Policy</Dropdown.Item>
+              </Link>
+              <Link to="/terms">
+                <Dropdown.Item>Terms of Service</Dropdown.Item>
+              </Link>
+              <Link to="/contact">
+                <Dropdown.Item>Contact Us</Dropdown.Item>
+              </Link>
             </Dropdown.Menu>
           </Dropdown>
         </Menu.Menu>

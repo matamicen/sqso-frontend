@@ -23,6 +23,7 @@ import ErrorBoundary from "./ErrorBoundary";
 import Follow from "./follow";
 
 import PrivacyPolicy from "./help/privacyPolicy";
+import TermsOfService from "./help/termsOfServcice";
 
 // if (process.env.NODE_ENV !== 'production') {     const {whyDidYouUpdate} =
 // require('why-did-you-update')     whyDidYouUpdate(React)   }
@@ -118,6 +119,15 @@ class App extends Component {
             component={() => (
               <ErrorBoundary key="privacy">
                 <PrivacyPolicy />
+              </ErrorBoundary>
+            )}
+          />
+          <Route
+            exact
+            path="/terms"
+            component={() => (
+              <ErrorBoundary key="terms">
+                <TermsOfService />
               </ErrorBoundary>
             )}
           />
