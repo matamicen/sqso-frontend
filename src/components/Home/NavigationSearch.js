@@ -97,7 +97,7 @@ const Option = props => {
         className="avatar"
         color="#0366d6"
         name={data.qra}
-        src={data.avatarpic}
+        src={data.avatarpic ? data.avatarpic : "/emptyprofile.png"}
       />
       <span>{" " + data.name}</span>
     </components.Option>

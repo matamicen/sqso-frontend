@@ -24,7 +24,15 @@ export default class QRA extends React.Component {
                   height: "60px"
                 }}
               >
-                <Image size="medium" src={this.props.avatarpic} circular />
+                <Image
+                  size="medium"
+                  src={
+                    this.props.avatarpic
+                      ? this.props.avatarpic
+                      : "/emptyprofile.png"
+                  }
+                  circular
+                />
               </div>
               <div
                 style={{

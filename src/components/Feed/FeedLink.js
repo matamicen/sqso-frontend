@@ -58,7 +58,11 @@ class FeedLink extends React.PureComponent {
             </Modal.Content>
           </Modal>
           <Image
-            src={this.props.link.avatarpic}
+            src={
+              this.props.link.avatarpic
+                ? this.props.link.avatarpic
+                : "/emptyprofile.png"
+            }
             size="mini"
             avatar
             style={{

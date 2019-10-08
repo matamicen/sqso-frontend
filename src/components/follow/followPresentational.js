@@ -199,7 +199,7 @@ const qraFollowRecommendPresentational = props => (
               >
                 <Card raised style={{ height: "14em" }}>
                   <Card.Content>
-                    <Image floated="right" size="mini" src={qra.avatarpic} />
+                    <Image floated="right" size="mini" src={qra.avatarpic?qra.avatarpic:"/emptyprofile.png"} />
                     <Card.Header>
                       {" "}
                       <Link to={"/" + qra.qra}>{qra.qra}</Link>
@@ -253,7 +253,11 @@ const qraFollowRecommendPresentational = props => (
               >
                 <Card raised style={{ height: "14em" }}>
                   <Card.Content>
-                    <Image floated="right" size="mini" src={qra.avatarpic} />
+                    <Image
+                      floated="right"
+                      size="mini"
+                      src={qra.avatarpic ? qra.avatarpic : "/emptyprofile.png"}
+                    />
                     <Card.Header>
                       <Link to={"/" + qra.qra}>{qra.qra}</Link>
                     </Card.Header>

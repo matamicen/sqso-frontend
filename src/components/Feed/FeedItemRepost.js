@@ -68,7 +68,11 @@ class FeedItemRepost extends React.Component {
           trigger={
             <Link to={"/" + this.props.qso.qra}>
               <Image
-                src={this.props.qso.avatarpic}
+                src={
+                  this.props.qso.avatarpic
+                    ? this.props.qso.avatarpic
+                    : "/emptyprofile.png"
+                }
                 size="mini"
                 avatar
                 style={{
@@ -103,7 +107,11 @@ class FeedItemRepost extends React.Component {
             trigger={
               <Link to={"/" + this.props.qso.original[0].qra}>
                 <Image
-                  src={this.props.qso.original[0].avatarpic}
+                  src={
+                    this.props.qso.original[0].avatarpic
+                      ? this.props.qso.original[0].avatarpic
+                      : "/emptyprofile.png"
+                  }
                   size="mini"
                   avatar
                   style={{

@@ -20,14 +20,16 @@ const QRAProfileHeader = props => {
       <Segment>
         <div className="inner">
           <div className="pic">
-            {props.qraInfo.avatarpic && (
-              <Image
-                src={props.qraInfo.avatarpic}
-                centered
-                size="small"
-                circular
-              />
-            )}
+            <Image
+              src={
+                props.qraInfo.avatarpic
+                  ? props.qraInfo.avatarpic
+                  : "/emptyprofile.png"
+              }
+              centered
+              size="small"
+              circular
+            />
           </div>
           <div className="detail">
             <span className="qra">{props.qraInfo.qra}</span>

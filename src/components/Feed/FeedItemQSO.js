@@ -74,7 +74,11 @@ class FeedItemQSO extends React.Component {
           trigger={
             <Link to={"/" + this.props.qso.qra}>
               <Image
-                src={this.props.qso.avatarpic}
+                src={
+                  this.props.qso.avatarpic
+                    ? this.props.qso.avatarpic
+                    : "/emptyprofile.png"
+                }
                 size="mini"
                 avatar
                 style={{

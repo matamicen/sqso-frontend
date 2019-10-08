@@ -18,7 +18,7 @@ const QRAProfileFollowing = props => (
                     {qra.avatarpic ? (
                       <Image avatar size="tiny" src={qra.avatarpic} />
                     ) : (
-                      ""
+                      <Image avatar size="tiny" src="/emptyprofile.png" />
                     )}
                   </div>
                   <div className="qra">{qra.qra}</div>
