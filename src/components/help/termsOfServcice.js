@@ -341,9 +341,9 @@ const TermsOfService = props => (
           jurisdiction and waive any objection as to inconvenient forum.
         </p>
         <p>
-          These Terms are an agreement between you and SuperQSO SAS, Luis Maria
-          Campos 877, Buenos Aires, C1426, ARGENTINA. If you have any questions
-          about these Terms, please contact{" "}
+          These Terms are an agreement between you and SuperQSO SAS, Andrés
+          Vallejos 2340, Buenos Aires, C1426, ARGENTINA. If you have any
+          questions about these Terms, please contact{" "}
           <a href="https://www.superqso.com/contact">us</a>.
         </p>
       </div>
