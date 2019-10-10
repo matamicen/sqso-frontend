@@ -191,17 +191,20 @@
   order: 1;
   -webkit-flex: 0 1 auto;
   -ms-flex: 0 1 auto;
-  flex: 0 1 auto;
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: space-between;
+  
 }
 
-.profile-buttons .inner {
+/* .profile-buttons .inner {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: flex-start;
   align-items: center;
   align-content: center;
-}
+} */
 
 .profile-following {
   display: grid;

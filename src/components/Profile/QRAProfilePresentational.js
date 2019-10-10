@@ -56,51 +56,55 @@ const QRAProfile = props => {
             onClick={props.onClick}
             currentQRA={props.currentQRA}
           />
-          <div className="profile-buttons">
-            <Segment>
-              <Button.Group widths="5">
-                <Button
-                  onClick={() => props.handleTabClick(1)}
-                  active={props.tab === 1 ? true : false}
-                >
-                  QSO's
-                </Button>
-                <Button
-                  onClick={() => props.handleTabClick(2)}
-                  active={props.tab === 2 ? true : false}
-                >
-                  Bio
-                </Button>
-                <Button
-                  onClick={() => props.handleTabClick(3)}
-                  active={props.tab === 3 ? true : false}
-                >
-                  Info
-                </Button>
-                <Button
-                  onClick={() => props.handleTabClick(4)}
-                  active={props.tab === 4 ? true : false}
-                >
-                  Following
-                </Button>
-              </Button.Group>
-            </Segment>
-          </div>
+          <Segment basic style={{ padding: "0px" }}>
+            <div className="profile-buttons">
+              <Button
+                style={{ flex: "1 1 auto" }}
+                onClick={() => props.handleTabClick(1)}
+                active={props.tab === 1 ? true : false}
+              >
+                QSO's
+              </Button>
+              <Button
+                style={{ flex: "1 1 auto" }}
+                onClick={() => props.handleTabClick(2)}
+                active={props.tab === 2 ? true : false}
+              >
+                Bio
+              </Button>
+              <Button
+                style={{ flex: "1 1 auto" }}
+                onClick={() => props.handleTabClick(3)}
+                active={props.tab === 3 ? true : false}
+              >
+                Info
+              </Button>
+              <Button
+                style={{ flex: "1 1 auto" }}
+                onClick={() => props.handleTabClick(4)}
+                active={props.tab === 4 ? true : false}
+              >
+                Following
+              </Button>
+            </div>
+          </Segment>
           <div className="profile-detail">
-            <Segment>
+            {/* <Segment> */}
+            {
               {
-                {
-                  1: <QRAProfileQsos qsos={props.qra ? props.qra.qsos : []} />,
-                  2: <QRAProfileBio qraInfo={props.qraInfo} />,
-                  3: <QRAProfileInfo qraInfo={props.qraInfo} />,
-                  4: (
+                1: <QRAProfileQsos qsos={props.qra ? props.qra.qsos : []} />,
+                2: <QRAProfileBio qraInfo={props.qraInfo} />,
+                3: <QRAProfileInfo qraInfo={props.qraInfo} />,
+                4: (
+                  <Segment>
                     <QRAProfileFollowing
                       following={props.qra ? props.qra.following : null}
                     />
-                  )
-                }[props.tab]
-              }
-            </Segment>
+                  </Segment>
+                )
+              }[props.tab]
+            }
+            {/* </Segment> */}
           </div>
         </div>
       )}
