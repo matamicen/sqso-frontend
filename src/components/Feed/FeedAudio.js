@@ -65,7 +65,7 @@ class FeedAudio extends React.Component {
               content="Please Login to perform this action"
             />
             <div style={{ display: "flex", alignItems: "center" }}>
-              <Button icon onClick={this.onClick}>
+              <Button size="mini" icon onClick={this.onClick}>
                 <Icon name="play circle" />
               </Button>
               {this.props.media.description}{" "}
@@ -86,6 +86,7 @@ class FeedAudio extends React.Component {
             <audio
               ref="audio_tag"
               src={this.props.media.url}
+              style={{ width: "100%", height: "25px" }}
               controls
               autoPlay
               preload="none"

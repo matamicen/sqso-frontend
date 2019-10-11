@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import FeedAudioList from "./FeedAudioList";
 import FeedImage from "./FeedImage";
 import FeedLinkList from "./FeedLinkList";
@@ -106,13 +106,13 @@ class FeedItemQSO extends React.Component {
             QslCard={true}
           />
         </div>
-        <Divider hidden />
+        <Divider hidden style={{ margin: "0.5vh" }} />
         <QRAs
           avatarpic={this.props.qso.avatarpic}
           qso_owner={this.props.qso.qra}
           qras={this.props.qso.qras}
         />
-        <Divider hidden />
+        <Divider hidden style={{ margin: "0.5vh" }} />
         <Label>Date:</Label>
         {date.toLocaleDateString("EN-US", { month: "short" }) +
           " " +
@@ -126,22 +126,28 @@ class FeedItemQSO extends React.Component {
         <Label>Band:</Label>
         {this.props.qso.band}{" "}
         {picList.length > 0 && (
-          <FeedImage
-            img={picList}
-            measure={this.props.measure}
-            idqso={this.props.qso.idqsos}
-            qso_owner={this.props.qso.qra}
-          />
+          <Fragment>
+            <Divider style={{ margin: "1vh" }} />
+            <FeedImage
+              img={picList}
+              measure={this.props.measure}
+              idqso={this.props.qso.idqsos}
+              qso_owner={this.props.qso.qra}
+            />
+          </Fragment>
         )}
         {audioList.length > 0 && (
-          <FeedAudioList
-            mediaList={audioList}
-            idqso={this.props.qso.idqsos}
-            qso_owner={this.props.qso.qra}
-          />
+          <Fragment>
+            <Divider style={{ margin: "1vh" }} />
+            <FeedAudioList
+              mediaList={audioList}
+              idqso={this.props.qso.idqsos}
+              qso_owner={this.props.qso.qra}
+            />
+          </Fragment>
         )}
         {this.props.qso.links && <FeedLinkList links={this.props.qso.links} />}
-        <Divider hidden />
+        <Divider hidden style={{ margin: "1vh" }} />
         <Button.Group widths="4" basic>
           <QSOLikeButton qso={this.props.qso} />
           <Button onClick={e => this.handleOnComment(e)}>
