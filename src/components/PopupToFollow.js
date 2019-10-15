@@ -37,6 +37,7 @@ class PopupToFollow extends React.Component {
           icon="remove user"
           onClick={() => this.unfollow()}
           content="Unfollow"
+          size="mini"
         />
       );
     else
@@ -45,6 +46,7 @@ class PopupToFollow extends React.Component {
           icon="add user"
           onClick={() => this.follow()}
           content="Follow"
+          size="mini"
         />
       );
 
@@ -53,8 +55,10 @@ class PopupToFollow extends React.Component {
         <Popup
           trigger={this.props.trigger}
           content={button}
+          position="top center"
           flowing
           hoverable
+          size="mini"
         />
       );
     else return this.props.trigger;
