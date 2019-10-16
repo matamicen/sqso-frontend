@@ -106,13 +106,13 @@ class FeedItemQSO extends React.Component {
             QslCard={true}
           />
         </div>
-        <Divider hidden style={{ margin: "0.5vh" }} />
+        <Divider hidden style={{ marginTop: "0.5vh", marginBottom: "0.5vh" }} />
         <QRAs
           avatarpic={this.props.qso.avatarpic}
           qso_owner={this.props.qso.qra}
           qras={this.props.qso.qras}
         />
-        <Divider hidden style={{ margin: "0.5vh" }} />
+        <Divider hidden style={{ marginTop: "0.5vh", marginBottom: "0.5vh" }} />
         <Label>Date:</Label>
         {date.toLocaleDateString("EN-US", { month: "short" }) +
           " " +
@@ -127,7 +127,7 @@ class FeedItemQSO extends React.Component {
         {this.props.qso.band}{" "}
         {picList.length > 0 && (
           <Fragment>
-            <Divider style={{ margin: "1vh" }} />
+            <Divider hidden style={{ marginTop: "1vh", marginBottom: "1vh" }} />
             <FeedImage
               img={picList}
               measure={this.props.measure}
@@ -138,7 +138,7 @@ class FeedItemQSO extends React.Component {
         )}
         {audioList.length > 0 && (
           <Fragment>
-            <Divider style={{ margin: "1vh" }} />
+            <Divider hidden style={{ marginTop: "1vh", marginBottom: "1vh" }} />
             <FeedAudioList
               mediaList={audioList}
               idqso={this.props.qso.idqsos}
@@ -147,7 +147,7 @@ class FeedItemQSO extends React.Component {
           </Fragment>
         )}
         {this.props.qso.links && <FeedLinkList links={this.props.qso.links} />}
-        <Divider hidden style={{ margin: "1vh" }} />
+        <Divider hidden style={{ marginTop: "1vh", marginBottom: "1vh" }} />
         <Button.Group widths="4" basic>
           <QSOLikeButton qso={this.props.qso} />
           <Button onClick={e => this.handleOnComment(e)}>

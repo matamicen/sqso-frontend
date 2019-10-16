@@ -5,7 +5,7 @@ import Button from "semantic-ui-react/dist/commonjs/elements/Button";
 import Image from "semantic-ui-react/dist/commonjs/elements/Image";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 import "../../styles/style.css";
-
+import Divider from "semantic-ui-react/dist/commonjs/elements/Divider";
 const QRAProfileHeader = props => {
   let buttonText;
 
@@ -33,13 +33,15 @@ const QRAProfileHeader = props => {
           </div>
           <div className="detail">
             <span className="qra">{props.qraInfo.qra}</span>
-            <br />
+            <Divider
+              hidden
+              style={{ marginTop: "0.5vh", marginBottom: "0.5vh" }}
+            />
             <div className="name">
               {props.qraInfo.firstname && props.qraInfo.firstname + " "}
               {props.qraInfo.lastname && props.qraInfo.lastname}
             </div>
-            <br />
-            <br />
+            <Divider hidden style={{ marginBottom: "4vh" }} />
             <div className="follow">
               {props.isAuthenticated && props.qraInfo.qra !== props.currentQRA && (
                 <Button

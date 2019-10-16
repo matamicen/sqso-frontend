@@ -50,8 +50,9 @@ class FeedImage extends React.Component {
                   alt={m.description}
                   onClick={() => this.open()}
                   style={{
-                    height: "38vh",
+                    height: "29vh",
                     objectFit: "cover",
+                    // width: "100%",
                     margin: "0 auto"
                   }}
                 />
