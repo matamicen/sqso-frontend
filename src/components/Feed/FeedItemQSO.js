@@ -107,32 +107,37 @@ class FeedItemQSO extends React.Component {
           />
         </div>
         <Divider hidden style={{ marginTop: "0.5vh", marginBottom: "0.5vh" }} />
-        <QRAs
-          avatarpic={this.props.qso.avatarpic}
-          qso_owner={this.props.qso.qra}
-          qras={this.props.qso.qras}
-        />
-        <Divider hidden style={{ marginTop: "0.5vh", marginBottom: "0.5vh" }} />
-        <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-          <div>
-            <Label>Mode:</Label>
-            {this.props.qso.mode}
-            <br />
-            <Label>Band:</Label>
-            {this.props.qso.band}
+        <Segment>
+          <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+            <div>
+              <Label>Mode:</Label>
+              {this.props.qso.mode}
+
+              <Label>Band:</Label>
+              {this.props.qso.band}
+            </div>
+            <div>
+              <Label>Date:</Label>
+              {date.toLocaleDateString("EN-US", { month: "short" }) +
+                " " +
+                date.getDate() +
+                ", " +
+                date.getFullYear()}
+
+              <Label>QTR (UTC):</Label>
+              {date.getUTCHours() + ":" + date.getMinutes()}
+            </div>
           </div>
-          <div>
-            <Label>Date:</Label>
-            {date.toLocaleDateString("EN-US", { month: "short" }) +
-              " " +
-              date.getDate() +
-              ", " +
-              date.getFullYear()}
-            <br />
-            <Label>QTR (UTC):</Label>
-            {date.getUTCHours() + ":" + date.getMinutes()}
-          </div>
-        </div>
+          <Divider
+            hidden
+            style={{ marginTop: "0.5vh", marginBottom: "0.5vh" }}
+          />
+          <QRAs
+            avatarpic={this.props.qso.avatarpic}
+            qso_owner={this.props.qso.qra}
+            qras={this.props.qso.qras}
+          />
+        </Segment>
         {picList.length > 0 && (
           <Fragment>
             <Divider hidden style={{ marginTop: "1vh", marginBottom: "1vh" }} />
