@@ -113,18 +113,26 @@ class FeedItemQSO extends React.Component {
           qras={this.props.qso.qras}
         />
         <Divider hidden style={{ marginTop: "0.5vh", marginBottom: "0.5vh" }} />
-        <Label>Date:</Label>
-        {date.toLocaleDateString("EN-US", { month: "short" }) +
-          " " +
-          date.getDate() +
-          ", " +
-          date.getFullYear()}
-        <Label>QTR (UTC):</Label>
-        {date.getUTCHours() + ":" + date.getMinutes()}
-        <Label>Mode:</Label>
-        {this.props.qso.mode}
-        <Label>Band:</Label>
-        {this.props.qso.band}{" "}
+        <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+          <div>
+            <Label>Mode:</Label>
+            {this.props.qso.mode}
+            <br />
+            <Label>Band:</Label>
+            {this.props.qso.band}
+          </div>
+          <div>
+            <Label>Date:</Label>
+            {date.toLocaleDateString("EN-US", { month: "short" }) +
+              " " +
+              date.getDate() +
+              ", " +
+              date.getFullYear()}
+            <br />
+            <Label>QTR (UTC):</Label>
+            {date.getUTCHours() + ":" + date.getMinutes()}
+          </div>
+        </div>
         {picList.length > 0 && (
           <Fragment>
             <Divider hidden style={{ marginTop: "1vh", marginBottom: "1vh" }} />

@@ -45,17 +45,18 @@ class FeedImage extends React.Component {
             <div key={m.idqsos_media}>
               <h3>
                 <img
+                  className="image"
                   src={m.url}
                   key={m.idqsos_media}
                   alt={m.description}
                   onClick={() => this.open()}
                   style={{
-                    height: "29vh",
                     objectFit: "cover",
                     // width: "100%",
                     margin: "0 auto"
                   }}
                 />
+
                 <p>{m.description}</p>
               </h3>
             </div>

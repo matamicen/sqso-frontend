@@ -16,11 +16,14 @@
   padding: 0;
   height: 50px;
 }
-/*logo desktop*/
+
 .desktop {
   display: block;
   padding: 0;
   height: 48px;
+}
+.image {
+  height: 40vh;
 }
 .NavBar {
   /* padding: 2px; */
@@ -194,7 +197,6 @@
   flex: 1 1 auto;
   display: flex;
   justify-content: space-between;
-  
 }
 
 /* .profile-buttons .inner {
@@ -320,6 +322,10 @@
   .desktop {
     display: none;
   }
+  .image {
+    height: 29vh;
+  }
+ 
   .global-container {
     grid-template-columns: repeat(1, 100%);
     grid-template-rows: 60px auto;
