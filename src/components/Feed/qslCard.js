@@ -90,7 +90,7 @@ export default async function QslCardPrint(props) {
 
   /*QSO LOGO */
   imgData.src = "/logoMobile.jpg";
-  pdf.addImage(imgData, "JPEG", 3.6, 0.9);
+  pdf.addImage(imgData, "JPEG", 3.8, 1.1);
 
   if (props.qso.qras[0]) {
     imgData = await getImage(props.qso.qras[0].profilepic);

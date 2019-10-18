@@ -307,10 +307,18 @@ class FeedOptionsMenu extends React.PureComponent {
           {this.props.optionsCaller === "FeedItem" &&
             this.props.QslCard &&
             this.props.currentQRA === this.props.qso_owner && (
-              <Dropdown.Item
-                icon="print"
-                text="Print QSL Card"
-                onClick={this.printQSLCard.bind(this)}
+              <Modal
+                trigger={<Dropdown.Item icon="print" text="Print QSL Card" />}
+                header="QSL Card"
+                content="Please disable POPUP Blockers in order to get the PDF File"
+                onActionClick={this.printQSLCard.bind(this)}
+                actions={[
+                  {
+                    key: "done",
+                    content: "Done",
+                    positive: true
+                  }
+                ]}
               />
             )}
           {/* END FEED ITEM QSL CARD*/}
