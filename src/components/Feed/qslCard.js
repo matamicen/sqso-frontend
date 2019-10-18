@@ -162,7 +162,7 @@ async function showImages(media, pdf) {
     }
 
     imgData = await getImage(picList[i].url, true);
-    console.log(imgData);
+
     pdf.addImage(imgData, "JPEG", tot_width, 2, picWidth, picHeight);
     tot_width = tot_width + picWidthEnd;
   }
