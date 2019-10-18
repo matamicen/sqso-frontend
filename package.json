@@ -22,7 +22,7 @@
     "html-to-draftjs": "^1.4.0",
     "ignore-styles": "^5.0.1",
     "immutable": "^3.8.2",
-    "jspdf": "^1.4.1",
+    "jspdf": "^1.5.3",
     "morgan": "^1.9.0",
     "prop-types": "^15.6.0",
     "qrcode.react": "^0.8.0",

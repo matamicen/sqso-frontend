@@ -6,7 +6,8 @@ import React from "react";
 import Storage from "@aws-amplify/storage";
 import * as Sentry from "@sentry/browser";
 export default async function QslCardPrint(props) {
-  const pdf = new jsPDF("l", "in", [5.5, 3.5]);
+  const pdf = new jsPDF("l", "in");
+
   /* Card Frame Begin*/
   pdf.setDrawColor(0);
   pdf.setFillColor(255, 255, 255);
@@ -31,7 +32,7 @@ export default async function QslCardPrint(props) {
   /*QRA OWNER Image Begin*/
   imgData = await getImage(props.qso.profilepic, true);
 
-  await pdf.addImage(imgData, "JPEG", 0.4, 0.3, 0.4, 0.4);
+  pdf.addImage(imgData, "JPEG", 0.4, 0.3, 0.4, 0.4);
   /* QRA Image End*/
 
   /* QRA TEXT */
@@ -87,9 +88,13 @@ export default async function QslCardPrint(props) {
   pdf.setLineWidth(0.01);
   pdf.roundedRect(0.9, 1.1, 2.6, 0.7, 0.1, 0.1, "FD");
 
+  /*QSO LOGO */
+  imgData.src = "/logoMobile.jpg";
+  pdf.addImage(imgData, "JPEG", 3.6, 0.9);
+
   if (props.qso.qras[0]) {
     imgData = await getImage(props.qso.qras[0].profilepic);
-    await pdf.addImage(imgData, "JPEG", 1, 1.2, 0.4, 0.4);
+    pdf.addImage(imgData, "JPEG", 1, 1.2, 0.4, 0.4);
     /* QSO QRA TEXT */
     pdf.setFontSize(7);
     pdf.text(1, 1.7, props.qso.qras[0].qra);
@@ -97,7 +102,7 @@ export default async function QslCardPrint(props) {
   }
   if (props.qso.qras[1]) {
     imgData = await getImage(props.qso.qras[1].profilepic);
-    await pdf.addImage(imgData, "JPEG", 1.5, 1.2, 0.4, 0.4);
+    pdf.addImage(imgData, "JPEG", 1.5, 1.2, 0.4, 0.4);
     /* QSO QRA TEXT */
     pdf.setFontSize(7);
     pdf.text(1.5, 1.7, props.qso.qras[1].qra);
@@ -105,7 +110,7 @@ export default async function QslCardPrint(props) {
   }
   if (props.qso.qras[2]) {
     imgData = await getImage(props.qso.qras[2].profilepic);
-    await pdf.addImage(imgData, "JPEG", 2, 1.2, 0.4, 0.4);
+    pdf.addImage(imgData, "JPEG", 2, 1.2, 0.4, 0.4);
     /* QSO QRA TEXT */
     pdf.setFontSize(7);
     pdf.text(2, 1.7, props.qso.qras[2].qra);
@@ -113,7 +118,7 @@ export default async function QslCardPrint(props) {
   }
   if (props.qso.qras[3]) {
     imgData = await getImage(props.qso.qras[3].profilepic);
-    await pdf.addImage(imgData, "JPEG", 2.5, 1.2, 0.4, 0.4);
+    pdf.addImage(imgData, "JPEG", 2.5, 1.2, 0.4, 0.4);
     /* QSO QRA TEXT */
     pdf.setFontSize(7);
     pdf.text(2.5, 1.7, props.qso.qras[3].qra);
@@ -121,7 +126,7 @@ export default async function QslCardPrint(props) {
   }
   if (props.qso.qras[4]) {
     imgData = await getImage(props.qso.qras[4].profilepic);
-    await pdf.addImage(imgData, "JPEG", 3, 1.2, 0.4, 0.4);
+    pdf.addImage(imgData, "JPEG", 3, 1.2, 0.4, 0.4);
     /* QSO QRA TEXT */
     pdf.setFontSize(7);
     pdf.text(3, 1.7, props.qso.qras[4].qra);
@@ -134,8 +139,8 @@ export default async function QslCardPrint(props) {
 
   /* QRA Image End*/
 
-  var blob = await pdf.output("blob");
-  await window.open(URL.createObjectURL(blob));
+  var blob = pdf.output("blob");
+  window.open(URL.createObjectURL(blob));
   // Print pdf.save('QSLCard.pdf');
 }
 async function showImages(media, pdf) {
@@ -157,8 +162,8 @@ async function showImages(media, pdf) {
     }
 
     imgData = await getImage(picList[i].url, true);
-
-    await pdf.addImage(imgData, "JPEG", tot_width, 2, picWidth, picHeight);
+    console.log(imgData);
+    pdf.addImage(imgData, "JPEG", tot_width, 2, picWidth, picHeight);
     tot_width = tot_width + picWidthEnd;
   }
 }
