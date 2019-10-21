@@ -63,11 +63,21 @@ class FeedImage extends React.Component {
           ))}
         </Slider>
 
-        <Modal closeIcon open={this.state.showModal} onClose={this.close}>
-          <Modal.Content image scrolling>
+        <Modal
+          centered={false}
+          closeIcon
+          open={this.state.showModal}
+          onClose={this.close}
+        >
+          <Modal.Content>
             <Modal.Description>
               {this.props.img.map(m => (
-                <Segment key={m.idqsos_media} raised textAlign="center">
+                <Segment
+                  key={m.idqsos_media}
+                  raised
+                  textAlign="center"
+                  style={{ overflow: "auto", maxHeight: 200 }}
+                >
                   {this.props.isAuthenticated && (
                     <div
                       style={{
