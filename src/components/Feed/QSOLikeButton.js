@@ -23,19 +23,19 @@ class QSOLikeButton extends React.Component {
   componentDidMount() {
     if (this.props.qso.likes) {
       this.setState({ likeCounter: this.props.qso.likes.length });
-
-      if (
-        this.props.isAuthenticated &&
-        this.props.qso.likes.some(
-          o => o.qra === this.props.currentQRA.toUpperCase()
-        )
-      ) {
-        this.setState({ liked: true });
-        this.setState({ icon: "thumbs up" });
-      }
     }
   }
-
+  static getDerivedStateFromProps(props, prevState) {
+    if (
+      !prevState.liked &&
+      props.isAuthenticated &&
+      props.qso.likes.some(o => o.idqra === props.userData.qra.idqras)
+    ) {
+      console.log("liked: true");
+      return { liked: true, icon: "thumbs up" };
+    }
+    return null;
+  }
   doLike() {
     let apiName = "superqso";
     let path = "/qso-like";
@@ -75,10 +75,14 @@ class QSOLikeButton extends React.Component {
     };
     API.del(apiName, path, myInit)
       .then(response => {
+        console.log(response.body);
         if (response.body.error > 0) {
           console.error(response.body.message);
         } else {
-          this.setState({ likeCounter: response.body.message });
+          this.setState({
+            likeCounter: response.body.message,
+            icon: "thumbs outline up"
+          });
 
           ReactGA.event({ category: "QSO", action: "liked" });
         }
@@ -91,6 +95,7 @@ class QSOLikeButton extends React.Component {
   }
 
   handleOnLike() {
+    console.log(this.state.liked);
     if (!this.props.isAuthenticated) this.setState({ openLogin: true });
     else {
       if (!this.state.liked) {
@@ -138,6 +143,7 @@ class QSOLikeButton extends React.Component {
 const mapStateToProps = state => ({
   isAuthenticated: state.userData.isAuthenticated,
   currentQRA: state.userData.currentQRA,
+  userData: state.userData,
   token: state.userData.token
 });
 const mapDispatchToProps = dispatch => ({
