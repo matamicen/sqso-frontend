@@ -31,7 +31,6 @@ class QSOLikeButton extends React.Component {
       props.isAuthenticated &&
       props.qso.likes.some(o => o.idqra === props.userData.qra.idqras)
     ) {
-      console.log("liked: true");
       return { liked: true, icon: "thumbs up" };
     }
     return null;
@@ -75,7 +74,6 @@ class QSOLikeButton extends React.Component {
     };
     API.del(apiName, path, myInit)
       .then(response => {
-        console.log(response.body);
         if (response.body.error > 0) {
           console.error(response.body.message);
         } else {
