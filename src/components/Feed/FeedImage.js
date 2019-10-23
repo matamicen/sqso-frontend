@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import FeedOptionsMenu from "./FeedOptionsMenu";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 import Image from "semantic-ui-react/dist/commonjs/elements/Image";
