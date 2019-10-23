@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import FeedOptionsMenu from "./FeedOptionsMenu";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 import Image from "semantic-ui-react/dist/commonjs/elements/Image";
@@ -68,16 +68,12 @@ class FeedImage extends React.Component {
           closeIcon
           open={this.state.showModal}
           onClose={this.close}
+          style={{ height: "90%", overflowY: "auto" }}
         >
-          <Modal.Content>
+          <Modal.Content image>
             <Modal.Description>
               {this.props.img.map(m => (
-                <Segment
-                  key={m.idqsos_media}
-                  raised
-                  textAlign="center"
-                  style={{ overflow: "auto", maxHeight: 200 }}
-                >
+                <div key={m.idqsos_media} style={{ padding: "1vh" }}>
                   {this.props.isAuthenticated && (
                     <div
                       style={{
@@ -94,14 +90,14 @@ class FeedImage extends React.Component {
                   )}
                   <Image
                     key={m.idqsos_media}
-                    wrapped
                     centered
                     rounded
+                    size="big"
                     src={m.url}
                   />
 
                   <p>{m.description}</p>
-                </Segment>
+                </div>
               ))}
             </Modal.Description>
           </Modal.Content>
