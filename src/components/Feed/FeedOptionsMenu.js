@@ -13,11 +13,12 @@ import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 import API from "@aws-amplify/api";
 import * as Sentry from "@sentry/browser";
 import QslCardPrint from "./qslCard";
-
+import Recaptcha from "react-recaptcha";
 class FeedOptionsMenu extends React.PureComponent {
   state = {
     showReportContent: false,
-    showMessage: false
+    showMessage: false,
+    recaptchaToken: null
   };
 
   openReportedContent = () => this.setState({ showReportContent: true });
@@ -52,7 +53,7 @@ class FeedOptionsMenu extends React.PureComponent {
   handleOnSubmitReportComment(e) {
     var datetime = new Date();
     e.preventDefault();
-    if (!e.target.comments.value) return;
+    if (!e.target.comments.value || !this.state.recaptchaToken) return;
     let apiName = "superqso";
     let path = "/content-reported";
     let myInit = {
@@ -83,7 +84,7 @@ class FeedOptionsMenu extends React.PureComponent {
   handleOnSubmitReportQso(e) {
     var datetime = new Date();
     e.preventDefault();
-    if (!e.target.comments.value) return;
+    if (!e.target.comments.value || !this.state.recaptchaToken) return;
     let apiName = "superqso";
     let path = "/content-reported";
     let myInit = {
@@ -112,7 +113,7 @@ class FeedOptionsMenu extends React.PureComponent {
   handleOnSubmitReportMedia(e) {
     var datetime = new Date();
     e.preventDefault();
-    if (!e.target.comments.value) return;
+    if (!e.target.comments.value || !this.state.recaptchaToken) return;
     let apiName = "superqso";
     let path = "/content-reported";
     let myInit = {
@@ -176,6 +177,15 @@ class FeedOptionsMenu extends React.PureComponent {
                       name="idmedia"
                       value={this.props.idqsos_media}
                     />
+                    <Form.Field>
+                      <Recaptcha
+                        sitekey="6Lf1VL8UAAAAAEyE2sQHbSr-tbH3_fwZqxEXEg-l"
+                        render="explicit"
+                        verifyCallback={response => {
+                          this.setState({ recaptchaToken: response });
+                        }}
+                      />{" "}
+                    </Form.Field>
                     <Form.Button>Submit</Form.Button>
 
                     <Modal
@@ -239,6 +249,15 @@ class FeedOptionsMenu extends React.PureComponent {
                       name="idmedia"
                       value={this.props.idqsos_media}
                     />
+                    <Form.Field>
+                      <Recaptcha
+                        sitekey="6Lf1VL8UAAAAAEyE2sQHbSr-tbH3_fwZqxEXEg-l"
+                        render="explicit"
+                        verifyCallback={response => {
+                          this.setState({ recaptchaToken: response });
+                        }}
+                      />{" "}
+                    </Form.Field>
                     <Form.Button>Submit</Form.Button>
 
                     <Modal
@@ -343,6 +362,15 @@ class FeedOptionsMenu extends React.PureComponent {
                       label="Comments"
                       placeholder="Why do you think we should remove this content?"
                     />
+                    <Form.Field>
+                      <Recaptcha
+                        sitekey="6Lf1VL8UAAAAAEyE2sQHbSr-tbH3_fwZqxEXEg-l"
+                        render="explicit"
+                        verifyCallback={response => {
+                          this.setState({ recaptchaToken: response });
+                        }}
+                      />{" "}
+                    </Form.Field>
                     <Form.Button>Submit</Form.Button>
 
                     <Modal
@@ -389,6 +417,15 @@ class FeedOptionsMenu extends React.PureComponent {
                       label="Comments"
                       placeholder="Why do you think we should remove this content?"
                     />
+                    <Form.Field>
+                      <Recaptcha
+                        sitekey="6Lf1VL8UAAAAAEyE2sQHbSr-tbH3_fwZqxEXEg-l"
+                        render="explicit"
+                        verifyCallback={response => {
+                          this.setState({ recaptchaToken: response });
+                        }}
+                      />{" "}
+                    </Form.Field>
                     <Form.Button>Submit</Form.Button>
 
                     <Modal

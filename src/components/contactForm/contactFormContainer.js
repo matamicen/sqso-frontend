@@ -37,7 +37,8 @@ class contactForm extends React.Component {
       email: Yup.string("Enter your email")
         .email("Enter a valid email")
         .required("Email is required"),
-      message: Yup.string().required("Enter Message")
+      message: Yup.string().required("Enter Message"),
+      recaptcha: Yup.string().required("Confirm Recaptcha")
     });
 
     return (

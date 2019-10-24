@@ -5,6 +5,7 @@ import AppNavigation from "../Home/AppNavigation";
 import Header from "semantic-ui-react/dist/commonjs/elements/Header";
 import Form from "semantic-ui-react/dist/commonjs/collections/Form";
 import Message from "semantic-ui-react/dist/commonjs/collections/Message";
+import Recaptcha from "react-recaptcha";
 
 const ContactFormPresentation = props => {
   const {
@@ -15,6 +16,7 @@ const ContactFormPresentation = props => {
     handleBlur,
     setFieldTouched,
     handleSubmit,
+    setFieldValue
   } = props;
 
   const change = (name, e) => {
@@ -35,13 +37,13 @@ const ContactFormPresentation = props => {
         <Grid
           textAlign="center"
           style={{
-            height: "100%",
+            height: "100%"
           }}
           verticalAlign="middle"
         >
           <Grid.Column
             style={{
-              maxWidth: 450,
+              maxWidth: 450
             }}
           >
             <Header as="h2" color="teal" textAlign="center">
@@ -73,6 +75,18 @@ const ContactFormPresentation = props => {
               {touched.message && errors.message && (
                 <Message content={errors.message} />
               )}
+              <Form.Field>
+                <Recaptcha
+                  sitekey="6LeiVL8UAAAAAIQSELqMu1FpyRsiazdA233cV4u7"
+                  render="explicit"
+                  verifyCallback={response => {
+                    setFieldValue("recaptcha", response);
+                  }}
+                />{" "}
+                {touched.token && errors.token && (
+                  <Message negative content={errors.token} />
+                )}
+              </Form.Field>
               <Form.Button content="Send" onClick={handleSubmit} />
             </Form>
           </Grid.Column>

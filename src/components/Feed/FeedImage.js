@@ -48,7 +48,7 @@ class FeedImage extends React.Component {
                   className="image"
                   src={m.url}
                   key={m.idqsos_media}
-                  alt={m.description}
+                  alt={m.description ? m.description : "no description"}
                   onClick={() => this.open()}
                   style={{
                     objectFit: "cover",
@@ -92,6 +92,7 @@ class FeedImage extends React.Component {
                     key={m.idqsos_media}
                     centered
                     rounded
+                    alt={m.description ? m.description : "no description"}
                     size="big"
                     src={m.url}
                   />
