@@ -137,7 +137,10 @@ class FeedItemRepost extends React.Component {
             ", " +
             date.getFullYear()}
           <Label>QTR (UTC):</Label>
-          {date.getUTCHours() + ":" + date.getMinutes()}
+          {date.getUTCHours() +
+            ":" +
+            (date.getMinutes() < 10 ? "0" : "") +
+            date.getMinutes()}
           <Label>Mode:</Label>
           {this.props.qso.original[0].mode}
           <Label>Band:</Label>

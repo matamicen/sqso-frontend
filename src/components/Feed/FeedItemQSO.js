@@ -125,7 +125,10 @@ class FeedItemQSO extends React.Component {
                 date.getFullYear()}
 
               <Label>QTR (UTC):</Label>
-              {date.getUTCHours() + ":" + date.getMinutes()}
+              {date.getUTCHours() +
+                ":" +
+                (date.getMinutes() < 10 ? "0" : "") +
+                date.getMinutes()}
             </div>
           </div>
           <Divider

@@ -75,7 +75,10 @@ class FeedAudio extends React.Component {
                 date.getDate() +
                 ", " +
                 date.getFullYear()}{" "}
-              {date.getUTCHours() + ":" + date.getMinutes()}
+              {date.getUTCHours() +
+                ":" +
+                (date.getMinutes() < 10 ? "0" : "") +
+                date.getMinutes()}
               {onlyForRegistered && <Link to="/login">Login Required</Link>}
             </div>
           </Fragment>
