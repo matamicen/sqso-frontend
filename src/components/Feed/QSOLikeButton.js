@@ -14,9 +14,10 @@ class QSOLikeButton extends React.Component {
     super();
     this.state = {
       icon: "thumbs outline up",
-      liked: false,
+      liked: null,
       likeCounter: 0,
-      openLogin: false
+      openLogin: false,
+      likes: []
     };
   }
 
@@ -27,11 +28,25 @@ class QSOLikeButton extends React.Component {
   }
   static getDerivedStateFromProps(props, prevState) {
     if (
-      !prevState.liked &&
-      props.isAuthenticated &&
-      props.qso.likes.some(o => o.idqra === props.userData.qra.idqras)
+      prevState.likes.length === 0 &&
+      props.qso.likes.length > 0 &&
+      props.userData.qra
     ) {
-      return { liked: true, icon: "thumbs up" };
+      if (props.qso.likes.some(o => o.idqra === props.userData.qra.idqras)) {
+        return {
+          liked: true,
+          icon: "thumbs up",
+          likes: props.qso.likes,
+          likeCounter: props.qso.likes.length
+        };
+      } else {
+        return {
+          liked: false,
+          icon: "thumbs outline up",
+          likes: props.qso.likes,
+          likeCounter: props.qso.likes.length
+        };
+      }
     }
     return null;
   }
@@ -49,9 +64,15 @@ class QSOLikeButton extends React.Component {
     API.post(apiName, path, myInit)
       .then(response => {
         if (response.body.error > 0) {
-          console.error(response.body.message);
+          this.setState(previousState => ({
+            likeCounter: previousState.likeCounter - 1
+          }));
         } else {
-          this.setState({ likeCounter: response.body.message });
+          // this.setState({
+          //   likeCounter: response.body.message
+          //   // icon: "thumbs up",
+          //   // liked: true
+          // });
         }
       })
       .catch(error => {
@@ -75,14 +96,17 @@ class QSOLikeButton extends React.Component {
     API.del(apiName, path, myInit)
       .then(response => {
         if (response.body.error > 0) {
-          console.error(response.body.message);
+          this.setState(previousState => ({
+            likeCounter: previousState.likeCounter - 1
+          }));
         } else {
-          this.setState({
-            likeCounter: response.body.message,
-            icon: "thumbs outline up"
-          });
+          // this.setState({
+          //   likeCounter: response.body.message
+          //   // icon: "thumbs outline up",
+          //   // liked: false
+          // });
 
-          ReactGA.event({ category: "QSO", action: "liked" });
+          ReactGA.event({ category: "QSO", action: "unliked" });
         }
       })
       .catch(error => {
@@ -93,28 +117,25 @@ class QSOLikeButton extends React.Component {
   }
 
   handleOnLike() {
-    console.log(this.state.liked);
     if (!this.props.isAuthenticated) this.setState({ openLogin: true });
     else {
       if (!this.state.liked) {
         this.setState(previousState => ({
-          likeCounter: previousState.likeCounter + 1
+          likeCounter: previousState.likeCounter + 1,
+          icon: "thumbs up",
+          liked: true
         }));
-        if (this.props.isAuthenticated) this.doLike();
+        this.doLike();
 
-        this.setState({ icon: "thumbs up" });
-      } else {
+        this.setState({});
+      } else if (this.state.liked) {
         this.setState(previousState => ({
-          likeCounter: previousState.likeCounter - 1
+          likeCounter: previousState.likeCounter - 1,
+          liked: false,
+          icon: "thumbs outline up"
         }));
-        if (this.props.isAuthenticated) this.doUnLike();
-
-        this.setState({ icon: "thumbs outline up" });
+        this.doUnLike();
       }
-
-      this.setState({
-        liked: !this.state.liked
-      });
     }
   }
 
