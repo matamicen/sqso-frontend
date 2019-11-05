@@ -2,7 +2,7 @@ import React from "react";
 import FeedOptionsMenu from "./FeedOptionsMenu";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 import Image from "semantic-ui-react/dist/commonjs/elements/Image";
-
+import Button from "semantic-ui-react/dist/commonjs/elements/Button";
 import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
 
 import "../../styles/style.css";
@@ -16,7 +16,30 @@ const styles = {
   paddingTop: "0px",
   paddingBottom: "0px"
 };
+// declare component
+const Right = props => (
+  <div
+    className="slick-next"
+    style={{
+      ...props.style,
+      display: "block",
+      right: "-10px"
+    }}
+    onClick={props.onClick}
+  >
+    <Button circular icon="arrow circle right" />
+  </div>
+);
 
+const Left = props => (
+  <div
+    className="slick-prev"
+    style={{ ...props.style, display: "block", left: "-25px" }}
+    onClick={props.onClick}
+  >
+    <Button circular icon="arrow circle left" />
+  </div>
+);
 class FeedImage extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -32,10 +55,12 @@ class FeedImage extends React.Component {
     var settings = {
       infinite: true,
       dots: true,
-      arrows: true,
+      // arrows: true,
       speed: 150,
       centerPadding: "0px",
-      centerMode: true
+      centerMode: true,
+      nextArrow: <Right />,
+      prevArrow: <Left />
     };
 
     return (
