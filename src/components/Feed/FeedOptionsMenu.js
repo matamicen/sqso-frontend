@@ -334,7 +334,7 @@ class FeedOptionsMenu extends React.PureComponent {
                 actions={[
                   {
                     key: "done",
-                    content: "Done",
+                    content: "Print QSL CARD",
                     positive: true
                   }
                 ]}
