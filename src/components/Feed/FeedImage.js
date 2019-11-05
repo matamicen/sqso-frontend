@@ -65,7 +65,11 @@ class FeedImage extends React.Component {
 
         <Modal
           centered={false}
-          closeIcon
+          closeIcon={{
+            style: { top: "0.0535rem", right: "0rem" },
+            color: "black",
+            name: "close"
+          }}
           open={this.state.showModal}
           onClose={this.close}
           style={{ height: "90%", overflowY: "auto" }}
