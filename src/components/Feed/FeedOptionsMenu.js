@@ -37,7 +37,7 @@ class FeedOptionsMenu extends React.PureComponent {
   }
 
   deleteComment() {
-    this.props.actions.doDeleteComment(
+    this.props.actions.doCommentDelete(
       this.props.idcomment,
       this.props.idqso,
       this.props.token

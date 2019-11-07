@@ -28,7 +28,7 @@ import "../../styles/style.css";
 class FeedItemQSO extends React.Component {
   constructor() {
     super();
-    this.state = { error: null };
+    this.state = { comments: [], error: null };
     this.handleOnComment = this.handleOnComment.bind(this);
     this.recalculateRowHeight = this.recalculateRowHeight.bind(this);
   }
@@ -44,6 +44,11 @@ class FeedItemQSO extends React.Component {
   }
 
   //     }
+  static getDerivedStateFromProps(props, prevState) {
+    if (props.qso.comments !== prevState.comments)
+      return { comments: props.qso.comments };
+    return null;
+  }
   render() {
     let picList = this.props.qso.media.filter(media => media.type === "image");
     let audioList = this.props.qso.media.filter(
@@ -176,6 +181,7 @@ class FeedItemQSO extends React.Component {
         {this.props.qso.showComments && (
           <QSOComments
             qso={this.props.qso}
+            comments={this.state.comments}
             recalculateRowHeight={this.recalculateRowHeight}
           />
         )}
@@ -183,6 +189,7 @@ class FeedItemQSO extends React.Component {
     );
   }
 }
+
 const mapStateToProps = (state, qsos) => ({
   fetchingQSOS: state.FetchingQSOS,
   qsosFetched: state.qsosFetched,
@@ -193,9 +200,7 @@ const mapDispatchToProps = dispatch => ({
 });
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
-  null,
-  { pure: false }
+  mapDispatchToProps
 )(FeedItemQSO);
 FeedItemQSO.propTypes = {
   qso: PropTypes.object.isRequired

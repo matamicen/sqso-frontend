@@ -27,7 +27,8 @@ export const RECEIVE_FOLLOWERS = "RECEIVE_FOLLOWERS";
 export const RECEIVE_QSO_MEDIA_COUNTER = "RECEIVE_QSO_MEDIA_COUNTER";
 export const DELETE_MEDIA = "DELETE_MEDIA";
 export const DELETE_QSO = "DELETE_QSO";
-export const DELETE_COMMENT = "DELETE_COMMENT";
+export const COMMENT_DELETE = "COMMENT_DELETE";
+export const COMMENT_ADD = "COMMENT_ADD";
 export const NOTIFICATION_READ = "NOTIFICATION_READ";
 export const RECEIVE_NOTIFICATIONS = "RECEIVE_NOTIFICATIONS";
 export const FOLLOW_CLEAR = "FOLLOW_CLEAR";
@@ -69,7 +70,7 @@ export function doNotificationRead(idnotif = null, token) {
       });
   };
 }
-export function doDeleteComment(idcomment, idqso, token) {
+export function doCommentDelete(idcomment, idqso, token) {
   return dispatch => {
     let apiName = "superqso";
     let path = "/qso-comment";
@@ -85,15 +86,16 @@ export function doDeleteComment(idcomment, idqso, token) {
     API.del(apiName, path, myInit)
       .then(response => {
         if (response.body.error === 0)
-          dispatch(doDeleteCommentResponse(idcomment, idqso));
+          dispatch(doCommentDeleteResponse(idcomment, idqso));
         else console.log(response.body.message);
       })
       .catch(error => {
+        console.log(error);
         Auth.currentSession()
           .then(session => {
             token = session.idToken.jwtToken;
             dispatch(refreshToken(token));
-            dispatch(doDeleteComment(idcomment, idqso, token));
+            dispatch(doCommentDelete(idcomment, idqso, token));
           })
           .catch(error => {
             if (process.env.NODE_ENV !== "production") {
@@ -104,19 +106,67 @@ export function doDeleteComment(idcomment, idqso, token) {
       });
   };
 }
+export function doCommentAdd(idqso, comment, token) {
+  return dispatch => {
+    let apiName = "superqso";
+    let path = "/qso-comment";
+    let myInit = {
+      body: {
+        qso: idqso,
+        comment: comment.comment,
+        datetime: comment.datetime
+      }, // replace this with attributes you need
+      headers: {
+        Authorization: token
+      } // OPTIONAL
+    };
+    API.post(apiName, path, myInit)
+      .then(response => {
+        if (response.body.error === 0)
+          dispatch(doCommentAddResponse(idqso, response.body.message));
+        else console.log(response.body.message);
+      })
+      .catch(error => {
+        console.log(error);
+        Auth.currentSession()
+          .then(session => {
+            token = session.idToken.jwtToken;
+            dispatch(refreshToken(token));
+            dispatch(doCommentAdd(idqso, comment, token));
+          })
+          .catch(error => {
+            if (process.env.NODE_ENV !== "production") {
+              console.log(error);
+            } else Sentry.captureException(error);
+            dispatch(doLogout());
+          });
+      });
+  };
+}
+export function doCommentAddResponse(idqso = null, comments = []) {
+  ReactGA.event({
+    category: "QSO",
+    action: "CommentAdd"
+  });
+  return {
+    type: COMMENT_ADD,
+    idqso: idqso,
+    comments: comments
+  };
+}
 export function refreshToken(token) {
   return {
     type: REFRESH_TOKEN,
     token: token
   };
 }
-export function doDeleteCommentResponse(idcomment = null, idqso = null) {
+export function doCommentDeleteResponse(idcomment = null, idqso = null) {
   ReactGA.event({
     category: "QSO",
     action: "CommentDelete"
   });
   return {
-    type: DELETE_COMMENT,
+    type: COMMENT_DELETE,
     idcomment: idcomment,
     idqso: idqso
   };

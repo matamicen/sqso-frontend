@@ -19,7 +19,8 @@ import {
   CLEAR_QRA,
   REQUEST_QSO,
   REQUEST_USERINFO,
-  DELETE_COMMENT,
+  COMMENT_DELETE,
+  COMMENT_ADD,
   CLEAR_QSO,
   CLEAR_QSO_LINK,
   NOTIFICATION_READ,
@@ -72,6 +73,7 @@ const initialState = {
 function generalReducers(state = initialState, action) {
   let newStore;
   let userInfo;
+
   switch (action.type) {
     case NOTIFICATION_READ:
       userInfo = {
@@ -91,7 +93,42 @@ function generalReducers(state = initialState, action) {
         qsos: state.qsos.filter(qso => qso.idqsos !== action.idqso)
       });
       return newStore;
-    case DELETE_COMMENT:
+
+    case COMMENT_ADD:
+      newStore = Object.assign({}, state, {
+        ...state,
+        qsos: state.qsos.map(qso => {
+          if (qso.idqsos === action.idqso) {
+            qso.comments = action.comments;
+          }
+          return qso;
+        }),
+        qra: state.qra
+          ? {
+              ...state.qra,
+              qsos:
+                state.qra && state.qra.qsos
+                  ? state.qra.qsos.map(qso => {
+                      if (qso.idqsos === action.idqso) {
+                        qso.comments = action.comments;
+                      }
+                      return qso;
+                    })
+                  : []
+            }
+          : null,
+
+        qso:
+          state.qso && state.qso.idqsos
+            ? {
+                ...state.qso,
+                comments: action.comments
+              }
+            : {}
+      });
+
+      return newStore;
+    case COMMENT_DELETE:
       newStore = Object.assign({}, state, {
         ...state,
         qsos: state.qsos.map(qso => {
@@ -100,11 +137,39 @@ function generalReducers(state = initialState, action) {
               comment => comment.idqsos_comments !== action.idcomment
             );
           }
+
           return qso;
-        })
+        }),
+        qra: state.qra
+          ? {
+              ...state.qra,
+              qsos:
+                state.qra && state.qra.qsos
+                  ? state.qra.qsos.map(qso => {
+                      if (qso.idqsos === action.idqso) {
+                        qso.comments = qso.comments.filter(
+                          comment =>
+                            comment.idqsos_comments !== action.idcomment
+                        );
+                      }
+                      return qso;
+                    })
+                  : []
+            }
+          : null,
+        qso:
+          state.qso && state.qso.idqsos
+            ? {
+                ...state.qso,
+                comments: state.qso.comments.filter(
+                  comment => comment.idqsos_comments !== action.idcomment
+                )
+              }
+            : {}
       });
 
       return newStore;
+
     case DELETE_MEDIA:
       newStore = Object.assign({}, state, {
         ...state,

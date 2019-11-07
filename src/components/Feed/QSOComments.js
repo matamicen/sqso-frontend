@@ -6,9 +6,7 @@ import QSOCommentItem from "./QSOCommentItem";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as Actions from "../../actions";
-import API from "@aws-amplify/api";
-import ReactGA from "react-ga";
-import * as Sentry from "@sentry/browser";
+
 class QSOComments extends React.Component {
   constructor() {
     super();
@@ -29,34 +27,34 @@ class QSOComments extends React.Component {
     this.props.recalculateRowHeight();
   };
 
-  doComment = c => {
-    let apiName = "superqso";
-    let path = "/qso-comment";
-    let myInit = {
-      body: {
-        qso: this.props.qso.idqsos,
-        comment: c.comment,
-        datetime: c.datetime
-      }, // replace this with attributes you need
-      headers: {
-        Authorization: this.props.token
-      } // OPTIONAL
-    };
-    API.post(apiName, path, myInit)
-      .then(response => {
-        if (response.body.error > 0) {
-          console.error(response.body.message);
-        } else {
-          this.setState({ comments: response.body.message });
-          ReactGA.event({ category: "QSO", action: "CommentAdd" });
-        }
-      })
-      .catch(error => {
-        if (process.env.NODE_ENV !== "production") {
-          console.log(error);
-        } else Sentry.captureException(error);
-      });
-  };
+  // doComment = c => {
+  //   let apiName = "superqso";
+  //   let path = "/qso-comment";
+  //   let myInit = {
+  //     body: {
+  //       qso: this.props.qso.idqsos,
+  //       comment: c.comment,
+  //       datetime: c.datetime
+  //     }, // replace this with attributes you need
+  //     headers: {
+  //       Authorization: this.props.token
+  //     } // OPTIONAL
+  //   };
+  //   API.post(apiName, path, myInit)
+  //     .then(response => {
+  //       if (response.body.error > 0) {
+  //         console.error(response.body.message);
+  //       } else {
+  //         this.setState({ comments: response.body.message });
+  //         ReactGA.event({ category: "QSO", action: "CommentAdd" });
+  //       }
+  //     })
+  //     .catch(error => {
+  //       if (process.env.NODE_ENV !== "production") {
+  //         console.log(error);
+  //       } else Sentry.captureException(error);
+  //     });
+  // };
 
   handleAddComment = e => {
     e.preventDefault();
@@ -69,14 +67,23 @@ class QSOComments extends React.Component {
       datetime: datetime
     };
     this.setState({ comment: comment });
-    this.setState({
-      comments: this.state.comments.concat(comment)
-    });
+    // this.setState({
+    //   comments: this.state.comments.concat(comment)
+    // });
     e.target.comment.value = null;
     // this .props .recalculateRowHeight();
-    this.doComment(comment);
-  };
 
+    this.props.actions.doCommentAdd(
+      this.props.qso.idqsos,
+      comment,
+      this.props.token
+    );
+  };
+  static getDerivedStateFromProps(props, prevState) {
+    if (props.qso.comments !== prevState.comments)
+      return { comments: props.qso.comments };
+    return null;
+  }
   render() {
     let comments = null;
     if (this.state.comments) {
