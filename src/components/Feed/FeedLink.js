@@ -9,7 +9,7 @@ import * as Actions from "../../actions";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
-import Button from "semantic-ui-react/dist/commonjs/elements/Button";
+
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 
 class FeedLink extends React.PureComponent {
@@ -45,36 +45,44 @@ class FeedLink extends React.PureComponent {
           <Loader>Loading QSO Link</Loader>
         </Dimmer>
 
-        <Segment>
+        <Segment textAlign="center" style={{ padding: "1vh", width: "100%" }}>
           <Modal
-            closeIcon
+            closeIcon={{
+              style: { top: "0.0535rem", right: "0rem" },
+              color: "black",
+              name: "close"
+            }}
             open={this.state.showModal && this.props.qso_link ? true : false}
             onClose={() => this.close()}
+            style={{ height: "90%", overflowY: "auto" }}
           >
-            <Modal.Content image scrolling>
+            <Modal.Content image>
               <Modal.Description>
                 {this.props.qso_link && <NewsFeed list={qsos} />}
               </Modal.Description>
             </Modal.Content>
           </Modal>
-          <Image
-            src={
-              this.props.link.avatarpic
-                ? this.props.link.avatarpic
-                : "/emptyprofile.png"
-            }
-            size="mini"
-            avatar
-            style={{
-              width: "35px",
-              height: "35px"
-            }}
-          />{" "}
-          {this.props.link.qra + " "}
-          created a linked QSO{" "}
-          <Button size="mini" onClick={() => this.onOpenModal()}>
-            See Details
-          </Button>
+          <div
+            style={{ fontSize: "smaller" }}
+            onClick={() => this.onOpenModal()}
+          >
+            This QSO is linked to another QSO created by
+            {" " + this.props.link.qra + " "}
+            <Image
+              src={
+                this.props.link.avatarpic
+                  ? this.props.link.avatarpic
+                  : "/emptyprofile.png"
+              }
+              size="mini"
+              avatar
+              style={{
+                width: "35px",
+                height: "35px"
+              }}
+            />
+          </div>
+          {/* <Button size="mini">See Details</Button> */}
         </Segment>
       </Fragment>
     );

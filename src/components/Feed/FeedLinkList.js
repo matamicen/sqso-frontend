@@ -8,10 +8,10 @@ export default class FeedLinkList extends React.Component {
     if (this.props.links.length > 0) {
       return (
         <Fragment>
-          <Divider />
-          <Item.Group>
+          <Divider hidden style={{ marginTop: "1vh", marginBottom: "1vh" }} />
+          <Item.Group style={{ marginTop: "1vh", marginBottom: "1vh" }}>
             {this.props.links.map((l, i) => (
-              <Item key={i}>
+              <Item key={i} style={{ marginTop: "1vh", marginBottom: "1vh" }}>
                 <FeedLink key={i} link={l} />
               </Item>
             ))}
