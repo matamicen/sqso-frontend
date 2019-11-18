@@ -9,7 +9,8 @@ import { withRouter } from "react-router-dom";
 import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
 import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
 import "../../styles/style.css";
-import List from "semantic-ui-react/dist/commonjs/elements/List";
+import Table from "semantic-ui-react/dist/commonjs/collections/Table";
+
 import Notification from "./Notification";
 import Ad from "../Ad/Ad";
 
@@ -100,19 +101,23 @@ class Notifications extends React.Component {
           />
         </div>
         <div className="notifications-main">
-          <List divided>
-            {this.props.notifications.map(m => {
-              return (
-                <Notification
-                  key={m.idqra_notifications}
-                  notification={m}
-                  token={this.props.token}
-                  currentQRA={this.props.currentQRA}
-                  doNotificationRead={this.props.actions.doNotificationRead}
-                />
-              );
-            })}
-          </List>
+          <Table unstackable>
+            <Table.Body>
+              {/* <List divided relaxed animated> */}
+              {this.props.notifications.map(m => {
+                return (
+                  <Notification
+                    key={m.idqra_notifications}
+                    notification={m}
+                    token={this.props.token}
+                    currentQRA={this.props.currentQRA}
+                    doNotificationRead={this.props.actions.doNotificationRead}
+                  />
+                );
+              })}
+            </Table.Body>
+          </Table>
+          {/* </List> */}
         </div>
 
         <div className="site-right">

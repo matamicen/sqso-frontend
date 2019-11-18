@@ -1,6 +1,6 @@
 import FeedItem from "./FeedItem";
 import React from "react";
-
+import "../../styles/style.css";
 import AutoSizer from "react-virtualized/dist/commonjs/AutoSizer";
 import List from "react-virtualized/dist/commonjs/List";
 import WindowScroller from "react-virtualized/dist/commonjs/WindowScroller";
@@ -161,9 +161,12 @@ export default class NewsFeed extends React.Component {
 
     return (
       <div className="WindowScrollerWrapper">
-        <WindowScroller ref={ref => (this._windowScroller = ref)}>
+        <WindowScroller
+          ref={ref => (this._windowScroller = ref)}
+          style={{ overflow: "visible" }}
+        >
           {({ height, isScrolling, onChildScroll, scrollTop }) => (
-            <AutoSizer disableHeight>
+            <AutoSizer disableHeight style={{ overflow: "visible" }}>
               {({ width }) => (
                 <List
                   autoHeight
@@ -178,6 +181,7 @@ export default class NewsFeed extends React.Component {
                   rowHeight={this._cache.rowHeight}
                   rowRenderer={this._rowRenderer}
                   width={width}
+                  style={{ overflow: "visible" }}
                 />
               )}
             </AutoSizer>

@@ -9,6 +9,9 @@
   padding: 1px;
 }
 
+.ReactVirtualized__Grid__innerScrollContainer {
+  overflow: visible !important;
+}
 /* HOME */
 /*logo mobile*/
 .mobile {
