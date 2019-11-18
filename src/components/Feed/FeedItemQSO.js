@@ -169,11 +169,13 @@ class FeedItemQSO extends React.Component {
         )}
         {this.props.qso.links && <FeedLinkList links={this.props.qso.links} />}
         <Divider hidden style={{ marginTop: "1vh", marginBottom: "1vh" }} />
-        <Button.Group widths="4" basic>
+        <Button.Group fluid basic>
           <QSOLikeButton qso={this.props.qso} />
           <Button onClick={e => this.handleOnComment(e)}>
-            <Icon name="comment outline" />{" "}
-            {this.props.qso.comments.length > 0 && commentsCounter}
+            <div>
+              <Icon name="comment outline" />{" "}
+              {this.props.qso.comments.length > 0 && commentsCounter}
+            </div>
           </Button>
           <QSORePostButton qso={this.props.qso} />
           <QSOShareButtons idqso={this.props.qso.GUID_URL} />
