@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
 import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
 import Image from "semantic-ui-react/dist/commonjs/elements/Image";
-
+import Button from "semantic-ui-react/dist/commonjs/elements/Button";
 import NewsFeed from "./NewsFeedPresentational";
 import { bindActionCreators } from "redux";
 import * as Actions from "../../actions";
@@ -45,27 +45,25 @@ class FeedLink extends React.PureComponent {
           <Loader>Loading QSO Link</Loader>
         </Dimmer>
 
-        <Segment textAlign="center" style={{ padding: "1vh", width: "100%" }}>
-          <Modal
-            closeIcon={{
-              style: { top: "0.0535rem", right: "0rem" },
-              color: "black",
-              name: "close"
-            }}
-            open={this.state.showModal && this.props.qso_link ? true : false}
-            onClose={() => this.close()}
-            style={{ height: "90%", overflowY: "auto" }}
-          >
-            <Modal.Content image>
-              <Modal.Description>
-                {this.props.qso_link && <NewsFeed list={qsos} />}
-              </Modal.Description>
-            </Modal.Content>
-          </Modal>
-          <div
-            style={{ fontSize: "smaller" }}
-            onClick={() => this.onOpenModal()}
-          >
+        <Modal
+          closeIcon={{
+            style: { top: "0.0535rem", right: "0rem" },
+            color: "black",
+            name: "close"
+          }}
+          open={this.state.showModal && this.props.qso_link ? true : false}
+          onClose={() => this.close()}
+          style={{ height: "90%", overflowY: "auto" }}
+        >
+          <Modal.Content image>
+            <Modal.Description>
+              {this.props.qso_link && <NewsFeed list={qsos} />}
+            </Modal.Description>
+          </Modal.Content>
+        </Modal>
+        <div style={{ fontSize: "smaller", padding: "1vh", width: "100%" }}>
+          <Button fluid basic onClick={() => this.onOpenModal()}>
+            {" "}
             This QSO is linked to another QSO created by
             {" " + this.props.link.qra + " "}
             <Image
@@ -80,10 +78,9 @@ class FeedLink extends React.PureComponent {
                 width: "35px",
                 height: "35px"
               }}
-            />
-          </div>
-          {/* <Button size="mini">See Details</Button> */}
-        </Segment>
+            />{" "}
+          </Button>
+        </div>
       </Fragment>
     );
   }
