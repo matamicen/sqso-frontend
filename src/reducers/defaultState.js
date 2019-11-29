@@ -103,6 +103,7 @@ function generalReducers(state = initialState, action) {
           }
           return qso;
         }),
+        qso_link: { ...state.qso_link, comments: action.comments },
         qra: state.qra
           ? {
               ...state.qra,
@@ -140,6 +141,12 @@ function generalReducers(state = initialState, action) {
 
           return qso;
         }),
+        qso_link: {
+          ...state.qso_link,
+          comments: state.qso_link.comments.filter(
+            comment => comment.idqsos_comments !== action.idcomment
+          )
+        },
         qra: state.qra
           ? {
               ...state.qra,
