@@ -36,7 +36,7 @@ if (process.env.NODE_ENV === "production") {
     }
   });
 }
-ReactGA.initialize("UA-124438207-1");
+ReactGA.initialize("UA-153548794-1");
 
 const store =
   process.env.NODE_ENV !== "production"
