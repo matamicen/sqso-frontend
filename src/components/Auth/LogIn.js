@@ -12,7 +12,7 @@ import Message from "semantic-ui-react/dist/commonjs/collections/Message";
 import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
 // import Auth from '@aws-amplify/auth';
 import "./style.css";
-import ReactGA from "react-ga";
+// import ReactGA from "react-ga";
 import AppNavigation from "../Home/AppNavigation";
 import Amplify from "@aws-amplify/core";
 import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
@@ -68,7 +68,7 @@ class LogIn extends React.Component {
           qra: this.state.qra
         });
       });
-      ReactGA.event({ category: "QRA", action: "login" });
+      // ReactGA.event({ category: "QRA", action: "login" });
       this.props.history.goBack();
     }
   }
@@ -100,7 +100,7 @@ class LogIn extends React.Component {
           },
           showModal: true
         });
-        ReactGA.event({ category: "QRA", action: "resentCode" });
+        // ReactGA.event({ category: "QRA", action: "resentCode" });
       })
       .catch(err => {
         if (process.env.NODE_ENV !== "production") {
@@ -122,7 +122,7 @@ class LogIn extends React.Component {
           dimmerValCodeActive: false,
           dimmerLoginActive: true
         });
-        ReactGA.event({ category: "QRA", action: "confirmCode" });
+        // ReactGA.event({ category: "QRA", action: "confirmCode" });
         this.handleOnClickLogin();
       })
       .catch(err => {

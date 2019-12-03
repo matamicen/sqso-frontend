@@ -10,7 +10,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as Actions from "../../actions";
 import * as Sentry from "@sentry/browser";
-import ReactGA from "react-ga";
+// import ReactGA from "react-ga";
 class SignUp extends React.Component {
   constructor(props) {
     super(props);
@@ -76,7 +76,7 @@ class SignUp extends React.Component {
           userCreated: true,
           showModal: true
         });
-        ReactGA.event({ category: "QRA", action: "signUP" });
+        // ReactGA.event({ category: "QRA", action: "signUP" });
       })
       .catch(err => {
         this.setState({ dimmerActive: false, signUpError: err.message });
@@ -88,7 +88,7 @@ class SignUp extends React.Component {
   async handleResendCode() {
     await Auth.resendSignUp(this.state.qra.toUpperCase())
       .then(() => {
-        ReactGA.event({ category: "QRA", action: "resentCode" });
+        //ReactGA.event({ category: "QRA", action: "resentCode" });
       })
       .catch(err => {
         if (process.env.NODE_ENV !== "production") {
@@ -112,7 +112,7 @@ class SignUp extends React.Component {
           dimmerLoginActive: true,
           showModalMessage: true
         });
-        ReactGA.event({ category: "QRA", action: "confirmCode" });
+        //ReactG.event({ category: "QRA", action: "confirmCode" });
       })
       .catch(err => {
         if (process.env.NODE_ENV !== "production") {
@@ -147,7 +147,7 @@ class SignUp extends React.Component {
         });
       });
       this.setState({ dimmerLoginActive: false });
-      ReactGA.event({ category: "QRA", action: "login" });
+      //ReactG.event({ category: "QRA", action: "login" });
       this.props.history.push("/follow");
     }
   }
