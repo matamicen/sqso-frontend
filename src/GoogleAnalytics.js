@@ -1,36 +1,6 @@
-// import React from 'react';
-// import { withRouter } from 'react-router-dom';
-
-// class GoogleAnalytics extends React.Component {
-//     componentWillUpdate ({ location, history }) {
-//         const gtag = window.gtag;
-
-//         if (location.pathname === this.props.location.pathname) {
-//             // don't log identical link clicks (nav links likely)
-//             return;
-//         }
-
-//         if (history.action === 'PUSH' &&
-//             typeof(gtag) === 'function') {
-//             gtag('config', 'G-H8G28LYKBY', {
-//                 'page_title': document.title,
-//                 'page_location': window.location.href,
-//                 'page_path': location.pathname
-//             });
-//         }
-//     }
-
-//     render () {
-//         return null;
-//     }
-// }
-
-// export default withRouter(GoogleAnalytics);
-
-// utils/GoogleAnalytics.js
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-// import ReactGA from "react-ga";
+
 import { Route } from "react-router-dom";
 
 class GoogleAnalytics extends Component {
@@ -62,12 +32,6 @@ class GoogleAnalytics extends Component {
       page_location: window.location.href,
       page_path: location.pathname
     });
-    // ReactGA.set({
-    //     page,
-    //     location: `${location.origin}${page}`,
-    //     ...this.props.options
-    // });
-    // ReactGA.pageview(page);
   }
 
   render() {

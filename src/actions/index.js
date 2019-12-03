@@ -1,6 +1,6 @@
 import API from "@aws-amplify/api";
 import Auth from "@aws-amplify/auth";
-// import ReactGA from "react-ga";
+
 import * as Sentry from "@sentry/browser";
 export const PUBLIC_SESSION = "PUBLIC_SESSION";
 export const PREPARE_LOGIN = "PREPARE_LOGIN";
@@ -308,20 +308,14 @@ export function doSetPublicSession() {
   };
 }
 export function doLogin(token, qra, identityId) {
-  window.gtag("event", 'userLogin', {
+  window.gtag("config", "G-H8G28LYKBY", {
+    custom_map: { dimension1: "userQRA" }
+  });
+  window.gtag("event", "userLogin", {
     event_category: "User",
-    event_label: "Login"
+    event_label: "Login",
+    userQRA: qra
   });
-  window.gtag('config', 'G-H8G28LYKBY', {
-    'user_id': qra
-  });
-  //ReactGA.set({
-  //   userId: qra
-  // });
-  //ReactGA.event({
-  //   category: "User",
-  //   action: "Login"
-  // });
 
   return {
     type: LOGIN,
@@ -656,13 +650,15 @@ export function doClearQsoLink() {
   };
 }
 export function doFetchQSO(idqso, token = null) {
-  //ReactGA.set({
-  //   qso: idqso
-  // });
-  //ReactGA.event({
-  //   category: "QSO",
-  //   action: "getInfo"
-  // });
+  window.gtag("config", "G-H8G28LYKBY", {
+    custom_map: { dimension2: "qso" }
+  });
+  window.gtag("event", "qsoGetInfo", {
+    event_category: "QSO",
+    event_label: "Login",
+    qso: idqso
+  });
+
   if (token) {
     return dispatch => {
       let apiName = "superqso";
@@ -710,13 +706,15 @@ export function doFetchQSO(idqso, token = null) {
   }
 }
 export function doFetchQsoLink(idqso) {
-  //ReactGA.set({
-  //   qso: idqso
-  // });
-  //ReactGA.event({
-  //   category: "QSO",
-  //   action: "getInfo"
-  // });
+  window.gtag("config", "G-H8G28LYKBY", {
+    custom_map: { dimension2: "qsoLink" }
+  });
+  window.gtag("event", "qsoGetInfo", {
+    event_category: "QSO",
+
+    qsoLink: idqso
+  });
+
   return dispatch => {
     let apiName = "superqso";
     let path = "/qso-detail";
@@ -743,20 +741,14 @@ export function doFetchQsoLink(idqso) {
 }
 
 export function doFetchQRA(qra, token = null) {
-  //ReactGA.set({
-  //   qra: qra
-  // });
-  window.gtag("event", 'qraGetInfo', {
+  window.gtag("config", "G-H8G28LYKBY", {
+    custom_map: { dimension3: "qra" }
+  });
+  window.gtag("event", "qraGetInfo", {
     event_category: "QRA",
     event_label: "Login"
   });
-  window.gtag('config', 'G-H8G28LYKBY', {
-    'user_id': qra
-  });
-  //ReactGA.event({
-  //   category: "QRA",
-  //   action: "getInfo"
-  // });
+
   if (token) {
     return dispatch => {
       let apiName = "superqso";
@@ -807,13 +799,10 @@ export function doFetchQRA(qra, token = null) {
 }
 
 export function doFollowQRA(token, follower) {
-  //ReactGA.set({
-  //   follower: follower
-  // });
-  //ReactGA.event({
-  //   category: "QRA",
-  //   action: "follow"
-  // });
+  window.gtag("event", "qraFollow", {
+    event_category: "QRA"
+  });
+
   return dispatch => {
     let apiName = "superqso";
     let path = "/qra-follower";
@@ -850,13 +839,10 @@ export function doFollowQRA(token, follower) {
 }
 
 export function doUnfollowQRA(token, follower) {
-  //ReactGA.set({
-  //   follower: follower
-  // });
-  // ReactGA.event({
-  //   category: "QRA",
-  //   action: "unfollow"
-  // });
+  window.gtag("event", "qraUnfollow", {
+    event_category: "QRA"
+  });
+
   return dispatch => {
     let apiName = "superqso";
     let path = "/qra-follower";

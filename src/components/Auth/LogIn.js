@@ -10,9 +10,9 @@ import Header from "semantic-ui-react/dist/commonjs/elements/Header";
 import Form from "semantic-ui-react/dist/commonjs/collections/Form";
 import Message from "semantic-ui-react/dist/commonjs/collections/Message";
 import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
-// import Auth from '@aws-amplify/auth';
+
 import "./style.css";
-// import ReactGA from "react-ga";
+
 import AppNavigation from "../Home/AppNavigation";
 import Amplify from "@aws-amplify/core";
 import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
