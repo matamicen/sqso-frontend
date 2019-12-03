@@ -1,26 +1,31 @@
-import ReactGA from 'react-ga'
+// import ReactGA from 'react-ga'
 
-const options = {}
+// const options = {};
 
-const trackPage = (page) => {
-  ReactGA.set({
-    page,
-    ...options
-  })
-  ReactGA.pageview(page)
-}
+const trackPage = page => {
+  // ReactGA.set({
+  //   page,
+  //   ...options
+  // })
+  // ReactGA.pageview(page)
+  console.log(page)
+  window.gtag("config", "G-H8G28LYKBY", {
+    page_path: page
+  });
+};
 
-let currentPage = ''
+let currentPage = "";
 
 export const googleAnalytics = store => next => action => {
-  if (action.type === '@@router/LOCATION_CHANGE') {
-    const nextPage = `${action.payload.pathname}${action.payload.search}`
+  console.log(action.type)
+  if (action.type === "@@router/LOCATION_CHANGE") {
+    const nextPage = `${action.payload.pathname}${action.payload.search}`;
 
     if (currentPage !== nextPage) {
-      currentPage = nextPage
-      trackPage(nextPage)
+      currentPage = nextPage;
+      trackPage(nextPage);
     }
   }
 
-  return next(action)
-}
+  return next(action);
+};

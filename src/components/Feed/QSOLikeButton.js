@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as Actions from "../../actions";
 import API from "@aws-amplify/api";
-import ReactGA from "react-ga";
+// import ReactGA from "react-ga";
 import Confirm from "semantic-ui-react/dist/commonjs/addons/Confirm";
 import { withRouter } from "react-router-dom";
 import * as Sentry from "@sentry/browser";
@@ -73,6 +73,10 @@ class QSOLikeButton extends React.Component {
           //   // icon: "thumbs up",
           //   // liked: true
           // });
+          window.gtag("event", 'qsoLiked', {
+            event_category: "QSO",
+            event_label: "qsoLiked"
+          });
         }
       })
       .catch(error => {
@@ -105,8 +109,11 @@ class QSOLikeButton extends React.Component {
           //   // icon: "thumbs outline up",
           //   // liked: false
           // });
-
-          ReactGA.event({ category: "QSO", action: "unliked" });
+          window.gtag("event", 'qsoUnliked', {
+            event_category: "QSO",
+            event_label: "qsoUnliked"
+          });
+          // ReactGA.event({ category: "QSO", action: "unliked" });
         }
       })
       .catch(error => {

@@ -10,15 +10,15 @@ import thunk from "redux-thunk";
 import reducer from "./reducers";
 import { Route, BrowserRouter } from "react-router-dom";
 
-import { googleAnalytics } from "./reactGAMiddlewares";
+// import { googleAnalytics } from "../reactGAMiddlewares";
 import "semantic-ui-css/semantic.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import App from "./components/App";
-import ReactGA from "react-ga";
+// import ReactGA from "react-ga";
 import * as Sentry from "@sentry/browser";
 import packageJson from "../package.json";
-
+import GA from "./GoogleAnalytics";
 import "./ReactotronConfig";
 
 const RELEASE = packageJson.version;
@@ -36,22 +36,23 @@ if (process.env.NODE_ENV === "production") {
     }
   });
 }
-ReactGA.initialize("G-H8G28LYKBY");
+// ReactGA.initialize("G-H8G28LYKBY");
 
 const store =
   process.env.NODE_ENV !== "production"
     ? createStore(
         reducer,
         compose(
-          applyMiddleware(thunk, googleAnalytics),
+          applyMiddleware(thunk),
           console.tron.createEnhancer()
         )
       )
-    : createStore(reducer, compose(applyMiddleware(thunk, googleAnalytics)));
+    : createStore(reducer, compose(applyMiddleware(thunk)));
 
 render(
   <Provider store={store}>
     <BrowserRouter>
+      <GA.RouteTracker />
       <Route component={App} />
     </BrowserRouter>
   </Provider>,

@@ -7,7 +7,7 @@ import { bindActionCreators } from "redux";
 import * as Actions from "../../actions";
 import API from "@aws-amplify/api";
 import * as Sentry from "@sentry/browser";
-import ReactGA from "react-ga";
+// import ReactGA from "react-ga";
 
 import Confirm from "semantic-ui-react/dist/commonjs/addons/Confirm";
 class QSORePostButton extends React.Component {
@@ -41,7 +41,7 @@ class QSORePostButton extends React.Component {
         if (response.body.error > 0) {
           console.error(response.body.message);
         } else {
-          ReactGA.event({ category: "QSO", action: "repost" });
+          //ReactG.event({ category: "QSO", action: "repost" });
         }
       })
       .catch(error => {
