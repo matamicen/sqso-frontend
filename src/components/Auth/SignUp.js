@@ -10,7 +10,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as Actions from "../../actions";
 import * as Sentry from "@sentry/browser";
-// import ReactGA from "react-ga";
+
 class SignUp extends React.Component {
   constructor(props) {
     super(props);
@@ -76,7 +76,13 @@ class SignUp extends React.Component {
           userCreated: true,
           showModal: true
         });
-        // ReactGA.event({ category: "QRA", action: "signUP" });
+        window.gtag("config", "G-H8G28LYKBY", {
+          custom_map: { dimension1: "userQRA" }
+        });
+        window.gtag("event", "qraSignUp", {
+          event_category: "QRA",
+          userQRA: qra
+        });
       })
       .catch(err => {
         this.setState({ dimmerActive: false, signUpError: err.message });
