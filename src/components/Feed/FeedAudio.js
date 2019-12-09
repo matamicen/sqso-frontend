@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import Button from "semantic-ui-react/dist/commonjs/elements/Button";
 import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
-import PropTypes from "prop-types";
+
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as Actions from "../../actions";
@@ -9,9 +9,6 @@ import { Confirm, Modal } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 
-Audio.propTypes = {
-  url: PropTypes.string.isRequired
-};
 class FeedAudio extends React.Component {
   constructor() {
     super();
