@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 
 import { Route, Switch, withRouter } from "react-router-dom";
 
@@ -57,191 +57,189 @@ class App extends Component {
   }
   render() {
     return (
-      <Fragment>
-        <Switch>
-          <Route
-            exact
-            path="/"
-            component={() => {
-              if (
-                !this.props.authenticating &&
-                (this.props.isAuthenticated || this.props.public)
-              )
-                return (
-                  <ErrorBoundary key="home">
-                    <Home />
-                  </ErrorBoundary>
-                );
-              else return null;
-            }}
-          />
-          <Route exact path="/signup" component={SignUp} />
-          <Route
-            exact
-            path="/login"
-            component={() => (
-              <ErrorBoundary key="login">
-                <LogIn />
-              </ErrorBoundary>
-            )}
-          />
-          <Route exact path="/forgot" component={() => <ForgotPassword />} />
-          <Route
-            exact
-            path="/changepassword"
-            component={() => (
-              <ErrorBoundary key="changePassword">
-                <ChangePassword />
-              </ErrorBoundary>
-            )}
-          />
-          <Route
-            exact
-            path="/notifications"
-            component={() => {
-              if (this.props.isAuthenticated)
-                return (
-                  <ErrorBoundary key="notifications">
-                    <Notifications />
-                  </ErrorBoundary>
-                );
-              else
-                return (
-                  <ErrorBoundary key="login">
-                    <LogIn />
-                  </ErrorBoundary>
-                );
-            }}
-          />
-          <Route
-            exact
-            path="/privacy"
-            component={() => (
-              <ErrorBoundary key="privacy">
-                <PrivacyPolicy />
-              </ErrorBoundary>
-            )}
-          />
-          <Route
-            exact
-            path="/terms"
-            component={() => (
-              <ErrorBoundary key="terms">
-                <TermsOfService />
-              </ErrorBoundary>
-            )}
-          />
-          <Route
-            exact
-            path="/contact"
-            component={() => (
-              <ErrorBoundary key="contact">
-                <ContactForm />
-              </ErrorBoundary>
-            )}
-          />
-          <Route
-            exact
-            path="/follow"
-            component={() => {
-              if (this.props.isAuthenticated)
-                return (
-                  <ErrorBoundary key="follow">
-                    <Follow />
-                  </ErrorBoundary>
-                );
-              else
-                return (
-                  <ErrorBoundary key="login">
-                    <LogIn />
-                  </ErrorBoundary>
-                );
-            }}
-          />
-          <Route
-            exact
-            path="/:qra"
-            component={() => {
-              if (
-                !this.props.authenticating &&
-                (this.props.isAuthenticated || this.props.public)
-              )
-                return (
-                  <ErrorBoundary key="qraProfile">
-                    <QRAProfileContainer />
-                  </ErrorBoundary>
-                );
-              else return null;
-            }}
-          />
-          <Route
-            exact
-            path="/:qra/bio"
-            component={() => {
-              if (
-                !this.props.authenticating &&
-                (this.props.isAuthenticated || this.props.public)
-              )
-                return (
-                  <ErrorBoundary key="qraProfileBio">
-                    <QRAProfileContainer tab="BIO" />
-                  </ErrorBoundary>
-                );
-              else return null;
-            }}
-          />
-          <Route
-            exact
-            path="/:qra/info"
-            component={() => {
-              if (
-                !this.props.authenticating &&
-                (this.props.isAuthenticated || this.props.public)
-              )
-                return (
-                  <ErrorBoundary key="qraProfileInfo">
-                    <QRAProfileContainer tab="INFO" />{" "}
-                  </ErrorBoundary>
-                );
-              else return null;
-            }}
-          />
+      <Switch>
+        <Route
+          exact
+          path="/"
+          component={() => {
+            if (
+              !this.props.authenticating &&
+              (this.props.isAuthenticated || this.props.public)
+            )
+              return (
+                <ErrorBoundary key="home">
+                  <Home />
+                </ErrorBoundary>
+              );
+            else return null;
+          }}
+        />
+        <Route exact path="/signup" component={SignUp} />
+        <Route
+          exact
+          path="/login"
+          component={() => (
+            <ErrorBoundary key="login">
+              <LogIn />
+            </ErrorBoundary>
+          )}
+        />
+        <Route exact path="/forgot" component={() => <ForgotPassword />} />
+        <Route
+          exact
+          path="/changepassword"
+          component={() => (
+            <ErrorBoundary key="changePassword">
+              <ChangePassword />
+            </ErrorBoundary>
+          )}
+        />
+        <Route
+          exact
+          path="/notifications"
+          component={() => {
+            if (this.props.isAuthenticated)
+              return (
+                <ErrorBoundary key="notifications">
+                  <Notifications />
+                </ErrorBoundary>
+              );
+            else
+              return (
+                <ErrorBoundary key="login">
+                  <LogIn />
+                </ErrorBoundary>
+              );
+          }}
+        />
+        <Route
+          exact
+          path="/privacy"
+          component={() => (
+            <ErrorBoundary key="privacy">
+              <PrivacyPolicy />
+            </ErrorBoundary>
+          )}
+        />
+        <Route
+          exact
+          path="/terms"
+          component={() => (
+            <ErrorBoundary key="terms">
+              <TermsOfService />
+            </ErrorBoundary>
+          )}
+        />
+        <Route
+          exact
+          path="/contact"
+          component={() => (
+            <ErrorBoundary key="contact">
+              <ContactForm />
+            </ErrorBoundary>
+          )}
+        />
+        <Route
+          exact
+          path="/follow"
+          component={() => {
+            if (this.props.isAuthenticated)
+              return (
+                <ErrorBoundary key="follow">
+                  <Follow />
+                </ErrorBoundary>
+              );
+            else
+              return (
+                <ErrorBoundary key="login">
+                  <LogIn />
+                </ErrorBoundary>
+              );
+          }}
+        />
+        <Route
+          exact
+          path="/:qra"
+          component={() => {
+            if (
+              !this.props.authenticating &&
+              (this.props.isAuthenticated || this.props.public)
+            )
+              return (
+                <ErrorBoundary key="qraProfile">
+                  <QRAProfileContainer />
+                </ErrorBoundary>
+              );
+            else return null;
+          }}
+        />
+        <Route
+          exact
+          path="/:qra/bio"
+          component={() => {
+            if (
+              !this.props.authenticating &&
+              (this.props.isAuthenticated || this.props.public)
+            )
+              return (
+                <ErrorBoundary key="qraProfileBio">
+                  <QRAProfileContainer tab="BIO" />
+                </ErrorBoundary>
+              );
+            else return null;
+          }}
+        />
+        <Route
+          exact
+          path="/:qra/info"
+          component={() => {
+            if (
+              !this.props.authenticating &&
+              (this.props.isAuthenticated || this.props.public)
+            )
+              return (
+                <ErrorBoundary key="qraProfileInfo">
+                  <QRAProfileContainer tab="INFO" />{" "}
+                </ErrorBoundary>
+              );
+            else return null;
+          }}
+        />
 
-          <Route
-            exact
-            path="/:qra/following"
-            component={() => {
-              if (
-                !this.props.authenticating &&
-                (this.props.isAuthenticated || this.props.public)
-              )
-                return (
-                  <ErrorBoundary key="qraProfileFollowing">
-                    <QRAProfileContainer tab="FOLLOWING" />{" "}
-                  </ErrorBoundary>
-                );
-              else return null;
-            }}
-          />
+        <Route
+          exact
+          path="/:qra/following"
+          component={() => {
+            if (
+              !this.props.authenticating &&
+              (this.props.isAuthenticated || this.props.public)
+            )
+              return (
+                <ErrorBoundary key="qraProfileFollowing">
+                  <QRAProfileContainer tab="FOLLOWING" />{" "}
+                </ErrorBoundary>
+              );
+            else return null;
+          }}
+        />
 
-          <Route
-            exact
-            path="/qso/:idqso"
-            component={() => {
-              if (
-                !this.props.authenticating &&
-                (this.props.isAuthenticated || this.props.public)
-              )
-                return (
-                  <ErrorBoundary key="qsoDetail">
-                    <QSODetail />
-                  </ErrorBoundary>
-                );
-              else return null;
-            }}
-          />
-        </Switch>
-      </Fragment>
+        <Route
+          exact
+          path="/qso/:idqso"
+          component={() => {
+            if (
+              !this.props.authenticating &&
+              (this.props.isAuthenticated || this.props.public)
+            )
+              return (
+                <ErrorBoundary key="qsoDetail">
+                  <QSODetail />
+                </ErrorBoundary>
+              );
+            else return null;
+          }}
+        />
+      </Switch>
     );
   }
 }

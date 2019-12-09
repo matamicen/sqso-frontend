@@ -1,4 +1,3 @@
-import jsPDF from "jspdf";
 import canvg from "canvg";
 import ReactDOMServer from "react-dom/server";
 import QRCode from "qrcode.react";
@@ -6,6 +5,7 @@ import React from "react";
 import Storage from "@aws-amplify/storage";
 import * as Sentry from "@sentry/browser";
 export default async function QslCardPrint(props) {
+  const jsPDF = require("jspdf");
   const pdf = new jsPDF("l", "in");
   const emptyProfile = "/emptyprofile.png";
   /* Card Frame Begin*/
