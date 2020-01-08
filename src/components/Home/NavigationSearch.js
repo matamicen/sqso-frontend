@@ -71,7 +71,7 @@ export default class NavigationSearch extends Component {
           onChange={this.onChange.bind(this)}
           valueKey="qra"
           labelKey="name"
-          placeholder={"Search QRA"}
+          placeholder={"Search callsign"}
           loadOptions={this.getUsers.bind(this)}
           autoload={false}
           autosize={false}
