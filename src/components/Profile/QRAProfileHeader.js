@@ -32,15 +32,19 @@ const QRAProfileHeader = props => {
             />
           </div>
           <div className="detail">
-            <span className="qra">{props.qraInfo.qra}</span>
+            <h1>
+              <span className="qra">{props.qraInfo.qra}</span>
+            </h1>
             <Divider
               hidden
               style={{ marginTop: "0.5vh", marginBottom: "0.5vh" }}
             />
-            <div className="name">
-              {props.qraInfo.firstname && props.qraInfo.firstname + " "}
-              {props.qraInfo.lastname && props.qraInfo.lastname}
-            </div>
+            <h2>
+              <div className="name">
+                {props.qraInfo.firstname && props.qraInfo.firstname + " "}
+                {props.qraInfo.lastname && props.qraInfo.lastname}
+              </div>
+            </h2>
             <Divider hidden style={{ marginBottom: "4vh" }} />
             <div className="follow">
               {props.isAuthenticated && props.qraInfo.qra !== props.currentQRA && (
