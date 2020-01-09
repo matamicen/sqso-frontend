@@ -18,9 +18,10 @@ class FeedOptionsMenu extends React.PureComponent {
   state = {
     showReportContent: false,
     showMessage: false,
-    recaptchaToken: null
+    recaptchaToken: null,
+    comments: ""
   };
-
+  handleChange = (e, { name, value }) => this.setState({ [name]: value });
   openReportedContent = () => this.setState({ showReportContent: true });
   closeReportedContent = () => this.setState({ showReportContent: false });
   open = () => this.setState({ showMessage: true });
@@ -86,18 +87,19 @@ class FeedOptionsMenu extends React.PureComponent {
     e.preventDefault();
     if (
       !e.target.comments.value ||
-      !e.target.email.value ||
+      // !e.target.email.value ||
       !this.state.recaptchaToken
     )
       return;
+    console.log(e.target.comments.value);
     let apiName = "superqso";
     let path = "/content-reported";
     let myInit = {
       body: {
         idqso: this.props.idqso,
         detail: e.target.comments.value,
-        datetime: datetime,
-        email: e.target.email.value
+        datetime: datetime
+        // email: e.target.email.value
       }, // replace this with attributes you need
       headers: {
         // Authorization: this.props.token
@@ -317,11 +319,11 @@ class FeedOptionsMenu extends React.PureComponent {
             //   </Modal.Content>
             // </Modal>
             <Modal
+              size="tiny"
+              closeIcon
               open={showReportContent}
               onOpen={this.openReportedContent}
               onClose={this.closeReportedContent}
-              size="tiny"
-              closeIcon
               trigger={<Dropdown.Item icon="warning" text="Report Content" />}
             >
               <Modal.Header>Help Us Understand What's Happening</Modal.Header>
@@ -332,8 +334,9 @@ class FeedOptionsMenu extends React.PureComponent {
                     name="comments"
                     label="Comments"
                     placeholder="Why do you think we should remove this content?"
+                    autoFocus
                   />
-                  <Form.Input name="email" label="Email" />
+                  {/* <Form.Input name="email" label="Email" /> */}
                   <Form.Field>
                     <Recaptcha
                       sitekey="6Lf1VL8UAAAAAEyE2sQHbSr-tbH3_fwZqxEXEg-l"
@@ -344,26 +347,21 @@ class FeedOptionsMenu extends React.PureComponent {
                     />{" "}
                   </Form.Field>
                   <Form.Button>Submit</Form.Button>
-
-                  <Modal
-                    open={showMessage}
-                    onOpen={this.open}
-                    onClose={this.close}
-                    size="small"
-                  >
-                    <Modal.Header>Report Content</Modal.Header>
-                    <Modal.Content>
-                      <p>Content Reported!</p>
-                    </Modal.Content>
-                    <Modal.Actions>
-                      <Button
-                        icon="check"
-                        content="Close"
-                        onClick={this.close}
-                      />
-                    </Modal.Actions>
-                  </Modal>
                 </Form>
+                <Modal
+                  open={showMessage}
+                  onOpen={this.open}
+                  onClose={this.close}
+                  size="small"
+                >
+                  <Modal.Header>Report Content</Modal.Header>
+                  <Modal.Content>
+                    <p>Content Reported!</p>
+                  </Modal.Content>
+                  <Modal.Actions>
+                    <Button icon="check" content="Close" onClick={this.close} />
+                  </Modal.Actions>
+                </Modal>
               </Modal.Content>
             </Modal>
           )}
@@ -418,7 +416,7 @@ class FeedOptionsMenu extends React.PureComponent {
                       label="Comments"
                       placeholder="Why do you think we should remove this content?"
                     />
-                    <Form.Input name="email" label="Email" />
+                    {/* <Form.Input name="email" label="Email" /> */}
                     <Form.Field>
                       <Recaptcha
                         sitekey="6Lf1VL8UAAAAAEyE2sQHbSr-tbH3_fwZqxEXEg-l"
