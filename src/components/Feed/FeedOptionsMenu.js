@@ -86,18 +86,19 @@ class FeedOptionsMenu extends React.PureComponent {
     e.preventDefault();
     if (
       !e.target.comments.value ||
-      !e.target.email.value ||
+      // !e.target.email.value ||
       !this.state.recaptchaToken
     )
       return;
+    console.log(e.target.comments.value);
     let apiName = "superqso";
     let path = "/content-reported";
     let myInit = {
       body: {
         idqso: this.props.idqso,
         detail: e.target.comments.value,
-        datetime: datetime,
-        email: e.target.email.value
+        datetime: datetime
+        // email: e.target.email.value
       }, // replace this with attributes you need
       headers: {
         // Authorization: this.props.token
@@ -173,6 +174,7 @@ class FeedOptionsMenu extends React.PureComponent {
                 <Modal.Content>
                   <Form onSubmit={this.handleOnSubmitReportMedia.bind(this)}>
                     <Form.TextArea
+                      style={{ whiteSpace: "unset" }}
                       required
                       name="comments"
                       label="Comments"
@@ -245,6 +247,7 @@ class FeedOptionsMenu extends React.PureComponent {
                 <Modal.Content>
                   <Form onSubmit={this.handleOnSubmitReportMedia.bind(this)}>
                     <Form.TextArea
+                      style={{ whiteSpace: "unset" }}
                       required
                       name="comments"
                       label="Comments"
@@ -328,12 +331,13 @@ class FeedOptionsMenu extends React.PureComponent {
               <Modal.Content>
                 <Form onSubmit={this.handleOnSubmitReportQso.bind(this)}>
                   <Form.TextArea
+                    style={{ whiteSpace: "unset" }}
                     required
                     name="comments"
                     label="Comments"
                     placeholder="Why do you think we should remove this content?"
                   />
-                  <Form.Input name="email" label="Email" />
+                  {/* <Form.Input name="email" label="Email" /> */}
                   <Form.Field>
                     <Recaptcha
                       sitekey="6Lf1VL8UAAAAAEyE2sQHbSr-tbH3_fwZqxEXEg-l"
@@ -413,12 +417,13 @@ class FeedOptionsMenu extends React.PureComponent {
                 <Modal.Content>
                   <Form onSubmit={this.handleOnSubmitReportQso.bind(this)}>
                     <Form.TextArea
+                      style={{ whiteSpace: "unset" }}
                       required
                       name="comments"
                       label="Comments"
                       placeholder="Why do you think we should remove this content?"
                     />
-                    <Form.Input name="email" label="Email" />
+                    {/* <Form.Input name="email" label="Email" /> */}
                     <Form.Field>
                       <Recaptcha
                         sitekey="6Lf1VL8UAAAAAEyE2sQHbSr-tbH3_fwZqxEXEg-l"
@@ -469,6 +474,7 @@ class FeedOptionsMenu extends React.PureComponent {
                 <Modal.Content>
                   <Form onSubmit={this.handleOnSubmitReportComment.bind(this)}>
                     <Form.TextArea
+                      style={{ whiteSpace: "unset" }}
                       required
                       name="comments"
                       label="Comments"
