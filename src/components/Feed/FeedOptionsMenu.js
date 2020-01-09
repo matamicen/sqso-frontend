@@ -18,9 +18,10 @@ class FeedOptionsMenu extends React.PureComponent {
   state = {
     showReportContent: false,
     showMessage: false,
-    recaptchaToken: null
+    recaptchaToken: null,
+    comments: ""
   };
-
+  handleChange = (e, { name, value }) => this.setState({ [name]: value });
   openReportedContent = () => this.setState({ showReportContent: true });
   closeReportedContent = () => this.setState({ showReportContent: false });
   open = () => this.setState({ showMessage: true });
@@ -174,7 +175,6 @@ class FeedOptionsMenu extends React.PureComponent {
                 <Modal.Content>
                   <Form onSubmit={this.handleOnSubmitReportMedia.bind(this)}>
                     <Form.TextArea
-                      style={{ whiteSpace: "unset" }}
                       required
                       name="comments"
                       label="Comments"
@@ -247,7 +247,6 @@ class FeedOptionsMenu extends React.PureComponent {
                 <Modal.Content>
                   <Form onSubmit={this.handleOnSubmitReportMedia.bind(this)}>
                     <Form.TextArea
-                      style={{ whiteSpace: "unset" }}
                       required
                       name="comments"
                       label="Comments"
@@ -320,22 +319,22 @@ class FeedOptionsMenu extends React.PureComponent {
             //   </Modal.Content>
             // </Modal>
             <Modal
+              size="tiny"
+              closeIcon
               open={showReportContent}
               onOpen={this.openReportedContent}
               onClose={this.closeReportedContent}
-              size="tiny"
-              closeIcon
               trigger={<Dropdown.Item icon="warning" text="Report Content" />}
             >
               <Modal.Header>Help Us Understand What's Happening</Modal.Header>
               <Modal.Content>
                 <Form onSubmit={this.handleOnSubmitReportQso.bind(this)}>
                   <Form.TextArea
-                    style={{ whiteSpace: "unset" }}
                     required
                     name="comments"
                     label="Comments"
                     placeholder="Why do you think we should remove this content?"
+                    autoFocus
                   />
                   {/* <Form.Input name="email" label="Email" /> */}
                   <Form.Field>
@@ -348,26 +347,21 @@ class FeedOptionsMenu extends React.PureComponent {
                     />{" "}
                   </Form.Field>
                   <Form.Button>Submit</Form.Button>
-
-                  <Modal
-                    open={showMessage}
-                    onOpen={this.open}
-                    onClose={this.close}
-                    size="small"
-                  >
-                    <Modal.Header>Report Content</Modal.Header>
-                    <Modal.Content>
-                      <p>Content Reported!</p>
-                    </Modal.Content>
-                    <Modal.Actions>
-                      <Button
-                        icon="check"
-                        content="Close"
-                        onClick={this.close}
-                      />
-                    </Modal.Actions>
-                  </Modal>
                 </Form>
+                <Modal
+                  open={showMessage}
+                  onOpen={this.open}
+                  onClose={this.close}
+                  size="small"
+                >
+                  <Modal.Header>Report Content</Modal.Header>
+                  <Modal.Content>
+                    <p>Content Reported!</p>
+                  </Modal.Content>
+                  <Modal.Actions>
+                    <Button icon="check" content="Close" onClick={this.close} />
+                  </Modal.Actions>
+                </Modal>
               </Modal.Content>
             </Modal>
           )}
@@ -417,7 +411,6 @@ class FeedOptionsMenu extends React.PureComponent {
                 <Modal.Content>
                   <Form onSubmit={this.handleOnSubmitReportQso.bind(this)}>
                     <Form.TextArea
-                      style={{ whiteSpace: "unset" }}
                       required
                       name="comments"
                       label="Comments"
@@ -474,7 +467,6 @@ class FeedOptionsMenu extends React.PureComponent {
                 <Modal.Content>
                   <Form onSubmit={this.handleOnSubmitReportComment.bind(this)}>
                     <Form.TextArea
-                      style={{ whiteSpace: "unset" }}
                       required
                       name="comments"
                       label="Comments"
