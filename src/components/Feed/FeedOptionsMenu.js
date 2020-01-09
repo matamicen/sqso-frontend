@@ -3,13 +3,13 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as Actions from "../../actions";
 
-import QRCode from "qrcode.react";
+// import QRCode from "qrcode.react";
 import Button from "semantic-ui-react/dist/commonjs/elements/Button";
 import Form from "semantic-ui-react/dist/commonjs/collections/Form";
 import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown";
 import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
-import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
-import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
+// import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
+// import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 import API from "@aws-amplify/api";
 import * as Sentry from "@sentry/browser";
 import QslCardPrint from "./qslCard";
@@ -84,17 +84,23 @@ class FeedOptionsMenu extends React.PureComponent {
   handleOnSubmitReportQso(e) {
     var datetime = new Date();
     e.preventDefault();
-    if (!e.target.comments.value || !this.state.recaptchaToken) return;
+    if (
+      !e.target.comments.value ||
+      !e.target.email.value ||
+      !this.state.recaptchaToken
+    )
+      return;
     let apiName = "superqso";
     let path = "/content-reported";
     let myInit = {
       body: {
         idqso: this.props.idqso,
         detail: e.target.comments.value,
-        datetime: datetime
+        datetime: datetime,
+        email: e.target.email.value
       }, // replace this with attributes you need
       headers: {
-        Authorization: this.props.token
+        // Authorization: this.props.token
       } // OPTIONAL
     };
     API.post(apiName, path, myInit)
@@ -296,18 +302,68 @@ class FeedOptionsMenu extends React.PureComponent {
           {/* END FEED AUDIO DELETE CONTENT */}
           {/* FEED ITEM QR CODE */}
           {this.props.optionsCaller === "FeedItem" && (
+            // <Modal
+            //   size="tiny"
+            //   closeIcon
+            //   trigger={<Dropdown.Item icon="qrcode" text="Show QR Code" />}
+            // >
+            //   <Modal.Header>QR Code</Modal.Header>
+            //   <Modal.Content>
+            //     <Grid centered>
+            //       <Segment raised>
+            //         <QRCode value={this.props.guid} />
+            //       </Segment>
+            //     </Grid>
+            //   </Modal.Content>
+            // </Modal>
             <Modal
+              open={showReportContent}
+              onOpen={this.openReportedContent}
+              onClose={this.closeReportedContent}
               size="tiny"
               closeIcon
-              trigger={<Dropdown.Item icon="qrcode" text="Show QR Code" />}
+              trigger={<Dropdown.Item icon="warning" text="Report Content" />}
             >
-              <Modal.Header>QR Code</Modal.Header>
+              <Modal.Header>Help Us Understand What's Happening</Modal.Header>
               <Modal.Content>
-                <Grid centered>
-                  <Segment raised>
-                    <QRCode value={this.props.guid} />
-                  </Segment>
-                </Grid>
+                <Form onSubmit={this.handleOnSubmitReportQso.bind(this)}>
+                  <Form.TextArea
+                    required
+                    name="comments"
+                    label="Comments"
+                    placeholder="Why do you think we should remove this content?"
+                  />
+                  <Form.Input name="email" label="Email" />
+                  <Form.Field>
+                    <Recaptcha
+                      sitekey="6Lf1VL8UAAAAAEyE2sQHbSr-tbH3_fwZqxEXEg-l"
+                      render="explicit"
+                      verifyCallback={response => {
+                        this.setState({ recaptchaToken: response });
+                      }}
+                    />{" "}
+                  </Form.Field>
+                  <Form.Button>Submit</Form.Button>
+
+                  <Modal
+                    open={showMessage}
+                    onOpen={this.open}
+                    onClose={this.close}
+                    size="small"
+                  >
+                    <Modal.Header>Report Content</Modal.Header>
+                    <Modal.Content>
+                      <p>Content Reported!</p>
+                    </Modal.Content>
+                    <Modal.Actions>
+                      <Button
+                        icon="check"
+                        content="Close"
+                        onClick={this.close}
+                      />
+                    </Modal.Actions>
+                  </Modal>
+                </Form>
               </Modal.Content>
             </Modal>
           )}
@@ -362,6 +418,7 @@ class FeedOptionsMenu extends React.PureComponent {
                       label="Comments"
                       placeholder="Why do you think we should remove this content?"
                     />
+                    <Form.Input name="email" label="Email" />
                     <Form.Field>
                       <Recaptcha
                         sitekey="6Lf1VL8UAAAAAEyE2sQHbSr-tbH3_fwZqxEXEg-l"
