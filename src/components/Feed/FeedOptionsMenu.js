@@ -321,6 +321,9 @@ class FeedOptionsMenu extends React.PureComponent {
             <Modal
               size="tiny"
               closeIcon
+              open={showReportContent}
+              onOpen={this.openReportedContent}
+              onClose={this.closeReportedContent}
               trigger={<Dropdown.Item icon="warning" text="Report Content" />}
             >
               <Modal.Header>Help Us Understand What's Happening</Modal.Header>
@@ -330,8 +333,6 @@ class FeedOptionsMenu extends React.PureComponent {
                     required
                     name="comments"
                     label="Comments"
-                    value={this.state.comments}
-                    onChange={this.handleChange}
                     placeholder="Why do you think we should remove this content?"
                     autoFocus
                   />
