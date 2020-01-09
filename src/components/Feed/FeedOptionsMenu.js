@@ -418,6 +418,7 @@ class FeedOptionsMenu extends React.PureComponent {
                       label="Comments"
                       placeholder="Why do you think we should remove this content?"
                     />
+                    <Form.Input name="email" label="Email" />
                     <Form.Field>
                       <Recaptcha
                         sitekey="6Lf1VL8UAAAAAEyE2sQHbSr-tbH3_fwZqxEXEg-l"
