@@ -179,7 +179,7 @@ class LogIn extends React.Component {
                         fluid
                         icon="user"
                         iconPosition="left"
-                        placeholder="QRA"
+                        placeholder="callsign"
                         error={this.state.loginError ? true : false}
                         name="QRA"
                         value={this.state.qra}

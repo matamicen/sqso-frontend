@@ -73,7 +73,7 @@ const SignUpPresentation = props => {
                       fluid
                       icon="user"
                       iconPosition="left"
-                      placeholder="QRA"
+                      placeholder="callsign"
                       error={touched.qra && Boolean(errors.qra)}
                       name="qra"
                       onChange={change.bind(null, "qra")}
