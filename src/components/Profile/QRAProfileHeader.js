@@ -22,8 +22,8 @@ const QRAProfileHeader = props => {
           <div className="pic">
             <Image
               src={
-                props.qraInfo.profilepic
-                  ? props.qraInfo.profilepic
+                props.qraInfo.avatarpic
+                  ? props.qraInfo.avatarpic
                   : "/emptyprofile.png"
               }
               centered
