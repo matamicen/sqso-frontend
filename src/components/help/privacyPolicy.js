@@ -196,14 +196,14 @@ const PrivacyPolicy = props => (
           and maintain copies of your information beyond this time period when
           required to do so by law.
         </p>
-        <h2 dir="ltr">Data Security</h2>
+        {/* <h2 dir="ltr">Data Security</h2>
         <p dir="ltr">
           We use encryption (HTTPS/TLS) to protect data transmitted to and from
           our site. However, no data transmission over the Internet is 100%
           secure, so we can&rsquo;t guarantee security. You use the Service at
           your own risk, and you&rsquo;re responsible for taking reasonable
           measures to secure your account.
-        </p>
+        </p> */}
         <h2 dir="ltr">Affiliates and Change of Ownership</h2>
         <p dir="ltr">
           In the event that we are involved in a bankruptcy, merger,
