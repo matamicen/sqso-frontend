@@ -14,11 +14,11 @@ const replace_qra_tags = (req, res) => {
     var apigClientFactory = require("aws-api-gateway-client").default;
 
     var config = {
-      invokeUrl: "https://bvi2z1683m.execute-api.us-east-1.amazonaws.com"
+      invokeUrl: "https://uhywdaa747.execute-api.us-east-1.amazonaws.com"
     };
     var apigClient = apigClientFactory.newClient(config);
     var params = {};
-    var pathTemplate = "/reactWeb/qra-get-data";
+    var pathTemplate = "/Prod/qra-get-data";
     var method = "POST";
     var additionalParams = {
       headers: {

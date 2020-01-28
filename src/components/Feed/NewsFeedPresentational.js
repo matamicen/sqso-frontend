@@ -147,7 +147,7 @@ export default class NewsFeed extends React.Component {
     ) {
       return (
         <Message negative>
-          <Message.Header>Your feed is emtpy! :(</Message.Header>
+          <Message.Header>Your feed is empty! :(</Message.Header>
           <p>
             You are not following any CallSign, so we dont have anything to show
             you here.
