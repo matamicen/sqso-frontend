@@ -1,8 +1,7 @@
 User Pool ID:
-us-east-1_a5Bor8IjF
-
+us-east-1_erR0uZ9sN	
 Pool ARN
-arn:aws:cognito-idp:us-east-1:048234780056:userpool/us-east-1_a5Bor8IjF
+arn:aws:cognito-idp:us-east-1:048234780056:userpool/us-east-1_erR0uZ9sN
 
 App Client ID:
-65gfp0rjjt2v77gjq0gtkcj0qn
+6l8llkcn0ht6b69k3jkm1lsl7n
