@@ -1,11 +1,10 @@
-import bodyParser from 'body-parser';
-import compression from 'compression';
-import express from 'express';
-import morgan from 'morgan';
-import path from 'path';
+import bodyParser from "body-parser";
+import compression from "compression";
+import express from "express";
+import morgan from "morgan";
+import path from "path";
 
-import index from './routes/index';
-
+import index from "./routes/index";
 
 // import api from './routes/api';
 // import universalLoader from './universal';
@@ -20,15 +19,12 @@ const PORT = process.env.PORT || 3000;
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(morgan('dev'));
+app.use(morgan("dev"));
 
 // Set up route handling, include static assets and an optional API
- 
 
-
-
-app.use(express.static(path.resolve(__dirname, '../build')));
-app.use('/',index)
+app.use(express.static(path.resolve(__dirname, "../build")));
+app.use("/", index);
 
 // Let's rock
 app.listen(PORT, () => {
@@ -36,20 +32,20 @@ app.listen(PORT, () => {
 });
 
 // Handle the bugs somehow
-app.on('error', error => {
-  if (error.syscall !== 'listen') {
+app.on("error", error => {
+  if (error.syscall !== "listen") {
     throw error;
   }
 
-  const bind = typeof PORT === 'string' ? 'Pipe ' + PORT : 'Port ' + PORT;
+  const bind = typeof PORT === "string" ? "Pipe " + PORT : "Port " + PORT;
 
   switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
+    case "EACCES":
+      console.error(bind + " requires elevated privileges");
       process.exit(1);
       break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
+    case "EADDRINUSE":
+      console.error(bind + " is already in use");
       process.exit(1);
       break;
     default:
