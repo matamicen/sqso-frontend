@@ -1,9 +1,9 @@
 const config = {
   Auth: {
-    identityPoolId: "us-east-1:12d39a08-c5cc-4f39-9720-077fe9014e4c",
+    identityPoolId: "us-east-1:8dcfb2b7-1957-4331-8b4b-42d50577ca56",
     region: "us-east-1",
-    userPoolId: "us-east-1_erR0uZ9sN",
-    userPoolWebClientId: "6l8llkcn0ht6b69k3jkm1lsl7n",
+    userPoolId: "us-east-1_Gk5yMffLo",
+    userPoolWebClientId: "73ee1164avq7a0ec5srthdjtni",
     mandatorySignIn: false,
     aws_mandatory_sign_in: "enable",
     bucket: "sqso"
@@ -18,9 +18,9 @@ const config = {
     ]
   },
   Storage: {
-    bucket: "sqsomodel-sqsobucket-svq3sw60lcdj", //REQUIRED -  Amazon S3 bucket
+    bucket: "sqsovpc-sqsobucket-ng5i255pq30h", //REQUIRED -  Amazon S3 bucket
     region: "us-east-1", //OPTIONAL -  Amazon service region
-    identityPoolId: "us-east-1:12d39a08-c5cc-4f39-9720-077fe9014e4c"
+    identityPoolId: "us-east-1:8dcfb2b7-1957-4331-8b4b-42d50577ca56"
   },
   Analytics: {
     // OPTIONAL -  Amazon Pinpoint App ID

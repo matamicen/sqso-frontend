@@ -57,11 +57,12 @@ class SignUp extends React.Component {
     this.setState({ dimmerActive: true });
 
     Auth.signUp({
-      username: qra,
+      username: email,
       password: password,
       attributes: {
         email: email, // optional
         birthdate: birthDate, // optional - E.164 number convention
+        "custom:callsign": qra,
         "custom:country": country,
         "custom:firstName": firstName,
         "custom:lastName": lastName
@@ -85,7 +86,12 @@ class SignUp extends React.Component {
         });
       })
       .catch(err => {
-        this.setState({ dimmerActive: false, signUpError: err.message });
+        if (err.code === "UserLambdaValidationException") {
+          this.setState({
+            dimmerActive: false,
+            signUpError: "callsign already registered"
+          });
+        } else this.setState({ dimmerActive: false, signUpError: err.message });
       });
   }
   handleCodeChange(e) {
@@ -107,7 +113,7 @@ class SignUp extends React.Component {
     const code = this.state.code.trim();
     this.setState({ dimmerValCodeActive: true, showModal: false });
 
-    Auth.confirmSignUp(this.state.qra.trim().toUpperCase(), code, {
+    Auth.confirmSignUp(this.state.email.trim(), code, {
       // Optional. Force user confirmation irrespective of existing alias. By default
       // set to True.
       forceAliasCreation: true
@@ -131,7 +137,7 @@ class SignUp extends React.Component {
     let token;
     this.setState({ active: true });
 
-    let user = await Auth.signIn(this.state.qra, this.state.password).catch(
+    let user = await Auth.signIn(this.state.email, this.state.password).catch(
       err => {
         console.log(err);
       }
@@ -141,6 +147,7 @@ class SignUp extends React.Component {
       await this.props.actions.doStartingLogin();
       token = user.signInUserSession.idToken.jwtToken;
       let credentials = await Auth.currentCredentials();
+
       await this.props.actions.doLogin(
         token,
         this.state.qra.toUpperCase(),

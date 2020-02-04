@@ -396,7 +396,7 @@ export function doFetchUserInfo(token) {
           .then(session => {
             token = session.idToken.jwtToken;
             dispatch(refreshToken(token));
-            dispatch(doFetchUserInfo(token));
+            // dispatch(doFetchUserInfo(token));
           })
           .catch(error => {
             if (process.env.NODE_ENV !== "production") {
@@ -544,7 +544,7 @@ export function doFollowFetch(token) {
           .then(session => {
             token = session.idToken.jwtToken;
             dispatch(refreshToken(token));
-            dispatch(doFollowFetch(token));
+            // dispatch(doFollowFetch(token)); #
           })
           .catch(error => {
             if (process.env.NODE_ENV !== "production") {

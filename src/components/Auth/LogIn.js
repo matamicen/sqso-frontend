@@ -32,7 +32,7 @@ class LogIn extends React.Component {
       showModal: false,
       code: "",
       password: "",
-      qra: "",
+      email: "",
       error: null,
       loginError: false,
       confirmError: ""
@@ -46,7 +46,7 @@ class LogIn extends React.Component {
     let token;
     this.setState({ dimmerActive: true });
 
-    let user = await Auth.signIn(this.state.qra, this.state.password).catch(
+    let user = await Auth.signIn(this.state.email, this.state.password).catch(
       err => {
         this.setState({ dimmerActive: false });
         this.setState({ loginError: err });
@@ -59,13 +59,13 @@ class LogIn extends React.Component {
       let credentials = await Auth.currentCredentials();
       await this.props.actions.doLogin(
         token,
-        this.state.qra.toUpperCase(),
+        user.signInUserSession.idToken.payload["custom:callsign"],
         credentials.data.IdentityId
       );
       await this.props.actions.doFetchUserInfo(token);
       Sentry.configureScope(scope => {
         scope.setUser({
-          qra: this.state.qra
+          qra: user.signInUserSession.idToken.payload["custom:callsign"]
         });
       });
       // ReactGA.event({ category: "QRA", action: "login" });
@@ -85,18 +85,18 @@ class LogIn extends React.Component {
     this.setState({ password: e.target.value });
   }
 
-  handleQraChange(e) {
+  handleEmailChange(e) {
     this.setState({
-      qra: e.target.value.toUpperCase()
+      email: e.target.value
     });
   }
   async handleResendCode() {
-    await Auth.resendSignUp(this.state.qra.toUpperCase())
+    await Auth.resendSignUp(this.state.email)
       .then(() => {
         this.setState({
           loginError: {
             code: "codeResent",
-            message: "Code Resent for " + this.state.qra.toUpperCase()
+            message: "Code Resent for " + this.state.email
           },
           showModal: true
         });
@@ -112,7 +112,7 @@ class LogIn extends React.Component {
   handleOnConfirm(e) {
     const code = this.state.code.trim();
     this.setState({ dimmerValCodeActive: true });
-    Auth.confirmSignUp(this.state.qra.trim().toUpperCase(), code, {
+    Auth.confirmSignUp(this.state.email.trim(), code, {
       // Optional. Force user confirmation irrespective of existing alias. By default
       // set to True.
       forceAliasCreation: true
@@ -179,11 +179,11 @@ class LogIn extends React.Component {
                         fluid
                         icon="user"
                         iconPosition="left"
-                        placeholder="callsign"
+                        placeholder="email"
                         error={this.state.loginError ? true : false}
-                        name="QRA"
-                        value={this.state.qra}
-                        onChange={this.handleQraChange.bind(this)}
+                        name="email"
+                        value={this.state.email}
+                        onChange={this.handleEmailChange.bind(this)}
                         style={{
                           textTransform: "uppercase"
                         }}
