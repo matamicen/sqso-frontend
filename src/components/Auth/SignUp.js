@@ -27,7 +27,7 @@ class SignUp extends React.Component {
       country: "",
       code: "",
       showModal: false,
-      showModalTC: false,
+      // showModalTC: false,
       showModalMessage: false,
       userCreated: false,
       userConfirmed: false,
@@ -41,10 +41,10 @@ class SignUp extends React.Component {
     this.login();
     this.setState({ showModalMessage: false });
   }
-  handleAcceptTC() {
-    this.signUp();
-    this.setState({ showModalTC: false });
-  }
+  // handleAcceptTC() {
+  //   this.signUp();
+  //   this.setState({ showModalTC: false });
+  // }
   signUp(values) {
     const email = this.state.email;
     const password = this.state.password;
@@ -174,7 +174,9 @@ class SignUp extends React.Component {
       birthDate: "",
       firstName: "",
       lastName: "",
-      country: ""
+      country: "",
+      recaptcha: "",
+      terms: ""
     };
     const validationSchema = Yup.object({
       email: Yup.string("Enter your email")
@@ -199,7 +201,10 @@ class SignUp extends React.Component {
       country: Yup.string().required(),
       firstName: Yup.string().required("First Name is required"),
       lastName: Yup.string().required("Last Name is required"),
-      recaptcha: Yup.string().required("Confirm Recaptcha")
+      recaptcha: Yup.string().required("Confirm Recaptcha"),
+      terms: Yup.bool()
+        .required("Accept Privacy Policy")
+        .oneOf([true], "Accept Privacy Policy")
     });
     return (
       <Fragment>
@@ -218,14 +223,14 @@ class SignUp extends React.Component {
               {...props}
               signUpError={this.state.signUpError}
               showModal={this.state.showModal}
-              showModalTC={this.state.showModalTC}
+              // showModalTC={this.state.showModalTC}
               showModalMessage={this.state.showModalMessage}
               handleOnCloseModal={() => this.setState({ showModal: false })}
-              handleOnAcceptModalTC={() => this.handleAcceptTC()}
+              // handleOnAcceptModalTC={() => this.handleAcceptTC()}
               handleAcceptMessageModal={() => this.handleAcceptMessageModal()}
-              handleOnCancelModalTC={() =>
-                this.setState({ showModalTC: false })
-              }
+              // handleOnCancelModalTC={() =>
+              //   this.setState({ showModalTC: false })
+              // }
               handleOnConfirm={() => this.handleOnConfirm()}
               handleCodeChange={this.handleCodeChange.bind(this)}
               handleResendCode={() => this.handleResendCode()}
@@ -242,9 +247,10 @@ class SignUp extends React.Component {
               birthDate: values.birthDate.trim(),
               firstName: values.firstName.trim(),
               lastName: values.lastName.trim(),
-              country: values.country.trim(),
-              showModalTC: true
+              country: values.country.trim()
+              // showModalTC: true
             });
+            this.signUp();
           }}
         />
       </Fragment>
