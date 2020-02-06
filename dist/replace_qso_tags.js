@@ -32,7 +32,7 @@ const replace_qso_tags = async (req, res) => {
     var apigClientFactory = require("aws-api-gateway-client").default;
 
     var config = {
-      invokeUrl: "https://v0sa0f73z1.execute-api.us-east-1.amazonaws.com"
+      invokeUrl: "https://3hzhw0ugo1.execute-api.us-east-1.amazonaws.com"
     };
     var apigClient = apigClientFactory.newClient(config);
     var params = {};
