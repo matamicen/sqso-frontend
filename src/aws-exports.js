@@ -8,6 +8,7 @@ const config = {
     aws_mandatory_sign_in: "enable",
     bucket: "sqso"
   },
+  
   API: {
     endpoints: [
       {
