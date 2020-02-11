@@ -82,7 +82,6 @@ class QRAProfileBio extends React.Component {
           };
           API.post(apiName, path, myInit)
             .then(response => {
-              console.log(response)
               if (response.body.error > 0) {
                 //NSFW
                 Storage.remove(result.key, { level: "protected" })

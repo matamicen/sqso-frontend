@@ -46,9 +46,9 @@ class SignUp extends React.Component {
   //   this.setState({ showModalTC: false });
   // }
   signUp(values) {
-    const email = this.state.email;
+    const email = this.state.email.toLowerCase();
     const password = this.state.password;
-    const qra = this.state.qra;
+    const qra = this.state.qra.toUpperCase();
     const birthDate = this.state.birthDate;
     const firstName = this.state.firstName;
     const lastName = this.state.lastName;

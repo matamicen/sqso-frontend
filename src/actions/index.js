@@ -95,7 +95,7 @@ export function doCommentDelete(idcomment, idqso, token) {
           .then(session => {
             token = session.idToken.jwtToken;
             dispatch(refreshToken(token));
-            dispatch(doCommentDelete(idcomment, idqso, token));
+            // dispatch(doCommentDelete(idcomment, idqso, token));
           })
           .catch(error => {
             if (process.env.NODE_ENV !== "production") {

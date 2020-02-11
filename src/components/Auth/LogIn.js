@@ -46,12 +46,13 @@ class LogIn extends React.Component {
     let token;
     this.setState({ dimmerActive: true });
 
-    let user = await Auth.signIn(this.state.email, this.state.password).catch(
-      err => {
-        this.setState({ dimmerActive: false });
-        this.setState({ loginError: err });
-      }
-    );
+    let user = await Auth.signIn(
+      this.state.email.toLowerCase(),
+      this.state.password
+    ).catch(err => {
+      this.setState({ dimmerActive: false });
+      this.setState({ loginError: err });
+    });
 
     if (user) {
       await this.props.actions.doStartingLogin();
