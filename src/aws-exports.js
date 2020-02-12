@@ -8,12 +8,12 @@ const config = {
     aws_mandatory_sign_in: "enable",
     bucket: "sqso"
   },
-  
+
   API: {
     endpoints: [
       {
         name: "superqso",
-        endpoint: "https://3hzhw0ugo1.execute-api.us-east-1.amazonaws.com/Prod",
+        endpoint: "https://d1xllikkw9xhcf.cloudfront.net",
         region: "us-east-1"
       }
     ]
