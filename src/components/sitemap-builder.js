@@ -1,8 +1,8 @@
 const Sitemap = require("react-router-sitemap").default;
 require("ignore-styles");
-require("@babel/register")({
-  presets: ["@babel/preset-env", "@babel/react"]
-});
+// require("@babel/register")({
+//   presets: ["@babel/preset-env", "@babel/react"]
+// });
 // Ignore those pesky styles
 const App = require("./AppForSitemap").default;
 async function generateSitemap() {

@@ -27,7 +27,7 @@ class SignUp extends React.Component {
       country: "",
       code: "",
       showModal: false,
-      showModalTC: false,
+      // showModalTC: false,
       showModalMessage: false,
       userCreated: false,
       userConfirmed: false,
@@ -41,14 +41,14 @@ class SignUp extends React.Component {
     this.login();
     this.setState({ showModalMessage: false });
   }
-  handleAcceptTC() {
-    this.signUp();
-    this.setState({ showModalTC: false });
-  }
+  // handleAcceptTC() {
+  //   this.signUp();
+  //   this.setState({ showModalTC: false });
+  // }
   signUp(values) {
-    const email = this.state.email;
+    const email = this.state.email.toLowerCase();
     const password = this.state.password;
-    const qra = this.state.qra;
+    const qra = this.state.qra.toUpperCase();
     const birthDate = this.state.birthDate;
     const firstName = this.state.firstName;
     const lastName = this.state.lastName;
@@ -57,11 +57,12 @@ class SignUp extends React.Component {
     this.setState({ dimmerActive: true });
 
     Auth.signUp({
-      username: qra,
+      username: email,
       password: password,
       attributes: {
         email: email, // optional
         birthdate: birthDate, // optional - E.164 number convention
+        "custom:callsign": qra,
         "custom:country": country,
         "custom:firstName": firstName,
         "custom:lastName": lastName
@@ -85,7 +86,12 @@ class SignUp extends React.Component {
         });
       })
       .catch(err => {
-        this.setState({ dimmerActive: false, signUpError: err.message });
+        if (err.code === "UserLambdaValidationException") {
+          this.setState({
+            dimmerActive: false,
+            signUpError: "callsign already registered"
+          });
+        } else this.setState({ dimmerActive: false, signUpError: err.message });
       });
   }
   handleCodeChange(e) {
@@ -107,7 +113,7 @@ class SignUp extends React.Component {
     const code = this.state.code.trim();
     this.setState({ dimmerValCodeActive: true, showModal: false });
 
-    Auth.confirmSignUp(this.state.qra.trim().toUpperCase(), code, {
+    Auth.confirmSignUp(this.state.email.trim(), code, {
       // Optional. Force user confirmation irrespective of existing alias. By default
       // set to True.
       forceAliasCreation: true
@@ -131,7 +137,7 @@ class SignUp extends React.Component {
     let token;
     this.setState({ active: true });
 
-    let user = await Auth.signIn(this.state.qra, this.state.password).catch(
+    let user = await Auth.signIn(this.state.email, this.state.password).catch(
       err => {
         console.log(err);
       }
@@ -141,6 +147,7 @@ class SignUp extends React.Component {
       await this.props.actions.doStartingLogin();
       token = user.signInUserSession.idToken.jwtToken;
       let credentials = await Auth.currentCredentials();
+
       await this.props.actions.doLogin(
         token,
         this.state.qra.toUpperCase(),
@@ -167,7 +174,9 @@ class SignUp extends React.Component {
       birthDate: "",
       firstName: "",
       lastName: "",
-      country: ""
+      country: "",
+      recaptcha: "",
+      terms: ""
     };
     const validationSchema = Yup.object({
       email: Yup.string("Enter your email")
@@ -192,7 +201,10 @@ class SignUp extends React.Component {
       country: Yup.string().required(),
       firstName: Yup.string().required("First Name is required"),
       lastName: Yup.string().required("Last Name is required"),
-      recaptcha: Yup.string().required("Confirm Recaptcha")
+      recaptcha: Yup.string().required("Confirm Recaptcha"),
+      terms: Yup.bool()
+        .required("Accept Privacy Policy")
+        .oneOf([true], "Accept Privacy Policy")
     });
     return (
       <Fragment>
@@ -211,14 +223,14 @@ class SignUp extends React.Component {
               {...props}
               signUpError={this.state.signUpError}
               showModal={this.state.showModal}
-              showModalTC={this.state.showModalTC}
+              // showModalTC={this.state.showModalTC}
               showModalMessage={this.state.showModalMessage}
               handleOnCloseModal={() => this.setState({ showModal: false })}
-              handleOnAcceptModalTC={() => this.handleAcceptTC()}
+              // handleOnAcceptModalTC={() => this.handleAcceptTC()}
               handleAcceptMessageModal={() => this.handleAcceptMessageModal()}
-              handleOnCancelModalTC={() =>
-                this.setState({ showModalTC: false })
-              }
+              // handleOnCancelModalTC={() =>
+              //   this.setState({ showModalTC: false })
+              // }
               handleOnConfirm={() => this.handleOnConfirm()}
               handleCodeChange={this.handleCodeChange.bind(this)}
               handleResendCode={() => this.handleResendCode()}
@@ -235,9 +247,10 @@ class SignUp extends React.Component {
               birthDate: values.birthDate.trim(),
               firstName: values.firstName.trim(),
               lastName: values.lastName.trim(),
-              country: values.country.trim(),
-              showModalTC: true
+              country: values.country.trim()
+              // showModalTC: true
             });
+            this.signUp();
           }}
         />
       </Fragment>

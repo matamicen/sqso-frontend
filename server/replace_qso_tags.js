@@ -8,17 +8,18 @@ const prepHTML = (data, { html, head, body }) => {
   return data;
 };
 
-const replace_qso_tags = (req, res) => {
+const replace_qso_tags = async (req, res) => {
   console.log(req.params);
+
   if (req.params["idQSO"] !== "empty") {
     var apigClientFactory = require("aws-api-gateway-client").default;
 
     var config = {
-      invokeUrl: "https://bvi2z1683m.execute-api.us-east-1.amazonaws.com"
+      invokeUrl: "https://3hzhw0ugo1.execute-api.us-east-1.amazonaws.com"
     };
     var apigClient = apigClientFactory.newClient(config);
     var params = {};
-    var pathTemplate = "/reactWeb/qso-metadata-get";
+    var pathTemplate = "/Prod/qso-metadata-get";
     var method = "POST";
     var additionalParams = {
       headers: {
@@ -33,10 +34,10 @@ const replace_qso_tags = (req, res) => {
     console.log(body);
     apigClient
       .invokeApi(params, pathTemplate, method, additionalParams, body)
-      .then(function(result) {
+      .then(async function(result) {
         const filePath = path.resolve(__dirname, "../build/index.html");
 
-        fs.readFile(filePath, "utf8", (err, htmlData) => {
+        fs.readFile(filePath, "utf8", async (err, htmlData) => {
           // If there's an error... serve up something nasty
           if (err) {
             if (process.env.NODE_ENV !== "production") {
@@ -70,7 +71,7 @@ const replace_qso_tags = (req, res) => {
                 '"/>';
             }
           }
-          const html = prepHTML(htmlData, {
+          const html = await prepHTML(htmlData, {
             head:
               '<meta name="og:title" content="' +
               title +
@@ -83,7 +84,7 @@ const replace_qso_tags = (req, res) => {
           });
 
           // Up, up, and away...
-          res.send(html);
+          await res.send(html);
         });
       }) //apigClient
       .catch(function(result) {
@@ -93,29 +94,29 @@ const replace_qso_tags = (req, res) => {
         Sentry.captureException(result);
       });
     //This is where you would put an error callback
-    const filePath = path.resolve(__dirname, "../build/index.html");
+    // const filePath = path.resolve(__dirname, "../build/index.html");
 
-    fs.readFile(filePath, "utf8", (err, htmlData) => {
-      // If there's an error... serve up something nasty
-      if (err) {
-        console.error("Read error", err);
+    // fs.readFile(filePath, "utf8", (err, htmlData) => {
+    //   // If there's an error... serve up something nasty
+    //   if (err) {
+    //     console.error("Read error", err);
 
-        return res.status(404).end();
-      }
+    //     return res.status(404).end();
+    //   }
 
-      const html = prepHTML(htmlData, {
-        head:
-          '<meta property="og:type" content="website" />' +
-          '<meta property="og:url" content="http://www.SuperQSO.com"/>' +
-          '<meta name="og:title" content="SuperQSO.com"/>' +
-          '<meta property="og:site_name" content="SuperQSO.com"/>' +
-          '<meta property="og:description" content="SuperQSO.com"/>'
-        // helmet.link.toString(), body: routeMarkup
-      });
+    //   const html = prepHTML(htmlData, {
+    //     head:
+    //       '<meta property="og:type" content="website" />' +
+    //       '<meta property="og:url" content="http://www.SuperQSO.com"/>' +
+    //       '<meta name="og:title" content="SuperQSO.com"/>' +
+    //       '<meta property="og:site_name" content="SuperQSO.com"/>' +
+    //       '<meta property="og:description" content="SuperQSO.com"/>'
+    //     // helmet.link.toString(), body: routeMarkup
+    //   });
 
-      // Up, up, and away...
-      res.send(html);
-    });
+    //   // Up, up, and away...
+    //   res.send(html);
+    // });
   }
 };
 

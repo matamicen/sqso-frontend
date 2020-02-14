@@ -9,6 +9,7 @@ import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 import Recaptcha from "react-recaptcha";
 import Button from "semantic-ui-react/dist/commonjs/elements/Button";
 import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
+import Checkbox from "semantic-ui-react/dist/commonjs/modules/Checkbox";
 import { CountryDropdown } from "react-country-region-selector";
 import { Link } from "react-router-dom";
 const SignUpPresentation = props => {
@@ -23,12 +24,12 @@ const SignUpPresentation = props => {
     setFieldValue,
     signUpError,
     showModal,
-    showModalTC,
+    // showModalTC,
     showModalMessage,
     handleOnCloseModal,
-    handleOnAcceptModalTC,
+    // handleOnAcceptModalTC,
     handleAcceptMessageModal,
-    handleOnCancelModalTC,
+    // handleOnCancelModalTC,
     handleOnConfirm,
     handleCodeChange,
     handleResendCode,
@@ -225,8 +226,31 @@ const SignUpPresentation = props => {
                         setFieldValue("recaptcha", response);
                       }}
                     />{" "}
-                    {touched.token && errors.token && (
-                      <Message negative content={errors.token} />
+                    {touched.recaptcha && errors.recaptcha && (
+                      <Message negative content={errors.recaptcha} />
+                    )}
+                  </Form.Field>
+                  <Form.Field>
+                    <Checkbox
+                      id="terms"
+                      label={
+                        <label>
+                          By signing up, you agree to the{" "}
+                          <Link target={"_blank"} to="/privacy">
+                            Privacy Policy
+                          </Link>{" "}
+                          and{" "}
+                          <Link target={"_blank"} to="/terms">
+                            {" "}
+                            Terms and Conditions
+                          </Link>
+                          . Others will be able to find you by CallSign.
+                        </label>
+                      }
+                      onChange={change.bind(null, "terms")}
+                    />
+                    {touched.terms && errors.terms && (
+                      <Message negative content={errors.terms} />
                     )}
                   </Form.Field>
                   {signUpError && <Message negative content={signUpError} />}
@@ -242,7 +266,7 @@ const SignUpPresentation = props => {
           <Ad adslot="/21799560237/Signup/left" width={160} height={600} />
         </div>
       </div>
-      <Modal size="small" open={showModalTC}>
+      {/* <Modal size="small" open={showModalTC}>
         <Modal.Content>
           <p>
             By signing up, you agree to the{" "}
@@ -262,7 +286,7 @@ const SignUpPresentation = props => {
             onClick={() => handleOnAcceptModalTC()}
           />
         </Modal.Actions>
-      </Modal>
+      </Modal> */}
       <Modal size="small" open={showModalMessage}>
         <Modal.Content>
           <p>

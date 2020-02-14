@@ -40,15 +40,16 @@ class App extends Component {
 
     if (session) {
       let credentials = await Auth.currentCredentials();
+
       this.props.actions.doLogin(
         session.idToken.jwtToken,
-        session.idToken.payload["cognito:username"].toUpperCase(),
+        session.idToken.payload["custom:callsign"].toUpperCase(),
         credentials.data.IdentityId
       );
       this.props.actions.doFetchUserInfo(session.idToken.jwtToken);
       Sentry.configureScope(scope => {
         scope.setUser({
-          qra: session.idToken.payload["cognito:username"].toUpperCase()
+          qra: session.idToken.payload["custom:callsign"].toUpperCase()
         });
       });
     } else {

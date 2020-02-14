@@ -14,11 +14,11 @@ const replace_qra_tags = (req, res) => {
     var apigClientFactory = require("aws-api-gateway-client").default;
 
     var config = {
-      invokeUrl: "https://bvi2z1683m.execute-api.us-east-1.amazonaws.com"
+      invokeUrl: "https://3hzhw0ugo1.execute-api.us-east-1.amazonaws.com"
     };
     var apigClient = apigClientFactory.newClient(config);
     var params = {};
-    var pathTemplate = "/reactWeb/qra-get-data";
+    var pathTemplate = "/Prod/qra-get-data";
     var method = "POST";
     var additionalParams = {
       headers: {
@@ -37,7 +37,7 @@ const replace_qra_tags = (req, res) => {
       .then(function(result) {
         const filePath = path.resolve(__dirname, "../build/index.html");
 
-        fs.readFile(filePath, "utf8", (err, htmlData) => {
+        fs.readFile(filePath, "utf8", async (err, htmlData) => {
           // If there's an error... serve up something nasty
           if (err) {
             if (process.env.NODE_ENV !== "production") {
@@ -59,7 +59,7 @@ const replace_qra_tags = (req, res) => {
               result.data.body.message.lastname;
             url = result.data.body.message.avatarpic;
           }
-          const html = prepHTML(htmlData, {
+          const html = await prepHTML(htmlData, {
             head:
               '<meta name="og:title" content="' +
               title +
@@ -73,7 +73,7 @@ const replace_qra_tags = (req, res) => {
               '<meta property="og:description" content="SuperQSO.com"/>'
           });
 
-          res.send(html);
+          await res.send(html);
         });
       }) //apigClient
       .catch(function(result) {
@@ -83,29 +83,29 @@ const replace_qra_tags = (req, res) => {
         Sentry.captureException(result);
       });
     //This is where you would put an error callback
-    const filePath = path.resolve(__dirname, "../build/index.html");
+    // const filePath = path.resolve(__dirname, "../build/index.html");
 
-    fs.readFile(filePath, "utf8", (err, htmlData) => {
-      // If there's an error... serve up something nasty
-      if (err) {
-        console.error("Read error", err);
+    // fs.readFile(filePath, "utf8", (err, htmlData) => {
+    //   // If there's an error... serve up something nasty
+    //   if (err) {
+    //     console.error("Read error", err);
 
-        return res.status(404).end();
-      }
+    //     return res.status(404).end();
+    //   }
 
-      const html = prepHTML(htmlData, {
-        head:
-          '<meta property="og:type" content="website" />' +
-          '<meta property="og:url" content="http://www.SuperQSO.com"/>' +
-          '<meta name="og:title" content="SuperQSO.com"/>' +
-          '<meta property="og:site_name" content="SuperQSO.com"/>' +
-          '<meta property="og:description" content="SuperQSO.com"/>'
-        // helmet.link.toString(), body: routeMarkup
-      });
+    //   const html = prepHTML(htmlData, {
+    //     head:
+    //       '<meta property="og:type" content="website" />' +
+    //       '<meta property="og:url" content="http://www.SuperQSO.com"/>' +
+    //       '<meta name="og:title" content="SuperQSO.com"/>' +
+    //       '<meta property="og:site_name" content="SuperQSO.com"/>' +
+    //       '<meta property="og:description" content="SuperQSO.com"/>'
+    //     // helmet.link.toString(), body: routeMarkup
+    //   });
 
-      // Up, up, and away...
-      res.send(html);
-    });
+    //   // Up, up, and away...
+    //   res.send(html);
+    // });
   }
 }; //end replace_Qra_tags
 
