@@ -3,13 +3,13 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as Actions from "../../actions";
 
-// import QRCode from "qrcode.react";
+import QRCode from "qrcode.react";
 import Button from "semantic-ui-react/dist/commonjs/elements/Button";
 import Form from "semantic-ui-react/dist/commonjs/collections/Form";
 import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown";
 import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
-// import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
-// import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
+import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
+import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 import API from "@aws-amplify/api";
 import * as Sentry from "@sentry/browser";
 import QslCardPrint from "./qslCard";
@@ -304,66 +304,70 @@ class FeedOptionsMenu extends React.PureComponent {
           {/* END FEED AUDIO DELETE CONTENT */}
           {/* FEED ITEM QR CODE */}
           {this.props.optionsCaller === "FeedItem" && (
-            // <Modal
-            //   size="tiny"
-            //   closeIcon
-            //   trigger={<Dropdown.Item icon="qrcode" text="Show QR Code" />}
-            // >
-            //   <Modal.Header>QR Code</Modal.Header>
-            //   <Modal.Content>
-            //     <Grid centered>
-            //       <Segment raised>
-            //         <QRCode value={this.props.guid} />
-            //       </Segment>
-            //     </Grid>
-            //   </Modal.Content>
-            // </Modal>
             <Modal
               size="tiny"
               closeIcon
-              open={showReportContent}
-              onOpen={this.openReportedContent}
-              onClose={this.closeReportedContent}
-              trigger={<Dropdown.Item icon="warning" text="Report Content" />}
+              trigger={<Dropdown.Item icon="qrcode" text="Show QR Code" />}
             >
-              <Modal.Header>Help Us Understand What's Happening</Modal.Header>
+              <Modal.Header>QR Code</Modal.Header>
               <Modal.Content>
-                <Form onSubmit={this.handleOnSubmitReportQso.bind(this)}>
-                  <Form.TextArea
-                    required
-                    name="comments"
-                    label="Comments"
-                    placeholder="Why do you think we should remove this content?"
-                    autoFocus
-                  />
-                  {/* <Form.Input name="email" label="Email" /> */}
-                  <Form.Field>
-                    <Recaptcha
-                      sitekey="6Lf1VL8UAAAAAEyE2sQHbSr-tbH3_fwZqxEXEg-l"
-                      render="explicit"
-                      verifyCallback={response => {
-                        this.setState({ recaptchaToken: response });
-                      }}
-                    />{" "}
-                  </Form.Field>
-                  <Form.Button>Submit</Form.Button>
-                </Form>
-                <Modal
-                  open={showMessage}
-                  onOpen={this.open}
-                  onClose={this.close}
-                  size="small"
-                >
-                  <Modal.Header>Report Content</Modal.Header>
-                  <Modal.Content>
-                    <p>Content Reported!</p>
-                  </Modal.Content>
-                  <Modal.Actions>
-                    <Button icon="check" content="Close" onClick={this.close} />
-                  </Modal.Actions>
-                </Modal>
+                <Grid centered>
+                  <Segment raised>
+                    <QRCode value={this.props.guid} />
+                  </Segment>
+                </Grid>
               </Modal.Content>
             </Modal>
+            // <Modal
+            //   size="tiny"
+            //   closeIcon
+            //   open={showReportContent}
+            //   onOpen={this.openReportedContent}
+            //   onClose={this.closeReportedContent}
+            //   trigger={<Dropdown.Item icon="warning" text="Report Content" />}
+            // >
+            //   <Modal.Header>Help Us Understand What's Happening</Modal.Header>
+            //   <Modal.Content>
+            //     <Form onSubmit={this.handleOnSubmitReportQso.bind(this)}>
+            //       <Form.TextArea
+            //         required
+            //         name="comments"
+            //         label="Comments"
+            //         placeholder="Why do you think we should remove this content?"
+            //         autoFocus
+            //       />
+            //       {/* <Form.Input name="email" label="Email" /> */}
+            //       <Form.Field>
+            //         <Recaptcha
+            //           sitekey="6Lf1VL8UAAAAAEyE2sQHbSr-tbH3_fwZqxEXEg-l"
+            //           render="explicit"
+            //           verifyCallback={response => {
+            //             this.setState({ recaptchaToken: response });
+            //           }}
+            //         />{" "}
+            //       </Form.Field>
+            //       <Form.Button>Submit</Form.Button>
+            //     </Form>
+            //     <Modal
+            //       open={showMessage}
+            //       onOpen={this.open}
+            //       onClose={this.close}
+            //       size="small"
+            //     >
+            //       <Modal.Header>Report Content</Modal.Header>
+            //       <Modal.Content>
+            //         <p>Content Reported!</p>
+            //       </Modal.Content>
+            //       <Modal.Actions>
+            //         <Button
+            //           icon="check"
+            //           content="Close"
+            //           onClick={this.close}
+            //         />
+            //       </Modal.Actions>
+            //     </Modal>
+            //   </Modal.Content>
+            // </Modal>
           )}
           {/* END FEED ITEM QR CODE */}
           {/* FEED ITEM DELETE QSO*/}

@@ -87,7 +87,11 @@ const ContactFormPresentation = props => {
                   <Message negative content={errors.token} />
                 )}
               </Form.Field>
-              <Form.Button content="Send" onClick={handleSubmit} />
+              <Form.Button
+                type="submit"
+                content="Send"
+                onClick={handleSubmit}
+              />
             </Form>
           </Grid.Column>
         </Grid>
