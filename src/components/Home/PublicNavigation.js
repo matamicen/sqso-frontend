@@ -29,7 +29,12 @@ const PublicNavigation = () => (
           >
             <Dropdown.Item>Login</Dropdown.Item>
           </Link>
-          <Link to="/signup">
+          <Link
+            to={{
+              pathname: "/signup",
+              state: { from: "/" }
+            }}
+          >
             <Dropdown.Item>SignUp</Dropdown.Item>
           </Link>
           <Dropdown.Divider />

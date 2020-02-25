@@ -54,7 +54,13 @@ export class Account extends React.Component {
             <Button type="submit">Sign in</Button>
           </Col>
           <Col xs={3} md={3}>
-            <NavLink to="/signup" activeClassName="active">
+            <NavLink
+              to={{
+                pathname: "/signup",
+                state: { from: this.props.location.pathname }
+              }}
+              activeClassName="active"
+            >
               <Button type="submit">Sign Up</Button>
             </NavLink>
           </Col>

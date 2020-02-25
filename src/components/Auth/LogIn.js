@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 
-import { Link, withRouter } from "react-router-dom";
+import { Link, withRouter, Redirect } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as Actions from "../../actions";
@@ -147,6 +147,16 @@ class LogIn extends React.Component {
     this.setState({ code: e.target.value });
   }
   render() {
+    const { location } = this.props;
+    if (this.props.isAuthenticated && !this.props.authenticating) {
+      alert("Please Logout before login again!");
+      if (location.state && location.state.from) {
+        return <Redirect to={"/" + location.state.from} />;
+      } else {
+        return <Redirect to={"/"} />;
+      }
+    }
+
     return (
       <Fragment>
         <Dimmer active={this.state.dimmerLoginActive} page>
@@ -243,7 +253,14 @@ class LogIn extends React.Component {
                 </Form>
                 <Message>
                   New to us?
-                  <Link to="/signup"> Sign Up</Link>
+                  <Link
+                    to={{
+                      pathname: "/signup",
+                      state: { from: this.props.location.pathname }
+                    }}
+                  >
+                    Sign Up
+                  </Link>
                 </Message>
                 <Message>
                   <Link to="/forgot"> Forgot Password?</Link>

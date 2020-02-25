@@ -5,7 +5,7 @@ import SignUpPresentation from "./SignUpPresentation";
 import Auth from "@aws-amplify/auth";
 import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
 import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as Actions from "../../actions";
@@ -165,6 +165,16 @@ class SignUp extends React.Component {
     }
   }
   render() {
+    const { location } = this.props;
+
+    if (this.props.isAuthenticated && !this.props.authenticating) {
+      alert("Please Logout to Signup again");
+      if (location.state && location.state.from) {
+        return <Redirect to={"/" + location.state.from} />;
+      } else {
+        return <Redirect to={"/"} />;
+      }
+    }
     const values = {
       email: "",
       emailConfirm: "",
