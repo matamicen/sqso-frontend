@@ -47,7 +47,10 @@ class ChangePassword extends React.Component {
   close = () => {
     this.setState({ showModal: false });
     this.props.actions.doLogout();
-    this.props.history.push("/login");
+    this.props.history.push({
+      pathname: "/login",
+      state: { from: this.props.location.pathname }
+    });
   };
   open = () => this.setState({ showModal: true });
 

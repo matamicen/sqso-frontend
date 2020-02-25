@@ -37,6 +37,10 @@ class LogIn extends React.Component {
       loginError: false,
       confirmError: ""
     };
+    // if (this.props.isAuthenticated && !this.props.authenticating) {
+    //   alert("You can't login if you are logged in!");
+    //   this.props.history.goBack();
+    // }
   }
   handleOnClickLogin = () => {
     this.setState({ dimmerActive: true });
@@ -70,13 +74,19 @@ class LogIn extends React.Component {
         });
       });
       // ReactGA.event({ category: "QRA", action: "login" });
-      this.props.history.goBack();
+
+      const { location } = this.props;
+      if (location.state && location.state.from) {
+        this.props.history.push(location.state.from);
+      } else {
+        this.props.history.push("/");
+      }
     }
   }
   static getDerivedStateFromProps(props, state) {
-    if (props.isAuthenticated || state.loginError)
+    if (props.isAuthenticated || state.loginError) {
       return { dimmerActive: false };
-    else if (props.authenticating && !state.loginError)
+    } else if (props.authenticating && !state.loginError)
       return { dimmerActive: true };
     // Return null to indicate no change to state.
     return null;

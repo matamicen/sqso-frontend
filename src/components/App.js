@@ -62,6 +62,10 @@ class App extends Component {
         <Route
           exact
           path="/"
+          location={{
+            pathname: "/",
+            state: { from: this.props.location.pathname }
+          }}
           component={() => {
             if (
               !this.props.authenticating &&

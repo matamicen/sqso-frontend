@@ -79,7 +79,12 @@ class QSORePostButton extends React.Component {
           size="mini"
           open={this.state.openLogin}
           onCancel={() => this.setState({ openLogin: false })}
-          onConfirm={() => this.props.history.push("/login")}
+          onConfirm={() =>
+            this.props.history.push({
+              pathname: "/login",
+              state: { from: this.props.location.pathname }
+            })
+          }
           cancelButton="Cancel"
           confirmButton="Login"
           content="Please Login to perform this action"

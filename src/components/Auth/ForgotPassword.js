@@ -151,7 +151,14 @@ export default class ForgotPassword extends React.Component {
   }
   render() {
     if (this.state.userConfirmed) {
-      return <Redirect to="/login" />;
+      return (
+        <Redirect
+          to={{
+            pathname: "/login",
+            state: { from: this.props.location.pathname }
+          }}
+        />
+      );
     }
     return (
       <div className="global-container">
