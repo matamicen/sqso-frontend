@@ -91,7 +91,7 @@
     "babelbuild": "babel server -d dist",
     "start": "yarn install --production &&  yarn build && node ./dist/app",
     "eb_test": "yarn install --production && yarn build && node dist/app",
-    "static": "react-scripts start",
+    "static": "yarn && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "coverage": "react-scripts test --env=jsdom coverage",
