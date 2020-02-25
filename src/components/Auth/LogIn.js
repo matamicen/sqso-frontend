@@ -44,7 +44,11 @@ class LogIn extends React.Component {
   }
   handleOnClickLogin = () => {
     this.setState({ dimmerActive: true });
-    this.login();
+    if (!this.state.email || !this.state.password) {
+      this.setState({
+        loginError: { message: "Please enter Email and Password" }
+      });
+    } else this.login();
   };
   async login() {
     let token;
@@ -107,10 +111,15 @@ class LogIn extends React.Component {
     });
   }
   async handleResendCode() {
+    this.setState({ confirmError: "" });
     await Auth.resendSignUp(this.state.email)
       .then(() => {
         this.setState({
           loginError: {
+            code: "codeResent",
+            message: "Code Resent for " + this.state.email
+          },
+          confirmError: {
             code: "codeResent",
             message: "Code Resent for " + this.state.email
           },
@@ -142,9 +151,10 @@ class LogIn extends React.Component {
         this.handleOnClickLogin();
       })
       .catch(err => {
-        if (process.env.NODE_ENV !== "production") {
-          console.log(err);
-        } else Sentry.captureException(err);
+        this.setState({ dimmerValCodeActive: false });
+        // if (process.env.NODE_ENV !== "production") {
+        //   console.log(err);
+        // } else Sentry.captureException(err);
         this.setState({ confirmError: err });
       });
   }
@@ -319,7 +329,10 @@ class LogIn extends React.Component {
                     </Form.Field>
 
                     {this.state.confirmError && (
-                      <Message negative content={this.state.confirmError} />
+                      <Message
+                        negative
+                        content={this.state.confirmError.message}
+                      />
                     )}
                     <div>
                       <Button

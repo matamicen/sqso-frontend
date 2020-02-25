@@ -127,6 +127,7 @@ class SignUp extends React.Component {
         //ReactG.event({ category: "QRA", action: "confirmCode" });
       })
       .catch(err => {
+        console.log(err);
         if (process.env.NODE_ENV !== "production") {
           console.log(err);
         } else Sentry.captureException(err);
@@ -244,7 +245,7 @@ class SignUp extends React.Component {
               handleOnConfirm={() => this.handleOnConfirm()}
               handleCodeChange={this.handleCodeChange.bind(this)}
               handleResendCode={() => this.handleResendCode()}
-              confirmError={this.state.confirmError}
+              confirmError={this.state.confirmError.message}
             />
           )}
           initialValues={values}
