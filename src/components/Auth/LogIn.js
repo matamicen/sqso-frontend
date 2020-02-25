@@ -76,7 +76,12 @@ class LogIn extends React.Component {
       // ReactGA.event({ category: "QRA", action: "login" });
 
       const { location } = this.props;
-      if (location.state && location.state.from) {
+
+      if (
+        location.state &&
+        location.state.from &&
+        location.state.from !== "/"
+      ) {
         this.props.history.push(location.state.from);
       } else {
         this.props.history.push("/");
@@ -148,9 +153,14 @@ class LogIn extends React.Component {
   }
   render() {
     const { location } = this.props;
+
     if (this.props.isAuthenticated && !this.props.authenticating) {
-      alert("Please Logout before login again!");
-      if (location.state && location.state.from) {
+      // alert("Please Logout before login again!");
+      if (
+        location.state &&
+        location.state.from &&
+        location.state.from !== "/"
+      ) {
         return <Redirect to={"/" + location.state.from} />;
       } else {
         return <Redirect to={"/"} />;
