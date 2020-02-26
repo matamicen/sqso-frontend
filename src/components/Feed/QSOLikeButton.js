@@ -73,7 +73,7 @@ class QSOLikeButton extends React.Component {
           //   // icon: "thumbs up",
           //   // liked: true
           // });
-          window.gtag("event", 'qsoLiked', {
+          window.gtag("event", "qsoLiked", {
             event_category: "QSO",
             event_label: "qsoLiked"
           });
@@ -109,7 +109,7 @@ class QSOLikeButton extends React.Component {
           //   // icon: "thumbs outline up",
           //   // liked: false
           // });
-          window.gtag("event", 'qsoUnliked', {
+          window.gtag("event", "qsoUnliked", {
             event_category: "QSO",
             event_label: "qsoUnliked"
           });
@@ -153,7 +153,12 @@ class QSOLikeButton extends React.Component {
           size="mini"
           open={this.state.openLogin}
           onCancel={() => this.setState({ openLogin: false })}
-          onConfirm={() => this.props.history.push("/login")}
+          onConfirm={() =>
+            this.props.history.push({
+              pathname: "/login",
+              state: { from: this.props.location.pathname }
+            })
+          }
           cancelButton="Cancel"
           confirmButton="Login"
           content="Please Login to perform this action"

@@ -5,7 +5,7 @@ import SignUpPresentation from "./SignUpPresentation";
 import Auth from "@aws-amplify/auth";
 import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
 import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as Actions from "../../actions";
@@ -127,6 +127,7 @@ class SignUp extends React.Component {
         //ReactG.event({ category: "QRA", action: "confirmCode" });
       })
       .catch(err => {
+        console.log(err);
         if (process.env.NODE_ENV !== "production") {
           console.log(err);
         } else Sentry.captureException(err);
@@ -165,6 +166,15 @@ class SignUp extends React.Component {
     }
   }
   render() {
+    const { location } = this.props;
+
+    if (this.props.isAuthenticated && !this.props.authenticating) {
+      if (location.state && location.state.from) {
+        return <Redirect to={"/" + location.state.from} />;
+      } else {
+        return <Redirect to={"/"} />;
+      }
+    }
     const values = {
       email: "",
       emailConfirm: "",
@@ -234,7 +244,7 @@ class SignUp extends React.Component {
               handleOnConfirm={() => this.handleOnConfirm()}
               handleCodeChange={this.handleCodeChange.bind(this)}
               handleResendCode={() => this.handleResendCode()}
-              confirmError={this.state.confirmError}
+              confirmError={this.state.confirmError.message}
             />
           )}
           initialValues={values}

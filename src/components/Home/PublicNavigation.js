@@ -21,10 +21,18 @@ const PublicNavigation = () => (
     <Menu.Menu style={{ flex: "0 1 auto" }}>
       <Dropdown item icon="setting" direction="left" style={{ width: "50px" }}>
         <Dropdown.Menu>
-          <Link to="/login">
+          <Link
+            to={{
+              pathname: "/login"
+            }}
+          >
             <Dropdown.Item>Login</Dropdown.Item>
           </Link>
-          <Link to="/signup">
+          <Link
+            to={{
+              pathname: "/signup"
+            }}
+          >
             <Dropdown.Item>SignUp</Dropdown.Item>
           </Link>
           <Dropdown.Divider />

@@ -55,7 +55,12 @@ class FeedAudio extends React.Component {
             <Confirm
               size="mini"
               open={this.state.promptLogin}
-              onConfirm={() => this.props.history.push("/login")}
+              onConfirm={() =>
+                this.props.history.push({
+                  pathname: "/login",
+                  state: { from: this.props.location.pathname }
+                })
+              }
               onCancel={() => this.setState({ promptLogin: false })}
               cancelButton="Cancel"
               confirmButton="Login"
@@ -76,7 +81,16 @@ class FeedAudio extends React.Component {
                 ":" +
                 (date.getMinutes() < 10 ? "0" : "") +
                 date.getMinutes()}
-              {onlyForRegistered && <Link to="/login">Login Required</Link>}
+              {onlyForRegistered && (
+                <Link
+                  to={{
+                    pathname: "/login",
+                    state: { from: this.props.location.pathname }
+                  }}
+                >
+                  Login Required
+                </Link>
+              )}
             </div>
           </Fragment>
         );

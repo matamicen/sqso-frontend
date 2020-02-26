@@ -9,7 +9,12 @@ const Authenticated = ({ authenticated, component, ...rest }) => (
       return authenticated ? (
         React.createElement(component, { authenticated })
       ) : (
-        <Redirect to="/login" />
+        <Redirect
+          to={{
+            pathname: "/login",
+            state: { from: this.props.location.pathname }
+          }}
+        />
       );
     }}
   />

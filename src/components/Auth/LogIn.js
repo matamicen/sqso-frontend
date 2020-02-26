@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 
-import { Link, withRouter } from "react-router-dom";
+import { Link, withRouter, Redirect } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as Actions from "../../actions";
@@ -37,10 +37,18 @@ class LogIn extends React.Component {
       loginError: false,
       confirmError: ""
     };
+    // if (this.props.isAuthenticated && !this.props.authenticating) {
+    //   alert("You can't login if you are logged in!");
+    //   this.props.history.goBack();
+    // }
   }
   handleOnClickLogin = () => {
     this.setState({ dimmerActive: true });
-    this.login();
+    if (!this.state.email || !this.state.password) {
+      this.setState({
+        loginError: { message: "Please enter Email and Password" }
+      });
+    } else this.login();
   };
   async login() {
     let token;
@@ -70,13 +78,24 @@ class LogIn extends React.Component {
         });
       });
       // ReactGA.event({ category: "QRA", action: "login" });
-      this.props.history.goBack();
+
+      const { location } = this.props;
+
+      if (
+        location.state &&
+        location.state.from &&
+        location.state.from !== "/"
+      ) {
+        this.props.history.push(location.state.from);
+      } else {
+        this.props.history.push("/");
+      }
     }
   }
   static getDerivedStateFromProps(props, state) {
-    if (props.isAuthenticated || state.loginError)
+    if (props.isAuthenticated || state.loginError) {
       return { dimmerActive: false };
-    else if (props.authenticating && !state.loginError)
+    } else if (props.authenticating && !state.loginError)
       return { dimmerActive: true };
     // Return null to indicate no change to state.
     return null;
@@ -92,10 +111,15 @@ class LogIn extends React.Component {
     });
   }
   async handleResendCode() {
+    this.setState({ confirmError: "" });
     await Auth.resendSignUp(this.state.email)
       .then(() => {
         this.setState({
           loginError: {
+            code: "codeResent",
+            message: "Code Resent for " + this.state.email
+          },
+          confirmError: {
             code: "codeResent",
             message: "Code Resent for " + this.state.email
           },
@@ -127,9 +151,10 @@ class LogIn extends React.Component {
         this.handleOnClickLogin();
       })
       .catch(err => {
-        if (process.env.NODE_ENV !== "production") {
-          console.log(err);
-        } else Sentry.captureException(err);
+        this.setState({ dimmerValCodeActive: false });
+        // if (process.env.NODE_ENV !== "production") {
+        //   console.log(err);
+        // } else Sentry.captureException(err);
         this.setState({ confirmError: err });
       });
   }
@@ -137,6 +162,21 @@ class LogIn extends React.Component {
     this.setState({ code: e.target.value });
   }
   render() {
+    const { location } = this.props;
+
+    if (this.props.isAuthenticated && !this.props.authenticating) {
+      // alert("Please Logout before login again!");
+      if (
+        location.state &&
+        location.state.from &&
+        location.state.from !== "/"
+      ) {
+        return <Redirect to={"/" + location.state.from} />;
+      } else {
+        return <Redirect to={"/"} />;
+      }
+    }
+
     return (
       <Fragment>
         <Dimmer active={this.state.dimmerLoginActive} page>
@@ -233,7 +273,14 @@ class LogIn extends React.Component {
                 </Form>
                 <Message>
                   New to us?
-                  <Link to="/signup"> Sign Up</Link>
+                  <Link
+                    to={{
+                      pathname: "/signup",
+                      state: { from: this.props.location.pathname }
+                    }}
+                  >
+                    Sign Up
+                  </Link>
                 </Message>
                 <Message>
                   <Link to="/forgot"> Forgot Password?</Link>
@@ -282,7 +329,10 @@ class LogIn extends React.Component {
                     </Form.Field>
 
                     {this.state.confirmError && (
-                      <Message negative content={this.state.confirmError} />
+                      <Message
+                        negative
+                        content={this.state.confirmError.message}
+                      />
                     )}
                     <div>
                       <Button

@@ -32,11 +32,11 @@ const replace_qso_tags = async (req, res) => {
     var apigClientFactory = require("aws-api-gateway-client").default;
 
     var config = {
-      invokeUrl: "https://3hzhw0ugo1.execute-api.us-east-1.amazonaws.com"
+      invokeUrl: "https://d1xllikkw9xhcf.cloudfront.net"
     };
     var apigClient = apigClientFactory.newClient(config);
     var params = {};
-    var pathTemplate = "/Prod/qso-metadata-get";
+    var pathTemplate = "/qso-metadata-get";
     var method = "POST";
     var additionalParams = {
       headers: {
