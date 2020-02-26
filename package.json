@@ -1,8 +1,8 @@
 {
   "name": "sqso-frontend",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "private": true,
-  "homepage": "https://www.miqso.com.ar/",
+  "homepage": "https://www.superqso.com/",
   "dependencies": {
     "@aws-amplify/api": "^1.0.11",
     "@aws-amplify/auth": "^1.2.7",
@@ -69,8 +69,10 @@
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.7.0",
     "enzyme-to-json": "^3.3.4",
+    "eslint": "^6.8.0",
     "eslint-config-react-app": "^5.2.0",
     "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-react": "^7.18.3",
     "json-loader": "^0.5.4",
     "mini-css-extract-plugin": "^0.8.0",
     "prettier": "1.16.4",
