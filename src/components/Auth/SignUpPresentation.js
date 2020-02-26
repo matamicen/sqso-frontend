@@ -235,7 +235,7 @@ const SignUpPresentation = props => {
                       id="terms"
                       label={
                         <label>
-                          By signing up, you agree to the{" "}
+                          I agree the{" "}
                           <Link target={"_blank"} to="/privacy">
                             Privacy Policy
                           </Link>{" "}

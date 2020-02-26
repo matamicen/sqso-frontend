@@ -87,11 +87,12 @@ class QRAProfileContainer extends React.PureComponent {
   static getDerivedStateFromProps(props, prevState) {
     let followed;
 
-    if (props.qraError && prevState.active)
+    if (props.qraError && prevState.active) {
       return {
         qraError: props.qraError,
         active: false
       };
+    }
     if (props.QRAFetched && prevState.active) {
       if (
         process.env.NODE_ENV === "production" &&
@@ -111,12 +112,15 @@ class QRAProfileContainer extends React.PureComponent {
       } else if (
         process.env.NODE_ENV === "production" &&
         !props.isAuthenticated
-      )
+      ) {
         return {
           adActive: true,
           active: false
         };
-      else return { active: false };
+      } else {
+        followed = props.following.some(o => o.qra === props.match.params.qra);
+        return { followed: followed, active: false };
+      }
     }
     if (!props.qra && !prevState.active) {
       return { active: true };
