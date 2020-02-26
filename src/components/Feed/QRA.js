@@ -7,44 +7,42 @@ import PopupToFollow from "../PopupToFollow";
 export default class QRA extends React.Component {
   render() {
     return (
-      <PopupToFollow
-        qra={this.props.qra}
-        trigger={
+      <div
+        style={{
+          display: "grid",
+          justifyItems: "center"
+        }}
+      >
+        <div
+          style={{
+            justifySelf: "center",
+            width: "60px",
+            height: "60px"
+          }}
+        >
           <Link to={"/" + this.props.qra}>
-            <div
-              style={{
-                display: "grid",
-                justifyItems: "center"
-              }}
-            >
-              <div
-                style={{
-                  justifySelf: "center",
-                  width: "60px",
-                  height: "60px"
-                }}
-              >
-                <Image
-                  size="medium"
-                  src={
-                    this.props.avatarpic
-                      ? this.props.avatarpic
-                      : "/emptyprofile.png"
-                  }
-                  circular
-                />
-              </div>
-              <div
-                style={{
-                  justifySelf: "center"
-                }}
-              >
-                {this.props.qra}
-              </div>
-            </div>
+            <Image
+              size="medium"
+              src={
+                this.props.avatarpic
+                  ? this.props.avatarpic
+                  : "/emptyprofile.png"
+              }
+              circular
+            />
           </Link>
-        }
-      />
+        </div>
+        <div
+          style={{
+            justifySelf: "center"
+          }}
+        >
+          <PopupToFollow
+            qra={this.props.qra}
+            trigger={<Link to={"/" + this.props.qra}>{this.props.qra}</Link>}
+          />
+        </div>
+      </div>
     );
   }
 }

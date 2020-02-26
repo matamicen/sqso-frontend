@@ -55,7 +55,7 @@ class PopupToFollow extends React.Component {
         <Popup
           trigger={this.props.trigger}
           content={button}
-          position="top center"
+          position="top left"
           flowing
           hoverable
           size="mini"

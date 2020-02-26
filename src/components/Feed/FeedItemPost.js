@@ -74,25 +74,25 @@ class FeedItemQSO extends React.Component {
 
     return (
       <Segment raised>
+        <Link to={"/" + this.props.qso.qra}>
+          <Image
+            src={
+              this.props.qso.avatarpic
+                ? this.props.qso.avatarpic
+                : "/emptyprofile.png"
+            }
+            size="mini"
+            avatar
+            style={{
+              width: "35px",
+              height: "35px"
+            }}
+          />
+        </Link>
         <PopupToFollow
           qra={this.props.qso.qra}
           trigger={
-            <Link to={"/" + this.props.qso.qra}>
-              <Image
-                src={
-                  this.props.qso.avatarpic
-                    ? this.props.qso.avatarpic
-                    : "/emptyprofile.png"
-                }
-                size="mini"
-                avatar
-                style={{
-                  width: "35px",
-                  height: "35px"
-                }}
-              />{" "}
-              {this.props.qso.qra}
-            </Link>
+            <Link to={"/" + this.props.qso.qra}>{this.props.qso.qra}</Link>
           }
         />
         {text}

@@ -1,6 +1,7 @@
 import React from "react";
 
 import AppNavigation from "../Home/AppNavigation";
+import Message from "semantic-ui-react/dist/commonjs/collections/Message";
 
 import { bindActionCreators } from "redux";
 import * as Actions from "../../actions";
@@ -101,22 +102,33 @@ class Notifications extends React.Component {
           />
         </div>
         <div className="notifications-main">
-          <Table unstackable>
-            <Table.Body>
-              {/* <List divided relaxed animated> */}
-              {this.props.notifications.map(m => {
-                return (
-                  <Notification
-                    key={m.idqra_notifications}
-                    notification={m}
-                    token={this.props.token}
-                    currentQRA={this.props.currentQRA}
-                    doNotificationRead={this.props.actions.doNotificationRead}
-                  />
-                );
-              })}
-            </Table.Body>
-          </Table>
+          {this.props.notifications && (
+            <Table unstackable>
+              <Table.Body>
+                {/* <List divided relaxed animated> */}
+                {this.props.notifications &&
+                  this.props.notifications.map(m => {
+                    return (
+                      <Notification
+                        key={m.idqra_notifications}
+                        notification={m}
+                        token={this.props.token}
+                        currentQRA={this.props.currentQRA}
+                        doNotificationRead={
+                          this.props.actions.doNotificationRead
+                        }
+                      />
+                    );
+                  })}
+              </Table.Body>
+            </Table>
+          )}
+          {this.props.notifications.length === 0 && (
+            <Message negative>
+              <Message.Header>Congratulations!!!</Message.Header>
+              <p>You don´t have any pending Notifications! :)</p>
+            </Message>
+          )}
           {/* </List> */}
         </div>
 
