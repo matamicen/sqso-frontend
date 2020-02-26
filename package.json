@@ -1,6 +1,6 @@
 {
   "name": "sqso-frontend",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "private": true,
   "homepage": "https://www.superqso.com/",
   "dependencies": {
@@ -23,6 +23,7 @@
     "ignore-styles": "^5.0.1",
     "immutable": "^3.8.2",
     "jspdf": "^1.5.3",
+    "moment": "^2.24.0",
     "morgan": "^1.9.0",
     "prop-types": "^15.6.0",
     "qrcode.react": "^0.8.0",

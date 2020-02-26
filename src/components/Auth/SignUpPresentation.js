@@ -122,7 +122,7 @@ const SignUpPresentation = props => {
                   <Form.Field>
                     <Form.Input
                       fluid
-                      icon="at"
+                      // icon="at"
                       iconPosition="left"
                       placeholder="Email"
                       error={touched.email && Boolean(errors.email)}
@@ -136,7 +136,7 @@ const SignUpPresentation = props => {
                   <Form.Field>
                     <Form.Input
                       fluid
-                      icon="at"
+                      // icon="at"
                       iconPosition="left"
                       placeholder="Email Confirmation"
                       error={

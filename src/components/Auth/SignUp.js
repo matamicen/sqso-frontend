@@ -10,7 +10,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as Actions from "../../actions";
 import * as Sentry from "@sentry/browser";
-
+import moment from "moment";
 class SignUp extends React.Component {
   constructor(props) {
     super(props);
@@ -202,12 +202,16 @@ class SignUp extends React.Component {
         .required()
         .oneOf([Yup.ref("password"), null], "Passwords must match"),
       qra: Yup.string("Enter your Callsign")
-        .required("QRA is required")
-        .min(3, "QRA is too short"),
+        .required("Callsign is required")
+        .min(3, "Callsign is too short")
+        .max(10, "Callsign is too long"),
       birthDate: Yup.date()
         .required("Enter your Date of Birth")
         .min(new Date(1900, 0, 1))
-        .max(new Date()),
+        .max(new Date())
+        .test("birthDate", "You should be older than 13 years", value => {
+          return moment().diff(moment(value), "years") >= 13;
+        }),
       country: Yup.string().required(),
       firstName: Yup.string().required("First Name is required"),
       lastName: Yup.string().required("Last Name is required"),
