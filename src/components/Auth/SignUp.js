@@ -169,7 +169,6 @@ class SignUp extends React.Component {
     const { location } = this.props;
 
     if (this.props.isAuthenticated && !this.props.authenticating) {
-      alert("Please Logout to Signup again");
       if (location.state && location.state.from) {
         return <Redirect to={"/" + location.state.from} />;
       } else {
