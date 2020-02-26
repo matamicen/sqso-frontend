@@ -63,25 +63,25 @@ class FeedItemRepost extends React.Component {
     var date = new Date(this.props.qso.original[0].datetime);
     return (
       <Segment raised>
+        <Link to={"/" + this.props.qso.qra}>
+          <Image
+            src={
+              this.props.qso.avatarpic
+                ? this.props.qso.avatarpic
+                : "/emptyprofile.png"
+            }
+            size="mini"
+            avatar
+            style={{
+              width: "35px",
+              height: "35px"
+            }}
+          />
+        </Link>
         <PopupToFollow
           qra={this.props.qso.qra}
           trigger={
-            <Link to={"/" + this.props.qso.qra}>
-              <Image
-                src={
-                  this.props.qso.avatarpic
-                    ? this.props.qso.avatarpic
-                    : "/emptyprofile.png"
-                }
-                size="mini"
-                avatar
-                style={{
-                  width: "35px",
-                  height: "35px"
-                }}
-              />{" "}
-              {this.props.qso.qra}
-            </Link>
+            <Link to={"/" + this.props.qso.qra}>{this.props.qso.qra}</Link>
           }
         />
 
@@ -102,23 +102,25 @@ class FeedItemRepost extends React.Component {
 
         <Divider hidden />
         <Segment raised>
+          <Link to={"/" + this.props.qso.original[0].qra}>
+            <Image
+              src={
+                this.props.qso.original[0].avatarpic
+                  ? this.props.qso.original[0].avatarpic
+                  : "/emptyprofile.png"
+              }
+              size="mini"
+              avatar
+              style={{
+                width: "35px",
+                height: "35px"
+              }}
+            />{" "}
+          </Link>
           <PopupToFollow
             qra={this.props.qso.original[0].qra}
             trigger={
               <Link to={"/" + this.props.qso.original[0].qra}>
-                <Image
-                  src={
-                    this.props.qso.original[0].avatarpic
-                      ? this.props.qso.original[0].avatarpic
-                      : "/emptyprofile.png"
-                  }
-                  size="mini"
-                  avatar
-                  style={{
-                    width: "35px",
-                    height: "35px"
-                  }}
-                />{" "}
                 {this.props.qso.original[0].qra}
               </Link>
             }

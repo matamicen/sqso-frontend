@@ -211,7 +211,7 @@ class LogIn extends React.Component {
                 }}
               >
                 <Header as="h2" color="teal" textAlign="center">
-                  Sign-in to your account
+                  Login to your account
                 </Header>
                 <Form size="large">
                   <Segment stacked>

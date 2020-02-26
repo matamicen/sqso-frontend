@@ -8,24 +8,25 @@ const QRAProfileFollowing = props => (
   <div className="profile-following">
     {props.following
       ? props.following.map((qra, i) => (
-          <PopupToFollow
-            qra={qra.qra}
-            key={qra.qra}
-            trigger={
+          <div className="qra" key={qra.qra}>
+            <div className="avatar">
               <Link to={"/" + qra.qra}>
-                <div className="qra">
-                  <div className="avatar">
-                    {qra.avatarpic ? (
-                      <Image avatar size="tiny" src={qra.avatarpic} />
-                    ) : (
-                      <Image avatar size="tiny" src="/emptyprofile.png" />
-                    )}
-                  </div>
-                  <div className="qra">{qra.qra}</div>
-                </div>
+                {qra.avatarpic ? (
+                  <Image avatar size="tiny" src={qra.avatarpic} />
+                ) : (
+                  <Image avatar size="tiny" src="/emptyprofile.png" />
+                )}
               </Link>
-            }
-          />
+            </div>
+            <div className="qra">
+              {" "}
+              <PopupToFollow
+                qra={qra.qra}
+                key={qra.qra}
+                trigger={<Link to={"/" + qra.qra}>{qra.qra}</Link>}
+              />
+            </div>
+          </div>
         ))
       : ""}
   </div>
