@@ -143,9 +143,11 @@ function generalReducers(state = initialState, action) {
         }),
         qso_link: {
           ...state.qso_link,
-          comments: state.qso_link.comments.filter(
-            comment => comment.idqsos_comments !== action.idcomment
-          )
+          comments: state.qso_link.comments
+            ? state.qso_link.comments.filter(
+                comment => comment.idqsos_comments !== action.idcomment
+              )
+            : []
         },
         qra: state.qra
           ? {

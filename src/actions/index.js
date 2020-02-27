@@ -819,7 +819,8 @@ export function doFollowQRA(token, follower) {
       .then(response => {
         if (response.body.error === 0)
           dispatch(doReceiveFollowers(response.body.message));
-        else console.log(response.body.message);
+        else if (process.env.NODE_ENV !== "production");
+        console.log(response.body.message);
       })
       .catch(error => {
         Auth.currentSession()

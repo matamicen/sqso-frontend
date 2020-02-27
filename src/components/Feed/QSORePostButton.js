@@ -94,7 +94,7 @@ class QSORePostButton extends React.Component {
           open={showConfirmationRequest}
           onCancel={this.closeConfirmationRequest}
           onConfirm={this.doRePost.bind(this)}
-          content="Confirm Repost"
+          content="Confirm Repost?"
         />
       </Fragment>
     );
