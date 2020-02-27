@@ -25,13 +25,16 @@ import QSORePostButton from "./QSORePostButton";
 class FeedItemRepost extends React.Component {
   constructor() {
     super();
-
+    this.state = { comments: [], error: null };
     this.handleOnComment = this.handleOnComment.bind(this);
     this.recalculateRowHeight = this.recalculateRowHeight.bind(this);
   }
   handleOnComment() {
-    this.props.showComments(this.props.index);
+    if (this.props.qso.comments.length > 0)
+      this.props.showComments(this.props.index);
+    // this.recalculateRowHeight(); this.props.recalculateRowHeight()
   }
+
   // componentDidUpdate(prevProps, prevState) {
   //     if ((this.state.showComment !== prevState.showComment) && (this.props.recalculateRowHeight))
   //         this.props.recalculateRowHeight(this.props.index);
@@ -41,7 +44,11 @@ class FeedItemRepost extends React.Component {
     if (this.props.recalculateRowHeight)
       this.props.recalculateRowHeight(this.props.index);
   }
-
+  static getDerivedStateFromProps(props, prevState) {
+    if (props.qso.comments !== prevState.comments)
+      return { comments: props.qso.comments };
+    return null;
+  }
   render() {
     let picList = this.props.qso.media.filter(media => media.type === "image");
     let audioList = this.props.qso.media.filter(
@@ -183,6 +190,7 @@ class FeedItemRepost extends React.Component {
         {this.props.qso.showComments && (
           <QSOComments
             qso={this.props.qso}
+            comments={this.state.comments}
             recalculateRowHeight={this.recalculateRowHeight}
           />
         )}
