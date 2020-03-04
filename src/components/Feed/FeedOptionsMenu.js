@@ -54,7 +54,12 @@ class FeedOptionsMenu extends React.PureComponent {
   handleOnSubmitReportComment(e) {
     var datetime = new Date();
     e.preventDefault();
-    if (!e.target.comments.value || !this.state.recaptchaToken) return;
+    if (
+      !e.target.comments.value ||
+      !e.target.email.value ||
+      !this.state.recaptchaToken
+    )
+      alert("Please fill all the fields");
     let apiName = "superqso";
     let path = "/content-reported";
     let myInit = {
@@ -62,10 +67,11 @@ class FeedOptionsMenu extends React.PureComponent {
         idqso: this.props.idqso,
         idcomment: this.props.idcomment,
         detail: e.target.comments.value,
-        datetime: datetime
+        datetime: datetime,
+        email: e.target.email.value
       }, // replace this with attributes you need
       headers: {
-        Authorization: this.props.token
+        // Authorization: this.props.token
       } // OPTIONAL
     };
     API.post(apiName, path, myInit)
@@ -87,19 +93,19 @@ class FeedOptionsMenu extends React.PureComponent {
     e.preventDefault();
     if (
       !e.target.comments.value ||
-      // !e.target.email.value ||
+      !e.target.email.value ||
       !this.state.recaptchaToken
     )
-      return;
-    console.log(e.target.comments.value);
+      alert("Please fill all the fields");
+
     let apiName = "superqso";
     let path = "/content-reported";
     let myInit = {
       body: {
         idqso: this.props.idqso,
         detail: e.target.comments.value,
-        datetime: datetime
-        // email: e.target.email.value
+        datetime: datetime,
+        email: e.target.email.value
       }, // replace this with attributes you need
       headers: {
         // Authorization: this.props.token
@@ -121,7 +127,13 @@ class FeedOptionsMenu extends React.PureComponent {
   handleOnSubmitReportMedia(e) {
     var datetime = new Date();
     e.preventDefault();
-    if (!e.target.comments.value || !this.state.recaptchaToken) return;
+    if (
+      !e.target.comments.value ||
+      !e.target.email.value ||
+      !this.state.recaptchaToken
+    )
+      alert("Please fill all the fields");
+
     let apiName = "superqso";
     let path = "/content-reported";
     let myInit = {
@@ -129,10 +141,11 @@ class FeedOptionsMenu extends React.PureComponent {
         idqso: this.props.idqso,
         idmedia: e.target.idmedia.value,
         detail: e.target.comments.value,
-        datetime: datetime
+        datetime: datetime,
+        email: e.target.email.value
       }, // replace this with attributes you need
       headers: {
-        Authorization: this.props.token
+        // Authorization: this.props.token
       } // OPTIONAL
     };
     API.post(apiName, path, myInit)
@@ -161,7 +174,7 @@ class FeedOptionsMenu extends React.PureComponent {
         <Dropdown.Menu>
           {/* FEED IMAGE REPORT CONTENT */}
           {this.props.optionsCaller === "FeedImage" &&
-            this.props.currentQRA &&
+            // this.props.currentQRA &&
             this.props.currentQRA !== this.props.qso_owner && (
               <Modal
                 open={showReportContent}
@@ -180,6 +193,7 @@ class FeedOptionsMenu extends React.PureComponent {
                       label="Comments"
                       placeholder="Why do you think we should remove this photo?"
                     />
+                    <Form.Input name="email" label="Email" />
                     <Form.Input
                       type="hidden"
                       name="idmedia"
@@ -233,7 +247,7 @@ class FeedOptionsMenu extends React.PureComponent {
           {/* FEED AUDIO REPORT CONTENT */}
 
           {this.props.optionsCaller === "FeedAudio" &&
-            this.props.currentQRA &&
+            // this.props.currentQRA &&
             this.props.currentQRA !== this.props.qso_owner && (
               <Modal
                 open={showReportContent}
@@ -252,6 +266,7 @@ class FeedOptionsMenu extends React.PureComponent {
                       label="Comments"
                       placeholder="Why do you think we should remove this audio?"
                     />
+                    <Form.Input name="email" label="Email" />
                     <Form.Input
                       type="hidden"
                       name="idmedia"
@@ -401,7 +416,7 @@ class FeedOptionsMenu extends React.PureComponent {
           {/* END FEED ITEM QSL CARD*/}
           {/* FEED ITEM REPORT QSO*/}
           {this.props.optionsCaller === "FeedItem" &&
-            this.props.currentQRA &&
+            // this.props.currentQRA &&
             this.props.currentQRA !== this.props.qso_owner && (
               <Modal
                 open={showReportContent}
@@ -420,7 +435,7 @@ class FeedOptionsMenu extends React.PureComponent {
                       label="Comments"
                       placeholder="Why do you think we should remove this content?"
                     />
-                    {/* <Form.Input name="email" label="Email" /> */}
+                    <Form.Input name="email" label="Email" />
                     <Form.Field>
                       <Recaptcha
                         sitekey="6Lf1VL8UAAAAAEyE2sQHbSr-tbH3_fwZqxEXEg-l"
@@ -457,7 +472,7 @@ class FeedOptionsMenu extends React.PureComponent {
           {/* END FEED ITEM REPORT QSO*/}
           {/*  FEED ITEM REPORT COMMENT */}
           {this.props.optionsCaller === "FeedComment" &&
-            this.props.currentQRA &&
+            // this.props.currentQRA &&
             this.props.comment_owner !== this.props.currentQRA && (
               <Modal
                 open={showReportContent}
@@ -476,6 +491,7 @@ class FeedOptionsMenu extends React.PureComponent {
                       label="Comments"
                       placeholder="Why do you think we should remove this content?"
                     />
+                    <Form.Input name="email" label="Email" />
                     <Form.Field>
                       <Recaptcha
                         sitekey="6Lf1VL8UAAAAAEyE2sQHbSr-tbH3_fwZqxEXEg-l"
