@@ -58,7 +58,8 @@ class PopupToFollow extends React.Component {
           position="top left"
           flowing
           hoverable
-          size="mini"
+          // hideOnScroll
+          // size="mini"
         />
       );
     else return this.props.trigger;
