@@ -1,6 +1,6 @@
 {
   "name": "sqso-frontend",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "private": true,
   "homepage": "https://www.superqso.com/",
   "dependencies": {
@@ -101,6 +101,7 @@
     "eject": "react-scripts eject",
     "serve": "set NODE_ENV=production && yarn build && node dist/app.js",
     "deploy": "yarn version && git add . && eb deploy --stage --timeout 30",
+    "eb_create": "eb create -i t2.small",
     "analyze": "npm run build && source-map-explorer build/static/js/main.* ",
     "sitemap": "node src/components/sitemap-builder.js"
   },
