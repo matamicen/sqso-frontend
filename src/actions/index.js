@@ -203,7 +203,7 @@ export function doDeleteQso(idqso, token) {
           .then(session => {
             token = session.idToken.jwtToken;
             dispatch(refreshToken(token));
-            dispatch(doDeleteQso(idqso, token));
+            // dispatch(doDeleteQso(idqso, token));
           })
           .catch(error => {
             if (process.env.NODE_ENV !== "production") {

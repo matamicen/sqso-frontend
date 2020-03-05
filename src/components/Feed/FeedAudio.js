@@ -88,7 +88,7 @@ class FeedAudio extends React.Component {
                     state: { from: this.props.location.pathname }
                   }}
                 >
-                  Login Required
+                  {"  "}Login Required
                 </Link>
               )}
             </div>
