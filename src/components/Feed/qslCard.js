@@ -63,7 +63,7 @@ export default async function QslCardPrint(props) {
   pdf.text(
     5.3,
     2.8,
-    "QTR (UTC): " +
+    "UTC: " +
       date.getUTCHours() +
       ":" +
       (date.getMinutes() < 10 ? "0" : "") +
