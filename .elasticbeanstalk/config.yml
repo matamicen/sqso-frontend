@@ -1,6 +1,6 @@
 branch-defaults:
   dev:
-    environment: superQSO-dev
+    environment: null
 environment-defaults:
   sqso:
     branch: null
