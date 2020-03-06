@@ -145,7 +145,7 @@ class FeedItemRepost extends React.Component {
             date.getDate() +
             ", " +
             date.getFullYear()}
-          <Label>QTR (UTC):</Label>
+          <Label>UTC:</Label>
           {date.getUTCHours() +
             ":" +
             (date.getMinutes() < 10 ? "0" : "") +
