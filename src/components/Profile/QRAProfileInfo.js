@@ -303,7 +303,6 @@ class QRAProfileInfo extends React.Component {
                 name="mailqsl"
                 options={options}
                 onChange={this.changeHandler}
-               
                 disabled={!edit}
                 defaultValue={mailqsl === 1 ? "1" : "0"}
                 // placeholder="Gender"
