@@ -430,7 +430,7 @@ export function doSaveUserInfo(token, qra) {
           .then(session => {
             token = session.idToken.jwtToken;
             dispatch(refreshToken(token));
-            dispatch(doSaveUserInfo(token, qra));
+            // dispatch(doSaveUserInfo(token, qra));
           })
           .catch(error => {
             if (process.env.NODE_ENV !== "production") {

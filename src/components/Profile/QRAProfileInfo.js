@@ -10,6 +10,11 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import "../../styles/style.css";
+
+const options = [
+  { key: "Y", text: "Yes", value: "1" },
+  { key: "N", text: "No", value: "0" }
+];
 class QRAProfileInfo extends React.Component {
   constructor(props) {
     super(props);
@@ -23,14 +28,20 @@ class QRAProfileInfo extends React.Component {
         mobile: this.props.qraInfo.mobile,
         birthday: this.props.qraInfo.birthday,
         address: this.props.qraInfo.address,
+        address2: this.props.qraInfo.address2,
         city: this.props.qraInfo.city,
         state: this.props.qraInfo.state,
         zipcode: this.props.qraInfo.zipcode,
         country: this.props.qraInfo.country,
         cqzone: this.props.qraInfo.cqzone,
+        ituzone: this.props.qraInfo.ituzone,
+        gridlocator: this.props.qraInfo.gridlocator,
         iotadesignator: this.props.qraInfo.iotadesignator,
         licenseclass: this.props.qraInfo.licenseclass,
-        qslinfo: this.props.qraInfo.qslinfo
+        qslinfo: this.props.qraInfo.qslinfo,
+        eqsl: this.props.qraInfo.eqsl,
+        lotw: this.props.qraInfo.lotw,
+        mailqsl: this.props.qraInfo.mailqsl
       }
     };
   }
@@ -41,10 +52,7 @@ class QRAProfileInfo extends React.Component {
     this.props.actions.doSaveUserInfo(this.props.token, this.state.qra);
     this.close();
   };
-  changeHandler = event => {
-    const name = event.target.name;
-    const value = event.target.value;
-
+  changeHandler = (e, { name, value }) => {
     this.setState({
       qra: {
         ...this.state.qra,
@@ -65,10 +73,16 @@ class QRAProfileInfo extends React.Component {
       country,
       state,
       address,
+      address2,
       cqzone,
+      ituzone,
+      gridlocator,
       iotadesignator,
       licenseclass,
-      qslinfo
+      qslinfo,
+      eqsl,
+      lotw,
+      mailqsl
     } = this.state.qra;
 
     return (
@@ -103,11 +117,11 @@ class QRAProfileInfo extends React.Component {
                 </div>
               )}
 
-            <Form.Group widths={2}>
+            <Form.Group widths="equal">
               <Form.Input
                 name="firstname"
                 label="First name"
-                width={4}
+                // width={6}
                 readOnly={!edit}
                 onChange={this.changeHandler}
                 value={firstname ? firstname : ""}
@@ -115,55 +129,66 @@ class QRAProfileInfo extends React.Component {
               <Form.Input
                 name="lastname"
                 label="Last name"
-                width={4}
+                // width={6}
                 readOnly={!edit}
                 onChange={this.changeHandler}
                 value={lastname ? lastname : ""}
               />
             </Form.Group>
-            <Form.Group widths={2}>
+            <Form.Group widths="equal">
               <Form.Input
                 name="email"
                 label="Email"
-                width={4}
+                // width={5}
                 value={this.props.qraInfo.email ? this.props.qraInfo.email : ""}
+              />
+              <Form.Input
+                name="birthday"
+                label="Birthday"
+                type="date"
+                // width={4}
+                readOnly={!edit}
+                onChange={this.changeHandler}
+                value={
+                  birthday
+                    ? new Date(birthday).toISOString().substring(0, 10)
+                    : ""
+                }
               />
               <Form.Input
                 name="mobile"
                 label="Mobile Phone"
-                width={4}
+                // width={4}
                 readOnly={!edit}
                 onChange={this.changeHandler}
                 value={mobile ? mobile : ""}
               />
             </Form.Group>
-            <Form.Input
-              name="birthday"
-              label="Birthday"
-              type="date"
-              width={4}
-              readOnly={!edit}
-              onChange={this.changeHandler}
-              value={
-                birthday
-                  ? new Date(birthday).toISOString().substring(0, 10)
-                  : ""
-              }
-            />
-
-            <Form.Input
-              name="address"
-              label="Address"
-              width={4}
-              readOnly={!edit}
-              onChange={this.changeHandler}
-              value={address ? address : ""}
-            />
-            <Form.Group widths={3}>
+            <Form.Group widths="equal">
+              <Form.Input
+                name="address"
+                label="Address Line 1"
+                // width={12}
+                readOnly={!edit}
+                onChange={this.changeHandler}
+                value={address ? address : ""}
+              />
+            </Form.Group>
+            <Form.Group widths="equal">
+              <Form.Input
+                name="address2"
+                label="Address Line 2"
+                // width={12}
+                readOnly={!edit}
+                onChange={this.changeHandler}
+                value={address2 ? address2 : ""}
+              />
+            </Form.Group>
+            <Form.Group widths="equal">
               <Form.Input
                 name="city"
                 label="City"
-                width={4}
+                width={3}
                 readOnly={!edit}
                 onChange={this.changeHandler}
                 value={city ? city : ""}
@@ -171,17 +196,15 @@ class QRAProfileInfo extends React.Component {
               <Form.Input
                 name="state"
                 label="State"
-                width={4}
+                width={3}
                 readOnly={!edit}
                 onChange={this.changeHandler}
                 value={state ? state : ""}
               />
-            </Form.Group>
-            <Form.Group widths={2}>
               <Form.Input
                 name="zipcode"
                 label="ZIP Code"
-                width={4}
+                width={3}
                 readOnly={!edit}
                 onChange={this.changeHandler}
                 value={zipcode ? zipcode : ""}
@@ -189,44 +212,103 @@ class QRAProfileInfo extends React.Component {
               <Form.Input
                 name="country"
                 label="Country"
-                width={4}
+                width={3}
                 readOnly={!edit}
                 onChange={this.changeHandler}
                 value={country ? country : ""}
               />
             </Form.Group>
-            <Form.Input
-              name="cqzone"
-              label="cqzone"
-              width={4}
-              readOnly={!edit}
-              onChange={this.changeHandler}
-              value={cqzone ? cqzone : ""}
-            />
-            <Form.Input
-              name="iotadesignator"
-              label="iotadesignator"
-              width={4}
-              readOnly={!edit}
-              onChange={this.changeHandler}
-              value={iotadesignator ? iotadesignator : ""}
-            />
-            <Form.Input
-              name="licenseclass"
-              label="licenseclass"
-              width={4}
-              readOnly={!edit}
-              onChange={this.changeHandler}
-              value={licenseclass ? licenseclass : ""}
-            />
-            <Form.Input
-              name="qslinfo"
-              label="qslinfo"
-              width={4}
-              readOnly={!edit}
-              onChange={this.changeHandler}
-              value={qslinfo ? qslinfo : ""}
-            />
+            <Form.Group>
+              <Form.Input
+                name="cqzone"
+                label="CQ Zone"
+                width={3}
+                readOnly={!edit}
+                onChange={this.changeHandler}
+                value={cqzone ? cqzone : ""}
+              />
+              <Form.Input
+                name="ituzone"
+                label="ITU Zone"
+                width={3}
+                readOnly={!edit}
+                onChange={this.changeHandler}
+                value={ituzone ? ituzone : ""}
+              />
+              <Form.Input
+                name="gridlocator"
+                label="GRID Locator"
+                width={3}
+                readOnly={!edit}
+                onChange={this.changeHandler}
+                value={gridlocator ? gridlocator : ""}
+              />
+              <Form.Input
+                name="licenseclass"
+                label="License Class"
+                width={3}
+                readOnly={!edit}
+                onChange={this.changeHandler}
+                value={licenseclass ? licenseclass : ""}
+              />
+              <Form.Input
+                name="qslinfo"
+                label="QSL Info"
+                // width={4}
+                readOnly={!edit}
+                onChange={this.changeHandler}
+                value={qslinfo ? qslinfo : ""}
+              />
+
+              <Form.Input
+                name="iotadesignator"
+                label="IOTA Designator"
+                // width={4}
+                readOnly={!edit}
+                onChange={this.changeHandler}
+                value={iotadesignator ? iotadesignator : ""}
+              />
+            </Form.Group>
+
+            <Form.Group inline>
+              <label>QSL by eQSL?</label>
+              <Form.Select
+                // fluid
+                name="eqsl"
+                options={options}
+                defaultValue={eqsl === 1 ? "1" : "0"}
+                onChange={this.changeHandler}
+                disabled={!edit}
+                // placeholder=''
+              />
+              <label>Do you accept QSL from eQSL.net?</label>
+            </Form.Group>
+            <Form.Group inline>
+              <label>Uses LOTW?</label>
+              <Form.Select
+                // fluid
+                name="lotw"
+                options={options}
+                onChange={this.changeHandler}
+                disabled={!edit}
+                defaultValue={lotw === 1 ? "1" : "0"}
+                // placeholder="Gender"
+              />
+              <label>Do you use ARRL's Logbook of the World (LOTW)?</label>
+            </Form.Group>
+            <Form.Group inline>
+              <label>QSL by Mail?</label>
+              <Form.Select
+                // fluid
+                name="mailqsl"
+                options={options}
+                onChange={this.changeHandler}
+                disabled={!edit}
+                defaultValue={mailqsl === 1 ? "1" : "0"}
+                // placeholder="Gender"
+              />
+              <label>Do you send QSL Cards by postal mail?</label>
+            </Form.Group>
           </Form>
         </Segment>
       </Fragment>
