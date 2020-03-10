@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-
+import ReactGA from "react-ga";
 import { Link, withRouter, Redirect } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -77,7 +77,7 @@ class LogIn extends React.Component {
           qra: user.signInUserSession.idToken.payload["custom:callsign"]
         });
       });
-      // ReactGA.event({ category: "QRA", action: "login" });
+      ReactGA.event({ category: "QRA", action: "login" });
 
       const { location } = this.props;
 
@@ -125,7 +125,7 @@ class LogIn extends React.Component {
           },
           showModal: true
         });
-        // ReactGA.event({ category: "QRA", action: "resentCode" });
+        ReactGA.event({ category: "QRA", action: "resentCode" });
       })
       .catch(err => {
         if (process.env.NODE_ENV !== "production") {
@@ -147,7 +147,7 @@ class LogIn extends React.Component {
           dimmerValCodeActive: false,
           dimmerLoginActive: true
         });
-        // ReactGA.event({ category: "QRA", action: "confirmCode" });
+        ReactGA.event({ category: "QRA", action: "confirmCode" });
         this.handleOnClickLogin();
       })
       .catch(err => {

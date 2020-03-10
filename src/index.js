@@ -15,7 +15,7 @@ import "semantic-ui-css/semantic.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import App from "./components/App";
-// import ReactGA from "react-ga";
+import ReactGA from "react-ga";
 import * as Sentry from "@sentry/browser";
 import packageJson from "../package.json";
 import GA from "./GoogleAnalytics";
@@ -36,7 +36,7 @@ if (process.env.NODE_ENV === "production") {
     }
   });
 }
-// ReactGA.initialize("G-H8G28LYKBY");
+ReactGA.initialize("G-H8G28LYKBY");
 
 const store =
   process.env.NODE_ENV !== "production"

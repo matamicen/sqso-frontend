@@ -1,6 +1,6 @@
 import API from "@aws-amplify/api";
 import Auth from "@aws-amplify/auth";
-
+import ReactGA from "react-ga";
 import * as Sentry from "@sentry/browser";
 export const PUBLIC_SESSION = "PUBLIC_SESSION";
 export const PREPARE_LOGIN = "PREPARE_LOGIN";
@@ -144,10 +144,10 @@ export function doCommentAdd(idqso, comment, token) {
   };
 }
 export function doCommentAddResponse(idqso = null, comments = []) {
-  // ReactGA.event({
-  //   category: "QSO",
-  //   action: "CommentAdd"
-  // });
+  ReactGA.event({
+    category: "QSO",
+    action: "CommentAdd"
+  });
   return {
     type: COMMENT_ADD,
     idqso: idqso,
@@ -161,10 +161,10 @@ export function refreshToken(token) {
   };
 }
 export function doCommentDeleteResponse(idcomment = null, idqso = null) {
-  //ReactGA.event({
-  //   category: "QSO",
-  //   action: "CommentDelete"
-  // });
+  ReactGA.event({
+    category: "QSO",
+    action: "CommentDelete"
+  });
   return {
     type: COMMENT_DELETE,
     idcomment: idcomment,
@@ -172,10 +172,10 @@ export function doCommentDeleteResponse(idcomment = null, idqso = null) {
   };
 }
 export function doNotificationReadResponse(idnotif) {
-  //ReactGA.event({
-  //   category: "QRA",
-  //   action: "CommentRead"
-  // });
+  ReactGA.event({
+    category: "QRA",
+    action: "CommentRead"
+  });
   return {
     type: NOTIFICATION_READ,
     idnotif: idnotif
@@ -216,10 +216,10 @@ export function doDeleteQso(idqso, token) {
 }
 
 export function doDeleteQsoResponse(idqso = null) {
-  //ReactGA.event({
-  //   category: "QSO",
-  //   action: "Delete"
-  // });
+  ReactGA.event({
+    category: "QSO",
+    action: "Delete"
+  });
   return {
     type: DELETE_QSO,
     idqso: idqso
@@ -263,10 +263,10 @@ export function doDeleteMedia(idmedia, idqso, token) {
   };
 }
 export function doDeleteMediaResponse(idmedia = null, idqso = null) {
-  //ReactGA.event({
-  //   category: "QSO",
-  //   action: "MediaDelete"
-  // });
+  ReactGA.event({
+    category: "QSO",
+    action: "MediaDelete"
+  });
   return {
     type: DELETE_MEDIA,
     idmedia: idmedia,
@@ -326,10 +326,10 @@ export function doLogin(token, qra, identityId) {
 }
 
 export function doLogout() {
-  //ReactGA.event({
-  //   category: "User",
-  //   action: "Logout"
-  // });
+  ReactGA.event({
+    category: "User",
+    action: "Logout"
+  });
   return {
     type: LOGOUT
   };
