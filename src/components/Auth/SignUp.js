@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import * as Actions from "../../actions";
 import * as Sentry from "@sentry/browser";
 import moment from "moment";
+import ReactGA from "react-ga";
 class SignUp extends React.Component {
   constructor(props) {
     super(props);
@@ -100,7 +101,7 @@ class SignUp extends React.Component {
   async handleResendCode() {
     await Auth.resendSignUp(this.state.qra.toUpperCase())
       .then(() => {
-        //ReactGA.event({ category: "QRA", action: "resentCode" });
+        ReactGA.event({ category: "QRA", action: "resentCode" });
       })
       .catch(err => {
         if (process.env.NODE_ENV !== "production") {
