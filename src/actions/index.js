@@ -55,18 +55,24 @@ export function doNotificationRead(idnotif = null, token) {
         else console.log(response.body.message);
       })
       .catch(error => {
-        Auth.currentSession()
-          .then(session => {
-            token = session.idToken.jwtToken;
-            dispatch(refreshToken(token));
-            dispatch(doNotificationRead(idnotif, token));
-          })
-          .catch(error => {
-            if (process.env.NODE_ENV !== "production") {
-              console.log(error);
-            } else Sentry.captureException(error);
-            dispatch(doLogout());
-          });
+        if (error.message === "Request failed with status code 401")
+          Auth.currentSession()
+            .then(session => {
+              token = session.idToken.jwtToken;
+              dispatch(refreshToken(token));
+              dispatch(doNotificationRead(idnotif, token));
+            })
+            .catch(error => {
+              if (process.env.NODE_ENV !== "production") {
+                console.log(error);
+              } else Sentry.captureException(error);
+              dispatch(doLogout());
+            });
+        else {
+          if (process.env.NODE_ENV !== "production") {
+            console.log(error.message);
+          } else Sentry.captureException(error);
+        }
       });
   };
 }
@@ -90,19 +96,24 @@ export function doCommentDelete(idcomment, idqso, token) {
         else console.log(response.body.message);
       })
       .catch(error => {
-        console.log(error);
-        Auth.currentSession()
-          .then(session => {
-            token = session.idToken.jwtToken;
-            dispatch(refreshToken(token));
-            // dispatch(doCommentDelete(idcomment, idqso, token));
-          })
-          .catch(error => {
-            if (process.env.NODE_ENV !== "production") {
-              console.log(error);
-            } else Sentry.captureException(error);
-            dispatch(doLogout());
-          });
+        if (error.message === "Request failed with status code 401")
+          Auth.currentSession()
+            .then(session => {
+              token = session.idToken.jwtToken;
+              dispatch(refreshToken(token));
+              dispatch(doCommentDelete(idcomment, idqso, token));
+            })
+            .catch(error => {
+              if (process.env.NODE_ENV !== "production") {
+                console.log(error);
+              } else Sentry.captureException(error);
+              dispatch(doLogout());
+            });
+        else {
+          if (process.env.NODE_ENV !== "production") {
+            console.log(error.message);
+          } else Sentry.captureException(error);
+        }
       });
   };
 }
@@ -127,19 +138,24 @@ export function doCommentAdd(idqso, comment, token) {
         else console.log(response.body.message);
       })
       .catch(error => {
-        console.log(error);
-        Auth.currentSession()
-          .then(session => {
-            token = session.idToken.jwtToken;
-            dispatch(refreshToken(token));
-            dispatch(doCommentAdd(idqso, comment, token));
-          })
-          .catch(error => {
-            if (process.env.NODE_ENV !== "production") {
-              console.log(error);
-            } else Sentry.captureException(error);
-            dispatch(doLogout());
-          });
+        if (error.message === "Request failed with status code 401")
+          Auth.currentSession()
+            .then(session => {
+              token = session.idToken.jwtToken;
+              dispatch(refreshToken(token));
+              dispatch(doCommentAdd(idqso, comment, token));
+            })
+            .catch(error => {
+              if (process.env.NODE_ENV !== "production") {
+                console.log(error);
+              } else Sentry.captureException(error);
+              dispatch(doLogout());
+            });
+        else {
+          if (process.env.NODE_ENV !== "production") {
+            console.log(error.message);
+          } else Sentry.captureException(error);
+        }
       });
   };
 }
@@ -199,18 +215,24 @@ export function doDeleteQso(idqso, token) {
         else console.log(response.body.message);
       })
       .catch(error => {
-        Auth.currentSession()
-          .then(session => {
-            token = session.idToken.jwtToken;
-            dispatch(refreshToken(token));
-            // dispatch(doDeleteQso(idqso, token));
-          })
-          .catch(error => {
-            if (process.env.NODE_ENV !== "production") {
-              console.log(error);
-            } else Sentry.captureException(error);
-            dispatch(doLogout());
-          });
+        if (error.message === "Request failed with status code 401")
+          Auth.currentSession()
+            .then(session => {
+              token = session.idToken.jwtToken;
+              dispatch(refreshToken(token));
+              dispatch(doDeleteQso(idqso, token));
+            })
+            .catch(error => {
+              if (process.env.NODE_ENV !== "production") {
+                console.log(error);
+              } else Sentry.captureException(error);
+              dispatch(doLogout());
+            });
+        else {
+          if (process.env.NODE_ENV !== "production") {
+            console.log(error.message);
+          } else Sentry.captureException(error);
+        }
       });
   };
 }
@@ -247,18 +269,24 @@ export function doDeleteMedia(idmedia, idqso, token) {
         else console.log(response.body.message);
       })
       .catch(error => {
-        Auth.currentSession()
-          .then(session => {
-            token = session.idToken.jwtToken;
-            dispatch(refreshToken(token));
-            dispatch(doDeleteMedia(idmedia, idqso, token));
-          })
-          .catch(error => {
-            if (process.env.NODE_ENV !== "production") {
-              console.log(error);
-            } else Sentry.captureException(error);
-            dispatch(doLogout());
-          });
+        if (error.message === "Request failed with status code 401")
+          Auth.currentSession()
+            .then(session => {
+              token = session.idToken.jwtToken;
+              dispatch(refreshToken(token));
+              dispatch(doDeleteMedia(idmedia, idqso, token));
+            })
+            .catch(error => {
+              if (process.env.NODE_ENV !== "production") {
+                console.log(error);
+              } else Sentry.captureException(error);
+              dispatch(doLogout());
+            });
+        else {
+          if (process.env.NODE_ENV !== "production") {
+            console.log(error.message);
+          } else Sentry.captureException(error);
+        }
       });
   };
 }
@@ -391,19 +419,24 @@ export function doFetchUserInfo(token) {
         else console.log(response.body.message);
       })
       .catch(error => {
-        console.log(error);
-        Auth.currentSession()
-          .then(session => {
-            token = session.idToken.jwtToken;
-            dispatch(refreshToken(token));
-            // dispatch(doFetchUserInfo(token));
-          })
-          .catch(error => {
-            if (process.env.NODE_ENV !== "production") {
-              console.log(error);
-            } else Sentry.captureException(error);
-            dispatch(doLogout());
-          });
+        if (error.message === "Request failed with status code 401")
+          Auth.currentSession()
+            .then(session => {
+              token = session.idToken.jwtToken;
+              dispatch(refreshToken(token));
+              dispatch(doFetchUserInfo(token));
+            })
+            .catch(error => {
+              if (process.env.NODE_ENV !== "production") {
+                console.log(error);
+              } else Sentry.captureException(error);
+              dispatch(doLogout());
+            });
+        else {
+          if (process.env.NODE_ENV !== "production") {
+            console.log(error.message);
+          } else Sentry.captureException(error);
+        }
       });
   };
 }
@@ -426,18 +459,24 @@ export function doSaveUserInfo(token, qra) {
         else dispatch(doReceiveUserDataInfo(response.body.message));
       })
       .catch(error => {
-        Auth.currentSession()
-          .then(session => {
-            token = session.idToken.jwtToken;
-            dispatch(refreshToken(token));
-            // dispatch(doSaveUserInfo(token, qra));
-          })
-          .catch(error => {
-            if (process.env.NODE_ENV !== "production") {
-              console.log(error);
-            } else Sentry.captureException(error);
-            dispatch(doLogout());
-          });
+        if (error.message === "Request failed with status code 401")
+          Auth.currentSession()
+            .then(session => {
+              token = session.idToken.jwtToken;
+              dispatch(refreshToken(token));
+              dispatch(doSaveUserInfo(token, qra));
+            })
+            .catch(error => {
+              if (process.env.NODE_ENV !== "production") {
+                console.log(error);
+              } else Sentry.captureException(error);
+              dispatch(doLogout());
+            });
+        else {
+          if (process.env.NODE_ENV !== "production") {
+            console.log(error.message);
+          } else Sentry.captureException(error);
+        }
       });
   };
 }
@@ -467,18 +506,24 @@ export function doSaveUserBio(token, bio, identityId) {
         else dispatch(doReceiveUserBio(response.body.message));
       })
       .catch(error => {
-        Auth.currentSession()
-          .then(session => {
-            token = session.idToken.jwtToken;
-            dispatch(refreshToken(token));
-            dispatch(doSaveUserBio(token, bio, identityId));
-          })
-          .catch(error => {
-            if (process.env.NODE_ENV !== "production") {
-              console.log(error);
-            } else Sentry.captureException(error);
-            dispatch(doLogout());
-          });
+        if (error.message === "Request failed with status code 401")
+          Auth.currentSession()
+            .then(session => {
+              token = session.idToken.jwtToken;
+              dispatch(refreshToken(token));
+              dispatch(doSaveUserBio(token, bio, identityId));
+            })
+            .catch(error => {
+              if (process.env.NODE_ENV !== "production") {
+                console.log(error);
+              } else Sentry.captureException(error);
+              dispatch(doLogout());
+            });
+        else {
+          if (process.env.NODE_ENV !== "production") {
+            console.log(error.message);
+          } else Sentry.captureException(error);
+        }
       });
   };
 }
@@ -507,18 +552,24 @@ export function doFetchUserFeed(token) {
         else console.log(response.body.message);
       })
       .catch(error => {
-        Auth.currentSession()
-          .then(session => {
-            token = session.idToken.jwtToken;
-            dispatch(refreshToken(token));
-            dispatch(doFetchUserFeed(token));
-          })
-          .catch(error => {
-            if (process.env.NODE_ENV !== "production") {
-              console.log(error);
-            } else Sentry.captureException(error);
-            dispatch(doLogout());
-          });
+        if (error.message === "Request failed with status code 401")
+          Auth.currentSession()
+            .then(session => {
+              token = session.idToken.jwtToken;
+              dispatch(refreshToken(token));
+              dispatch(doFetchUserFeed(token));
+            })
+            .catch(error => {
+              if (process.env.NODE_ENV !== "production") {
+                console.log(error);
+              } else Sentry.captureException(error);
+              dispatch(doLogout());
+            });
+        else {
+          if (process.env.NODE_ENV !== "production") {
+            console.log(error.message);
+          } else Sentry.captureException(error);
+        }
       });
   };
 }
@@ -540,18 +591,24 @@ export function doFollowFetch(token) {
         else console.log(response.body.message);
       })
       .catch(error => {
-        Auth.currentSession()
-          .then(session => {
-            token = session.idToken.jwtToken;
-            dispatch(refreshToken(token));
-            // dispatch(doFollowFetch(token)); #
-          })
-          .catch(error => {
-            if (process.env.NODE_ENV !== "production") {
-              console.log(error);
-            } else Sentry.captureException(error);
-            dispatch(doLogout());
-          });
+        if (error.message === "Request failed with status code 401")
+          Auth.currentSession()
+            .then(session => {
+              token = session.idToken.jwtToken;
+              dispatch(refreshToken(token));
+              // dispatch(doFollowFetch(token)); #
+            })
+            .catch(error => {
+              if (process.env.NODE_ENV !== "production") {
+                console.log(error);
+              } else Sentry.captureException(error);
+              dispatch(doLogout());
+            });
+        else {
+          if (process.env.NODE_ENV !== "production") {
+            console.log(error.message);
+          } else Sentry.captureException(error);
+        }
       });
   };
 }
@@ -573,19 +630,25 @@ export function doFetchNotifications(token) {
         else console.log(response.body.message);
       })
       .catch(error => {
-        Auth.currentSession()
-          .then(session => {
-            console.log(session);
-            token = session.idToken.jwtToken;
-            dispatch(refreshToken(token));
-            dispatch(doFetchNotifications(token));
-          })
-          .catch(error => {
-            if (process.env.NODE_ENV !== "production") {
-              console.log(error);
-            } else Sentry.captureException(error);
-            dispatch(doLogout());
-          });
+        if (error.message === "Request failed with status code 401")
+          Auth.currentSession()
+            .then(session => {
+              console.log(session);
+              token = session.idToken.jwtToken;
+              dispatch(refreshToken(token));
+              dispatch(doFetchNotifications(token));
+            })
+            .catch(error => {
+              if (process.env.NODE_ENV !== "production") {
+                console.log(error);
+              } else Sentry.captureException(error);
+              dispatch(doLogout());
+            });
+        else {
+          if (process.env.NODE_ENV !== "production") {
+            console.log(error.message);
+          } else Sentry.captureException(error);
+        }
       });
   };
 }
@@ -676,9 +739,24 @@ export function doFetchQSO(idqso, token = null) {
           dispatch(doReceiveQSO(response.body.message, response.body.error));
         })
         .catch(error => {
-          if (process.env.NODE_ENV !== "production") {
-            console.log(error);
-          } else Sentry.captureException(error);
+          if (error.message === "Request failed with status code 401")
+            Auth.currentSession()
+              .then(session => {
+                token = session.idToken.jwtToken;
+                dispatch(refreshToken(token));
+                dispatch(doFetchQSO(idqso, token));
+              })
+              .catch(error => {
+                if (process.env.NODE_ENV !== "production") {
+                  console.log(error);
+                } else Sentry.captureException(error);
+                dispatch(doLogout());
+              });
+          else {
+            if (process.env.NODE_ENV !== "production") {
+              console.log(error.message);
+            } else Sentry.captureException(error);
+          }
         });
     };
   } else {
@@ -767,9 +845,24 @@ export function doFetchQRA(qra, token = null) {
           dispatch(doReceiveQRA(response.body.message, response.body.error))
         )
         .catch(error => {
-          if (process.env.NODE_ENV !== "production") {
-            console.log(error);
-          } else Sentry.captureException(error);
+          if (error.message === "Request failed with status code 401")
+            Auth.currentSession()
+              .then(session => {
+                token = session.idToken.jwtToken;
+                dispatch(refreshToken(token));
+                dispatch(doFetchQRA(qra, token));
+              })
+              .catch(error => {
+                if (process.env.NODE_ENV !== "production") {
+                  console.log(error);
+                } else Sentry.captureException(error);
+                dispatch(doLogout());
+              });
+          else {
+            if (process.env.NODE_ENV !== "production") {
+              console.log(error.message);
+            } else Sentry.captureException(error);
+          }
         });
     };
   } else {
@@ -823,18 +916,24 @@ export function doFollowQRA(token, follower) {
         console.log(response.body.message);
       })
       .catch(error => {
-        Auth.currentSession()
-          .then(session => {
-            token = session.idToken.jwtToken;
-            dispatch(refreshToken(token));
-            dispatch(doFollowQRA(token, follower));
-          })
-          .catch(error => {
-            if (process.env.NODE_ENV !== "production") {
-              console.log(error);
-            } else Sentry.captureException(error);
-            dispatch(doLogout());
-          });
+        if (error.message === "Request failed with status code 401")
+          Auth.currentSession()
+            .then(session => {
+              token = session.idToken.jwtToken;
+              dispatch(refreshToken(token));
+              dispatch(doFollowQRA(token, follower));
+            })
+            .catch(error => {
+              if (process.env.NODE_ENV !== "production") {
+                console.log(error);
+              } else Sentry.captureException(error);
+              dispatch(doLogout());
+            });
+        else {
+          if (process.env.NODE_ENV !== "production") {
+            console.log(error.message);
+          } else Sentry.captureException(error);
+        }
       });
   };
 }
@@ -861,18 +960,24 @@ export function doUnfollowQRA(token, follower) {
         else dispatch(doReceiveFollowers(response.body.message));
       })
       .catch(error => {
-        Auth.currentSession()
-          .then(session => {
-            token = session.idToken.jwtToken;
-            dispatch(refreshToken(token));
-            dispatch(doUnfollowQRA(token, follower));
-          })
-          .catch(error => {
-            if (process.env.NODE_ENV !== "production") {
-              console.log(error);
-            } else Sentry.captureException(error);
-            dispatch(doLogout());
-          });
+        if (error.message === "Request failed with status code 401")
+          Auth.currentSession()
+            .then(session => {
+              token = session.idToken.jwtToken;
+              dispatch(refreshToken(token));
+              dispatch(doUnfollowQRA(token, follower));
+            })
+            .catch(error => {
+              if (process.env.NODE_ENV !== "production") {
+                console.log(error);
+              } else Sentry.captureException(error);
+              dispatch(doLogout());
+            });
+        else {
+          if (process.env.NODE_ENV !== "production") {
+            console.log(error.message);
+          } else Sentry.captureException(error);
+        }
       });
   };
 }
@@ -949,18 +1054,24 @@ export function doQsoMediaPlay(idMedia, token, idqso) {
         else dispatch(doReceiveMediaCounter(response.body.message));
       })
       .catch(error => {
-        Auth.currentSession()
-          .then(session => {
-            token = session.idToken.jwtToken;
-            dispatch(refreshToken(token));
-            dispatch(doQsoMediaPlay(idMedia, token, idqso));
-          })
-          .catch(error => {
-            if (process.env.NODE_ENV !== "production") {
-              console.log(error);
-            } else Sentry.captureException(error);
-            dispatch(doLogout());
-          });
+        if (error.message === "Request failed with status code 401")
+          Auth.currentSession()
+            .then(session => {
+              token = session.idToken.jwtToken;
+              dispatch(refreshToken(token));
+              dispatch(doQsoMediaPlay(idMedia, token, idqso));
+            })
+            .catch(error => {
+              if (process.env.NODE_ENV !== "production") {
+                console.log(error);
+              } else Sentry.captureException(error);
+              dispatch(doLogout());
+            });
+        else {
+          if (process.env.NODE_ENV !== "production") {
+            console.log(error.message);
+          } else Sentry.captureException(error);
+        }
       });
   };
 }
@@ -989,18 +1100,24 @@ export function doQslCardPrint(idqso, token) {
         if (response.body.error > 0) console.error(response.body.message);
       })
       .catch(error => {
-        Auth.currentSession()
-          .then(session => {
-            token = session.idToken.jwtToken;
-            dispatch(refreshToken(token));
-            dispatch(doQslCardPrint(token, idqso));
-          })
-          .catch(error => {
-            if (process.env.NODE_ENV !== "production") {
-              console.log(error);
-            } else Sentry.captureException(error);
-            dispatch(doLogout());
-          });
+        if (error.message === "Request failed with status code 401")
+          Auth.currentSession()
+            .then(session => {
+              token = session.idToken.jwtToken;
+              dispatch(refreshToken(token));
+              dispatch(doQslCardPrint(token, idqso));
+            })
+            .catch(error => {
+              if (process.env.NODE_ENV !== "production") {
+                console.log(error);
+              } else Sentry.captureException(error);
+              dispatch(doLogout());
+            });
+        else {
+          if (process.env.NODE_ENV !== "production") {
+            console.log(error.message);
+          } else Sentry.captureException(error);
+        }
       });
   };
 }
