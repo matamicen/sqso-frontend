@@ -103,7 +103,10 @@ function generalReducers(state = initialState, action) {
           }
           return qso;
         }),
-        qso_link: { ...state.qso_link, comments: action.comments },
+        qso_link:
+          state.qso_link && state.qso_link.idqsos === action.idqso
+            ? { ...state.qso_link, comments: action.comments }
+            : { ...state.qso_link },
         qra: state.qra
           ? {
               ...state.qra,
