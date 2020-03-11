@@ -241,7 +241,14 @@ function generalReducers(state = initialState, action) {
       };
       newStore = Object.assign({}, state, {
         ...state,
-        userData: userInfo
+        userData: userInfo,
+        qra: {
+          ...state.qra,
+          following:
+            state.qra.qra.idqras === state.userData.qra.idqras
+              ? action.following
+              : state.qra.following
+        }
       });
       return newStore;
     case REQUEST_FEED:
