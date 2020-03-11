@@ -11,10 +11,10 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import "../../styles/style.css";
 
-const options = [
-  { key: "Y", text: "Yes", value: "1" },
-  { key: "N", text: "No", value: "0" }
-];
+// const options = [
+//   { key: "Y", text: "Yes", value: "1" },
+//   { key: "N", text: "No", value: "0" }
+// ];
 class QRAProfileInfo extends React.Component {
   constructor(props) {
     super(props);
@@ -25,6 +25,7 @@ class QRAProfileInfo extends React.Component {
       qra: {
         firstname: this.props.qraInfo.firstname,
         lastname: this.props.qraInfo.lastname,
+        email: this.props.qraInfo.email,
         mobile: this.props.qraInfo.mobile,
         birthday: this.props.qraInfo.birthday,
         address: this.props.qraInfo.address,
@@ -62,10 +63,10 @@ class QRAProfileInfo extends React.Component {
   };
   render() {
     const { edit } = this.state;
-    const {
+    let {
       firstname,
       lastname,
-
+      email,
       mobile,
       city,
       birthday,
@@ -79,12 +80,14 @@ class QRAProfileInfo extends React.Component {
       gridlocator,
       iotadesignator,
       licenseclass,
-      qslinfo,
-      eqsl,
-      lotw,
-      mailqsl
+      qslinfo
+      // eqsl,
+      // lotw,
+      // mailqsl
     } = this.state.qra;
-
+    this.props.isAuthenticated
+      ? (email = this.state.qra.email)
+      : (email = "Please login to see this field");
     return (
       <Fragment>
         <Segment raised>
@@ -140,7 +143,7 @@ class QRAProfileInfo extends React.Component {
                 name="email"
                 label="Email"
                 // width={5}
-                value={this.props.qraInfo.email ? this.props.qraInfo.email : ""}
+                value={email ? email : ""}
               />
               <Form.Input
                 name="birthday"
@@ -251,14 +254,6 @@ class QRAProfileInfo extends React.Component {
                 onChange={this.changeHandler}
                 value={licenseclass ? licenseclass : ""}
               />
-              <Form.Input
-                name="qslinfo"
-                label="QSL Info"
-                // width={4}
-                readOnly={!edit}
-                onChange={this.changeHandler}
-                value={qslinfo ? qslinfo : ""}
-              />
 
               <Form.Input
                 name="iotadesignator"
@@ -269,8 +264,18 @@ class QRAProfileInfo extends React.Component {
                 value={iotadesignator ? iotadesignator : ""}
               />
             </Form.Group>
-
             <Form.Group inline>
+              <Form.Input
+                name="qslinfo"
+                label="QSL Info"
+                // width={4}
+                readOnly={!edit}
+                onChange={this.changeHandler}
+                value={qslinfo ? qslinfo : ""}
+              />
+              <label>E.G. LOWT / eQSL / Postal Mail</label>
+            </Form.Group>
+            {/* <Form.Group inline>
               <label>QSL by eQSL?</label>
               <Form.Select
                 // fluid
@@ -308,7 +313,7 @@ class QRAProfileInfo extends React.Component {
                 // placeholder="Gender"
               />
               <label>Do you send QSL Cards by postal mail?</label>
-            </Form.Group>
+            </Form.Group> */}
           </Form>
         </Segment>
       </Fragment>
