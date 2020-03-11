@@ -25,6 +25,7 @@ class QRAProfileInfo extends React.Component {
       qra: {
         firstname: this.props.qraInfo.firstname,
         lastname: this.props.qraInfo.lastname,
+        email: this.props.qraInfo.email,
         mobile: this.props.qraInfo.mobile,
         birthday: this.props.qraInfo.birthday,
         address: this.props.qraInfo.address,
@@ -62,10 +63,10 @@ class QRAProfileInfo extends React.Component {
   };
   render() {
     const { edit } = this.state;
-    const {
+    let {
       firstname,
       lastname,
-
+      email,
       mobile,
       city,
       birthday,
@@ -84,7 +85,9 @@ class QRAProfileInfo extends React.Component {
       // lotw,
       // mailqsl
     } = this.state.qra;
-
+    this.props.isAuthenticated
+      ? (email = this.state.qra.email)
+      : (email = "Please login to see this field");
     return (
       <Fragment>
         <Segment raised>
@@ -140,7 +143,7 @@ class QRAProfileInfo extends React.Component {
                 name="email"
                 label="Email"
                 // width={5}
-                value={this.props.qraInfo.email ? this.props.qraInfo.email : ""}
+                value={email ? email : ""}
               />
               <Form.Input
                 name="birthday"
