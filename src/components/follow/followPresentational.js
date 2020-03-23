@@ -98,11 +98,15 @@ const qraFollowRecommendPresentational = props => (
               <div key={i}>
                 <Card raised style={{ height: "14em" }}>
                   <Card.Content>
-                    <Image floated="right" size="mini" src={qra.avatarpic} />
-                    <Card.Header>
+                    <Card.Header style={{ width: "max-content" }}>
                       <Link to={"/" + qra.qra}>{qra.qra}</Link>
+                      <Image floated="right" size="mini" src={qra.avatarpic} />
                     </Card.Header>
-                    <Card.Meta>{qra.firstname + " " + qra.lastname}</Card.Meta>
+                    <Card.Meta>
+                      {(qra.firstname ? qra.firstname : "") +
+                        " " +
+                        (qra.lastname ? qra.lastname : "")}
+                    </Card.Meta>
                     <Card.Description>
                       <Icon name="microphone" />
                       {qra.qsos_counter} Qsos Created
@@ -144,11 +148,15 @@ const qraFollowRecommendPresentational = props => (
               <div key={i}>
                 <Card raised style={{ height: "14em" }}>
                   <Card.Content>
-                    <Image floated="right" size="mini" src={qra.avatarpic} />
-                    <Card.Header>
+                    <Card.Header style={{ width: "max-content" }}>
                       <Link to={"/" + qra.qra}>{qra.qra}</Link>
+                      <Image floated="right" size="mini" src={qra.avatarpic} />
                     </Card.Header>
-                    <Card.Meta>{qra.firstname + " " + qra.lastname}</Card.Meta>
+                    <Card.Meta>
+                      {(qra.firstname ? qra.firstname : "") +
+                        " " +
+                        (qra.lastname ? qra.lastname : "")}
+                    </Card.Meta>
                     <Card.Description>
                       <Icon name="microphone" />
                       {qra.qsos_counter} Qsos Created
@@ -199,12 +207,21 @@ const qraFollowRecommendPresentational = props => (
               >
                 <Card raised style={{ height: "14em" }}>
                   <Card.Content>
-                    <Image floated="right" size="mini" src={qra.avatarpic?qra.avatarpic:"/emptyprofile.png"} />
-                    <Card.Header>
-                      {" "}
+                    <Card.Header style={{ width: "max-content" }}>
                       <Link to={"/" + qra.qra}>{qra.qra}</Link>
+                      <Image
+                        floated="right"
+                        size="mini"
+                        src={
+                          qra.avatarpic ? qra.avatarpic : "/emptyprofile.png"
+                        }
+                      />
                     </Card.Header>
-                    <Card.Meta>{qra.firstname + " " + qra.lastname}</Card.Meta>
+                    <Card.Meta>
+                      {(qra.firstname ? qra.firstname : "") +
+                        " " +
+                        (qra.lastname ? qra.lastname : "")}
+                    </Card.Meta>
                     <Card.Description>
                       <Icon name="microphone" />
                       {qra.qsos_counter} Qsos Created
@@ -253,15 +270,22 @@ const qraFollowRecommendPresentational = props => (
               >
                 <Card raised style={{ height: "14em" }}>
                   <Card.Content>
-                    <Image
-                      floated="right"
-                      size="mini"
-                      src={qra.avatarpic ? qra.avatarpic : "/emptyprofile.png"}
-                    />
-                    <Card.Header>
+                    <Card.Header style={{ width: "max-content" }}>
                       <Link to={"/" + qra.qra}>{qra.qra}</Link>
+                      <Image
+                        floated="right"
+                        size="mini"
+                        src={
+                          qra.avatarpic ? qra.avatarpic : "/emptyprofile.png"
+                        }
+                      />
                     </Card.Header>
-                    <Card.Meta>{qra.firstname + " " + qra.lastname}</Card.Meta>
+
+                    <Card.Meta>
+                      {(qra.firstname ? qra.firstname : "") +
+                        " " +
+                        (qra.lastname ? qra.lastname : "")}
+                    </Card.Meta>
                     <Card.Description>
                       <Icon name="microphone" />
                       {qra.qsos_counter} Qsos Created
