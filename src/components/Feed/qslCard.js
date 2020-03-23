@@ -38,7 +38,7 @@ export default async function QslCardPrint(props) {
   /* QRA Image End*/
 
   /* QRA TEXT */
-  pdf.setFontSize(40);
+  pdf.setFontSize(20);
   pdf.text(2.9, 2.7, props.qso.qra);
   /* QRA END */
 
