@@ -67,7 +67,7 @@ class QRAProfileInfo extends React.Component {
       firstname,
       lastname,
       email,
-      mobile,
+      // mobile,
       city,
       birthday,
       zipcode,
@@ -158,14 +158,14 @@ class QRAProfileInfo extends React.Component {
                     : ""
                 }
               />
-              <Form.Input
+              {/* <Form.Input
                 name="mobile"
                 label="Mobile Phone"
                 // width={4}
                 readOnly={!edit}
                 onChange={this.changeHandler}
                 value={mobile ? mobile : ""}
-              />
+              /> */}
             </Form.Group>
             <Form.Group widths="equal">
               <Form.Input
