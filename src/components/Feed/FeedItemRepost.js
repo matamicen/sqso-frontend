@@ -5,7 +5,7 @@ import QSOShareButtons from "./QSOShareButtons";
 import PopupToFollow from "../PopupToFollow";
 import Button from "semantic-ui-react/dist/commonjs/elements/Button";
 import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
-import Label from "semantic-ui-react/dist/commonjs/elements/Label";
+
 import Divider from "semantic-ui-react/dist/commonjs/elements/Divider";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 
@@ -21,7 +21,7 @@ import Image from "semantic-ui-react/dist/commonjs/elements/Image";
 import { Link } from "react-router-dom";
 import FeedOptionsMenu from "./FeedOptionsMenu";
 import QSORePostButton from "./QSORePostButton";
-
+import "./style.css";
 class FeedItemRepost extends React.Component {
   constructor() {
     super();
@@ -60,105 +60,143 @@ class FeedItemRepost extends React.Component {
 
     switch (this.props.qso.original[0].type) {
       case "QSO":
-        text = " worked a QSO with";
+        text = " worked a QSO";
         break;
       case "LISTEN":
-        text = " listened a QSO with";
+        text = " listened a QSO";
         break;
       default:
     }
     var date = new Date(this.props.qso.original[0].datetime);
     return (
       <Segment raised>
-        <Link to={"/" + this.props.qso.qra}>
-          <Image
-            src={
-              this.props.qso.avatarpic
-                ? this.props.qso.avatarpic
-                : "/emptyprofile.png"
-            }
-            size="mini"
-            avatar
-            style={{
-              width: "35px",
-              height: "35px"
-            }}
-          />
-        </Link>
-        <PopupToFollow
-          qra={this.props.qso.qra}
-          trigger={
-            <Link to={"/" + this.props.qso.qra}>{this.props.qso.qra}</Link>
-          }
-        />
+        <div className="qso-header">
+          <div className="qso-avatar">
+            <Link to={"/" + this.props.qso.qra}>
+              <Image
+                src={
+                  this.props.qso.avatarpic
+                    ? this.props.qso.avatarpic
+                    : "/emptyprofile.png"
+                }
+                size="mini"
+                avatar
+                style={{
+                  width: "35px",
+                  height: "35px"
+                }}
+              />
+            </Link>
+          </div>
+          <div className="qso-header-action">
+            <PopupToFollow
+              qra={this.props.qso.qra}
+              trigger={
+                <Link to={"/" + this.props.qso.qra}>{this.props.qso.qra}</Link>
+              }
+            />
+            {"reposted a QSO"}
+          </div>
 
-        {" reposted a QSO"}
-        <div
-          style={{
-            float: "right"
-          }}
-        >
-          <FeedOptionsMenu
-            qso_owner={this.props.qso.qra}
-            idqso={this.props.qso.idqsos}
-            guid={this.props.qso.GUID_QR}
-            optionsCaller="FeedItem"
-            QslCard={false}
-          />
+          <div
+            className="qso-header-button"
+            style={{
+              float: "right"
+            }}
+          >
+            <FeedOptionsMenu
+              qso_owner={this.props.qso.qra}
+              idqso={this.props.qso.idqsos}
+              guid={this.props.qso.GUID_QR}
+              optionsCaller="FeedItem"
+              QslCard={false}
+            />
+          </div>
         </div>
 
         <Divider hidden />
         <Segment raised>
-          <Link to={"/" + this.props.qso.original[0].qra}>
-            <Image
-              src={
-                this.props.qso.original[0].avatarpic
-                  ? this.props.qso.original[0].avatarpic
-                  : "/emptyprofile.png"
-              }
-              size="mini"
-              avatar
-              style={{
-                width: "35px",
-                height: "35px"
-              }}
-            />{" "}
-          </Link>
-          <PopupToFollow
-            qra={this.props.qso.original[0].qra}
-            trigger={
+          <div className="qso-header">
+            <div className="qso-avatar">
               <Link to={"/" + this.props.qso.original[0].qra}>
-                {this.props.qso.original[0].qra}
+                <Image
+                  src={
+                    this.props.qso.original[0].avatarpic
+                      ? this.props.qso.original[0].avatarpic
+                      : "/emptyprofile.png"
+                  }
+                  size="mini"
+                  avatar
+                  style={{
+                    width: "35px",
+                    height: "35px"
+                  }}
+                />
               </Link>
-            }
+            </div>
+            <div className="qso-header-action">
+              <PopupToFollow
+                qra={this.props.qso.original[0].qra}
+                trigger={
+                  <Link to={"/" + this.props.qso.original[0].qra}>
+                    {this.props.qso.original[0].qra}
+                  </Link>
+                }
+              />
+              {text}
+            </div>
+            <div className="qso-header-info">
+              <div>
+                <b>Mode: </b>
+                {this.props.qso.original[0].mode}
+              </div>
+              <div>
+                <b>Band: </b>
+                {this.props.qso.original[0].band}
+              </div>
+              <div>
+                <b>Date: </b>
+                {date.toLocaleDateString("EN-US", { month: "short" }) +
+                  " " +
+                  date.getDate() +
+                  ", " +
+                  date.getFullYear()}
+              </div>
+              <div>
+                <b>UTC: </b>
+                {date.getUTCHours() +
+                  ":" +
+                  (date.getMinutes() < 10 ? "0" : "") +
+                  date.getMinutes()}
+              </div>
+            </div>
+
+            <div
+              className="qso-header-button"
+              style={{
+                float: "right"
+              }}
+            >
+              <FeedOptionsMenu
+                qso_owner={this.props.qso.qra}
+                idqso={this.props.qso.idqsos}
+                guid={this.props.qso.GUID_QR}
+                optionsCaller="FeedItem"
+                QslCard={false}
+              />
+            </div>
+          </div>
+          <Divider
+            hidden
+            style={{ marginTop: "0.5vh", marginBottom: "0.5vh" }}
           />
-          {text}
-          <div
-            style={{
-              float: "right"
-            }}
-          />
-          <Divider hidden />
-          <Label>Date:</Label>
-          {date.toLocaleDateString("EN-US", { month: "short" }) +
-            " " +
-            date.getDate() +
-            ", " +
-            date.getFullYear()}
-          <Label>UTC:</Label>
-          {date.getUTCHours() +
-            ":" +
-            (date.getMinutes() < 10 ? "0" : "") +
-            date.getMinutes()}
-          <Label>Mode:</Label>
-          {this.props.qso.original[0].mode}
-          <Label>Band:</Label>
-          {this.props.qso.original[0].band}
-          <QRAs
-            avatarpic={this.props.qso.original[0].avatarpic}
-            qso_owner={this.props.qso.original[0].qra}
-            qras={this.props.qso.qras}
-          />{" "}
+          <Segment>
+            <QRAs
+              avatarpic={this.props.qso.original[0].avatarpic}
+              qso_owner={this.props.qso.original[0].qra}
+              qras={this.props.qso.qras}
+            />
+          </Segment>
           {picList.length > 0 && (
             <FeedImage
               img={picList}
