@@ -44,3 +44,50 @@
   height: 100vh; */
 }
 
+@media (max-width: 910px) {
+  .qso-header {
+    display: grid;
+    grid-template-columns: 35px auto 10px;
+    /* grid-gap: 1em; */
+    grid-template-rows: 20px auto ;
+    grid-template-areas: "profileSection actionSection buttonSection" "profileSection infoSection buttonSection";
+    /* justify-content: space-evenly; */
+  }
+  
+  .qso-avatar {
+    grid-area: profileSection;
+    /* position: fixed; */
+    /* grid-column: 1 / 4;
+      grid-row: 1; */
+    /* z-index: 1; */
+    
+  }
+  
+  .qso-header-action {
+    /*grid-column: span 4;*/
+    grid-area: actionSection;
+    /* grid-column: 2;
+      grid-row: 2; */
+    /* max-width: 730px; */
+    margin-left: 2px;
+  }
+  
+  .qso-header-info {
+    grid-area: infoSection;
+    font-size: x-small;
+    margin-left: 2px;
+    display: flex;
+    justify-content: space-between;
+    /* position: sticky;
+    top: 60px;
+    left: 0;
+    height: 100vh; */
+  }
+  .qso-header-button {
+    grid-area: buttonSection;
+    /* position: sticky;
+    top: 60px;
+    left: 0;
+    height: 100vh; */
+  }
+}

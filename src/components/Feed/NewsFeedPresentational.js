@@ -130,9 +130,15 @@ export default class NewsFeed extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    this._cache.clearAll();
-    // this._list.recomputeRowHeights();
-    this._list.forceUpdateGrid();
+    if (
+      prevProps.list.length > 0 &&
+      this.props.qsosFetched &&
+      !this.props.fetchingQsos
+    ) {
+      this._cache.clearAll();
+      // this._list.recomputeRowHeights();
+      this._list.forceUpdateGrid();
+    }
   }
   componentWillUnmount() {
     this.setState({ list: [] });
