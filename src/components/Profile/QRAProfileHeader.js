@@ -1,5 +1,5 @@
 import React from "react";
-
+import { MY_COUNTRIES_DATA } from "./countries.js";
 import Button from "semantic-ui-react/dist/commonjs/elements/Button";
 import Flag from "semantic-ui-react/dist/commonjs/elements/Flag";
 import Image from "semantic-ui-react/dist/commonjs/elements/Image";
@@ -14,6 +14,9 @@ const QRAProfileHeader = props => {
   } else {
     buttonText = "Follow";
   }
+  var result = MY_COUNTRIES_DATA.filter(obj => {
+    return obj.key === props.qraInfo.country;
+  });
 
   return (
     <div className="profile-header">
@@ -42,7 +45,8 @@ const QRAProfileHeader = props => {
                   : "ar"
               }
             />
-            Argentina
+            {result.length > 0 ? result[0].text : "Argentina"}
+
             <Divider
               hidden
               style={{ marginTop: "0.5vh", marginBottom: "0.5vh" }}
