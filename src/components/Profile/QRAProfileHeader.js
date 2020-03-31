@@ -36,7 +36,7 @@ const QRAProfileHeader = props => {
           </div>
           <div className="detail">
             {/* <div> */}
-            <h1 style={{ display: "inline" }}>
+            <h1 style={{ display: "inline", marginRight: "2%" }}>
               <span className="qra">{props.qraInfo.qra}</span>
             </h1>
             <Flag
