@@ -32,17 +32,17 @@ const QRAProfileHeader = props => {
             />
           </div>
           <div className="detail">
-            <h1>
+            <h1 style={{ display: "inline" }}>
               <span className="qra">{props.qraInfo.qra}</span>
-              <Flag
-                name={
-                  props.qraInfo.country !== ""
-                    ? props.qraInfo.country.toLowerCase()
-                    : "ar"
-                }
-              />
             </h1>
-
+            <Flag
+              name={
+                props.qraInfo.country !== ""
+                  ? props.qraInfo.country.toLowerCase()
+                  : "ar"
+              }
+            />
+            Argentina
             <Divider
               hidden
               style={{ marginTop: "0.5vh", marginBottom: "0.5vh" }}

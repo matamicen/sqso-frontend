@@ -212,14 +212,7 @@ class QRAProfileInfo extends React.Component {
                 onChange={this.changeHandler}
                 value={zipcode ? zipcode : ""}
               />
-              {/* <Form.Input
-                name="country"
-                label="Country"
-                width={3}
-                readOnly={!edit}
-                onChange={this.changeHandler}
-                value={country ? country : ""}
-              /> */}
+
               <Form.Field>
                 <label htmlFor="country">Country</label>
                 <Dropdown
