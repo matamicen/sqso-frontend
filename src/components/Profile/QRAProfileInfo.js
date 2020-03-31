@@ -10,7 +10,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import "../../styles/style.css";
-
+import { MY_COUNTRIES_DATA } from "./countries.js";
 // const options = [
 //   { key: "Y", text: "Yes", value: "1" },
 //   { key: "N", text: "No", value: "0" }
@@ -212,14 +212,27 @@ class QRAProfileInfo extends React.Component {
                 onChange={this.changeHandler}
                 value={zipcode ? zipcode : ""}
               />
-              <Form.Input
+              {/* <Form.Input
                 name="country"
                 label="Country"
                 width={3}
                 readOnly={!edit}
                 onChange={this.changeHandler}
                 value={country ? country : ""}
-              />
+              /> */}
+              <Form.Field>
+                <label htmlFor="country">Country</label>
+                <Dropdown
+                  name="country"
+                  onChange={this.changeHandler}
+                  options={MY_COUNTRIES_DATA}
+                  search
+                  disabled={!edit}
+                  selection
+                  selectOnBlur={false}
+                  value={country ? country : ""}
+                />
+              </Form.Field>
             </Form.Group>
             <Form.Group>
               <Form.Input

@@ -1,7 +1,7 @@
 import React from "react";
 
 import Button from "semantic-ui-react/dist/commonjs/elements/Button";
-
+import Flag from "semantic-ui-react/dist/commonjs/elements/Flag";
 import Image from "semantic-ui-react/dist/commonjs/elements/Image";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 import "../../styles/style.css";
@@ -34,7 +34,15 @@ const QRAProfileHeader = props => {
           <div className="detail">
             <h1>
               <span className="qra">{props.qraInfo.qra}</span>
+              <Flag
+                name={
+                  props.qraInfo.country !== ""
+                    ? props.qraInfo.country.toLowerCase()
+                    : "ar"
+                }
+              />
             </h1>
+
             <Divider
               hidden
               style={{ marginTop: "0.5vh", marginBottom: "0.5vh" }}
