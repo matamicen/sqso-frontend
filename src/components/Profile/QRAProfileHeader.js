@@ -35,6 +35,7 @@ const QRAProfileHeader = props => {
             />
           </div>
           <div className="detail">
+            {/* <div> */}
             <h1 style={{ display: "inline" }}>
               <span className="qra">{props.qraInfo.qra}</span>
             </h1>
@@ -45,19 +46,44 @@ const QRAProfileHeader = props => {
                   : "ar"
               }
             />
-            {result.length > 0 ? result[0].text : "Argentina"}
-
+            <span>{result.length > 0 ? result[0].text : "Argentina"}</span>
+            {/* </div> */}
             <Divider
               hidden
               style={{ marginTop: "0.5vh", marginBottom: "0.5vh" }}
             />
-            <h2>
+            <h2 style={{ margin: "initial" }}>
               <div className="name">
                 {props.qraInfo.firstname && props.qraInfo.firstname + " "}
                 {props.qraInfo.lastname && props.qraInfo.lastname}
               </div>
             </h2>
-            <Divider hidden style={{ marginBottom: "4vh" }} />
+
+            <div className="kpi">
+              {props.qraInfo.views_counter ? (
+                <div style={{ marginRight: "5%" }}>
+                  Lookups: {props.qraInfo.views_counter}
+                </div>
+              ) : (
+                ""
+              )}
+              {props.qraInfo.qsos_counter ? (
+                <div style={{ marginRight: "5%" }}>
+                  QSOS: {props.qraInfo.qsos_counter}
+                </div>
+              ) : (
+                ""
+              )}
+              {props.qraInfo.followers_counter ? (
+                <div style={{ marginRight: "5%" }}>
+                  Followers: {props.qraInfo.followers_counter}
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
+
+            <Divider hidden style={{ marginBottom: "0vh" }} />
             <div className="follow">
               {props.isAuthenticated && props.qraInfo.qra !== props.currentQRA && (
                 <Button
