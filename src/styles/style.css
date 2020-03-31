@@ -176,21 +176,24 @@
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
   align-self: flex-start;
+  margin-left: 10%;
 }
 
 .profile-header .inner .detail .qra {
-  font-size: xx-large;
-  margin-left: 30%;
+  font-size: -webkit-xxx-large;
 }
 
 .profile-header .inner .detail .name {
   font-size: x-large;
-  margin-left: 30%;
 }
-
-.profile-header .inner .detail .follow {
-  margin-left: 30%;
+.profile-header .inner .detail .kpi {
+  display: flex;
+  font-size: smaller;
+  margin-top: 1vh;
 }
+/* .profile-header .inner .detail .follow {
+  margin-left: 30%;
+} */
 
 .profile-buttons {
   -webkit-order: 1;
@@ -329,7 +332,7 @@
   .image {
     height: 29vh;
   }
- 
+
   .global-container {
     grid-template-columns: repeat(1, 100%);
     grid-template-rows: 60px auto;
@@ -406,15 +409,15 @@
   }
   .profile-header .inner .detail .qra {
     font-size: xx-large;
-    margin-left: 10%;
+    /* margin-left: 10%; */
   }
   .profile-header .inner .detail .name {
     font-size: x-large;
-    margin-left: 10%;
+    /* margin-left: 10%; */
   }
-  .profile-header .inner .detail .follow {
+  /* .profile-header .inner .detail .follow {
     margin-left: 10%;
-  }
+  } */
   .profile-following {
     display: grid;
     grid-template-columns: 2fr 2fr 2fr 2fr;
