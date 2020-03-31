@@ -111,6 +111,10 @@ class FeedItemQSO extends React.Component {
               {this.props.qso.band}
             </div>
             <div>
+              <b>RST: </b>
+              {this.props.qso.rst}
+            </div>
+            <div>
               <b>Date: </b>
               {date.toLocaleDateString("EN-US", { month: "short" }) +
                 " " +
