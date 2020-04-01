@@ -62,14 +62,14 @@ const QRAProfileHeader = props => {
             <div className="kpi">
               {props.qraInfo.views_counter ? (
                 <div style={{ marginRight: "5%" }}>
-                  Lookups: {props.qraInfo.views_counter}
+                  Views: {props.qraInfo.views_counter}
                 </div>
               ) : (
                 ""
               )}
               {props.qraInfo.qsos_counter ? (
                 <div style={{ marginRight: "5%" }}>
-                  QSOS: {props.qraInfo.qsos_counter}
+                  QSOs: {props.qraInfo.qsos_counter}
                 </div>
               ) : (
                 ""

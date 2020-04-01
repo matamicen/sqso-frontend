@@ -154,6 +154,10 @@ class FeedItemRepost extends React.Component {
                 <b>Band: </b>
                 {this.props.qso.original[0].band}
               </div>
+              {/* <div>
+              <b>RST: </b>
+              {this.props.qso.rst}
+            </div> */}
               <div>
                 <b>Date: </b>
                 {date.toLocaleDateString("EN-US", { month: "short" }) +
