@@ -237,7 +237,7 @@
 
 .profile-following .qra .avatar {
   flex: 0 1 80%;
-  height: 70px;
+  /* height: 70px; */
   align-content: center;
 }
 
