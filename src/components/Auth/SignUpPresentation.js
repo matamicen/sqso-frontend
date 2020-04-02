@@ -266,27 +266,7 @@ const SignUpPresentation = props => {
           <Ad adslot="/21799560237/Signup/left" width={160} height={600} />
         </div>
       </div>
-      {/* <Modal size="small" open={showModalTC}>
-        <Modal.Content>
-          <p>
-            By signing up, you agree to the{" "}
-            <Link to="/privacy">Privacy Policy</Link>. Others will be able to
-            find you by CallSign.
-          </p>
-        </Modal.Content>
-        <Modal.Actions>
-          <Button negative onClick={() => handleOnCancelModalTC()}>
-            No
-          </Button>
-          <Button
-            positive
-            icon="checkmark"
-            labelPosition="right"
-            content="Yes"
-            onClick={() => handleOnAcceptModalTC()}
-          />
-        </Modal.Actions>
-      </Modal> */}
+
       <Modal size="small" open={showModalMessage}>
         <Modal.Content>
           <p>
