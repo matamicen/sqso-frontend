@@ -112,7 +112,7 @@ class SignUp extends React.Component {
   }
   handleOnConfirm() {
     const code = this.state.code.trim();
-    this.setState({ dimmerValCodeActive: true, showModal: false });
+    this.setState({ dimmerValCodeActive: true });
 
     Auth.confirmSignUp(this.state.email.trim(), code, {
       // Optional. Force user confirmation irrespective of existing alias. By default
