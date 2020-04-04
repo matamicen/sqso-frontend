@@ -138,13 +138,15 @@ class FeedItemQSO extends React.Component {
         </div>
 
         <Divider hidden style={{ marginTop: "0.5vh", marginBottom: "0.5vh" }} />
-        <Segment>
-          <QRAs
-            avatarpic={this.props.qso.avatarpic}
-            qso_owner={this.props.qso.qra}
-            qras={this.props.qso.qras}
-          />
-        </Segment>
+        {this.props.qso.qras.length > 0 && (
+          <Segment>
+            <QRAs
+              avatarpic={this.props.qso.avatarpic}
+              qso_owner={this.props.qso.qra}
+              qras={this.props.qso.qras}
+            />
+          </Segment>
+        )}
         {picList.length > 0 && (
           <Fragment>
             <Divider hidden style={{ marginTop: "1vh", marginBottom: "1vh" }} />
