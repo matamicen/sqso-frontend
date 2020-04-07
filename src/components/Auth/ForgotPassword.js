@@ -22,7 +22,7 @@ export default class ForgotPassword extends React.Component {
       showModal: false,
       password: "",
       passwordConfirm: null,
-      qra: "",
+      email: "",
       code: "",
       emailSent: false,
       userConfirmed: false,
@@ -30,7 +30,7 @@ export default class ForgotPassword extends React.Component {
       forgotPasswordError: "",
       confirmError: "",
       formErrors: {
-        qra: "",
+        email: "",
         password: "",
         passwordConfirm: ""
       }
@@ -47,8 +47,8 @@ export default class ForgotPassword extends React.Component {
   handlePasswordConfirmChange(e) {
     this.setState({ passwordConfirm: e.target.value });
   }
-  handleQraChange(e) {
-    this.setState({ qra: e.target.value });
+  handleEmailChange(e) {
+    this.setState({ email: e.target.value });
   }
 
   handleEmailSent(result) {
@@ -64,21 +64,21 @@ export default class ForgotPassword extends React.Component {
   handleChangePasswordButton(e) {
     e.preventDefault();
 
-    const qra = this.state.qra.trim().toUpperCase();
+    const email = this.state.email.trim();
 
-    this.validateQRA();
+    this.validateEmail();
 
-    if (!this.state.formErrors.qra) {
-      Auth.forgotPassword(qra)
+    if (!this.state.formErrors.email) {
+      Auth.forgotPassword(email)
         .then(data => {
           this.handleEmailSent(data);
         })
         .catch(err => {
+          this.setState({ forgotPasswordError: err.message });
           if (process.env.NODE_ENV !== "production") {
             console.log(err);
             return;
           } else Sentry.captureException(err);
-          this.setState({ forgotPasswordError: err });
         });
     }
   }
@@ -99,12 +99,14 @@ export default class ForgotPassword extends React.Component {
 
     this.setState({ formErrors: fieldValidationErrors });
   }
-  validateQRA() {
+  validateEmail() {
     let fieldValidationErrors = this.state.formErrors;
 
-    //QRA
-    let qraValid = this.state.qra.length >= 4;
-    fieldValidationErrors.qra = qraValid ? "" : "QRA is too short";
+    //email
+    let emailValid = this.state.email.match(
+      /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i
+    );
+    fieldValidationErrors.email = emailValid ? "" : "Email is not Valid";
 
     this.setState({ formErrors: fieldValidationErrors });
   }
@@ -120,26 +122,21 @@ export default class ForgotPassword extends React.Component {
     if (
       !this.state.formErrors.password &&
       !this.state.formErrors.passwordConfirm &&
-      !this.state.formErrors.qra
+      !this.state.formErrors.email
     ) {
-      Auth.forgotPasswordSubmit(
-        this.state.qra.trim().toUpperCase(),
-        code,
-        password,
-        {
-          // Optional. Force user confirmation irrespective of existing alias. By default
-          // set to True.
-          forceAliasCreation: true
-        }
-      )
+      Auth.forgotPasswordSubmit(this.state.email.trim(), code, password, {
+        // Optional. Force user confirmation irrespective of existing alias. By default
+        // set to True.
+        forceAliasCreation: true
+      })
         .then(data => {
           this.handleUserConfirmed(data);
         })
         .catch(err => {
+          this.setState({ confirmError: err.message });
           if (process.env.NODE_ENV !== "production") {
             console.log(err);
           } else Sentry.captureException(err);
-          this.setState({ confirmError: err.message });
         });
     }
   }
@@ -201,16 +198,16 @@ export default class ForgotPassword extends React.Component {
                       fluid
                       icon="user"
                       iconPosition="left"
-                      placeholder="QRA"
-                      error={this.state.formErrors.qra ? true : false}
-                      name="QRA"
-                      onChange={this.handleQraChange.bind(this)}
-                      style={{
-                        textTransform: "uppercase"
-                      }}
+                      placeholder="email"
+                      error={this.state.formErrors.email ? true : false}
+                      name="email"
+                      onChange={this.handleEmailChange.bind(this)}
+                      // style={{
+                      //   textTransform: "uppercase"
+                      // }}
                     />{" "}
-                    {this.state.formErrors.qra && (
-                      <Message negative content={this.state.formErrors.qra} />
+                    {this.state.formErrors.email && (
+                      <Message negative content={this.state.formErrors.email} />
                     )}
                   </Form.Field>
 
@@ -226,7 +223,7 @@ export default class ForgotPassword extends React.Component {
                     closeIcon
                     open={this.state.showModal}
                     onClose={this.handleOnCloseModal.bind(this)}
-                    trigger={<Button content="Change Password" />}
+                    trigger={<Button content="Submit" />}
                   >
                     <Modal.Content>
                       <Modal.Description>
