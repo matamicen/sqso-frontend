@@ -50,9 +50,10 @@ export default async function QslCardPrint(props) {
   pdf.text(5.3, 2.4, "Type: " + props.qso.type);
   pdf.text(5.3, 2.5, "Mode: " + props.qso.mode);
   pdf.text(5.3, 2.6, "Band: " + props.qso.band);
+  pdf.text(5.3, 2.7, "RST: " + (props.qso.rst ? props.qso.rst : "59"));
   pdf.text(
     5.3,
-    2.7,
+    2.8,
     "Date: " +
       date.toLocaleDateString("EN-US", { month: "short" }) +
       " " +
@@ -62,7 +63,7 @@ export default async function QslCardPrint(props) {
   );
   pdf.text(
     5.3,
-    2.8,
+    2.9,
     "UTC: " +
       date.getUTCHours() +
       ":" +
