@@ -6,7 +6,7 @@ import Image from "semantic-ui-react/dist/commonjs/elements/Image";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 import "../../styles/style.css";
 import Divider from "semantic-ui-react/dist/commonjs/elements/Divider";
-const QRAProfileHeader = props => {
+const QRAProfileHeader = (props) => {
   let buttonText;
 
   if (props.followed) {
@@ -14,7 +14,7 @@ const QRAProfileHeader = props => {
   } else {
     buttonText = "Follow";
   }
-  var result = MY_COUNTRIES_DATA.filter(obj => {
+  var result = MY_COUNTRIES_DATA.filter((obj) => {
     return obj.key === props.qraInfo.country;
   });
 
@@ -41,7 +41,7 @@ const QRAProfileHeader = props => {
             </h1>
             <Flag
               name={
-                props.qraInfo.country !== ""
+                props.qraInfo.country !== "" && props.qraInfo.country !== null
                   ? props.qraInfo.country.toLowerCase()
                   : "ar"
               }
