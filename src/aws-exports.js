@@ -2,8 +2,8 @@ const config = {
   Auth: {
     identityPoolId: "us-east-1:2cf52faa-ca6d-41a5-9bd0-70d7a57f025a",
     region: "us-east-1",
-    userPoolId: "us-east-1_4pxrtcUkJ",
-    userPoolWebClientId: "3sj7e62qn4fcm9q5bee4q4vl2",
+    userPoolId: "us-east-1_M18Nqj16I",
+    userPoolWebClientId: "24r10o76fe6hlufebsa1lin179",
     mandatorySignIn: false,
     aws_mandatory_sign_in: "enable",
     bucket: "sqso"
