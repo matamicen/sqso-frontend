@@ -1,6 +1,6 @@
 const config = {
   Auth: {
-    identityPoolId: "us-east-1:800789c1-c80d-4041-a395-b96f8c520a08",
+    identityPoolId: "us-east-1:2cf52faa-ca6d-41a5-9bd0-70d7a57f025a",
     region: "us-east-1",
     userPoolId: "us-east-1_M18Nqj16I",
     userPoolWebClientId: "24r10o76fe6hlufebsa1lin179",
@@ -21,7 +21,7 @@ const config = {
   Storage: {
     bucket: "sqsovpcrds-sqsobucket-7mm5nfwuu0ws", //REQUIRED -  Amazon S3 bucket
     region: "us-east-1", //OPTIONAL -  Amazon service region
-    identityPoolId: "us-east-1:800789c1-c80d-4041-a395-b96f8c520a08"
+    identityPoolId: "us-east-1:2cf52faa-ca6d-41a5-9bd0-70d7a57f025a"
   },
   Analytics: {
     // OPTIONAL -  Amazon Pinpoint App ID
