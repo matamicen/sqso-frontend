@@ -3,7 +3,7 @@ const config = {
     identityPoolId: "us-east-1:800789c1-c80d-4041-a395-b96f8c520a08",
     region: "us-east-1",
     userPoolId: "us-east-1_M18Nqj16I",
-    userPoolWebClientId: "6ekve4eh0fof6nqt9biq3876kh",
+    userPoolWebClientId: "24r10o76fe6hlufebsa1lin179",
     mandatorySignIn: false,
     aws_mandatory_sign_in: "enable",
     bucket: "sqso"

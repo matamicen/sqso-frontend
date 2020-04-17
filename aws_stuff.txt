@@ -4,4 +4,4 @@ Pool ARN
 arn:aws:cognito-idp:us-east-1:048234780056:userpool/us-east-1_M18Nqj16I
 
 App Client ID:
-6ekve4eh0fof6nqt9biq3876kh
+24r10o76fe6hlufebsa1lin179
