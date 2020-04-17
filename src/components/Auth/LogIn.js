@@ -35,7 +35,7 @@ class LogIn extends React.Component {
       email: "",
       error: null,
       loginError: false,
-      confirmError: ""
+      confirmError: "",
     };
     // if (this.props.isAuthenticated && !this.props.authenticating) {
     //   alert("You can't login if you are logged in!");
@@ -46,7 +46,7 @@ class LogIn extends React.Component {
     this.setState({ dimmerActive: true });
     if (!this.state.email || !this.state.password) {
       this.setState({
-        loginError: { message: "Please enter Email and Password" }
+        loginError: { message: "Please enter Email and Password" },
       });
     } else this.login();
   };
@@ -57,38 +57,42 @@ class LogIn extends React.Component {
     let user = await Auth.signIn(
       this.state.email.toLowerCase(),
       this.state.password
-    ).catch(err => {
+    ).catch((err) => {
       this.setState({ dimmerActive: false });
       this.setState({ loginError: err });
     });
-
+    console.log(user);
     if (user) {
-      await this.props.actions.doStartingLogin();
-      token = user.signInUserSession.idToken.jwtToken;
-      let credentials = await Auth.currentCredentials();
-      await this.props.actions.doLogin(
-        token,
-        user.signInUserSession.idToken.payload["custom:callsign"],
-        credentials.data.IdentityId
-      );
-      await this.props.actions.doFetchUserInfo(token);
-      Sentry.configureScope(scope => {
-        scope.setUser({
-          qra: user.signInUserSession.idToken.payload["custom:callsign"]
-        });
-      });
-      ReactGA.event({ category: "QRA", action: "login" });
-
-      const { location } = this.props;
-
-      if (
-        location.state &&
-        location.state.from &&
-        location.state.from !== "/"
-      ) {
-        this.props.history.push(location.state.from);
+      if (user.challengeName === "NEW_PASSWORD_REQUIRED") {
+        this.props.history.push("/changepassword");
       } else {
-        this.props.history.push("/");
+        await this.props.actions.doStartingLogin();
+        token = user.signInUserSession.idToken.jwtToken;
+        let credentials = await Auth.currentCredentials();
+        await this.props.actions.doLogin(
+          token,
+          user.signInUserSession.idToken.payload["custom:callsign"],
+          credentials.data.IdentityId
+        );
+        await this.props.actions.doFetchUserInfo(token);
+        Sentry.configureScope((scope) => {
+          scope.setUser({
+            qra: user.signInUserSession.idToken.payload["custom:callsign"],
+          });
+        });
+        ReactGA.event({ category: "QRA", action: "login" });
+
+        const { location } = this.props;
+
+        if (
+          location.state &&
+          location.state.from &&
+          location.state.from !== "/"
+        ) {
+          this.props.history.push(location.state.from);
+        } else {
+          this.props.history.push("/");
+        }
       }
     }
   }
@@ -107,7 +111,7 @@ class LogIn extends React.Component {
 
   handleEmailChange(e) {
     this.setState({
-      email: e.target.value
+      email: e.target.value,
     });
   }
   async handleResendCode() {
@@ -117,17 +121,17 @@ class LogIn extends React.Component {
         this.setState({
           loginError: {
             code: "codeResent",
-            message: "Code Resent for " + this.state.email
+            message: "Code Resent for " + this.state.email,
           },
           confirmError: {
             code: "codeResent",
-            message: "Code Resent for " + this.state.email
+            message: "Code Resent for " + this.state.email,
           },
-          showModal: true
+          showModal: true,
         });
         ReactGA.event({ category: "QRA", action: "resentCode" });
       })
-      .catch(err => {
+      .catch((err) => {
         if (process.env.NODE_ENV !== "production") {
           console.log(err);
         } else Sentry.captureException(err);
@@ -140,17 +144,17 @@ class LogIn extends React.Component {
     Auth.confirmSignUp(this.state.email.trim(), code, {
       // Optional. Force user confirmation irrespective of existing alias. By default
       // set to True.
-      forceAliasCreation: true
+      forceAliasCreation: true,
     })
-      .then(data => {
+      .then((data) => {
         this.setState({
           dimmerValCodeActive: false,
-          dimmerLoginActive: true
+          dimmerLoginActive: true,
         });
         ReactGA.event({ category: "QRA", action: "confirmCode" });
         this.handleOnClickLogin();
       })
-      .catch(err => {
+      .catch((err) => {
         this.setState({ dimmerValCodeActive: false });
         // if (process.env.NODE_ENV !== "production") {
         //   console.log(err);
@@ -201,13 +205,13 @@ class LogIn extends React.Component {
             <Grid
               textAlign="center"
               style={{
-                height: "100%"
+                height: "100%",
               }}
               verticalAlign="middle"
             >
               <Grid.Column
                 style={{
-                  maxWidth: 450
+                  maxWidth: 450,
                 }}
               >
                 <Header as="h2" color="teal" textAlign="center">
@@ -226,7 +230,7 @@ class LogIn extends React.Component {
                         value={this.state.email}
                         onChange={this.handleEmailChange.bind(this)}
                         style={{
-                          textTransform: "uppercase"
+                          textTransform: "uppercase",
                         }}
                       />
                     </Form.Field>
@@ -276,7 +280,7 @@ class LogIn extends React.Component {
                   <Link
                     to={{
                       pathname: "/signup",
-                      state: { from: this.props.location.pathname }
+                      state: { from: this.props.location.pathname },
                     }}
                   >
                     Sign Up
@@ -303,13 +307,13 @@ class LogIn extends React.Component {
               <Grid
                 textAlign="center"
                 style={{
-                  height: "100%"
+                  height: "100%",
                 }}
                 verticalAlign="middle"
               >
                 <Grid.Column
                   style={{
-                    maxWidth: 450
+                    maxWidth: 450,
                   }}
                 >
                   <Header as="h2" color="teal" textAlign="center">
@@ -355,12 +359,12 @@ class LogIn extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isAuthenticated: state.userData.isAuthenticated,
-  authenticating: state.userData.authenticating
+  authenticating: state.userData.authenticating,
 });
-const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(Actions, dispatch)
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(Actions, dispatch),
 });
 
 export default withRouter(

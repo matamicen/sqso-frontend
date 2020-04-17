@@ -72,6 +72,7 @@ export default class ForgotPassword extends React.Component {
       Auth.forgotPassword(email)
         .then(data => {
           this.handleEmailSent(data);
+          this.setState({ forgotPasswordError: null });
         })
         .catch(err => {
           this.setState({ forgotPasswordError: err.message });
@@ -219,7 +220,7 @@ export default class ForgotPassword extends React.Component {
                   )}
 
                   <Modal
-                    basic
+                    // basic
                     closeIcon
                     open={this.state.showModal}
                     onClose={this.handleOnCloseModal.bind(this)}
