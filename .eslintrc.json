@@ -5,6 +5,7 @@
     },
     "extends": [
         "plugin:react/recommended",
+        
         "standard"
     ],
     "globals": {
@@ -12,12 +13,12 @@
         "SharedArrayBuffer": "readonly"
     },
     "parserOptions": {
+        "ecmaVersion": 8,
         "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 2018,
-        "sourceType": "module"
-    },
+          "globalReturn": true,
+          "experimentalObjectRestSpread": true
+        }
+      },
     "plugins": [
         "react"
     ],

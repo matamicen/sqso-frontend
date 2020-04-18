@@ -1,7 +1,7 @@
-/* eslint-disable react/prop-types */
 import Auth from '@aws-amplify/auth'
 import Amplify from '@aws-amplify/core'
 import * as Sentry from '@sentry/browser'
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Route, Switch, withRouter } from 'react-router-dom'
@@ -21,7 +21,6 @@ import Home from './Home/Home'
 import Notifications from './Notifications/Notifications'
 import QRAProfileContainer from './Profile/QRAProfileContainer'
 import QSODetail from './QSODetail'
-
 // if (process.env.NODE_ENV !== 'production') {     const {whyDidYouUpdate} =
 // require('why-did-you-update')     whyDidYouUpdate(React)   }
 
@@ -34,22 +33,33 @@ class App extends Component {
       console.log(error)
       this.props.actions.doLogout()
     })
-
-    if (session) {
+    console.log(session)
+    if (
+      session &&
+      session.idToken &&
+      session.idToken.payload['custom:callsign']
+    ) {
       const credentials = await Auth.currentCredentials()
+      if (!credentials.data) {
+        await Auth.signOut()
 
-      this.props.actions.doLogin(
-        session.idToken.jwtToken,
-        session.idToken.payload['custom:callsign'].toUpperCase(),
-        credentials.data.IdentityId
-      )
-      this.props.actions.doFetchUserInfo(session.idToken.jwtToken)
-      Sentry.configureScope(scope => {
-        scope.setUser({
-          qra: session.idToken.payload['custom:callsign'].toUpperCase()
+        this.props.actions.doSetPublicSession()
+      } else {
+        this.props.actions.doLogin(
+          session.idToken.jwtToken,
+          session.idToken.payload['custom:callsign'].toUpperCase(),
+          credentials.data.IdentityId
+        )
+        this.props.actions.doFetchUserInfo(session.idToken.jwtToken)
+        Sentry.configureScope(scope => {
+          scope.setUser({
+            qra: session.idToken.payload['custom:callsign'].toUpperCase()
+          })
         })
-      })
+      }
     } else {
+      await Auth.signOut()
+
       this.props.actions.doSetPublicSession()
     }
   }
@@ -84,27 +94,36 @@ class App extends Component {
             pathname: '/login',
             state: { from: this.props.location.pathname }
           }}
-          path= '/login'
+          path="/login"
           component={() => (
             <ErrorBoundary key="login">
               <LogIn />
             </ErrorBoundary>
           )}
         />
-        <Route exact path='/forgot' location={{
-          pathname: '/forgot',
-          state: { from: this.props.location.pathname }
-        }} component={() => <ForgotPassword />} />
         <Route
           exact
-          path='/changepassword'
+          path="/forgot"
+          location={{
+            pathname: '/forgot',
+            state: { from: this.props.location.pathname }
+          }}
+          component={() => <ForgotPassword />}
+        />
+        <Route
+          exact
+          path="/changepassword"
           location={{
             pathname: '/changepassword',
             state: { from: this.props.location.pathname }
           }}
-
           component={() => {
-            if (this.props.isAuthenticated) {
+            console.log(this.props)
+            if (
+              this.props.isAuthenticated ||
+              (this.props.location.data &&
+                this.props.location.data.newPasswordRequired)
+            ) {
               return (
                 <ErrorBoundary key="changePassword">
                   <ChangePassword />
@@ -121,12 +140,11 @@ class App extends Component {
         />
         <Route
           exact
-          path='/notifications'
+          path="/notifications"
           location={{
             pathname: '/notifications',
             state: { from: this.props.location.pathname }
           }}
-
           component={() => {
             if (this.props.isAuthenticated) {
               return (
@@ -145,12 +163,11 @@ class App extends Component {
         />
         <Route
           exact
-          path='/privacy'
+          path="/privacy"
           location={{
             pathname: '/privacy',
             state: { from: this.props.location.pathname }
           }}
-
           component={() => (
             <ErrorBoundary key="privacy">
               <PrivacyPolicy />
@@ -159,12 +176,11 @@ class App extends Component {
         />
         <Route
           exact
-          path='/terms'
+          path="/terms"
           location={{
             pathname: '/terms',
             state: { from: this.props.location.pathname }
           }}
-
           component={() => (
             <ErrorBoundary key="terms">
               <TermsOfService />
@@ -173,12 +189,11 @@ class App extends Component {
         />
         <Route
           exact
-          path='/contact'
+          path="/contact"
           location={{
             pathname: '/contact',
             state: { from: this.props.location.pathname }
           }}
-
           component={() => (
             <ErrorBoundary key="contact">
               <ContactForm />
@@ -187,12 +202,11 @@ class App extends Component {
         />
         <Route
           exact
-          path='/follow'
+          path="/follow"
           location={{
             pathname: '/follow',
             state: { from: this.props.location.pathname }
           }}
-
           component={() => {
             if (this.props.isAuthenticated) {
               return (
@@ -211,12 +225,11 @@ class App extends Component {
         />
         <Route
           exact
-          path='/:qra'
+          path="/:qra"
           location={{
             pathname: '/:qra',
             state: { from: this.props.location.pathname }
           }}
-
           component={() => {
             if (
               !this.props.authenticating &&
@@ -232,12 +245,11 @@ class App extends Component {
         />
         <Route
           exact
-          path='/:qra/bio'
+          path="/:qra/bio"
           location={{
             pathname: '/:qra/bio',
             state: { from: this.props.location.pathname }
           }}
-
           component={() => {
             if (
               !this.props.authenticating &&
@@ -253,12 +265,11 @@ class App extends Component {
         />
         <Route
           exact
-          path='/:qra/info'
+          path="/:qra/info"
           location={{
             pathname: '/:qra/info',
             state: { from: this.props.location.pathname }
           }}
-
           component={() => {
             if (
               !this.props.authenticating &&
@@ -275,12 +286,11 @@ class App extends Component {
 
         <Route
           exact
-          path='/:qra/following'
+          path="/:qra/following"
           location={{
             pathname: '/:qra/following',
             state: { from: this.props.location.pathname }
           }}
-
           component={() => {
             if (
               !this.props.authenticating &&
@@ -297,12 +307,11 @@ class App extends Component {
 
         <Route
           exact
-          path='/qso/:idqso'
+          path="/qso/:idqso"
           location={{
             pathname: '/qso/:idqso',
             state: { from: this.props.location.pathname }
           }}
-
           component={() => {
             if (
               !this.props.authenticating &&
@@ -320,7 +329,28 @@ class App extends Component {
     )
   }
 }
-
+App.propTypes = {
+  actions: PropTypes.shape({
+    doStartingLogin: PropTypes.func,
+    doLogout: PropTypes.func,
+    doLogin: PropTypes.func,
+    doFetchUserInfo: PropTypes.func,
+    doSetPublicSession: PropTypes.func
+  }).isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+    data: PropTypes.shape({ newPasswordRequired: PropTypes.bool })
+  }),
+  authenticating: PropTypes.bool,
+  isAuthenticated: PropTypes.bool,
+  public: PropTypes.bool,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+    location: PropTypes.shape({
+      state: PropTypes.shape({})
+    }).isRequired
+  }).isRequired
+}
 const mapStateToProps = (state, props) => {
   return {
     authenticating: state.userData.authenticating,

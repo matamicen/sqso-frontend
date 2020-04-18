@@ -359,7 +359,7 @@ ForgotPassword.propTypes = {
     search: PropTypes.string
   }).isRequired,
   history: PropTypes.shape({
-    push: PropTypes.string
+    push: PropTypes.func
   }).isRequired
 }
 
