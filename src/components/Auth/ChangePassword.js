@@ -1,104 +1,133 @@
-import React from "react";
-import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
-import Form from "semantic-ui-react/dist/commonjs/collections/Form";
-import Message from "semantic-ui-react/dist/commonjs/collections/Message";
-import * as Actions from "../../actions";
-import Auth from "@aws-amplify/auth";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import Advertisement from "semantic-ui-react/dist/commonjs/views/Advertisement";
-import AppNavigation from "../Home/AppNavigation";
-import { withRouter } from "react-router-dom";
-import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
-import "../../styles/style.css";
-import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
-import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
-import Header from "semantic-ui-react/dist/commonjs/elements/Header";
-import Ad from "../Ad/Ad";
-
+import Auth from '@aws-amplify/auth'
+import PropTypes from 'prop-types'
+import React from 'react'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import { bindActionCreators } from 'redux'
+import Form from 'semantic-ui-react/dist/commonjs/collections/Form'
+import Message from 'semantic-ui-react/dist/commonjs/collections/Message'
+import Header from 'semantic-ui-react/dist/commonjs/elements/Header'
+import Loader from 'semantic-ui-react/dist/commonjs/elements/Loader'
+import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
+import Dimmer from 'semantic-ui-react/dist/commonjs/modules/Dimmer'
+import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal'
+import Advertisement from 'semantic-ui-react/dist/commonjs/views/Advertisement'
+import * as Actions from '../../actions'
+import '../../styles/style.css'
+import Ad from '../Ad/Ad'
+import AppNavigation from '../Home/AppNavigation'
 class ChangePassword extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       loader: false,
       showModal: false,
       oldPassword: null,
       password: null,
       passwordConfirm: null,
-      changePasswordError: "",
+      changePasswordError: '',
       formErrors: {
-        oldPassword: "",
-        password: "",
-        passwordConfirm: ""
+        oldPassword: '',
+        password: '',
+        passwordConfirm: ''
       },
       error: null
-    };
+    }
     this.handleChangePasswordButton = this.handleChangePasswordButton.bind(
       this
-    );
+    )
   }
 
-  changeHandler = event => {
-    const name = event.target.name;
-    const value = event.target.value;
+  changeHandler (event) {
+    const name = event.target.name
+    const value = event.target.value
 
-    this.setState({ [name]: value });
-  };
-  close = () => {
-    this.setState({ showModal: false });
-    this.props.actions.doLogout();
+    this.setState({ [name]: value })
+  }
+
+  close () {
+    this.setState({ showModal: false })
+    this.props.actions.doLogout()
     this.props.history.push({
-      pathname: "/login"
-    });
-  };
-  open = () => this.setState({ showModal: true });
+      pathname: '/login'
+    })
+  }
 
-  handleChangePasswordButton = () => {
-    let error = this.validateFields();
+  open () {
+    this.setState({ showModal: true })
+  }
 
+  handleChangePasswordButton () {
+    const error = this.validateFields()
+    console.log(this.props)
     if (!error) {
-      this.setState({ loader: true });
-      Auth.currentAuthenticatedUser()
-        .then(user => {
-          return Auth.changePassword(
-            user,
-            this.state.oldPassword,
-            this.state.password
-          );
-        })
-        .then(data => {
-          this.setState({ loader: false });
-          this.setState({ showModal: true });
-        })
-        .catch(err => {
-          this.setState({ changePasswordError: err.message });
-          this.setState({ loader: false });
-        });
+      this.setState({ loader: true })
+      if (this.props.history.location.data && this.props.history.location.data.newPasswordRequired) {
+        Auth.completeNewPassword(
+          this.props.history.location.data.user, // the Cognito User Object
+          this.state.password // the new password
+          // OPTIONAL, the required attributes
+          // {
+          //   email: 'xxxx@example.com',
+          //   phone_number: '1234567890'
+          // }
+        )
+          .then(user => {
+            // at this time the user is logged in if no MFA required
+            this.setState({ loader: false })
+            this.setState({ showModal: true })
+          })
+          .catch(err => {
+            this.setState({ changePasswordError: err.message })
+            this.setState({ loader: false })
+          })
+      } else {
+        Auth.currentAuthenticatedUser()
+          .then(user => {
+            return Auth.changePassword(
+              user,
+              this.state.oldPassword,
+              this.state.password
+            )
+          })
+          .then(data => {
+            this.setState({ loader: false })
+            this.setState({ showModal: true })
+          })
+          .catch(err => {
+            this.setState({ changePasswordError: err.message })
+            this.setState({ loader: false })
+          })
+      }
     }
-  };
-  validateFields() {
-    let fieldValidationErrors = this.state.formErrors;
+  }
 
-    //password
+  validateFields () {
+    const fieldValidationErrors = this.state.formErrors
 
-    let passwordValid = this.state.password.length >= 6;
+    // password
+
+    const passwordValid = this.state.password.length >= 6
     fieldValidationErrors.password = passwordValid
       ? null
-      : "Password is too short";
+      : 'Password is too short'
 
     fieldValidationErrors.passwordConfirm =
       this.state.password === this.state.passwordConfirm
         ? null
-        : "New Password and Confirmation are not the same";
+        : 'New Password and Confirmation are not the same'
 
-    this.setState({ formErrors: fieldValidationErrors });
+    this.setState({ formErrors: fieldValidationErrors })
 
-    if (fieldValidationErrors.password || fieldValidationErrors.passwordConfirm)
-      return true;
-    else return false;
+    if (
+      fieldValidationErrors.password ||
+      fieldValidationErrors.passwordConfirm
+    ) {
+      return true
+    } else return false
   }
 
-  render() {
+  render () {
     return (
       <div className="global-container">
         <div className="site-header">
@@ -118,13 +147,13 @@ class ChangePassword extends React.Component {
           <Segment raised>
             <Modal
               open={this.state.showModal}
-              onClose={this.close}
+              onClose={() => this.close()}
               header="Password Changed"
               content="Your password has been changed. Please login again!"
               actions={[
                 {
-                  key: "done",
-                  content: "Ok",
+                  key: 'done',
+                  content: 'Ok',
                   positive: true
                 }
               ]}
@@ -142,11 +171,11 @@ class ChangePassword extends React.Component {
                   icon="lock"
                   iconPosition="left"
                   type="password"
-                  error={this.state.formErrors.password ? true : false}
+                  error={!!this.state.formErrors.password}
                   placeholder="Old Password"
                   name="oldPassword"
                   onChange={this.changeHandler.bind(this)}
-                />{" "}
+                />{' '}
                 {this.state.formErrors.password && (
                   <Message negative content={this.state.formErrors.password} />
                 )}
@@ -157,11 +186,11 @@ class ChangePassword extends React.Component {
                   icon="lock"
                   iconPosition="left"
                   type="password"
-                  error={this.state.formErrors.password ? true : false}
+                  error={!!this.state.formErrors.password}
                   placeholder="New Password"
                   name="password"
                   onChange={this.changeHandler.bind(this)}
-                />{" "}
+                />{' '}
                 {this.state.formErrors.password && (
                   <Message negative content={this.state.formErrors.password} />
                 )}
@@ -172,11 +201,11 @@ class ChangePassword extends React.Component {
                   icon="lock"
                   iconPosition="left"
                   type="password"
-                  error={this.state.formErrors.passwordConfirm ? true : false}
+                  error={!!this.state.formErrors.passwordConfirm}
                   placeholder="New Password Confirmation"
                   name="passwordConfirm"
                   onChange={this.changeHandler.bind(this)}
-                />{" "}
+                />{' '}
                 {this.state.formErrors.passwordConfirm && (
                   <Message
                     negative
@@ -202,17 +231,31 @@ class ChangePassword extends React.Component {
           </Advertisement>
         </div>
       </div>
-    );
+    )
   }
 }
 const mapStateToProps = (state, ownProps) => ({
-  //state: state,
+  // state: state,
   currentQRA: state.userData.currentQRA
-});
+})
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(Actions, dispatch)
-});
+})
+ChangePassword.propTypes = {
+  actions: PropTypes.shape({
+    doLogout: PropTypes.func
+  }).isRequired,
 
+  history: PropTypes.shape({
+    push: PropTypes.func,
+    location: PropTypes.shape({
+      data: PropTypes.shape({
+        newPasswordRequired: PropTypes.bool,
+        user: PropTypes.object
+      })
+    }).isRequired
+  }).isRequired
+}
 export default withRouter(
   connect(
     mapStateToProps,
@@ -220,4 +263,4 @@ export default withRouter(
     null,
     { pure: false }
   )(ChangePassword)
-);
+)
