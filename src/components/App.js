@@ -103,11 +103,21 @@ class App extends Component {
             state: { from: this.props.location.pathname }
           }}
 
-          component={() => (
-            <ErrorBoundary key="changePassword">
-              <ChangePassword />
-            </ErrorBoundary>
-          )}
+          component={() => {
+            if (this.props.isAuthenticated) {
+              return (
+                <ErrorBoundary key="changePassword">
+                  <ChangePassword />
+                </ErrorBoundary>
+              )
+            } else {
+              return (
+                <ErrorBoundary key="login">
+                  <LogIn />
+                </ErrorBoundary>
+              )
+            }
+          }}
         />
         <Route
           exact
