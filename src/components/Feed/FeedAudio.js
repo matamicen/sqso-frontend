@@ -1,17 +1,16 @@
-import React, { Fragment } from "react";
-import Button from "semantic-ui-react/dist/commonjs/elements/Button";
-import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
-
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import * as Actions from "../../actions";
-import { Confirm, Modal } from "semantic-ui-react";
-import { Link } from "react-router-dom";
-import { withRouter } from "react-router-dom";
+/* eslint-disable react/prop-types */
+import React, { Fragment } from 'react'
+import { connect } from 'react-redux'
+import { Link, withRouter } from 'react-router-dom'
+import { bindActionCreators } from 'redux'
+import { Confirm, Modal } from 'semantic-ui-react'
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
+import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon'
+import * as Actions from '../../actions'
 
 class FeedAudio extends React.Component {
-  constructor() {
-    super();
+  constructor () {
+    super()
     this.state = {
       showReportContent: false,
       showMessage: false,
@@ -19,27 +18,26 @@ class FeedAudio extends React.Component {
       promptLogin: false,
       promptPremium: false,
       error: null
-    };
-    this.onClick = this.onClick.bind(this);
+    }
+    this.onClick = this.onClick.bind(this)
   }
 
-  onClick() {
+  onClick () {
     if (this.props.isAuthenticated) {
       if (
         this.props.qraUserData.monthly_audio_play >
         this.props.qraUserData.account_type.web_qso_audio_play
-      )
-        this.setState({ promptPremium: true });
-      else this.setState({ audioNotVisible: false });
+      ) { this.setState({ promptPremium: true }) } else this.setState({ audioNotVisible: false })
     } else {
-      if (this.props.index > 0) this.setState({ promptLogin: true });
-      else this.setState({ audioNotVisible: false });
+      if (this.props.index > 0) this.setState({ promptLogin: true })
+      else this.setState({ audioNotVisible: false })
     }
   }
-  render() {
-    let date = new Date(this.props.media.datetime);
-    let onlyForRegistered =
-      this.props.index > 0 && !this.props.isAuthenticated ? true : false;
+
+  render () {
+    const date = new Date(this.props.media.datetime)
+    const onlyForRegistered =
+      !!(this.props.index > 0 && !this.props.isAuthenticated)
     if (this.props.media.url) {
       if (this.state.audioNotVisible) {
         return (
@@ -50,14 +48,14 @@ class FeedAudio extends React.Component {
               onClose={() => this.setState({ promptPremium: false })}
               header="Upgrade to Premium"
               content="You've reached the maximum allowed for free users. Upgrade to Premium in our APP"
-              actions={["OK"]}
+              actions={['OK']}
             />
             <Confirm
               size="mini"
               open={this.state.promptLogin}
               onConfirm={() =>
                 this.props.history.push({
-                  pathname: "/login",
+                  pathname: '/login',
                   state: { from: this.props.location.pathname }
                 })
               }
@@ -66,41 +64,41 @@ class FeedAudio extends React.Component {
               confirmButton="Login"
               content="Please Login to perform this action"
             />
-            <div style={{ display: "flex", alignItems: "center" }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
               <Button size="mini" icon onClick={this.onClick}>
                 <Icon name="play circle" />
               </Button>
-              {this.props.media.description}{" "}
-              {this.props.media.description && " - "}
-              {date.toLocaleDateString("EN-US", { month: "short" }) +
-                " " +
+              {this.props.media.description}{' '}
+              {this.props.media.description && ' - '}
+              {date.toLocaleDateString('EN-US', { month: 'short' }) +
+                ' ' +
                 date.getDate() +
-                ", " +
-                date.getFullYear()}{" "}
+                ', ' +
+                date.getFullYear()}{' '}
               {date.getUTCHours() +
-                ":" +
-                (date.getMinutes() < 10 ? "0" : "") +
+                ':' +
+                (date.getMinutes() < 10 ? '0' : '') +
                 date.getMinutes()}
               {onlyForRegistered && (
                 <Link
                   to={{
-                    pathname: "/login",
+                    pathname: '/login',
                     state: { from: this.props.location.pathname }
                   }}
                 >
-                  {"  "}Login Required
+                  {'  '}Login Required
                 </Link>
               )}
             </div>
           </Fragment>
-        );
+        )
       } else {
         return (
           <Fragment>
             <audio
-              ref="audio_tag"
+              ref={this.props.media.url}
               src={this.props.media.url}
-              style={{ width: "100%", height: "25px" }}
+              style={{ width: '100%', height: '25px' }}
               controls
               autoPlay
               preload="none"
@@ -115,10 +113,10 @@ class FeedAudio extends React.Component {
               }
             />
           </Fragment>
-        );
+        )
       }
     } else {
-      return null;
+      return null
     }
   }
 }
@@ -128,10 +126,10 @@ const mapStateToProps = state => ({
   isAuthenticated: state.userData.isAuthenticated,
   currentQRA: state.userData.currentQRA,
   qraUserData: state.userData.qra
-});
+})
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(Actions, dispatch)
-});
+})
 export default withRouter(
   connect(
     mapStateToProps,
@@ -139,4 +137,4 @@ export default withRouter(
     null,
     { pure: false }
   )(FeedAudio)
-);
+)

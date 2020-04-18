@@ -1,11 +1,13 @@
-import React from "react";
-import FeedItemRepost from "./FeedItemRepost";
-import FeedItemQSO from "./FeedItemQSO";
-import FeedItemPost from "./FeedItemPost";
-import FeedItemAd from "./FeedItemAd";
+/* eslint-disable react/prop-types */
+import React from 'react'
+import FeedItemPost from './FeedItemPost'
+import FeedItemQSO from './FeedItemQSO'
+import FeedItemRepost from './FeedItemRepost'
+
+// import FeedItemAd from './FeedItemAd'
 const FeedItem = props => {
   switch (props.type) {
-    case "QSO":
+    case 'QSO':
       return (
         <FeedItemQSO
           key={props.qso.idqsos}
@@ -15,8 +17,8 @@ const FeedItem = props => {
           showComments={props.showComments}
           index={props.index}
         />
-      );
-    case "LISTEN":
+      )
+    case 'LISTEN':
       return (
         <FeedItemQSO
           key={props.qso.idqsos}
@@ -26,8 +28,8 @@ const FeedItem = props => {
           showComments={props.showComments}
           index={props.index}
         />
-      );
-    case "POST":
+      )
+    case 'POST':
       return (
         <FeedItemPost
           key={props.qso.idqsos}
@@ -37,8 +39,8 @@ const FeedItem = props => {
           showComments={props.showComments}
           index={props.index}
         />
-      );
-    case "SHARE":
+      )
+    case 'SHARE':
       return (
         <FeedItemRepost
           key={props.qso.idqsos}
@@ -48,7 +50,7 @@ const FeedItem = props => {
           recalculateRowHeight={props.recalculateRowHeight}
           index={props.index}
         />
-      );
+      )
     // case "AD":
     //   return (
     //     <FeedItemAd
@@ -60,8 +62,8 @@ const FeedItem = props => {
     //     />
     //   );
     default:
-      return null;
+      return null
   }
-};
+}
 
-export default FeedItem;
+export default FeedItem
