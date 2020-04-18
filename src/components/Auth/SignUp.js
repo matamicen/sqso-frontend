@@ -1,61 +1,64 @@
-import React, { Fragment } from "react";
-import { Formik } from "formik";
-import * as Yup from "yup";
-import SignUpPresentation from "./SignUpPresentation";
-import Auth from "@aws-amplify/auth";
-import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
-import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
-import { withRouter, Redirect } from "react-router-dom";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import * as Actions from "../../actions";
-import * as Sentry from "@sentry/browser";
-import moment from "moment";
-import ReactGA from "react-ga";
+/* eslint-disable react/prop-types */
+import Auth from '@aws-amplify/auth'
+import * as Sentry from '@sentry/browser'
+import { Formik } from 'formik'
+import moment from 'moment'
+import React, { Fragment } from 'react'
+import ReactGA from 'react-ga'
+import { connect } from 'react-redux'
+import { Redirect, withRouter } from 'react-router-dom'
+import { bindActionCreators } from 'redux'
+import Loader from 'semantic-ui-react/dist/commonjs/elements/Loader'
+import Dimmer from 'semantic-ui-react/dist/commonjs/modules/Dimmer'
+import * as Yup from 'yup'
+import * as Actions from '../../actions'
+import SignUpPresentation from './SignUpPresentation'
 class SignUp extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       dimmerActive: false,
       dimmerLoginActive: false,
       dimmerValCodeActive: false,
-      qra: "",
-      password: "",
-      email: "",
-      birthDate: "",
-      firstName: "",
-      lastName: "",
-      country: "",
-      code: "",
+      qra: '',
+      password: '',
+      email: '',
+      birthDate: '',
+      firstName: '',
+      lastName: '',
+      country: '',
+      code: '',
       showModal: false,
       // showModalTC: false,
       showModalMessage: false,
       userCreated: false,
       userConfirmed: false,
-      cognitoUser: "",
-      signUpError: "",
-      confirmError: "",
+      cognitoUser: '',
+      signUpError: '',
+      confirmError: '',
       error: null
-    };
+    }
   }
-  handleAcceptMessageModal() {
-    this.login();
-    this.setState({ showModalMessage: false });
+
+  handleAcceptMessageModal () {
+    this.login()
+    this.setState({ showModalMessage: false })
   }
+
   // handleAcceptTC() {
   //   this.signUp();
   //   this.setState({ showModalTC: false });
   // }
-  signUp(values) {
-    const email = this.state.email.toLowerCase();
-    const password = this.state.password;
-    const qra = this.state.qra.toUpperCase();
-    const birthDate = this.state.birthDate;
-    const firstName = this.state.firstName;
-    const lastName = this.state.lastName;
-    const country = this.state.country;
+  signUp (values) {
+    const email = this.state.email.toLowerCase()
+    const password = this.state.password
+    const qra = this.state.qra.toUpperCase()
+    const birthDate = this.state.birthDate
+    const firstName = this.state.firstName
+    const lastName = this.state.lastName
+    const country = this.state.country
 
-    this.setState({ dimmerActive: true });
+    this.setState({ dimmerActive: true })
 
     Auth.signUp({
       username: email,
@@ -63,13 +66,13 @@ class SignUp extends React.Component {
       attributes: {
         email: email, // optional
         birthdate: birthDate, // optional - E.164 number convention
-        "custom:callsign": qra,
-        "custom:country": country,
-        "custom:firstName": firstName,
-        "custom:lastName": lastName
+        'custom:callsign': qra,
+        'custom:country': country,
+        'custom:firstName': firstName,
+        'custom:lastName': lastName
         // other custom attributes
       },
-      validationData: [] //optional
+      validationData: [] // optional
     })
       .then(data => {
         this.setState({
@@ -77,42 +80,45 @@ class SignUp extends React.Component {
           cognitoUser: data.user.username,
           userCreated: true,
           showModal: true
-        });
-        window.gtag("config", "G-H8G28LYKBY", {
-          custom_map: { dimension1: "userQRA" }
-        });
-        window.gtag("event", "qraSignUp", {
-          event_category: "QRA",
+        })
+        window.gtag('config', 'G-H8G28LYKBY', {
+          custom_map: { dimension1: 'userQRA' }
+        })
+        window.gtag('event', 'qraSignUp', {
+          event_category: 'QRA',
           userQRA: qra
-        });
+        })
       })
       .catch(err => {
-        if (err.code === "UserLambdaValidationException") {
+        if (err.code === 'UserLambdaValidationException') {
           this.setState({
             dimmerActive: false,
-            signUpError: "callsign already registered"
-          });
-        } else this.setState({ dimmerActive: false, signUpError: err.message });
-      });
+            signUpError: 'callsign already registered'
+          })
+        } else this.setState({ dimmerActive: false, signUpError: err.message })
+      })
   }
-  handleCodeChange(e) {
-    this.setState({ code: e.target.value });
+
+  handleCodeChange (e) {
+    this.setState({ code: e.target.value })
   }
-  async handleResendCode() {
+
+  async handleResendCode () {
     await Auth.resendSignUp(this.state.qra.toUpperCase())
       .then(() => {
-        ReactGA.event({ category: "QRA", action: "resentCode" });
+        ReactGA.event({ category: 'QRA', action: 'resentCode' })
       })
       .catch(err => {
-        if (process.env.NODE_ENV !== "production") {
-          console.log(err);
-        } else Sentry.captureException(err);
-        this.setState({ confirmError: err });
-      });
+        if (process.env.NODE_ENV !== 'production') {
+          console.log(err)
+        } else Sentry.captureException(err)
+        this.setState({ confirmError: err })
+      })
   }
-  handleOnConfirm() {
-    const code = this.state.code.trim();
-    this.setState({ dimmerValCodeActive: true });
+
+  handleOnConfirm () {
+    const code = this.state.code.trim()
+    this.setState({ dimmerValCodeActive: true })
 
     Auth.confirmSignUp(this.state.email.trim(), code, {
       // Optional. Force user confirmation irrespective of existing alias. By default
@@ -124,104 +130,106 @@ class SignUp extends React.Component {
           dimmerValCodeActive: false,
           dimmerLoginActive: true,
           showModalMessage: true
-        });
-        //ReactG.event({ category: "QRA", action: "confirmCode" });
+        })
+        // ReactG.event({ category: "QRA", action: "confirmCode" });
       })
       .catch(err => {
-        console.log(err);
-        if (process.env.NODE_ENV !== "production") {
-          console.log(err);
-        } else Sentry.captureException(err);
-        this.setState({ dimmerValCodeActive: false, confirmError: err });
-      });
+        console.log(err)
+        if (process.env.NODE_ENV !== 'production') {
+          console.log(err)
+        } else Sentry.captureException(err)
+        this.setState({ dimmerValCodeActive: false, confirmError: err })
+      })
   }
-  async login() {
-    let token;
-    this.setState({ active: true });
 
-    let user = await Auth.signIn(this.state.email, this.state.password).catch(
+  async login () {
+    let token
+    this.setState({ active: true })
+
+    const user = await Auth.signIn(this.state.email, this.state.password).catch(
       err => {
-        console.log(err);
+        console.log(err)
       }
-    );
+    )
 
     if (user) {
-      await this.props.actions.doStartingLogin();
-      token = user.signInUserSession.idToken.jwtToken;
-      let credentials = await Auth.currentCredentials();
+      await this.props.actions.doStartingLogin()
+      token = user.signInUserSession.idToken.jwtToken
+      const credentials = await Auth.currentCredentials()
 
       await this.props.actions.doLogin(
         token,
         this.state.qra.toUpperCase(),
         credentials.data.IdentityId
-      );
-      await this.props.actions.doFetchUserInfo(token);
+      )
+      await this.props.actions.doFetchUserInfo(token)
       Sentry.configureScope(scope => {
         scope.setUser({
           qra: this.state.qra
-        });
-      });
-      this.setState({ dimmerLoginActive: false });
-      //ReactG.event({ category: "QRA", action: "login" });
-      this.props.history.push("/follow");
+        })
+      })
+      this.setState({ dimmerLoginActive: false })
+      // ReactG.event({ category: "QRA", action: "login" });
+      this.props.history.push('/follow')
     }
   }
-  render() {
-    const { location } = this.props;
+
+  render () {
+    const { location } = this.props
 
     if (this.props.isAuthenticated && !this.props.authenticating) {
       if (location.state && location.state.from) {
-        return <Redirect to={"/" + location.state.from} />;
+        return <Redirect to={'/' + location.state.from} />
       } else {
-        return <Redirect to={"/"} />;
+        return <Redirect to={'/'} />
       }
     }
     const values = {
-      email: "",
-      emailConfirm: "",
-      password: "",
-      passwordConfirm: "",
-      qra: "",
-      birthDate: "",
-      firstName: "",
-      lastName: "",
-      country: "",
-      recaptcha: "",
-      terms: ""
-    };
+      email: '',
+      emailConfirm: '',
+      password: '',
+      passwordConfirm: '',
+      qra: '',
+      birthDate: '',
+      firstName: '',
+      lastName: '',
+      country: '',
+      recaptcha: '',
+      terms: ''
+    }
     const validationSchema = Yup.object({
-      email: Yup.string("Enter your email")
-        .email("Enter a valid email")
-        .required("Email is required"),
+      email: Yup.string('Enter your email')
+        .email('Enter a valid email')
+        .required('Email is required'),
       emailConfirm: Yup.string()
         .required()
-        .oneOf([Yup.ref("email"), null], "Emails must match"),
-      password: Yup.string("Enter a Password")
-        .min(6, "Password is too short")
-        .required("Password is required"),
+        .oneOf([Yup.ref('email'), null], 'Emails must match'),
+      password: Yup.string('Enter a Password')
+        .min(6, 'Password is too short')
+        .required('Password is required'),
       passwordConfirm: Yup.string()
         .required()
-        .oneOf([Yup.ref("password"), null], "Passwords must match"),
-      qra: Yup.string("Enter your Callsign")
-        .required("Callsign is required")
-        .matches(/^[a-zA-Z0-9]+$/, "Do not include / or any special symbols")
-        .min(3, "Callsign is too short")
-        .max(10, "Callsign is too long"),
+        .oneOf([Yup.ref('password'), null], 'Passwords must match'),
+      qra: Yup.string('Enter your Callsign')
+        .required('Callsign is required')
+        .matches(/^[a-zA-Z0-9]+$/, 'Do not include / or any special symbols')
+        .min(3, 'Callsign is too short')
+        .max(10, 'Callsign is too long'),
       birthDate: Yup.date()
-        .required("Enter your Date of Birth")
+        .required('Enter your Date of Birth')
         .min(new Date(1900, 0, 1))
         .max(new Date())
-        .test("birthDate", "You should be older than 13 years", value => {
-          return moment().diff(moment(value), "years") >= 13;
+        .test('birthDate', 'You should be older than 13 years', value => {
+          return moment().diff(moment(value), 'years') >= 13
         }),
       country: Yup.string().required(),
-      firstName: Yup.string().required("First Name is required"),
-      lastName: Yup.string().required("Last Name is required"),
-      recaptcha: Yup.string().required("Confirm Recaptcha"),
+      firstName: Yup.string().required('First Name is required'),
+      lastName: Yup.string().required('Last Name is required'),
+      recaptcha: Yup.string().required('Confirm Recaptcha'),
       terms: Yup.bool()
-        .required("Accept Privacy Policy")
-        .oneOf([true], "Accept Privacy Policy")
-    });
+        .required('Accept Privacy Policy')
+        .oneOf([true], 'Accept Privacy Policy')
+    })
     return (
       <Fragment>
         <Dimmer active={this.state.dimmerLoginActive} page>
@@ -265,25 +273,25 @@ class SignUp extends React.Component {
               lastName: values.lastName.trim(),
               country: values.country.trim()
               // showModalTC: true
-            });
-            this.signUp();
+            })
+            this.signUp()
           }}
         />
       </Fragment>
-    );
+    )
   }
 }
 const mapStateToProps = state => ({
   isAuthenticated: state.userData.isAuthenticated,
   authenticating: state.userData.authenticating
-});
+})
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(Actions, dispatch)
-});
+})
 
 export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
   )(SignUp)
-);
+)
