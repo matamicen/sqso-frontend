@@ -93,7 +93,7 @@ class SignUp extends React.Component {
         if (err.code === 'UserLambdaValidationException') {
           this.setState({
             dimmerActive: false,
-            signUpError: 'callsign already registered'
+            signUpError: 'callsign/email already registered'
           })
         } else this.setState({ dimmerActive: false, signUpError: err.message })
       })

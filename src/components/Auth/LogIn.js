@@ -63,7 +63,7 @@ class LogIn extends React.Component {
       this.setState({ dimmerActive: false })
       this.setState({ loginError: err })
     })
-    console.log(user)
+
     if (user) {
       if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
         this.props.history.push({

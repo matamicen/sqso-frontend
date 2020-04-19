@@ -33,7 +33,7 @@ class App extends Component {
       console.log(error)
       this.props.actions.doLogout()
     })
-    console.log(session)
+
     if (
       session &&
       session.idToken &&
