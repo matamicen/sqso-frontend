@@ -21,6 +21,7 @@ class ForgotPassword extends React.Component {
     this.state = {
       error: null,
       showModal: false,
+      showMessageModal: false,
       password: '',
 
       passwordConfirm: null,
@@ -139,8 +140,7 @@ class ForgotPassword extends React.Component {
       )
         .then(data => {
           this.handleUserConfirmed(data)
-          this.setState({ confirmError: null })
-          this.props.history.push('/login')
+          this.setState({ confirmError: null, showMessageModal: true })
         })
         .catch(err => {
           this.setState({ confirmError: err.message })
@@ -149,6 +149,11 @@ class ForgotPassword extends React.Component {
           } else Sentry.captureException(err)
         })
     }
+  }
+
+  close () {
+    this.setState({ showMessageModal: false })
+    this.props.history.push('/login')
   }
 
   handleOnOpenModal () {
@@ -334,6 +339,19 @@ class ForgotPassword extends React.Component {
                       </Modal.Description>
                     </Modal.Content>
                   </Modal>
+                  <Modal
+                    open={this.state.showMessageModal}
+                    onClose={() => this.close()}
+                    header="Password Changed"
+                    content="Your password has been changed. Please login again!"
+                    actions={[
+                      {
+                        key: 'done',
+                        content: 'Ok',
+                        positive: true
+                      }
+                    ]}
+                  />
                 </Segment>
               </Form>
             </Grid.Column>
