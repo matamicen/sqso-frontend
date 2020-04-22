@@ -1,14 +1,13 @@
-import FeedItem from "./FeedItem";
+import PropTypes from "prop-types";
 import React from "react";
-import "../../styles/style.css";
+import { Link } from "react-router-dom";
 import AutoSizer from "react-virtualized/dist/commonjs/AutoSizer";
+import { CellMeasurer, CellMeasurerCache } from "react-virtualized/dist/commonjs/CellMeasurer";
 import List from "react-virtualized/dist/commonjs/List";
 import WindowScroller from "react-virtualized/dist/commonjs/WindowScroller";
-import { CellMeasurer } from "react-virtualized/dist/commonjs/CellMeasurer";
-import { CellMeasurerCache } from "react-virtualized/dist/commonjs/CellMeasurer";
 import Message from "semantic-ui-react/dist/commonjs/collections/Message";
-import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
+import "../../styles/style.css";
+import FeedItem from "./FeedItem";
 export default class NewsFeed extends React.Component {
   constructor(props) {
     super(props);
@@ -111,7 +110,7 @@ export default class NewsFeed extends React.Component {
   };
   showComments = index => {
     let localList = this.state.list;
-    localList[index].qso.showComments = true;
+    localList[index].qso.showComments = !this.state.list[index].qso.showComments;
     this.setState({ list: localList });
   };
 

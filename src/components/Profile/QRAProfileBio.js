@@ -1,21 +1,20 @@
-import React, { Fragment } from "react";
-
-import Container from "semantic-ui-react/dist/commonjs/elements/Container";
-import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
-import * as Sentry from "@sentry/browser";
-import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown";
-import Confirm from "semantic-ui-react/dist/commonjs/addons/Confirm";
-import * as Actions from "../../actions";
-import { withRouter } from "react-router-dom";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 import API from "@aws-amplify/api";
-import { EditorState, convertToRaw, ContentState } from "draft-js";
-import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import Storage from "@aws-amplify/storage";
+import * as Sentry from "@sentry/browser";
+import { ContentState, convertToRaw, EditorState } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
-import Storage from "@aws-amplify/storage";
+import React, { Fragment } from "react";
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { bindActionCreators } from "redux";
+import Confirm from "semantic-ui-react/dist/commonjs/addons/Confirm";
+import Container from "semantic-ui-react/dist/commonjs/elements/Container";
+import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
+import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown";
+import * as Actions from "../../actions";
 import "../../styles/style.css";
 class QRAProfileBio extends React.Component {
   constructor(props) {
@@ -55,15 +54,25 @@ class QRAProfileBio extends React.Component {
     });
   }
   uploadImageCallBack(file) {
+
+    const customPrefix = {
+      public: 'myPublicPrefix/',
+      protected: "1/",
+      private: 'myPrivatePrefix/'
+  };
     return new Promise((resolve, reject) => {
       let folder = "bio/" + file.name;
+      
       Storage.put(folder, file, {
+        customPrefix: customPrefix,
         level: "protected",
         contentType: "image/png"
       })
         .then(result => {
+          console.log(result)
           let filepath =
-            "https://d1v72vqgluf2qt.cloudfront.net/protected/" +
+            "https://d1v72vqgluf2qt.cloudfront.net/1/" +
+          
             encodeURIComponent(this.props.identityId) +
             "/" +
             encodeURIComponent(result.key);
@@ -131,6 +140,7 @@ class QRAProfileBio extends React.Component {
     this.setState({ editorState: editorState });
   };
   render() {
+    
     const { edit, editorState } = this.state;
     return (
       <Fragment>

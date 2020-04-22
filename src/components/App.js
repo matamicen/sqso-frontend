@@ -15,6 +15,7 @@ import SignUp from './Auth/SignUp'
 import ContactForm from './contactForm'
 import ErrorBoundary from './ErrorBoundary'
 import Follow from './follow'
+import FAQ from './help/faq'
 import PrivacyPolicy from './help/privacyPolicy'
 import TermsOfService from './help/termsOfServcice'
 import Home from './Home/Home'
@@ -40,6 +41,7 @@ class App extends Component {
       session.idToken.payload['custom:callsign']
     ) {
       const credentials = await Auth.currentCredentials()
+
       if (!credentials.data) {
         await Auth.signOut()
 
@@ -184,6 +186,19 @@ class App extends Component {
           component={() => (
             <ErrorBoundary key="terms">
               <TermsOfService />
+            </ErrorBoundary>
+          )}
+        />
+        <Route
+          exact
+          path="/faq"
+          location={{
+            pathname: '/faq',
+            state: { from: this.props.location.pathname }
+          }}
+          component={() => (
+            <ErrorBoundary key="faq">
+              <FAQ />
             </ErrorBoundary>
           )}
         />
