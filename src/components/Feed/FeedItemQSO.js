@@ -1,93 +1,98 @@
-import React, { Fragment } from "react";
-import FeedAudioList from "./FeedAudioList";
-import FeedImage from "./FeedImage";
-import FeedLinkList from "./FeedLinkList";
-import QSOShareButtons from "./QSOShareButtons";
-import PopupToFollow from "../PopupToFollow";
-import Button from "semantic-ui-react/dist/commonjs/elements/Button";
-import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
+import PropTypes from 'prop-types'
+import React, { Fragment } from 'react'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { bindActionCreators } from 'redux'
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
+import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider'
+import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon'
+import Image from 'semantic-ui-react/dist/commonjs/elements/Image'
+import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
+import * as Actions from '../../actions'
+import '../../styles/style.css'
+import PopupToFollow from '../PopupToFollow'
+import FeedAudioList from './FeedAudioList'
+import FeedImage from './FeedImage'
+import FeedLinkList from './FeedLinkList'
+import FeedOptionsMenu from './FeedOptionsMenu'
+import QRAs from './QRAs'
+import QSOComments from './QSOComments'
+import QSOLikeButton from './QSOLikeButton'
+import QSORePostButton from './QSORePostButton'
+import QSOShareButtons from './QSOShareButtons'
+import './style.css'
 
-import Divider from "semantic-ui-react/dist/commonjs/elements/Divider";
-import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
-import Image from "semantic-ui-react/dist/commonjs/elements/Image";
-
-import QSOComments from "./QSOComments";
-import QSOLikeButton from "./QSOLikeButton";
-import QRAs from "./QRAs";
-
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import * as Actions from "../../actions";
-import PropTypes from "prop-types";
-
-import { Link } from "react-router-dom";
-import FeedOptionsMenu from "./FeedOptionsMenu";
-import QSORePostButton from "./QSORePostButton";
-import "../../styles/style.css";
-import "./style.css";
 class FeedItemQSO extends React.Component {
-  constructor() {
-    super();
-    this.state = { comments: [], error: null };
-    this.handleOnComment = this.handleOnComment.bind(this);
-    this.recalculateRowHeight = this.recalculateRowHeight.bind(this);
-  }
-  handleOnComment = () => {
-    if (this.props.currentQRA || this.props.qso.comments.length > 0)
-      this.props.showComments(this.props.index);
-    // this.recalculateRowHeight(); this.props.recalculateRowHeight()
-  };
+  constructor () {
+    super()
+    this.state = { comments: [], error: null }
 
-  recalculateRowHeight() {
-    if (this.props.recalculateRowHeight)
-      this.props.recalculateRowHeight(this.props.index);
+    this.recalculateRowHeight = this.recalculateRowHeight.bind(this)
+  }
+
+  handleOnComment (e) {
+    if (this.props.currentQRA || this.props.qso.comments.length > 0) {
+      this.props.showComments(this.props.index)
+    }
+    // this.recalculateRowHeight(); this.props.recalculateRowHeight()
+  }
+
+  recalculateRowHeight () {
+    if (this.props.recalculateRowHeight) {
+      this.props.recalculateRowHeight(this.props.index)
+    }
   }
 
   //     }
-  static getDerivedStateFromProps(props, prevState) {
-    if (props.qso.comments !== prevState.comments)
-      return { comments: props.qso.comments };
-    return null;
+  static getDerivedStateFromProps (props, prevState) {
+    if (props.qso.comments !== prevState.comments) {
+      return { comments: props.qso.comments }
+    }
+    return null
   }
-  render() {
-    let picList = this.props.qso.media.filter(media => media.type === "image");
-    let audioList = this.props.qso.media.filter(
-      media => media.type === "audio"
-    );
-    const commentsCounter = "(" + this.props.qso.comments.length + ")";
 
-    let text;
+  render () {
+    const picList = this.props.qso.media.filter(
+      media => media.type === 'image'
+    )
+    const audioList = this.props.qso.media.filter(
+      media => media.type === 'audio'
+    )
+    const commentsCounter = '(' + this.props.qso.comments.length + ')'
+
+    let text
 
     switch (this.props.qso.type) {
-      case "QSO":
-        text = " worked a QSO";
-        break;
-      case "LISTEN":
-        text = " listened a QSO";
-        break;
-      case "SHARE":
-        text = " reposted a QSO";
-        break;
+      case 'QSO':
+        text = ' worked a QSO'
+        break
+      case 'LISTEN':
+        text = ' listened a QSO'
+        break
+      case 'SHARE':
+        text = ' reposted a QSO'
+        break
       default:
     }
-    var date = new Date(this.props.qso.datetime);
+    var date = new Date(this.props.qso.datetime)
 
     return (
+
       <Segment raised>
         <div className="qso-header">
           <div className="qso-avatar">
-            <Link to={"/" + this.props.qso.qra}>
+            <Link to={'/' + this.props.qso.qra}>
               <Image
                 src={
                   this.props.qso.avatarpic
                     ? this.props.qso.avatarpic
-                    : "/emptyprofile.png"
+                    : '/emptyprofile.png'
                 }
                 size="mini"
                 avatar
                 style={{
-                  width: "35px",
-                  height: "35px"
+                  width: '35px',
+                  height: '35px'
                 }}
               />
             </Link>
@@ -96,7 +101,7 @@ class FeedItemQSO extends React.Component {
             <PopupToFollow
               qra={this.props.qso.qra}
               trigger={
-                <Link to={"/" + this.props.qso.qra}>{this.props.qso.qra}</Link>
+                <Link to={'/' + this.props.qso.qra}>{this.props.qso.qra}</Link>
               }
             />
             {text}
@@ -112,21 +117,21 @@ class FeedItemQSO extends React.Component {
             </div>
             <div>
               <b>RST: </b>
-              {this.props.qso.rst ? this.props.qso.rst : "59"}
+              {this.props.qso.rst ? this.props.qso.rst : '59'}
             </div>
             <div>
               <b>Date: </b>
-              {date.toLocaleDateString("EN-US", { month: "short" }) +
-                " " +
+              {date.toLocaleDateString('EN-US', { month: 'short' }) +
+                ' ' +
                 date.getDate() +
-                ", " +
+                ', ' +
                 date.getFullYear()}
             </div>
             <div>
               <b>UTC: </b>
               {date.getUTCHours() +
-                ":" +
-                (date.getMinutes() < 10 ? "0" : "") +
+                ':' +
+                (date.getMinutes() < 10 ? '0' : '') +
                 date.getMinutes()}
             </div>
           </div>
@@ -135,7 +140,7 @@ class FeedItemQSO extends React.Component {
           <div
             className="qso-header-button"
             style={{
-              float: "right"
+              float: 'right'
             }}
           >
             <FeedOptionsMenu
@@ -148,7 +153,7 @@ class FeedItemQSO extends React.Component {
             />
           </div>
         </div>
-        <Divider hidden style={{ marginTop: "0.5vh", marginBottom: "0.5vh" }} />
+        <Divider hidden style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }} />
         <Segment>
           <QRAs
             avatarpic={this.props.qso.avatarpic}
@@ -158,7 +163,7 @@ class FeedItemQSO extends React.Component {
         </Segment>
         {picList.length > 0 && (
           <Fragment>
-            <Divider hidden style={{ marginTop: "1vh", marginBottom: "1vh" }} />
+            <Divider hidden style={{ marginTop: '1vh', marginBottom: '1vh' }} />
             <FeedImage
               img={picList}
               measure={this.props.measure}
@@ -169,7 +174,7 @@ class FeedItemQSO extends React.Component {
         )}
         {audioList.length > 0 && (
           <Fragment>
-            <Divider hidden style={{ marginTop: "1vh", marginBottom: "1vh" }} />
+            <Divider hidden style={{ marginTop: '1vh', marginBottom: '1vh' }} />
             <FeedAudioList
               mediaList={audioList}
               idqso={this.props.qso.idqsos}
@@ -178,12 +183,12 @@ class FeedItemQSO extends React.Component {
           </Fragment>
         )}
         {this.props.qso.links && <FeedLinkList links={this.props.qso.links} />}
-        <Divider hidden style={{ marginTop: "1vh", marginBottom: "1vh" }} />
+        <Divider hidden style={{ marginTop: '1vh', marginBottom: '1vh' }} />
         <Button.Group fluid basic>
           <QSOLikeButton qso={this.props.qso} />
           <Button onClick={e => this.handleOnComment(e)}>
             <div>
-              <Icon name="comment outline" />{" "}
+              <Icon name="comment outline" />{' '}
               {this.props.qso.comments.length > 0 && commentsCounter}
             </div>
           </Button>
@@ -198,22 +203,28 @@ class FeedItemQSO extends React.Component {
           />
         )}
       </Segment>
-    );
+    )
   }
 }
-
+FeedItemQSO.propTypes = {
+  currentQRA: PropTypes.string,
+  showComments: PropTypes.func,
+  recalculateRowHeight: PropTypes.func,
+  measure: PropTypes.string,
+  index: PropTypes.string
+}
 const mapStateToProps = (state, qsos) => ({
   fetchingQSOS: state.FetchingQSOS,
   qsosFetched: state.qsosFetched,
   currentQRA: state.userData.currentQRA
-});
+})
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(Actions, dispatch)
-});
+})
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(FeedItemQSO);
+)(FeedItemQSO)
 FeedItemQSO.propTypes = {
   qso: PropTypes.object.isRequired
-};
+}
