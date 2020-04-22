@@ -40,6 +40,7 @@ class App extends Component {
       session.idToken.payload['custom:callsign']
     ) {
       const credentials = await Auth.currentCredentials()
+
       if (!credentials.data) {
         await Auth.signOut()
 
