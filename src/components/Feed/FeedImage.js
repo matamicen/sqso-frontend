@@ -1,15 +1,15 @@
 import React from "react";
-import FeedOptionsMenu from "./FeedOptionsMenu";
-import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
-import Image from "semantic-ui-react/dist/commonjs/elements/Image";
-import Button from "semantic-ui-react/dist/commonjs/elements/Button";
-import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
-
-import "../../styles/style.css";
-import Slider from "react-slick";
 import { connect } from "react-redux";
+import Slider from "react-slick";
 import { bindActionCreators } from "redux";
+import Button from "semantic-ui-react/dist/commonjs/elements/Button";
+import Image from "semantic-ui-react/dist/commonjs/elements/Image";
+import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
+import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
 import * as Actions from "../../actions";
+import "../../styles/style.css";
+import FeedOptionsMenu from "./FeedOptionsMenu";
+
 
 const styles = {
   margin: "0px",
@@ -82,7 +82,7 @@ class FeedImage extends React.Component {
                   }}
                 />
 
-                <p>{m.description}</p>
+                <p style={{textAlign: "center"}}>{m.description}</p>
               </h3>
             </div>
           ))}
