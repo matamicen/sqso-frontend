@@ -1,37 +1,37 @@
-import React from "react";
-import FeedAudioList from "./FeedAudioList";
-import FeedImage from "./FeedImage";
-import QSOShareButtons from "./QSOShareButtons";
-import PopupToFollow from "../PopupToFollow";
-import Button from "semantic-ui-react/dist/commonjs/elements/Button";
-import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
+import PropTypes from 'prop-types'
+import React from 'react'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { bindActionCreators } from 'redux'
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
+import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider'
+import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon'
+import Image from 'semantic-ui-react/dist/commonjs/elements/Image'
+import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
+import * as Actions from '../../actions'
+import PopupToFollow from '../PopupToFollow'
+import FeedAudioList from './FeedAudioList'
+import FeedImage from './FeedImage'
+import FeedOptionsMenu from './FeedOptionsMenu'
+import QRAs from './QRAs'
+import QSOComments from './QSOComments'
+import QSOLikeButton from './QSOLikeButton'
+import QSORePostButton from './QSORePostButton'
+import QSOShareButtons from './QSOShareButtons'
+import './style.css'
 
-import Divider from "semantic-ui-react/dist/commonjs/elements/Divider";
-import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
-
-import QSOComments from "./QSOComments";
-import QSOLikeButton from "./QSOLikeButton";
-
-import QRAs from "./QRAs";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import * as Actions from "../../actions";
-
-import Image from "semantic-ui-react/dist/commonjs/elements/Image";
-import { Link } from "react-router-dom";
-import FeedOptionsMenu from "./FeedOptionsMenu";
-import QSORePostButton from "./QSORePostButton";
-import "./style.css";
 class FeedItemRepost extends React.Component {
-  constructor() {
-    super();
-    this.state = { comments: [], error: null };
-    this.handleOnComment = this.handleOnComment.bind(this);
-    this.recalculateRowHeight = this.recalculateRowHeight.bind(this);
+  constructor () {
+    super()
+    this.state = { comments: [], error: null }
+    this.handleOnComment = this.handleOnComment.bind(this)
+    this.recalculateRowHeight = this.recalculateRowHeight.bind(this)
   }
-  handleOnComment() {
-    if (this.props.qso.comments.length > 0)
-      this.props.showComments(this.props.index);
+
+  handleOnComment () {
+    if (this.props.qso.comments.length > 0) {
+      this.props.showComments(this.props.index)
+    }
     // this.recalculateRowHeight(); this.props.recalculateRowHeight()
   }
 
@@ -40,50 +40,56 @@ class FeedItemRepost extends React.Component {
   //         this.props.recalculateRowHeight(this.props.index);
 
   //     }
-  recalculateRowHeight() {
-    if (this.props.recalculateRowHeight)
-      this.props.recalculateRowHeight(this.props.index);
+  recalculateRowHeight () {
+    if (this.props.recalculateRowHeight) {
+      this.props.recalculateRowHeight(this.props.index)
+    }
   }
-  static getDerivedStateFromProps(props, prevState) {
-    if (props.qso.comments !== prevState.comments)
-      return { comments: props.qso.comments };
-    return null;
-  }
-  render() {
-    let picList = this.props.qso.media.filter(media => media.type === "image");
-    let audioList = this.props.qso.media.filter(
-      media => media.type === "audio"
-    );
-    const commentsCounter = "(" + this.props.qso.comments.length + ")";
 
-    let text;
+  static getDerivedStateFromProps (props, prevState) {
+    if (props.qso.comments !== prevState.comments) {
+      return { comments: props.qso.comments }
+    }
+    return null
+  }
+
+  render () {
+    const picList = this.props.qso.media.filter(
+      media => media.type === 'image'
+    )
+    const audioList = this.props.qso.media.filter(
+      media => media.type === 'audio'
+    )
+    const commentsCounter = '(' + this.props.qso.comments.length + ')'
+
+    let text
 
     switch (this.props.qso.original[0].type) {
-      case "QSO":
-        text = " worked a QSO";
-        break;
-      case "LISTEN":
-        text = " listened a QSO";
-        break;
+      case 'QSO':
+        text = ' worked a QSO'
+        break
+      case 'LISTEN':
+        text = ' listened a QSO'
+        break
       default:
     }
-    var date = new Date(this.props.qso.original[0].datetime);
+    var date = new Date(this.props.qso.original[0].datetime)
     return (
       <Segment raised>
         <div className="qso-header">
           <div className="qso-avatar">
-            <Link to={"/" + this.props.qso.qra}>
+            <Link to={'/' + this.props.qso.qra}>
               <Image
                 src={
                   this.props.qso.avatarpic
                     ? this.props.qso.avatarpic
-                    : "/emptyprofile.png"
+                    : '/emptyprofile.png'
                 }
                 size="mini"
                 avatar
                 style={{
-                  width: "35px",
-                  height: "35px"
+                  width: '35px',
+                  height: '35px'
                 }}
               />
             </Link>
@@ -92,16 +98,16 @@ class FeedItemRepost extends React.Component {
             <PopupToFollow
               qra={this.props.qso.qra}
               trigger={
-                <Link to={"/" + this.props.qso.qra}>{this.props.qso.qra}</Link>
+                <Link to={'/' + this.props.qso.qra}>{this.props.qso.qra}</Link>
               }
             />
-            {"reposted a QSO"}
+            {'reposted a QSO'}
           </div>
 
           <div
             className="qso-header-button"
             style={{
-              float: "right"
+              float: 'right'
             }}
           >
             <FeedOptionsMenu
@@ -118,18 +124,18 @@ class FeedItemRepost extends React.Component {
         <Segment raised>
           <div className="qso-header">
             <div className="qso-avatar">
-              <Link to={"/" + this.props.qso.original[0].qra}>
+              <Link to={'/' + this.props.qso.original[0].qra}>
                 <Image
                   src={
                     this.props.qso.original[0].avatarpic
                       ? this.props.qso.original[0].avatarpic
-                      : "/emptyprofile.png"
+                      : '/emptyprofile.png'
                   }
                   size="mini"
                   avatar
                   style={{
-                    width: "35px",
-                    height: "35px"
+                    width: '35px',
+                    height: '35px'
                   }}
                 />
               </Link>
@@ -138,7 +144,7 @@ class FeedItemRepost extends React.Component {
               <PopupToFollow
                 qra={this.props.qso.original[0].qra}
                 trigger={
-                  <Link to={"/" + this.props.qso.original[0].qra}>
+                  <Link to={'/' + this.props.qso.original[0].qra}>
                     {this.props.qso.original[0].qra}
                   </Link>
                 }
@@ -156,21 +162,21 @@ class FeedItemRepost extends React.Component {
               </div>
               <div>
                 <b>RST: </b>
-                {this.props.qso.rst ? this.props.qso.rst : "59"}
+                {this.props.qso.rst ? this.props.qso.rst : '59'}
               </div>
               <div>
                 <b>Date: </b>
-                {date.toLocaleDateString("EN-US", { month: "short" }) +
-                  " " +
+                {date.toLocaleDateString('EN-US', { month: 'short' }) +
+                  ' ' +
                   date.getDate() +
-                  ", " +
+                  ', ' +
                   date.getFullYear()}
               </div>
               <div>
                 <b>UTC: </b>
                 {date.getUTCHours() +
-                  ":" +
-                  (date.getMinutes() < 10 ? "0" : "") +
+                  ':' +
+                  (date.getMinutes() < 10 ? '0' : '') +
                   date.getMinutes()}
               </div>
             </div>
@@ -178,7 +184,7 @@ class FeedItemRepost extends React.Component {
             <div
               className="qso-header-button"
               style={{
-                float: "right"
+                float: 'right'
               }}
             >
               <FeedOptionsMenu
@@ -192,7 +198,7 @@ class FeedItemRepost extends React.Component {
           </div>
           <Divider
             hidden
-            style={{ marginTop: "0.5vh", marginBottom: "0.5vh" }}
+            style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
           />
           <Segment>
             <QRAs
@@ -222,7 +228,7 @@ class FeedItemRepost extends React.Component {
         <Button.Group widths="4" basic>
           <QSOLikeButton qso={this.props.qso} />
           <Button onClick={this.handleOnComment.bind(this)}>
-            <Icon name="comment outline" />{" "}
+            <Icon name="comment outline" />{' '}
             {this.props.qso.comments.length > 0 && commentsCounter}
           </Button>
           <QSORePostButton qso={this.props.qso} />
@@ -237,20 +243,58 @@ class FeedItemRepost extends React.Component {
           />
         )}
       </Segment>
-    );
+    )
   }
+}
+FeedItemRepost.propTypes = {
+  actions: PropTypes.shape({
+    // doStartingLogin: PropTypes.func,
+    // doLogout: PropTypes.func,
+    // doLogin: PropTypes.func,
+    // doFetchUserInfo: PropTypes.func,
+    // doSetPublicSession: PropTypes.func
+  }).isRequired,
+  measure: PropTypes.func,
+  qso: PropTypes.shape({
+    avatarpic: PropTypes.string,
+    idqsos: PropTypes.number,
+    GUID_QR: PropTypes.string,
+    GUID_URL: PropTypes.string,
+    rst: PropTypes.string,
+    qras: PropTypes.array,
+    comments: PropTypes.array,
+    original: PropTypes.array,
+    media: PropTypes.array,
+    qra: PropTypes.string,
+    showComments: PropTypes.bool
+  }),
+  location: PropTypes.shape({
+    // pathname: PropTypes.string,
+    // data: PropTypes.shape({ newPasswordRequired: PropTypes.bool })
+  }),
+  showComments: PropTypes.func,
+  recalculateRowHeight: PropTypes.func,
+  index: PropTypes.number
+  // isAuthenticated: PropTypes.bool,
+  // public: PropTypes.bool,
+  // history: PropTypes.shape({
+  //   push: PropTypes.func,
+  //   location: PropTypes.shape({
+  //     state: PropTypes.shape({})
+  //   }).isRequired
+  // }).isRequired
 }
 const mapStateToProps = (state, qsos) => ({
   fetchingQSOS: state.FetchingQSOS,
   qsosFetched: state.qsosFetched,
   currentQRA: state.userData.currentQRA
-});
+})
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(Actions, dispatch)
-});
+})
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
   null,
   { pure: false }
-)(FeedItemRepost);
+)(FeedItemRepost)
