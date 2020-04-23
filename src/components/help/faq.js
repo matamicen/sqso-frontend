@@ -1,9 +1,8 @@
-import React, { Fragment } from 'react'
-import Header from 'semantic-ui-react/dist/commonjs/elements/Header'
-import Embed from 'semantic-ui-react/dist/commonjs/modules/Embed'
-import '../../styles/style.css'
-import Ad from '../Ad/Ad'
-import AppNavigation from '../Home/AppNavigation'
+import React, { Fragment } from 'react';
+import Header from 'semantic-ui-react/dist/commonjs/elements/Header';
+import '../../styles/style.css';
+import Ad from '../Ad/Ad';
+import AppNavigation from '../Home/AppNavigation';
 const PrivacyPolicy = props => (
   <Fragment>
     <div className="global-container">
@@ -19,20 +18,25 @@ const PrivacyPolicy = props => (
           <Header.Subheader>Explicado por Matias (LU2ACH) </Header.Subheader>
         </Header>
 
-        <Embed
-          icon="right circle arrow"
-          // placeholder="/images/image-16by9.png"
-          url="https://d1v72vqgluf2qt.cloudfront.net/tutorialCompleto.mp4"
-        />
+        <video width="100%" controls>
+          <source
+            src="https://d1v72vqgluf2qt.cloudfront.net/faq/tutorialCompleto.mp4"
+            type="video/mp4"
+          />
+          Your browser does not support the video tag.
+        </video>
         <Header as="h2" dividing>
           Preguntas Frecuentes
         </Header>
         <Header as="h3">¿Como postear un QSO?</Header>
-        <Embed
-          icon="right circle arrow"
-          // placeholder="/images/image-16by9.png"
-          url="https://d1v72vqgluf2qt.cloudfront.net/PostQSO_alta.mp4"
-        />
+        <video width="100%" controls>
+          <source
+            src="https://d1v72vqgluf2qt.cloudfront.net/faq/PostQSO_alta.mp4"
+            type="video/mp4"
+          />
+          Your browser does not support the video tag.
+        </video>
+
         <Header as="h3">
           ¿Puedo postear un QSO de otros colega/s que escucho aunque yo no
           participo del QSO?
@@ -46,11 +50,14 @@ const PrivacyPolicy = props => (
           damos la posibilidad de escucharse realmente como esta saliendo en
           nuestra estación.
         </p>
-        <Embed
-          icon="right circle arrow"
-          // placeholder="/images/image-16by9.png"
-          url="https://d1v72vqgluf2qt.cloudfront.net/PostQSO_alta.mp4"
-        />
+        <video width="100%" controls>
+          <source
+            src="https://d1v72vqgluf2qt.cloudfront.net/faq/Post+de+una+escucha.mp4"
+            type="video/mp4"
+          />
+          Your browser does not support the video tag.
+        </video>
+
         <Header as="h3">
           ¿Puedo postear un una foto con colegas, amigos, el armado de un
           equipo, antena o promocionar una activación de radio para darlo a
@@ -76,11 +83,14 @@ const PrivacyPolicy = props => (
         </p>
         <Header as="h3">¿Como empiezo a seguir(Follow) a un colega?</Header>
         <p>Podes empezar a seguir a un colega desde la APP y la Web.</p>
-        <Embed
-          icon="right circle arrow"
-          // placeholder="/images/image-16by9.png"
-          url="https://d1v72vqgluf2qt.cloudfront.net/Seguir+a+un+colega.mp4"
-        />
+
+        <video width="100%" controls>
+          <source
+            src="https://d1v72vqgluf2qt.cloudfront.net/faq/Seguir+a+un+colega.mp4"
+            type="video/mp4"
+          />
+          Your browser does not support the video tag.
+        </video>
         <Header as="h3">¿Donde leo las notificaciones?</Header>
         <p>Las notificaciones se pueden leer desde la APP y la WEB. </p>
         <p>
@@ -88,11 +98,14 @@ const PrivacyPolicy = props => (
           que te interese para ver mas detalle de la misma.
         </p>
         <p> Desde la WEB haces click en la campanita arriba a la derecha.</p>
-        <Embed
-          icon="right circle arrow"
-          // placeholder="/images/image-16by9.png"
-          url="https://d1v72vqgluf2qt.cloudfront.net/Leer+notificaciones.mp4"
-        />
+        <video width="100%" controls>
+          <source
+            src="https://d1v72vqgluf2qt.cloudfront.net/faq/Leer+notificaciones.mp4"
+            type="video/mp4"
+          />
+          Your browser does not support the video tag.
+        </video>
+
         <Header as="h3">
           ¿Puedo imprimir la tarjeta QSL de mis QSOs y LISTENs(Escuchas) ?
         </Header>
@@ -108,11 +121,14 @@ const PrivacyPolicy = props => (
           QSL CARD. (Recorda que debes tener habilitados los POPUPS en el
           navegador WEB par que se puede generar el PDF de la tarjeta QSL)
         </p>
-        <Embed
-          icon="right circle arrow"
-          // placeholder="/images/image-16by9.png"
-          url="https://d1v72vqgluf2qt.cloudfront.net/Imprimir+tarjeta+QSL.mp4"
-        />
+        <video width="100%" controls>
+          <source
+            src="https://d1v72vqgluf2qt.cloudfront.net/faq/Imprimir+tarjeta+QSL.mp4"
+            type="video/mp4"
+          />
+          Your browser does not support the video tag.
+        </video>
+
         <Header as="h3">
           ¿Como ESCANEO el codigo QR de mi tarjeta QSL para poder recuperar las
           fotos y audios del POST?
@@ -121,11 +137,14 @@ const PrivacyPolicy = props => (
           En la APP, seleccionas SCAN, luego SCAN QSL CARD y apuntas la camara
           del celular al codigo QR de la tarjeta.
         </p>
-        <Embed
-          icon="right circle arrow"
-          // placeholder="/images/image-16by9.png"
-          url="https://d1v72vqgluf2qt.cloudfront.net/Escanear+c%C3%B3digo+QR+de+tarjeta+QSL.mp4"
-        />
+        <video width="100%" controls>
+          <source
+            src="https://d1v72vqgluf2qt.cloudfront.net/faq/Escanear+c%C3%B3digo+QR+de+tarjeta+QSL.mp4"
+            type="video/mp4"
+          />
+          Your browser does not support the video tag.
+        </video>
+
         <Header as="h3">
           ¿Puedo compartir en WhatsAPP u otra red social un POST que acabo de
           hacer estando en la APP?
@@ -135,11 +154,14 @@ const PrivacyPolicy = props => (
           Share(Compartir), presionando sobre ese icono se puede compartir el
           POST.
         </p>
-        <Embed
-          icon="right circle arrow"
-          // placeholder="/images/image-16by9.png"
-          url="https://d1v72vqgluf2qt.cloudfront.net/Compartir+en+redes+sociales+desde+la+APP.mp4"
-        />
+
+        <video width="100%" controls>
+          <source
+            src="https://d1v72vqgluf2qt.cloudfront.net/faq/Compartir+en+redes+sociales+desde+la+APP.mp4"
+            type="video/mp4"
+          />
+          Your browser does not support the video tag.
+        </video>
         <Header as="h3">
           ¿Puedo compartir en WhatsAPP u otra red social un POST desde la WEB?
         </Header>
@@ -147,21 +169,26 @@ const PrivacyPolicy = props => (
           Si, para compartir el post desde la WEB estando en el POST se debe
           hacer click en compartir.
         </p>
-        <Embed
-          icon="right circle arrow"
-          // placeholder="/images/image-16by9.png"
-          url="https://d1v72vqgluf2qt.cloudfront.net/Compartir+en+redes+sociales+desde+la+Web.mp4"
-        />
+        <video width="100%" controls>
+          <source
+            src="https://d1v72vqgluf2qt.cloudfront.net/faq/Compartir+en+redes+sociales+desde+la+Web.mp4"
+            type="video/mp4"
+          />
+          Your browser does not support the video tag.
+        </video>
+
         <Header as="h3">
           ¿Como hago para hacer un comentarios, repostear o poner me gusta en un
           POST?
         </Header>
+        <video width="100%" controls>
+          <source
+            src="https://d1v72vqgluf2qt.cloudfront.net/faq/Comentar%2C+Like+y+Repostear.mp4"
+            type="video/mp4"
+          />
+          Your browser does not support the video tag.
+        </video>
 
-        <Embed
-          icon="right circle arrow"
-          // placeholder="/images/image-16by9.png"
-          url="https://d1v72vqgluf2qt.cloudfront.net/Comentar%2C+Like+y+Repostear.mp4"
-        />
         <Header as="h3">
           ¿Puedo postear a un colega que no este registrado en SuperQSO?
         </Header>
@@ -169,11 +196,7 @@ const PrivacyPolicy = props => (
           Si, se puede y es normal, por supuesto que el colega no va a recibir
           ninguna notificación al respecto porque aun no es usuario de la APP.
         </p>
-        <Embed
-          icon="right circle arrow"
-          // placeholder="/images/image-16by9.png"
-          url="https://d1v72vqgluf2qt.cloudfront.net/Comentar%2C+Like+y+Repostear.mp4"
-        />
+
         <Header as="h3">
           ¿Un colega no registrado puede entrar a superqso.com y ver el posteo
           que recien hice?
@@ -191,5 +214,5 @@ const PrivacyPolicy = props => (
       </div>
     </div>
   </Fragment>
-)
-export default PrivacyPolicy
+);
+export default PrivacyPolicy;
