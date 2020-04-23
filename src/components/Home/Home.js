@@ -1,14 +1,14 @@
 import React, { Fragment } from "react";
-
-import AppNavigation from "./AppNavigation";
-import FeedQSO from "../Feed/NewsFeedContainer";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
+import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
 import * as Actions from "../../actions";
 import "../../styles/style.css";
 import Ad from "../Ad/Ad";
-import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
-import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
+import FeedQSO from "../Feed/NewsFeedContainer";
+import AppNavigation from "./AppNavigation";
+
 
 class Home extends React.Component {
   state = {
@@ -64,7 +64,7 @@ class Home extends React.Component {
     return (
       <Fragment>
         <Dimmer active={this.state.active} page>
-          <Loader>Loading Qsos...</Loader>
+          <Loader>Loading QSOs...</Loader>
         </Dimmer>
         {/* <Dimmer
           active={

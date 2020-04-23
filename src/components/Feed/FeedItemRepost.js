@@ -101,7 +101,7 @@ class FeedItemRepost extends React.Component {
                 <Link to={'/' + this.props.qso.qra}>{this.props.qso.qra}</Link>
               }
             />
-            {'reposted a QSO'}
+            {' reposted a QSO'}
           </div>
 
           <div
