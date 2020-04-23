@@ -1,13 +1,13 @@
-import PropTypes from "prop-types";
-import React from "react";
-import { Link } from "react-router-dom";
-import AutoSizer from "react-virtualized/dist/commonjs/AutoSizer";
-import { CellMeasurer, CellMeasurerCache } from "react-virtualized/dist/commonjs/CellMeasurer";
-import List from "react-virtualized/dist/commonjs/List";
-import WindowScroller from "react-virtualized/dist/commonjs/WindowScroller";
-import Message from "semantic-ui-react/dist/commonjs/collections/Message";
-import "../../styles/style.css";
-import FeedItem from "./FeedItem";
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
+import { CellMeasurer, CellMeasurerCache } from 'react-virtualized/dist/commonjs/CellMeasurer';
+import List from 'react-virtualized/dist/commonjs/List';
+import WindowScroller from 'react-virtualized/dist/commonjs/WindowScroller';
+import Message from 'semantic-ui-react/dist/commonjs/collections/Message';
+import '../../styles/style.css';
+import FeedItem from './FeedItem';
 export default class NewsFeed extends React.Component {
   constructor(props) {
     super(props);
@@ -20,9 +20,10 @@ export default class NewsFeed extends React.Component {
       overscanRowCount: 10,
       list: list,
       randomScrollToIndex: null,
-      rowCount: list.length
+      rowCount: list.length,
+      _list: null
     };
-
+    this._ref = null;
     this._cache = new CellMeasurerCache({
       fixedWidth: true,
       defaultHeight: 40
@@ -72,7 +73,7 @@ export default class NewsFeed extends React.Component {
       >
         {({ measure }) => (
           <div style={style} key={key}>
-            <div style={{ marginBottom: "1vh" }}>
+            <div style={{ marginBottom: '1vh' }}>
               <FeedItem
                 key={key}
                 qso={row.qso}
@@ -106,11 +107,12 @@ export default class NewsFeed extends React.Component {
     }, 0);
   }
   _setListRef = ref => {
-    this._list = ref;
+    this.setState({_list : ref});
   };
   showComments = index => {
     let localList = this.state.list;
-    localList[index].qso.showComments = !this.state.list[index].qso.showComments;
+    localList[index].qso.showComments = !this.state.list[index].qso
+      .showComments;
     this.setState({ list: localList });
   };
 
@@ -120,7 +122,7 @@ export default class NewsFeed extends React.Component {
     // this
     //     ._list
     //     .recomputeRowHeights(index);
-    this._list.forceUpdateGrid();
+    this.state._list.forceUpdateGrid();
   }
   static getDerivedStateFromProps(props, state) {
     if (props.list) return { list: props.list };
@@ -129,6 +131,7 @@ export default class NewsFeed extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    
     if (
       prevProps.list.length > 0 &&
       this.props.qsosFetched &&
@@ -136,7 +139,7 @@ export default class NewsFeed extends React.Component {
     ) {
       this._cache.clearAll();
       // this._list.recomputeRowHeights();
-      this._list.forceUpdateGrid();
+      this.state._list.forceUpdateGrid();
     }
   }
   componentWillUnmount() {
@@ -158,7 +161,7 @@ export default class NewsFeed extends React.Component {
             you here.
           </p>
           <p>
-            To start following a Callsign click <Link to={"/follow"}>here</Link>
+            To start following a Callsign click <Link to={'/follow'}>here</Link>
           </p>
         </Message>
       );
@@ -168,10 +171,10 @@ export default class NewsFeed extends React.Component {
       <div className="WindowScrollerWrapper">
         <WindowScroller
           ref={ref => (this._windowScroller = ref)}
-          style={{ overflow: "visible" }}
+          style={{ overflow: 'visible' }}
         >
           {({ height, isScrolling, onChildScroll, scrollTop }) => (
-            <AutoSizer disableHeight style={{ overflow: "visible" }}>
+            <AutoSizer disableHeight style={{ overflow: 'visible' }}>
               {({ width }) => (
                 <List
                   autoHeight
@@ -186,7 +189,7 @@ export default class NewsFeed extends React.Component {
                   rowHeight={this._cache.rowHeight}
                   rowRenderer={this._rowRenderer}
                   width={width}
-                  style={{ overflow: "visible" }}
+                  style={{ overflow: 'visible' }}
                 />
               )}
             </AutoSizer>
