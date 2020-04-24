@@ -1,7 +1,8 @@
-import API from '@aws-amplify/api'
-import Auth from '@aws-amplify/auth'
-import * as Sentry from '@sentry/browser'
-import ReactGA from 'react-ga'
+import API from '@aws-amplify/api';
+import Auth from '@aws-amplify/auth';
+import * as Sentry from '@sentry/browser';
+import ReactGA from 'react-ga';
+import { toast } from "react-toastify";
 export const PUBLIC_SESSION = 'PUBLIC_SESSION'
 export const PREPARE_LOGIN = 'PREPARE_LOGIN'
 export const REFRESH_TOKEN = 'REFRESH_TOKEN'
@@ -206,7 +207,9 @@ export function doDeleteQso (idqso, token) {
     }
     API.del(apiName, path, myInit)
       .then(response => {
-        if (response.body.error === 0) dispatch(doDeleteQsoResponse(idqso))
+        if (response.body.error === 0) {
+          toast.success("QSO Deleted");
+          dispatch(doDeleteQsoResponse(idqso))}
         else console.log(response.body.message)
       })
       .catch(error => {
@@ -452,7 +455,9 @@ export function doRepost (idqso, token, qso) {
     API.post(apiName, path, myInit)
       .then(response => {
         if (response.body.error !== 0) console.log(response.body.message)
-        else dispatch(doAddRepostToFeed(qso))
+        else {qso.idqsos = response.body.message; 
+          toast.success("QSO Reposted");
+          dispatch(doAddRepostToFeed(qso))}
       })
       .catch(error => {
         if (error.message === 'Request failed with status code 401') {
@@ -463,6 +468,7 @@ export function doRepost (idqso, token, qso) {
               doRepost(idqso, token, qso)
             })
             .catch(error => {
+              toast.warn("QSO Could not be Repost");
               if (process.env.NODE_ENV !== 'production') {
                 console.log(error)
               } else Sentry.captureException(error)
