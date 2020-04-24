@@ -1,26 +1,26 @@
-import "core-js/es6/map";
-import "core-js/es6/set";
-import "core-js/es6/number";
+import * as Sentry from "@sentry/browser";
 import "core-js/es6/array";
+import "core-js/es6/map";
+import "core-js/es6/number";
+import "core-js/es6/set";
 import React from "react";
 import { render } from "react-dom";
+import ReactGA from "react-ga";
 import { Provider } from "react-redux";
-import { createStore, applyMiddleware, compose } from "redux";
+import { BrowserRouter, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { applyMiddleware, compose, createStore } from "redux";
 import thunk from "redux-thunk";
-import reducer from "./reducers";
-import { Route, BrowserRouter } from "react-router-dom";
-
 // import { googleAnalytics } from "../reactGAMiddlewares";
 import "semantic-ui-css/semantic.css";
-import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import App from "./components/App";
-import ReactGA from "react-ga";
-import * as Sentry from "@sentry/browser";
+import "slick-carousel/slick/slick.css";
 import packageJson from "../package.json";
+import App from "./components/App";
 import GA from "./GoogleAnalytics";
 import "./ReactotronConfig";
-
+import reducer from "./reducers";
 const RELEASE = packageJson.version;
 if (process.env.NODE_ENV === "production") {
   Sentry.init({
@@ -54,6 +54,7 @@ render(
     <BrowserRouter>
       <GA.RouteTracker />
       <Route component={App} />
+      <ToastContainer autoClose={2000} />
     </BrowserRouter>
   </Provider>,
   document.getElementById("root")
