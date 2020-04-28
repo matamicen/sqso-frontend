@@ -1,19 +1,19 @@
-import React from "react";
+import React from 'react';
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
+import Loader from 'semantic-ui-react/dist/commonjs/elements/Loader';
+import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment';
+import Dimmer from 'semantic-ui-react/dist/commonjs/modules/Dimmer';
+import '../../styles/style.css';
+import Ad from '../Ad/Ad';
+import AppNavigation from '../Home/AppNavigation';
+import QRAProfileBio from './QRAProfileBio';
+import QRAProfileFollowing from './QRAProfileFollowing';
+import QRAProfileHeader from './QRAProfileHeader';
+import QRAProfileInfo from './QRAProfileInfo';
+import QRAProfileQsos from './QRAProfileQsos';
 
-import QRAProfileFollowing from "./QRAProfileFollowing";
-import QRAProfileQsos from "./QRAProfileQsos";
-import QRAProfileBio from "./QRAProfileBio";
-import QRAProfileInfo from "./QRAProfileInfo";
-import QRAProfileHeader from "./QRAProfileHeader";
 
-import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
-import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
 
-import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
-import Button from "semantic-ui-react/dist/commonjs/elements/Button";
-import AppNavigation from "../Home/AppNavigation";
-import "../../styles/style.css";
-import Ad from "../Ad/Ad";
 
 const QRAProfile = props => {
   return (
@@ -56,31 +56,31 @@ const QRAProfile = props => {
             onClick={props.onClick}
             currentQRA={props.currentQRA}
           />
-          <Segment basic style={{ padding: "0px" }}>
+          <Segment basic style={{ padding: '0px' }}>
             <div className="profile-buttons">
               <Button
-                style={{ flex: "1 1 auto" }}
+                style={{ flex: '1 1 auto' }}
                 onClick={() => props.handleTabClick(1)}
                 active={props.tab === 1 ? true : false}
               >
                 QSO's
               </Button>
               <Button
-                style={{ flex: "1 1 auto" }}
+                style={{ flex: '1 1 auto' }}
                 onClick={() => props.handleTabClick(2)}
                 active={props.tab === 2 ? true : false}
               >
                 Bio
               </Button>
               <Button
-                style={{ flex: "1 1 auto" }}
+                style={{ flex: '1 1 auto' }}
                 onClick={() => props.handleTabClick(3)}
                 active={props.tab === 3 ? true : false}
               >
                 Info
               </Button>
               <Button
-                style={{ flex: "1 1 auto" }}
+                style={{ flex: '1 1 auto' }}
                 onClick={() => props.handleTabClick(4)}
                 active={props.tab === 4 ? true : false}
               >
@@ -92,7 +92,13 @@ const QRAProfile = props => {
             {/* <Segment> */}
             {
               {
-                1: <QRAProfileQsos qsos={props.qra ? props.qra.qsos : []} />,
+                1: (
+                  <QRAProfileQsos
+                    qsos={props.qra ? props.qra.qsos : []}
+                    fetchingQRA={props.fetchingQRA}
+                    QRAFetched={props.QRAFetched}
+                  />
+                ),
                 2: <QRAProfileBio qraInfo={props.qraInfo} />,
                 3: <QRAProfileInfo qraInfo={props.qraInfo} />,
                 4: (

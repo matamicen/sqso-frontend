@@ -218,8 +218,8 @@ export function doDeleteQso(idqso, token) {
           toast.success('QSO Deleted', {
             position: toast.POSITION.BOTTOM_RIGHT,
             className: css({
-              background: "#8BD8BD !important"
-          })
+              background: '#8BD8BD !important'
+            })
           });
           dispatch(doDeleteQsoResponse(idqso));
         } else console.log(response.body.message);
@@ -470,14 +470,16 @@ export function doRepost(idqso, token, qso) {
       .then(response => {
         if (response.body.error !== 0) console.log(response.body.message);
         else {
+          qso.idqso_shared = qso.idqsos;
           qso.idqsos = response.body.message;
+          qso.type = 'SHARE';
           toast.success('QSO Reposted', {
             position: toast.POSITION.BOTTOM_RIGHT,
             className: css({
-              background: "#8BD8BD !important"
-          })
+              background: '#8BD8BD !important'
+            })
           });
-          dispatch(doAddRepostToFeed(qso));
+          // dispatch(doAddRepostToFeed(qso)); #TODO
         }
       })
       .catch(error => {
@@ -503,9 +505,11 @@ export function doRepost(idqso, token, qso) {
   };
 }
 export function doAddRepostToFeed(qso) {
+  qso.original.push(qso);
+  let repostQso = { type: 'SHARE', qso: qso };
   return {
     type: REPOST_QSO,
-    qso: qso
+    qso: repostQso
   };
 }
 export function doSaveUserInfo(token, qra) {

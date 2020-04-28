@@ -12,16 +12,18 @@ const PrivacyPolicy = props => (
       <div className="site-left">
         <Ad adslot="/21799560237/Signup/left" width={160} height={600} />
       </div>
-      <div className="site-main">
+      <div className="site-main"  onContextMenu={(e)=> e.preventDefault()}>
         <Header as="h2" dividing>
           Tutorial Completo
           <Header.Subheader>Explicado por Matias (LU2ACH) </Header.Subheader>
         </Header>
 
-        <video width="100%" controls>
+        <video  width="100%"  controls controlsList="nodownload">
           <source
             src="https://d1v72vqgluf2qt.cloudfront.net/faq/tutorialCompleto.mp4"
             type="video/mp4"
+            
+            
           />
           Your browser does not support the video tag.
         </video>
@@ -29,10 +31,11 @@ const PrivacyPolicy = props => (
           Preguntas Frecuentes
         </Header>
         <Header as="h3">¿Como postear un QSO?</Header>
-        <video width="100%" controls>
+        <video width="100%" controls controlsList="nodownload">
           <source
             src="https://d1v72vqgluf2qt.cloudfront.net/faq/PostQSO_alta.mp4"
             type="video/mp4"
+            controlsList="nodownload"
           />
           Your browser does not support the video tag.
         </video>
@@ -50,10 +53,11 @@ const PrivacyPolicy = props => (
           damos la posibilidad de escucharse realmente como esta saliendo en
           nuestra estación.
         </p>
-        <video width="100%" controls>
+        <video width="100%" controls controlsList="nodownload">
           <source
             src="https://d1v72vqgluf2qt.cloudfront.net/faq/Post+de+una+escucha.mp4"
             type="video/mp4"
+            controlsList="nodownload"
           />
           Your browser does not support the video tag.
         </video>
@@ -84,10 +88,11 @@ const PrivacyPolicy = props => (
         <Header as="h3">¿Como empiezo a seguir(Follow) a un colega?</Header>
         <p>Podes empezar a seguir a un colega desde la APP y la Web.</p>
 
-        <video width="100%" controls>
+        <video width="100%" controls controlsList="nodownload">
           <source
             src="https://d1v72vqgluf2qt.cloudfront.net/faq/Seguir+a+un+colega.mp4"
             type="video/mp4"
+            controlsList="nodownload"
           />
           Your browser does not support the video tag.
         </video>
@@ -98,10 +103,11 @@ const PrivacyPolicy = props => (
           que te interese para ver mas detalle de la misma.
         </p>
         <p> Desde la WEB haces click en la campanita arriba a la derecha.</p>
-        <video width="100%" controls>
+        <video width="100%" controls controlsList="nodownload">
           <source
             src="https://d1v72vqgluf2qt.cloudfront.net/faq/Leer+notificaciones.mp4"
             type="video/mp4"
+            controlsList="nodownload"
           />
           Your browser does not support the video tag.
         </video>
@@ -121,10 +127,11 @@ const PrivacyPolicy = props => (
           QSL CARD. (Recorda que debes tener habilitados los POPUPS en el
           navegador WEB par que se puede generar el PDF de la tarjeta QSL)
         </p>
-        <video width="100%" controls>
+        <video width="100%" controls controlsList="nodownload">
           <source
             src="https://d1v72vqgluf2qt.cloudfront.net/faq/Imprimir+tarjeta+QSL.mp4"
             type="video/mp4"
+            controlsList="nodownload"
           />
           Your browser does not support the video tag.
         </video>
@@ -137,10 +144,11 @@ const PrivacyPolicy = props => (
           En la APP, seleccionas SCAN, luego SCAN QSL CARD y apuntas la camara
           del celular al codigo QR de la tarjeta.
         </p>
-        <video width="100%" controls>
+        <video width="100%" controls controlsList="nodownload">
           <source
             src="https://d1v72vqgluf2qt.cloudfront.net/faq/Escanear+c%C3%B3digo+QR+de+tarjeta+QSL.mp4"
             type="video/mp4"
+            controlsList="nodownload"
           />
           Your browser does not support the video tag.
         </video>
@@ -155,10 +163,11 @@ const PrivacyPolicy = props => (
           POST.
         </p>
 
-        <video width="100%" controls>
+        <video width="100%" controls controlsList="nodownload">
           <source
             src="https://d1v72vqgluf2qt.cloudfront.net/faq/Compartir+en+redes+sociales+desde+la+APP.mp4"
             type="video/mp4"
+            controlsList="nodownload"
           />
           Your browser does not support the video tag.
         </video>
@@ -169,10 +178,11 @@ const PrivacyPolicy = props => (
           Si, para compartir el post desde la WEB estando en el POST se debe
           hacer click en compartir.
         </p>
-        <video width="100%" controls>
+        <video width="100%" controls controlsList="nodownload">
           <source
             src="https://d1v72vqgluf2qt.cloudfront.net/faq/Compartir+en+redes+sociales+desde+la+Web.mp4"
             type="video/mp4"
+            controlsList="nodownload"
           />
           Your browser does not support the video tag.
         </video>
@@ -181,10 +191,11 @@ const PrivacyPolicy = props => (
           ¿Como hago para hacer un comentarios, repostear o poner me gusta en un
           POST?
         </Header>
-        <video width="100%" controls>
+        <video width="100%" controls controlsList="nodownload">
           <source
             src="https://d1v72vqgluf2qt.cloudfront.net/faq/Comentar%2C+Like+y+Repostear.mp4"
             type="video/mp4"
+            controlsList="nodownload"
           />
           Your browser does not support the video tag.
         </video>

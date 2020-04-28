@@ -1,5 +1,5 @@
-import React from "react";
-import NewsFeed from "../Feed/NewsFeedPresentational";
+import React from 'react';
+import NewsFeed from '../Feed/NewsFeedPresentational';
 export default class QRAProfileQsos extends React.Component {
   render() {
     let qsos = [];
@@ -12,7 +12,13 @@ export default class QRAProfileQsos extends React.Component {
           ad: this.props.qsos[i].ad ? this.props.qsos[i].ad : null
         });
       }
-      return <NewsFeed list={qsos} />;
+      return (
+        <NewsFeed
+          list={qsos}
+          QRAFetched={this.props.QRAFetched}
+          FetchingQRA={this.props.FetchingQRA}
+        />
+      );
     }
 
     return null;
