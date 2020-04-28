@@ -10,11 +10,11 @@ async function generateSitemap() {
     var apigClientFactory = require("aws-api-gateway-client").default;
 
     var config = {
-      invokeUrl: "https://bvi2z1683m.execute-api.us-east-1.amazonaws.com"
+      invokeUrl: "https://api.zxcvbnmasd.com"
     };
     var apigClient = apigClientFactory.newClient(config);
     var params = {};
-    var pathTemplate = "/reactWeb/qra/list";
+    var pathTemplate = "/qra/list";
     var method = "GET";
     var additionalParams = {
       headers: {

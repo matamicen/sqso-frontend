@@ -1,6 +1,6 @@
-import path from "path";
-import fs from "fs";
 import * as Sentry from "@sentry/browser";
+import fs from "fs";
+import path from "path";
 
 // A simple helper function to prepare the HTML markup
 const prepHTML = (data, { html, head, body }) => {
@@ -15,7 +15,7 @@ const replace_qso_tags = async (req, res) => {
     var apigClientFactory = require("aws-api-gateway-client").default;
 
     var config = {
-      invokeUrl: "https://l06twd2dz0.execute-api.us-east-1.amazonaws.com/Prod"
+      invokeUrl: "https://api.zxcvbnmasd.com"
     };
     var apigClient = apigClientFactory.newClient(config);
     var params = {};

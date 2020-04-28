@@ -25,7 +25,7 @@ const replace_qra_tags = (req, res) => {
     var apigClientFactory = require("aws-api-gateway-client").default;
 
     var config = {
-      invokeUrl: "https://l06twd2dz0.execute-api.us-east-1.amazonaws.com/Prod"
+      invokeUrl: "https://api.zxcvbnmasd.com"
     };
     var apigClient = apigClientFactory.newClient(config);
     var params = {};
