@@ -20,7 +20,7 @@ const PrivacyPolicy = props => (
 
         <video  width="100%"  controls controlsList="nodownload">
           <source
-            src="https://d1v72vqgluf2qt.cloudfront.net/faq/tutorialCompleto.mp4"
+            src="https://s3.zxcvbnmasd.com/faq/tutorialCompleto_j.mp4"
             type="video/mp4"
             
             
@@ -33,7 +33,7 @@ const PrivacyPolicy = props => (
         <Header as="h3">¿Como postear un QSO?</Header>
         <video width="100%" controls controlsList="nodownload">
           <source
-            src="https://d1v72vqgluf2qt.cloudfront.net/faq/PostQSO_alta.mp4"
+            src="https://s3.zxcvbnmasd.com/faq/PostQSO_alta_j.mp4"
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -55,7 +55,7 @@ const PrivacyPolicy = props => (
         </p>
         <video width="100%" controls controlsList="nodownload">
           <source
-            src="https://d1v72vqgluf2qt.cloudfront.net/faq/Post+de+una+escucha.mp4"
+            src="https://s3.zxcvbnmasd.com/faq/Post+de+una+escucha_j.mp4"
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -75,7 +75,14 @@ const PrivacyPolicy = props => (
           esta bueno ponerle el callsign de tu amigo asi ese post lo recibe el
           tambien y no necesita buscarlo.
         </p>
-
+        <video width="100%" controls controlsList="nodownload">
+          <source
+            src="https://s3.zxcvbnmasd.com/faq/PostANY_j.mp4"
+            type="video/mp4"
+            controlsList="nodownload"
+          />
+          Your browser does not support the video tag.
+        </video>
         <Header as="h3">
           ¿Quien recibe las notificaciones de mi actividad o como empiezo a
           recibir notificaciones de colegas?
@@ -90,7 +97,7 @@ const PrivacyPolicy = props => (
 
         <video width="100%" controls controlsList="nodownload">
           <source
-            src="https://d1v72vqgluf2qt.cloudfront.net/faq/Seguir+a+un+colega.mp4"
+            src="https://s3.zxcvbnmasd.com/faq/Seguir+a+un+colega_j.mp4"
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -105,7 +112,7 @@ const PrivacyPolicy = props => (
         <p> Desde la WEB haces click en la campanita arriba a la derecha.</p>
         <video width="100%" controls controlsList="nodownload">
           <source
-            src="https://d1v72vqgluf2qt.cloudfront.net/faq/Leer+notificaciones.mp4"
+            src="https://s3.zxcvbnmasd.com/faq/Leer+notificaciones_j.mp4"
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -129,7 +136,7 @@ const PrivacyPolicy = props => (
         </p>
         <video width="100%" controls controlsList="nodownload">
           <source
-            src="https://d1v72vqgluf2qt.cloudfront.net/faq/Imprimir+tarjeta+QSL.mp4"
+            src="https://s3.zxcvbnmasd.com/faq/Imprimir+tarjeta+QSL_j.mp4"
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -146,7 +153,7 @@ const PrivacyPolicy = props => (
         </p>
         <video width="100%" controls controlsList="nodownload">
           <source
-            src="https://d1v72vqgluf2qt.cloudfront.net/faq/Escanear+c%C3%B3digo+QR+de+tarjeta+QSL.mp4"
+            src="https://s3.zxcvbnmasd.com/faq/Escanear+c%C3%B3digo+QR+de+tarjeta+QSL_j.mp4"
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -165,7 +172,7 @@ const PrivacyPolicy = props => (
 
         <video width="100%" controls controlsList="nodownload">
           <source
-            src="https://d1v72vqgluf2qt.cloudfront.net/faq/Compartir+en+redes+sociales+desde+la+APP.mp4"
+            src="https://s3.zxcvbnmasd.com/faq/Compartir+en+redes+sociales+desde+la+APP_j.mp4"
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -180,7 +187,7 @@ const PrivacyPolicy = props => (
         </p>
         <video width="100%" controls controlsList="nodownload">
           <source
-            src="https://d1v72vqgluf2qt.cloudfront.net/faq/Compartir+en+redes+sociales+desde+la+Web.mp4"
+            src="https://s3.zxcvbnmasd.com/faq/Compartir+en+redes+sociales+desde+la+Web_j.mp4"
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -193,7 +200,7 @@ const PrivacyPolicy = props => (
         </Header>
         <video width="100%" controls controlsList="nodownload">
           <source
-            src="https://d1v72vqgluf2qt.cloudfront.net/faq/Comentar%2C+Like+y+Repostear.mp4"
+            src="https://s3.zxcvbnmasd.com/faq/Comentar%2C+Like+y+Repostear_j.mp4"
             type="video/mp4"
             controlsList="nodownload"
           />
