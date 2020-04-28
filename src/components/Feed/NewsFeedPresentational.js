@@ -57,11 +57,11 @@ export default class NewsFeed extends React.Component {
 
   _setRef(windowScroller) {
     this._windowScroller = windowScroller;
-  }
+  } 
 
   _rowRenderer({ index, isScrolling, key, parent, style }) {
     let row = this.state.list[index];
-    if (row === null) return null;
+    if (row === null || row === undefined) return null;
 
     return (
       <CellMeasurer
@@ -107,7 +107,7 @@ export default class NewsFeed extends React.Component {
     }, 0);
   }
   _setListRef = ref => {
-    this.setState({_list : ref});
+    this.setState({ _list: ref });
   };
   showComments = index => {
     let localList = this.state.list;
@@ -125,17 +125,18 @@ export default class NewsFeed extends React.Component {
     this.state._list.forceUpdateGrid();
   }
   static getDerivedStateFromProps(props, state) {
+  
     if (props.list) return { list: props.list };
     //Default
     return null;
+
   }
 
   componentDidUpdate(prevProps, prevState) {
-    
     if (
-      prevProps.list.length > 0 &&
-      this.props.qsosFetched &&
-      !this.props.fetchingQsos
+      prevProps.list.length > 0 && prevProps.list.length !== prevState.list.length &&
+      ((prevProps.qsosFetched && !prevProps.fetchingQsos) ||
+        (prevProps.QRAFetched && !prevProps.FetchingQRA))
     ) {
       this._cache.clearAll();
       // this._list.recomputeRowHeights();

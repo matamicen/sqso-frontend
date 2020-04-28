@@ -1,13 +1,11 @@
-import React, { Fragment } from "react";
+import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
+import 'react-virtualized/styles.css'; // only needs to be imported once
+import { bindActionCreators } from 'redux';
+import * as Actions from '../../actions';
+import '../../styles/style.css';
+import NewsFeed from './NewsFeedPresentational';
 
-import NewsFeed from "./NewsFeedPresentational";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-
-import * as Actions from "../../actions";
-import "react-virtualized/styles.css"; // only needs to be imported once
-
-import "../../styles/style.css";
 class NewsFeedContainer extends React.PureComponent {
   render() {
     let qsos = [];

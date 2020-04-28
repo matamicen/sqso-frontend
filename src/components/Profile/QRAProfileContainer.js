@@ -1,12 +1,12 @@
 import React, { Fragment } from "react";
-
-import QRAProfile from "./QRAProfilePresentational";
-import * as Actions from "../../actions";
-import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
-import "../../styles/style.css";
 import { Modal } from "semantic-ui-react";
+import * as Actions from "../../actions";
+import "../../styles/style.css";
+import QRAProfile from "./QRAProfilePresentational";
+
 
 class QRAProfileContainer extends React.PureComponent {
   constructor() {
@@ -216,6 +216,8 @@ class QRAProfileContainer extends React.PureComponent {
           tab={this.state.tab}
           adActive={this.state.adActive}
           handleClose={this.handleClose}
+          fetchingQRA={this.props.fetchingQRA}
+          QRAFetched={this.props.QRAFetched}
         />
       </Fragment>
     );
