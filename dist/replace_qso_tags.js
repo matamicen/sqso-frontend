@@ -78,6 +78,19 @@ const replace_qso_tags = async (req, res) => {
                 qso.band +
                 " - Mode: " +
                 qso.mode;
+            }else if (qso.type === "POST") {
+              title =
+                qso.qra +
+                " created a new post ";
+            }else if (qso.type === "LISTEN") {
+              title =
+              qso.qra +
+              " listened a QSO on Mode: " +
+              qso.qras[0].qra +
+              " - Band: " +
+              qso.band +
+              " - Mode: " +
+              qso.mode;
             }
 
             if (qso.media.length > 0) {
