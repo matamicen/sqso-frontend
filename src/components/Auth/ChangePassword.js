@@ -59,7 +59,7 @@ class ChangePassword extends React.Component {
 
   handleChangePasswordButton () {
     const error = this.validateFields()
-    console.log(this.props)
+    
     if (!error) {
       this.setState({ loader: true })
       if (this.props.history.location.data && this.props.history.location.data.newPasswordRequired) {

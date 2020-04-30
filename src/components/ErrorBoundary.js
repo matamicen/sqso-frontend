@@ -7,7 +7,7 @@ export default class ErrorBoundary extends React.Component {
   }
 
   static getDerivedStateFromError(error) {
-    console.log("getDerivedStateFromError");
+    
     // Update state so the next render will show the fallback UI.
     Sentry.withScope(scope => {
       Sentry.captureException(error);

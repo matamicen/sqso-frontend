@@ -62,7 +62,7 @@ const replace_qso_tags = async (req, res) => {
             return res.status(404).end();
           }
 
-          console.log(result.data);
+          
           let title;
           let image = null;
 
@@ -94,6 +94,7 @@ const replace_qso_tags = async (req, res) => {
             }
 
             if (qso.media.length > 0) {
+              
               image =
                 '<meta property="og:image" content="' +
                 qso.media[0].url +

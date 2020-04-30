@@ -69,7 +69,7 @@ class QRAProfileBio extends React.Component {
         contentType: "image/png"
       })
         .then(result => {
-          console.log(result)
+          
           let filepath =
             "https://d30o7j00smmz5f.cloudfront.net/1/" +
           

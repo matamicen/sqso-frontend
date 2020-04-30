@@ -31,7 +31,7 @@ class App extends Component {
   async componentDidMount () {
     this.props.actions.doStartingLogin()
     const session = await Auth.currentSession().catch(error => {
-      console.log(error)
+      
       this.props.actions.doLogout()
     })
 
@@ -120,7 +120,6 @@ class App extends Component {
             state: { from: this.props.location.pathname }
           }}
           component={() => {
-            console.log(this.props)
             if (
               this.props.isAuthenticated ||
               (this.props.location.data &&
