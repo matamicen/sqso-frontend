@@ -71,7 +71,7 @@ class QRAProfileBio extends React.Component {
         .then(result => {
           console.log(result)
           let filepath =
-            "https://d1v72vqgluf2qt.cloudfront.net/1/" +
+            "https://d30o7j00smmz5f.cloudfront.net/1/" +
           
             encodeURIComponent(this.props.identityId) +
             "/" +

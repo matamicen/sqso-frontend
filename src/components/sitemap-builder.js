@@ -10,7 +10,7 @@ async function generateSitemap() {
     var apigClientFactory = require("aws-api-gateway-client").default;
 
     var config = {
-      invokeUrl: "https://api.zxcvbnmasd.com"
+      invokeUrl: "https://hlcyk2ty6c.execute-api.us-east-1.amazonaws.com/Prod"
     };
     var apigClient = apigClientFactory.newClient(config);
     var params = {};
