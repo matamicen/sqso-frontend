@@ -26,7 +26,7 @@ const replace_qso_tags = async (req, res) => {
     var apigClientFactory = require("aws-api-gateway-client").default;
 
     var config = {
-      invokeUrl: "https://api.zxcvbnmasd.com"
+      invokeUrl: "https://hlcyk2ty6c.execute-api.us-east-1.amazonaws.com/Prod"
     };
     var apigClient = apigClientFactory.newClient(config);
     var params = {};
@@ -62,7 +62,7 @@ const replace_qso_tags = async (req, res) => {
             return res.status(404).end();
           }
 
-          console.log(result.data);
+          
           let title;
           let image = null;
 
@@ -78,9 +78,23 @@ const replace_qso_tags = async (req, res) => {
                 qso.band +
                 " - Mode: " +
                 qso.mode;
+            }else if (qso.type === "POST") {
+              title =
+                qso.qra +
+                " created a new post ";
+            }else if (qso.type === "LISTEN") {
+              title =
+              qso.qra +
+              " listened a QSO on Mode: " +
+              qso.qras[0].qra +
+              " - Band: " +
+              qso.band +
+              " - Mode: " +
+              qso.mode;
             }
 
             if (qso.media.length > 0) {
+              
               image =
                 '<meta property="og:image" content="' +
                 qso.media[0].url +

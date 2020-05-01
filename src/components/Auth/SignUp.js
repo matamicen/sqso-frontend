@@ -1,21 +1,20 @@
 /* eslint-disable react/prop-types */
-import Auth from '@aws-amplify/auth'
-import * as Sentry from '@sentry/browser'
-import { Formik } from 'formik'
-import moment from 'moment'
-import React, { Fragment } from 'react'
-import ReactGA from 'react-ga'
-import { connect } from 'react-redux'
-import { Redirect, withRouter } from 'react-router-dom'
-import { bindActionCreators } from 'redux'
-import Loader from 'semantic-ui-react/dist/commonjs/elements/Loader'
-import Dimmer from 'semantic-ui-react/dist/commonjs/modules/Dimmer'
-import * as Yup from 'yup'
-import * as Actions from '../../actions'
-import SignUpPresentation from './SignUpPresentation'
+import Auth from '@aws-amplify/auth';
+import * as Sentry from '@sentry/browser';
+import { Formik } from 'formik';
+import moment from 'moment';
+import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
+import { Redirect, withRouter } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import Loader from 'semantic-ui-react/dist/commonjs/elements/Loader';
+import Dimmer from 'semantic-ui-react/dist/commonjs/modules/Dimmer';
+import * as Yup from 'yup';
+import * as Actions from '../../actions';
+import SignUpPresentation from './SignUpPresentation';
 class SignUp extends React.Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       dimmerActive: false,
       dimmerLoginActive: false,
@@ -37,28 +36,28 @@ class SignUp extends React.Component {
       signUpError: '',
       confirmError: '',
       error: null
-    }
+    };
   }
 
-  handleAcceptMessageModal () {
-    this.login()
-    this.setState({ showModalMessage: false })
+  handleAcceptMessageModal() {
+    this.login();
+    this.setState({ showModalMessage: false });
   }
 
   // handleAcceptTC() {
   //   this.signUp();
   //   this.setState({ showModalTC: false });
   // }
-  signUp (values) {
-    const email = this.state.email.toLowerCase()
-    const password = this.state.password
-    const qra = this.state.qra.toUpperCase()
-    const birthDate = this.state.birthDate
-    const firstName = this.state.firstName
-    const lastName = this.state.lastName
-    const country = this.state.country
+  signUp(values) {
+    const email = this.state.email.toLowerCase();
+    const password = this.state.password;
+    const qra = this.state.qra.toUpperCase();
+    const birthDate = this.state.birthDate;
+    const firstName = this.state.firstName;
+    const lastName = this.state.lastName;
+    const country = this.state.country;
 
-    this.setState({ dimmerActive: true })
+    this.setState({ dimmerActive: true });
 
     Auth.signUp({
       username: email,
@@ -80,45 +79,62 @@ class SignUp extends React.Component {
           cognitoUser: data.user.username,
           userCreated: true,
           showModal: true
-        })
+        });
         window.gtag('config', 'G-H8G28LYKBY', {
           custom_map: { dimension1: 'userQRA' }
-        })
-        window.gtag('event', 'qraSignUp', {
-          event_category: 'QRA',
-          userQRA: qra
-        })
+        });
+        if (process.env.NODE_ENV !== 'production')
+          window.gtag('event', 'userSignUp_WEBDEV', {
+            event_category: 'User',
+            event_label: 'signUp',
+            userQRA: qra
+          });
+        else
+          window.gtag('event', 'userSignUp_WEBPRD', {
+            event_category: 'User',
+            event_label: 'signUO',
+            userQRA: qra
+          });
       })
       .catch(err => {
         if (err.code === 'UserLambdaValidationException') {
           this.setState({
             dimmerActive: false,
             signUpError: 'callsign/email already registered'
-          })
-        } else this.setState({ dimmerActive: false, signUpError: err.message })
-      })
+          });
+        } else this.setState({ dimmerActive: false, signUpError: err.message });
+      });
   }
 
-  handleCodeChange (e) {
-    this.setState({ code: e.target.value })
+  handleCodeChange(e) {
+    this.setState({ code: e.target.value });
   }
 
-  async handleResendCode () {
+  async handleResendCode() {
     await Auth.resendSignUp(this.state.qra.toUpperCase())
       .then(() => {
-        ReactGA.event({ category: 'QRA', action: 'resentCode' })
+        if (process.env.NODE_ENV !== 'production')
+          window.gtag('event', 'resendCode_WEBDEV', {
+            event_category: 'User',
+            event_label: 'resendCode'
+          });
+        else
+          window.gtag('event', 'resendCode_WEBPRD', {
+            event_category: 'User',
+            event_label: 'resendCode'
+          });
       })
       .catch(err => {
         if (process.env.NODE_ENV !== 'production') {
-          console.log(err)
-        } else Sentry.captureException(err)
-        this.setState({ confirmError: err })
-      })
+          console.log(err);
+        } else Sentry.captureException(err);
+        this.setState({ confirmError: err });
+      });
   }
 
-  handleOnConfirm () {
-    const code = this.state.code.trim()
-    this.setState({ dimmerValCodeActive: true })
+  handleOnConfirm() {
+    const code = this.state.code.trim();
+    this.setState({ dimmerValCodeActive: true });
 
     Auth.confirmSignUp(this.state.email.trim(), code, {
       // Optional. Force user confirmation irrespective of existing alias. By default
@@ -130,58 +146,57 @@ class SignUp extends React.Component {
           dimmerValCodeActive: false,
           dimmerLoginActive: true,
           showModalMessage: true
-        })
+        });
         // ReactG.event({ category: "QRA", action: "confirmCode" });
       })
       .catch(err => {
-        console.log(err)
         if (process.env.NODE_ENV !== 'production') {
-          console.log(err)
-        } else Sentry.captureException(err)
-        this.setState({ dimmerValCodeActive: false, confirmError: err })
-      })
+          console.log(err);
+        } else Sentry.captureException(err);
+        this.setState({ dimmerValCodeActive: false, confirmError: err });
+      });
   }
 
-  async login () {
-    let token
-    this.setState({ active: true })
+  async login() {
+    let token;
+    this.setState({ active: true });
 
     const user = await Auth.signIn(this.state.email, this.state.password).catch(
       err => {
-        console.log(err)
+        console.log(err);
       }
-    )
+    );
 
     if (user) {
-      await this.props.actions.doStartingLogin()
-      token = user.signInUserSession.idToken.jwtToken
-      const credentials = await Auth.currentCredentials()
+      await this.props.actions.doStartingLogin();
+      token = user.signInUserSession.idToken.jwtToken;
+      const credentials = await Auth.currentCredentials();
 
       await this.props.actions.doLogin(
         token,
         this.state.qra.toUpperCase(),
         credentials.data.IdentityId
-      )
-      await this.props.actions.doFetchUserInfo(token)
+      );
+      await this.props.actions.doFetchUserInfo(token);
       Sentry.configureScope(scope => {
         scope.setUser({
           qra: this.state.qra
-        })
-      })
-      this.setState({ dimmerLoginActive: false })
+        });
+      });
+      this.setState({ dimmerLoginActive: false });
       // ReactG.event({ category: "QRA", action: "login" });
-      this.props.history.push('/follow')
+      this.props.history.push('/follow');
     }
   }
 
-  render () {
-    const { location } = this.props
+  render() {
+    const { location } = this.props;
 
     if (this.props.isAuthenticated && !this.props.authenticating) {
       if (location.state && location.state.from) {
-        return <Redirect to={'/' + location.state.from} />
+        return <Redirect to={'/' + location.state.from} />;
       } else {
-        return <Redirect to={'/'} />
+        return <Redirect to={'/'} />;
       }
     }
     const values = {
@@ -196,7 +211,7 @@ class SignUp extends React.Component {
       country: '',
       recaptcha: '',
       terms: ''
-    }
+    };
     const validationSchema = Yup.object({
       email: Yup.string('Enter your email')
         .email('Enter a valid email')
@@ -220,7 +235,7 @@ class SignUp extends React.Component {
         .min(new Date(1900, 0, 1))
         .max(new Date())
         .test('birthDate', 'You should be older than 13 years', value => {
-          return moment().diff(moment(value), 'years') >= 13
+          return moment().diff(moment(value), 'years') >= 13;
         }),
       country: Yup.string().required(),
       firstName: Yup.string().required('First Name is required'),
@@ -229,7 +244,7 @@ class SignUp extends React.Component {
       terms: Yup.bool()
         .required('Accept Privacy Policy')
         .oneOf([true], 'Accept Privacy Policy')
-    })
+    });
     return (
       <Fragment>
         <Dimmer active={this.state.dimmerLoginActive} page>
@@ -273,25 +288,25 @@ class SignUp extends React.Component {
               lastName: values.lastName.trim(),
               country: values.country.trim()
               // showModalTC: true
-            })
-            this.signUp()
+            });
+            this.signUp();
           }}
         />
       </Fragment>
-    )
+    );
   }
 }
 const mapStateToProps = state => ({
   isAuthenticated: state.userData.isAuthenticated,
   authenticating: state.userData.authenticating
-})
+});
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(Actions, dispatch)
-})
+});
 
 export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
   )(SignUp)
-)
+);

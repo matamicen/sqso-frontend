@@ -1,19 +1,18 @@
-import React, { Fragment } from "react";
-import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
-import Button from "semantic-ui-react/dist/commonjs/elements/Button";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import * as Actions from "../../actions";
-import API from "@aws-amplify/api";
-import ReactGA from "react-ga";
-import Confirm from "semantic-ui-react/dist/commonjs/addons/Confirm";
-import { withRouter } from "react-router-dom";
-import * as Sentry from "@sentry/browser";
+import API from '@aws-amplify/api';
+import * as Sentry from '@sentry/browser';
+import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import Confirm from 'semantic-ui-react/dist/commonjs/addons/Confirm';
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
+import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
+import * as Actions from '../../actions';
 class QSOLikeButton extends React.Component {
   constructor() {
     super();
     this.state = {
-      icon: "thumbs outline up",
+      icon: 'thumbs outline up',
       liked: null,
       likeCounter: 0,
       openLogin: false,
@@ -35,14 +34,14 @@ class QSOLikeButton extends React.Component {
       if (props.qso.likes.some(o => o.idqra === props.userData.qra.idqras)) {
         return {
           liked: true,
-          icon: "thumbs up",
+          icon: 'thumbs up',
           likes: props.qso.likes,
           likeCounter: props.qso.likes.length
         };
       } else {
         return {
           liked: false,
-          icon: "thumbs outline up",
+          icon: 'thumbs outline up',
           likes: props.qso.likes,
           likeCounter: props.qso.likes.length
         };
@@ -51,8 +50,8 @@ class QSOLikeButton extends React.Component {
     return null;
   }
   doLike() {
-    let apiName = "superqso";
-    let path = "/qso-like";
+    let apiName = 'superqso';
+    let path = '/qso-like';
     let myInit = {
       body: {
         qso: this.props.qso.idqsos
@@ -73,22 +72,30 @@ class QSOLikeButton extends React.Component {
           //   // icon: "thumbs up",
           //   // liked: true
           // });
-          window.gtag("event", "qsoLiked", {
-            event_category: "QSO",
-            event_label: "qsoLiked"
-          });
+          if (process.env.NODE_ENV !== 'production') {
+            window.gtag('event', 'qsoLiked_WEBDEV', {
+              event_category: 'QSO',
+              event_label: 'liked'
+            });
+          } else {
+            window.gtag('event', 'qsoLiked_WEBPRD', {
+              event_category: 'QSO',
+              event_label: 'liked'
+            });
+          }
+
         }
       })
       .catch(error => {
-        if (process.env.NODE_ENV !== "production") {
+        if (process.env.NODE_ENV !== 'production') {
           console.log(error);
         } else Sentry.captureException(error);
       });
   }
 
   doUnLike() {
-    let apiName = "superqso";
-    let path = "/qso-like";
+    let apiName = 'superqso';
+    let path = '/qso-like';
     let myInit = {
       body: {
         qso: this.props.qso.idqsos
@@ -109,15 +116,23 @@ class QSOLikeButton extends React.Component {
           //   // icon: "thumbs outline up",
           //   // liked: false
           // });
-          window.gtag("event", "qsoUnliked", {
-            event_category: "QSO",
-            event_label: "qsoUnliked"
-          });
-          ReactGA.event({ category: "QSO", action: "unliked" });
+          if (process.env.NODE_ENV !== 'production') {
+            window.gtag('event', 'qsoUnliked_WEBDEV', {
+              event_category: 'QSO',
+              event_label: 'unliked'
+            });
+          } else {
+            window.gtag('event', 'qsoUnliked_WEBPRD', {
+              event_category: 'QSO',
+              event_label: 'unliked'
+            });
+          }
+
+          
         }
       })
       .catch(error => {
-        if (process.env.NODE_ENV !== "production") {
+        if (process.env.NODE_ENV !== 'production') {
           console.log(error);
         } else Sentry.captureException(error);
       });
@@ -129,7 +144,7 @@ class QSOLikeButton extends React.Component {
       if (!this.state.liked) {
         this.setState(previousState => ({
           likeCounter: previousState.likeCounter + 1,
-          icon: "thumbs up",
+          icon: 'thumbs up',
           liked: true
         }));
         this.doLike();
@@ -139,7 +154,7 @@ class QSOLikeButton extends React.Component {
         this.setState(previousState => ({
           likeCounter: previousState.likeCounter - 1,
           liked: false,
-          icon: "thumbs outline up"
+          icon: 'thumbs outline up'
         }));
         this.doUnLike();
       }
@@ -155,7 +170,7 @@ class QSOLikeButton extends React.Component {
           onCancel={() => this.setState({ openLogin: false })}
           onConfirm={() =>
             this.props.history.push({
-              pathname: "/login",
+              pathname: '/login',
               state: { from: this.props.location.pathname }
             })
           }
@@ -164,7 +179,7 @@ class QSOLikeButton extends React.Component {
           content="Please Login to perform this action"
         />
         <Button icon active={false} onClick={this.handleOnLike.bind(this)}>
-          <Icon name={this.state.icon} /> {this.state.likeCounter}{" "}
+          <Icon name={this.state.icon} /> {this.state.likeCounter}{' '}
         </Button>
       </Fragment>
     );

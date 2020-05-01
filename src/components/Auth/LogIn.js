@@ -1,29 +1,27 @@
-
-import Amplify from '@aws-amplify/core'
-import * as Sentry from '@sentry/browser'
-import PropTypes from 'prop-types'
-import React, { Fragment } from 'react'
-import ReactGA from 'react-ga'
-import { connect } from 'react-redux'
-import { Link, Redirect, withRouter } from 'react-router-dom'
-import { bindActionCreators } from 'redux'
-import Form from 'semantic-ui-react/dist/commonjs/collections/Form'
-import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid'
-import Message from 'semantic-ui-react/dist/commonjs/collections/Message'
-import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
-import Header from 'semantic-ui-react/dist/commonjs/elements/Header'
-import Loader from 'semantic-ui-react/dist/commonjs/elements/Loader'
-import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
-import Dimmer from 'semantic-ui-react/dist/commonjs/modules/Dimmer'
-import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal'
-import * as Actions from '../../actions'
-import Ad from '../Ad/Ad'
-import AppNavigation from '../Home/AppNavigation'
-import './style.css'
-const Auth = Amplify.Auth
+import Amplify from '@aws-amplify/core';
+import * as Sentry from '@sentry/browser';
+import PropTypes from 'prop-types';
+import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
+import { Link, Redirect, withRouter } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import Form from 'semantic-ui-react/dist/commonjs/collections/Form';
+import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid';
+import Message from 'semantic-ui-react/dist/commonjs/collections/Message';
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
+import Header from 'semantic-ui-react/dist/commonjs/elements/Header';
+import Loader from 'semantic-ui-react/dist/commonjs/elements/Loader';
+import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment';
+import Dimmer from 'semantic-ui-react/dist/commonjs/modules/Dimmer';
+import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
+import * as Actions from '../../actions';
+import Ad from '../Ad/Ad';
+import AppNavigation from '../Home/AppNavigation';
+import './style.css';
+const Auth = Amplify.Auth;
 class LogIn extends React.Component {
-  constructor (props, context) {
-    super(props, context)
+  constructor(props, context) {
+    super(props, context);
     this.state = {
       dimmerActive: false,
       dimmerLoginActive: false,
@@ -36,100 +34,114 @@ class LogIn extends React.Component {
       error: null,
       loginError: false,
       confirmError: ''
-    }
+    };
     // if (this.props.isAuthenticated && !this.props.authenticating) {
     //   alert("You can't login if you are logged in!");
     //   this.props.history.goBack();
     // }
   }
 
-  handleOnClickLogin () {
-    this.setState({ dimmerActive: true })
+  handleOnClickLogin() {
+    this.setState({ dimmerActive: true });
     if (!this.state.email || !this.state.password) {
       this.setState({
         loginError: { message: 'Please enter Email and Password' }
-      })
-    } else this.login()
+      });
+    } else this.login();
   }
 
-  async login () {
-    let token
-    this.setState({ dimmerActive: true })
+  async login() {
+    let token;
+    this.setState({ dimmerActive: true });
 
     const user = await Auth.signIn(
       this.state.email.toLowerCase(),
       this.state.password
     ).catch(err => {
-      this.setState({ dimmerActive: false })
-      this.setState({ loginError: err })
-    })
+      this.setState({ dimmerActive: false });
+      this.setState({ loginError: err });
+    });
 
     if (user) {
       if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
         this.props.history.push({
           pathname: '/changepassword',
           data: { user: user, newPasswordRequired: true }
-        })
+        });
       } else {
-        await this.props.actions.doStartingLogin()
-        token = user.signInUserSession.idToken.jwtToken
-        const credentials = await Auth.currentCredentials()
+        await this.props.actions.doStartingLogin();
+        token = user.signInUserSession.idToken.jwtToken;
+        const credentials = await Auth.currentCredentials();
         if (!credentials.data) {
-          await Auth.signOut()
+          await Auth.signOut();
 
-          this.props.actions.doSetPublicSession()
+          this.props.actions.doSetPublicSession();
         } else {
           await this.props.actions.doLogin(
             token,
             user.signInUserSession.idToken.payload['custom:callsign'],
             credentials.data.IdentityId
-          )
-          await this.props.actions.doFetchUserInfo(token)
+          );
+          await this.props.actions.doFetchUserInfo(token);
           Sentry.configureScope(scope => {
             scope.setUser({
               qra: user.signInUserSession.idToken.payload['custom:callsign']
-            })
-          })
-          ReactGA.event({ category: 'QRA', action: 'login' })
+            });
+          });
+          window.gtag('config', 'G-H8G28LYKBY', {
+            custom_map: { dimension1: 'userQRA' }
+          });
+          if (process.env.NODE_ENV !== 'production')
+            window.gtag('event', 'userLogin_WEBDEV', {
+              event_category: 'User',
+              event_label: 'login',
+              userQRA: user.signInUserSession.idToken.payload['custom:callsign']
+            });
+          else
+            window.gtag('event', 'userLogin_WEBPRD', {
+              event_category: 'User',
+              event_label: 'login',
+              userQRA: user.signInUserSession.idToken.payload['custom:callsign']
+            });
 
-          const { location } = this.props
+          const { location } = this.props;
 
           if (
             location.state &&
-          location.state.from &&
-          location.state.from !== '/'
+            location.state.from &&
+            location.state.from !== '/'
           ) {
-            this.props.history.push(location.state.from)
+            this.props.history.push(location.state.from);
           } else {
-            this.props.history.push('/')
+            this.props.history.push('/');
           }
         }
       }
     }
   }
 
-  static getDerivedStateFromProps (props, state) {
+  static getDerivedStateFromProps(props, state) {
     if (props.isAuthenticated || state.loginError) {
-      return { dimmerActive: false }
+      return { dimmerActive: false };
     } else if (props.authenticating && !state.loginError) {
-      return { dimmerActive: true }
+      return { dimmerActive: true };
     }
     // Return null to indicate no change to state.
-    return null
+    return null;
   }
 
-  handlePasswordChange (e) {
-    this.setState({ password: e.target.value })
+  handlePasswordChange(e) {
+    this.setState({ password: e.target.value });
   }
 
-  handleEmailChange (e) {
+  handleEmailChange(e) {
     this.setState({
       email: e.target.value
-    })
+    });
   }
 
-  async handleResendCode () {
-    this.setState({ confirmError: '' })
+  async handleResendCode() {
+    this.setState({ confirmError: '' });
     await Auth.resendSignUp(this.state.email)
       .then(() => {
         this.setState({
@@ -142,20 +154,20 @@ class LogIn extends React.Component {
             message: 'Code Resent for ' + this.state.email
           },
           showModal: true
-        })
-        ReactGA.event({ category: 'QRA', action: 'resentCode' })
+        });
+        
       })
       .catch(err => {
         if (process.env.NODE_ENV !== 'production') {
-          console.log(err)
-        } else Sentry.captureException(err)
-        this.setState({ confirmError: err })
-      })
+          console.log(err);
+        } else Sentry.captureException(err);
+        this.setState({ confirmError: err });
+      });
   }
 
-  handleOnConfirm (e) {
-    const code = this.state.code.trim()
-    this.setState({ dimmerValCodeActive: true })
+  handleOnConfirm(e) {
+    const code = this.state.code.trim();
+    this.setState({ dimmerValCodeActive: true });
     Auth.confirmSignUp(this.state.email.trim(), code, {
       // Optional. Force user confirmation irrespective of existing alias. By default
       // set to True.
@@ -165,25 +177,35 @@ class LogIn extends React.Component {
         this.setState({
           dimmerValCodeActive: false,
           dimmerLoginActive: true
-        })
-        ReactGA.event({ category: 'QRA', action: 'confirmCode' })
-        this.handleOnClickLogin()
+        });
+        if (process.env.NODE_ENV !== 'production')
+          window.gtag('event', 'confirmCode_WEBDEV', {
+            event_category: 'User',
+            event_label: 'confirmCode'
+          });
+        else
+          window.gtag('event', 'confirmCode_WEBPRD', {
+            event_category: 'User',
+            event_label: 'confirmCode'
+          });
+
+        this.handleOnClickLogin();
       })
       .catch(err => {
-        this.setState({ dimmerValCodeActive: false })
+        this.setState({ dimmerValCodeActive: false });
         // if (process.env.NODE_ENV !== "production") {
         //   console.log(err);
         // } else Sentry.captureException(err);
-        this.setState({ confirmError: err })
-      })
+        this.setState({ confirmError: err });
+      });
   }
 
-  handleCodeChange (e) {
-    this.setState({ code: e.target.value })
+  handleCodeChange(e) {
+    this.setState({ code: e.target.value });
   }
 
-  render () {
-    const { location } = this.props
+  render() {
+    const { location } = this.props;
 
     if (this.props.isAuthenticated && !this.props.authenticating) {
       // alert("Please Logout before login again!");
@@ -192,9 +214,9 @@ class LogIn extends React.Component {
         location.state.from &&
         location.state.from !== '/'
       ) {
-        return <Redirect to={'/' + location.state.from} />
+        return <Redirect to={'/' + location.state.from} />;
       } else {
-        return <Redirect to={'/'} />
+        return <Redirect to={'/'} />;
       }
     }
 
@@ -372,7 +394,7 @@ class LogIn extends React.Component {
           </Modal.Content>
         </Modal>
       </Fragment>
-    )
+    );
   }
 }
 LogIn.propTypes = {
@@ -383,7 +405,10 @@ LogIn.propTypes = {
     doFetchUserInfo: PropTypes.func,
     doSetPublicSession: PropTypes.func
   }).isRequired,
-  location: PropTypes.shape({ pathname: PropTypes.string, state: PropTypes.string }),
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+    state: PropTypes.string
+  }),
   authenticating: PropTypes.bool,
   isAuthenticated: PropTypes.bool,
   public: PropTypes.bool,
@@ -395,18 +420,18 @@ LogIn.propTypes = {
       // search: PropTypes.string
     }).isRequired
   }).isRequired
-}
+};
 const mapStateToProps = state => ({
   isAuthenticated: state.userData.isAuthenticated,
   authenticating: state.userData.authenticating
-})
+});
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(Actions, dispatch)
-})
+});
 
 export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
   )(LogIn)
-)
+);
