@@ -102,7 +102,14 @@ class SignUp extends React.Component {
             dimmerActive: false,
             signUpError: 'callsign/email already registered'
           });
-        } else this.setState({ dimmerActive: false, signUpError: err.message });
+         
+        }  else if (err.message === 'SignUp is not permitted for this user pool') {
+          this.setState({
+            dimmerActive: false,
+            signUpError: 'SignUp is no available yet. Please wait a few days!'
+          });
+        }
+        else this.setState({ dimmerActive: false, signUpError: err.message });
       });
   }
 

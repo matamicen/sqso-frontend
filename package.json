@@ -114,7 +114,9 @@
     "eb_create": "eb create -i t2.small",
     "analyze": "npm run build && source-map-explorer build/static/js/main.* ",
     "sitemap": "node src/components/sitemap-builder.js",
-    "getcountries": "get-countries -n MY_COUNTRIES_DATA -p /src/components/Profile/countries.js --no-flags"
+    "getcountries": "get-countries -n MY_COUNTRIES_DATA -p /src/components/Profile/countries.js --no-flags",
+    "getcreds": "aws sts get-session-token --serial-number arn:aws:iam::591848583596:mfa/lisandrolan --token-code 011330"
+
   },
   "browserslist": [
     ">0.2%",
