@@ -118,7 +118,7 @@ class SignUp extends React.Component {
   }
 
   async handleResendCode() {
-    await Auth.resendSignUp(this.state.qra.toUpperCase())
+    await Auth.resendSignUp(this.state.email.toLowerCase())
       .then(() => {
         if (process.env.NODE_ENV !== 'production')
           window.gtag('event', 'resendCode_WEBDEV', {
