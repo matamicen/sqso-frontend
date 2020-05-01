@@ -20,6 +20,8 @@ const router = _express.default.Router();
 
 router.get("/", _universal.default);
 router.get("/qso/:idQSO", _replace_qso_tags.default);
-router.get("/:idQRA", _replace_qra_tags.default);
+router.use("/:idQRA", _replace_qra_tags.default);
+
+
 var _default = router;
 exports.default = _default;
