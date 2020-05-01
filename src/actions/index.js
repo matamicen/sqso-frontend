@@ -2,7 +2,6 @@ import API from '@aws-amplify/api';
 import Auth from '@aws-amplify/auth';
 import * as Sentry from '@sentry/browser';
 import { css } from 'glamor';
-import ReactGA from 'react-ga';
 import { toast } from 'react-toastify';
 export const PUBLIC_SESSION = 'PUBLIC_SESSION';
 export const PREPARE_LOGIN = 'PREPARE_LOGIN';
@@ -41,6 +40,16 @@ export const FOLLOW_RECEIVE = 'FOLLOW_RECEIVE';
 
 export function doNotificationRead(idnotif = null, token) {
   return dispatch => {
+    if (process.env.NODE_ENV !== 'production')
+      window.gtag('event', 'notificationRead_WEBDEV', {
+        event_category: 'User',
+        event_label: 'notificationRead'
+      });
+    else
+      window.gtag('event', 'notificationRead_WEBPRD', {
+        event_category: 'User',
+        event_label: 'notificationRead'
+      });
     const apiName = 'superqso';
     const path = '/qra-notification/set-read';
     const myInit = {
@@ -81,6 +90,16 @@ export function doNotificationRead(idnotif = null, token) {
 }
 export function doCommentDelete(idcomment, idqso, token) {
   return dispatch => {
+    if (process.env.NODE_ENV !== 'production')
+      window.gtag('event', 'qsoCommentDel_WEBDEV', {
+        event_category: 'QSO',
+        event_label: 'commentDel'
+      });
+    else
+      window.gtag('event', 'qsoCommentDel_WEBPRD', {
+        event_category: 'QSO',
+        event_label: 'commentDel'
+      });
     const apiName = 'superqso';
     const path = '/qso-comment';
     const myInit = {
@@ -122,6 +141,16 @@ export function doCommentDelete(idcomment, idqso, token) {
 }
 export function doCommentAdd(idqso, comment, token) {
   return dispatch => {
+    if (process.env.NODE_ENV !== 'production')
+      window.gtag('event', 'qsoCommentAdd_WEBDEV', {
+        event_category: 'QSO',
+        event_label: 'commentAdd'
+      });
+    else
+      window.gtag('event', 'qsoCommentAdd_WEBPRD', {
+        event_category: 'QSO',
+        event_label: 'commentAdd'
+      });
     const apiName = 'superqso';
     const path = '/qso-comment';
     const myInit = {
@@ -163,10 +192,6 @@ export function doCommentAdd(idqso, comment, token) {
   };
 }
 export function doCommentAddResponse(idqso = null, comments = []) {
-  ReactGA.event({
-    category: 'QSO',
-    action: 'CommentAdd'
-  });
   return {
     type: COMMENT_ADD,
     idqso: idqso,
@@ -180,10 +205,6 @@ export function refreshToken(token) {
   };
 }
 export function doCommentDeleteResponse(idcomment = null, idqso = null) {
-  ReactGA.event({
-    category: 'QSO',
-    action: 'CommentDelete'
-  });
   return {
     type: COMMENT_DELETE,
     idcomment: idcomment,
@@ -191,10 +212,6 @@ export function doCommentDeleteResponse(idcomment = null, idqso = null) {
   };
 }
 export function doNotificationReadResponse(idnotif) {
-  ReactGA.event({
-    category: 'QRA',
-    action: 'CommentRead'
-  });
   return {
     type: NOTIFICATION_READ,
     idnotif: idnotif
@@ -202,6 +219,17 @@ export function doNotificationReadResponse(idnotif) {
 }
 export function doDeleteQso(idqso, token) {
   return dispatch => {
+    if (process.env.NODE_ENV !== 'production')
+      window.gtag('event', 'qsoDelete_WEBDEV', {
+        event_category: 'QSO',
+        event_label: 'delete'
+      });
+    else
+      window.gtag('event', 'qsoDelete_WEBPRD', {
+        event_category: 'QSO',
+        event_label: 'delete'
+      });
+
     const apiName = 'superqso';
     const path = '/qsonew';
     const myInit = {
@@ -248,10 +276,6 @@ export function doDeleteQso(idqso, token) {
 }
 
 export function doDeleteQsoResponse(idqso = null) {
-  ReactGA.event({
-    category: 'QSO',
-    action: 'Delete'
-  });
   return {
     type: DELETE_QSO,
     idqso: idqso
@@ -260,6 +284,17 @@ export function doDeleteQsoResponse(idqso = null) {
 
 export function doDeleteMedia(idmedia, idqso, token) {
   return dispatch => {
+    if (process.env.NODE_ENV !== 'production')
+      window.gtag('event', 'qsoMediaDelete_WEBDEV', {
+        event_category: 'QSO',
+        event_label: 'mediaDelete'
+      });
+    else
+      window.gtag('event', 'qsoMediaDelete_WEBPRD', {
+        event_category: 'QSO',
+        event_label: 'mediaDelete'
+      });
+
     const apiName = 'superqso';
     const path = '/qsomediaadd';
     const myInit = {
@@ -301,10 +336,6 @@ export function doDeleteMedia(idmedia, idqso, token) {
   };
 }
 export function doDeleteMediaResponse(idmedia = null, idqso = null) {
-  ReactGA.event({
-    category: 'QSO',
-    action: 'MediaDelete'
-  });
   return {
     type: DELETE_MEDIA,
     idmedia: idmedia,
@@ -349,11 +380,18 @@ export function doLogin(token, qra, identityId) {
   window.gtag('config', 'G-H8G28LYKBY', {
     custom_map: { dimension1: 'userQRA' }
   });
-  window.gtag('event', 'userLogin', {
-    event_category: 'User',
-    event_label: 'Login',
-    userQRA: qra
-  });
+  if (process.env.NODE_ENV !== 'production')
+    window.gtag('event', 'userLogin_WEBDEV', {
+      event_category: 'User',
+      event_label: 'Login',
+      userQRA: qra
+    });
+  else
+    window.gtag('event', 'userLogin_WEBPRD', {
+      event_category: 'User',
+      event_label: 'Login',
+      userQRA: qra
+    });
 
   return {
     type: LOGIN,
@@ -364,10 +402,17 @@ export function doLogin(token, qra, identityId) {
 }
 
 export function doLogout() {
-  ReactGA.event({
-    category: 'User',
-    action: 'Logout'
-  });
+  if (process.env.NODE_ENV !== 'production')
+    window.gtag('event', 'userLogout_WEBDEV', {
+      event_category: 'User',
+      event_label: 'Logout'
+    });
+  else
+    window.gtag('event', 'userLogout_WEBPRD', {
+      event_category: 'User',
+      event_label: 'Logout'
+    });
+
   return {
     type: LOGOUT
   };
@@ -452,6 +497,16 @@ export function doFetchUserInfo(token) {
 }
 export function doRepost(idqso, token, qso) {
   return dispatch => {
+    if (process.env.NODE_ENV !== 'production')
+      window.gtag('event', 'repost_WEBDEV', {
+        event_category: 'QSO',
+        event_label: 'repost'
+      });
+    else
+      window.gtag('event', 'repost_WEBPRD', {
+        event_category: 'QSO',
+        event_label: 'repost'
+      });
     dispatch(doRequestUserInfo());
     const apiName = 'superqso';
     const path = '/qso-share';
@@ -514,6 +569,16 @@ export function doAddRepostToFeed(qso) {
 }
 export function doSaveUserInfo(token, qra) {
   return dispatch => {
+    if (process.env.NODE_ENV !== 'production')
+      window.gtag('event', 'updateUserInfo_WEBDEV', {
+        event_category: 'User',
+        event_label: 'updateUserInfo'
+      });
+    else
+      window.gtag('event', 'updateUserInfo_WEBPRD', {
+        event_category: 'User',
+        event_label: 'updateUserInfo'
+      });
     dispatch(doRequestUserInfo());
     const apiName = 'superqso';
     const path = '/qra-info/info';
@@ -560,6 +625,16 @@ export function doReceiveUserDataInfo(qra) {
 }
 export function doSaveUserBio(token, bio, identityId) {
   return dispatch => {
+    if (process.env.NODE_ENV !== 'production')
+      window.gtag('event', 'updateUserBio_WEBDEV', {
+        event_category: 'User',
+        event_label: 'updateUserBio'
+      });
+    else
+      window.gtag('event', 'updateUserBio_WEBPRD', {
+        event_category: 'User',
+        event_label: 'updateUserBio'
+      });
     const apiName = 'superqso';
     const path = '/qra-info/bio';
     const myInit = {
@@ -608,6 +683,16 @@ export function doReceiveUserBio(qra) {
 }
 export function doFetchUserFeed(token) {
   return dispatch => {
+    if (process.env.NODE_ENV !== 'production')
+      window.gtag('event', 'getUserFeed_WEBDEV', {
+        event_category: 'User',
+        event_label: 'getUserFeed'
+      });
+    else
+      window.gtag('event', 'getUserFeed_WEBPRD', {
+        event_category: 'User',
+        event_label: 'getUserFeed'
+      });
     dispatch(doRequestFeed());
     const apiName = 'superqso';
     const path = '/qso-get-user-feed';
@@ -647,6 +732,16 @@ export function doFetchUserFeed(token) {
 }
 export function doFollowFetch(token) {
   return dispatch => {
+    if (process.env.NODE_ENV !== 'production')
+      window.gtag('event', 'getRecFollow_WEBDEV', {
+        event_category: 'User',
+        event_label: 'getRecFollow'
+      });
+    else
+      window.gtag('event', 'getRecFollow_WEBPRD', {
+        event_category: 'User',
+        event_label: 'getRecFollow'
+      });
     dispatch(doFollowRequest());
     const apiName = 'superqso';
     const path = '/qra/getRecFollowers';
@@ -686,6 +781,16 @@ export function doFollowFetch(token) {
 }
 export function doFetchNotifications(token) {
   return dispatch => {
+    if (process.env.NODE_ENV !== 'production')
+      window.gtag('event', 'getNotifications_WEBDEV', {
+        event_category: 'User',
+        event_label: 'getNotifications'
+      });
+    else
+      window.gtag('event', 'getNotifications_WEBPRD', {
+        event_category: 'User',
+        event_label: 'getNotifications'
+      });
     dispatch(doRequestFeed());
     const apiName = 'superqso';
     const path = '/qra-notification';
@@ -789,12 +894,19 @@ export function doFetchQSO(idqso, token = null) {
   window.gtag('config', 'G-H8G28LYKBY', {
     custom_map: { dimension2: 'qso' }
   });
-  window.gtag('event', 'qsoGetInfo', {
-    event_category: 'QSO',
-    event_label: 'Login',
-    qso: idqso
-  });
 
+  if (process.env.NODE_ENV !== 'production')
+    window.gtag('event', 'qsoGetDetail_WEBDEV', {
+      event_category: 'QSO',
+      event_label: 'getDetail',
+      qso: idqso
+    });
+  else
+    window.gtag('event', 'qsoGetDetail_WEBPRD', {
+      event_category: 'QSO',
+      event_label: 'getDetail',
+      qso: idqso
+    });
   if (token) {
     return dispatch => {
       const apiName = 'superqso';
@@ -860,11 +972,18 @@ export function doFetchQsoLink(idqso) {
   window.gtag('config', 'G-H8G28LYKBY', {
     custom_map: { dimension2: 'qsoLink' }
   });
-  window.gtag('event', 'qsoGetInfo', {
-    event_category: 'QSO',
-
-    qsoLink: idqso
-  });
+  if (process.env.NODE_ENV !== 'production')
+    window.gtag('event', 'qsoGetLinkDetail_WEBDEV', {
+      event_category: 'QSO',
+      event_label: 'getLinkDetail',
+      qso: idqso
+    });
+  else
+    window.gtag('event', 'qsoGetLinkDetail_WEBPRD', {
+      event_category: 'QSO',
+      event_label: 'getLinkDetail',
+      qso: idqso
+    });
 
   return dispatch => {
     const apiName = 'superqso';
@@ -895,11 +1014,19 @@ export function doFetchQRA(qra, token = null) {
   window.gtag('config', 'G-H8G28LYKBY', {
     custom_map: { dimension3: 'qra' }
   });
-  window.gtag('event', 'qraGetInfo', {
-    event_category: 'QRA',
-    event_label: 'Login'
-  });
 
+  if (process.env.NODE_ENV !== 'production')
+    window.gtag('event', 'qraGetDetail_WEBDEV', {
+      event_category: 'QRA',
+      event_label: 'getDetail',
+      qra: qra
+    });
+  else
+    window.gtag('event', 'qraGetDetail_WEBPRD', {
+      event_category: 'QRA',
+      event_label: 'getDetail',
+      qra: qra
+    });
   if (token) {
     return dispatch => {
       const apiName = 'superqso';
@@ -965,9 +1092,16 @@ export function doFetchQRA(qra, token = null) {
 }
 
 export function doFollowQRA(token, follower) {
-  window.gtag('event', 'qraFollow', {
-    event_category: 'QRA'
-  });
+  if (process.env.NODE_ENV !== 'production')
+    window.gtag('event', 'qraFollow_WEBDEV', {
+      event_category: 'User',
+      event_label: 'follow'
+    });
+  else
+    window.gtag('event', 'qraFollow_WEBPRD', {
+      event_category: 'User',
+      event_label: 'follow'
+    });
 
   return dispatch => {
     const apiName = 'superqso';
@@ -1013,9 +1147,16 @@ export function doFollowQRA(token, follower) {
 }
 
 export function doUnfollowQRA(token, follower) {
-  window.gtag('event', 'qraUnfollow', {
-    event_category: 'QRA'
-  });
+  if (process.env.NODE_ENV !== 'production')
+    window.gtag('event', 'qraUnfollow_WEBDEV', {
+      event_category: 'User',
+      event_label: 'unfollow'
+    });
+  else
+    window.gtag('event', 'qraUnfollow_WEBPRD', {
+      event_category: 'User',
+      event_label: 'unfollow'
+    });
 
   return dispatch => {
     const apiName = 'superqso';
@@ -1111,6 +1252,16 @@ export function doReceiveFollowers(following) {
 }
 
 export function doQsoMediaPlay(idMedia, token, idqso) {
+  if (process.env.NODE_ENV !== 'production')
+    window.gtag('event', 'qsoMediaPlay_WEBDEV', {
+      event_category: 'QSO',
+      event_label: 'mediaPlay'
+    });
+  else
+    window.gtag('event', 'qsoMediaPlay_WEBPRD', {
+      event_category: 'QSO',
+      event_label: 'mediaPlay'
+    });
   return dispatch => {
     const apiName = 'superqso';
     const path = '/qso/media-play';
@@ -1159,6 +1310,16 @@ export function doReceiveMediaCounter(data) {
 }
 
 export function doQslCardPrint(idqso, token) {
+  if (process.env.NODE_ENV !== 'production')
+    window.gtag('event', 'qsoQSLCardPrint_WEBDEV', {
+      event_category: 'QSO',
+      event_label: 'QSLCardPrint'
+    });
+  else
+    window.gtag('event', 'qsoQSLCardPrint_WEBPRD', {
+      event_category: 'QSO',
+      event_label: 'QSLCardPrint'
+    });
   return dispatch => {
     const apiName = 'superqso';
     const path = '/qso/qslcard-print';

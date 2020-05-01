@@ -5,7 +5,6 @@ import "core-js/es6/number";
 import "core-js/es6/set";
 import React from "react";
 import { render } from "react-dom";
-import ReactGA from "react-ga";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -36,7 +35,7 @@ if (process.env.NODE_ENV === "production") {
     }
   });
 }
-ReactGA.initialize("G-H8G28LYKBY");
+
 
 const store =
   process.env.NODE_ENV !== "production"

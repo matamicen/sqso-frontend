@@ -1,25 +1,25 @@
-import React from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import * as Actions from "../../actions";
+import API from '@aws-amplify/api';
+import * as Sentry from '@sentry/browser';
+import QRCode from 'qrcode.react';
+import React from 'react';
+import Recaptcha from 'react-recaptcha';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import Form from 'semantic-ui-react/dist/commonjs/collections/Form';
+import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid';
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
+import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment';
+import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
+import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
+import * as Actions from '../../actions';
+import QslCardPrint from './qslCard';
 
-import QRCode from "qrcode.react";
-import Button from "semantic-ui-react/dist/commonjs/elements/Button";
-import Form from "semantic-ui-react/dist/commonjs/collections/Form";
-import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown";
-import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
-import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
-import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
-import API from "@aws-amplify/api";
-import * as Sentry from "@sentry/browser";
-import QslCardPrint from "./qslCard";
-import Recaptcha from "react-recaptcha";
 class FeedOptionsMenu extends React.PureComponent {
   state = {
     showReportContent: false,
     showMessage: false,
     recaptchaToken: null,
-    comments: ""
+    comments: ''
   };
   handleChange = (e, { name, value }) => this.setState({ [name]: value });
   openReportedContent = () => this.setState({ showReportContent: true });
@@ -52,6 +52,16 @@ class FeedOptionsMenu extends React.PureComponent {
     QslCardPrint(this.props);
   }
   handleOnSubmitReportComment(e) {
+    if (process.env.NODE_ENV !== 'production')
+      window.gtag('event', 'reportComment_WEBDEV', {
+        event_category: 'QSO',
+        event_label: 'reportComment'
+      });
+    else
+      window.gtag('event', 'reportContent_WEBPRD', {
+        event_category: 'QSO',
+        event_label: 'reportComment'
+      });
     var datetime = new Date();
     e.preventDefault();
     if (
@@ -59,9 +69,9 @@ class FeedOptionsMenu extends React.PureComponent {
       !e.target.email.value ||
       !this.state.recaptchaToken
     )
-      alert("Please fill all the fields");
-    let apiName = "superqso";
-    let path = "/content-reported";
+      alert('Please fill all the fields');
+    let apiName = 'superqso';
+    let path = '/content-reported';
     let myInit = {
       body: {
         idqso: this.props.idqso,
@@ -83,12 +93,22 @@ class FeedOptionsMenu extends React.PureComponent {
         }
       })
       .catch(error => {
-        if (process.env.NODE_ENV !== "production") {
+        if (process.env.NODE_ENV !== 'production') {
           console.log(error);
         } else Sentry.captureException(error);
       });
   }
   handleOnSubmitReportQso(e) {
+    if (process.env.NODE_ENV !== 'production')
+    window.gtag('event', 'reportQSO_WEBDEV', {
+      event_category: 'QSO',
+      event_label: 'reportQSO'
+    });
+  else
+    window.gtag('event', 'reportContent_WEBPRD', {
+      event_category: 'QSO',
+      event_label: 'reportQSO'
+    });
     var datetime = new Date();
     e.preventDefault();
     if (
@@ -96,10 +116,10 @@ class FeedOptionsMenu extends React.PureComponent {
       !e.target.email.value ||
       !this.state.recaptchaToken
     )
-      alert("Please fill all the fields");
+      alert('Please fill all the fields');
 
-    let apiName = "superqso";
-    let path = "/content-reported";
+    let apiName = 'superqso';
+    let path = '/content-reported';
     let myInit = {
       body: {
         idqso: this.props.idqso,
@@ -119,12 +139,22 @@ class FeedOptionsMenu extends React.PureComponent {
         }
       })
       .catch(error => {
-        if (process.env.NODE_ENV !== "production") {
+        if (process.env.NODE_ENV !== 'production') {
           console.log(error);
         } else Sentry.captureException(error);
       });
   }
   handleOnSubmitReportMedia(e) {
+    if (process.env.NODE_ENV !== 'production')
+    window.gtag('event', 'reportMedia_WEBDEV', {
+      event_category: 'QSO',
+      event_label: 'reportMedia'
+    });
+  else
+    window.gtag('event', 'reportMedia_WEBPRD', {
+      event_category: 'QSO',
+      event_label: 'reportMedia'
+    });
     var datetime = new Date();
     e.preventDefault();
     if (
@@ -132,10 +162,10 @@ class FeedOptionsMenu extends React.PureComponent {
       !e.target.email.value ||
       !this.state.recaptchaToken
     )
-      alert("Please fill all the fields");
+      alert('Please fill all the fields');
 
-    let apiName = "superqso";
-    let path = "/content-reported";
+    let apiName = 'superqso';
+    let path = '/content-reported';
     let myInit = {
       body: {
         idqso: this.props.idqso,
@@ -156,7 +186,7 @@ class FeedOptionsMenu extends React.PureComponent {
         }
       })
       .catch(error => {
-        if (process.env.NODE_ENV !== "production") {
+        if (process.env.NODE_ENV !== 'production') {
           console.log(error);
         } else Sentry.captureException(error);
       });
@@ -173,7 +203,7 @@ class FeedOptionsMenu extends React.PureComponent {
       >
         <Dropdown.Menu>
           {/* FEED IMAGE REPORT CONTENT */}
-          {this.props.optionsCaller === "FeedImage" &&
+          {this.props.optionsCaller === 'FeedImage' &&
             // this.props.currentQRA &&
             this.props.currentQRA !== this.props.qso_owner && (
               <Modal
@@ -206,7 +236,7 @@ class FeedOptionsMenu extends React.PureComponent {
                         verifyCallback={response => {
                           this.setState({ recaptchaToken: response });
                         }}
-                      />{" "}
+                      />{' '}
                     </Form.Field>
                     <Form.Button>Submit</Form.Button>
 
@@ -235,7 +265,7 @@ class FeedOptionsMenu extends React.PureComponent {
             )}
           {/* END FEED IMAGE REPORT CONTENT */}
           {/* FEED IMAGE DELETE CONTENT */}
-          {this.props.optionsCaller === "FeedImage" &&
+          {this.props.optionsCaller === 'FeedImage' &&
             this.props.currentQRA === this.props.qso_owner && (
               <Dropdown.Item
                 icon="delete"
@@ -246,7 +276,7 @@ class FeedOptionsMenu extends React.PureComponent {
           {/* END FEED IMAGE DELETE CONTENT */}
           {/* FEED AUDIO REPORT CONTENT */}
 
-          {this.props.optionsCaller === "FeedAudio" &&
+          {this.props.optionsCaller === 'FeedAudio' &&
             // this.props.currentQRA &&
             this.props.currentQRA !== this.props.qso_owner && (
               <Modal
@@ -279,7 +309,7 @@ class FeedOptionsMenu extends React.PureComponent {
                         verifyCallback={response => {
                           this.setState({ recaptchaToken: response });
                         }}
-                      />{" "}
+                      />{' '}
                     </Form.Field>
                     <Form.Button>Submit</Form.Button>
 
@@ -308,7 +338,7 @@ class FeedOptionsMenu extends React.PureComponent {
             )}
           {/* END FEED AUDIO REPORT CONTENT */}
           {/* FEED AUDIO DELETE CONTENT */}
-          {this.props.optionsCaller === "FeedAudio" &&
+          {this.props.optionsCaller === 'FeedAudio' &&
             this.props.currentQRA === this.props.qso_owner && (
               <Dropdown.Item
                 icon="delete"
@@ -318,7 +348,7 @@ class FeedOptionsMenu extends React.PureComponent {
             )}
           {/* END FEED AUDIO DELETE CONTENT */}
           {/* FEED ITEM QR CODE */}
-          {this.props.optionsCaller === "FeedItem" && (
+          {this.props.optionsCaller === 'FeedItem' && (
             <Modal
               size="tiny"
               closeIcon
@@ -386,7 +416,7 @@ class FeedOptionsMenu extends React.PureComponent {
           )}
           {/* END FEED ITEM QR CODE */}
           {/* FEED ITEM DELETE QSO*/}
-          {this.props.optionsCaller === "FeedItem" &&
+          {this.props.optionsCaller === 'FeedItem' &&
             this.props.currentQRA === this.props.qso_owner && (
               <Dropdown.Item
                 icon="delete"
@@ -396,7 +426,7 @@ class FeedOptionsMenu extends React.PureComponent {
             )}
           {/* END FEED ITEM DELETE QSO*/}
           {/* FEED ITEM PRINT QSL CARD*/}
-          {this.props.optionsCaller === "FeedItem" &&
+          {this.props.optionsCaller === 'FeedItem' &&
             this.props.QslCard &&
             this.props.currentQRA === this.props.qso_owner && (
               <Modal
@@ -406,8 +436,8 @@ class FeedOptionsMenu extends React.PureComponent {
                 onActionClick={this.printQSLCard.bind(this)}
                 actions={[
                   {
-                    key: "done",
-                    content: "Print QSL CARD",
+                    key: 'done',
+                    content: 'Print QSL CARD',
                     positive: true
                   }
                 ]}
@@ -415,7 +445,7 @@ class FeedOptionsMenu extends React.PureComponent {
             )}
           {/* END FEED ITEM QSL CARD*/}
           {/* FEED ITEM REPORT QSO*/}
-          {this.props.optionsCaller === "FeedItem" &&
+          {this.props.optionsCaller === 'FeedItem' &&
             // this.props.currentQRA &&
             this.props.currentQRA !== this.props.qso_owner && (
               <Modal
@@ -443,7 +473,7 @@ class FeedOptionsMenu extends React.PureComponent {
                         verifyCallback={response => {
                           this.setState({ recaptchaToken: response });
                         }}
-                      />{" "}
+                      />{' '}
                     </Form.Field>
                     <Form.Button>Submit</Form.Button>
 
@@ -471,7 +501,7 @@ class FeedOptionsMenu extends React.PureComponent {
             )}
           {/* END FEED ITEM REPORT QSO*/}
           {/*  FEED ITEM REPORT COMMENT */}
-          {this.props.optionsCaller === "FeedComment" &&
+          {this.props.optionsCaller === 'FeedComment' &&
             // this.props.currentQRA &&
             this.props.comment_owner !== this.props.currentQRA && (
               <Modal
@@ -499,7 +529,7 @@ class FeedOptionsMenu extends React.PureComponent {
                         verifyCallback={response => {
                           this.setState({ recaptchaToken: response });
                         }}
-                      />{" "}
+                      />{' '}
                     </Form.Field>
                     <Form.Button>Submit</Form.Button>
 
@@ -527,7 +557,7 @@ class FeedOptionsMenu extends React.PureComponent {
             )}
           {/* END FEED ITEM REPORT COMMENT */}
           {/* FEED ITEM DELETE COMMENT*/}
-          {this.props.optionsCaller === "FeedComment" &&
+          {this.props.optionsCaller === 'FeedComment' &&
             this.props.currentQRA === this.props.comment_owner && (
               <Dropdown.Item
                 icon="delete"
