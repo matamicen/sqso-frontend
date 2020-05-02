@@ -20,7 +20,7 @@ const PrivacyPolicy = props => (
 
         <video  width="100%"  controls controlsList="nodownload">
           <source
-            src="https://d30o7j00smmz5f.cloudfront.net/faq/tutorialCompleto_j.mp4"
+            src="https://d1dwfud4bi54v7.cloudfront.net/faq/tutorialCompleto_j.mp4"
             type="video/mp4"
             
             
@@ -33,7 +33,7 @@ const PrivacyPolicy = props => (
         <Header as="h3">¿Como postear un QSO?</Header>
         <video width="100%" controls controlsList="nodownload">
           <source
-            src="https://d30o7j00smmz5f.cloudfront.net/faq/PostQSO_alta_j.mp4"
+            src="https://d1dwfud4bi54v7.cloudfront.net/faq/PostQSO_alta_j.mp4"
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -55,7 +55,7 @@ const PrivacyPolicy = props => (
         </p>
         <video width="100%" controls controlsList="nodownload">
           <source
-            src="https://d30o7j00smmz5f.cloudfront.net/faq/Post+de+una+escucha_j.mp4"
+            src="https://d1dwfud4bi54v7.cloudfront.net/faq/Post+de+una+escucha_j.mp4"
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -77,7 +77,7 @@ const PrivacyPolicy = props => (
         </p>
         <video width="100%" controls controlsList="nodownload">
           <source
-            src="https://d30o7j00smmz5f.cloudfront.net/faq/PostANY_j.mp4"
+            src="https://d1dwfud4bi54v7.cloudfront.net/faq/PostANY_j.mp4"
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -97,7 +97,7 @@ const PrivacyPolicy = props => (
 
         <video width="100%" controls controlsList="nodownload">
           <source
-            src="https://d30o7j00smmz5f.cloudfront.net/faq/Seguir+a+un+colega_j.mp4"
+            src="https://d1dwfud4bi54v7.cloudfront.net/faq/Seguir+a+un+colega_j.mp4"
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -112,7 +112,7 @@ const PrivacyPolicy = props => (
         <p> Desde la WEB haces click en la campanita arriba a la derecha.</p>
         <video width="100%" controls controlsList="nodownload">
           <source
-            src="https://d30o7j00smmz5f.cloudfront.net/faq/Leer+notificaciones_j.mp4"
+            src="https://d1dwfud4bi54v7.cloudfront.net/faq/Leer+notificaciones_j.mp4"
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -136,7 +136,7 @@ const PrivacyPolicy = props => (
         </p>
         <video width="100%" controls controlsList="nodownload">
           <source
-            src="https://d30o7j00smmz5f.cloudfront.net/faq/Imprimir+tarjeta+QSL_j.mp4"
+            src="https://d1dwfud4bi54v7.cloudfront.net/faq/Imprimir+tarjeta+QSL_j.mp4"
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -153,7 +153,7 @@ const PrivacyPolicy = props => (
         </p>
         <video width="100%" controls controlsList="nodownload">
           <source
-            src="https://d30o7j00smmz5f.cloudfront.net/faq/Escanear+c%C3%B3digo+QR+de+tarjeta+QSL_j.mp4"
+            src="https://d1dwfud4bi54v7.cloudfront.net/faq/Escanear+c%C3%B3digo+QR+de+tarjeta+QSL_j.mp4"
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -172,7 +172,7 @@ const PrivacyPolicy = props => (
 
         <video width="100%" controls controlsList="nodownload">
           <source
-            src="https://d30o7j00smmz5f.cloudfront.net/faq/Compartir+en+redes+sociales+desde+la+APP_j.mp4"
+            src="https://d1dwfud4bi54v7.cloudfront.net/faq/Compartir+en+redes+sociales+desde+la+APP_j.mp4"
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -187,7 +187,7 @@ const PrivacyPolicy = props => (
         </p>
         <video width="100%" controls controlsList="nodownload">
           <source
-            src="https://d30o7j00smmz5f.cloudfront.net/faq/Compartir+en+redes+sociales+desde+la+Web_j.mp4"
+            src="https://d1dwfud4bi54v7.cloudfront.net/faq/Compartir+en+redes+sociales+desde+la+Web_j.mp4"
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -200,7 +200,7 @@ const PrivacyPolicy = props => (
         </Header>
         <video width="100%" controls controlsList="nodownload">
           <source
-            src="https://d30o7j00smmz5f.cloudfront.net/faq/Comentar%2C+Like+y+Repostear_j.mp4"
+            src="https://d1dwfud4bi54v7.cloudfront.net/faq/Comentar%2C+Like+y+Repostear_j.mp4"
             type="video/mp4"
             controlsList="nodownload"
           />

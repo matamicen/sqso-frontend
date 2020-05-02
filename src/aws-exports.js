@@ -1,9 +1,9 @@
 const config = {
   Auth: {
-    identityPoolId: 'us-east-1:daa39e2c-c363-4b97-91a9-de1ae54c7590',
+    identityPoolId: 'us-east-1:630321b3-e3c0-4886-a6a8-1d7e66a192d9',
     region: 'us-east-1',
-    userPoolId: 'us-east-1_IZ0rymzBv',
-    userPoolWebClientId: '32ouiqpjfne8l0vnsasplhmgvr',
+    userPoolId: ' us-east-1_v0hUEyUMg',
+    userPoolWebClientId: '2pms2b0i64226gr4tiokknpm0s',
     mandatorySignIn: false,
     aws_mandatory_sign_in: 'enable',
     bucket: 'sqso'
@@ -13,15 +13,15 @@ const config = {
     endpoints: [
       {
         name: 'superqso',
-        endpoint: 'https://hlcyk2ty6c.execute-api.us-east-1.amazonaws.com/Prod',
+        endpoint: 'https://api.zxcvbnmasd.com',
         region: 'us-east-1'
       }
     ]
   },
   Storage: {
-    bucket: 'sqsovpcrds-sqsobucket-12jwrpncf5o8h', // REQUIRED -  Amazon S3 bucket
+    bucket: 'sqsovpcrds-sqsobucket-1cbtj8fwlc47a', // REQUIRED -  Amazon S3 bucket
     region: 'us-east-1', // OPTIONAL -  Amazon service region
-    identityPoolId: 'us-east-1:daa39e2c-c363-4b97-91a9-de1ae54c7590'
+    identityPoolId: 'us-east-1:630321b3-e3c0-4886-a6a8-1d7e66a192d9'
   },
   Analytics: {
     // OPTIONAL -  Amazon Pinpoint App ID
