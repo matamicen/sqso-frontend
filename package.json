@@ -102,7 +102,7 @@
   },
   "scripts": {
     "babelbuild": "babel server -d dist",
-    "start": "yarn install --production &&  yarn build && yarn sitemap && node ./dist/app",
+    "start": "yarn install --production &&  yarn build  && node ./dist/app",
     "eb_test": "yarn install --production && yarn build && node dist/app",
     "static": "yarn && react-scripts start",
     "build": "react-scripts build",
