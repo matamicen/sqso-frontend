@@ -59,7 +59,7 @@
     "yup": "^0.27.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
+    "@babel/cli": "^7.8.4",
     "@babel/core": "^7.3.4",
     "@babel/node": "^7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.7.4",
@@ -102,7 +102,7 @@
   },
   "scripts": {
     "babelbuild": "babel server -d dist",
-    "start": "yarn install --production &&  yarn build && node ./dist/app",
+    "start": "yarn install --production &&  yarn build && yarn sitemap && node ./dist/app",
     "eb_test": "yarn install --production && yarn build && node dist/app",
     "static": "yarn && react-scripts start",
     "build": "react-scripts build",
@@ -110,13 +110,12 @@
     "coverage": "react-scripts test --env=jsdom coverage",
     "eject": "react-scripts eject",
     "serve": "set NODE_ENV=production && yarn build && node dist/app.js",
-    "deploy": "yarn version && git add . && eb deploy --stage --timeout 30",
+    "deploy": "yarn sitemap && yarn version && git add . && eb deploy --stage --timeout 30",
     "eb_create": "eb create -i t2.small",
     "analyze": "npm run build && source-map-explorer build/static/js/main.* ",
     "sitemap": "node src/components/sitemap-builder.js",
     "getcountries": "get-countries -n MY_COUNTRIES_DATA -p /src/components/Profile/countries.js --no-flags",
     "getcreds": "aws sts get-session-token --serial-number arn:aws:iam::591848583596:mfa/lisandrolan --token-code 664909"
-
   },
   "browserslist": [
     ">0.2%",

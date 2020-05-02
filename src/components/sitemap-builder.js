@@ -1,3 +1,6 @@
+require('@babel/register')({
+	extends: './.babelrc',
+})
 const Sitemap = require("react-router-sitemap").default;
 require("ignore-styles");
 // require("@babel/register")({
@@ -28,9 +31,9 @@ async function generateSitemap() {
     await apigClient
       .invokeApi(params, pathTemplate, method, additionalParams, body)
       .then(function(response) {
-        console.log(response.data.body.message.length);
-        for (var i = 0; i < response.data.body.message.length; i++) {
-          idMap.push(response.data.body.message[i].qra);
+        console.log(response.data.body.qras);
+        for (var i = 0; i < response.data.body.qras.length; i++) {
+          idMap.push(response.data.body.qras[i].qra);
         }
 
         const paramsConfig = {
