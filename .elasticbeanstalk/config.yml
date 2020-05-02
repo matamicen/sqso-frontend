@@ -1,10 +1,11 @@
 branch-defaults:
   dev:
-    environment: superQSO-dev
+    environment: superQSOprd
+    group_suffix: null
 global:
-  application_name: superQSO
+  application_name: superQSOprd
   branch: null
-  default_ec2_keyname: p1
+  default_ec2_keyname: prd
   default_platform: Node.js running on 64bit Amazon Linux
   default_region: us-east-1
   include_git_submodules: true
