@@ -226,7 +226,11 @@ async function loadImage(url) {
 //         .catch(error => {
 //           if (process.env.NODE_ENV !== 'production') {
 //             console.log(error);
-//           } else Sentry.captureException(error);
+//           } else { Sentry.configureScope(function (scope) {   
+//     scope.setExtra("ENV", process.env.NODE_ENV);
+//   });
+// Sentry.captureException(error);
+// }
 //         });
 //     } else {
 //       Storage.get(file, {
@@ -244,7 +248,11 @@ async function loadImage(url) {
 //         .catch(error => {
 //           if (process.env.NODE_ENV !== 'production') {
 //             console.log(error);
-//           } else Sentry.captureException(error);
+//           } else { Sentry.configureScope(function (scope) {   
+//     scope.setExtra("ENV", process.env.NODE_ENV);
+//   });
+// Sentry.captureException(error);
+// }
 //         });
 //     }
 //   });

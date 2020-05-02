@@ -134,7 +134,11 @@ class SignUp extends React.Component {
       .catch(err => {
         if (process.env.NODE_ENV !== 'production') {
           console.log(err);
-        } else Sentry.captureException(err);
+        } else  Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV)
+
+  });
+Sentry.captureException(err);
         this.setState({ confirmError: err });
       });
   }
@@ -159,7 +163,11 @@ class SignUp extends React.Component {
       .catch(err => {
         if (process.env.NODE_ENV !== 'production') {
           console.log(err);
-        } else Sentry.captureException(err);
+        } else  Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV)
+
+  });
+Sentry.captureException(err);
         this.setState({ dimmerValCodeActive: false, confirmError: err });
       });
   }

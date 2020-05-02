@@ -1,11 +1,11 @@
 import React from "react";
-import Button from "semantic-ui-react/dist/commonjs/elements/Button";
-import Form from "semantic-ui-react/dist/commonjs/collections/Form";
-import Comment from "semantic-ui-react/dist/commonjs/views/Comment";
-import QSOCommentItem from "./QSOCommentItem";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import Form from "semantic-ui-react/dist/commonjs/collections/Form";
+import Button from "semantic-ui-react/dist/commonjs/elements/Button";
+import Comment from "semantic-ui-react/dist/commonjs/views/Comment";
 import * as Actions from "../../actions";
+import QSOCommentItem from "./QSOCommentItem";
 
 class QSOComments extends React.Component {
   constructor() {
@@ -26,35 +26,6 @@ class QSOComments extends React.Component {
   componentDidUpdate = () => {
     this.props.recalculateRowHeight();
   };
-
-  // doComment = c => {
-  //   let apiName = "superqso";
-  //   let path = "/qso-comment";
-  //   let myInit = {
-  //     body: {
-  //       qso: this.props.qso.idqsos,
-  //       comment: c.comment,
-  //       datetime: c.datetime
-  //     }, // replace this with attributes you need
-  //     headers: {
-  //       Authorization: this.props.token
-  //     } // OPTIONAL
-  //   };
-  //   API.post(apiName, path, myInit)
-  //     .then(response => {
-  //       if (response.body.error > 0) {
-  //         console.error(response.body.message);
-  //       } else {
-  //         this.setState({ comments: response.body.message });
-  //         ReactGA.event({ category: "QSO", action: "CommentAdd" });
-  //       }
-  //     })
-  //     .catch(error => {
-  //       if (process.env.NODE_ENV !== "production") {
-  //         console.log(error);
-  //       } else Sentry.captureException(error);
-  //     });
-  // };
 
   handleAddComment = e => {
     e.preventDefault();

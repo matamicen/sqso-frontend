@@ -48,7 +48,11 @@ class QRAProfileBio extends React.Component {
         .catch(error => {
           if (process.env.NODE_ENV !== "production") {
             console.log(error);
-          } else Sentry.captureException(error);
+          } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
           reject(error);
         });
     });
@@ -97,7 +101,11 @@ class QRAProfileBio extends React.Component {
                   .catch(error => {
                     if (process.env.NODE_ENV !== "production") {
                       console.log(error);
-                    } else Sentry.captureException(error);
+                    } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
                     reject(error);
                   });
                 this.setState({ openPornConfirm: true });
@@ -113,14 +121,22 @@ class QRAProfileBio extends React.Component {
             .catch(error => {
               if (process.env.NODE_ENV !== "production") {
                 console.log(error);
-              } else Sentry.captureException(error);
+              } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
               reject(error);
             });
         })
         .catch(error => {
           if (process.env.NODE_ENV !== "production") {
             console.log(error);
-          } else Sentry.captureException(error);
+          } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
           reject(error);
         });
     });

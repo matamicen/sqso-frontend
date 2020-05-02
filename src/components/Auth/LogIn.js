@@ -193,9 +193,6 @@ class LogIn extends React.Component {
       })
       .catch(err => {
         this.setState({ dimmerValCodeActive: false });
-        // if (process.env.NODE_ENV !== "production") {
-        //   console.log(err);
-        // } else Sentry.captureException(err);
         this.setState({ confirmError: err });
       });
   }

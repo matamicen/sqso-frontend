@@ -1,46 +1,48 @@
-var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+'use strict';
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+var _interopRequireDefault = require('@babel/runtime/helpers/interopRequireDefault');
 
-Object.defineProperty(exports, "__esModule", {
+var _interopRequireWildcard = require('@babel/runtime/helpers/interopRequireWildcard');
+
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
 exports.default = void 0;
 
-var _path = _interopRequireDefault(require("path"));
+var Sentry = _interopRequireWildcard(require('@sentry/browser'));
 
-var _fs = _interopRequireDefault(require("fs"));
+var _fs = _interopRequireDefault(require('fs'));
 
-var Sentry = _interopRequireWildcard(require("@sentry/browser"));
+var _path = _interopRequireDefault(require('path'));
 
 // A simple helper function to prepare the HTML markup
 const prepHTML = (data, { html, head, body }) => {
-  data = data.replace("</head>", `${head}</head>`);
+  data = data.replace('</head>', `${head}</head>`);
   return data;
 };
 
 const replace_qso_tags = async (req, res) => {
   console.log(req.params);
 
-  if (req.params["idQSO"] !== "empty") {
-    var apigClientFactory = require("aws-api-gateway-client").default;
+  if (req.params['idQSO'] !== 'empty') {
+    var apigClientFactory = require('aws-api-gateway-client').default;
 
     var config = {
-      invokeUrl: "https://hlcyk2ty6c.execute-api.us-east-1.amazonaws.com/Prod"
+      invokeUrl: 'https://hlcyk2ty6c.execute-api.us-east-1.amazonaws.com/Prod'
     };
     var apigClient = apigClientFactory.newClient(config);
     var params = {};
-    var pathTemplate = "/qso-metadata-get";
-    var method = "POST";
+    var pathTemplate = '/qso-metadata-get';
+    var method = 'POST';
     var additionalParams = {
       headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*"
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
       },
       queryParams: {}
     };
     let body = {
-      qso: req.params["idQSO"]
+      qso: req.params['idQSO']
     };
     console.log(body);
     apigClient
@@ -48,53 +50,42 @@ const replace_qso_tags = async (req, res) => {
       .then(async function(result) {
         const filePath = _path.default.resolve(
           __dirname,
-          "../build/index.html"
+          '../build/index.html'
         );
 
-        _fs.default.readFile(filePath, "utf8", async (err, htmlData) => {
+        _fs.default.readFile(filePath, 'utf8', async (err, htmlData) => {
           // If there's an error... serve up something nasty
           if (err) {
-            if (process.env.NODE_ENV !== "production") {
-              console.error("Read error", err);
+            if (process.env.NODE_ENV !== 'production') {
+              console.error('Read error', err);
             }
 
+            Sentry.configureScope(function(scope) {
+              scope.setExtra('ENV', process.env.NODE_ENV);
+            });
             Sentry.captureException(err);
             return res.status(404).end();
           }
 
-          
+          console.log(result.data);
           let title;
           let image = null;
 
           if (!result.data.errorMessage && result.data.body.error === 0) {
             let qso = result.data.body.message;
 
-            if (qso.type === "QSO" && qso.qras.length > 0) {
+            if (qso.type === 'QSO' && qso.qras.length > 0) {
               title =
                 qso.qra +
-                " started a QSO with " +
+                ' started a QSO with ' +
                 qso.qras[0].qra +
-                " - Band: " +
+                ' - Band: ' +
                 qso.band +
-                " - Mode: " +
+                ' - Mode: ' +
                 qso.mode;
-            }else if (qso.type === "POST") {
-              title =
-                qso.qra +
-                " created a new post ";
-            }else if (qso.type === "LISTEN") {
-              title =
-              qso.qra +
-              " listened a QSO on Mode: " +
-              qso.qras[0].qra +
-              " - Band: " +
-              qso.band +
-              " - Mode: " +
-              qso.mode;
             }
 
             if (qso.media.length > 0) {
-              
               image =
                 '<meta property="og:image" content="' +
                 qso.media[0].url +
@@ -118,7 +109,7 @@ const replace_qso_tags = async (req, res) => {
         });
       }) //apigClient
       .catch(function(result) {
-        if (process.env.NODE_ENV !== "production") {
+        if (process.env.NODE_ENV !== 'production') {
           console.log(result);
         }
 

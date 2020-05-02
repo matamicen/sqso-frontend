@@ -10,7 +10,23 @@ export default class ErrorBoundary extends React.Component {
     
     // Update state so the next render will show the fallback UI.
     Sentry.withScope(scope => {
-      Sentry.captureException(error);
+      { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+{ Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+{ Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+{ Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
+}
+}
+}
     });
     return { hasError: true };
   }

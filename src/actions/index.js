@@ -77,13 +77,21 @@ export function doNotificationRead(idnotif = null, token) {
             .catch(error => {
               if (process.env.NODE_ENV !== 'production') {
                 console.log(error);
-              } else Sentry.captureException(error);
+              } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
               dispatch(doLogout());
             });
         } else {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
-          } else Sentry.captureException(error);
+          } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
         }
       });
   };
@@ -128,13 +136,21 @@ export function doCommentDelete(idcomment, idqso, token) {
             .catch(error => {
               if (process.env.NODE_ENV !== 'production') {
                 console.log(error);
-              } else Sentry.captureException(error);
+              } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
               dispatch(doLogout());
             });
         } else {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
-          } else Sentry.captureException(error);
+          } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
         }
       });
   };
@@ -180,13 +196,21 @@ export function doCommentAdd(idqso, comment, token) {
             .catch(error => {
               if (process.env.NODE_ENV !== 'production') {
                 console.log(error);
-              } else Sentry.captureException(error);
+              } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
               dispatch(doLogout());
             });
         } else {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
-          } else Sentry.captureException(error);
+          } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
         }
       });
   };
@@ -263,13 +287,21 @@ export function doDeleteQso(idqso, token) {
             .catch(error => {
               if (process.env.NODE_ENV !== 'production') {
                 console.log(error);
-              } else Sentry.captureException(error);
+              } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
               dispatch(doLogout());
             });
         } else {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
-          } else Sentry.captureException(error);
+          } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
         }
       });
   };
@@ -324,13 +356,21 @@ export function doDeleteMedia(idmedia, idqso, token) {
             .catch(error => {
               if (process.env.NODE_ENV !== 'production') {
                 console.log(error);
-              } else Sentry.captureException(error);
+              } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
               dispatch(doLogout());
             });
         } else {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
-          } else Sentry.captureException(error);
+          } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
         }
       });
   };
@@ -484,13 +524,21 @@ export function doFetchUserInfo(token) {
             .catch(error => {
               if (process.env.NODE_ENV !== 'production') {
                 console.log(error);
-              } else Sentry.captureException(error);
+              } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
               dispatch(doLogout());
             });
         } else {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
-          } else Sentry.captureException(error);
+          } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
         }
       });
   };
@@ -548,13 +596,21 @@ export function doRepost(idqso, token, qso) {
             .catch(error => {
               if (process.env.NODE_ENV !== 'production') {
                 console.log(error);
-              } else Sentry.captureException(error);
+              } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
               dispatch(doLogout());
             });
         } else {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
-          } else Sentry.captureException(error);
+          } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
         }
       });
   };
@@ -606,13 +662,21 @@ export function doSaveUserInfo(token, qra) {
             .catch(error => {
               if (process.env.NODE_ENV !== 'production') {
                 console.log(error);
-              } else Sentry.captureException(error);
+              } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
               dispatch(doLogout());
             });
         } else {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
-          } else Sentry.captureException(error);
+          } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
         }
       });
   };
@@ -663,13 +727,21 @@ export function doSaveUserBio(token, bio, identityId) {
             .catch(error => {
               if (process.env.NODE_ENV !== 'production') {
                 console.log(error);
-              } else Sentry.captureException(error);
+              } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
               dispatch(doLogout());
             });
         } else {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
-          } else Sentry.captureException(error);
+          } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
         }
       });
   };
@@ -719,13 +791,21 @@ export function doFetchUserFeed(token) {
             .catch(error => {
               if (process.env.NODE_ENV !== 'production') {
                 console.log(error);
-              } else Sentry.captureException(error);
+              } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
               dispatch(doLogout());
             });
         } else {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
-          } else Sentry.captureException(error);
+          } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
         }
       });
   };
@@ -768,13 +848,21 @@ export function doFollowFetch(token) {
             .catch(error => {
               if (process.env.NODE_ENV !== 'production') {
                 console.log(error);
-              } else Sentry.captureException(error);
+              } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
               dispatch(doLogout());
             });
         } else {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
-          } else Sentry.captureException(error);
+          } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
         }
       });
   };
@@ -818,13 +906,21 @@ export function doFetchNotifications(token) {
             .catch(error => {
               if (process.env.NODE_ENV !== 'production') {
                 console.log(error);
-              } else Sentry.captureException(error);
+              } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
               dispatch(doLogout());
             });
         } else {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
-          } else Sentry.captureException(error);
+          } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
         }
       });
   };
@@ -849,7 +945,11 @@ export function doFetchPublicFeed() {
       .catch(error => {
         if (process.env.NODE_ENV !== 'production') {
           console.log(error);
-        } else Sentry.captureException(error);
+        } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
       });
   };
 }
@@ -934,13 +1034,21 @@ export function doFetchQSO(idqso, token = null) {
               .catch(error => {
                 if (process.env.NODE_ENV !== 'production') {
                   console.log(error);
-                } else Sentry.captureException(error);
+                } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
                 dispatch(doLogout());
               });
           } else {
             if (process.env.NODE_ENV !== 'production') {
               console.log(error.message);
-            } else Sentry.captureException(error);
+            } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
           }
         });
     };
@@ -963,7 +1071,11 @@ export function doFetchQSO(idqso, token = null) {
         .catch(error => {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error);
-          } else Sentry.captureException(error);
+          } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
         });
     };
   }
@@ -1005,7 +1117,11 @@ export function doFetchQsoLink(idqso) {
       .catch(error => {
         if (process.env.NODE_ENV !== 'production') {
           console.log(error);
-        } else Sentry.captureException(error);
+        } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
       });
   };
 }
@@ -1055,13 +1171,21 @@ export function doFetchQRA(qra, token = null) {
               .catch(error => {
                 if (process.env.NODE_ENV !== 'production') {
                   console.log(error);
-                } else Sentry.captureException(error);
+                } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
                 dispatch(doLogout());
               });
           } else {
             if (process.env.NODE_ENV !== 'production') {
               console.log(error.message);
-            } else Sentry.captureException(error);
+            } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
           }
         });
     };
@@ -1085,7 +1209,11 @@ export function doFetchQRA(qra, token = null) {
         .catch(error => {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error);
-          } else Sentry.captureException(error);
+          } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
         });
     };
   }
@@ -1134,13 +1262,21 @@ export function doFollowQRA(token, follower) {
             .catch(error => {
               if (process.env.NODE_ENV !== 'production') {
                 console.log(error);
-              } else Sentry.captureException(error);
+              } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
               dispatch(doLogout());
             });
         } else {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
-          } else Sentry.captureException(error);
+          } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
         }
       });
   };
@@ -1185,13 +1321,21 @@ export function doUnfollowQRA(token, follower) {
             .catch(error => {
               if (process.env.NODE_ENV !== 'production') {
                 console.log(error);
-              } else Sentry.captureException(error);
+              } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
               dispatch(doLogout());
             });
         } else {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
-          } else Sentry.captureException(error);
+          } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
         }
       });
   };
@@ -1290,13 +1434,34 @@ export function doQsoMediaPlay(idMedia, token, idqso) {
             .catch(error => {
               if (process.env.NODE_ENV !== 'production') {
                 console.log(error);
-              } else Sentry.captureException(error);
+              } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV)
+
+  });
+{ Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+{ Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+{ Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
+}
+}
+}
               dispatch(doLogout());
             });
         } else {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
-          } else Sentry.captureException(error);
+          } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
         }
       });
   };
@@ -1346,13 +1511,21 @@ export function doQslCardPrint(idqso, token) {
             .catch(error => {
               if (process.env.NODE_ENV !== 'production') {
                 console.log(error);
-              } else Sentry.captureException(error);
+              } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
               dispatch(doLogout());
             });
         } else {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
-          } else Sentry.captureException(error);
+          } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
         }
       });
   };

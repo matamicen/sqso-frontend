@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import Async from "react-select/async";
 // import 'react-select/dist/react-select.css';
 import API from "@aws-amplify/api";
+import * as Sentry from "@sentry/browser";
+import React, { Component } from "react";
+import Avatar from "react-avatar";
 import { Redirect } from "react-router-dom";
 import { components } from "react-select";
-import Avatar from "react-avatar";
-import * as Sentry from "@sentry/browser";
+import Async from "react-select/async";
 import "../../styles/style.css";
 export default class NavigationSearch extends Component {
   constructor(props) {
@@ -47,7 +47,11 @@ export default class NavigationSearch extends Component {
         .catch(error => {
           if (process.env.NODE_ENV !== "production") {
             console.log(error);
-          } else Sentry.captureException(error);
+          } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
           return [];
         });
 
