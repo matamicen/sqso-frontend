@@ -35,3 +35,6 @@ build/asset-manifest.json
 build/asset-manifest.json
 build/service-worker.js
 build/index.html
+server/global_config.json
+src/global_config.json
+src/aws-exports.js

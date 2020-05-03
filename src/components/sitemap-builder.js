@@ -2,6 +2,7 @@ require('@babel/register')({
 	extends: './.babelrc',
 })
 const Sitemap = require("react-router-sitemap").default;
+const global_config = require("../global_config.json");
 require("ignore-styles");
 // require("@babel/register")({
 //   presets: ["@babel/preset-env", "@babel/react"]
@@ -13,7 +14,7 @@ async function generateSitemap() {
     var apigClientFactory = require("aws-api-gateway-client").default;
 
     var config = {
-      invokeUrl: "https://hlcyk2ty6c.execute-api.us-east-1.amazonaws.com/Prod"
+      invokeUrl: global_config.apiEndpoint
     };
     var apigClient = apigClientFactory.newClient(config);
     var params = {};

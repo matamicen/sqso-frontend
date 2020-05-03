@@ -1,13 +1,12 @@
 import * as Sentry from '@sentry/browser';
 import fs from 'fs';
 import path from 'path';
-
+import global_config from './global_config.json';
 // A simple helper function to prepare the HTML markup
 const prepHTML = (data, { html, head, body }) => {
   data = data.replace('</head>', `${head}</head>`);
   return data;
 };
-
 const replace_qso_tags = async (req, res) => {
   console.log(req.params);
 
@@ -15,7 +14,7 @@ const replace_qso_tags = async (req, res) => {
     var apigClientFactory = require('aws-api-gateway-client').default;
 
     var config = {
-      invokeUrl: 'https://hlcyk2ty6c.execute-api.us-east-1.amazonaws.com/Prod'
+      invokeUrl: global_config.apiEndpoint
     };
     var apigClient = apigClientFactory.newClient(config);
     var params = {};

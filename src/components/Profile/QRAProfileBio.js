@@ -15,6 +15,7 @@ import Container from "semantic-ui-react/dist/commonjs/elements/Container";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown";
 import * as Actions from "../../actions";
+import config from '../../global_config.json';
 import "../../styles/style.css";
 class QRAProfileBio extends React.Component {
   constructor(props) {
@@ -75,7 +76,7 @@ Sentry.captureException(error);
         .then(result => {
           
           let filepath =
-            "https://d30o7j00smmz5f.cloudfront.net/1/" +
+          config.s3Cloudfront + "/1/" +
           
             encodeURIComponent(this.props.identityId) +
             "/" +
