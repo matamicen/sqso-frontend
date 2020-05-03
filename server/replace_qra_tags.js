@@ -1,12 +1,11 @@
 import * as Sentry from "@sentry/browser";
 import fs from "fs";
 import path from "path";
-
+import global_config from '../../global_config.json';
 const prepHTML = (data, { html, head, body }) => {
   data = data.replace("</head>", `${head}</head>`);
   return data;
 };
-
 const replace_qra_tags = (req, res) => {
   console.log(req.params);
 
@@ -14,7 +13,7 @@ const replace_qra_tags = (req, res) => {
     var apigClientFactory = require("aws-api-gateway-client").default;
 
     var config = {
-      invokeUrl: "https://api.zxcvbnmasd.com"
+      invokeUrl: global_config.apiEndpoint
     };
     var apigClient = apigClientFactory.newClient(config);
     var params = {};
