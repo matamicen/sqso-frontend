@@ -38,3 +38,4 @@ build/index.html
 server/global_config.json
 src/global_config.json
 src/aws-exports.js
+dist/global_config.json
