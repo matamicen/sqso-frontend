@@ -48,6 +48,9 @@ const PublicNavigation = () => (
           <Link to="/FAQ">
             <Dropdown.Item>FAQ</Dropdown.Item>
           </Link>
+          <Link to="/FAQ">
+            <Dropdown.Item><b>Tutorial</b></Dropdown.Item>
+          </Link>
         </Dropdown.Menu>
       </Dropdown>
     </Menu.Menu>
