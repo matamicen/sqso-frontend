@@ -1,54 +1,54 @@
-import Auth from '@aws-amplify/auth'
-import * as Sentry from '@sentry/browser'
-import PropTypes from 'prop-types'
-import React from 'react'
-import { connect } from 'react-redux'
-import { Link, withRouter } from 'react-router-dom'
-import { bindActionCreators } from 'redux'
-import Menu from 'semantic-ui-react/dist/commonjs/collections/Menu'
-import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon'
-import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown'
-import * as Actions from '../../actions'
-import NavigationSearch from './NavigationSearch'
+import Auth from '@aws-amplify/auth';
+import * as Sentry from '@sentry/browser';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
+import { Link, withRouter } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import Menu from 'semantic-ui-react/dist/commonjs/collections/Menu';
+import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
+import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
+import * as Actions from '../../actions';
+import NavigationSearch from './NavigationSearch';
 class AuthenticatedNavigation extends React.PureComponent {
-  constructor () {
-    super()
+  constructor() {
+    super();
     this.state = {
       notif_icon: 'bell'
-    }
+    };
   }
 
-  logout () {
+  logout() {
     Auth.signOut()
       .then(data => {
-        this.props.actions.doLogout()
-        this.props.history.push('/')
+        this.props.actions.doLogout();
+        this.props.history.push('/');
       })
       .catch(error => {
         if (process.env.NODE_ENV !== 'production') {
-          console.log(error)
-        } else Sentry.captureException(error)
-      })
+          console.log(error);
+        } else Sentry.captureException(error);
+      });
   }
 
-  notificationIcon () {
+  notificationIcon() {
     if (this.props.notifications.length > 0) {
       return (
         <Icon.Group size="large">
           <Icon name="bell" />
           <Icon corner name="attention" />
         </Icon.Group>
-      )
+      );
     } else {
       return (
         <Icon.Group size="large">
           <Icon name="bell outline" />
         </Icon.Group>
-      )
+      );
     }
   }
 
-  render () {
+  render() {
     return (
       <Menu fixed="top" style={{ height: '50px', display: 'flex' }}>
         <Menu.Item
@@ -109,20 +109,25 @@ class AuthenticatedNavigation extends React.PureComponent {
               <Link to="/FAQ">
                 <Dropdown.Item>FAQ</Dropdown.Item>
               </Link>
+              <Link to="/FAQ">
+                <Dropdown.Item>
+                  <b>Tutorial</b>
+                </Dropdown.Item>
+              </Link>
             </Dropdown.Menu>
           </Dropdown>
         </Menu.Menu>
       </Menu>
-    )
+    );
   }
 }
 AuthenticatedNavigation.propTypes = {
   actions: PropTypes.shape({
-  //   doStartingLogin: PropTypes.func,
+    //   doStartingLogin: PropTypes.func,
     doLogout: PropTypes.func
-  //   doLogin: PropTypes.func,
-  //   doFetchUserInfo: PropTypes.func,
-  //   doSetPublicSession: PropTypes.func
+    //   doLogin: PropTypes.func,
+    //   doFetchUserInfo: PropTypes.func,
+    //   doSetPublicSession: PropTypes.func
   }).isRequired,
   // location: PropTypes.shape({
   //   pathname: PropTypes.string,
@@ -134,19 +139,19 @@ AuthenticatedNavigation.propTypes = {
   currentQRA: PropTypes.string,
   history: PropTypes.shape({
     push: PropTypes.func
-  //   location: PropTypes.shape({
-  //     state: PropTypes.shape({})
-  //   }).isRequired
+    //   location: PropTypes.shape({
+    //     state: PropTypes.shape({})
+    //   }).isRequired
   }).isRequired,
   notifications: PropTypes.array
-}
+};
 const mapStateToProps = state => ({
   currentQRA: state.userData.currentQRA,
   notifications: state.userData.notifications
-})
+});
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(Actions, dispatch)
-})
+});
 export default withRouter(
   connect(
     mapStateToProps,
@@ -154,4 +159,4 @@ export default withRouter(
     null,
     { pure: false }
   )(AuthenticatedNavigation)
-)
+);
