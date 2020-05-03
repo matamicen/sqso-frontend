@@ -1,7 +1,9 @@
+
 import * as Sentry from '@sentry/browser';
 import fs from 'fs';
 import path from 'path';
 import global_config from './global_config.json';
+
 // A simple helper function to prepare the HTML markup
 const prepHTML = (data, { html, head, body }) => {
   data = data.replace('</head>', `${head}</head>`);
