@@ -1,11 +1,11 @@
-import React, { Fragment } from "react";
-import { Formik } from "formik";
-import ContactFormPresentation from "./contactFormPresentation";
-import * as Yup from "yup";
 import API from "@aws-amplify/api";
 import * as Sentry from "@sentry/browser";
+import { Formik } from "formik";
+import React, { Fragment } from "react";
 import { withRouter } from "react-router-dom";
 import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
+import * as Yup from "yup";
+import ContactFormPresentation from "./contactFormPresentation";
 class contactForm extends React.Component {
   state = { openModal: false };
   send(values) {
@@ -28,7 +28,11 @@ class contactForm extends React.Component {
       .catch(error => {
         if (process.env.NODE_ENV !== "production") {
           console.log(error);
-        } else Sentry.captureException(error);
+        } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
       });
   }
   render() {

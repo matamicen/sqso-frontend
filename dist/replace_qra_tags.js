@@ -17,50 +17,58 @@ var _path = _interopRequireDefault(require("path"));
 
 var _global_config = _interopRequireDefault(require("./global_config.json"));
 
+
 const prepHTML = (data, {
   html,
   head,
   body
 }) => {
-  data = data.replace("</head>", `${head}</head>`);
+
+  data = data.replace('</head>', `${head}</head>`);
+
   return data;
 };
 
 const replace_qra_tags = (req, res) => {
   console.log(req.params);
 
-  if (req.params["idQRA"] !== "empty") {
-    var apigClientFactory = require("aws-api-gateway-client").default;
+  if (req.params['idQRA'] !== 'empty') {
+    var apigClientFactory = require('aws-api-gateway-client').default;
 
     var config = {
       invokeUrl: _global_config.default.apiEndpoint
     };
     var apigClient = apigClientFactory.newClient(config);
     var params = {};
-    var pathTemplate = "/qra-get-data";
-    var method = "POST";
+    var pathTemplate = '/qra-get-data';
+    var method = 'POST';
     var additionalParams = {
       headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*"
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
       },
       queryParams: {}
     };
     var body = {
-      qra: req.params["idQRA"]
+      qra: req.params['idQRA']
     };
     console.log(body);
     apigClient.invokeApi(params, pathTemplate, method, additionalParams, body).then(function (result) {
-      const filePath = _path.default.resolve(__dirname, "../build/index.html");
 
-      _fs.default.readFile(filePath, "utf8", async (err, htmlData) => {
+      const filePath = _path.default.resolve(__dirname, '../build/index.html');
+
+      _fs.default.readFile(filePath, 'utf8', async (err, htmlData) => {
         // If there's an error... serve up something nasty
         if (err) {
-          if (process.env.NODE_ENV !== "production") {
-            console.error("Read error", err);
+          if (process.env.NODE_ENV !== 'production') {
+            console.error('Read error', err);
+          } else {
+            Sentry.configureScope(function (scope) {
+              scope.setExtra('ENV', event['stage-variables'].NODE_ENV);
+            });
+            Sentry.captureException(err);
           }
 
-          Sentry.captureException(err);
           return res.status(404).end();
         }
 
@@ -69,7 +77,9 @@ const replace_qra_tags = (req, res) => {
         let url;
 
         if (!result.data.errorMessage && result.data.body.error === 0) {
-          title = result.data.body.message.qra.toUpperCase() + " - " + result.data.body.message.firstname + " " + result.data.body.message.lastname;
+
+          title = result.data.body.message.qra.toUpperCase() + ' - ' + result.data.body.message.firstname + ' ' + result.data.body.message.lastname;
+
           url = result.data.body.message.avatarpic;
         }
 
@@ -80,7 +90,9 @@ const replace_qra_tags = (req, res) => {
       });
     }) //apigClient
     .catch(function (result) {
-      if (process.env.NODE_ENV !== "production") {
+
+      if (process.env.NODE_ENV !== 'production') {
+
         console.log(result);
       }
 

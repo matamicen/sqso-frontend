@@ -102,7 +102,14 @@ class SignUp extends React.Component {
             dimmerActive: false,
             signUpError: 'callsign/email already registered'
           });
-        } else this.setState({ dimmerActive: false, signUpError: err.message });
+         
+        }  else if (err.message === 'SignUp is not permitted for this user pool') {
+          this.setState({
+            dimmerActive: false,
+            signUpError: 'SignUp is no available yet. Please wait a few days!'
+          });
+        }
+        else this.setState({ dimmerActive: false, signUpError: err.message });
       });
   }
 
@@ -111,7 +118,7 @@ class SignUp extends React.Component {
   }
 
   async handleResendCode() {
-    await Auth.resendSignUp(this.state.qra.toUpperCase())
+    await Auth.resendSignUp(this.state.email.toLowerCase())
       .then(() => {
         if (process.env.NODE_ENV !== 'production')
           window.gtag('event', 'resendCode_WEBDEV', {
@@ -127,7 +134,11 @@ class SignUp extends React.Component {
       .catch(err => {
         if (process.env.NODE_ENV !== 'production') {
           console.log(err);
-        } else Sentry.captureException(err);
+        } else  Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV)
+
+  });
+Sentry.captureException(err);
         this.setState({ confirmError: err });
       });
   }
@@ -152,7 +163,11 @@ class SignUp extends React.Component {
       .catch(err => {
         if (process.env.NODE_ENV !== 'production') {
           console.log(err);
-        } else Sentry.captureException(err);
+        } else  Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV)
+
+  });
+Sentry.captureException(err);
         this.setState({ dimmerValCodeActive: false, confirmError: err });
       });
   }

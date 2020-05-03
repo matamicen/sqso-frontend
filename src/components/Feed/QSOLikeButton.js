@@ -89,7 +89,11 @@ class QSOLikeButton extends React.Component {
       .catch(error => {
         if (process.env.NODE_ENV !== 'production') {
           console.log(error);
-        } else Sentry.captureException(error);
+        } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
       });
   }
 
@@ -134,7 +138,11 @@ class QSOLikeButton extends React.Component {
       .catch(error => {
         if (process.env.NODE_ENV !== 'production') {
           console.log(error);
-        } else Sentry.captureException(error);
+        } else { Sentry.configureScope(function (scope) {   
+    scope.setExtra("ENV", process.env.NODE_ENV);
+  });
+Sentry.captureException(error);
+}
       });
   }
 

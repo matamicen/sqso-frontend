@@ -1,8 +1,7 @@
-const React = require("react").default;
+import React from 'react';
+import { Route } from 'react-router';
 
-const Route = require("react-router").Route;
-
-module.exports =  (
+export default (
   <Route>
     <Route path="/" />
     <Route path="/follow" />
@@ -11,6 +10,7 @@ module.exports =  (
     <Route path="/login" />
     <Route path="/terms" />
     <Route path="/privacy" />
+    <Route path="/faq" />
     <Route path="/changepassword" />
     <Route path="/notifications" />
   </Route>
