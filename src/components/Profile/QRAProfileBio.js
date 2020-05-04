@@ -1,22 +1,24 @@
-import API from "@aws-amplify/api";
-import Storage from "@aws-amplify/storage";
-import * as Sentry from "@sentry/browser";
-import { ContentState, convertToRaw, EditorState } from "draft-js";
-import draftToHtml from "draftjs-to-html";
-import htmlToDraft from "html-to-draftjs";
-import React, { Fragment } from "react";
-import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import { bindActionCreators } from "redux";
-import Confirm from "semantic-ui-react/dist/commonjs/addons/Confirm";
-import Container from "semantic-ui-react/dist/commonjs/elements/Container";
-import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
-import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown";
-import * as Actions from "../../actions";
-import config from '../../global_config.json';
-import "../../styles/style.css";
+import API from '@aws-amplify/api';
+import Storage from '@aws-amplify/storage';
+import * as Sentry from '@sentry/browser';
+import { ContentState, convertToRaw, EditorState } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
+import htmlToDraft from 'html-to-draftjs';
+import React, { Fragment } from 'react';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import Confirm from 'semantic-ui-react/dist/commonjs/addons/Confirm';
+import Container from 'semantic-ui-react/dist/commonjs/elements/Container';
+import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment';
+import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
+import * as Actions from '../../actions';
+import global_configDEV from '../../global_configDEV.json';
+import global_configPRD from '../../global_configPRD.json';
+import '../../styles/style.css';
+
 class QRAProfileBio extends React.Component {
   constructor(props) {
     super(props);
@@ -42,49 +44,56 @@ class QRAProfileBio extends React.Component {
 
   getImage(path) {
     return new Promise((resolve, reject) => {
-      Storage.get(path, { level: "protected" })
+      Storage.get(path, { level: 'protected' })
         .then(result => {
           resolve(result);
         })
         .catch(error => {
-          if (process.env.NODE_ENV !== "production") {
+          if (process.env.NODE_ENV !== 'production') {
             console.log(error);
-          } else { Sentry.configureScope(function (scope) {   
-    scope.setExtra("ENV", process.env.NODE_ENV);
-  });
-Sentry.captureException(error);
-}
+          } else {
+            Sentry.configureScope(function(scope) {
+              scope.setExtra('ENV', process.env.NODE_ENV);
+            });
+            Sentry.captureException(error);
+          }
           reject(error);
         });
     });
   }
   uploadImageCallBack(file) {
-
     const customPrefix = {
       public: 'myPublicPrefix/',
-      protected: "1/",
+      protected: '1/',
       private: 'myPrivatePrefix/'
-  };
+    };
     return new Promise((resolve, reject) => {
-      let folder = "bio/" + file.name;
-      
+      let folder = 'bio/' + file.name;
+
       Storage.put(folder, file, {
         customPrefix: customPrefix,
-        level: "protected",
-        contentType: "image/png"
+        level: 'protected',
+        contentType: 'image/png'
       })
         .then(result => {
-          
-          let filepath =
-          config.s3Cloudfront + "/1/" +
-          
-            encodeURIComponent(this.props.identityId) +
-            "/" +
-            encodeURIComponent(result.key);
-
+          let filepath;
+          if (process.env.NODE_ENV !== 'production')
+            filepath =
+              global_configDEV.s3Cloudfront +
+              '/1/' +
+              encodeURIComponent(this.props.identityId) +
+              '/' +
+              encodeURIComponent(result.key);
+          else if (process.env.NODE_ENV !== 'production')
+            filepath =
+              global_configPRD.s3Cloudfront +
+              '/1/' +
+              encodeURIComponent(this.props.identityId) +
+              '/' +
+              encodeURIComponent(result.key);
           //CHECK NSFW
-          let apiName = "superqso";
-          let path = "/nsfw-check";
+          let apiName = 'superqso';
+          let path = '/nsfw-check';
           let myInit = {
             body: {
               url: filepath
@@ -97,16 +106,17 @@ Sentry.captureException(error);
             .then(response => {
               if (response.body.error > 0) {
                 //NSFW
-                Storage.remove(result.key, { level: "protected" })
+                Storage.remove(result.key, { level: 'protected' })
                   .then(result => resolve(true))
                   .catch(error => {
-                    if (process.env.NODE_ENV !== "production") {
+                    if (process.env.NODE_ENV !== 'production') {
                       console.log(error);
-                    } else { Sentry.configureScope(function (scope) {   
-    scope.setExtra("ENV", process.env.NODE_ENV);
-  });
-Sentry.captureException(error);
-}
+                    } else {
+                      Sentry.configureScope(function(scope) {
+                        scope.setExtra('ENV', process.env.NODE_ENV);
+                      });
+                      Sentry.captureException(error);
+                    }
                     reject(error);
                   });
                 this.setState({ openPornConfirm: true });
@@ -120,24 +130,26 @@ Sentry.captureException(error);
                 });
             })
             .catch(error => {
-              if (process.env.NODE_ENV !== "production") {
+              if (process.env.NODE_ENV !== 'production') {
                 console.log(error);
-              } else { Sentry.configureScope(function (scope) {   
-    scope.setExtra("ENV", process.env.NODE_ENV);
-  });
-Sentry.captureException(error);
-}
+              } else {
+                Sentry.configureScope(function(scope) {
+                  scope.setExtra('ENV', process.env.NODE_ENV);
+                });
+                Sentry.captureException(error);
+              }
               reject(error);
             });
         })
         .catch(error => {
-          if (process.env.NODE_ENV !== "production") {
+          if (process.env.NODE_ENV !== 'production') {
             console.log(error);
-          } else { Sentry.configureScope(function (scope) {   
-    scope.setExtra("ENV", process.env.NODE_ENV);
-  });
-Sentry.captureException(error);
-}
+          } else {
+            Sentry.configureScope(function(scope) {
+              scope.setExtra('ENV', process.env.NODE_ENV);
+            });
+            Sentry.captureException(error);
+          }
           reject(error);
         });
     });
@@ -157,7 +169,6 @@ Sentry.captureException(error);
     this.setState({ editorState: editorState });
   };
   render() {
-    
     const { edit, editorState } = this.state;
     return (
       <Fragment>
@@ -175,7 +186,7 @@ Sentry.captureException(error);
             this.props.currentQRA === this.props.qraInfo.qra && (
               <div
                 style={{
-                  float: "right"
+                  float: 'right'
                 }}
               >
                 <Dropdown
