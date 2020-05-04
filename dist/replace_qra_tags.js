@@ -15,17 +15,16 @@ var _fs = _interopRequireDefault(require("fs"));
 
 var _path = _interopRequireDefault(require("path"));
 
-var _global_config = _interopRequireDefault(require("./global_config.json"));
+var _global_configDEV = _interopRequireDefault(require("./global_configDEV.json"));
 
+var _global_configPRD = _interopRequireDefault(require("./global_configPRD.json"));
 
 const prepHTML = (data, {
   html,
   head,
   body
 }) => {
-
   data = data.replace('</head>', `${head}</head>`);
-
   return data;
 };
 
@@ -35,8 +34,10 @@ const replace_qra_tags = (req, res) => {
   if (req.params['idQRA'] !== 'empty') {
     var apigClientFactory = require('aws-api-gateway-client').default;
 
-    var config = {
-      invokeUrl: _global_config.default.apiEndpoint
+    if (process.env.NODE_ENV === 'production') var config = {
+      invokeUrl: _global_configPRD.default.apiEndpoint
+    };else config = {
+      invokeUrl: _global_configDEV.default.apiEndpoint
     };
     var apigClient = apigClientFactory.newClient(config);
     var params = {};
@@ -54,7 +55,6 @@ const replace_qra_tags = (req, res) => {
     };
     console.log(body);
     apigClient.invokeApi(params, pathTemplate, method, additionalParams, body).then(function (result) {
-
       const filePath = _path.default.resolve(__dirname, '../build/index.html');
 
       _fs.default.readFile(filePath, 'utf8', async (err, htmlData) => {
@@ -77,9 +77,7 @@ const replace_qra_tags = (req, res) => {
         let url;
 
         if (!result.data.errorMessage && result.data.body.error === 0) {
-
           title = result.data.body.message.qra.toUpperCase() + ' - ' + result.data.body.message.firstname + ' ' + result.data.body.message.lastname;
-
           url = result.data.body.message.avatarpic;
         }
 
@@ -90,9 +88,7 @@ const replace_qra_tags = (req, res) => {
       });
     }) //apigClient
     .catch(function (result) {
-
       if (process.env.NODE_ENV !== 'production') {
-
         console.log(result);
       }
 

@@ -1,9 +1,8 @@
-
 import * as Sentry from '@sentry/browser';
 import fs from 'fs';
 import path from 'path';
-
-import global_config from './global_config.json';
+import global_configDEV from './global_configDEV.json';
+import global_configPRD from './global_configPRD.json';
 const prepHTML = (data, { html, head, body }) => {
   data = data.replace('</head>', `${head}</head>`);
   return data;
@@ -14,9 +13,14 @@ const replace_qra_tags = (req, res) => {
   if (req.params['idQRA'] !== 'empty') {
     var apigClientFactory = require('aws-api-gateway-client').default;
 
-    var config = {
-      invokeUrl: global_config.apiEndpoint
-    };
+    if (process.env.NODE_ENV === 'production')
+      var config = {
+        invokeUrl: global_configPRD.apiEndpoint
+      };
+    else
+      config = {
+        invokeUrl: global_configDEV.apiEndpoint
+      };
     var apigClient = apigClientFactory.newClient(config);
     var params = {};
     var pathTemplate = '/qra-get-data';

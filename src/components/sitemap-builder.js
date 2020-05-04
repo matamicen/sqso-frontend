@@ -2,7 +2,10 @@ require('@babel/register')({
 	extends: './.babelrc',
 })
 const Sitemap = require("react-router-sitemap").default;
-const global_config = require("../global_config.json");
+if (process.env.NODE_ENV === 'production')
+  import global_config from './global_configPRD.json';
+else import global_config from './global_configDEV.json';
+
 require("ignore-styles");
 // require("@babel/register")({
 //   presets: ["@babel/preset-env", "@babel/react"]
