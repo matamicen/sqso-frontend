@@ -47,3 +47,5 @@ server/global_config.json
 server/global_config.json
 server/global_config.json
 src/global_config.json
+src/aws-exports.js
+src/global_config.json
