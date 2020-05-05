@@ -100,7 +100,7 @@ export function doNotificationRead(idnotif = null, token) {
 }
 export function doCommentDelete(idcomment, idqso, token) {
   return dispatch => {
-    if (process.env. ENV !== 'production')
+    if (process.env.ENV !== 'production')
       window.gtag('event', 'qsoCommentDel_WEBDEV', {
         event_category: 'QSO',
         event_label: 'commentDel'
@@ -161,7 +161,7 @@ export function doCommentDelete(idcomment, idqso, token) {
 }
 export function doCommentAdd(idqso, comment, token) {
   return dispatch => {
-    if (process.env. ENV !== 'production')
+    if (process.env.ENV !== 'production')
       window.gtag('event', 'qsoCommentAdd_WEBDEV', {
         event_category: 'QSO',
         event_label: 'commentAdd'
@@ -249,7 +249,7 @@ export function doNotificationReadResponse(idnotif) {
 }
 export function doDeleteQso(idqso, token) {
   return dispatch => {
-    if (process.env. ENV !== 'production')
+    if (process.env.ENV !== 'production')
       window.gtag('event', 'qsoDelete_WEBDEV', {
         event_category: 'QSO',
         event_label: 'delete'

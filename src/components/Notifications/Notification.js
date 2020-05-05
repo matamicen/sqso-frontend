@@ -1,10 +1,10 @@
-import React from "react";
-
-import { Link } from "react-router-dom";
-import "../../styles/style.css";
-
-import Table from "semantic-ui-react/dist/commonjs/collections/Table";
-import Image from "semantic-ui-react/dist/commonjs/elements/Image";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import Table from 'semantic-ui-react/dist/commonjs/collections/Table';
+import Image from 'semantic-ui-react/dist/commonjs/elements/Image';
+import global_configDEV from '../../global_configDEV.json';
+import global_configPRD from '../../global_configPRD.json';
+import '../../styles/style.css';
 
 export default class Notification extends React.Component {
   constructor(props) {
@@ -27,7 +27,7 @@ export default class Notification extends React.Component {
         if (this.props.currentQRA === notif.REF_QRA)
           return (
             // <List.Description>
-            <Link to={"/" + notif.QRA} onClick={this.handleOnClick}>
+            <Link to={'/' + notif.QRA} onClick={this.handleOnClick}>
               {notif.message}
             </Link>
             // </List.Description>
@@ -35,7 +35,7 @@ export default class Notification extends React.Component {
         else
           return (
             // <List.Description>
-            <Link to={"/" + notif.REF_QRA} onClick={this.handleOnClick}>
+            <Link to={'/' + notif.REF_QRA} onClick={this.handleOnClick}>
               {notif.message}
             </Link>
             // </List.Description>
@@ -43,7 +43,7 @@ export default class Notification extends React.Component {
       case 10: //new QSO
         return (
           // <List.Description>
-          <Link to={"/qso/" + notif.QSO_GUID} onClick={this.handleOnClick}>
+          <Link to={'/qso/' + notif.QSO_GUID} onClick={this.handleOnClick}>
             {notif.message}
           </Link>
           // </List.Description>
@@ -51,7 +51,7 @@ export default class Notification extends React.Component {
       case 12: //add QRA to QSO
         return (
           // <List.Description>
-          <Link to={"/qso/" + notif.QSO_GUID} onClick={this.handleOnClick}>
+          <Link to={'/qso/' + notif.QSO_GUID} onClick={this.handleOnClick}>
             {notif.message}
           </Link>
           // </List.Description>
@@ -59,7 +59,7 @@ export default class Notification extends React.Component {
       case 18: //add QSO Comment
         return (
           // <List.Description>
-          <Link to={"/qso/" + notif.QSO_GUID} onClick={this.handleOnClick}>
+          <Link to={'/qso/' + notif.QSO_GUID} onClick={this.handleOnClick}>
             {notif.message}
           </Link>
           // </List.Description>
@@ -67,7 +67,7 @@ export default class Notification extends React.Component {
       case 20: //add QSO Link
         return (
           // <List.Description>
-          <Link to={"/qso/" + notif.QSO_GUID} onClick={this.handleOnClick}>
+          <Link to={'/qso/' + notif.QSO_GUID} onClick={this.handleOnClick}>
             {notif.message}
           </Link>
           // </List.Description>
@@ -75,7 +75,7 @@ export default class Notification extends React.Component {
       case 23: //add QSO Like
         return (
           // <List.Description>
-          <Link to={"/qso/" + notif.QSO_GUID} onClick={this.handleOnClick}>
+          <Link to={'/qso/' + notif.QSO_GUID} onClick={this.handleOnClick}>
             {notif.message}
           </Link>
           // </List.Description>
@@ -83,7 +83,7 @@ export default class Notification extends React.Component {
       case 50: //Bio updated
         return (
           // <List.Description>
-          <Link to={"/" + notif.QRA} onClick={this.handleOnClick}>
+          <Link to={'/' + notif.QRA} onClick={this.handleOnClick}>
             {notif.message}
           </Link>
           // </List.Description>
@@ -91,7 +91,7 @@ export default class Notification extends React.Component {
       default:
         return (
           // <List.Description>
-          <Link to={"/qso/" + notif.QSO_GUID} onClick={this.handleOnClick}>
+          <Link to={'/qso/' + notif.QSO_GUID} onClick={this.handleOnClick}>
             {notif.message}
           </Link>
           // </List.Description>
@@ -106,7 +106,16 @@ export default class Notification extends React.Component {
       // </List.Item>
       <Table.Row>
         <Table.Cell>
-          <Image avatar src={this.props.notification.qra_avatarpic} />
+          <Image
+            avatar
+            src={
+              this.props.notification.qra_avatarpic
+                ? this.props.notification.qra_avatarpic
+                : (process.env.ENV !== 'production'
+                    ? global_configDEV.s3Cloudfront
+                    : global_configPRD.s3Cloudfront) + 'faq/emptyprofile.png'
+            }
+          />
         </Table.Cell>
         <Table.Cell>{this.formatNotification()}</Table.Cell>
       </Table.Row>
