@@ -83,7 +83,7 @@ class SignUp extends React.Component {
         window.gtag('config', 'G-H8G28LYKBY', {
           custom_map: { dimension1: 'userQRA' }
         });
-        if (process.env.ENV !== 'production')
+        if (process.env.NODE_ENV !== 'production')
           window.gtag('event', 'userSignUp_WEBDEV', {
             event_category: 'User',
             event_label: 'signUp',
@@ -120,7 +120,7 @@ class SignUp extends React.Component {
   async handleResendCode() {
     await Auth.resendSignUp(this.state.email.toLowerCase())
       .then(() => {
-        if (process.env.ENV !== 'production')
+        if (process.env.NODE_ENV !== 'production')
           window.gtag('event', 'resendCode_WEBDEV', {
             event_category: 'User',
             event_label: 'resendCode'
@@ -136,7 +136,7 @@ class SignUp extends React.Component {
           console.log(err);
         } else
           Sentry.configureScope(function(scope) {
-            scope.setExtra('ENV', process.env.ENV);
+            scope.setExtra('ENV', process.env.NODE_ENV);
           });
         Sentry.captureException(err);
         this.setState({ confirmError: err });
@@ -165,7 +165,7 @@ class SignUp extends React.Component {
           console.log(err);
         } else
           Sentry.configureScope(function(scope) {
-            scope.setExtra('ENV', process.env.ENV);
+            scope.setExtra('ENV', process.env.NODE_ENV);
           });
         Sentry.captureException(err);
         this.setState({ dimmerValCodeActive: false, confirmError: err });

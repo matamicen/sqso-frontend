@@ -2,8 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Table from 'semantic-ui-react/dist/commonjs/collections/Table';
 import Image from 'semantic-ui-react/dist/commonjs/elements/Image';
-import global_configDEV from '../../global_configDEV.json';
-import global_configPRD from '../../global_configPRD.json';
+import global_config from '../../global_config.json';
 import '../../styles/style.css';
 
 export default class Notification extends React.Component {
@@ -111,9 +110,7 @@ export default class Notification extends React.Component {
             src={
               this.props.notification.qra_avatarpic
                 ? this.props.notification.qra_avatarpic
-                : (process.env.ENV !== 'production'
-                    ? global_configDEV.s3Cloudfront
-                    : global_configPRD.s3Cloudfront) + 'faq/emptyprofile.png'
+                : global_config.s3Cloudfront + 'faq/emptyprofile.png'
             }
           />
         </Table.Cell>

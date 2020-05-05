@@ -15,8 +15,7 @@ import Container from 'semantic-ui-react/dist/commonjs/elements/Container';
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment';
 import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
 import * as Actions from '../../actions';
-import global_configDEV from '../../global_configDEV.json';
-import global_configPRD from '../../global_configPRD.json';
+import global_config from '../../global_config.json';
 import '../../styles/style.css';
 
 class QRAProfileBio extends React.Component {
@@ -53,7 +52,7 @@ class QRAProfileBio extends React.Component {
             console.log(error);
           } else {
             Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.ENV);
+              scope.setExtra('ENV', process.env.NODE_ENV);
             });
             Sentry.captureException(error);
           }
@@ -77,20 +76,13 @@ class QRAProfileBio extends React.Component {
       })
         .then(result => {
           let filepath;
-          if (process.env.ENV !== 'production')
-            filepath =
-              global_configDEV.s3Cloudfront +
-              '/1/' +
-              encodeURIComponent(this.props.identityId) +
-              '/' +
-              encodeURIComponent(result.key);
-          else 
-            filepath =
-              global_configPRD.s3Cloudfront +
-              '/1/' +
-              encodeURIComponent(this.props.identityId) +
-              '/' +
-              encodeURIComponent(result.key);
+
+          filepath =
+            global_config.s3Cloudfront +
+            '/1/' +
+            encodeURIComponent(this.props.identityId) +
+            '/' +
+            encodeURIComponent(result.key);
           //CHECK NSFW
           let apiName = 'superqso';
           let path = '/nsfw-check';
@@ -113,7 +105,7 @@ class QRAProfileBio extends React.Component {
                       console.log(error);
                     } else {
                       Sentry.configureScope(function(scope) {
-                        scope.setExtra('ENV', process.env.ENV);
+                        scope.setExtra('ENV', process.env.NODE_ENV);
                       });
                       Sentry.captureException(error);
                     }
@@ -134,7 +126,7 @@ class QRAProfileBio extends React.Component {
                 console.log(error);
               } else {
                 Sentry.configureScope(function(scope) {
-                  scope.setExtra('ENV', process.env.ENV);
+                  scope.setExtra('ENV', process.env.NODE_ENV);
                 });
                 Sentry.captureException(error);
               }
@@ -146,7 +138,7 @@ class QRAProfileBio extends React.Component {
             console.log(error);
           } else {
             Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.ENV);
+              scope.setExtra('ENV', process.env.NODE_ENV);
             });
             Sentry.captureException(error);
           }

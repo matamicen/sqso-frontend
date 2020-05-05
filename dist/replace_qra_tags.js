@@ -34,7 +34,7 @@ const replace_qra_tags = (req, res) => {
   if (req.params['idQRA'] !== 'empty') {
     var apigClientFactory = require('aws-api-gateway-client').default;
 
-    if (process.env.ENV === 'production')
+    if (process.env.NODE_ENV === 'production')
       var config = {
         invokeUrl: _global_configPRD.default.apiEndpoint
       };
@@ -72,7 +72,7 @@ const replace_qra_tags = (req, res) => {
               console.error('Read error', err);
             } else {
               Sentry.configureScope(function(scope) {
-                scope.setExtra('ENV', process.env.ENV);
+                scope.setExtra('ENV', process.env.NODE_ENV);
               });
               Sentry.captureException(err);
             }
@@ -115,7 +115,7 @@ const replace_qra_tags = (req, res) => {
           console.log(result);
         } else {
           Sentry.configureScope(function(scope) {
-            scope.setExtra('ENV', process.env.ENV);
+            scope.setExtra('ENV', process.env.NODE_ENV);
           });
           Sentry.captureException(result);
         }

@@ -82,7 +82,7 @@ class ForgotPassword extends React.Component {
             console.log(err);
           } else {
             Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.ENV);
+              scope.setExtra('ENV', process.env.NODE_ENV);
             });
             Sentry.captureException(err);
           }
@@ -152,7 +152,7 @@ class ForgotPassword extends React.Component {
             console.log(err);
           } else {
             Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.ENV);
+              scope.setExtra('ENV', process.env.NODE_ENV);
             });
             Sentry.captureException(err);
           }

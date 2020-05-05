@@ -29,7 +29,7 @@ class AuthenticatedNavigation extends React.PureComponent {
           console.log(error);
         } else {
           Sentry.configureScope(function(scope) {
-            scope.setExtra('ENV', process.env.ENV);
+            scope.setExtra('ENV', process.env.NODE_ENV);
           });
           Sentry.captureException(error);
         }

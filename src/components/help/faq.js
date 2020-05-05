@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import Header from 'semantic-ui-react/dist/commonjs/elements/Header';
-import global_configDEV from '../../global_configDEV.json';
-import global_configPRD from '../../global_configPRD.json';
+import global_config from '../../global_config.json';
 import '../../styles/style.css';
 import Ad from '../Ad/Ad';
 import AppNavigation from '../Home/AppNavigation';
@@ -23,7 +22,7 @@ const PrivacyPolicy = props => (
 
         <video  width="100%"  controls controlsList="nodownload">
           <source
-            src={(process.env.NODE_ENV !== 'production'?global_configDEV.s3Cloudfront:global_configPRD.s3Cloudfront) + "/faq/tutorialCompleto_j.mp4"}
+            src={global_config.s3Cloudfront + "/faq/tutorialCompleto_j.mp4"}
             type="video/mp4"
             
             
@@ -36,7 +35,7 @@ const PrivacyPolicy = props => (
         <Header as="h3">¿Como postear un QSO?</Header>
         <video width="100%" controls controlsList="nodownload">
           <source
-            src={(process.env.ENV !== 'production'?global_configDEV.s3Cloudfront:global_configPRD.s3Cloudfront) + "/faq/PostQSO_alta_j.mp4"}
+            src={global_config.s3Cloudfront + "/faq/PostQSO_alta_j.mp4"}
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -58,7 +57,7 @@ const PrivacyPolicy = props => (
         </p>
         <video width="100%" controls controlsList="nodownload">
           <source
-            src={(process.env.ENV !== 'production'?global_configDEV.s3Cloudfront:global_configPRD.s3Cloudfront) + "/faq/Post+de+una+escucha_j.mp4"}
+            src={global_config.s3Cloudfront + "/faq/Post+de+una+escucha_j.mp4"}
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -80,7 +79,7 @@ const PrivacyPolicy = props => (
         </p>
         <video width="100%" controls controlsList="nodownload">
           <source
-            src={(process.env.ENV !== 'production'?global_configDEV.s3Cloudfront:global_configPRD.s3Cloudfront) + "/faq/PostANY_j.mp4"}
+            src={global_config.s3Cloudfront + "/faq/PostANY_j.mp4"}
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -100,7 +99,7 @@ const PrivacyPolicy = props => (
 
         <video width="100%" controls controlsList="nodownload">
           <source
-            src={(process.env.ENV !== 'production'?global_configDEV.s3Cloudfront:global_configPRD.s3Cloudfront) + "/faq/Seguir+a+un+colega_j.mp4"}
+            src={global_config.s3Cloudfront + "/faq/Seguir+a+un+colega_j.mp4"}
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -115,7 +114,7 @@ const PrivacyPolicy = props => (
         <p> Desde la WEB haces click en la campanita arriba a la derecha.</p>
         <video width="100%" controls controlsList="nodownload">
           <source
-            src={(process.env.ENV !== 'production'?global_configDEV.s3Cloudfront:global_configPRD.s3Cloudfront) + "/faq/Leer+notificaciones_j.mp4"}
+            src={global_config.s3Cloudfront + "/faq/Leer+notificaciones_j.mp4"}
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -139,7 +138,7 @@ const PrivacyPolicy = props => (
         </p>
         <video width="100%" controls controlsList="nodownload">
           <source
-            src={(process.env.ENV !== 'production'?global_configDEV.s3Cloudfront:global_configPRD.s3Cloudfront) + "/faq/Imprimir+tarjeta+QSL_j.mp4"}
+            src={global_config.s3Cloudfront + "/faq/Imprimir+tarjeta+QSL_j.mp4"}
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -156,7 +155,7 @@ const PrivacyPolicy = props => (
         </p>
         <video width="100%" controls controlsList="nodownload">
           <source
-            src={(process.env.ENV !== 'production'?global_configDEV.s3Cloudfront:global_configPRD.s3Cloudfront) + "/faq/Escanear+c%C3%B3digo+QR+de+tarjeta+QSL_j.mp4"}
+            src={global_config.s3Cloudfront + "/faq/Escanear+c%C3%B3digo+QR+de+tarjeta+QSL_j.mp4"}
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -175,7 +174,7 @@ const PrivacyPolicy = props => (
 
         <video width="100%" controls controlsList="nodownload">
           <source
-            src={(process.env.ENV !== 'production'?global_configDEV.s3Cloudfront:global_configPRD.s3Cloudfront) + "/faq/Compartir+en+redes+sociales+desde+la+APP_j.mp4"}
+            src={global_config.s3Cloudfront + "/faq/Compartir+en+redes+sociales+desde+la+APP_j.mp4"}
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -190,7 +189,7 @@ const PrivacyPolicy = props => (
         </p>
         <video width="100%" controls controlsList="nodownload">
           <source
-            src={(process.env.ENV !== 'production'?global_configDEV.s3Cloudfront:global_configPRD.s3Cloudfront) + "/faq/Compartir+en+redes+sociales+desde+la+Web_j.mp4"}
+            src={global_config.s3Cloudfront + "/faq/Compartir+en+redes+sociales+desde+la+Web_j.mp4"}
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -203,7 +202,7 @@ const PrivacyPolicy = props => (
         </Header>
         <video width="100%" controls controlsList="nodownload">
           <source
-            src={(process.env.ENV !== 'production'?global_configDEV.s3Cloudfront:global_configPRD.s3Cloudfront) + "/faq/Comentar%2C+Like+y+Repostear_j.mp4"}
+            src={global_config.s3Cloudfront + "/faq/Comentar%2C+Like+y+Repostear_j.mp4"}
             type="video/mp4"
             controlsList="nodownload"
           />

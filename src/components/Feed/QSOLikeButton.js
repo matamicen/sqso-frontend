@@ -72,7 +72,7 @@ class QSOLikeButton extends React.Component {
           //   // icon: "thumbs up",
           //   // liked: true
           // });
-          if (process.env.ENV !== 'production') {
+          if (process.env.NODE_ENV !== 'production') {
             window.gtag('event', 'qsoLiked_WEBDEV', {
               event_category: 'QSO',
               event_label: 'liked'
@@ -90,7 +90,7 @@ class QSOLikeButton extends React.Component {
           console.log(error);
         } else {
           Sentry.configureScope(function(scope) {
-            scope.setExtra('ENV', process.env.ENV);
+            scope.setExtra('ENV', process.env.NODE_ENV);
           });
           Sentry.captureException(error);
         }
@@ -120,7 +120,7 @@ class QSOLikeButton extends React.Component {
           //   // icon: "thumbs outline up",
           //   // liked: false
           // });
-          if (process.env.ENV !== 'production') {
+          if (process.env.NODE_ENV !== 'production') {
             window.gtag('event', 'qsoUnliked_WEBDEV', {
               event_category: 'QSO',
               event_label: 'unliked'
@@ -138,7 +138,7 @@ class QSOLikeButton extends React.Component {
           console.log(error);
         } else {
           Sentry.configureScope(function(scope) {
-            scope.setExtra('ENV', process.env.ENV);
+            scope.setExtra('ENV', process.env.NODE_ENV);
           });
           Sentry.captureException(error);
         }
