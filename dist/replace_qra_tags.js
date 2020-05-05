@@ -15,11 +15,8 @@ var _fs = _interopRequireDefault(require('fs'));
 
 var _path = _interopRequireDefault(require('path'));
 
-var _global_configDEV = _interopRequireDefault(
-  require('./global_configDEV.json')
-);
 
-var _global_configPRD = _interopRequireDefault(
+var _global_config = _interopRequireDefault(
   require('./global_config.json')
 );
 
@@ -34,14 +31,11 @@ const replace_qra_tags = (req, res) => {
   if (req.params['idQRA'] !== 'empty') {
     var apigClientFactory = require('aws-api-gateway-client').default;
 
-    if (process.env.NODE_ENV === 'production')
+
       var config = {
-        invokeUrl: _global_configPRD.default.apiEndpoint
+        invokeUrl: _global_config.default.apiEndpoint
       };
-    else
-      config = {
-        invokeUrl: _global_configDEV.default.apiEndpoint
-      };
+   
     var apigClient = apigClientFactory.newClient(config);
     var params = {};
     var pathTemplate = '/qra-get-data';
