@@ -20,7 +20,7 @@ var _global_configDEV = _interopRequireDefault(
 );
 
 var _global_configPRD = _interopRequireDefault(
-  require('./global_configPRD.json')
+  require('./global_config.json')
 );
 
 const prepHTML = (data, { html, head, body }) => {
