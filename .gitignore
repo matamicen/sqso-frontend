@@ -36,19 +36,19 @@ build/asset-manifest.json
 build/service-worker.js
 build/index.html
 
-server/global_config.json
-src/global_config.json
-src/aws-exports.js
-dist/global_configPRD.json
-dist/global_config.json
-src/aws-exports.js
-src/aws-exports.js
-server/global_config.json
-src/global_configPRD.json
-server/global_config.json
-server/global_config.json
-server/global_configPRD.json
-src/global_config.json
-src/aws-exportsPRD.js
-src/global_config.json
+# server/global_config.json
+# src/global_config.json
+# src/aws-exports.js
+# dist/global_configPRD.json
+# dist/global_config.json
+# src/aws-exports.js
+# src/aws-exports.js
+# server/global_config.json
+# src/global_configPRD.json
+# server/global_config.json
+# server/global_config.json
+# server/global_configPRD.json
+# src/global_config.json
+# src/aws-exportsPRD.js
+# src/global_config.json
 
