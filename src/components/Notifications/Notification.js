@@ -110,7 +110,7 @@ export default class Notification extends React.Component {
             src={
               this.props.notification.qra_avatarpic
                 ? this.props.notification.qra_avatarpic
-                : global_config.s3Cloudfront + 'faq/emptyprofile.png'
+                : global_config.s3Cloudfront + '/faq/emptyprofile.png'
             }
           />
         </Table.Cell>
