@@ -1,8 +1,7 @@
 import * as Sentry from '@sentry/browser';
 import fs from 'fs';
 import path from 'path';
-import global_configDEV from './global_configDEV.json';
-import global_configPRD from './global_configPRD.json';
+import global_config from './global_config.json';
 
 // A simple helper function to prepare the HTML markup
 const prepHTML = (data, { html, head, body }) => {
@@ -14,14 +13,11 @@ const replace_qso_tags = async (req, res) => {
 
   if (req.params['idQSO'] !== 'empty') {
     var apigClientFactory = require('aws-api-gateway-client').default;
-    if (process.env.ENV === 'production')
+
       var config = {
-        invokeUrl: global_configPRD.apiEndpoint
+        invokeUrl: global_config.apiEndpoint
       };
-    else
-      config = {
-        invokeUrl: global_configDEV.apiEndpoint
-      };
+    
     var apigClient = apigClientFactory.newClient(config);
     var params = {};
     var pathTemplate = '/qso-metadata-get';
@@ -49,7 +45,7 @@ const replace_qso_tags = async (req, res) => {
               console.error('Read error', err);
             }
             Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.ENV);
+              scope.setExtra('ENV', process.env.NODE_ENV);
             });
             Sentry.captureException(err);
 
@@ -101,7 +97,7 @@ const replace_qso_tags = async (req, res) => {
         }
         else {
           Sentry.configureScope(function(scope) {
-            scope.setExtra('ENV', process.env.ENV);
+            scope.setExtra('ENV', process.env.NODE_ENV);
           });
           Sentry.captureException(result);
         }

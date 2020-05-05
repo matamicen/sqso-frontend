@@ -3,7 +3,7 @@ require('@babel/register')({
 });
 const Sitemap = require('react-router-sitemap').default;
 
-const global_config = require('../global_configPRD.json');
+const global_config = require('../global_config.json');
 
 require('ignore-styles');
 // require("@babel/register")({

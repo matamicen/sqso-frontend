@@ -7,8 +7,7 @@ import { connect } from 'react-redux';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import * as Actions from '../actions';
-import AwsExportsDEV from '../aws-exportsDEV';
-import AwsExportsPRD from '../aws-exportsPRD';
+import AwsExports from '../aws-exports';
 import ChangePassword from './Auth/ChangePassword';
 import ForgotPassword from './Auth/ForgotPassword';
 import LogIn from './Auth/LogIn';
@@ -26,8 +25,7 @@ import QSODetail from './QSODetail';
 // if (process.env.NODE_ENV !== 'production') {     const {whyDidYouUpdate} =
 // require('why-did-you-update')     whyDidYouUpdate(React)   }
 
-if (process.env.ENV !== 'production') Amplify.configure(AwsExportsDEV);
-else Amplify.configure(AwsExportsPRD);
+Amplify.configure(AwsExports);
 
 class App extends Component {
   async componentDidMount() {

@@ -23,7 +23,7 @@ const QSOShareButtons = ({ idqso }) => {
             title="CheckOut this QSO"
             url={window.location.origin + '/qso/' + idqso}
             beforeOnClick={() => {
-              if (process.env.ENV !== 'production')
+              if (process.env.NODE_ENV !== 'production')
                 window.gtag('event', 'qsoShareWAPP_WEBDEV', {
                   event_category: 'QSO',
                   event_label: 'shareWAPP'
@@ -43,7 +43,7 @@ const QSOShareButtons = ({ idqso }) => {
             quote="CheckOut this QSO"
             url={window.location.origin + '/qso/' + idqso}
             beforeOnClick={() => {
-              if (process.env.ENV !== 'production')
+              if (process.env.NODE_ENV !== 'production')
                 window.gtag('event', 'qsoShareFB_WEBDEV', {
                   event_category: 'QSO',
                   event_label: 'shareFB'
@@ -69,7 +69,7 @@ const QSOShareButtons = ({ idqso }) => {
             title="CheckOut this QSO"
             url={window.location.origin + '/qso/' + idqso}
             beforeOnClick={() => {
-              if (process.env.ENV !== 'production')
+              if (process.env.NODE_ENV !== 'production')
                 window.gtag('event', 'qsoShareTW_WEBDEV', {
                   event_category: 'QSO',
                   event_label: 'shareTW'

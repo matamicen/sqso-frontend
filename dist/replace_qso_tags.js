@@ -35,7 +35,7 @@ const replace_qso_tags = async (req, res) => {
   if (req.params['idQSO'] !== 'empty') {
     var apigClientFactory = require('aws-api-gateway-client').default;
 
-    if (process.env.ENV === 'production')
+    if (process.env.NODE_ENV === 'production')
       var config = {
         invokeUrl: _global_configPRD.default.apiEndpoint
       };
@@ -74,7 +74,7 @@ const replace_qso_tags = async (req, res) => {
             }
 
             Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.ENV);
+              scope.setExtra('ENV', process.env.NODE_ENV);
             });
             Sentry.captureException(err);
             return res.status(404).end();
@@ -126,7 +126,7 @@ const replace_qso_tags = async (req, res) => {
           console.log(result);
         } else {
           Sentry.configureScope(function(scope) {
-            scope.setExtra('ENV', process.env.ENV);
+            scope.setExtra('ENV', process.env.NODE_ENV);
           });
           Sentry.captureException(result);
         }

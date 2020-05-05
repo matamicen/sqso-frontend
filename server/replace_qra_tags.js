@@ -1,8 +1,7 @@
 import * as Sentry from '@sentry/browser';
 import fs from 'fs';
 import path from 'path';
-import global_configDEV from './global_configDEV.json';
-import global_configPRD from './global_configPRD.json';
+import global_config from './global_config.json';
 const prepHTML = (data, { html, head, body }) => {
   data = data.replace('</head>', `${head}</head>`);
   return data;
@@ -13,14 +12,10 @@ const replace_qra_tags = (req, res) => {
   if (req.params['idQRA'] !== 'empty') {
     var apigClientFactory = require('aws-api-gateway-client').default;
 
-    if (process.env.ENV === 'production')
-      var config = {
-        invokeUrl: global_configPRD.apiEndpoint
-      };
-    else
-      config = {
-        invokeUrl: global_configDEV.apiEndpoint
-      };
+    var config = {
+      invokeUrl: global_config.apiEndpoint
+    };
+
     var apigClient = apigClientFactory.newClient(config);
     var params = {};
     var pathTemplate = '/qra-get-data';
@@ -49,7 +44,7 @@ const replace_qra_tags = (req, res) => {
               console.error('Read error', err);
             } else {
               Sentry.configureScope(function(scope) {
-                scope.setExtra('ENV', process.env.ENV);
+                scope.setExtra('ENV', process.env.NODE_ENV);
               });
               Sentry.captureException(err);
             }
@@ -87,10 +82,9 @@ const replace_qra_tags = (req, res) => {
       .catch(function(result) {
         if (process.env.NODE_ENV !== 'production') {
           console.log(result);
-        }
-        else{
+        } else {
           Sentry.configureScope(function(scope) {
-            scope.setExtra('ENV', process.env.ENV);
+            scope.setExtra('ENV', process.env.NODE_ENV);
           });
           Sentry.captureException(result);
         }
