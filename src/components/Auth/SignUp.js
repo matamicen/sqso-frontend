@@ -83,7 +83,7 @@ class SignUp extends React.Component {
         window.gtag('config', 'G-H8G28LYKBY', {
           custom_map: { dimension1: 'userQRA' }
         });
-        if (process.env.NODE_ENV !== 'production')
+        if (process.env.ENV !== 'production')
           window.gtag('event', 'userSignUp_WEBDEV', {
             event_category: 'User',
             event_label: 'signUp',
@@ -102,14 +102,14 @@ class SignUp extends React.Component {
             dimmerActive: false,
             signUpError: 'callsign/email already registered'
           });
-         
-        }  else if (err.message === 'SignUp is not permitted for this user pool') {
+        } else if (
+          err.message === 'SignUp is not permitted for this user pool'
+        ) {
           this.setState({
             dimmerActive: false,
             signUpError: 'SignUp is no available yet. Please wait a few days!'
           });
-        }
-        else this.setState({ dimmerActive: false, signUpError: err.message });
+        } else this.setState({ dimmerActive: false, signUpError: err.message });
       });
   }
 
@@ -120,7 +120,7 @@ class SignUp extends React.Component {
   async handleResendCode() {
     await Auth.resendSignUp(this.state.email.toLowerCase())
       .then(() => {
-        if (process.env.NODE_ENV !== 'production')
+        if (process.env.ENV !== 'production')
           window.gtag('event', 'resendCode_WEBDEV', {
             event_category: 'User',
             event_label: 'resendCode'
@@ -134,11 +134,11 @@ class SignUp extends React.Component {
       .catch(err => {
         if (process.env.NODE_ENV !== 'production') {
           console.log(err);
-        } else  Sentry.configureScope(function (scope) {   
-    scope.setExtra("ENV", process.env.NODE_ENV)
-
-  });
-Sentry.captureException(err);
+        } else
+          Sentry.configureScope(function(scope) {
+            scope.setExtra('ENV', process.env.ENV);
+          });
+        Sentry.captureException(err);
         this.setState({ confirmError: err });
       });
   }
@@ -163,11 +163,11 @@ Sentry.captureException(err);
       .catch(err => {
         if (process.env.NODE_ENV !== 'production') {
           console.log(err);
-        } else  Sentry.configureScope(function (scope) {   
-    scope.setExtra("ENV", process.env.NODE_ENV)
-
-  });
-Sentry.captureException(err);
+        } else
+          Sentry.configureScope(function(scope) {
+            scope.setExtra('ENV', process.env.ENV);
+          });
+        Sentry.captureException(err);
         this.setState({ dimmerValCodeActive: false, confirmError: err });
       });
   }

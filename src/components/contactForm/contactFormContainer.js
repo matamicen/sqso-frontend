@@ -1,16 +1,16 @@
-import API from "@aws-amplify/api";
-import * as Sentry from "@sentry/browser";
-import { Formik } from "formik";
-import React, { Fragment } from "react";
-import { withRouter } from "react-router-dom";
-import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
-import * as Yup from "yup";
-import ContactFormPresentation from "./contactFormPresentation";
+import API from '@aws-amplify/api';
+import * as Sentry from '@sentry/browser';
+import { Formik } from 'formik';
+import React, { Fragment } from 'react';
+import { withRouter } from 'react-router-dom';
+import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
+import * as Yup from 'yup';
+import ContactFormPresentation from './contactFormPresentation';
 class contactForm extends React.Component {
   state = { openModal: false };
   send(values) {
-    let apiName = "superqso";
-    let path = "/contactformsend";
+    let apiName = 'superqso';
+    let path = '/contactformsend';
     let myInit = {
       body: {
         email: values.email,
@@ -26,23 +26,24 @@ class contactForm extends React.Component {
         }
       })
       .catch(error => {
-        if (process.env.NODE_ENV !== "production") {
+        if (process.env.NODE_ENV !== 'production') {
           console.log(error);
-        } else { Sentry.configureScope(function (scope) {   
-    scope.setExtra("ENV", process.env.NODE_ENV);
-  });
-Sentry.captureException(error);
-}
+        } else {
+          Sentry.configureScope(function(scope) {
+            scope.setExtra('ENV', process.env.ENV);
+          });
+          Sentry.captureException(error);
+        }
       });
   }
   render() {
-    const values = { email: "", message: "" };
+    const values = { email: '', message: '' };
     const validationSchema = Yup.object({
-      email: Yup.string("Enter your email")
-        .email("Enter a valid email")
-        .required("Email is required"),
-      message: Yup.string().required("Enter Message"),
-      recaptcha: Yup.string().required("Confirm Recaptcha")
+      email: Yup.string('Enter your email')
+        .email('Enter a valid email')
+        .required('Email is required'),
+      message: Yup.string().required('Enter Message'),
+      recaptcha: Yup.string().required('Confirm Recaptcha')
     });
 
     return (
@@ -56,7 +57,7 @@ Sentry.captureException(error);
 
         <Modal
           open={this.state.openModal}
-          onClose={() => this.props.history.push("/")}
+          onClose={() => this.props.history.push('/')}
           size="small"
         >
           <Modal.Header>Contact Us</Modal.Header>

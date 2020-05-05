@@ -72,7 +72,7 @@ class QSOLikeButton extends React.Component {
           //   // icon: "thumbs up",
           //   // liked: true
           // });
-          if (process.env.NODE_ENV !== 'production') {
+          if (process.env.ENV !== 'production') {
             window.gtag('event', 'qsoLiked_WEBDEV', {
               event_category: 'QSO',
               event_label: 'liked'
@@ -83,17 +83,17 @@ class QSOLikeButton extends React.Component {
               event_label: 'liked'
             });
           }
-
         }
       })
       .catch(error => {
         if (process.env.NODE_ENV !== 'production') {
           console.log(error);
-        } else { Sentry.configureScope(function (scope) {   
-    scope.setExtra("ENV", process.env.NODE_ENV);
-  });
-Sentry.captureException(error);
-}
+        } else {
+          Sentry.configureScope(function(scope) {
+            scope.setExtra('ENV', process.env.ENV);
+          });
+          Sentry.captureException(error);
+        }
       });
   }
 
@@ -120,7 +120,7 @@ Sentry.captureException(error);
           //   // icon: "thumbs outline up",
           //   // liked: false
           // });
-          if (process.env.NODE_ENV !== 'production') {
+          if (process.env.ENV !== 'production') {
             window.gtag('event', 'qsoUnliked_WEBDEV', {
               event_category: 'QSO',
               event_label: 'unliked'
@@ -131,18 +131,17 @@ Sentry.captureException(error);
               event_label: 'unliked'
             });
           }
-
-          
         }
       })
       .catch(error => {
         if (process.env.NODE_ENV !== 'production') {
           console.log(error);
-        } else { Sentry.configureScope(function (scope) {   
-    scope.setExtra("ENV", process.env.NODE_ENV);
-  });
-Sentry.captureException(error);
-}
+        } else {
+          Sentry.configureScope(function(scope) {
+            scope.setExtra('ENV', process.env.ENV);
+          });
+          Sentry.captureException(error);
+        }
       });
   }
 

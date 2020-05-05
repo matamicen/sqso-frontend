@@ -52,7 +52,7 @@ class FeedOptionsMenu extends React.PureComponent {
     QslCardPrint(this.props);
   }
   handleOnSubmitReportComment(e) {
-    if (process.env.NODE_ENV !== 'production')
+    if (process.env.ENV !== 'production')
       window.gtag('event', 'reportComment_WEBDEV', {
         event_category: 'QSO',
         event_label: 'reportComment'
@@ -95,24 +95,25 @@ class FeedOptionsMenu extends React.PureComponent {
       .catch(error => {
         if (process.env.NODE_ENV !== 'production') {
           console.log(error);
-        } else { Sentry.configureScope(function (scope) {   
-    scope.setExtra("ENV", process.env.NODE_ENV);
-  });
-Sentry.captureException(error);
-}
+        } else {
+          Sentry.configureScope(function(scope) {
+            scope.setExtra('ENV', process.env.ENV);
+          });
+          Sentry.captureException(error);
+        }
       });
   }
   handleOnSubmitReportQso(e) {
-    if (process.env.NODE_ENV !== 'production')
-    window.gtag('event', 'reportQSO_WEBDEV', {
-      event_category: 'QSO',
-      event_label: 'reportQSO'
-    });
-  else
-    window.gtag('event', 'reportContent_WEBPRD', {
-      event_category: 'QSO',
-      event_label: 'reportQSO'
-    });
+    if (process.env.ENV !== 'production')
+      window.gtag('event', 'reportQSO_WEBDEV', {
+        event_category: 'QSO',
+        event_label: 'reportQSO'
+      });
+    else
+      window.gtag('event', 'reportContent_WEBPRD', {
+        event_category: 'QSO',
+        event_label: 'reportQSO'
+      });
     var datetime = new Date();
     e.preventDefault();
     if (
@@ -145,24 +146,25 @@ Sentry.captureException(error);
       .catch(error => {
         if (process.env.NODE_ENV !== 'production') {
           console.log(error);
-        } else { Sentry.configureScope(function (scope) {   
-    scope.setExtra("ENV", process.env.NODE_ENV);
-  });
-Sentry.captureException(error);
-}
+        } else {
+          Sentry.configureScope(function(scope) {
+            scope.setExtra('ENV', process.env.ENV);
+          });
+          Sentry.captureException(error);
+        }
       });
   }
   handleOnSubmitReportMedia(e) {
-    if (process.env.NODE_ENV !== 'production')
-    window.gtag('event', 'reportMedia_WEBDEV', {
-      event_category: 'QSO',
-      event_label: 'reportMedia'
-    });
-  else
-    window.gtag('event', 'reportMedia_WEBPRD', {
-      event_category: 'QSO',
-      event_label: 'reportMedia'
-    });
+    if (process.env.ENV !== 'production')
+      window.gtag('event', 'reportMedia_WEBDEV', {
+        event_category: 'QSO',
+        event_label: 'reportMedia'
+      });
+    else
+      window.gtag('event', 'reportMedia_WEBPRD', {
+        event_category: 'QSO',
+        event_label: 'reportMedia'
+      });
     var datetime = new Date();
     e.preventDefault();
     if (
@@ -196,11 +198,12 @@ Sentry.captureException(error);
       .catch(error => {
         if (process.env.NODE_ENV !== 'production') {
           console.log(error);
-        } else { Sentry.configureScope(function (scope) {   
-    scope.setExtra("ENV", process.env.NODE_ENV);
-  });
-Sentry.captureException(error);
-}
+        } else {
+          Sentry.configureScope(function(scope) {
+            scope.setExtra('ENV', process.env.ENV);
+          });
+          Sentry.captureException(error);
+        }
       });
   }
   render() {

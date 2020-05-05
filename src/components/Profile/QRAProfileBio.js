@@ -53,7 +53,7 @@ class QRAProfileBio extends React.Component {
             console.log(error);
           } else {
             Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.NODE_ENV);
+              scope.setExtra('ENV', process.env.ENV);
             });
             Sentry.captureException(error);
           }
@@ -77,14 +77,14 @@ class QRAProfileBio extends React.Component {
       })
         .then(result => {
           let filepath;
-          if (process.env.NODE_ENV !== 'production')
+          if (process.env.ENV !== 'production')
             filepath =
               global_configDEV.s3Cloudfront +
               '/1/' +
               encodeURIComponent(this.props.identityId) +
               '/' +
               encodeURIComponent(result.key);
-          else if (process.env.NODE_ENV !== 'production')
+          else 
             filepath =
               global_configPRD.s3Cloudfront +
               '/1/' +
@@ -113,7 +113,7 @@ class QRAProfileBio extends React.Component {
                       console.log(error);
                     } else {
                       Sentry.configureScope(function(scope) {
-                        scope.setExtra('ENV', process.env.NODE_ENV);
+                        scope.setExtra('ENV', process.env.ENV);
                       });
                       Sentry.captureException(error);
                     }
@@ -134,7 +134,7 @@ class QRAProfileBio extends React.Component {
                 console.log(error);
               } else {
                 Sentry.configureScope(function(scope) {
-                  scope.setExtra('ENV', process.env.NODE_ENV);
+                  scope.setExtra('ENV', process.env.ENV);
                 });
                 Sentry.captureException(error);
               }
@@ -146,7 +146,7 @@ class QRAProfileBio extends React.Component {
             console.log(error);
           } else {
             Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.NODE_ENV);
+              scope.setExtra('ENV', process.env.ENV);
             });
             Sentry.captureException(error);
           }

@@ -26,7 +26,7 @@ import QSODetail from './QSODetail';
 // if (process.env.NODE_ENV !== 'production') {     const {whyDidYouUpdate} =
 // require('why-did-you-update')     whyDidYouUpdate(React)   }
 
-if (process.env.NODE_ENV !== 'production') Amplify.configure(AwsExportsDEV);
+if (process.env.ENV !== 'production') Amplify.configure(AwsExportsDEV);
 else Amplify.configure(AwsExportsPRD);
 
 class App extends Component {

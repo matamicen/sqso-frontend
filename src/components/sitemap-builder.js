@@ -1,32 +1,31 @@
 require('@babel/register')({
-	extends: './.babelrc',
-})
-const Sitemap = require("react-router-sitemap").default;
-if (process.env.NODE_ENV === 'production')
-  import global_config from './global_configPRD.json';
-else import global_config from './global_configDEV.json';
+  extends: './.babelrc'
+});
+const Sitemap = require('react-router-sitemap').default;
 
-require("ignore-styles");
+const global_config = require('../global_configPRD.json');
+
+require('ignore-styles');
 // require("@babel/register")({
 //   presets: ["@babel/preset-env", "@babel/react"]
 // });
 // Ignore those pesky styles
-const App = require("./AppForSitemap").default;
+const App = require('./AppForSitemap').default;
 async function generateSitemap() {
   try {
-    var apigClientFactory = require("aws-api-gateway-client").default;
+    var apigClientFactory = require('aws-api-gateway-client').default;
 
     var config = {
       invokeUrl: global_config.apiEndpoint
     };
     var apigClient = apigClientFactory.newClient(config);
     var params = {};
-    var pathTemplate = "/qra/list";
-    var method = "GET";
+    var pathTemplate = '/qra/list';
+    var method = 'GET';
     var additionalParams = {
       headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*"
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
       },
       queryParams: {}
     };
@@ -41,7 +40,7 @@ async function generateSitemap() {
         }
 
         const paramsConfig = {
-          "/:qra": [
+          '/:qra': [
             { qra: idMap } // array of ids
             // { qra: "LU2FFF" } // array of ids
           ]
@@ -50,8 +49,8 @@ async function generateSitemap() {
         new Sitemap(App)
 
           .applyParams(paramsConfig)
-          .build("https://www.superqso.com")
-          .save("./public/sitemap.xml");
+          .build('https://www.superqso.com')
+          .save('./public/sitemap.xml');
       })
       .catch(error => {
         console.log(error);

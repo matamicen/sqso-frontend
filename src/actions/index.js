@@ -40,7 +40,7 @@ export const FOLLOW_RECEIVE = 'FOLLOW_RECEIVE';
 
 export function doNotificationRead(idnotif = null, token) {
   return dispatch => {
-    if (process.env.NODE_ENV !== 'production')
+    if (process.env.ENV !== 'production')
       window.gtag('event', 'notificationRead_WEBDEV', {
         event_category: 'User',
         event_label: 'notificationRead'
@@ -75,11 +75,11 @@ export function doNotificationRead(idnotif = null, token) {
               dispatch(doNotificationRead(idnotif, token));
             })
             .catch(error => {
-              if (process.env.NODE_ENV !== 'production') {
+              if (process.env.ENV !== 'production') {
                 console.log(error);
               } else {
                 Sentry.configureScope(function(scope) {
-                  scope.setExtra('ENV', process.env.NODE_ENV);
+                  scope.setExtra('ENV', process.env.ENV);
                 });
                 Sentry.captureException(error);
               }
@@ -90,7 +90,7 @@ export function doNotificationRead(idnotif = null, token) {
             console.log(error.message);
           } else {
             Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.NODE_ENV);
+              scope.setExtra('ENV', process.env.ENV);
             });
             Sentry.captureException(error);
           }
@@ -100,7 +100,7 @@ export function doNotificationRead(idnotif = null, token) {
 }
 export function doCommentDelete(idcomment, idqso, token) {
   return dispatch => {
-    if (process.env.NODE_ENV !== 'production')
+    if (process.env. ENV !== 'production')
       window.gtag('event', 'qsoCommentDel_WEBDEV', {
         event_category: 'QSO',
         event_label: 'commentDel'
@@ -140,7 +140,7 @@ export function doCommentDelete(idcomment, idqso, token) {
                 console.log(error);
               } else {
                 Sentry.configureScope(function(scope) {
-                  scope.setExtra('ENV', process.env.NODE_ENV);
+                  scope.setExtra('ENV', process.env.ENV);
                 });
                 Sentry.captureException(error);
               }
@@ -151,7 +151,7 @@ export function doCommentDelete(idcomment, idqso, token) {
             console.log(error.message);
           } else {
             Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.NODE_ENV);
+              scope.setExtra('ENV', process.env.ENV);
             });
             Sentry.captureException(error);
           }
@@ -161,7 +161,7 @@ export function doCommentDelete(idcomment, idqso, token) {
 }
 export function doCommentAdd(idqso, comment, token) {
   return dispatch => {
-    if (process.env.NODE_ENV !== 'production')
+    if (process.env. ENV !== 'production')
       window.gtag('event', 'qsoCommentAdd_WEBDEV', {
         event_category: 'QSO',
         event_label: 'commentAdd'
@@ -202,7 +202,7 @@ export function doCommentAdd(idqso, comment, token) {
                 console.log(error);
               } else {
                 Sentry.configureScope(function(scope) {
-                  scope.setExtra('ENV', process.env.NODE_ENV);
+                  scope.setExtra('ENV', process.env.ENV);
                 });
                 Sentry.captureException(error);
               }
@@ -213,7 +213,7 @@ export function doCommentAdd(idqso, comment, token) {
             console.log(error.message);
           } else {
             Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.NODE_ENV);
+              scope.setExtra('ENV', process.env.ENV);
             });
             Sentry.captureException(error);
           }
@@ -249,7 +249,7 @@ export function doNotificationReadResponse(idnotif) {
 }
 export function doDeleteQso(idqso, token) {
   return dispatch => {
-    if (process.env.NODE_ENV !== 'production')
+    if (process.env. ENV !== 'production')
       window.gtag('event', 'qsoDelete_WEBDEV', {
         event_category: 'QSO',
         event_label: 'delete'
@@ -295,7 +295,7 @@ export function doDeleteQso(idqso, token) {
                 console.log(error);
               } else {
                 Sentry.configureScope(function(scope) {
-                  scope.setExtra('ENV', process.env.NODE_ENV);
+                  scope.setExtra('ENV', process.env.ENV);
                 });
                 Sentry.captureException(error);
               }
@@ -306,7 +306,7 @@ export function doDeleteQso(idqso, token) {
             console.log(error.message);
           } else {
             Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.NODE_ENV);
+              scope.setExtra('ENV', process.env.ENV);
             });
             Sentry.captureException(error);
           }
@@ -324,7 +324,7 @@ export function doDeleteQsoResponse(idqso = null) {
 
 export function doDeleteMedia(idmedia, idqso, token) {
   return dispatch => {
-    if (process.env.NODE_ENV !== 'production')
+    if (process.env.ENV !== 'production')
       window.gtag('event', 'qsoMediaDelete_WEBDEV', {
         event_category: 'QSO',
         event_label: 'mediaDelete'
@@ -366,7 +366,7 @@ export function doDeleteMedia(idmedia, idqso, token) {
                 console.log(error);
               } else {
                 Sentry.configureScope(function(scope) {
-                  scope.setExtra('ENV', process.env.NODE_ENV);
+                  scope.setExtra('ENV', process.env.ENV);
                 });
                 Sentry.captureException(error);
               }
@@ -377,7 +377,7 @@ export function doDeleteMedia(idmedia, idqso, token) {
             console.log(error.message);
           } else {
             Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.NODE_ENV);
+              scope.setExtra('ENV', process.env.ENV);
             });
             Sentry.captureException(error);
           }
@@ -430,7 +430,7 @@ export function doLogin(token, qra, identityId) {
   window.gtag('config', 'G-H8G28LYKBY', {
     custom_map: { dimension1: 'userQRA' }
   });
-  if (process.env.NODE_ENV !== 'production')
+  if (process.env.ENV !== 'production')
     window.gtag('event', 'userLogin_WEBDEV', {
       event_category: 'User',
       event_label: 'Login',
@@ -452,7 +452,7 @@ export function doLogin(token, qra, identityId) {
 }
 
 export function doLogout() {
-  if (process.env.NODE_ENV !== 'production')
+  if (process.env.ENV !== 'production')
     window.gtag('event', 'userLogout_WEBDEV', {
       event_category: 'User',
       event_label: 'Logout'
@@ -536,7 +536,7 @@ export function doFetchUserInfo(token) {
                 console.log(error);
               } else {
                 Sentry.configureScope(function(scope) {
-                  scope.setExtra('ENV', process.env.NODE_ENV);
+                  scope.setExtra('ENV', process.env.ENV);
                 });
                 Sentry.captureException(error);
               }
@@ -547,7 +547,7 @@ export function doFetchUserInfo(token) {
             console.log(error.message);
           } else {
             Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.NODE_ENV);
+              scope.setExtra('ENV', process.env.ENV);
             });
             Sentry.captureException(error);
           }
@@ -557,7 +557,7 @@ export function doFetchUserInfo(token) {
 }
 export function doRepost(idqso, token, qso) {
   return dispatch => {
-    if (process.env.NODE_ENV !== 'production')
+    if (process.env.ENV !== 'production')
       window.gtag('event', 'repost_WEBDEV', {
         event_category: 'QSO',
         event_label: 'repost'
@@ -610,7 +610,7 @@ export function doRepost(idqso, token, qso) {
                 console.log(error);
               } else {
                 Sentry.configureScope(function(scope) {
-                  scope.setExtra('ENV', process.env.NODE_ENV);
+                  scope.setExtra('ENV', process.env.ENV);
                 });
                 Sentry.captureException(error);
               }
@@ -621,7 +621,7 @@ export function doRepost(idqso, token, qso) {
             console.log(error.message);
           } else {
             Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.NODE_ENV);
+              scope.setExtra('ENV', process.env.ENV);
             });
             Sentry.captureException(error);
           }
@@ -639,7 +639,7 @@ export function doAddRepostToFeed(qso) {
 }
 export function doSaveUserInfo(token, qra) {
   return dispatch => {
-    if (process.env.NODE_ENV !== 'production')
+    if (process.env.ENV !== 'production')
       window.gtag('event', 'updateUserInfo_WEBDEV', {
         event_category: 'User',
         event_label: 'updateUserInfo'
@@ -678,7 +678,7 @@ export function doSaveUserInfo(token, qra) {
                 console.log(error);
               } else {
                 Sentry.configureScope(function(scope) {
-                  scope.setExtra('ENV', process.env.NODE_ENV);
+                  scope.setExtra('ENV', process.env.ENV);
                 });
                 Sentry.captureException(error);
               }
@@ -689,7 +689,7 @@ export function doSaveUserInfo(token, qra) {
             console.log(error.message);
           } else {
             Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.NODE_ENV);
+              scope.setExtra('ENV', process.env.ENV);
             });
             Sentry.captureException(error);
           }
@@ -705,7 +705,7 @@ export function doReceiveUserDataInfo(qra) {
 }
 export function doSaveUserBio(token, bio, identityId) {
   return dispatch => {
-    if (process.env.NODE_ENV !== 'production')
+    if (process.env.ENV !== 'production')
       window.gtag('event', 'updateUserBio_WEBDEV', {
         event_category: 'User',
         event_label: 'updateUserBio'
@@ -745,7 +745,7 @@ export function doSaveUserBio(token, bio, identityId) {
                 console.log(error);
               } else {
                 Sentry.configureScope(function(scope) {
-                  scope.setExtra('ENV', process.env.NODE_ENV);
+                  scope.setExtra('ENV', process.env.ENV);
                 });
                 Sentry.captureException(error);
               }
@@ -756,7 +756,7 @@ export function doSaveUserBio(token, bio, identityId) {
             console.log(error.message);
           } else {
             Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.NODE_ENV);
+              scope.setExtra('ENV', process.env.ENV);
             });
             Sentry.captureException(error);
           }
@@ -773,7 +773,7 @@ export function doReceiveUserBio(qra) {
 }
 export function doFetchUserFeed(token) {
   return dispatch => {
-    if (process.env.NODE_ENV !== 'production')
+    if (process.env.ENV !== 'production')
       window.gtag('event', 'getUserFeed_WEBDEV', {
         event_category: 'User',
         event_label: 'getUserFeed'
@@ -811,7 +811,7 @@ export function doFetchUserFeed(token) {
                 console.log(error);
               } else {
                 Sentry.configureScope(function(scope) {
-                  scope.setExtra('ENV', process.env.NODE_ENV);
+                  scope.setExtra('ENV', process.env.ENV);
                 });
                 Sentry.captureException(error);
               }
@@ -822,7 +822,7 @@ export function doFetchUserFeed(token) {
             console.log(error.message);
           } else {
             Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.NODE_ENV);
+              scope.setExtra('ENV', process.env.ENV);
             });
             Sentry.captureException(error);
           }
@@ -832,7 +832,7 @@ export function doFetchUserFeed(token) {
 }
 export function doFollowFetch(token) {
   return dispatch => {
-    if (process.env.NODE_ENV !== 'production')
+    if (process.env.ENV !== 'production')
       window.gtag('event', 'getRecFollow_WEBDEV', {
         event_category: 'User',
         event_label: 'getRecFollow'
@@ -870,7 +870,7 @@ export function doFollowFetch(token) {
                 console.log(error);
               } else {
                 Sentry.configureScope(function(scope) {
-                  scope.setExtra('ENV', process.env.NODE_ENV);
+                  scope.setExtra('ENV', process.env.ENV);
                 });
                 Sentry.captureException(error);
               }
@@ -881,7 +881,7 @@ export function doFollowFetch(token) {
             console.log(error.message);
           } else {
             Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.NODE_ENV);
+              scope.setExtra('ENV', process.env.ENV);
             });
             Sentry.captureException(error);
           }
@@ -891,7 +891,7 @@ export function doFollowFetch(token) {
 }
 export function doFetchNotifications(token) {
   return dispatch => {
-    if (process.env.NODE_ENV !== 'production')
+    if (process.env.ENV !== 'production')
       window.gtag('event', 'getNotifications_WEBDEV', {
         event_category: 'User',
         event_label: 'getNotifications'
@@ -930,7 +930,7 @@ export function doFetchNotifications(token) {
                 console.log(error);
               } else {
                 Sentry.configureScope(function(scope) {
-                  scope.setExtra('ENV', process.env.NODE_ENV);
+                  scope.setExtra('ENV', process.env.ENV);
                 });
                 Sentry.captureException(error);
               }
@@ -941,7 +941,7 @@ export function doFetchNotifications(token) {
             console.log(error.message);
           } else {
             Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.NODE_ENV);
+              scope.setExtra('ENV', process.env.ENV);
             });
             Sentry.captureException(error);
           }
@@ -971,7 +971,7 @@ export function doFetchPublicFeed() {
           console.log(error);
         } else {
           Sentry.configureScope(function(scope) {
-            scope.setExtra('ENV', process.env.NODE_ENV);
+            scope.setExtra('ENV', process.env.ENV);
           });
           Sentry.captureException(error);
         }
@@ -1020,7 +1020,7 @@ export function doFetchQSO(idqso, token = null) {
     custom_map: { dimension2: 'qso' }
   });
 
-  if (process.env.NODE_ENV !== 'production')
+  if (process.env.ENV !== 'production')
     window.gtag('event', 'qsoGetDetail_WEBDEV', {
       event_category: 'QSO',
       event_label: 'getDetail',
@@ -1061,7 +1061,7 @@ export function doFetchQSO(idqso, token = null) {
                   console.log(error);
                 } else {
                   Sentry.configureScope(function(scope) {
-                    scope.setExtra('ENV', process.env.NODE_ENV);
+                    scope.setExtra('ENV', process.env.ENV);
                   });
                   Sentry.captureException(error);
                 }
@@ -1072,7 +1072,7 @@ export function doFetchQSO(idqso, token = null) {
               console.log(error.message);
             } else {
               Sentry.configureScope(function(scope) {
-                scope.setExtra('ENV', process.env.NODE_ENV);
+                scope.setExtra('ENV', process.env.ENV);
               });
               Sentry.captureException(error);
             }
@@ -1100,7 +1100,7 @@ export function doFetchQSO(idqso, token = null) {
             console.log(error);
           } else {
             Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.NODE_ENV);
+              scope.setExtra('ENV', process.env.ENV);
             });
             Sentry.captureException(error);
           }
@@ -1112,7 +1112,7 @@ export function doFetchQsoLink(idqso) {
   window.gtag('config', 'G-H8G28LYKBY', {
     custom_map: { dimension2: 'qsoLink' }
   });
-  if (process.env.NODE_ENV !== 'production')
+  if (process.env.ENV !== 'production')
     window.gtag('event', 'qsoGetLinkDetail_WEBDEV', {
       event_category: 'QSO',
       event_label: 'getLinkDetail',
@@ -1147,7 +1147,7 @@ export function doFetchQsoLink(idqso) {
           console.log(error);
         } else {
           Sentry.configureScope(function(scope) {
-            scope.setExtra('ENV', process.env.NODE_ENV);
+            scope.setExtra('ENV', process.env.ENV);
           });
           Sentry.captureException(error);
         }
@@ -1160,7 +1160,7 @@ export function doFetchQRA(qra, token = null) {
     custom_map: { dimension3: 'qra' }
   });
 
-  if (process.env.NODE_ENV !== 'production')
+  if (process.env.ENV !== 'production')
     window.gtag('event', 'qraGetDetail_WEBDEV', {
       event_category: 'QRA',
       event_label: 'getDetail',
@@ -1202,7 +1202,7 @@ export function doFetchQRA(qra, token = null) {
                   console.log(error);
                 } else {
                   Sentry.configureScope(function(scope) {
-                    scope.setExtra('ENV', process.env.NODE_ENV);
+                    scope.setExtra('ENV', process.env.ENV);
                   });
                   Sentry.captureException(error);
                 }
@@ -1213,7 +1213,7 @@ export function doFetchQRA(qra, token = null) {
               console.log(error.message);
             } else {
               Sentry.configureScope(function(scope) {
-                scope.setExtra('ENV', process.env.NODE_ENV);
+                scope.setExtra('ENV', process.env.ENV);
               });
               Sentry.captureException(error);
             }
@@ -1242,7 +1242,7 @@ export function doFetchQRA(qra, token = null) {
             console.log(error);
           } else {
             Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.NODE_ENV);
+              scope.setExtra('ENV', process.env.ENV);
             });
             Sentry.captureException(error);
           }
@@ -1252,7 +1252,7 @@ export function doFetchQRA(qra, token = null) {
 }
 
 export function doFollowQRA(token, follower) {
-  if (process.env.NODE_ENV !== 'production')
+  if (process.env.ENV !== 'production')
     window.gtag('event', 'qraFollow_WEBDEV', {
       event_category: 'User',
       event_label: 'follow'
@@ -1296,7 +1296,7 @@ export function doFollowQRA(token, follower) {
                 console.log(error);
               } else {
                 Sentry.configureScope(function(scope) {
-                  scope.setExtra('ENV', process.env.NODE_ENV);
+                  scope.setExtra('ENV', process.env.ENV);
                 });
                 Sentry.captureException(error);
               }
@@ -1307,7 +1307,7 @@ export function doFollowQRA(token, follower) {
             console.log(error.message);
           } else {
             Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.NODE_ENV);
+              scope.setExtra('ENV', process.env.ENV);
             });
             Sentry.captureException(error);
           }
@@ -1317,7 +1317,7 @@ export function doFollowQRA(token, follower) {
 }
 
 export function doUnfollowQRA(token, follower) {
-  if (process.env.NODE_ENV !== 'production')
+  if (process.env.ENV !== 'production')
     window.gtag('event', 'qraUnfollow_WEBDEV', {
       event_category: 'User',
       event_label: 'unfollow'
@@ -1357,7 +1357,7 @@ export function doUnfollowQRA(token, follower) {
                 console.log(error);
               } else {
                 Sentry.configureScope(function(scope) {
-                  scope.setExtra('ENV', process.env.NODE_ENV);
+                  scope.setExtra('ENV', process.env.ENV);
                 });
                 Sentry.captureException(error);
               }
@@ -1368,7 +1368,7 @@ export function doUnfollowQRA(token, follower) {
             console.log(error.message);
           } else {
             Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.NODE_ENV);
+              scope.setExtra('ENV', process.env.ENV);
             });
             Sentry.captureException(error);
           }
@@ -1432,7 +1432,7 @@ export function doReceiveFollowers(following) {
 }
 
 export function doQsoMediaPlay(idMedia, token, idqso) {
-  if (process.env.NODE_ENV !== 'production')
+  if (process.env.ENV !== 'production')
     window.gtag('event', 'qsoMediaPlay_WEBDEV', {
       event_category: 'QSO',
       event_label: 'mediaPlay'
@@ -1472,7 +1472,7 @@ export function doQsoMediaPlay(idMedia, token, idqso) {
                 console.log(error);
               } else {
                 Sentry.configureScope(function(scope) {
-                  scope.setExtra('ENV', process.env.NODE_ENV);
+                  scope.setExtra('ENV', process.env.ENV);
                 });
 
                 Sentry.captureException(error);
@@ -1484,7 +1484,7 @@ export function doQsoMediaPlay(idMedia, token, idqso) {
             console.log(error.message);
           } else {
             Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.NODE_ENV);
+              scope.setExtra('ENV', process.env.ENV);
             });
             Sentry.captureException(error);
           }
@@ -1501,7 +1501,7 @@ export function doReceiveMediaCounter(data) {
 }
 
 export function doQslCardPrint(idqso, token) {
-  if (process.env.NODE_ENV !== 'production')
+  if (process.env.ENV !== 'production')
     window.gtag('event', 'qsoQSLCardPrint_WEBDEV', {
       event_category: 'QSO',
       event_label: 'QSLCardPrint'
@@ -1539,7 +1539,7 @@ export function doQslCardPrint(idqso, token) {
                 console.log(error);
               } else {
                 Sentry.configureScope(function(scope) {
-                  scope.setExtra('ENV', process.env.NODE_ENV);
+                  scope.setExtra('ENV', process.env.ENV);
                 });
                 Sentry.captureException(error);
               }
@@ -1550,7 +1550,7 @@ export function doQslCardPrint(idqso, token) {
             console.log(error.message);
           } else {
             Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.NODE_ENV);
+              scope.setExtra('ENV', process.env.ENV);
             });
             Sentry.captureException(error);
           }

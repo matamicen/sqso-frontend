@@ -1,12 +1,12 @@
 // import 'react-select/dist/react-select.css';
-import API from "@aws-amplify/api";
-import * as Sentry from "@sentry/browser";
-import React, { Component } from "react";
-import Avatar from "react-avatar";
-import { Redirect } from "react-router-dom";
-import { components } from "react-select";
-import Async from "react-select/async";
-import "../../styles/style.css";
+import API from '@aws-amplify/api';
+import * as Sentry from '@sentry/browser';
+import React, { Component } from 'react';
+import Avatar from 'react-avatar';
+import { Redirect } from 'react-router-dom';
+import { components } from 'react-select';
+import Async from 'react-select/async';
+import '../../styles/style.css';
 export default class NavigationSearch extends Component {
   constructor(props) {
     super(props);
@@ -25,8 +25,8 @@ export default class NavigationSearch extends Component {
       return Promise.resolve({ options: [] });
     }
     if (input.length > 2) {
-      let apiName = "superqso";
-      let path = "/qra-list?qra=" + input;
+      let apiName = 'superqso';
+      let path = '/qra-list?qra=' + input;
 
       let myInit = {
         body: {}, // replace this with attributes you need
@@ -45,13 +45,14 @@ export default class NavigationSearch extends Component {
           }
         })
         .catch(error => {
-          if (process.env.NODE_ENV !== "production") {
+          if (process.env.NODE_ENV !== 'production') {
             console.log(error);
-          } else { Sentry.configureScope(function (scope) {   
-    scope.setExtra("ENV", process.env.NODE_ENV);
-  });
-Sentry.captureException(error);
-}
+          } else {
+            Sentry.configureScope(function(scope) {
+              scope.setExtra('ENV', process.env.ENV);
+            });
+            Sentry.captureException(error);
+          }
           return [];
         });
 
@@ -64,7 +65,7 @@ Sentry.captureException(error);
   render() {
     if (this.state.value) {
       this.setState({ value: null });
-      return <Redirect to={"/" + this.state.value.qra} />;
+      return <Redirect to={'/' + this.state.value.qra} />;
     }
 
     return (
@@ -75,7 +76,7 @@ Sentry.captureException(error);
           onChange={this.onChange.bind(this)}
           valueKey="qra"
           labelKey="name"
-          placeholder={"Search callsign"}
+          placeholder={'Search callsign'}
           loadOptions={this.getUsers.bind(this)}
           autoload={false}
           autosize={false}
@@ -101,9 +102,9 @@ const Option = props => {
         className="avatar"
         color="#0366d6"
         name={data.qra}
-        src={data.avatarpic ? data.avatarpic : "/emptyprofile.png"}
+        src={data.avatarpic ? data.avatarpic : '/emptyprofile.png'}
       />
-      <span>{" " + data.name}</span>
+      <span>{' ' + data.name}</span>
     </components.Option>
   );
 };
