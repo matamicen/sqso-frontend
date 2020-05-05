@@ -15,13 +15,7 @@ var _fs = _interopRequireDefault(require('fs'));
 
 var _path = _interopRequireDefault(require('path'));
 
-var _global_configDEV = _interopRequireDefault(
-  require('./global_configDEV.json')
-);
-
-var _global_configPRD = _interopRequireDefault(
-  require('./global_config.json')
-);
+var _global_config = _interopRequireDefault(require('./global_config.json'));
 
 // A simple helper function to prepare the HTML markup
 const prepHTML = (data, { html, head, body }) => {
@@ -35,14 +29,10 @@ const replace_qso_tags = async (req, res) => {
   if (req.params['idQSO'] !== 'empty') {
     var apigClientFactory = require('aws-api-gateway-client').default;
 
-    if (process.env.NODE_ENV === 'production')
-      var config = {
-        invokeUrl: _global_configPRD.default.apiEndpoint
-      };
-    else
-      config = {
-        invokeUrl: _global_configDEV.default.apiEndpoint
-      };
+    var config = {
+      invokeUrl: _global_config.default.apiEndpoint
+    };
+
     var apigClient = apigClientFactory.newClient(config);
     var params = {};
     var pathTemplate = '/qso-metadata-get';
