@@ -14,7 +14,7 @@ const replace_qso_tags = async (req, res) => {
 
   if (req.params['idQSO'] !== 'empty') {
     var apigClientFactory = require('aws-api-gateway-client').default;
-    if (process.env.NODE_ENV === 'production')
+    if (process.env.ENV === 'production')
       var config = {
         invokeUrl: global_configPRD.apiEndpoint
       };
@@ -49,7 +49,7 @@ const replace_qso_tags = async (req, res) => {
               console.error('Read error', err);
             }
             Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.NODE_ENV);
+              scope.setExtra('ENV', process.env.ENV);
             });
             Sentry.captureException(err);
 
@@ -99,7 +99,12 @@ const replace_qso_tags = async (req, res) => {
         if (process.env.NODE_ENV !== 'production') {
           console.log(result);
         }
-        Sentry.captureException(result);
+        else {
+          Sentry.configureScope(function(scope) {
+            scope.setExtra('ENV', process.env.ENV);
+          });
+          Sentry.captureException(result);
+        }
       });
     //This is where you would put an error callback
     // const filePath = path.resolve(__dirname, "../build/index.html");

@@ -1,23 +1,22 @@
-
-import Auth from '@aws-amplify/auth'
-import * as Sentry from '@sentry/browser'
-import DOMPurify from 'dompurify'
-import PropTypes from 'prop-types'
-import React from 'react'
-import { withRouter } from 'react-router-dom'
-import Form from 'semantic-ui-react/dist/commonjs/collections/Form'
-import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid'
-import Message from 'semantic-ui-react/dist/commonjs/collections/Message'
-import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
-import Header from 'semantic-ui-react/dist/commonjs/elements/Header'
-import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
-import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal'
-import Advertisement from 'semantic-ui-react/dist/commonjs/views/Advertisement'
-import Ad from '../Ad/Ad'
-import AppNavigation from '../Home/AppNavigation'
+import Auth from '@aws-amplify/auth';
+import * as Sentry from '@sentry/browser';
+import DOMPurify from 'dompurify';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { withRouter } from 'react-router-dom';
+import Form from 'semantic-ui-react/dist/commonjs/collections/Form';
+import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid';
+import Message from 'semantic-ui-react/dist/commonjs/collections/Message';
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
+import Header from 'semantic-ui-react/dist/commonjs/elements/Header';
+import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment';
+import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
+import Advertisement from 'semantic-ui-react/dist/commonjs/views/Advertisement';
+import Ad from '../Ad/Ad';
+import AppNavigation from '../Home/AppNavigation';
 class ForgotPassword extends React.Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       error: null,
       showModal: false,
@@ -37,91 +36,96 @@ class ForgotPassword extends React.Component {
         password: '',
         passwordConfirm: ''
       }
-    }
+    };
   }
 
-  handleCodeChange (e) {
-    this.setState({ code: e.target.value })
+  handleCodeChange(e) {
+    this.setState({ code: e.target.value });
   }
 
-  handlePasswordChange (e) {
-    this.setState({ password: e.target.value })
+  handlePasswordChange(e) {
+    this.setState({ password: e.target.value });
   }
 
-  handlePasswordConfirmChange (e) {
-    this.setState({ passwordConfirm: e.target.value })
+  handlePasswordConfirmChange(e) {
+    this.setState({ passwordConfirm: e.target.value });
   }
 
-  handleEmailChange (e) {
-    this.setState({ email: e.target.value })
+  handleEmailChange(e) {
+    this.setState({ email: e.target.value });
   }
 
-  handleEmailSent (result) {
+  handleEmailSent(result) {
     // this.setState({cognitoUser: result.user.username});
-    this.setState({ emailSent: true })
-    this.setState({ showModal: true })
+    this.setState({ emailSent: true });
+    this.setState({ showModal: true });
   }
 
-  handleUserConfirmed (result) {
-    this.setState({ userConfirmed: true })
+  handleUserConfirmed(result) {
+    this.setState({ userConfirmed: true });
   }
 
-  handleChangePasswordButton (e) {
-    const email = this.state.email.trim()
+  handleChangePasswordButton(e) {
+    const email = this.state.email.trim();
 
-    this.validateEmail()
+    this.validateEmail();
 
     if (!this.state.formErrors.email) {
       Auth.forgotPassword(email)
         .then(data => {
-          this.handleEmailSent(data)
-          this.setState({ forgotPasswordError: null })
+          this.handleEmailSent(data);
+          this.setState({ forgotPasswordError: null });
         })
         .catch(err => {
-          this.setState({ forgotPasswordError: err.message })
+          this.setState({ forgotPasswordError: err.message });
           if (process.env.NODE_ENV !== 'production') {
-            console.log(err)
-          } else Sentry.captureException(err)
-        })
+            console.log(err);
+          } else {
+            Sentry.configureScope(function(scope) {
+              scope.setExtra('ENV', process.env.ENV);
+            });
+            Sentry.captureException(err);
+          }
+        });
     }
   }
 
-  validateFields () {
-    const fieldValidationErrors = this.state.formErrors
+  validateFields() {
+    const fieldValidationErrors = this.state.formErrors;
 
     // password
 
-    const passwordValid = this.state.password.length >= 6
+    const passwordValid = this.state.password.length >= 6;
     fieldValidationErrors.password = passwordValid
       ? ''
-      : 'Password is too short'
+      : 'Password is too short';
 
     fieldValidationErrors.passwordConfirm =
       this.state.password === this.state.passwordConfirm
         ? ''
-        : 'Password and Confirmation are not the same'
+        : 'Password and Confirmation are not the same';
 
-    this.setState({ formErrors: fieldValidationErrors })
+    this.setState({ formErrors: fieldValidationErrors });
   }
 
-  validateEmail () {
-    const fieldValidationErrors = this.state.formErrors
+  validateEmail() {
+    const fieldValidationErrors = this.state.formErrors;
 
     // email
     const emailValid = this.state.email.match(
       /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i
-    )
-    fieldValidationErrors.email = emailValid ? '' : 'Email is not Valid'
+    );
+    fieldValidationErrors.email = emailValid ? '' : 'Email is not Valid';
 
-    this.setState({ formErrors: fieldValidationErrors })
+    this.setState({ formErrors: fieldValidationErrors });
   }
 
-  handleConfirmPasswordButton (e) {
-    this.setState({ confirmError: null })
-    const code = this.state.code.trim()
+  handleConfirmPasswordButton(e) {
+    this.setState({ confirmError: null });
+    const code = this.state.code.trim();
 
-    const password = this.state.password.trim()
-    this.validateFields()
+    const password = this.state.password.trim();
+    this.validateFields();
 
     if (
       !this.state.formErrors.password &&
@@ -139,32 +143,37 @@ class ForgotPassword extends React.Component {
         }
       )
         .then(data => {
-          this.handleUserConfirmed(data)
-          this.setState({ confirmError: null, showMessageModal: true })
+          this.handleUserConfirmed(data);
+          this.setState({ confirmError: null, showMessageModal: true });
         })
         .catch(err => {
-          this.setState({ confirmError: err.message })
+          this.setState({ confirmError: err.message });
           if (process.env.NODE_ENV !== 'production') {
-            console.log(err)
-          } else Sentry.captureException(err)
-        })
+            console.log(err);
+          } else {
+            Sentry.configureScope(function(scope) {
+              scope.setExtra('ENV', process.env.ENV);
+            });
+            Sentry.captureException(err);
+          }
+        });
     }
   }
 
-  close () {
-    this.setState({ showMessageModal: false })
-    this.props.history.push('/login')
+  close() {
+    this.setState({ showMessageModal: false });
+    this.props.history.push('/login');
   }
 
-  handleOnOpenModal () {
-    this.setState({ showModal: true })
+  handleOnOpenModal() {
+    this.setState({ showModal: true });
   }
 
-  handleOnCloseModal () {
-    this.setState({ showModal: false })
+  handleOnCloseModal() {
+    this.setState({ showModal: false });
   }
 
-  render () {
+  render() {
     // if (this.state.userConfirmed) {
     //   return (
     //     <Redirect
@@ -368,7 +377,7 @@ class ForgotPassword extends React.Component {
           </Advertisement>
         </div>
       </div>
-    )
+    );
   }
 }
 ForgotPassword.propTypes = {
@@ -379,8 +388,6 @@ ForgotPassword.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func
   }).isRequired
-}
+};
 
-export default withRouter(
-  (ForgotPassword)
-)
+export default withRouter(ForgotPassword);

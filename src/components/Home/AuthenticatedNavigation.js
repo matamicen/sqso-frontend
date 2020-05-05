@@ -27,7 +27,12 @@ class AuthenticatedNavigation extends React.PureComponent {
       .catch(error => {
         if (process.env.NODE_ENV !== 'production') {
           console.log(error);
-        } else Sentry.captureException(error);
+        } else {
+          Sentry.configureScope(function(scope) {
+            scope.setExtra('ENV', process.env.ENV);
+          });
+          Sentry.captureException(error);
+        }
       });
   }
 
