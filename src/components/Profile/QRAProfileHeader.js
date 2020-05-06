@@ -46,7 +46,7 @@ const QRAProfileHeader = (props) => {
                   : null
               }
             />
-            <span>{result.length > 0 ? result[0].text : "Argentina"}</span>
+            <span>{result.length > 0 ? result[0].text : null}</span>
             {/* </div> */}
             <Divider
               hidden
