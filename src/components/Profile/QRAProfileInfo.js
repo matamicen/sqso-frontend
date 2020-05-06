@@ -1,16 +1,16 @@
 import React, { Fragment } from "react";
-import Form from "semantic-ui-react/dist/commonjs/collections/Form";
-
-import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
-
-import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown";
-
-import * as Actions from "../../actions";
-import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
+import Form from "semantic-ui-react/dist/commonjs/collections/Form";
+import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
+import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown";
+import * as Actions from "../../actions";
 import "../../styles/style.css";
 import { MY_COUNTRIES_DATA } from "./countries.js";
+
+
+
 // const options = [
 //   { key: "Y", text: "Yes", value: "1" },
 //   { key: "N", text: "No", value: "0" }
@@ -279,7 +279,7 @@ class QRAProfileInfo extends React.Component {
                 onChange={this.changeHandler}
                 value={qslinfo ? qslinfo : ""}
               />
-              <label>E.G. LOWT / eQSL / Postal Mail</label>
+              <label>E.G. LOTW / eQSL / Postal Mail</label>
             </Form.Group>
             {/* <Form.Group inline>
               <label>QSL by eQSL?</label>
