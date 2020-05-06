@@ -101,7 +101,7 @@
     "why-did-you-update": "^0.1.1"
   },
   "scripts": {
-    "babel": "babel server --out-dir dist && node ./dist/app",
+    "babel": "yarn && babel server --out-dir dist && node ./dist/app",
     "start": "yarn install --production &&  yarn build  && node ./dist/app",
     "eb_test": "yarn install --production && yarn build && node dist/app",
     "static": "yarn && react-scripts start",
