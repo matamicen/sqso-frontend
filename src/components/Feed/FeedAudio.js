@@ -5,7 +5,6 @@ import { Link, withRouter } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { Confirm, Modal } from 'semantic-ui-react'
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
-import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon'
 import * as Actions from '../../actions'
 
 class FeedAudio extends React.Component {
@@ -65,9 +64,9 @@ class FeedAudio extends React.Component {
               content="Please Login to perform this action"
             />
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <Button size="mini" icon onClick={this.onClick}>
-                <Icon name="play circle" />
-              </Button>
+              <Button circular icon="play" onClick={this.onClick}>
+                {/* <Icon  /> */}
+              </Button> {'Play Audio -'}
               {this.props.media.description}{' '}
               {this.props.media.description && ' - '}
               {date.toLocaleDateString('EN-US', { month: 'short' }) +
