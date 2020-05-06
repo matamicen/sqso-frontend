@@ -1,14 +1,13 @@
-import React, { Fragment } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
-import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
-import * as Actions from "../../actions";
-import "../../styles/style.css";
-import Ad from "../Ad/Ad";
-import FeedQSO from "../Feed/NewsFeedContainer";
-import AppNavigation from "./AppNavigation";
-
+import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import Loader from 'semantic-ui-react/dist/commonjs/elements/Loader';
+import Dimmer from 'semantic-ui-react/dist/commonjs/modules/Dimmer';
+import * as Actions from '../../actions';
+import '../../styles/style.css';
+import Ad from '../Ad/Ad';
+import FeedQSO from '../Feed/NewsFeedContainer';
+import AppNavigation from './AppNavigation';
 
 class Home extends React.Component {
   state = {
@@ -18,40 +17,40 @@ class Home extends React.Component {
   };
 
   componentDidMount() {
-    if (process.env.NODE_ENV !== "production")
+    if (process.env.NODE_ENV !== 'production')
       this.setState({ adActive: false });
 
     if (this.props.isAuthenticated)
       this.props.actions.doFetchUserFeed(this.props.token);
     else this.props.actions.doFetchPublicFeed();
-    /*  //Comentado Adsense
-    window.googletag.cmd.push(function() {
-      window.googletag.destroySlots();
-      window.googletag
-        .defineSlot(
-          "/21799560237/Home/Home_Left2",
-          [160, 600],
-          "div-ads-instance-home-left"
-        )
-        .addService(window.googletag.pubads());
-      // .setTargeting("interests", ["sports", "music", "movies"]);
-      window.window.googletag
-        .defineSlot(
-          "/21799560237/Home/Home_Intersitial",
-          [640, 480],
-          "div-ads-instance-home-intersitial"
-        )
-        .addService(window.googletag.pubads());
-      window.googletag
-        .defineSlot(
-          "/21799560237/Home/Home_Right",
-          [160, 600],
-          "div-ads-instance-home-right"
-        )
-        .addService(window.googletag.pubads());
-      window.googletag.pubads().enableSingleRequest();
-      window.googletag.enableServices();
-    });v*/
+    //Comentado Adsense
+    // window.googletag.cmd.push(function() {
+    //   window.googletag.destroySlots();
+    //   window.googletag
+    //     .defineSlot(
+    //       "5266743439",
+    //       [160, 600],
+    //       "div-ads-instance-home-left"
+    //     )
+    //     .addService(window.googletag.pubads());
+    //   // .setTargeting("interests", ["sports", "music", "movies"]);
+    //   window.window.googletag
+    //     .defineSlot(
+    //       "/21799560237/Home/Home_Intersitial",
+    //       [640, 480],
+    //       "div-ads-instance-home-intersitial"
+    //     )
+    //     .addService(window.googletag.pubads());
+    //   window.googletag
+    //     .defineSlot(
+    //       "/21799560237/Home/Home_Right",
+    //       [160, 600],
+    //       "div-ads-instance-home-right"
+    //     )
+    //     .addService(window.googletag.pubads());
+    //   window.googletag.pubads().enableSingleRequest();
+    //   window.googletag.enableServices();
+    // });
   }
   handleOpen = () => this.setState({ adActive: true });
   handleClose = () => this.setState({ adActive: false });
@@ -89,12 +88,19 @@ class Home extends React.Component {
             <AppNavigation />
           </div>
           <div className="site-left">
-            <Ad
+            {/* <Ad
               adslot="/21799560237/Home/Home_Left2"
               width={160}
               height={600}
               id="home-left"
               displayOnly={true}
+            /> */}
+            <ins
+              className="adsbygoogle"
+              style={{ display: 'inline', width: '160px', height: '600px' }}
+              data-ad-client="ca-pub-1064314468310203"
+              data-ad-slot="5266743439"
+              data-ad-format="auto"
             />
           </div>
 
