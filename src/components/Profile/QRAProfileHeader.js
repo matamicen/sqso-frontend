@@ -1,11 +1,11 @@
 import React from "react";
-import { MY_COUNTRIES_DATA } from "./countries.js";
 import Button from "semantic-ui-react/dist/commonjs/elements/Button";
+import Divider from "semantic-ui-react/dist/commonjs/elements/Divider";
 import Flag from "semantic-ui-react/dist/commonjs/elements/Flag";
 import Image from "semantic-ui-react/dist/commonjs/elements/Image";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 import "../../styles/style.css";
-import Divider from "semantic-ui-react/dist/commonjs/elements/Divider";
+import { MY_COUNTRIES_DATA } from "./countries.js";
 const QRAProfileHeader = (props) => {
   let buttonText;
 
@@ -43,7 +43,7 @@ const QRAProfileHeader = (props) => {
               name={
                 props.qraInfo.country !== "" && props.qraInfo.country !== null
                   ? props.qraInfo.country.toLowerCase()
-                  : "ar"
+                  : null
               }
             />
             <span>{result.length > 0 ? result[0].text : "Argentina"}</span>
