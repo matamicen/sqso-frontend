@@ -145,7 +145,7 @@ class Home extends React.Component {
             <video width="100%" autoPlay controls controlsList="nodownload">
               <source
                 src={
-                  global_config.s3Cloudfront + '/faq/Presentacion_SuperQSO.mp4'
+                  global_config.s3Cloudfront + '/faq/Presentacion_SuperQSO2.mp4'
                 }
                 type="video/mp4"
               />
