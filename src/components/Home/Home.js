@@ -156,7 +156,7 @@ class Home extends React.Component {
                 this.props.history.push('/tutorials');
               }}
             >
-              Watch Tutorials
+              Tutorials
             </Button>
             <Button onClick={() => {
                 this.setState({ modalOpen: false });
