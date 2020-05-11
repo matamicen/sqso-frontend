@@ -17,17 +17,28 @@ class Home extends React.Component {
     adActive: true,
     active: null,
     modalOpen: false,
-    error: null
+    error: null, 
+    videoAlreadyDisplayed: false
   };
 
   componentDidMount() {
+    let visited = localStorage["alreadyVisited"];
+    
+    if(visited) {
+         this.setState({ videoAlreadyDisplayed: true })
+         //do not view Popup
+    } else {
+         //this is the first time
+         localStorage["alreadyVisited"] = true;
+         this.setState({ viewPopup: false});
+    }
     if (process.env.NODE_ENV !== 'production')
       this.setState({ adActive: false });
 
     if (this.props.isAuthenticated)
       this.props.actions.doFetchUserFeed(this.props.token);
     else {
-      this.setState({ modalOpen: true });
+      if (!visited) this.setState({ modalOpen: true });
       this.props.actions.doFetchPublicFeed();
     }
     //Comentado Adsense
@@ -127,9 +138,9 @@ class Home extends React.Component {
         </div>
         <Modal
           open={this.state.modalOpen}
-          onClose={() => this.setState({ modalOpen: false })}
+          onClose={() => this.setState({ modalOpen: false, videoAlreadyDisplayed: true })}
           size="large"
-        >
+        ><Modal.Header>¿Que es SuperQSO.com?</Modal.Header>
           <Modal.Content>
             <video width="100%" autoPlay controls controlsList="nodownload">
               <source
@@ -145,21 +156,21 @@ class Home extends React.Component {
             <Button
               color="facebook"
               onClick={() => {
-                this.setState({ modalOpen: false });
+                this.setState({ modalOpen: false, videoAlreadyDisplayed: true });
                 this.props.history.push('/download');
               }}
             >
               Download App
             </Button>
             <Button onClick={() => {
-                this.setState({ modalOpen: false });
+                this.setState({ modalOpen: false, videoAlreadyDisplayed: true });
                 this.props.history.push('/tutorials');
               }}
             >
               Tutorials
             </Button>
             <Button onClick={() => {
-                this.setState({ modalOpen: false });
+                this.setState({ modalOpen: false, videoAlreadyDisplayed: true });
                 
               }}
             >
