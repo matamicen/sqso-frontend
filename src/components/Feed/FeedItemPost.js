@@ -31,7 +31,7 @@ class FeedItemQSO extends React.Component {
     this.recalculateRowHeight = this.recalculateRowHeight.bind(this);
   }
   handleOnComment = () => {
-    if (!this.props.isAuthenticated) this.setState({ openLogin: true })
+    if (!this.props.isAuthenticated && this.props.qso.comments.length === 0) this.setState({ openLogin: true })
     else if (this.props.currentQRA || this.props.qso.comments.length > 0)
       this.props.showComments(this.props.index);
     // this.recalculateRowHeight(); this.props.recalculateRowHeight()

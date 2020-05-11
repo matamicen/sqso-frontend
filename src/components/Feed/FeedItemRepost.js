@@ -30,7 +30,7 @@ class FeedItemRepost extends React.Component {
   }
 
   handleOnComment() {
-    if (!this.props.isAuthenticated) this.setState({ openLogin: true })
+    if (!this.props.isAuthenticated && this.props.qso.comments.length === 0) this.setState({ openLogin: true })
     else if (this.props.qso.comments.length > 0) {
       this.props.showComments(this.props.index);
     }
