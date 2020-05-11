@@ -15,9 +15,11 @@ import SignUp from './Auth/SignUp';
 import ContactForm from './contactForm';
 import ErrorBoundary from './ErrorBoundary';
 import Follow from './follow';
+import Download from './help/download';
 import FAQ from './help/faq';
 import PrivacyPolicy from './help/privacyPolicy';
 import TermsOfService from './help/termsOfServcice';
+import Tutorials from './help/tutorials';
 import Home from './Home/Home';
 import Notifications from './Notifications/Notifications';
 import QRAProfileContainer from './Profile/QRAProfileContainer';
@@ -197,6 +199,32 @@ class App extends Component {
           component={() => (
             <ErrorBoundary key="faq">
               <FAQ />
+            </ErrorBoundary>
+          )}
+        />
+         <Route
+          exact
+          path="/tutorials"
+          location={{
+            pathname: '/tutorials',
+            state: { from: this.props.location.pathname },
+          }}
+          component={() => (
+            <ErrorBoundary key="tutorials">
+              <Tutorials />
+            </ErrorBoundary>
+          )}
+        />
+         <Route
+          exact
+          path="/download"
+          location={{
+            pathname: '/download',
+            state: { from: this.props.location.pathname },
+          }}
+          component={() => (
+            <ErrorBoundary key="download">
+              <Download />
             </ErrorBoundary>
           )}
         />

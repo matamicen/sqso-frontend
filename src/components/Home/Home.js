@@ -1,18 +1,22 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
 import Loader from 'semantic-ui-react/dist/commonjs/elements/Loader';
 import Dimmer from 'semantic-ui-react/dist/commonjs/modules/Dimmer';
+import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
 import * as Actions from '../../actions';
+import global_config from '../../global_config.json';
 import '../../styles/style.css';
 import Ad from '../Ad/Ad';
 import FeedQSO from '../Feed/NewsFeedContainer';
 import AppNavigation from './AppNavigation';
-
 class Home extends React.Component {
   state = {
     adActive: true,
     active: null,
+    modalOpen: false,
     error: null
   };
 
@@ -22,7 +26,10 @@ class Home extends React.Component {
 
     if (this.props.isAuthenticated)
       this.props.actions.doFetchUserFeed(this.props.token);
-    else this.props.actions.doFetchPublicFeed();
+    else {
+      this.setState({ modalOpen: true });
+      this.props.actions.doFetchPublicFeed();
+    }
     //Comentado Adsense
     // window.googletag.cmd.push(function() {
     //   window.googletag.destroySlots();
@@ -118,6 +125,48 @@ class Home extends React.Component {
             />
           </div>
         </div>
+        <Modal
+          open={this.state.modalOpen}
+          onClose={() => this.setState({ modalOpen: false })}
+          size="large"
+        >
+          <Modal.Content>
+            <video width="100%" autoPlay controls controlsList="nodownload">
+              <source
+                src={
+                  global_config.s3Cloudfront + '/faq/Presentacion_SuperQSO.mp4'
+                }
+                type="video/mp4"
+              />
+              Your browser does not support the video tag.
+            </video>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button
+              color="facebook"
+              onClick={() => {
+                this.setState({ modalOpen: false });
+                this.props.history.push('/download');
+              }}
+            >
+              Download App
+            </Button>
+            <Button onClick={() => {
+                this.setState({ modalOpen: false });
+                this.props.history.push('/tutorials');
+              }}
+            >
+              Watch Tutorials
+            </Button>
+            <Button onClick={() => {
+                this.setState({ modalOpen: false });
+                
+              }}
+            >
+              Skip
+            </Button>
+          </Modal.Actions>
+        </Modal>
       </Fragment>
     );
   }
@@ -135,7 +184,9 @@ const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(Actions, dispatch)
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Home);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Home)
+);
