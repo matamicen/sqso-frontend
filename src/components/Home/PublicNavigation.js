@@ -46,10 +46,13 @@ const PublicNavigation = () => (
             <Dropdown.Item>Contact Us</Dropdown.Item>
           </Link>
           <Link to="/FAQ">
-            <Dropdown.Item>FAQ</Dropdown.Item>
+            <Dropdown.Item>Que es SuperQSO.com</Dropdown.Item>
           </Link>
-          <Link to="/FAQ">
+          <Link to="/tutorials">
             <Dropdown.Item><b>Tutorial</b></Dropdown.Item>
+          </Link>
+          <Link to="/download">
+            <Dropdown.Item><b>Download App</b></Dropdown.Item>
           </Link>
         </Dropdown.Menu>
       </Dropdown>
