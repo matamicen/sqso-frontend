@@ -87,7 +87,7 @@ const QRAProfileHeader = (props) => {
             <div className="follow">
               {props.isAuthenticated && props.qraInfo.qra !== props.currentQRA && (
                 <Button
-                  size="mini"
+                  size="small"
                   positive={!props.followed}
                   onClick={() => props.onClick()}
                 >

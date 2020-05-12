@@ -13,6 +13,10 @@
   overflow: visible !important;
 }
 /* HOME */
+.notifIcon {
+  display: flex;
+  
+}
 /*logo mobile*/
 .mobile {
   display: none;
@@ -320,6 +324,11 @@
   .NavBar {
     /* padding: 2px; */
     width: 100%;
+  }
+  .notifIcon {
+    display: none;
+    flex: '1 1 auto';
+    padding: 0;
   }
   .mobile {
     display: block;

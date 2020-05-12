@@ -1,17 +1,17 @@
 import React, { Fragment } from "react";
+import { CountryDropdown } from "react-country-region-selector";
+import Recaptcha from "react-recaptcha";
+import { Link } from "react-router-dom";
+import Form from "semantic-ui-react/dist/commonjs/collections/Form";
 import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
+import Message from "semantic-ui-react/dist/commonjs/collections/Message";
+import Button from "semantic-ui-react/dist/commonjs/elements/Button";
+import Header from "semantic-ui-react/dist/commonjs/elements/Header";
+import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
+import Checkbox from "semantic-ui-react/dist/commonjs/modules/Checkbox";
+import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
 import Ad from "../Ad/Ad";
 import AppNavigation from "../Home/AppNavigation";
-import Header from "semantic-ui-react/dist/commonjs/elements/Header";
-import Form from "semantic-ui-react/dist/commonjs/collections/Form";
-import Message from "semantic-ui-react/dist/commonjs/collections/Message";
-import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
-import Recaptcha from "react-recaptcha";
-import Button from "semantic-ui-react/dist/commonjs/elements/Button";
-import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
-import Checkbox from "semantic-ui-react/dist/commonjs/modules/Checkbox";
-import { CountryDropdown } from "react-country-region-selector";
-import { Link } from "react-router-dom";
 const SignUpPresentation = props => {
   const {
     values,
@@ -285,7 +285,7 @@ const SignUpPresentation = props => {
           />
         </Modal.Actions>
       </Modal>
-      <Modal closeIcon open={showModal} onClose={() => handleOnCloseModal()}>
+      <Modal closeOnDimmerClick={false} closeIcon open={showModal} onClose={() => handleOnCloseModal()}>
         <Modal.Content>
           <Modal.Description>
             <Grid
