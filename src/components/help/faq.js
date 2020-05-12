@@ -16,7 +16,7 @@ const FAQ = props => (
       </div>
       <div className="site-main" onContextMenu={e => e.preventDefault()}>
         <Header as="h2" dividing>
-          ¿Que es SuperQSO.com?
+          ¿Que es SuperQSO?
         </Header>
 
         <video width="100%" controls controlsList="nodownload">

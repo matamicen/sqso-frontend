@@ -9,6 +9,7 @@ import Menu from 'semantic-ui-react/dist/commonjs/collections/Menu';
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
 import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
 import * as Actions from '../../actions';
+import '../../styles/style.css';
 import NavigationSearch from './NavigationSearch';
 class AuthenticatedNavigation extends React.PureComponent {
   constructor() {
@@ -39,14 +40,14 @@ class AuthenticatedNavigation extends React.PureComponent {
   notificationIcon() {
     if (this.props.notifications.length > 0) {
       return (
-        <Icon.Group size="large">
+        <Icon.Group size="large" className="notifIcon">
           <Icon name="bell" />
           <Icon corner name="attention" />
         </Icon.Group>
       );
     } else {
       return (
-        <Icon.Group size="large">
+        <Icon.Group size="large" className="notifIcon">
           <Icon name="bell outline" />
         </Icon.Group>
       );
@@ -64,18 +65,27 @@ class AuthenticatedNavigation extends React.PureComponent {
             <img src="/logoDesk.jpg" alt="SuperQSO.com" className="desktop" />
           </Link>
         </Menu.Item>
-        <Menu.Item style={{ flex: '1 1 auto', justifyContent: 'center' }}>
+        <Menu.Item style={{ flex: '1 1 auto', justifyContent: 'center', padding: "5px" }}>
           <NavigationSearch />
         </Menu.Item>
-        <Menu.Item style={{ flex: '0 1 auto' }}>
-          <Link to="/notifications">{this.notificationIcon()}</Link>
+        <Menu.Item style={{  padding: "10px" }}>
+          <Link to="/">
+            <Icon.Group size="large" >
+              <Icon name="home" />
+            </Icon.Group>
+          </Link>
         </Menu.Item>
+        <div className="notifIcon">
+          <Menu.Item>
+            <Link to="/notifications">{this.notificationIcon()}</Link>
+          </Menu.Item>
+        </div>
         <Menu.Menu style={{ flex: '0 1 auto' }}>
           <Dropdown
             item
-            icon="setting"
+            text={this.props.currentQRA}
             direction="left"
-            style={{ width: '50px' }}
+            style={{ width: '90px', padding: "4px", justifyContent: 'center' }}
           >
             <Dropdown.Menu>
               <Dropdown.Header content={this.props.currentQRA} />
@@ -112,7 +122,7 @@ class AuthenticatedNavigation extends React.PureComponent {
                 <Dropdown.Item>Contact Us</Dropdown.Item>
               </Link>
               <Link to="/FAQ">
-                <Dropdown.Item>Que es SuperQSO.com</Dropdown.Item>
+                <Dropdown.Item>¿Que es SuperQSO?</Dropdown.Item>
               </Link>
               <Link to="/tutorials">
                 <Dropdown.Item>
