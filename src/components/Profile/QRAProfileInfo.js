@@ -191,7 +191,7 @@ class QRAProfileInfo extends React.Component {
               <Form.Input
                 name="city"
                 label="City"
-                width={3}
+                width={5}
                 readOnly={!edit}
                 onChange={this.changeHandler}
                 value={city ? city : ""}
@@ -207,13 +207,13 @@ class QRAProfileInfo extends React.Component {
               <Form.Input
                 name="zipcode"
                 label="ZIP Code"
-                width={3}
+                width={2}
                 readOnly={!edit}
                 onChange={this.changeHandler}
                 value={zipcode ? zipcode : ""}
               />
 
-              <Form.Field>
+              <Form.Field width={3}>
                 <label htmlFor="country">Country</label>
                 <Dropdown
                   name="country"
@@ -274,7 +274,7 @@ class QRAProfileInfo extends React.Component {
               <Form.Input
                 name="qslinfo"
                 label="QSL Info"
-                // width={4}
+                width={13}
                 readOnly={!edit}
                 onChange={this.changeHandler}
                 value={qslinfo ? qslinfo : ""}
