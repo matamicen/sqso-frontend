@@ -164,6 +164,9 @@ export default class NewsFeed extends React.Component {
           <p>
             To start following a Callsign click <Link to={'/follow'}>here</Link>
           </p>
+          <p>
+            To see the tutorials click <Link to={'/tutorials'}>here</Link>
+          </p>
         </Message>
       );
     }

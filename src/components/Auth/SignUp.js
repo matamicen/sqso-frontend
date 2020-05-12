@@ -92,12 +92,17 @@ class SignUp extends React.Component {
         else
           window.gtag('event', 'userSignUp_WEBPRD', {
             event_category: 'User',
-            event_label: 'signUO',
+            event_label: 'signUP',
             userQRA: qra
           });
       })
       .catch(err => {
         if (err.code === 'UserLambdaValidationException') {
+          this.setState({
+            dimmerActive: false,
+            signUpError: 'callsign/email already registered'
+          });
+        } else if (err.code === 'UsernameExistsException') {
           this.setState({
             dimmerActive: false,
             signUpError: 'callsign/email already registered'
@@ -109,7 +114,16 @@ class SignUp extends React.Component {
             dimmerActive: false,
             signUpError: 'SignUp is no available yet. Please wait a few days!'
           });
-        } else this.setState({ dimmerActive: false, signUpError: err.message });
+        } else {
+          if (process.env.NODE_ENV !== 'production') {
+            console.log(err);
+          } else
+            Sentry.configureScope(function(scope) {
+              scope.setExtra('ENV', process.env.NODE_ENV);
+            });
+          Sentry.captureException(err);
+          this.setState({ dimmerActive: false, signUpError: err.message });
+        }
       });
   }
 
@@ -186,21 +200,26 @@ class SignUp extends React.Component {
       await this.props.actions.doStartingLogin();
       token = user.signInUserSession.idToken.jwtToken;
       const credentials = await Auth.currentCredentials();
+      if (!credentials.data) {
+        await Auth.signOut();
 
-      await this.props.actions.doLogin(
-        token,
-        this.state.qra.toUpperCase(),
-        credentials.data.IdentityId
-      );
-      await this.props.actions.doFetchUserInfo(token);
-      Sentry.configureScope(scope => {
-        scope.setUser({
-          qra: this.state.qra
+        this.props.actions.doSetPublicSession();
+      } else {
+        await this.props.actions.doLogin(
+          token,
+          user.signInUserSession.idToken.payload['custom:callsign'],
+          credentials.data.IdentityId
+        );
+        await this.props.actions.doFetchUserInfo(token);
+        Sentry.configureScope(scope => {
+          scope.setUser({
+            qra: user.signInUserSession.idToken.payload['custom:callsign']
+          });
         });
-      });
-      this.setState({ dimmerLoginActive: false });
-      // ReactG.event({ category: "QRA", action: "login" });
-      this.props.history.push('/follow');
+        this.setState({ dimmerLoginActive: false });
+        // ReactG.event({ category: "QRA", action: "login" });
+        this.props.history.push('/follow');
+      }
     }
   }
 
@@ -279,7 +298,10 @@ class SignUp extends React.Component {
               showModal={this.state.showModal}
               // showModalTC={this.state.showModalTC}
               showModalMessage={this.state.showModalMessage}
-              handleOnCloseModal={() => this.setState({ showModal: false })}
+              handleOnCloseModal={() => {
+                this.setState({ showModal: false });
+
+              }}
               // handleOnAcceptModalTC={() => this.handleAcceptTC()}
               handleAcceptMessageModal={() => this.handleAcceptMessageModal()}
               // handleOnCancelModalTC={() =>

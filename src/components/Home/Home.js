@@ -9,7 +9,6 @@ import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
 import * as Actions from '../../actions';
 import global_config from '../../global_config.json';
 import '../../styles/style.css';
-import Ad from '../Ad/Ad';
 import FeedQSO from '../Feed/NewsFeedContainer';
 import AppNavigation from './AppNavigation';
 class Home extends React.Component {
@@ -113,13 +112,14 @@ class Home extends React.Component {
               id="home-left"
               displayOnly={true}
             /> */}
-            <ins
+            {/* <ins
               className="adsbygoogle"
               style={{ display: 'inline', width: '160px', height: '600px' }}
               data-ad-client="ca-pub-1064314468310203"
               data-ad-slot="5266743439"
               data-ad-format="auto"
-            />
+            /> */}
+            <img src='/bannerDescarga.gif' alt="Download APP and work your first QSO"/>
           </div>
 
           <div className="site-main">
@@ -127,20 +127,21 @@ class Home extends React.Component {
           </div>
 
           <div className="site-right">
-            <Ad
+            {/* <Ad
               adslot="/21799560237/21799560237/Home/Home_Right"
               width={160}
               height={600}
               id="home-right"
               displayOnly={true}
-            />
+            /> */}
+            <img src='/bannerDescarga.gif' alt="Download APP and work your first QSO"/>
           </div>
         </div>
         <Modal
           open={this.state.modalOpen}
           onClose={() => this.setState({ modalOpen: false, videoAlreadyDisplayed: true })}
           size="large"
-        ><Modal.Header>¿Que es SuperQSO.com?</Modal.Header>
+        ><Modal.Header>¿Que es SuperQSO?</Modal.Header>
           <Modal.Content>
             <video width="100%" autoPlay controls controlsList="nodownload">
               <source

@@ -155,7 +155,6 @@ class LogIn extends React.Component {
           },
           showModal: true
         });
-        
       })
       .catch(err => {
         if (process.env.NODE_ENV !== 'production') {
@@ -339,6 +338,7 @@ class LogIn extends React.Component {
           </div>
         </div>
         <Modal
+          closeOnDimmerClick={false}
           closeIcon
           open={this.state.showModal}
           onClose={() => this.setState({ showModal: false })}
