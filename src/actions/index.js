@@ -794,7 +794,6 @@ export function doFetchUserFeed(token) {
     };
     API.get(apiName, path, myInit)
       .then(response => {
-        console.log(response)
         if (response.body.error === 0) {
           if (response.body.message.length > 0)
             dispatch(doReceiveFeed(response.body.message));
