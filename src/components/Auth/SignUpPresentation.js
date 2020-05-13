@@ -74,7 +74,7 @@ const SignUpPresentation = props => {
                       fluid
                       icon="user"
                       iconPosition="left"
-                      placeholder="callsign"
+                      label="callsign"
                       error={touched.qra && Boolean(errors.qra)}
                       name="qra"
                       onChange={change.bind(null, "qra")}
@@ -91,7 +91,7 @@ const SignUpPresentation = props => {
                     <Form.Input
                       fluid
                       iconPosition="left"
-                      placeholder="First Name"
+                      label="First Name"
                       error={touched.firstName && Boolean(errors.firstName)}
                       name="firstName"
                       onChange={change.bind(null, "firstName")}
@@ -107,7 +107,7 @@ const SignUpPresentation = props => {
                     <Form.Input
                       fluid
                       iconPosition="left"
-                      placeholder="Last Name"
+                      label="Last Name"
                       error={touched.lastName && Boolean(errors.lastName)}
                       name="lastName"
                       onChange={change.bind(null, "lastName")}
@@ -124,7 +124,7 @@ const SignUpPresentation = props => {
                       fluid
                       // icon="at"
                       iconPosition="left"
-                      placeholder="Email"
+                      label="Email"
                       error={touched.email && Boolean(errors.email)}
                       name="email"
                       onChange={change.bind(null, "email")}
@@ -138,7 +138,7 @@ const SignUpPresentation = props => {
                       fluid
                       // icon="at"
                       iconPosition="left"
-                      placeholder="Email Confirmation"
+                      label="Email Confirmation"
                       error={
                         touched.emailConfirm && Boolean(errors.emailConfirm)
                       }
@@ -155,7 +155,7 @@ const SignUpPresentation = props => {
                       fluid
                       icon="calendar"
                       iconPosition="left"
-                      placeholder="Birthdate"
+                      label="Birthdate"
                       error={touched.birthDate && Boolean(errors.birthDate)}
                       name="birthDate"
                       onChange={change.bind(null, "birthDate")}
@@ -192,7 +192,7 @@ const SignUpPresentation = props => {
                       iconPosition="left"
                       type="password"
                       error={touched.password && Boolean(errors.password)}
-                      placeholder="Password"
+                      label="Password"
                       name="password"
                       onChange={change.bind(null, "password")}
                     />{" "}
@@ -210,7 +210,7 @@ const SignUpPresentation = props => {
                         touched.passwordConfirm &&
                         Boolean(errors.passwordConfirm)
                       }
-                      placeholder="Password Confirmation"
+                      label="Password Confirmation"
                       name="passwordConfirm"
                       onChange={change.bind(null, "passwordConfirm")}
                     />{" "}
