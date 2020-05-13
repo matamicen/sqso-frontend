@@ -795,9 +795,35 @@ export function doFetchUserFeed(token) {
     API.get(apiName, path, myInit)
       .then(response => {
         if (response.body.error === 0) {
+          
           if (response.body.message.length > 0)
             dispatch(doReceiveFeed(response.body.message));
-          else dispatch(doFetchPublicFeed);
+          else {
+            const apiName = 'superqso';
+            const path = '/qso-public-list';
+            const myInit = {
+              body: {}, // replace this with attributes you need
+              headers: {} // OPTIONAL
+            };
+            API.get(apiName, path, myInit)
+              .then(response => {
+                
+                if (response.body.error === 0) {
+                  dispatch(doReceiveFeed(response.body.message));
+                } else console.log(response.body.message);
+              })
+              .catch(error => {
+                console.log(error);
+                if (process.env.NODE_ENV !== 'production') {
+                  console.log(error);
+                } else {
+                  Sentry.configureScope(function(scope) {
+                    scope.setExtra('ENV', process.env.NODE_ENV);
+                  });
+                  Sentry.captureException(error);
+                }
+              });
+          }
         } else console.log(response.body.message);
       })
       .catch(error => {
@@ -953,7 +979,7 @@ export function doFetchNotifications(token) {
 }
 
 export function doFetchPublicFeed() {
-  // console.log("doFetchPublicFeed");
+  // console.log('doFetchPublicFeed');
   return dispatch => {
     dispatch(doRequestFeed());
     const apiName = 'superqso';
@@ -964,11 +990,13 @@ export function doFetchPublicFeed() {
     };
     API.get(apiName, path, myInit)
       .then(response => {
+        // console.log(response);
         if (response.body.error === 0) {
           dispatch(doReceiveFeed(response.body.message));
         } else console.log(response.body.message);
       })
       .catch(error => {
+        console.log(error);
         if (process.env.NODE_ENV !== 'production') {
           console.log(error);
         } else {
