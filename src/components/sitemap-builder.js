@@ -3,7 +3,7 @@ require('@babel/register')({
 });
 const Sitemap = require('react-router-sitemap').default;
 
-const global_config = require('../global_config.json');
+
 
 require('ignore-styles');
 // require("@babel/register")({
@@ -16,7 +16,7 @@ async function generateSitemap() {
     var apigClientFactory = require('aws-api-gateway-client').default;
 
     var config = {
-      invokeUrl: global_config.apiEndpoint
+      invokeUrl: 'https://api.zxcvbnmasd.com'
     };
     var apigClient = apigClientFactory.newClient(config);
     var params = {};
