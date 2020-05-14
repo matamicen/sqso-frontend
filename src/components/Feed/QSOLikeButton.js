@@ -63,12 +63,12 @@ class QSOLikeButton extends React.Component {
     API.post(apiName, path, myInit)
       .then(response => {
         if (response.body.error > 0) {
-          this.setState(previousState => ({
-            likeCounter:
-              this.props.qso.likes.length === 0
-                ? this.props.qso.likes.length
-                : this.props.qso.likes.length - 1
-          }));
+          // this.setState(previousState => ({
+          //   likeCounter:
+          //     this.props.qso.likes.length === 0
+          //       ? this.props.qso.likes.length
+          //       : this.props.qso.likes.length - 1
+          // }));
         } else {
           // this.setState({
           //   likeCounter: response.body.message
@@ -114,12 +114,12 @@ class QSOLikeButton extends React.Component {
     API.del(apiName, path, myInit)
       .then(response => {
         if (response.body.error > 0) {
-          this.setState(previousState => ({
-            likeCounter:
-              this.props.qso.likes.length === 0
-                ? this.props.qso.likes.length
-                : this.props.qso.likes.length - 1
-          }));
+          // this.setState(previousState => ({
+          //   likeCounter:
+          //     this.props.qso.likes.length === 0
+          //       ? this.props.qso.likes.length
+          //       : this.props.qso.likes.length - 1
+          // }));
         } else {
           // this.setState({
           //   likeCounter: response.body.message
