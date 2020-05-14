@@ -1,19 +1,19 @@
 import React from "react";
-
-import AppNavigation from "../Home/AppNavigation";
-import Message from "semantic-ui-react/dist/commonjs/collections/Message";
-
-import { bindActionCreators } from "redux";
-import * as Actions from "../../actions";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
+import { bindActionCreators } from "redux";
+import 'semantic-ui-css/semantic.min.css';
+import Message from "semantic-ui-react/dist/commonjs/collections/Message";
 import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
+import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
+import Feed from "semantic-ui-react/dist/commonjs/views/Feed";
+import * as Actions from "../../actions";
 import "../../styles/style.css";
-import Table from "semantic-ui-react/dist/commonjs/collections/Table";
-
-import Notification from "./Notification";
 import Ad from "../Ad/Ad";
+import AppNavigation from "../Home/AppNavigation";
+import Notification from "./Notification";
+
+
 
 class Notifications extends React.Component {
   state = {
@@ -63,6 +63,7 @@ class Notifications extends React.Component {
   handleOpen = () => this.setState({ adActive: true });
   handleClose = () => this.setState({ adActive: false });
   render() {
+    
     return (
       <div className="notifications-container">
         <Dimmer active={this.state.active} page>
@@ -103,8 +104,9 @@ class Notifications extends React.Component {
         </div>
         <div className="notifications-main">
           {this.props.notifications && (
-            <Table unstackable>
-              <Table.Body>
+            // <Table unstackable>
+              // <Table.Body>
+              <Feed>  
                 {/* <List divided relaxed animated> */}
                 {this.props.notifications &&
                   this.props.notifications.map(m => {
@@ -120,8 +122,9 @@ class Notifications extends React.Component {
                       />
                     );
                   })}
-              </Table.Body>
-            </Table>
+                  </Feed>
+              // </Table.Body>
+            // </Table>
           )}
           {this.props.notifications.length === 0 && (
             <Message negative>

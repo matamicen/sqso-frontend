@@ -640,14 +640,14 @@ export function doAddRepostToFeed(qso) {
 export function doSaveUserInfo(token, qra) {
   return dispatch => {
     if (process.env.NODE_ENV !== 'production')
-      window.gtag('event', 'updateUserInfo_WEBDEV', {
+      window.gtag('event', 'UserInfoUpdate_WEBDEV', {
         event_category: 'User',
-        event_label: 'updateUserInfo'
+        event_label: 'UserInfoUpdate'
       });
     else
-      window.gtag('event', 'updateUserInfo_WEBPRD', {
+      window.gtag('event', 'UserInfoUpdate_WEBPRD', {
         event_category: 'User',
-        event_label: 'updateUserInfo'
+        event_label: 'UserInfoUpdate'
       });
     dispatch(doRequestUserInfo());
     const apiName = 'superqso';
@@ -706,14 +706,14 @@ export function doReceiveUserDataInfo(qra) {
 export function doSaveUserBio(token, bio, identityId) {
   return dispatch => {
     if (process.env.NODE_ENV !== 'production')
-      window.gtag('event', 'updateUserBio_WEBDEV', {
+      window.gtag('event', 'UserBioUpdate_WEBDEV', {
         event_category: 'User',
-        event_label: 'updateUserBio'
+        event_label: 'UserBioUpdate'
       });
     else
-      window.gtag('event', 'updateUserBio_WEBPRD', {
+      window.gtag('event', 'UserBioUpdate_WEBPRD', {
         event_category: 'User',
-        event_label: 'updateUserBio'
+        event_label: 'UserBioUpdate'
       });
     const apiName = 'superqso';
     const path = '/qra-info/bio';
@@ -920,14 +920,14 @@ export function doFollowFetch(token) {
 export function doFetchNotifications(token) {
   return dispatch => {
     if (process.env.NODE_ENV !== 'production')
-      window.gtag('event', 'getNotifications_WEBDEV', {
+      window.gtag('event', 'NotificationGet_WEBDEV', {
         event_category: 'User',
-        event_label: 'getNotifications'
+        event_label: 'NotificationGet'
       });
     else
-      window.gtag('event', 'getNotifications_WEBPRD', {
+      window.gtag('event', 'NotificationGet_WEBPRD', {
         event_category: 'User',
-        event_label: 'getNotifications'
+        event_label: 'NotificationGet'
       });
     dispatch(doRequestFeed());
     const apiName = 'superqso';
