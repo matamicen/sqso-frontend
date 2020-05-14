@@ -50,7 +50,9 @@ export default async function QslCardPrint(props) {
     if (props.qso.type !== 'POST') {
       pdf.text(5.3, 2.5, 'Mode: ' + props.qso.mode);
       pdf.text(5.3, 2.6, 'Band: ' + props.qso.band);
-      pdf.text(5.3, 2.7, 'RST: ' + (props.qso.rst ? props.qso.rst : '59'));
+      if (props.qso.db)
+        pdf.text(5.3, 2.7, 'dB: ' + (props.qso.db ? props.qso.db : '59'));
+      else pdf.text(5.3, 2.7, 'RST: ' + (props.qso.rst ? props.qso.rst : '59'));
     }
     pdf.text(
       'Date: ' +
@@ -226,7 +228,7 @@ async function loadImage(url) {
 //         .catch(error => {
 //           if (process.env.NODE_ENV !== 'production') {
 //             console.log(error);
-//           } else { Sentry.configureScope(function (scope) {   
+//           } else { Sentry.configureScope(function (scope) {
 //     scope.setExtra("ENV", process.env.NODE_ENV);
 //   });
 // Sentry.captureException(error);
@@ -248,7 +250,7 @@ async function loadImage(url) {
 //         .catch(error => {
 //           if (process.env.NODE_ENV !== 'production') {
 //             console.log(error);
-//           } else { Sentry.configureScope(function (scope) {   
+//           } else { Sentry.configureScope(function (scope) {
 //     scope.setExtra("ENV", process.env.NODE_ENV);
 //   });
 // Sentry.captureException(error);

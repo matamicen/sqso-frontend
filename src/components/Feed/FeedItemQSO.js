@@ -1,27 +1,27 @@
-import PropTypes from 'prop-types'
-import React, { Fragment } from 'react'
-import { connect } from 'react-redux'
-import { Link, withRouter } from 'react-router-dom'
-import { bindActionCreators } from 'redux'
-import Confirm from 'semantic-ui-react/dist/commonjs/addons/Confirm'
-import Button from 'semantic-ui-react/dist/commonjs/elements/Button'
-import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider'
-import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon'
-import Image from 'semantic-ui-react/dist/commonjs/elements/Image'
-import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment'
-import * as Actions from '../../actions'
-import '../../styles/style.css'
-import PopupToFollow from '../PopupToFollow'
-import FeedAudioList from './FeedAudioList'
-import FeedImage from './FeedImage'
-import FeedLinkList from './FeedLinkList'
-import FeedOptionsMenu from './FeedOptionsMenu'
-import QRAs from './QRAs'
-import QSOComments from './QSOComments'
-import QSOLikeButton from './QSOLikeButton'
-import QSORePostButton from './QSORePostButton'
-import QSOShareButtons from './QSOShareButtons'
-import './style.css'
+import PropTypes from 'prop-types';
+import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
+import { Link, withRouter } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import Confirm from 'semantic-ui-react/dist/commonjs/addons/Confirm';
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
+import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider';
+import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
+import Image from 'semantic-ui-react/dist/commonjs/elements/Image';
+import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment';
+import * as Actions from '../../actions';
+import '../../styles/style.css';
+import PopupToFollow from '../PopupToFollow';
+import FeedAudioList from './FeedAudioList';
+import FeedImage from './FeedImage';
+import FeedLinkList from './FeedLinkList';
+import FeedOptionsMenu from './FeedOptionsMenu';
+import QRAs from './QRAs';
+import QSOComments from './QSOComments';
+import QSOLikeButton from './QSOLikeButton';
+import QSORePostButton from './QSORePostButton';
+import QSOShareButtons from './QSOShareButtons';
+import './style.css';
 
 class FeedItemQSO extends React.Component {
   constructor() {
@@ -32,7 +32,8 @@ class FeedItemQSO extends React.Component {
   }
 
   handleOnComment(e) {
-    if (!this.props.isAuthenticated && this.props.qso.comments.length === 0) this.setState({ openLogin: true })
+    if (!this.props.isAuthenticated && this.props.qso.comments.length === 0)
+      this.setState({ openLogin: true });
     else if (this.props.currentQRA || this.props.qso.comments.length > 0) {
       this.props.showComments(this.props.index);
     }
@@ -119,10 +120,18 @@ class FeedItemQSO extends React.Component {
                 <b>Band: </b>
                 {this.props.qso.band}
               </div>
-              <div>
-                <b>RST: </b>
-                {this.props.qso.rst ? this.props.qso.rst : '59'}
-              </div>
+              {this.props.qso.db && (
+                <div>
+                  <b>dB: </b>
+                  {this.props.qso.db ? this.props.qso.db : null}
+                </div>
+              )}
+              {!this.props.qso.db && (
+                <div>
+                  <b>RST: </b>
+                  {this.props.qso.rst ? this.props.qso.rst : '59'}
+                </div>
+              )}
               <div>
                 <b>Date: </b>
                 {date.toLocaleDateString('EN-US', { month: 'short' }) +
@@ -252,10 +261,12 @@ const mapStateToProps = (state, qsos) => ({
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(Actions, dispatch)
 });
-export default  withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(FeedItemQSO));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(FeedItemQSO)
+);
 FeedItemQSO.propTypes = {
   qso: PropTypes.object.isRequired
 };
