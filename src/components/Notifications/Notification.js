@@ -81,7 +81,7 @@ export default class Notification extends React.Component {
             <Feed.Extra text>
               {notif.mode ? 'Mode: ' + notif.mode : ''}
               {notif.band ? ' | Band: ' + notif.band : ''}
-              {notif.rst ? ' | RST: ' + notif.rst : ''}
+              
               {notif.UTC
                 ? ' | UTC: ' +
                   date.getUTCHours() +
@@ -120,7 +120,7 @@ export default class Notification extends React.Component {
             <Feed.Extra text>
               {notif.mode ? 'Mode: ' + notif.mode : ''}
               {notif.band ? ' | Band: ' + notif.band : ''}
-              {notif.rst ? ' | RST: ' + notif.rst : ''}
+              
               {notif.UTC
                 ? ' | UTC: ' +
                   date.getUTCHours() +
@@ -150,7 +150,7 @@ export default class Notification extends React.Component {
             <Feed.Extra text>
               {notif.mode ? 'Mode: ' + notif.mode : ''}
               {notif.band ? ' | Band: ' + notif.band : ''}
-              {notif.rst ? ' | RST: ' + notif.rst : ''}
+              
               {notif.UTC
                 ? ' | UTC: ' +
                   date.getUTCHours() +
