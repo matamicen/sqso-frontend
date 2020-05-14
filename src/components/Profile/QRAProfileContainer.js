@@ -12,7 +12,7 @@ class QRAProfileContainer extends React.PureComponent {
   constructor() {
     super();
     this.state = {
-      active: true,
+      loaderActive: true,
       adActive: false,
       adClosed: false,
       tab: null,
@@ -87,13 +87,16 @@ class QRAProfileContainer extends React.PureComponent {
   static getDerivedStateFromProps(props, prevState) {
     let followed;
 
-    if (props.qraError && prevState.active) {
+
+   
+    if (props.qraError && prevState.loaderActive) {
       return {
         qraError: props.qraError,
-        active: false
+        loaderActive: false
       };
     }
-    if (props.QRAFetched && prevState.active) {
+
+    if (props.QRAFetched && prevState.loaderActive) {
       if (
         process.env.NODE_ENV === "production" &&
         !prevState.adClosed &&
@@ -107,23 +110,26 @@ class QRAProfileContainer extends React.PureComponent {
         return {
           adActive: true,
           followed: followed,
-          active: false
+          loaderActive: false
         };
       } else if (
         process.env.NODE_ENV === "production" &&
         !props.isAuthenticated
       ) {
+        
         return {
           adActive: true,
-          active: false
+          loaderActive: false
         };
       } else {
         followed = props.following.some(o => o.qra === props.match.params.qra);
-        return { followed: followed, active: false };
+        
+        return { followed: followed, loaderActive: false };
       }
     }
-    if (!props.qra && !prevState.active) {
-      return { active: true };
+    if (!props.qra && !prevState.loaderActive) {
+      
+      return { loaderActive: true };
     }
 
     if (
@@ -134,13 +140,19 @@ class QRAProfileContainer extends React.PureComponent {
       props.qraUserData.monthly_qra_views >
         props.qraUserData.account_type.web_qra_profile_view
     ) {
+      
       return {
+        followed :   props.following.some(o => o.qra === props.match.params.qra),
         adActive: true
       };
+      
     }
-
+    
     //Default
-    return null;
+    return {
+      followed :   props.following.some(o => o.qra === props.match.params.qra)
+      
+    };
   }
   handleTabClick(i) {
     switch (i) {
@@ -206,7 +218,7 @@ class QRAProfileContainer extends React.PureComponent {
       <Fragment>
         <QRAProfile
           qraInfo={qraInfo}
-          active={this.state.active}
+          loaderActive={this.state.loaderActive}
           qra={this.props.qra}
           onClick={this.handleButtonClick}
           isAuthenticated={this.props.isAuthenticated}

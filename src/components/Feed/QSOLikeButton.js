@@ -64,7 +64,10 @@ class QSOLikeButton extends React.Component {
       .then(response => {
         if (response.body.error > 0) {
           this.setState(previousState => ({
-            likeCounter: previousState.likeCounter - 1
+            likeCounter:
+              this.props.qso.likes.length === 0
+                ? this.props.qso.likes.length
+                : this.props.qso.likes.length - 1
           }));
         } else {
           // this.setState({
@@ -112,7 +115,10 @@ class QSOLikeButton extends React.Component {
       .then(response => {
         if (response.body.error > 0) {
           this.setState(previousState => ({
-            likeCounter: previousState.likeCounter - 1
+            likeCounter:
+              this.props.qso.likes.length === 0
+                ? this.props.qso.likes.length
+                : this.props.qso.likes.length - 1
           }));
         } else {
           // this.setState({
@@ -146,11 +152,19 @@ class QSOLikeButton extends React.Component {
   }
 
   handleOnLike() {
+ 
     if (!this.props.isAuthenticated) this.setState({ openLogin: true });
     else {
-      if (!this.state.liked) {
+      if (
+        !this.state.liked &&
+        this.props.qso.likes.length >= this.state.likeCounter
+      ) {
         this.setState(previousState => ({
-          likeCounter: previousState.likeCounter + 1,
+          likeCounter: this.props.qso.likes.some(
+            o => o.idqra === this.props.userData.qra.idqras
+          )
+            ? this.props.qso.likes.length
+            : this.props.qso.likes.length + 1,
           icon: 'thumbs up',
           liked: true
         }));
@@ -159,7 +173,10 @@ class QSOLikeButton extends React.Component {
         this.setState({});
       } else if (this.state.liked) {
         this.setState(previousState => ({
-          likeCounter: previousState.likeCounter - 1,
+          likeCounter:
+            this.props.qso.likes.length === 0
+              ? this.props.qso.likes.length
+              : this.props.qso.likes.length - 1,
           liked: false,
           icon: 'thumbs outline up'
         }));
