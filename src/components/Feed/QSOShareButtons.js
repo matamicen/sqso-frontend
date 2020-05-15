@@ -29,7 +29,7 @@ const QSOShareButtons = ({ idqso }) => {
                   event_label: 'shareWAPP'
                 });
               else
-                window.gtag('event', 'qsoShareWAPP_WEBDEV', {
+                window.gtag('event', 'qsoShareWAPP_WEBPRD', {
                   event_category: 'QSO',
                   event_label: 'shareWAPP'
                 });

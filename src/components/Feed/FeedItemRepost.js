@@ -29,9 +29,10 @@ class FeedItemRepost extends React.Component {
     this.recalculateRowHeight = this.recalculateRowHeight.bind(this);
   }
 
-  handleOnComment() {
-    if (!this.props.isAuthenticated && this.props.qso.comments.length === 0) this.setState({ openLogin: true })
-    else if (this.props.qso.comments.length > 0) {
+  handleOnComment(e) {
+    if (!this.props.isAuthenticated && this.props.qso.comments.length === 0)
+      this.setState({ openLogin: true });
+    else if (this.props.currentQRA || this.props.qso.comments.length > 0) {
       this.props.showComments(this.props.index);
     }
     // this.recalculateRowHeight(); this.props.recalculateRowHeight()
@@ -165,10 +166,18 @@ class FeedItemRepost extends React.Component {
                   <b>Band: </b>
                   {this.props.qso.original[0].band}
                 </div>
-                <div>
-                  <b>RST: </b>
-                  {this.props.qso.rst ? this.props.qso.rst : '59'}
-                </div>
+                {this.props.qso.db && (
+                  <div>
+                    <b>dB: </b>
+                    {this.props.qso.db ? this.props.qso.db : null}
+                  </div>
+                )}
+                {!this.props.qso.db && (
+                  <div>
+                    <b>RST: </b>
+                    {this.props.qso.rst ? this.props.qso.rst : '59'}
+                  </div>
+                )}
                 <div>
                   <b>Date: </b>
                   {date.toLocaleDateString('EN-US', { month: 'short' }) +
@@ -232,7 +241,7 @@ class FeedItemRepost extends React.Component {
           <Divider hidden />
           <Button.Group widths="4" basic>
             <QSOLikeButton qso={this.props.qso} />
-            <Button onClick={this.handleOnComment.bind(this)}>
+            <Button onClick={e => this.handleOnComment(e)}>
               <Icon name="comment outline" />{' '}
               {this.props.qso.comments.length > 0 && commentsCounter}
             </Button>
