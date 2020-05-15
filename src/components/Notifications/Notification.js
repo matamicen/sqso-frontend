@@ -21,7 +21,7 @@ export default class Notification extends React.Component {
   formatNotification() {
     let notif = this.props.notification;
     var date = new Date(notif.UTC);
-    // var date = new Date(notif.DATETIME);
+    var datetime = new Date(notif.DATETIME);
     // console.log(date)
     switch (this.props.notification.activity_type) {
       case 1: //Follow
@@ -33,7 +33,7 @@ export default class Notification extends React.Component {
                   {notif.message}
                 </Link>
                 <Feed.Date>
-                  <Moment fromNow>{notif.DATETIME}</Moment>
+                  <Moment fromNow>{datetime}</Moment>
                 </Feed.Date>
               </Feed.Summary>
               <Feed.Extra text>{notif.comment}</Feed.Extra>
@@ -47,7 +47,7 @@ export default class Notification extends React.Component {
                   {notif.message}
                 </Link>
                 <Feed.Date>
-                  <Moment fromNow>{notif.DATETIME}</Moment>
+                  <Moment fromNow>{datetime}</Moment>
                 </Feed.Date>
               </Feed.Summary>
               <Feed.Extra text>{notif.comment}</Feed.Extra>
@@ -61,7 +61,7 @@ export default class Notification extends React.Component {
                 {notif.message}
               </Link>
               <Feed.Date>
-                <Moment fromNow>{notif.datetime}</Moment>
+                <Moment fromNow>{datetime}</Moment>
               </Feed.Date>
             </Feed.Summary>
             <Feed.Extra text>{notif.comment}</Feed.Extra>
@@ -75,7 +75,7 @@ export default class Notification extends React.Component {
                 {notif.message}
               </Link>
               <Feed.Date>
-                <Moment fromNow>{notif.DATETIME}</Moment>
+                <Moment fromNow>{datetime}</Moment>
               </Feed.Date>
             </Feed.Summary>
             <Feed.Extra text>
@@ -100,7 +100,7 @@ export default class Notification extends React.Component {
                 {notif.message}
               </Link>
               <Feed.Date>
-                <Moment fromNow>{notif.DATETIME}</Moment>
+                <Moment fromNow>{datetime}</Moment>
               </Feed.Date>
             </Feed.Summary>
             <Feed.Extra text>{notif.comment}</Feed.Extra>
@@ -114,7 +114,7 @@ export default class Notification extends React.Component {
                 {notif.message}
               </Link>
               <Feed.Date>
-                <Moment fromNow>{notif.DATETIME}</Moment>
+                <Moment fromNow>{datetime}</Moment>
               </Feed.Date>
             </Feed.Summary>
             <Feed.Extra text>
@@ -144,7 +144,7 @@ export default class Notification extends React.Component {
                 {notif.message}
               </Link>
               <Feed.Date>
-                <Moment fromNow>{notif.DATETIME}</Moment>
+                <Moment fromNow>{datetime}</Moment>
               </Feed.Date>
             </Feed.Summary>
             <Feed.Extra text>
@@ -174,7 +174,7 @@ export default class Notification extends React.Component {
                 {notif.message}
               </Link>
               <Feed.Date>
-                <Moment fromNow>{notif.DATETIME}</Moment>
+                <Moment fromNow>{datetime}</Moment>
               </Feed.Date>
             </Feed.Summary>
             <Feed.Extra text>{notif.comment}</Feed.Extra>
@@ -193,7 +193,7 @@ export default class Notification extends React.Component {
                 {notif.message}
               </Link>
               <Feed.Date>
-                <Moment fromNow>{notif.DATETIME}</Moment>
+                <Moment fromNow>{datetime}</Moment>
               </Feed.Date>
             </Feed.Summary>
             <Feed.Extra text>{notif.comment}</Feed.Extra>
