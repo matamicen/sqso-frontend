@@ -3,6 +3,22 @@ import canvg from 'canvg';
 import QRCode from 'qrcode.react';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
+import packageJson from '../../../package.json';
+const RELEASE = packageJson.version;
+if (process.env.NODE_ENV === 'production') {
+  Sentry.init({
+    dsn: 'https://2f1b1ed20458466ab2c6c66716678605@sentry.io/1441458',
+    release: RELEASE,
+    environment: process.env.NODE_ENV,
+    beforeSend(event, hint) {
+      // Check if it is an exception, and if so, show the report dialog
+      if (event.exception) {
+        Sentry.showReportDialog({ eventId: event.event_id });
+      }
+      return event;
+    }
+  });
+}
 export default async function QslCardPrint(props) {
   try {
     const jsPDF = require('jspdf');
@@ -200,6 +216,7 @@ async function loadImage(url) {
   return new Promise(resolve => {
     let img = new Image();
     img.onload = () => resolve(img);
+    img.setAttribute('crossorigin', 'anonymous');
     img.src = url;
   });
 }
