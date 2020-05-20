@@ -215,6 +215,7 @@ async function showImages(media, pdf) {
 async function loadImage(url) {
   return new Promise(resolve => {
     let img = new Image();
+    img.crossOrigin = "anonymous";
     img.onload = () => resolve(img);
     img.setAttribute('crossorigin', 'anonymous');
     img.src = url;
