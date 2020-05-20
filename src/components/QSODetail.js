@@ -1,17 +1,16 @@
-import React from "react";
-
-import NewsFeed from "./Feed/NewsFeedPresentational";
-import AppNavigation from "./Home/AppNavigation";
+import React from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 // import Advertisement from "semantic-ui-react/dist/commonjs/views/Advertisement";
-import { bindActionCreators } from "redux";
-import * as Actions from "../actions";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
-import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
-import Ad from "./Ad/Ad";
-import "../styles/style.css";
-import { Modal } from "semantic-ui-react";
+import { bindActionCreators } from 'redux';
+import { Modal } from 'semantic-ui-react';
+import Loader from 'semantic-ui-react/dist/commonjs/elements/Loader';
+import Dimmer from 'semantic-ui-react/dist/commonjs/modules/Dimmer';
+import * as Actions from '../actions';
+import '../styles/style.css';
+import NewsFeed from './Feed/NewsFeedPresentational';
+import AppNavigation from './Home/AppNavigation';
+
 class QSODetail extends React.PureComponent {
   state = {
     eventId: null,
@@ -31,7 +30,7 @@ class QSODetail extends React.PureComponent {
       };
     if (props.qso && prevState.active) {
       if (
-        process.env.NODE_ENV === "production" &&
+        process.env.NODE_ENV === 'production' &&
         !prevState.adClosed &&
         props.qraUserData &&
         props.qraUserData.account_type &&
@@ -43,7 +42,7 @@ class QSODetail extends React.PureComponent {
           active: false
         };
       } else if (
-        process.env.NODE_ENV === "production" &&
+        process.env.NODE_ENV === 'production' &&
         !props.isAuthenticated
       )
         return {
@@ -54,7 +53,7 @@ class QSODetail extends React.PureComponent {
     }
     if (!props.qso && !prevState.active) return { active: true };
     if (
-      process.env.NODE_ENV === "production" &&
+      process.env.NODE_ENV === 'production' &&
       !prevState.adClosed &&
       props.qraUserData &&
       props.qraUserData.account_type &&
@@ -68,9 +67,9 @@ class QSODetail extends React.PureComponent {
     return null;
   }
   componentDidMount() {
-    if (process.env.NODE_ENV !== "production")
+    if (process.env.NODE_ENV !== 'production')
       this.setState({ adActive: false });
-    let qsoInMemory = this.props.qso ? this.props.qso.GUID_URL : "";
+    let qsoInMemory = this.props.qso ? this.props.qso.GUID_URL : '';
 
     if (
       (!this.props.FetchingQSO && !this.props.QSOFetched) ||
@@ -119,7 +118,7 @@ class QSODetail extends React.PureComponent {
       return (
         <Modal
           open={this.state.qsoError ? true : false}
-          onClose={() => this.props.history.push("/")}
+          onClose={() => this.props.history.push('/')}
           size="small"
         >
           <Modal.Content>
@@ -128,6 +127,7 @@ class QSODetail extends React.PureComponent {
         </Modal>
       );
     }
+    
     let qsos = [];
     if (this.props.qso) {
       qsos.push({ qso: this.props.qso, type: this.props.qso.type });
@@ -158,12 +158,16 @@ class QSODetail extends React.PureComponent {
           <AppNavigation />
         </div>
         <div className="site-left">
-          <Ad
+          {/* <Ad
             adslot="/21799560237/qsoDetail/left"
             width={160}
             height={600}
             id="qsodetail-left"
             displayOnly={true}
+          /> */}
+          <img
+            src="/bannerDescarga.gif"
+            alt="Download APP and work your first QSO"
           />
         </div>
 
@@ -172,12 +176,16 @@ class QSODetail extends React.PureComponent {
         </div>
 
         <div className="site-right">
-          <Ad
+          {/* <Ad
             adslot="/21799560237/qsoDetail/right"
             width={160}
             height={600}
             id="qsodetail-right"
             displayOnly={true}
+          /> */}
+          <img
+            src="/bannerDescarga.gif"
+            alt="Download APP and work your first QSO"
           />
         </div>
       </div>
