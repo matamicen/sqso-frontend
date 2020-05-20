@@ -76,6 +76,7 @@ class FeedItemRepost extends React.Component {
         break;
       default:
     }
+    var repostDate = new Date(this.props.qso.datetime);
     var date = new Date(this.props.qso.original[0].datetime);
     return (
       <Fragment>
@@ -109,7 +110,23 @@ class FeedItemRepost extends React.Component {
               />
               {' reposted a QSO'}
             </div>
-
+            <div className="qso-header-info">               
+                <div>
+                  <b>Date: </b>
+                  {repostDate.toLocaleDateString('EN-US', { month: 'short' }) +
+                    ' ' +
+                    repostDate.getDate() +
+                    ', ' +
+                    repostDate.getFullYear()}
+                </div>
+                <div>
+                  <b>UTC: </b>
+                  {repostDate.getUTCHours() +
+                    ':' +
+                    (repostDate.getMinutes() < 10 ? '0' : '') +
+                    repostDate.getMinutes()}
+                </div>
+              </div>
             <div
               className="qso-header-button"
               style={{
