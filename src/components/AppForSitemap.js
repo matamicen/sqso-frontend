@@ -6,7 +6,6 @@ export default (
     <Route path="/" />
     <Route path="/follow" />
     <Route path="/signup" />
-    <Route path="/:qra" />
     <Route path="/login" />
     <Route path="/terms" />
     <Route path="/privacy" />
@@ -15,5 +14,6 @@ export default (
     <Route path="/download" />
     <Route path="/changepassword" />
     <Route path="/notifications" />
+    <Route path="/:qra" />    
   </Route>
 );
