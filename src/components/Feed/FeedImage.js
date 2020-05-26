@@ -122,7 +122,7 @@ class FeedImage extends React.Component {
                     centered
                     rounded
                     alt={m.description ? m.description : "no description"}
-                    size="big"
+                    size="large"
                     src={m.url}
                   />
 
