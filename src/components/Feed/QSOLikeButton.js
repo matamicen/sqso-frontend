@@ -11,25 +11,56 @@ import * as Actions from '../../actions';
 class QSOLikeButton extends React.Component {
   constructor() {
     super();
+    this.likeCounter = 0;
+    this.liked = null;
+    this.icon = 'thumbs outline up';
     this.state = {
       icon: 'thumbs outline up',
       liked: null,
       likeCounter: 0,
       openLogin: false,
-      likes: []
+      likes: [],
+      idqra: null
     };
   }
 
   componentDidMount() {
-    if (this.props.qso.likes) {
-      this.setState({ likeCounter: this.props.qso.likes.length });
+    this.likeCounter = this.props.qso.likes.length;
+    this.setState({
+      likeCounter: this.props.qso.likes.length
+    });
+
+    if (this.props.userData.qra.idqras) {
+      this.setState({ idqra: this.props.userData.qra.idqras });
+      if (this.props.qso.likes) {
+        if (
+          this.props.qso.likes.some(
+            o => o.idqra === this.props.userData.qra.idqras
+          )
+        ) {
+          this.icon = 'thumbs up';
+          this.liked = true;
+          this.setState({
+            likeCounter: this.props.qso.likes.length,
+            icon: 'thumbs up',
+            liked: true
+          });
+        } else {
+          this.icon = 'thumbs outline up';
+          this.liked = false;
+          this.setState({
+            likeCounter: this.props.qso.likes.length,
+            icon: 'thumbs outline up',
+            liked: false
+          });
+        }
+      }
     }
   }
   static getDerivedStateFromProps(props, prevState) {
     if (
-      prevState.likes.length === 0 &&
-      props.qso.likes.length > 0 &&
-      props.userData.qra
+      props.userData.qra.idqras &&
+      prevState.idqra !== props.userData.qra.idqras
     ) {
       if (props.qso.likes.some(o => o.idqra === props.userData.qra.idqras)) {
         return {
@@ -45,6 +76,24 @@ class QSOLikeButton extends React.Component {
           likes: props.qso.likes,
           likeCounter: props.qso.likes.length
         };
+        // if (
+        //   props.userData.qra
+        // ) {
+        //   if (props.qso.likes.some(o => o.idqra === props.userData.qra.idqras)) {
+        //     return {
+        //       liked: true,
+        //       icon: 'thumbs up',
+        //       likes: props.qso.likes,
+        //       likeCounter: props.qso.likes.length
+        //     };
+        //   } else {
+        //     return {
+        //       liked: false,
+        //       icon: 'thumbs outline up',
+        //       likes: props.qso.likes,
+        //       likeCounter: props.qso.likes.length
+        //     };
+        //   }
       }
     }
     return null;
@@ -152,40 +201,41 @@ class QSOLikeButton extends React.Component {
   }
 
   handleOnLike() {
- 
     if (!this.props.isAuthenticated) this.setState({ openLogin: true });
     else {
-      if (
-        !this.state.liked &&
-        this.props.qso.likes.length >= this.state.likeCounter
-      ) {
-        this.setState(previousState => ({
-          likeCounter: this.props.qso.likes.some(
-            o => o.idqra === this.props.userData.qra.idqras
-          )
-            ? this.props.qso.likes.length
-            : this.props.qso.likes.length + 1,
+      if (!this.liked) {
+        this.likeCounter++;
+        this.liked = true;
+        this.icon = 'thumbs up';
+        this.setState({
+          likeCounter: this.likeCounter,
           icon: 'thumbs up',
           liked: true
-        }));
+        });
         this.doLike();
-
-        this.setState({});
-      } else if (this.state.liked) {
-        this.setState(previousState => ({
-          likeCounter:
-            this.props.qso.likes.length === 0
-              ? this.props.qso.likes.length
-              : this.props.qso.likes.length - 1,
+      } else {
+        this.likeCounter--;
+        this.liked = false;
+        this.icon = 'thumbs outline up';
+        this.setState({
+          likeCounter: this.likeCounter,
           liked: false,
           icon: 'thumbs outline up'
-        }));
+        });
         this.doUnLike();
       }
     }
   }
 
   render() {
+    let icon;
+
+    if (this.liked !== true && this.liked !== false) {
+      icon = this.state.icon;
+      this.liked = this.state.liked;
+    } else if (this.liked) icon = 'thumbs up';
+    else icon = 'thumbs outline up';
+
     return (
       <Fragment>
         <Confirm
@@ -202,8 +252,8 @@ class QSOLikeButton extends React.Component {
           confirmButton="Login"
           content="Please Login to perform this action"
         />
-        <Button icon active={false} onClick={this.handleOnLike.bind(this)}>
-          <Icon name={this.state.icon} /> {this.state.likeCounter}{' '}
+        <Button icon active={false} onClick={() => this.handleOnLike()}>
+          <Icon name={icon} /> {this.likeCounter}{' '}
         </Button>
       </Fragment>
     );
