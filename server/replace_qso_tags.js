@@ -79,6 +79,10 @@ const replace_qso_tags = async (req, res) => {
               title =
                 qso.qra +
                 ' created a new POST '
+            }else if(qso.type === 'SHARE' ) {
+              title =
+                qso.qra +
+                ' shared a POST '
             }
 
             if (qso.media.length > 0) {

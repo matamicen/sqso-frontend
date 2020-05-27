@@ -81,6 +81,8 @@ const replace_qso_tags = async (req, res) => {
             title = qso.qra + ' listened a QSO with ' + qso.qras[0].qra + ' - Band: ' + qso.band + ' - Mode: ' + qso.mode;
           } else if (qso.type === 'POST') {
             title = qso.qra + ' created a new POST ';
+          } else if (qso.type === 'SHARE') {
+            title = qso.qra + ' shared a POST ';
           }
 
           if (qso.media.length > 0) {

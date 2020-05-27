@@ -4,8 +4,10 @@
       "@babel/preset-env",
       {
         "targets": {
-          "node": "current"
-        },
+          "node": true,
+          "esmodules": true
+
+        }
       
       }
     ],

@@ -66,13 +66,18 @@ class FeedItemRepost extends React.Component {
     const commentsCounter = '(' + this.props.qso.comments.length + ')';
 
     let text;
-
+  
     switch (this.props.qso.original[0].type) {
       case 'QSO':
-        text = ' worked a QSO';
+        text = ' worked a QSO';       
         break;
       case 'LISTEN':
         text = ' listened a QSO';
+    
+        break;
+      case 'POST':
+        text = ' created a new POST';
+  
         break;
       default:
     }
@@ -108,25 +113,25 @@ class FeedItemRepost extends React.Component {
                   </Link>
                 }
               />
-              {' reposted a QSO'}
+              {" shared content"}
             </div>
-            <div className="qso-header-info">               
-                <div>
-                  <b>Date: </b>
-                  {repostDate.toLocaleDateString('EN-US', { month: 'short' }) +
-                    ' ' +
-                    repostDate.getDate() +
-                    ', ' +
-                    repostDate.getFullYear()}
-                </div>
-                <div>
-                  <b>UTC: </b>
-                  {repostDate.getUTCHours() +
-                    ':' +
-                    (repostDate.getMinutes() < 10 ? '0' : '') +
-                    repostDate.getMinutes()}
-                </div>
+            <div className="qso-header-info">
+              <div>
+                <b>Date: </b>
+                {repostDate.toLocaleDateString('EN-US', { month: 'short' }) +
+                  ' ' +
+                  repostDate.getDate() +
+                  ', ' +
+                  repostDate.getFullYear()}
               </div>
+              <div>
+                <b>UTC: </b>
+                {repostDate.getUTCHours() +
+                  ':' +
+                  (repostDate.getMinutes() < 10 ? '0' : '') +
+                  repostDate.getMinutes()}
+              </div>
+            </div>
             <div
               className="qso-header-button"
               style={{
@@ -175,21 +180,25 @@ class FeedItemRepost extends React.Component {
                 {text}
               </div>
               <div className="qso-header-info">
-                <div>
-                  <b>Mode: </b>
-                  {this.props.qso.original[0].mode}
-                </div>
-                <div>
-                  <b>Band: </b>
-                  {this.props.qso.original[0].band}
-                </div>
+                {this.props.qso.original[0].mode && (
+                  <div>
+                    <b>Mode: </b>
+                    {this.props.qso.original[0].mode}
+                  </div>
+                )}
+                {this.props.qso.original[0].band && (
+                  <div>
+                    <b>Band: </b>
+                    {this.props.qso.original[0].band}
+                  </div>
+                )}
                 {this.props.qso.db && (
                   <div>
                     <b>dB: </b>
                     {this.props.qso.db ? this.props.qso.db : null}
                   </div>
                 )}
-                {!this.props.qso.db && (
+                {!this.props.qso.rst && (
                   <div>
                     <b>RST: </b>
                     {this.props.qso.rst ? this.props.qso.rst : '59'}
@@ -231,13 +240,15 @@ class FeedItemRepost extends React.Component {
               hidden
               style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
             />
-            <Segment>
-              <QRAs
-                avatarpic={this.props.qso.original[0].avatarpic}
-                qso_owner={this.props.qso.original[0].qra}
-                qras={this.props.qso.qras}
-              />
-            </Segment>
+            {this.props.qso.qras.length > 0 && (
+              <Segment>
+                <QRAs
+                  avatarpic={this.props.qso.original[0].avatarpic}
+                  qso_owner={this.props.qso.original[0].qra}
+                  qras={this.props.qso.qras}
+                />
+              </Segment>
+            )}
             {picList.length > 0 && (
               <FeedImage
                 img={picList}
