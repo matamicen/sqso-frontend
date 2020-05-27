@@ -16,7 +16,7 @@ class QRAProfileContainer extends React.PureComponent {
       adActive: false,
       adClosed: false,
       tab: null,
-      followed: false,
+      // followed: false,
       qraError: null
     };
     this.handleButtonClick = this.handleButtonClick.bind(this);
@@ -85,7 +85,7 @@ class QRAProfileContainer extends React.PureComponent {
   handleOpen = () => this.setState({ adActive: true });
   handleClose = () => this.setState({ adActive: false, adClosed: true });
   static getDerivedStateFromProps(props, prevState) {
-    let followed;
+    // let followed;
 
 
    
@@ -105,11 +105,11 @@ class QRAProfileContainer extends React.PureComponent {
         props.qraUserData.monthly_qra_views >
           props.qraUserData.account_type.web_qra_profile_view
       ) {
-        followed = props.following.some(o => o.qra === props.match.params.qra);
+        // followed = props.following.some(o => o.qra === props.match.params.qra);
 
         return {
           adActive: true,
-          followed: followed,
+          // followed: followed,
           loaderActive: false
         };
       } else if (
@@ -122,9 +122,11 @@ class QRAProfileContainer extends React.PureComponent {
           loaderActive: false
         };
       } else {
-        followed = props.following.some(o => o.qra === props.match.params.qra);
+        // followed = props.following.some(o => o.qra === props.match.params.qra);
         
-        return { followed: followed, loaderActive: false };
+        return { 
+          // followed: followed, 
+          loaderActive: false };
       }
     }
     if (!props.qra && !prevState.loaderActive) {
@@ -142,17 +144,18 @@ class QRAProfileContainer extends React.PureComponent {
     ) {
       
       return {
-        followed :   props.following.some(o => o.qra === props.match.params.qra),
+        // followed :   props.following.some(o => o.qra === props.match.params.qra),
         adActive: true
       };
       
     }
     
     //Default
-    return {
-      followed :   props.following.some(o => o.qra === props.match.params.qra)
+    // return {
+    //   followed :   props.following.some(o => o.qra === props.match.params.qra)
       
-    };
+    // };
+    return null;
   }
   handleTabClick(i) {
     switch (i) {
@@ -175,7 +178,7 @@ class QRAProfileContainer extends React.PureComponent {
   }
   handleButtonClick() {
     if (!this.props.token) return null;
-    if (!this.state.followed) {
+    if (!this.props.following.some(o => o.qra === this.props.match.params.qra)) {
       if (this.props.isAuthenticated) {
         this.props.actions.doFollowQRA(
           this.props.token,
@@ -190,11 +193,11 @@ class QRAProfileContainer extends React.PureComponent {
         );
       }
     }
-    this.setState(prevState => {
-      return {
-        followed: !prevState.followed
-      };
-    });
+    // this.setState(prevState => {
+    //   return {
+    //     followed: !prevState.followed
+    //   };
+    // });
   }
 
   render() {
@@ -218,12 +221,14 @@ class QRAProfileContainer extends React.PureComponent {
       <Fragment>
         <QRAProfile
           qraInfo={qraInfo}
+          following={this.props.following}
           loaderActive={this.state.loaderActive}
           qra={this.props.qra}
           onClick={this.handleButtonClick}
           isAuthenticated={this.props.isAuthenticated}
+          userFetched={this.props.userFetched}
           currentQRA={this.props.currentQRA}
-          followed={this.state.followed}
+          // followed={this.state.followed}
           handleTabClick={this.handleTabClick}
           tab={this.state.tab}
           adActive={this.state.adActive}
@@ -242,11 +247,12 @@ const mapStateToProps = (state, ownProps) => ({
   following: state.userData.following,
   token: state.userData.token,
   fetchingQRA: state.FetchingQRA,
+  userFetched: state.userData.userFetched,
   QRAFetched: state.QRAFetched,
   qra: state.qra,
   qraUserData: state.userData.qra,
   fetchingUser: state.userData.fetchingUser,
-  userFetched: state.userData.userFetched,
+  
   qraError: state.qraError
 });
 const mapDispatchToProps = dispatch => ({

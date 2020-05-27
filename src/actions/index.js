@@ -37,6 +37,8 @@ export const FOLLOW_CLEAR = 'FOLLOW_CLEAR';
 export const FOLLOW_FETCH = 'FOLLOW_FETCH';
 export const FOLLOW_REQUEST = 'FOLLOW_REQUEST';
 export const FOLLOW_RECEIVE = 'FOLLOW_RECEIVE';
+export const QSO_DISLIKE = 'QSO_DISLIKE';
+export const QSO_LIKE = 'QSO_LIKE';
 
 export function doNotificationRead(idnotif = null, token) {
   return dispatch => {
@@ -629,6 +631,20 @@ export function doRepost(idqso, token, qso) {
       });
   };
 }
+export function doLikeQSO(idqso, idqra) {
+  return {
+    type: QSO_LIKE,
+    idqso: idqso,
+    idqra: idqra
+  };
+}
+export function doDislikeQSO(idqso, idqra) {
+  return {
+    type: QSO_DISLIKE,
+    idqso: idqso,
+    idqra: idqra
+  };
+}
 export function doAddRepostToFeed(qso) {
   qso.original.push(qso);
   let repostQso = { type: 'SHARE', qso: qso };
@@ -795,7 +811,6 @@ export function doFetchUserFeed(token) {
     API.get(apiName, path, myInit)
       .then(response => {
         if (response.body.error === 0) {
-          
           if (response.body.message.length > 0)
             dispatch(doReceiveFeed(response.body.message));
           else {
@@ -807,7 +822,6 @@ export function doFetchUserFeed(token) {
             };
             API.get(apiName, path, myInit)
               .then(response => {
-                
                 if (response.body.error === 0) {
                   dispatch(doReceiveFeed(response.body.message));
                 } else console.log(response.body.message);

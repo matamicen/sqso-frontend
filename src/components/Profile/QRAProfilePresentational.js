@@ -52,7 +52,9 @@ const QRAProfile = props => {
           <QRAProfileHeader
             qraInfo={props.qraInfo}
             isAuthenticated={props.isAuthenticated}
-            followed={props.followed}
+            following={props.following}
+            userFetched={props.userFetched}
+            // followed={props.followed}
             onClick={props.onClick}
             currentQRA={props.currentQRA}
           />
