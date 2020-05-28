@@ -1,18 +1,19 @@
-import React from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import Form from "semantic-ui-react/dist/commonjs/collections/Form";
-import Button from "semantic-ui-react/dist/commonjs/elements/Button";
-import Comment from "semantic-ui-react/dist/commonjs/views/Comment";
-import * as Actions from "../../actions";
-import QSOCommentItem from "./QSOCommentItem";
+import React from 'react';
+import { connect } from 'react-redux';
+import TextareaAutosize from 'react-textarea-autosize';
+import { bindActionCreators } from 'redux';
+import Form from 'semantic-ui-react/dist/commonjs/collections/Form';
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
+import Comment from 'semantic-ui-react/dist/commonjs/views/Comment';
+import * as Actions from '../../actions';
+import QSOCommentItem from './QSOCommentItem';
 
 class QSOComments extends React.Component {
   constructor() {
     super();
     this.state = {
       comments: [],
-      comment: null
+      comment: ""
     };
 
     this.handleAddComment = this.handleAddComment.bind(this);
@@ -28,20 +29,22 @@ class QSOComments extends React.Component {
   };
 
   handleAddComment = e => {
-    e.preventDefault();
-    if (!e.target.comment.value) return;
+    // e.preventDefault();
+     if (this.state.comment === "") return;
 
+    
     let datetime = new Date();
     let comment = {
       qra: this.props.qra.toUpperCase(),
-      comment: e.target.comment.value,
+      comment: this.state.comment ,
       datetime: datetime
     };
     this.setState({ comment: comment });
     // this.setState({
     //   comments: this.state.comments.concat(comment)
     // });
-    e.target.comment.value = null;
+    // e.target.comment.value = null;
+    this.setState({comment:""})
     // this .props .recalculateRowHeight();
 
     this.props.actions.doCommentAdd(
@@ -73,7 +76,15 @@ class QSOComments extends React.Component {
       form = (
         <Form size="mini" reply onSubmit={this.handleAddComment}>
           <Form.Group>
-            <input placeholder="Comment" name="comment" />
+            
+            <TextareaAutosize
+              value={this.state.comment}
+              onChange={e => this.setState({ comment: e.target.value })}
+              
+              placeholder="Write a comment.."
+              rows={4}
+            />
+            
             <Button size="mini" content="Add" />
           </Form.Group>
         </Form>

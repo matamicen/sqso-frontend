@@ -94,8 +94,8 @@ class FeedItemQSO extends React.Component {
                   size="mini"
                   avatar
                   style={{
-                    width: '35px',
-                    height: '35px'
+                    width: '50px',
+                    height: '50px'
                   }}
                 />
               </Link>
@@ -113,27 +113,27 @@ class FeedItemQSO extends React.Component {
             </div>
             <div className="qso-header-info">
               <div>
-                <b>Mode: </b>
+                <b>Mode</b><br/>
                 {this.props.qso.mode}
               </div>
               <div>
-                <b>Band: </b>
+                <b>Band</b><br/>
                 {this.props.qso.band}
               </div>
               {this.props.qso.db && (
                 <div>
-                  <b>dB: </b>
+                  <b>dB</b><br/>
                   {this.props.qso.db ? this.props.qso.db : null}
                 </div>
               )}
               {!this.props.qso.db && (
                 <div>
-                  <b>RST: </b>
+                  <b>RST</b><br/>
                   {this.props.qso.rst ? this.props.qso.rst : '59'}
                 </div>
               )}
               <div>
-                <b>Date: </b>
+                <b>Date</b><br/>
                 {date.toLocaleDateString('EN-US', { month: 'short' }) +
                   ' ' +
                   date.getDate() +
@@ -141,7 +141,7 @@ class FeedItemQSO extends React.Component {
                   date.getFullYear()}
               </div>
               <div>
-                <b>UTC: </b>
+                <b>UTC</b><br/>
                 {date.getUTCHours() +
                   ':' +
                   (date.getMinutes() < 10 ? '0' : '') +
@@ -207,7 +207,7 @@ class FeedItemQSO extends React.Component {
           {this.props.qso.links && (
             <FeedLinkList links={this.props.qso.links} />
           )}
-          <Divider hidden style={{ marginTop: '1vh', marginBottom: '1vh' }} />
+          <Divider hidden style={{ marginTop: '2vh', marginBottom: '2vh' }} />
           <Button.Group fluid basic>
             <QSOLikeButton qso={this.props.qso} />
             <Button onClick={e => this.handleOnComment(e)}>
