@@ -1,6 +1,12 @@
+a:link {
+  color: #243665 ;
+}
+a:visited {
+  color: #243665 ;
+}
 .qso-header {
   display: grid;
-  grid-template-columns: 35px auto 10px;
+  grid-template-columns: 50px auto 10px;
   /* grid-gap: 1em; */
   grid-template-rows: 20px auto ;
   grid-template-areas: "profileSection actionSection buttonSection" "profileSection infoSection buttonSection";
@@ -17,24 +23,45 @@
 }
 
 .qso-header-action {
+  font-size: 1.3rem;
   /*grid-column: span 4;*/
   grid-area: actionSection;
   /* grid-column: 2;
     grid-row: 2; */
   /* max-width: 730px; */
-  margin-left: 2px;
+  margin-left: 4px;
 }
 
 .qso-header-info {
   grid-area: infoSection;
-  font-size: smaller;
-  margin-left: 2px;
+  margin-top: 0.1rem;
+  margin-left: 10px;
   display: flex;
   justify-content: space-between;
+  text-align: center;
+  font-size: 1rem;
+  line-height: 1.2em;
   /* position: sticky;
   top: 60px;
   left: 0;
   height: 100vh; */
+}
+.qso-header-info-post {
+  grid-area: infoSection;
+  margin-top: 0.1rem;
+  margin-left: 4px;
+  display: flex;
+  justify-content: flex-start;
+  text-align: center;
+  font-size: 1rem;
+  line-height: 2em;
+  /* position: sticky;
+  top: 60px;
+  left: 0;
+  height: 100vh; */
+}
+.qso-header-info-post > div {
+  margin: 5px
 }
 .qso-header-button {
   grid-area: buttonSection;
@@ -47,7 +74,7 @@
 @media (max-width: 910px) {
   .qso-header {
     display: grid;
-    grid-template-columns: 35px auto 10px;
+    grid-template-columns: 50px auto 10px;
     /* grid-gap: 1em; */
     grid-template-rows: 20px auto ;
     grid-template-areas: "profileSection actionSection buttonSection" "profileSection infoSection buttonSection";
@@ -64,24 +91,46 @@
   }
   
   .qso-header-action {
+    font-size: 1.3rem;
     /*grid-column: span 4;*/
     grid-area: actionSection;
     /* grid-column: 2;
       grid-row: 2; */
     /* max-width: 730px; */
-    margin-left: 2px;
+    margin-left: 4px;
+
   }
   
   .qso-header-info {
     grid-area: infoSection;
-    font-size: x-small;
-    margin-left: 2px;
+    margin-top: 0.1rem;
+    margin-left: 10px;
     display: flex;
     justify-content: space-between;
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1.2em;
     /* position: sticky;
     top: 60px;
     left: 0;
     height: 100vh; */
+  }
+  .qso-header-info-post {
+    grid-area: infoSection;
+    margin-top: 0.1rem;
+    margin-left: 4px;
+    display: flex;
+    justify-content: flex-start;
+    text-align: center;
+    font-size: 1rem;
+    line-height: 2em;
+    /* position: sticky;
+    top: 60px;
+    left: 0;
+    height: 100vh; */
+  }
+  .qso-header-info-post > div {
+    margin: 5px
   }
   .qso-header-button {
     grid-area: buttonSection;

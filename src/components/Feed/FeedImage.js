@@ -126,7 +126,7 @@ class FeedImage extends React.Component {
                     src={m.url}
                   />
 
-                  <p>{m.description}</p>
+                  <p style={{textAlign :"center"}}>{m.description}</p>
                 </div>
               ))}
             </Modal.Description>
