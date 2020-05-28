@@ -1,6 +1,6 @@
 import React from "react";
-import FeedAudio from "./FeedAudio";
 import Item from "semantic-ui-react/dist/commonjs/views/Item";
+import FeedAudio from "./FeedAudio";
 
 export default class FeedAudioList extends React.Component {
   render() {
@@ -8,7 +8,7 @@ export default class FeedAudioList extends React.Component {
       return (
         <Item.Group style={{ margin: "0px" }}>
           {this.props.mediaList.map((m, i) => (
-            <Item key={i} style={{ margin: "6px" }}>
+            <Item key={i} style={{ margin: "6px", display: "block" }}>
               <FeedAudio
                 key={i}
                 index={i}

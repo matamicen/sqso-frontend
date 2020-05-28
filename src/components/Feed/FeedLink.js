@@ -1,14 +1,14 @@
 import React, { Fragment } from "react";
-import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
-import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
-import Image from "semantic-ui-react/dist/commonjs/elements/Image";
-import Button from "semantic-ui-react/dist/commonjs/elements/Button";
-import NewsFeed from "./NewsFeedPresentational";
-import { bindActionCreators } from "redux";
-import * as Actions from "../../actions";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import { bindActionCreators } from "redux";
+import Button from "semantic-ui-react/dist/commonjs/elements/Button";
+import Image from "semantic-ui-react/dist/commonjs/elements/Image";
+import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
 import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
+import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
+import * as Actions from "../../actions";
+import NewsFeed from "./NewsFeedPresentational";
 
 class FeedLink extends React.PureComponent {
   state = {
@@ -73,8 +73,8 @@ class FeedLink extends React.PureComponent {
               size="mini"
               avatar
               style={{
-                width: "35px",
-                height: "35px"
+                width: "50px",
+                height: "50px"
               }}
             />{" "}
           </Button>

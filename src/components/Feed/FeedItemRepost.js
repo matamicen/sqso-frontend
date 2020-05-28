@@ -98,8 +98,8 @@ class FeedItemRepost extends React.Component {
                   size="mini"
                   avatar
                   style={{
-                    width: '35px',
-                    height: '35px'
+                    width: '50px',
+                    height: '50px'
                   }}
                 />
               </Link>
@@ -115,7 +115,7 @@ class FeedItemRepost extends React.Component {
               />
               {" shared content"}
             </div>
-            <div className="qso-header-info">
+            <div className="qso-header-info-post">
               <div>
                 <b>Date: </b>
                 {repostDate.toLocaleDateString('EN-US', { month: 'short' }) +
@@ -162,8 +162,8 @@ class FeedItemRepost extends React.Component {
                     size="mini"
                     avatar
                     style={{
-                      width: '35px',
-                      height: '35px'
+                      width: '50px',
+                      height: '50px'
                     }}
                   />
                 </Link>
@@ -182,30 +182,30 @@ class FeedItemRepost extends React.Component {
               <div className="qso-header-info">
                 {this.props.qso.original[0].mode && (
                   <div>
-                    <b>Mode: </b>
+                    <b>Mode</b><br/>
                     {this.props.qso.original[0].mode}
                   </div>
                 )}
                 {this.props.qso.original[0].band && (
                   <div>
-                    <b>Band: </b>
+                    <b>Band </b><br/>
                     {this.props.qso.original[0].band}
                   </div>
                 )}
                 {this.props.qso.db && (
                   <div>
-                    <b>dB: </b>
+                    <b>dB </b><br/>
                     {this.props.qso.db ? this.props.qso.db : null}
                   </div>
                 )}
                 {!this.props.qso.rst && (
                   <div>
-                    <b>RST: </b>
+                    <b>RST </b><br/>
                     {this.props.qso.rst ? this.props.qso.rst : '59'}
                   </div>
                 )}
                 <div>
-                  <b>Date: </b>
+                  <b>Date </b><br/>
                   {date.toLocaleDateString('EN-US', { month: 'short' }) +
                     ' ' +
                     date.getDate() +
@@ -266,7 +266,7 @@ class FeedItemRepost extends React.Component {
             )}
           </Segment>
 
-          <Divider hidden />
+          <Divider hidden style={{ marginTop: '2vh', marginBottom: '2vh' }} />
           <Button.Group widths="4" basic>
             <QSOLikeButton qso={this.props.qso} />
             <Button onClick={e => this.handleOnComment(e)}>

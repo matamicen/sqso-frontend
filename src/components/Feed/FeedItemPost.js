@@ -86,8 +86,8 @@ class FeedItemQSO extends React.Component {
                   size="mini"
                   avatar
                   style={{
-                    width: '35px',
-                    height: '35px'
+                    width: '50px',
+                    height: '50px'
                   }}
                 />
               </Link>
@@ -103,7 +103,7 @@ class FeedItemQSO extends React.Component {
               />
               {text}
             </div>
-            <div className="qso-header-info">
+            <div className="qso-header-info-post" >
               <div>
                 <b>Date: </b>
                 {date.toLocaleDateString('EN-US', { month: 'short' }) +
@@ -182,7 +182,7 @@ class FeedItemQSO extends React.Component {
           {this.props.qso.links && (
             <FeedLinkList links={this.props.qso.links} />
           )}
-          <Divider hidden style={{ marginTop: '1vh', marginBottom: '1vh' }} />
+          <Divider hidden style={{ marginTop: '2vh', marginBottom: '2vh' }} />
           <Button.Group fluid basic>
             <QSOLikeButton qso={this.props.qso} />
             <Button onClick={e => this.handleOnComment(e)}>
