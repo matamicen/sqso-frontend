@@ -1,5 +1,5 @@
-import React from "react";
 import PropTypes from "prop-types";
+import React from "react";
 import { Waypoint } from "react-waypoint";
 
 let instance = 0;
@@ -24,7 +24,7 @@ class Ads extends React.Component {
   async componentDidMount() {
     //   console.log(this.id)
     /*   //Comentado Adsense
-    if (!this.props.displayOnly)
+    if (!this.props.displayOnly)  
        await window.googletag.cmd.push(() => {
         window.googletag
           .defineSlot(

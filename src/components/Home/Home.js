@@ -9,6 +9,7 @@ import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
 import * as Actions from '../../actions';
 import global_config from '../../global_config.json';
 import '../../styles/style.css';
+import Ad from '../Ad/Ad';
 import FeedQSO from '../Feed/NewsFeedContainer';
 import AppNavigation from './AppNavigation';
 class Home extends React.Component {
@@ -41,15 +42,15 @@ class Home extends React.Component {
       this.props.actions.doFetchPublicFeed();
     }
     //Comentado Adsense
-    // window.googletag.cmd.push(function() {
-    //   window.googletag.destroySlots();
-    //   window.googletag
-    //     .defineSlot(
-    //       "5266743439",
-    //       [160, 600],
-    //       "div-ads-instance-home-left"
-    //     )
-    //     .addService(window.googletag.pubads());
+    window.googletag.cmd.push(function() {
+      window.googletag.destroySlots();
+      window.googletag
+        .defineSlot(
+          "/22031658057/Home/home_left",
+          [160, 600],
+          "div-ads-instance-home-left"
+        )
+        .addService(window.googletag.pubads());
     //   // .setTargeting("interests", ["sports", "music", "movies"]);
     //   window.window.googletag
     //     .defineSlot(
@@ -58,16 +59,16 @@ class Home extends React.Component {
     //       "div-ads-instance-home-intersitial"
     //     )
     //     .addService(window.googletag.pubads());
-    //   window.googletag
-    //     .defineSlot(
-    //       "/21799560237/Home/Home_Right",
-    //       [160, 600],
-    //       "div-ads-instance-home-right"
-    //     )
-    //     .addService(window.googletag.pubads());
-    //   window.googletag.pubads().enableSingleRequest();
-    //   window.googletag.enableServices();
-    // });
+      window.googletag
+        .defineSlot(
+          "/22031658057/Home/home_right",
+          [160, 600],
+          "div-ads-instance-home-right"
+        )
+        .addService(window.googletag.pubads());
+      window.googletag.pubads().enableSingleRequest();
+      window.googletag.enableServices();
+    });
   }
   handleOpen = () => this.setState({ adActive: true });
   handleClose = () => this.setState({ adActive: false });
@@ -105,21 +106,15 @@ class Home extends React.Component {
             <AppNavigation />
           </div>
           <div className="site-left">
-            {/* <Ad
+            <Ad
               adslot="/21799560237/Home/Home_Left2"
               width={160}
               height={600}
               id="home-left"
               displayOnly={true}
-            /> */}
-            {/* <ins
-              className="adsbygoogle"
-              style={{ display: 'inline', width: '160px', height: '600px' }}
-              data-ad-client="ca-pub-1064314468310203"
-              data-ad-slot="5266743439"
-              data-ad-format="auto"
-            /> */}
-            <img src='/bannerDescarga.gif' alt="Download APP and work your first QSO"/>
+            />
+
+            {/* <img src='/bannerDescarga.gif' alt="Download APP and work your first QSO"/> */}
           </div>
 
           <div className="site-main">
@@ -127,14 +122,14 @@ class Home extends React.Component {
           </div>
 
           <div className="site-right">
-            {/* <Ad
+            <Ad
               adslot="/21799560237/21799560237/Home/Home_Right"
               width={160}
               height={600}
               id="home-right"
               displayOnly={true}
-            /> */}
-            <img src='/bannerDescarga.gif' alt="Download APP and work your first QSO"/>
+            />
+            {/* <img src='/bannerDescarga.gif' alt="Download APP and work your first QSO"/> */}
           </div>
         </div>
         <Modal
