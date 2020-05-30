@@ -18,7 +18,7 @@ class Ads extends React.Component {
   }
 
   get id() {
-    return "div-ads-instance-" + (this.props.id || this.__id);
+    return (this.props.id || this.__id);
   }
 
   async componentDidMount() {
