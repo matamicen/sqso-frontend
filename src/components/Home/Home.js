@@ -107,10 +107,10 @@ class Home extends React.Component {
           </div>
           <div className="site-left">
             <Ad
-              adslot="/21799560237/Home/Home_Left2"
+              adslot="/22031658057/Home/home_left"
               width={160}
               height={600}
-              id="home-left"
+              id="div-ads-instance-home-left"
               displayOnly={true}
             />
 
@@ -123,10 +123,10 @@ class Home extends React.Component {
 
           <div className="site-right">
             <Ad
-              adslot="/21799560237/21799560237/Home/Home_Right"
+              adslot="/22031658057/Home/home_right"
               width={160}
               height={600}
-              id="home-right"
+              id="div-ads-instance-home-right"
               displayOnly={true}
             />
             {/* <img src='/bannerDescarga.gif' alt="Download APP and work your first QSO"/> */}
