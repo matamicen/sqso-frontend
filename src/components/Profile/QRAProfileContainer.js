@@ -27,34 +27,26 @@ class QRAProfileContainer extends React.PureComponent {
     if (process.env.NODE_ENV !== "production")
       this.setState({ adActive: false });
 
-    /*        //Comentado Adsense
-    window.googletag.cmd.push(function() {
-      window.googletag.destroySlots();
-      window.googletag
-        .defineSlot(
-          "/21799560237/qraDetail/left",
-          [160, 600],
-          "div-ads-instance-qradetail-left"
-        )
-        .addService(window.googletag.pubads());
-      // .setTargeting("interests", ["sports", "music", "movies"]);
-      window.googletag
-        .defineSlot(
-          "/21799560237/qraDetail/intersitial",
-          [640, 480],
-          "div-ads-instance-qradetail-intersitial"
-        )
-        .addService(window.googletag.pubads());
-      window.googletag
-        .defineSlot(
-          "/21799560237/qraDetail/right",
-          [160, 600],
-          "div-ads-instance-qradetail-right"
-        )
-        .addService(window.googletag.pubads());
-      window.googletag.pubads().enableSingleRequest();
-      window.googletag.enableServices();
-    }); */
+  //Comentado Adsense
+  window.googletag.cmd.push(function() {
+    window.googletag.destroySlots();
+    window.googletag
+      .defineSlot(
+        '/22031658057/qraDetail/qraDetail_left',
+        [160, 600],
+        'div-ads-instance-qraDetail-left'
+      )
+      .addService(window.googletag.pubads());
+    window.googletag
+      .defineSlot(
+        '/22031658057/qraDetail/qraDetail_right',
+        [160, 600],
+        'div-ads-instance-qraDetail-right'
+      )
+      .addService(window.googletag.pubads());
+    window.googletag.pubads().enableSingleRequest();
+    window.googletag.enableServices();
+  });
     let qraInMemory = this.props.qra ? this.props.qra.qra.qra : "";
 
     if (

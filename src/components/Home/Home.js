@@ -51,14 +51,6 @@ class Home extends React.Component {
           "div-ads-instance-home-left"
         )
         .addService(window.googletag.pubads());
-    //   // .setTargeting("interests", ["sports", "music", "movies"]);
-    //   window.window.googletag
-    //     .defineSlot(
-    //       "/21799560237/Home/Home_Intersitial",
-    //       [640, 480],
-    //       "div-ads-instance-home-intersitial"
-    //     )
-    //     .addService(window.googletag.pubads());
       window.googletag
         .defineSlot(
           "/22031658057/Home/home_right",
