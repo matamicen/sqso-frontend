@@ -31,34 +31,26 @@ class Notifications extends React.Component {
 
   componentDidMount() {
     this.props.actions.doFetchNotifications(this.props.token);
-    /*
-    window.googletag.cmd.push(function() {
-      window.googletag
-        .defineSlot(
-          "/21799560237/Notifications/left",
-          [160, 600],
-          "div-ads-instance-notifications-left"
-        )
-        .addService(window.googletag.pubads());
-      // .setTargeting("interests", ["sports", "music", "movies"]);
-      window.window.googletag
-        .defineSlot(
-          "/21799560237/Notifications/intersitial",
-          [640, 480],
-          "div-ads-instance-notifications-intersitial"
-        )
-        .addService(window.googletag.pubads());
-      window.googletag
-        .defineSlot(
-          "/21799560237/Notifications/right",
-          [160, 600],
-          "div-ads-instance-notifications-right"
-        )
-        .addService(window.googletag.pubads());
-      window.googletag.pubads().enableSingleRequest();
-      window.googletag.enableServices();
-    });
-    */ //Comentado para tener Adsense
+   //Comentado Adsense
+   window.googletag.cmd.push(function() {
+    window.googletag.destroySlots();
+    window.googletag
+      .defineSlot(
+        '/22031658057/notifications/notifications_left',
+        [160, 600],
+        'div-ads-instance-notifications-left'
+      )
+      .addService(window.googletag.pubads());
+    window.googletag
+      .defineSlot(
+        '/22031658057/notifications/notifications_right',
+        [160, 600],
+        'div-ads-instance-notifications-right'
+      )
+      .addService(window.googletag.pubads());
+    window.googletag.pubads().enableSingleRequest();
+    window.googletag.enableServices();
+  });
   }
   handleOpen = () => this.setState({ adActive: true });
   handleClose = () => this.setState({ adActive: false });
@@ -94,11 +86,11 @@ class Notifications extends React.Component {
         </div>
 
         <div className="site-left">
-          <Ad
-            adslot="/21799560237/Notifications/left"
+        <Ad
+            adslot="/22031658057/notifications/notifications_left"
             width={160}
             height={600}
-            id="notifications-left"
+            id="div-ads-instance-notifications-left"
             displayOnly={true}
           />
         </div>
@@ -136,11 +128,11 @@ class Notifications extends React.Component {
         </div>
 
         <div className="site-right">
-          <Ad
-            adslot="/21799560237/Notifications/right"
+        <Ad
+            adslot="/22031658057/notifications/notifications_right"
             width={160}
             height={600}
-            id="notifications-right"
+            id="div-ads-instance-notifications-right"
             displayOnly={true}
           />
         </div>

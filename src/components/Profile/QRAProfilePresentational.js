@@ -4,13 +4,13 @@ import Loader from 'semantic-ui-react/dist/commonjs/elements/Loader';
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment';
 import Dimmer from 'semantic-ui-react/dist/commonjs/modules/Dimmer';
 import '../../styles/style.css';
+import Ad from '../Ad/Ad';
 import AppNavigation from '../Home/AppNavigation';
 import QRAProfileBio from './QRAProfileBio';
 import QRAProfileFollowing from './QRAProfileFollowing';
 import QRAProfileHeader from './QRAProfileHeader';
 import QRAProfileInfo from './QRAProfileInfo';
 import QRAProfileQsos from './QRAProfileQsos';
-
 
 
 
@@ -38,14 +38,13 @@ const QRAProfile = props => {
         <AppNavigation />
       </div>
       <div className="site-left">
-        {/* <Ad
-          adslot="/21799560237/qraDetail/left"
-          width={160}
-          height={600}
-          id="qradetail-left"
-          displayOnly={true}
-        /> */}
-           <img src='/bannerFollow.gif' alt="Follow your friends and get notifications about them"/>
+      <Ad
+            adslot="/22031658057/qraDetail/qraDetail_left"
+            width={160}
+            height={600}
+            id="div-ads-instance-qraDetail-left"
+            displayOnly={true}
+          />
       </div>
       {!props.active && props.qra && (
         <div className="profile-main">
@@ -117,14 +116,14 @@ const QRAProfile = props => {
         </div>
       )}
       <div className="site-right">
-        {/* <Ad
-          adslot="/21799560237/qraDetail/right"
-          width={160}
-          height={600}
-          id="qradetail-right"
-          displayOnly={true}
-        /> */}
-        <img src='/bannerFollow.gif' alt="Follow your friends and get notifications about them"/>
+      <Ad
+            adslot="/22031658057/qraDetail/qraDetail_right"
+            width={160}
+            height={600}
+            id="div-ads-instance-qraDetail-right"
+            displayOnly={true}
+          />
+        
       </div>
     </div>
   );
