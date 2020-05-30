@@ -8,9 +8,9 @@ import Loader from 'semantic-ui-react/dist/commonjs/elements/Loader';
 import Dimmer from 'semantic-ui-react/dist/commonjs/modules/Dimmer';
 import * as Actions from '../actions';
 import '../styles/style.css';
+import Ad from './Ad/Ad';
 import NewsFeed from './Feed/NewsFeedPresentational';
 import AppNavigation from './Home/AppNavigation';
-
 class QSODetail extends React.PureComponent {
   state = {
     eventId: null,
@@ -82,34 +82,27 @@ class QSODetail extends React.PureComponent {
       );
       this.setState({ idqso: this.props.match.params.idqso });
     }
-    /*      //Comentado Adsense
+
+    //Comentado Adsense
     window.googletag.cmd.push(function() {
       window.googletag.destroySlots();
       window.googletag
         .defineSlot(
-          "/21799560237/qsoDetail/left",
+          '/22031658057/qsoDetail/qsoDetail_left',
           [160, 600],
-          "div-ads-instance-qsodetail-left"
-        )
-        .addService(window.googletag.pubads());
-      // .setTargeting("interests", ["sports", "music", "movies"]);
-      window.window.googletag
-        .defineSlot(
-          "/21799560237/qsoDetail/intersitial",
-          [640, 480],
-          "div-ads-instance-qsodetail-intersitial"
+          'div-ads-instance-qsoDetail-left'
         )
         .addService(window.googletag.pubads());
       window.googletag
         .defineSlot(
-          "/21799560237/qsoDetail/right",
+          '/22031658057/qsoDetail/qsoDetail_right',
           [160, 600],
-          "div-ads-instance-qsodetail-right"
+          'div-ads-instance-qsoDetail-right'
         )
         .addService(window.googletag.pubads());
       window.googletag.pubads().enableSingleRequest();
       window.googletag.enableServices();
-    }); */
+    });
   }
   handleOpen = () => this.setState({ adActive: true });
   handleClose = () => this.setState({ adActive: false, adClosed: true });
@@ -127,7 +120,7 @@ class QSODetail extends React.PureComponent {
         </Modal>
       );
     }
-    
+
     let qsos = [];
     if (this.props.qso) {
       qsos.push({ qso: this.props.qso, type: this.props.qso.type });
@@ -158,16 +151,12 @@ class QSODetail extends React.PureComponent {
           <AppNavigation />
         </div>
         <div className="site-left">
-          {/* <Ad
-            adslot="/21799560237/qsoDetail/left"
+          <Ad
+            adslot="/22031658057/qsoDetail/qsoDetail_left"
             width={160}
             height={600}
-            id="qsodetail-left"
+            id="div-ads-instance-qsoDetail-left"
             displayOnly={true}
-          /> */}
-          <img
-            src="/bannerDescarga.gif"
-            alt="Download APP and work your first QSO"
           />
         </div>
 
@@ -176,16 +165,12 @@ class QSODetail extends React.PureComponent {
         </div>
 
         <div className="site-right">
-          {/* <Ad
-            adslot="/21799560237/qsoDetail/right"
+          <Ad
+            adslot="/22031658057/qsoDetail/qsoDetail_right"
             width={160}
             height={600}
-            id="qsodetail-right"
+            id="div-ads-instance-qsoDetail-right"
             displayOnly={true}
-          /> */}
-          <img
-            src="/bannerDescarga.gif"
-            alt="Download APP and work your first QSO"
           />
         </div>
       </div>
