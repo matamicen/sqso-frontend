@@ -25,7 +25,7 @@ class QSOComments extends React.Component {
     }
   }
   componentDidUpdate = () => {
-    this.props.recalculateRowHeight();
+    // this.props.recalculateRowHeight();
   };
 
   handleAddComment = e => {
@@ -45,7 +45,7 @@ class QSOComments extends React.Component {
     // });
     // e.target.comment.value = null;
     this.setState({comment:""})
-    // this .props .recalculateRowHeight();
+    this .props .recalculateRowHeight();
 
     this.props.actions.doCommentAdd(
       this.props.qso.idqsos,
@@ -80,6 +80,7 @@ class QSOComments extends React.Component {
             <TextareaAutosize
               value={this.state.comment}
               onChange={e => this.setState({ comment: e.target.value })}
+              onHeightChange={this.props.recalculateRowHeight}
               fontSize= {12}
               style={{fontSize: "1.1rem", paddingTop: "5px", paddingBottom: "5px"}}
               placeholder="Write a comment.."
