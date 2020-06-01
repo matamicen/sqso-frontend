@@ -65,10 +65,14 @@ class FeedAudio extends React.Component {
               confirmButton="Login"
               content="Please Login to perform this action"
             />
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <Button circular icon="play" onClick={this.onClick}>
-                {/* <Icon  /> */}
-              </Button>
+            <div style={{ display: 'flex', alignItems: 'center',  fontSize: "1.2rem" }}>
+              <Button
+                size="large"
+                circular
+                icon="play"
+                onClick={this.onClick}
+                style={{ background: '#8BD8BD', color: '#243665' }}
+              />
               <span>
                 Play Audio{' '}
                 {this.props.media.description && (
@@ -104,7 +108,7 @@ class FeedAudio extends React.Component {
       } else {
         return (
           <Fragment>
-            <div >
+            <div>
               <audio
                 ref={this.props.media.url}
                 src={this.props.media.url}
