@@ -1,13 +1,13 @@
 import React from "react";
-import PopupToFollow from "../PopupToFollow";
-import Item from "semantic-ui-react/dist/commonjs/views/Item";
-import Comment from "semantic-ui-react/dist/commonjs/views/Comment";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { bindActionCreators } from "redux";
+import Comment from "semantic-ui-react/dist/commonjs/views/Comment";
+import Item from "semantic-ui-react/dist/commonjs/views/Item";
 import * as Actions from "../../actions";
-
+import PopupToFollow from "../PopupToFollow";
 import FeedOptionsMenu from "./FeedOptionsMenu";
+
 
 class QSOCommentItem extends React.Component {
   state = {
@@ -58,7 +58,7 @@ class QSOCommentItem extends React.Component {
               trigger={
                 <Link to={"/" + this.props.comment.qra}>
                   {" "}
-                  {this.props.comment.qra.toUpperCase()}{" "}
+                 <span style={{fontSize:"1.2rem"}}>{this.props.comment.qra.toUpperCase()}{" "}</span>
                 </Link>
               }
             />
@@ -66,7 +66,7 @@ class QSOCommentItem extends React.Component {
           <Comment.Metadata>
             <span>{timestamp}</span>
           </Comment.Metadata>
-          <Comment.Text>{this.props.comment.comment}</Comment.Text>
+          <Comment.Text><span style={{fontSize:"1.1rem"}}>{this.props.comment.comment}</span></Comment.Text>
         </Comment.Content>
       </Comment>
     );

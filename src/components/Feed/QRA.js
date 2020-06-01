@@ -1,8 +1,8 @@
 import React from "react";
-
-import Image from "semantic-ui-react/dist/commonjs/elements/Image";
 import { Link } from "react-router-dom";
+import Image from "semantic-ui-react/dist/commonjs/elements/Image";
 import PopupToFollow from "../PopupToFollow";
+
 
 export default class QRA extends React.Component {
   render() {
@@ -34,7 +34,8 @@ export default class QRA extends React.Component {
         </div>
         <div
           style={{
-            justifySelf: "center"
+            justifySelf: "center",
+            fontSize: "1.2rem"
           }}
         >
           <PopupToFollow

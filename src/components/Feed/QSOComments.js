@@ -80,7 +80,8 @@ class QSOComments extends React.Component {
             <TextareaAutosize
               value={this.state.comment}
               onChange={e => this.setState({ comment: e.target.value })}
-              
+              fontSize= {12}
+              style={{fontSize: "1.1rem", paddingTop: "5px", paddingBottom: "5px"}}
               placeholder="Write a comment.."
               rows={4}
             />
