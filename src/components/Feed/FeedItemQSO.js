@@ -36,6 +36,7 @@ class FeedItemQSO extends React.Component {
       this.setState({ openLogin: true });
     else if (this.props.currentQRA || this.props.qso.comments.length > 0) {
       this.props.showComments(this.props.index);
+      this.recalculateRowHeight();
     }
     // this.recalculateRowHeight(); this.props.recalculateRowHeight()
   }
