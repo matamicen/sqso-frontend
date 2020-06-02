@@ -1,9 +1,4 @@
-a:link {
-  color: #243665 ;
-}
-a:visited {
-  color: #243665 ;
-}
+
 .qso-header {
   display: grid;
   grid-template-columns: 50px auto 10px;
