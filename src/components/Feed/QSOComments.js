@@ -45,7 +45,7 @@ class QSOComments extends React.Component {
     // });
     // e.target.comment.value = null;
     this.setState({comment:""})
-    this .props .recalculateRowHeight();
+    this.props.recalculateRowHeight();
 
     this.props.actions.doCommentAdd(
       this.props.qso.idqsos,

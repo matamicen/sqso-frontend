@@ -17,6 +17,7 @@ import FeedOptionsMenu from './FeedOptionsMenu';
 import QRAs from './QRAs';
 import QSOComments from './QSOComments';
 import QSOLikeButton from './QSOLikeButton';
+import QSOLikeText from './QSOLikeText';
 import QSORePostButton from './QSORePostButton';
 import QSOShareButtons from './QSOShareButtons';
 import './style.css';
@@ -267,6 +268,7 @@ class FeedItemRepost extends React.Component {
           </Segment>
 
           <Divider hidden style={{ marginTop: '2vh', marginBottom: '2vh' }} />
+          <QSOLikeText qso={this.props.qso} />
           <Button.Group widths="4" basic>
             <QSOLikeButton qso={this.props.qso} />
             <Button onClick={e => this.handleOnComment(e)}>

@@ -631,11 +631,15 @@ export function doRepost(idqso, token, qso) {
       });
   };
 }
-export function doLikeQSO(idqso, idqra) {
+export function doLikeQSO(idqso, idqra, qra, firstname, lastname, avatarpic) {
   return {
     type: QSO_LIKE,
     idqso: idqso,
-    idqra: idqra
+    idqra: idqra,
+    qra: qra, 
+    firstname: firstname, 
+    lastname: lastname, 
+    avatarpic: avatarpic
   };
 }
 export function doDislikeQSO(idqso, idqra) {
