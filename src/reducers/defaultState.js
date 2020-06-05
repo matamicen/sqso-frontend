@@ -104,7 +104,7 @@ function generalReducers(state = initialState, action) {
         qso_link:
           state.qso_link && state.qso_link.idqsos === action.idqso
             ? { ...state.qso_link, likes: [...state.qso_link.likes, like] }
-            : { ...state.qso_link },
+            :  state.qso_link ,
         qra: state.qra
           ? {
               ...state.qra,
@@ -186,7 +186,7 @@ function generalReducers(state = initialState, action) {
         qso_link:
           state.qso_link && state.qso_link.idqsos === action.idqso
             ? { ...state.qso_link, comments: action.comments }
-            : { ...state.qso_link },
+            : state.qso_link ,
         qra: state.qra
           ? {
               ...state.qra,
