@@ -76,7 +76,7 @@ class QSOLikeText extends React.PureComponent {
     return (
       <Fragment>
         <a
-          style={{ cursor: 'pointer',fontSize: "1.1rem" }}
+          style={{ cursor: 'pointer', fontSize: '1.1rem' }}
           href={null}
           onClick={() => this.setState({ showModal: true })}
         >
@@ -97,12 +97,18 @@ class QSOLikeText extends React.PureComponent {
             overflowY: 'auto'
           }}
         >
+          <Modal.Header>
+            These Hams likes this {qso.type === 'POST' ? ' Post' : ' QSO'}
+          </Modal.Header>
           <Modal.Content>
             <Modal.Description>
               <div>
                 {qso.likes.map(l => (
                   // <div key={l.idqsos_likes} style={{ padding: '1vh' }} />
-                  <div key={l.idqsos_likes} style={{ display: 'flex', paddingBottom: "10px" }}>
+                  <div
+                    key={l.idqsos_likes}
+                    style={{ display: 'flex', paddingBottom: '10px' }}
+                  >
                     <div
                       style={{
                         flex: '0 1 auto',
@@ -144,8 +150,9 @@ class QSOLikeText extends React.PureComponent {
                     >
                       {l.qra !== this.props.userData.currentQRA && (
                         <Button
-                        style={{
-                          width:"100px"}}
+                          style={{
+                            width: '100px'
+                          }}
                           positive={
                             !this.props.userData.following.some(
                               o => o.idqra_followed === l.idqra

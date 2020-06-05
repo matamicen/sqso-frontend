@@ -218,7 +218,7 @@ async function loadImage(url) {
     img.crossOrigin = "anonymous";
     img.onload = () => resolve(img);
     img.setAttribute('crossorigin', 'anonymous');
-    img.src = url;
+    img.src = url + '?nocache=true';
   });
 }
 // async function getImage(url, own_profile) {
