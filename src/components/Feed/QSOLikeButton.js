@@ -212,7 +212,16 @@ class QSOLikeButton extends React.Component {
           icon: 'thumbs up',
           liked: true
         });
-        this.props.actions.doLikeQSO(this.props.qso.idqsos, this.props.userData.qra.idqras)
+        console.log(this.props.userData);
+        // doLikeQSO(idqso, idqra, qra, firstname, lastname, avatarpic)
+        this.props.actions.doLikeQSO(
+          this.props.qso.idqsos,
+          this.props.userData.qra.idqras,
+          this.props.userData.currentQRA,
+          this.props.userData.qra.firstname,
+          this.props.userData.qra.lastname,
+          this.props.userData.qra.avatarpic
+        );
         this.doLike();
       } else {
         this.likeCounter--;
@@ -223,7 +232,10 @@ class QSOLikeButton extends React.Component {
           liked: false,
           icon: 'thumbs outline up'
         });
-        this.props.actions.doDislikeQSO(this.props.qso.idqsos, this.props.userData.qra.idqras)
+        this.props.actions.doDislikeQSO(
+          this.props.qso.idqsos,
+          this.props.userData.qra.idqras
+        );
         this.doUnLike();
       }
     }
