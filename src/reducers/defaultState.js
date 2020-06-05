@@ -91,7 +91,11 @@ function generalReducers(state = initialState, action) {
 
       let like = {
         idqso: action.idqso,
-        idqra: action.idqra
+        idqra: action.idqra,
+        qra: action.qra, 
+        firstname: action.firstname,
+        lastname: action.lastname,
+        avatarpic: action.avatarpic
       };
       newStore = Object.assign({}, state, {
         ...state,
