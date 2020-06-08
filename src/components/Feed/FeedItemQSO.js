@@ -203,6 +203,8 @@ class FeedItemQSO extends React.PureComponent {
                 mediaList={audioList}
                 idqso={this.props.qso.idqsos}
                 qso_owner={this.props.qso.qra}
+                recalculateRowHeight={this.recalculateRowHeight}
+                
               />
             </Fragment>
           )}

@@ -263,6 +263,8 @@ class FeedItemRepost extends React.Component {
                 mediaList={audioList}
                 idqso={this.props.qso.idqsos}
                 qso_owner={this.props.qso.original[0].qra}
+                recalculateRowHeight={this.recalculateRowHeight}
+
               />
             )}
           </Segment>
