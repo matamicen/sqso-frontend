@@ -14,6 +14,7 @@ export default class FeedAudioList extends React.Component {
                 index={i}
                 media={m}
                 qso_owner={this.props.qso_owner}
+                recalculateRowHeight={this.props.recalculateRowHeight}
               />
             </Item>
           ))}

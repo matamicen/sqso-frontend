@@ -212,7 +212,7 @@ class QSOLikeButton extends React.Component {
           icon: 'thumbs up',
           liked: true
         });
-        console.log(this.props.userData);
+        
         // doLikeQSO(idqso, idqra, qra, firstname, lastname, avatarpic)
         this.props.actions.doLikeQSO(
           this.props.qso.idqsos,
