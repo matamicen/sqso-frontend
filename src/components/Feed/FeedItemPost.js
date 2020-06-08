@@ -27,12 +27,13 @@ import './style.css';
 class FeedItemQSO extends React.Component {
   constructor() {
     super();
-    this.state = { comments: [], error: null };
+    this.state = { comments: [], likes: [], error: null };
     this.handleOnComment = this.handleOnComment.bind(this);
     this.recalculateRowHeight = this.recalculateRowHeight.bind(this);
   }
   handleOnComment = () => {
-    if (!this.props.isAuthenticated && this.props.qso.comments.length === 0) this.setState({ openLogin: true })
+    if (!this.props.isAuthenticated && this.props.qso.comments.length === 0)
+      this.setState({ openLogin: true });
     else if (this.props.currentQRA || this.props.qso.comments.length > 0)
       this.props.showComments(this.props.index);
     // this.recalculateRowHeight(); this.props.recalculateRowHeight()
@@ -47,6 +48,9 @@ class FeedItemQSO extends React.Component {
   static getDerivedStateFromProps(props, prevState) {
     if (props.qso.comments !== prevState.comments)
       return { comments: props.qso.comments };
+    if (props.qso.likes !== prevState.likes) {
+      return { likes: props.qso.likes };
+    }
     return null;
   }
   render() {
@@ -104,7 +108,7 @@ class FeedItemQSO extends React.Component {
               />
               {text}
             </div>
-            <div className="qso-header-info-post" >
+            <div className="qso-header-info-post">
               <div>
                 <b>Date: </b>
                 {date.toLocaleDateString('EN-US', { month: 'short' }) +
@@ -178,7 +182,6 @@ class FeedItemQSO extends React.Component {
                 idqso={this.props.qso.idqsos}
                 qso_owner={this.props.qso.qra}
                 recalculateRowHeight={this.recalculateRowHeight}
-
               />
             </Fragment>
           )}
@@ -186,7 +189,7 @@ class FeedItemQSO extends React.Component {
             <FeedLinkList links={this.props.qso.links} />
           )}
           <Divider hidden style={{ marginTop: '2vh', marginBottom: '2vh' }} />
-          <QSOLikeText qso={this.props.qso} />
+          <QSOLikeText qso={this.props.qso} likes={this.state.likes} />
           <Button.Group fluid basic>
             <QSOLikeButton qso={this.props.qso} />
             <Button onClick={e => this.handleOnComment(e)}>

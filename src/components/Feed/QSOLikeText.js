@@ -15,6 +15,7 @@ class QSOLikeText extends React.PureComponent {
     this.setState({ likes: this.props.qso ? this.props.qso.likes : [] });
   }
   static getDerivedStateFromProps(props, prevState) {
+    
     if (props.qso.likes && props.qso.likes.length !== prevState.likes.length)
       return { likes: props.qso.likes };
     return null;
@@ -41,10 +42,16 @@ class QSOLikeText extends React.PureComponent {
     let counter;
     let outputText = '';
     let finalText;
-    let maxLikers = 5;
+    let maxLikers = 2;
+    let others = 0;
+    let avatarPic = null;
     if (qso.likes.length > maxLikers) {
       counter = maxLikers;
-      finalText = ' and ' + (qso.likes.length - maxLikers) + 'liked this';
+      others = qso.likes.length - maxLikers;
+      finalText =
+        ' and ' +
+        others +
+        (others > 1 ? ' others liked this' : ' other liked this');
     } else {
       counter = this.props.qso.likes.length;
       finalText = ' liked this QSO';
@@ -53,6 +60,8 @@ class QSOLikeText extends React.PureComponent {
     if (counter === 0) return null;
 
     for (let a = 0; a < counter; a++) {
+      if (qso.likes[a].avatarpic !== null && avatarPic === null) avatarPic = qso.likes[a].avatarpic;
+      
       outputText =
         outputText +
         (qso.likes[a].qra === this.props.userData.currentQRA
@@ -76,11 +85,23 @@ class QSOLikeText extends React.PureComponent {
     return (
       <Fragment>
         <a
-          style={{ cursor: 'pointer', fontSize: '1.1rem' }}
+          style={{
+            cursor: 'pointer',
+            fontSize: '1.1rem',
+            display: 'flex',
+            marginBottom: '5px'
+          }}
           href={null}
           onClick={() => this.setState({ showModal: true })}
         >
-          {outputText}
+          {avatarPic && (
+            <Image
+              style={{ height: '1.5rem', width: 'auto', marginRigth: '5px' }}
+              src={avatarPic}
+              circular
+            />
+          )}
+          <span>{outputText}</span>
         </a>
         <Modal
           size="tiny"
@@ -106,7 +127,7 @@ class QSOLikeText extends React.PureComponent {
                 {qso.likes.map(l => (
                   // <div key={l.idqsos_likes} style={{ padding: '1vh' }} />
                   <div
-                    key={l.idqsos_likes}
+                    key={l.qra}
                     style={{ display: 'flex', paddingBottom: '10px' }}
                   >
                     <div
