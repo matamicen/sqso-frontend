@@ -279,7 +279,10 @@ class FeedItemRepost extends React.Component {
           <Divider hidden style={{ marginTop: '2vh', marginBottom: '2vh' }} />
           <QSOLikeText qso={this.props.qso} likes={this.state.likes} />
           <Button.Group widths="4" basic>
-            <QSOLikeButton qso={this.props.qso} />
+            <QSOLikeButton
+              qso={this.props.qso}
+              recalculateRowHeight={this.recalculateRowHeight}
+            />
             <Button onClick={e => this.handleOnComment(e)}>
               <Icon name="comment outline" />{' '}
               {this.props.qso.comments.length > 0 && commentsCounter}

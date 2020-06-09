@@ -96,6 +96,7 @@ class FeedItemQSO extends React.Component {
                   }}
                 />
               </Link>
+              
             </div>
             <div className="qso-header-action">
               <PopupToFollow
@@ -191,7 +192,10 @@ class FeedItemQSO extends React.Component {
           <Divider hidden style={{ marginTop: '2vh', marginBottom: '2vh' }} />
           <QSOLikeText qso={this.props.qso} likes={this.state.likes} />
           <Button.Group fluid basic>
-            <QSOLikeButton qso={this.props.qso} />
+            <QSOLikeButton
+              qso={this.props.qso}
+              recalculateRowHeight={this.recalculateRowHeight}
+            />
             <Button onClick={e => this.handleOnComment(e)}>
               <div>
                 <Icon name="comment outline" />{' '}
