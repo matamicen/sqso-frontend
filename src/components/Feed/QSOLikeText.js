@@ -15,7 +15,6 @@ class QSOLikeText extends React.PureComponent {
     this.setState({ likes: this.props.qso ? this.props.qso.likes : [] });
   }
   static getDerivedStateFromProps(props, prevState) {
-    
     if (props.qso.likes && props.qso.likes.length !== prevState.likes.length)
       return { likes: props.qso.likes };
     return null;
@@ -45,6 +44,7 @@ class QSOLikeText extends React.PureComponent {
     let maxLikers = 2;
     let others = 0;
     let avatarPic = null;
+
     if (qso.likes.length > maxLikers) {
       counter = maxLikers;
       others = qso.likes.length - maxLikers;
@@ -54,14 +54,16 @@ class QSOLikeText extends React.PureComponent {
         (others > 1 ? ' others liked this' : ' other liked this');
     } else {
       counter = this.props.qso.likes.length;
-      finalText = ' liked this QSO';
+      finalText =
+        ' liked this' + (this.props.qso.type === 'POST' ? ' Post' : ' QSO');
     }
 
     if (counter === 0) return null;
 
     for (let a = 0; a < counter; a++) {
-      if (qso.likes[a].avatarpic !== null && avatarPic === null) avatarPic = qso.likes[a].avatarpic;
-      
+      if (qso.likes[a].avatarpic !== null && avatarPic === null)
+        avatarPic = qso.likes[a].avatarpic;
+
       outputText =
         outputText +
         (qso.likes[a].qra === this.props.userData.currentQRA

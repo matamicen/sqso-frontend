@@ -53,7 +53,6 @@ class FeedItemQSO extends React.PureComponent {
     if (props.qso.comments !== prevState.comments) {
       return { comments: props.qso.comments };
     }
-    
     if (props.qso.likes !== prevState.likes) {
       return { likes: props.qso.likes };
     }
@@ -223,7 +222,10 @@ class FeedItemQSO extends React.PureComponent {
           <Divider hidden style={{ marginTop: '2vh', marginBottom: '2vh' }} />
           <QSOLikeText qso={this.props.qso} likes={this.state.likes} />
           <Button.Group fluid basic>
-            <QSOLikeButton qso={this.props.qso} />
+            <QSOLikeButton
+              qso={this.props.qso}
+              recalculateRowHeight={this.recalculateRowHeight}
+            />
             <Button onClick={e => this.handleOnComment(e)}>
               <div>
                 <Icon name="comment outline" />{' '}
