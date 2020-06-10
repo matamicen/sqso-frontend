@@ -28,17 +28,17 @@ class QRAProfileContainer extends React.PureComponent {
       this.setState({ adActive: false });
 
     //Following
-    if (
-      this.props.isAuthenticated &&
-      this.props.userFetched &&
-      !this.props.fetchingQRA &&
-      this.props.QRAFetched
-    ) {
-      this.followed = this.props.following.some(
-        o => o.qra === this.props.qraInfo.qra
-      );
-      this.setState({ followed: this.followed });
-    }
+    // if (
+    //   this.props.isAuthenticated &&
+    //   this.props.userFetched &&
+    //   !this.props.fetchingQRA &&
+    //   this.props.QRAFetched
+    // ) {
+    //   this.followed = this.props.following.some(
+    //     o => o.qra === this.props.qraInfo.qra
+    //   );
+    //   this.setState({ followed: this.followed });
+    // }
 
     //Comentado Adsense
     window.googletag.cmd.push(function() {
