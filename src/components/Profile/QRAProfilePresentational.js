@@ -53,7 +53,7 @@ const QRAProfile = props => {
             isAuthenticated={props.isAuthenticated}
             following={props.following}
             userFetched={props.userFetched}
-            // followed={props.followed}
+            followed={props.followed}
             onClick={props.onClick}
             currentQRA={props.currentQRA}
           />
