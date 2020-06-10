@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
 import Image from 'semantic-ui-react/dist/commonjs/elements/Image';
 import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
 import * as Actions from '../../actions';
+import QSOLikeTextModalItem from './QSOLikeTextModalItem';
 class QSOLikeText extends React.PureComponent {
   constructor() {
     super();
@@ -19,23 +19,23 @@ class QSOLikeText extends React.PureComponent {
       return { likes: props.qso.likes };
     return null;
   }
-  handleButtonClick(idqra) {
-    if (!this.props.userData.token) return null;
-    if (!this.props.userData.following.some(o => o.qra === idqra)) {
-      if (this.props.userData.isAuthenticated) {
-        this.props.actions.doFollowQRA(this.props.userData.token, idqra);
-      }
-    } else {
-      if (this.props.userData.isAuthenticated) {
-        this.props.actions.doUnfollowQRA(this.props.userData.token, idqra);
-      }
-    }
-    // this.setState(prevState => {
-    //   return {
-    //     followed: !prevState.followed
-    //   };
-    // });
-  }
+  // handleButtonClick(idqra) {
+  //   if (!this.props.userData.token) return null;
+  //   if (!this.props.userData.following.some(o => o.qra === idqra)) {
+  //     if (this.props.userData.isAuthenticated) {
+  //       this.props.actions.doFollowQRA(this.props.userData.token, idqra);
+  //     }
+  //   } else {
+  //     if (this.props.userData.isAuthenticated) {
+  //       this.props.actions.doUnfollowQRA(this.props.userData.token, idqra);
+  //     }
+  //   }
+  //   // this.setState(prevState => {
+  //   //   return {
+  //   //     followed: !prevState.followed
+  //   //   };
+  //   // });
+  // }
   render() {
     const { qso } = this.props;
     let counter;
@@ -128,69 +128,8 @@ class QSOLikeText extends React.PureComponent {
               <div>
                 {qso.likes.map(l => (
                   // <div key={l.idqsos_likes} style={{ padding: '1vh' }} />
-                  <div
-                    key={l.qra}
-                    style={{ display: 'flex', paddingBottom: '10px' }}
-                  >
-                    <div
-                      style={{
-                        flex: '0 1 auto',
-                        justifyContent: 'center',
-                        paddingRigth: '5px'
-                      }}
-                    >
-                      <Image
-                        src={l.avatarpic ? l.avatarpic : '/emptyprofile.png'}
-                        size="mini"
-                        avatar
-                        style={{
-                          width: '50px',
-                          height: '50px'
-                        }}
-                      />
-                    </div>
-                    <div
-                      style={{
-                        flex: '1 1 auto',
-                        justifyContent: 'center',
-                        paddingRigth: '5px'
-                      }}
-                    >
-                      <Link to={'/' + l.qra}>
-                        <span style={{ fontSize: 'large' }}>{l.qra}</span>
-                        <br />
-                        <span style={{ fontSize: 'medium' }}>
-                          {l.firstname + ' ' + l.lastname}
-                        </span>
-                      </Link>
-                    </div>
-                    <div
-                      style={{
-                        flex: '0 1 auto',
-                        justifyContent: 'center',
-                        padding: '0'
-                      }}
-                    >
-                      {l.qra !== this.props.userData.currentQRA && (
-                        <Button
-                          style={{
-                            width: '100px'
-                          }}
-                          positive={
-                            !this.props.userData.following.some(
-                              o => o.idqra_followed === l.idqra
-                            )
-                          }
-                          onClick={() => this.handleButtonClick(l.qra)}
-                        >
-                          {this.props.userData.following.some(
-                            o => o.idqra_followed === l.idqra
-                          )
-                            ? 'Unfollow'
-                            : 'Follow'}
-                        </Button>
-                      )}
-                    </div>
+                  <div key={l.idqsos_likes}>
+                    <QSOLikeTextModalItem l={l} qso={this.props.qso} likes={this.state.likes} />
                   </div>
                 ))}
               </div>
