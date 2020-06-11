@@ -39,12 +39,8 @@ class QSOLikeTextModalItem extends React.PureComponent {
     // });
   }
   render() {
-    const { l, qso } = this.props;
-    let avatarPic = null;
-    for (let a = 0; a < qso.likes.length; a++) {
-      if (qso.likes[a].avatarpic !== null && avatarPic === null)
-        avatarPic = qso.likes[a].avatarpic;
-    }
+    const { l } = this.props;
+
 
     if (
       this.props.isAuthenticated &&
@@ -56,7 +52,6 @@ class QSOLikeTextModalItem extends React.PureComponent {
       this.followed = this.props.userData.following.some(
         o => o.idqra_followed === l.idqra
       );
-
     }
     return (
       <div key={l.qra} style={{ display: 'flex', paddingBottom: '10px' }}>

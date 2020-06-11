@@ -43,41 +43,55 @@ class QSOLikeText extends React.PureComponent {
     let finalText;
     let maxLikers = 2;
     let others = 0;
-    let avatarPic = null;
+    let likes = qso.likes;
+    // let avatarPic = null;
 
-    if (qso.likes.length > maxLikers) {
+    if (likes.length > maxLikers) {
       counter = maxLikers;
-      others = qso.likes.length - maxLikers;
+      others = likes.length - maxLikers;
       finalText =
         ' and ' +
         others +
-        (others > 1 ? ' others liked this' : ' other liked this');
+        (others > 1 ? ' others liked this' : ' other liked this') + (this.props.qso.type === 'POST' ? ' POST' : ' QSO');
     } else {
-      counter = this.props.qso.likes.length;
+      counter = likes.length;
       finalText =
-        ' liked this' + (this.props.qso.type === 'POST' ? ' Post' : ' QSO');
+        ' liked this' + (this.props.qso.type === 'POST' ? ' POST' : ' QSO');
     }
 
     if (counter === 0) return null;
 
-    for (let a = 0; a < counter; a++) {
-      if (qso.likes[a].avatarpic !== null && avatarPic === null)
-        avatarPic = qso.likes[a].avatarpic;
+    // if the first element in array does not have avatar -> reorder array
+    if (likes[0].avatarpic === null) {
+      let i = 0;
+      
+      while (likes[0].avatarpic === null && i < likes.length) {
+        let like = likes.splice(0, 1)[0];
+        
+        likes.push(like);
+        
+        i++;
+      }
+    }
+    outputText = "";
+    for (let a = 0; a <= counter - 1; a++) {
+      // if (qso.likes[a].avatarpic !== null
+      // avatarPic = qso.likes[a].avatarpic;
 
       outputText =
         outputText +
-        (qso.likes[a].qra === this.props.userData.currentQRA
+        (likes[a].qra === this.props.userData.currentQRA
           ? 'You'
-          : qso.likes[a].qra);
+          : likes[a].qra);
 
       switch (true) {
         case a === counter - 1: //Last QRA
           outputText = outputText + finalText;
           break;
-        case qso.likes.length > 1 && a === counter - 2: //Before Last
+        case likes.length > 1 && a === counter - 2: //Before Last
           outputText = outputText + ' and ';
           break;
-        case qso.likes.length > 1 && a < counter - 2: //Before Last
+        case likes.length > 1 && a < counter - 2: //Before Last
           outputText = outputText + ', ';
           break;
         default:
@@ -96,10 +110,10 @@ class QSOLikeText extends React.PureComponent {
           href={null}
           onClick={() => this.setState({ showModal: true })}
         >
-          {avatarPic && (
+          {likes[0].avatarpic && (
             <Image
               style={{ height: '1.5rem', width: 'auto', marginRigth: '5px' }}
-              src={avatarPic}
+              src={likes[0].avatarpic}
               circular
             />
           )}
@@ -121,15 +135,19 @@ class QSOLikeText extends React.PureComponent {
           }}
         >
           <Modal.Header>
-            These Hams likes this {qso.type === 'POST' ? ' Post' : ' QSO'}
+            These Hams likes this {qso.type === 'POST' ? ' POST' : ' QSO'}
           </Modal.Header>
           <Modal.Content>
             <Modal.Description>
               <div>
-                {qso.likes.map(l => (
+                {likes.map(l => (
                   // <div key={l.idqsos_likes} style={{ padding: '1vh' }} />
-                  <div key={l.idqsos_likes}>
-                    <QSOLikeTextModalItem l={l} qso={this.props.qso} likes={this.state.likes} />
+                  <div key={l.qra}>
+                    <QSOLikeTextModalItem
+                      l={l}
+                      qso={this.props.qso}
+                      likes={likes}
+                    />
                   </div>
                 ))}
               </div>
