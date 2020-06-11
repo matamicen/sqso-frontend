@@ -27,10 +27,16 @@ class FeedAudio extends React.Component {
         this.props.qraUserData.account_type.web_qso_audio_play
       ) {
         this.setState({ promptPremium: true });
-      } else this.setState({ audioNotVisible: false });
+      } else {
+        this.props.recalculateRowHeight();
+        this.setState({ audioNotVisible: false });
+      }
     } else {
       if (this.props.index > 0) this.setState({ promptLogin: true });
-      else this.setState({ audioNotVisible: false });
+      else {
+        this.props.recalculateRowHeight();
+        this.setState({ audioNotVisible: false });
+      }
     }
   }
 
@@ -65,7 +71,13 @@ class FeedAudio extends React.Component {
               confirmButton="Login"
               content="Please Login to perform this action"
             />
-            <div style={{ display: 'flex', alignItems: 'center',  fontSize: "1.2rem" }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                fontSize: '1.2rem'
+              }}
+            >
               <Button
                 size="large"
                 circular

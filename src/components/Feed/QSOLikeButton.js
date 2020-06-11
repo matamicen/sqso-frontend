@@ -112,18 +112,7 @@ class QSOLikeButton extends React.Component {
     API.post(apiName, path, myInit)
       .then(response => {
         if (response.body.error > 0) {
-          // this.setState(previousState => ({
-          //   likeCounter:
-          //     this.props.qso.likes.length === 0
-          //       ? this.props.qso.likes.length
-          //       : this.props.qso.likes.length - 1
-          // }));
         } else {
-          // this.setState({
-          //   likeCounter: response.body.message
-          //   // icon: "thumbs up",
-          //   // liked: true
-          // });
           if (process.env.NODE_ENV !== 'production') {
             window.gtag('event', 'qsoLiked_WEBDEV', {
               event_category: 'QSO',
@@ -163,18 +152,7 @@ class QSOLikeButton extends React.Component {
     API.del(apiName, path, myInit)
       .then(response => {
         if (response.body.error > 0) {
-          // this.setState(previousState => ({
-          //   likeCounter:
-          //     this.props.qso.likes.length === 0
-          //       ? this.props.qso.likes.length
-          //       : this.props.qso.likes.length - 1
-          // }));
         } else {
-          // this.setState({
-          //   likeCounter: response.body.message
-          //   // icon: "thumbs outline up",
-          //   // liked: false
-          // });
           if (process.env.NODE_ENV !== 'production') {
             window.gtag('event', 'qsoUnliked_WEBDEV', {
               event_category: 'QSO',
@@ -205,6 +183,8 @@ class QSOLikeButton extends React.Component {
     else {
       if (!this.liked) {
         this.likeCounter++;
+        console.log(this.likeCounter);
+        if (this.likeCounter === 1) this.props.recalculateRowHeight();
         this.liked = true;
         this.icon = 'thumbs up';
         this.setState({
@@ -212,7 +192,6 @@ class QSOLikeButton extends React.Component {
           icon: 'thumbs up',
           liked: true
         });
-        console.log(this.props.userData);
         // doLikeQSO(idqso, idqra, qra, firstname, lastname, avatarpic)
         this.props.actions.doLikeQSO(
           this.props.qso.idqsos,
@@ -225,6 +204,8 @@ class QSOLikeButton extends React.Component {
         this.doLike();
       } else {
         this.likeCounter--;
+
+        if (this.likeCounter === 0) this.props.recalculateRowHeight();
         this.liked = false;
         this.icon = 'thumbs outline up';
         this.setState({

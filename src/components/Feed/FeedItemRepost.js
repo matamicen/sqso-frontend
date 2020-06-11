@@ -25,7 +25,7 @@ import './style.css';
 class FeedItemRepost extends React.Component {
   constructor() {
     super();
-    this.state = { comments: [], error: null };
+    this.state = { comments: [], likes: [], error: null };
     this.handleOnComment = this.handleOnComment.bind(this);
     this.recalculateRowHeight = this.recalculateRowHeight.bind(this);
   }
@@ -54,6 +54,9 @@ class FeedItemRepost extends React.Component {
     if (props.qso.comments !== prevState.comments) {
       return { comments: props.qso.comments };
     }
+    if (props.qso.likes !== prevState.likes) {
+      return { likes: props.qso.likes };
+    }
     return null;
   }
 
@@ -67,18 +70,18 @@ class FeedItemRepost extends React.Component {
     const commentsCounter = '(' + this.props.qso.comments.length + ')';
 
     let text;
-  
+
     switch (this.props.qso.original[0].type) {
       case 'QSO':
-        text = ' worked a QSO';       
+        text = ' worked a QSO';
         break;
       case 'LISTEN':
         text = ' listened a QSO';
-    
+
         break;
       case 'POST':
         text = ' created a new POST';
-  
+
         break;
       default:
     }
@@ -114,7 +117,7 @@ class FeedItemRepost extends React.Component {
                   </Link>
                 }
               />
-              {" shared content"}
+              {' shared content'}
             </div>
             <div className="qso-header-info-post">
               <div>
@@ -183,30 +186,35 @@ class FeedItemRepost extends React.Component {
               <div className="qso-header-info">
                 {this.props.qso.original[0].mode && (
                   <div>
-                    <b>Mode</b><br/>
+                    <b>Mode</b>
+                    <br />
                     {this.props.qso.original[0].mode}
                   </div>
                 )}
                 {this.props.qso.original[0].band && (
                   <div>
-                    <b>Band </b><br/>
+                    <b>Band </b>
+                    <br />
                     {this.props.qso.original[0].band}
                   </div>
                 )}
                 {this.props.qso.db && (
                   <div>
-                    <b>dB </b><br/>
+                    <b>dB </b>
+                    <br />
                     {this.props.qso.db ? this.props.qso.db : null}
                   </div>
                 )}
                 {!this.props.qso.rst && (
                   <div>
-                    <b>RST </b><br/>
+                    <b>RST </b>
+                    <br />
                     {this.props.qso.rst ? this.props.qso.rst : '59'}
                   </div>
                 )}
                 <div>
-                  <b>Date </b><br/>
+                  <b>Date </b>
+                  <br />
                   {date.toLocaleDateString('EN-US', { month: 'short' }) +
                     ' ' +
                     date.getDate() +
@@ -263,14 +271,18 @@ class FeedItemRepost extends React.Component {
                 mediaList={audioList}
                 idqso={this.props.qso.idqsos}
                 qso_owner={this.props.qso.original[0].qra}
+                recalculateRowHeight={this.recalculateRowHeight}
               />
             )}
           </Segment>
 
           <Divider hidden style={{ marginTop: '2vh', marginBottom: '2vh' }} />
-          <QSOLikeText qso={this.props.qso} />
+          <QSOLikeText qso={this.props.qso} likes={this.state.likes} />
           <Button.Group widths="4" basic>
-            <QSOLikeButton qso={this.props.qso} />
+            <QSOLikeButton
+              qso={this.props.qso}
+              recalculateRowHeight={this.recalculateRowHeight}
+            />
             <Button onClick={e => this.handleOnComment(e)}>
               <Icon name="comment outline" />{' '}
               {this.props.qso.comments.length > 0 && commentsCounter}

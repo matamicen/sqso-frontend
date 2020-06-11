@@ -9,7 +9,7 @@ import { MY_COUNTRIES_DATA } from "./countries.js";
 const QRAProfileHeader = (props) => {
   let buttonText;
 
-  if (props.following.some(o => o.qra === props.qraInfo.qra)) {
+  if (props.followed) {
     buttonText = "Unfollow";
   } else {
     buttonText = "Follow";
@@ -88,7 +88,8 @@ const QRAProfileHeader = (props) => {
               {props.isAuthenticated && props.userFetched && props.qraInfo.qra !== props.currentQRA && (
                 <Button
                   size="small"
-                  positive={!props.following.some(o => o.qra === props.qraInfo.qra)}
+                  // positive={!props.following.some(o => o.qra === props.qraInfo.qra)}
+                  positive={!props.followed}
                   onClick={() => props.onClick()}
                 >
                   {buttonText}

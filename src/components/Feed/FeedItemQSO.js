@@ -27,7 +27,7 @@ import './style.css';
 class FeedItemQSO extends React.PureComponent {
   constructor() {
     super();
-    this.state = { comments: [], error: null };
+    this.state = { comments: [], likes: [], error: null };
 
     this.recalculateRowHeight = this.recalculateRowHeight.bind(this);
   }
@@ -52,6 +52,9 @@ class FeedItemQSO extends React.PureComponent {
   static getDerivedStateFromProps(props, prevState) {
     if (props.qso.comments !== prevState.comments) {
       return { comments: props.qso.comments };
+    }
+    if (props.qso.likes !== prevState.likes) {
+      return { likes: props.qso.likes };
     }
     return null;
   }
@@ -115,27 +118,32 @@ class FeedItemQSO extends React.PureComponent {
             </div>
             <div className="qso-header-info">
               <div>
-                <b>Mode</b><br/>
+                <b>Mode</b>
+                <br />
                 {this.props.qso.mode}
               </div>
               <div>
-                <b>Band</b><br/>
+                <b>Band</b>
+                <br />
                 {this.props.qso.band}
               </div>
               {this.props.qso.db && (
                 <div>
-                  <b>dB</b><br/>
+                  <b>dB</b>
+                  <br />
                   {this.props.qso.db ? this.props.qso.db : null}
                 </div>
               )}
               {!this.props.qso.db && (
                 <div>
-                  <b>RST</b><br/>
+                  <b>RST</b>
+                  <br />
                   {this.props.qso.rst ? this.props.qso.rst : '59'}
                 </div>
               )}
               <div>
-                <b>Date</b><br/>
+                <b>Date</b>
+                <br />
                 {date.toLocaleDateString('EN-US', { month: 'short' }) +
                   ' ' +
                   date.getDate() +
@@ -143,7 +151,8 @@ class FeedItemQSO extends React.PureComponent {
                   date.getFullYear()}
               </div>
               <div>
-                <b>UTC</b><br/>
+                <b>UTC</b>
+                <br />
                 {date.getUTCHours() +
                   ':' +
                   (date.getMinutes() < 10 ? '0' : '') +
@@ -203,6 +212,7 @@ class FeedItemQSO extends React.PureComponent {
                 mediaList={audioList}
                 idqso={this.props.qso.idqsos}
                 qso_owner={this.props.qso.qra}
+                recalculateRowHeight={this.recalculateRowHeight}
               />
             </Fragment>
           )}
@@ -210,9 +220,12 @@ class FeedItemQSO extends React.PureComponent {
             <FeedLinkList links={this.props.qso.links} />
           )}
           <Divider hidden style={{ marginTop: '2vh', marginBottom: '2vh' }} />
-          <QSOLikeText qso={this.props.qso} />
+          <QSOLikeText qso={this.props.qso} likes={this.state.likes} />
           <Button.Group fluid basic>
-            <QSOLikeButton qso={this.props.qso} />
+            <QSOLikeButton
+              qso={this.props.qso}
+              recalculateRowHeight={this.recalculateRowHeight}
+            />
             <Button onClick={e => this.handleOnComment(e)}>
               <div>
                 <Icon name="comment outline" />{' '}
