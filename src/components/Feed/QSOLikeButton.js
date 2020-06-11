@@ -183,7 +183,7 @@ class QSOLikeButton extends React.Component {
     else {
       if (!this.liked) {
         this.likeCounter++;
-        console.log(this.likeCounter);
+
         if (this.likeCounter === 1) this.props.recalculateRowHeight();
         this.liked = true;
         this.icon = 'thumbs up';
