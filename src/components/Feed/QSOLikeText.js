@@ -64,12 +64,12 @@ class QSOLikeText extends React.PureComponent {
     // if the first element in array does not have avatar -> reorder array
     if (likes[0].avatarpic === null) {
       let i = 0;
-      console.log(likes);
+      
       while (likes[0].avatarpic === null && i < likes.length) {
         let like = likes.splice(0, 1)[0];
-        console.log(likes);
+        
         likes.push(like);
-        console.log(likes);
+        
         i++;
       }
     }
