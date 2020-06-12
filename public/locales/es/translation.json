@@ -1,0 +1,9 @@
+{
+    "home" : {
+      "welcome_to_react_translation": "Bienvenido a React traducido",
+      "this_is_test_view": "Esto es una vista de prueba"
+    },
+    "menu": {
+      "changePassword": "Cambiar Contraseña"
+    }
+  }

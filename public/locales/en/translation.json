@@ -1,0 +1,42 @@
+{
+  "home": {
+    "welcome_to_react_translation": "Welcome to React Translate.",
+    "this_is_test_view": "This is the test view."
+  },
+  "navBar": {
+    "changePassword": "Change Password",
+    "editProfile": "Edit my Profile",
+    "logOut": "Log Out",
+    "signUp": "Signup",
+    "login": "Login",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "contactUs": "Contact Us",
+    "whatIsSuperQSO": "¿What is SuperQSO?",
+    "downloadApp": "Download App",
+    "tutorial": "Tutorial",
+    "whoToFollow": "Who to Follow",
+    "searchCallsign": "Search CALLSIGN"
+  },
+  "whatIsSuperQSO": {
+    "whatIsSuperQSO": "¿What is SuperQSO?",
+    "downloadApp": "Download App",
+    "tutorial": "Tutorial",
+    "skip": "Skip",
+    "browserNotSupportTag": "Your browser does not support the video tag"
+  },
+  "auth": {
+    "changePasswordHeader": "Change Password",
+    "changePasswordButton": "Change Password",
+    "placeholderOldPassword": "Old Password",
+    "placeholderNewPassword": "New Password",
+    "placeholderPasswordConfirm":"New Password Confirmation",
+    "passwordTooShort": "Password is too short",
+    "passwordsDontMatch": "New Password and Confirmation are not the same",
+    "passwordChangedHeader": "Password Changed",
+    "passwordChangedContent": "Your password has been changed. Please login again!"
+  },
+  "global": {
+    "loading": "Loading"
+  }
+}

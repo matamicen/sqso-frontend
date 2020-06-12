@@ -88,6 +88,7 @@
 .feed-item-qras {
   display: flex;
   overflow-x: auto;
+  overflow-y:hidden;
   justify-content: flex-start;
 }
 

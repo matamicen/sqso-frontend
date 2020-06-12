@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -70,6 +71,7 @@ class Home extends React.Component {
     else if (!props.qsosFetched) return { active: true };
   }
   render() {
+    const {t} = this.props;
     return (
       <Fragment>
         <Dimmer active={this.state.active} page>
@@ -128,7 +130,7 @@ class Home extends React.Component {
           open={this.state.modalOpen}
           onClose={() => this.setState({ modalOpen: false, videoAlreadyDisplayed: true })}
           size="large"
-        ><Modal.Header>¿Que es SuperQSO?</Modal.Header>
+        ><Modal.Header>{t('whatIsSuperQSO.whatIsSuperQSO')}</Modal.Header>
           <Modal.Content>
             <video width="100%" autoPlay controls controlsList="nodownload">
               <source
@@ -137,7 +139,7 @@ class Home extends React.Component {
                 }
                 type="video/mp4"
               />
-              Your browser does not support the video tag.
+              {t('whatIsSuperQSO.browserNotSupportTag')}.
             </video>
           </Modal.Content>
           <Modal.Actions>
@@ -148,21 +150,21 @@ class Home extends React.Component {
                 this.props.history.push('/download');
               }}
             >
-              Download App
+               {t('whatIsSuperQSO.downloadApp')}
             </Button>
             <Button onClick={() => {
                 this.setState({ modalOpen: false, videoAlreadyDisplayed: true });
                 this.props.history.push('/tutorials');
               }}
             >
-              Tutorials
+              {t('whatIsSuperQSO.tutorial')}
             </Button>
             <Button onClick={() => {
                 this.setState({ modalOpen: false, videoAlreadyDisplayed: true });
                 
               }}
             >
-              Skip
+             {t('whatIsSuperQSO.skip')}
             </Button>
           </Modal.Actions>
         </Modal>
@@ -187,5 +189,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(Home)
+  )(withTranslation()(Home))
 );

@@ -88,10 +88,10 @@ class QSOLikeText extends React.PureComponent {
         case a === counter - 1: //Last QRA
           outputText = outputText + finalText;
           break;
-        case likes.length > 1 && a === counter - 2: //Before Last
+        case likes.length > 1 && a === counter - 2 && counter === likes.length: //Before Last
           outputText = outputText + ' and ';
           break;
-        case likes.length > 1 && a < counter - 2: //Before Last
+        case likes.length > 1 && a <= counter - 2 && counter < likes.length: //Before Last
           outputText = outputText + ', ';
           break;
         default:
