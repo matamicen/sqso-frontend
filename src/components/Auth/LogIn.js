@@ -2,6 +2,7 @@ import Amplify from '@aws-amplify/core';
 import * as Sentry from '@sentry/browser';
 import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Link, Redirect, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -206,7 +207,7 @@ class LogIn extends React.Component {
   }
 
   render() {
-    const { location } = this.props;
+    const { location, t } = this.props;
 
     if (this.props.isAuthenticated && !this.props.authenticating) {
       // alert("Please Logout before login again!");
@@ -435,5 +436,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(LogIn)
+  )(withTranslation()(LogIn))
 );

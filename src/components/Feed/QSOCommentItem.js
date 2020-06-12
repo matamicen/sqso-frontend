@@ -1,4 +1,5 @@
 import React from "react";
+import { withTranslation } from 'react-i18next';
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { bindActionCreators } from "redux";
@@ -18,6 +19,7 @@ class QSOCommentItem extends React.Component {
     this.props.recalculateRowHeight();
   };
   render() {
+    const {t} = this.props;
     var date = new Date(this.props.comment.datetime);
     var timestamp = "";
 
@@ -83,4 +85,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(QSOCommentItem);
+)(withTranslation()(QSOCommentItem));

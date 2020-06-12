@@ -1,6 +1,7 @@
 import API from '@aws-amplify/api';
 import * as Sentry from '@sentry/browser';
 import React, { Fragment } from 'react';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -223,6 +224,7 @@ class QSOLikeButton extends React.Component {
   }
 
   render() {
+    const {t} = this.props;
     let icon;
 
     if (this.liked !== true && this.liked !== false) {
@@ -269,5 +271,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(QSOLikeButton)
+  )(withTranslation()(QSOLikeButton))
 );

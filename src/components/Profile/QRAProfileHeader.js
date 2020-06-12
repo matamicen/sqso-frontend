@@ -1,4 +1,5 @@
 import React from "react";
+import { withTranslation } from 'react-i18next';
 import Button from "semantic-ui-react/dist/commonjs/elements/Button";
 import Divider from "semantic-ui-react/dist/commonjs/elements/Divider";
 import Flag from "semantic-ui-react/dist/commonjs/elements/Flag";
@@ -6,7 +7,7 @@ import Image from "semantic-ui-react/dist/commonjs/elements/Image";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 import "../../styles/style.css";
 import { MY_COUNTRIES_DATA } from "./countries.js";
-const QRAProfileHeader = (props) => {
+const QRAProfileHeader = ({t, props}) => {
   let buttonText;
 
   if (props.followed) {
@@ -103,4 +104,4 @@ const QRAProfileHeader = (props) => {
   );
 };
 
-export default QRAProfileHeader;
+export default withTranslation()(QRAProfileHeader);

@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { Fragment } from 'react';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -41,6 +42,7 @@ class FeedAudio extends React.Component {
   }
 
   render() {
+    const {t} = this.props;
     const date = new Date(this.props.media.datetime);
     const onlyForRegistered = !!(
       this.props.index > 0 && !this.props.isAuthenticated
@@ -190,5 +192,5 @@ export default withRouter(
     mapDispatchToProps,
     null,
     { pure: false }
-  )(FeedAudio)
+  )(withTranslation()(FeedAudio))
 );

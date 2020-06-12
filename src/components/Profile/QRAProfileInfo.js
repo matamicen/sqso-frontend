@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import { withTranslation } from 'react-i18next';
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
@@ -8,7 +9,6 @@ import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown";
 import * as Actions from "../../actions";
 import "../../styles/style.css";
 import { MY_COUNTRIES_DATA } from "./countries.js";
-
 
 
 // const options = [
@@ -62,6 +62,7 @@ class QRAProfileInfo extends React.Component {
     });
   };
   render() {
+    const {t} = this.props;
     const { edit } = this.state;
     let {
       firstname,
@@ -89,6 +90,7 @@ class QRAProfileInfo extends React.Component {
       ? (email = this.state.qra.email)
       : (email = "Please login to see this field");
     return (
+   
       <Fragment>
         <Segment raised>
           <Form size="mini">
@@ -342,5 +344,5 @@ export default withRouter(
     mapDispatchToProps,
     null,
     { pure: false }
-  )(QRAProfileInfo)
+  )(withTranslation()(QRAProfileInfo))
 );

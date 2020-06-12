@@ -1,4 +1,5 @@
 import React from "react";
+import { withTranslation } from 'react-i18next';
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
@@ -12,7 +13,6 @@ import "../../styles/style.css";
 import Ad from "../Ad/Ad";
 import AppNavigation from "../Home/AppNavigation";
 import Notification from "./Notification";
-
 
 
 class Notifications extends React.Component {
@@ -55,7 +55,7 @@ class Notifications extends React.Component {
   handleOpen = () => this.setState({ adActive: true });
   handleClose = () => this.setState({ adActive: false });
   render() {
-    
+    const {t} = this.props;
     return (
       <div className="notifications-container">
         <Dimmer active={this.state.active} page>
@@ -155,5 +155,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(Notifications)
+  )(withTranslation()(Notifications))
 );

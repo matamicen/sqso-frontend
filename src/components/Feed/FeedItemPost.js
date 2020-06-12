@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -23,7 +24,6 @@ import QSOLikeText from './QSOLikeText';
 import QSORePostButton from './QSORePostButton';
 import QSOShareButtons from './QSOShareButtons';
 import './style.css';
-
 class FeedItemQSO extends React.Component {
   constructor() {
     super();
@@ -54,6 +54,8 @@ class FeedItemQSO extends React.Component {
     return null;
   }
   render() {
+    const {t} = this.props;
+
     let picList = this.props.qso.media.filter(media => media.type === 'image');
     let audioList = this.props.qso.media.filter(
       media => media.type === 'audio'
@@ -245,7 +247,7 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(FeedItemQSO)
+  )(withTranslation()(FeedItemQSO))
 );
 FeedItemQSO.propTypes = {
   qso: PropTypes.object.isRequired

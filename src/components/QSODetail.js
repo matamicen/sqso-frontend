@@ -1,4 +1,5 @@
 import React from 'react';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 // import Advertisement from "semantic-ui-react/dist/commonjs/views/Advertisement";
@@ -107,6 +108,8 @@ class QSODetail extends React.PureComponent {
   handleOpen = () => this.setState({ adActive: true });
   handleClose = () => this.setState({ adActive: false, adClosed: true });
   render() {
+    const {t} = this.props;
+
     if (this.state.qsoError) {
       return (
         <Modal
@@ -193,5 +196,6 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(QSODetail)
+  )
+  (withTranslation()(QSODetail))
 );

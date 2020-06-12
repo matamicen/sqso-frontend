@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import { withTranslation } from 'react-i18next';
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
@@ -9,7 +10,6 @@ import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
 import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
 import * as Actions from "../../actions";
 import NewsFeed from "./NewsFeedPresentational";
-
 class FeedLink extends React.PureComponent {
   state = {
     active: false,
@@ -32,6 +32,7 @@ class FeedLink extends React.PureComponent {
     this.props.actions.doClearQsoLink();
   };
   render() {
+    const {t} = this.props;
     let qsos = [];
     if (this.props.qso_link) {
       qsos.push({ qso: this.props.qso_link, type: this.props.qso_link.type });
@@ -92,5 +93,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(FeedLink)
+  )(withTranslation()(FeedLink))
 );

@@ -4,6 +4,7 @@ import * as Sentry from '@sentry/browser';
 import { Formik } from 'formik';
 import moment from 'moment';
 import React, { Fragment } from 'react';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -224,7 +225,7 @@ class SignUp extends React.Component {
   }
 
   render() {
-    const { location } = this.props;
+    const { location , t} = this.props;
 
     if (this.props.isAuthenticated && !this.props.authenticating) {
       if (location.state && location.state.from) {
@@ -345,5 +346,6 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(SignUp)
+  )
+  (withTranslation()(SignUp))
 );

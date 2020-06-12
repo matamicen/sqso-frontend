@@ -1,11 +1,12 @@
 import React from 'react';
+import { withTranslation } from 'react-i18next';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
 import Image from 'semantic-ui-react/dist/commonjs/elements/Image';
 import Feed from 'semantic-ui-react/dist/commonjs/views/Feed';
 import '../../styles/style.css';
-export default class Notification extends React.Component {
+class Notification extends React.Component {
   constructor(props) {
     super(props);
 
@@ -207,6 +208,7 @@ export default class Notification extends React.Component {
     }
   }
   render() {
+    const {t} = this.props;
     return (
       // <List.Item>
       //   <Image avatar src={this.props.notification.qra_avatarpic} />
@@ -243,3 +245,5 @@ export default class Notification extends React.Component {
     );
   }
 }
+
+export default withTranslation()(Notification)

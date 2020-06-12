@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
 import { CellMeasurer, CellMeasurerCache } from 'react-virtualized/dist/commonjs/CellMeasurer';
@@ -8,7 +9,7 @@ import WindowScroller from 'react-virtualized/dist/commonjs/WindowScroller';
 import Message from 'semantic-ui-react/dist/commonjs/collections/Message';
 import '../../styles/style.css';
 import FeedItem from './FeedItem';
-export default class NewsFeed extends React.Component {
+class NewsFeed extends React.Component {
   constructor(props) {
     super(props);
     var list = this.props.list;
@@ -147,6 +148,7 @@ export default class NewsFeed extends React.Component {
     this.setState({ list: [] });
   }
   render() {
+    const {t} = this.props;
     const { rowCount, overscanRowCount } = this.state;
 
     if (
@@ -206,3 +208,4 @@ export default class NewsFeed extends React.Component {
 NewsFeed.propTypes = {
   list: PropTypes.array.isRequired
 };
+export default withTranslation()(NewsFeed);

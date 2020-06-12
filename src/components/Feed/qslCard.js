@@ -3,6 +3,7 @@ import canvg from 'canvg';
 import QRCode from 'qrcode.react';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
+import { withTranslation } from 'react-i18next';
 import packageJson from '../../../package.json';
 const RELEASE = packageJson.version;
 if (process.env.NODE_ENV === 'production') {
@@ -19,7 +20,8 @@ if (process.env.NODE_ENV === 'production') {
     }
   });
 }
-export default async function QslCardPrint(props) {
+ async function QslCardPrint(props) {
+  const {t} = props;
   try {
     const jsPDF = require('jspdf');
     const pdf = new jsPDF('l', 'in');
@@ -277,3 +279,4 @@ async function loadImage(url) {
 //     }
 //   });
 // }
+export default withTranslation()(QslCardPrint)

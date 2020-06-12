@@ -1,4 +1,5 @@
 import React from 'react';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -39,7 +40,7 @@ class QSOLikeTextModalItem extends React.PureComponent {
     // });
   }
   render() {
-    const { l } = this.props;
+    const { l, t } = this.props;
 
 
     if (
@@ -127,5 +128,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(QSOLikeTextModalItem)
+  )(withTranslation()(QSOLikeTextModalItem))
 );

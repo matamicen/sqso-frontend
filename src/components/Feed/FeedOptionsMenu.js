@@ -2,6 +2,7 @@ import API from '@aws-amplify/api';
 import * as Sentry from '@sentry/browser';
 import QRCode from 'qrcode.react';
 import React from 'react';
+import { withTranslation } from 'react-i18next';
 import Recaptcha from 'react-recaptcha';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -13,7 +14,6 @@ import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
 import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
 import * as Actions from '../../actions';
 import QslCardPrint from './qslCard';
-
 class FeedOptionsMenu extends React.PureComponent {
   state = {
     showReportContent: false,
@@ -208,7 +208,7 @@ class FeedOptionsMenu extends React.PureComponent {
   }
   render() {
     const { showMessage, showReportContent } = this.state;
-
+    const {t} = this.props;
     return (
       <Dropdown
         icon="ellipsis vertical"
@@ -599,4 +599,4 @@ export default connect(
   mapDispatchToProps,
   null,
   { pure: false }
-)(FeedOptionsMenu);
+)(withTranslation()(FeedOptionsMenu));

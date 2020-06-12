@@ -1,11 +1,12 @@
 import React from "react";
-import Popup from "semantic-ui-react/dist/commonjs/modules/Popup";
-import Button from "semantic-ui-react/dist/commonjs/elements/Button";
-import * as Actions from "../actions";
-
+import { withTranslation } from 'react-i18next';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import Button from "semantic-ui-react/dist/commonjs/elements/Button";
+import Popup from "semantic-ui-react/dist/commonjs/modules/Popup";
+import * as Actions from "../actions";
 import "../styles/style.css";
+
 class PopupToFollow extends React.Component {
   state = {
     isFollowing: this.props.following.some(o => o.qra === this.props.qra),
@@ -30,6 +31,7 @@ class PopupToFollow extends React.Component {
     return null;
   }
   render = () => {
+    const {t} = this.props;
     let button;
     if (this.state.isFollowing)
       button = (
@@ -82,4 +84,5 @@ export default connect(
   mapDispatchToProps,
   null,
   { pure: false }
-)(PopupToFollow);
+)
+(withTranslation()(PopupToFollow));

@@ -2,6 +2,7 @@ import API from '@aws-amplify/api';
 import * as Sentry from '@sentry/browser';
 import { Formik } from 'formik';
 import React, { Fragment } from 'react';
+import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
 import * as Yup from 'yup';
@@ -37,6 +38,7 @@ class contactForm extends React.Component {
       });
   }
   render() {
+    const {t} = this.props;
     const values = { email: '', message: '' };
     const validationSchema = Yup.object({
       email: Yup.string('Enter your email')
@@ -70,4 +72,4 @@ class contactForm extends React.Component {
   }
 }
 
-export default withRouter(contactForm);
+export default withRouter(withTranslation()(contactForm));

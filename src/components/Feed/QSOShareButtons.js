@@ -1,9 +1,9 @@
 import React from 'react';
+import { withTranslation } from 'react-i18next';
 import { FacebookIcon, FacebookShareButton, TwitterIcon, TwitterShareButton, WhatsappIcon, WhatsappShareButton } from 'react-share';
 // import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
 import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
-
-const QSOShareButtons = ({ idqso }) => {
+const QSOShareButtons = ({ idqso, t }) => {
   return (
     // <Button icon as="div">
     //   <Icon name="share alternate" />
@@ -92,4 +92,4 @@ const QSOShareButtons = ({ idqso }) => {
   );
 };
 
-export default QSOShareButtons;
+export default withTranslation()(QSOShareButtons);

@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { CountryDropdown } from "react-country-region-selector";
+import { withTranslation } from 'react-i18next';
 import Recaptcha from "react-recaptcha";
 import { Link } from "react-router-dom";
 import Form from "semantic-ui-react/dist/commonjs/collections/Form";
@@ -33,7 +34,7 @@ const SignUpPresentation = props => {
     handleOnConfirm,
     handleCodeChange,
     handleResendCode,
-    confirmError
+    confirmError,t
   } = props;
 
   const change = (name, e) => {
@@ -337,4 +338,4 @@ const SignUpPresentation = props => {
   );
 };
 
-export default SignUpPresentation;
+export default withTranslation()(SignUpPresentation);

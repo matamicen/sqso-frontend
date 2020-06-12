@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -21,7 +22,6 @@ import QSOLikeText from './QSOLikeText';
 import QSORePostButton from './QSORePostButton';
 import QSOShareButtons from './QSOShareButtons';
 import './style.css';
-
 class FeedItemRepost extends React.Component {
   constructor() {
     super();
@@ -61,6 +61,7 @@ class FeedItemRepost extends React.Component {
   }
 
   render() {
+    const {t} = this.props;
     const picList = this.props.qso.media.filter(
       media => media.type === 'image'
     );
@@ -368,5 +369,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(FeedItemRepost)
+  )(withTranslation()(FeedItemRepost))
 );

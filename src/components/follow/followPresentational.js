@@ -1,19 +1,18 @@
 import React from "react";
-
-import Image from "semantic-ui-react/dist/commonjs/elements/Image";
 import { Link } from "react-router-dom";
-import "../../styles/style.css";
-import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
-import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
-import Header from "semantic-ui-react/dist/commonjs/elements/Header";
-import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
+import Slider from "react-slick";
 import Button from "semantic-ui-react/dist/commonjs/elements/Button";
+import Header from "semantic-ui-react/dist/commonjs/elements/Header";
 import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
+import Image from "semantic-ui-react/dist/commonjs/elements/Image";
+import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
+import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
+import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
 import Card from "semantic-ui-react/dist/commonjs/views/Card";
-import AppNavigation from "../Home/AppNavigation";
 import "../../styles/style.css";
 import Ad from "../Ad/Ad";
-import Slider from "react-slick";
+import AppNavigation from "../Home/AppNavigation";
+
 
 var settings = {
   // dots: false,
@@ -52,9 +51,9 @@ var settings = {
     }
   ]
 };
-const qraFollowRecommendPresentational = props => (
+const qraFollowRecommendPresentational = ({t, active, follow, following, doFollow}) => (
   <div className="profile-container">
-    <Dimmer active={props.active} page>
+    <Dimmer active={active} page>
       <Loader>Loading QRA...</Loader>
     </Dimmer>
     {/* <Dimmer
@@ -88,13 +87,13 @@ const qraFollowRecommendPresentational = props => (
       <Header as="h1" attached="top" textAlign="center">
         Who to Follow
       </Header>
-      {props.follow.followingMe && props.follow.followingMe.length > 0 && (
+      {follow.followingMe && follow.followingMe.length > 0 && (
         <Segment>
           <Header as="h3" block>
             Callsigns that follow you
           </Header>
           <Slider {...settings}>
-            {props.follow.followingMe.map((qra, i) => (
+            {follow.followingMe.map((qra, i) => (
               <div key={i}>
                 <Card raised style={{ height: "14em" }}>
                   <Card.Content>
@@ -117,7 +116,7 @@ const qraFollowRecommendPresentational = props => (
                   </Card.Content>
                   <Card.Content extra>
                     <div className="ui two buttons">
-                      {props.following.some(o => o.qra === qra.qra) ? (
+                      {following.some(o => o.qra === qra.qra) ? (
                         <Button basic color="grey">
                           Following
                         </Button>
@@ -125,7 +124,7 @@ const qraFollowRecommendPresentational = props => (
                         <Button
                           basic
                           color="green"
-                          onClick={() => props.doFollow(qra.qra)}
+                          onClick={() => doFollow(qra.qra)}
                         >
                           Follow
                         </Button>
@@ -138,13 +137,13 @@ const qraFollowRecommendPresentational = props => (
           </Slider>
         </Segment>
       )}
-      {props.follow.taggedMe && props.follow.taggedMe.length > 0 && (
+      {follow.taggedMe && follow.taggedMe.length > 0 && (
         <Segment>
           <Header as="h3" block>
             Callsigns that already tagged you
           </Header>
           <Slider {...settings}>
-            {props.follow.taggedMe.map((qra, i) => (
+            {follow.taggedMe.map((qra, i) => (
               <div key={i}>
                 <Card raised style={{ height: "14em" }}>
                   <Card.Content>
@@ -168,7 +167,7 @@ const qraFollowRecommendPresentational = props => (
 
                   <Card.Content extra>
                     <div className="ui two buttons">
-                      {props.following.some(o => o.qra === qra.qra) ? (
+                      {following.some(o => o.qra === qra.qra) ? (
                         <Button basic color="grey">
                           Following
                         </Button>
@@ -176,7 +175,7 @@ const qraFollowRecommendPresentational = props => (
                         <Button
                           basic
                           color="green"
-                          onClick={() => props.doFollow(qra.qra)}
+                          onClick={() => doFollow(qra.qra)}
                         >
                           Follow
                         </Button>
@@ -189,13 +188,13 @@ const qraFollowRecommendPresentational = props => (
           </Slider>
         </Segment>
       )}
-      {props.follow.taggedByMe && props.follow.taggedByMe.length > 0 && (
+      {follow.taggedByMe && follow.taggedByMe.length > 0 && (
         <Segment>
           <Header as="h3" block>
             Callsigns that you have already tagged
           </Header>
           <Slider {...settings}>
-            {props.follow.taggedByMe.map((qra, i) => (
+            {follow.taggedByMe.map((qra, i) => (
               <div
                 key={i}
                 style={{
@@ -233,7 +232,7 @@ const qraFollowRecommendPresentational = props => (
 
                   <Card.Content extra>
                     <div className="ui two buttons">
-                      {props.following.some(o => o.qra === qra.qra) ? (
+                      {following.some(o => o.qra === qra.qra) ? (
                         <Button basic color="grey">
                           Following
                         </Button>
@@ -241,7 +240,7 @@ const qraFollowRecommendPresentational = props => (
                         <Button
                           basic
                           color="green"
-                          onClick={() => props.doFollow(qra.qra)}
+                          onClick={() => doFollow(qra.qra)}
                         >
                           Follow
                         </Button>
@@ -254,13 +253,13 @@ const qraFollowRecommendPresentational = props => (
           </Slider>
         </Segment>
       )}
-      {props.follow.topFollowed && (
+      {follow.topFollowed && (
         <Segment>
           <Header as="h3" block>
             Callsigns most followed
           </Header>
           <Slider {...settings}>
-            {props.follow.topFollowed.map((qra, i) => (
+            {follow.topFollowed.map((qra, i) => (
               <div
                 key={i}
                 style={{
@@ -296,7 +295,7 @@ const qraFollowRecommendPresentational = props => (
                   </Card.Content>
                   <Card.Content extra>
                     <div className="ui two buttons">
-                      {props.following.some(o => o.qra === qra.qra) ? (
+                      {following.some(o => o.qra === qra.qra) ? (
                         <Button basic color="grey">
                           Following
                         </Button>
@@ -304,7 +303,7 @@ const qraFollowRecommendPresentational = props => (
                         <Button
                           basic
                           color="green"
-                          onClick={() => props.doFollow(qra.qra)}
+                          onClick={() => doFollow(qra.qra)}
                         >
                           Follow
                         </Button>

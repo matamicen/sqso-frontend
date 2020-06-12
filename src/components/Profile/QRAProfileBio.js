@@ -7,6 +7,7 @@ import htmlToDraft from 'html-to-draftjs';
 import React, { Fragment } from 'react';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -17,7 +18,6 @@ import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
 import * as Actions from '../../actions';
 import global_config from '../../global_config.json';
 import '../../styles/style.css';
-
 class QRAProfileBio extends React.Component {
   constructor(props) {
     super(props);
@@ -162,6 +162,7 @@ class QRAProfileBio extends React.Component {
   };
   render() {
     const { edit, editorState } = this.state;
+    const {t} = this.props;
     return (
       <Fragment>
         <Confirm
@@ -270,5 +271,5 @@ export default withRouter(
     mapDispatchToProps,
     null,
     { pure: false }
-  )(QRAProfileBio)
+  )(withTranslation()(QRAProfileBio))
 );

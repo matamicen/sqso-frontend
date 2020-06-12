@@ -3,6 +3,7 @@ import * as Sentry from '@sentry/browser';
 import DOMPurify from 'dompurify';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import Form from 'semantic-ui-react/dist/commonjs/collections/Form';
 import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid';
@@ -174,6 +175,7 @@ class ForgotPassword extends React.Component {
   }
 
   render() {
+    const {t} = this.props;
     // if (this.state.userConfirmed) {
     //   return (
     //     <Redirect
@@ -390,4 +392,4 @@ ForgotPassword.propTypes = {
   }).isRequired
 };
 
-export default withRouter(ForgotPassword);
+export default withRouter(withTranslation()(ForgotPassword));
