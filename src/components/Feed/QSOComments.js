@@ -85,7 +85,7 @@ class QSOComments extends React.Component {
               onHeightChange={this.props.recalculateRowHeight}
               fontSize= {12}
               style={{fontSize: "1.1rem", paddingTop: "5px", paddingBottom: "5px"}}
-              placeholder="Write a comment.."
+              placeholder={t('qso.writeComment')}
               rows={4}
             />
             

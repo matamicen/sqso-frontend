@@ -88,7 +88,7 @@ class QRAProfileInfo extends React.Component {
     } = this.state.qra;
     this.props.isAuthenticated
       ? (email = this.state.qra.email)
-      : (email = "Please login to see this field");
+      : (email = t('auth.loginToSeeField'));
     return (
    
       <Fragment>
@@ -109,11 +109,11 @@ class QRAProfileInfo extends React.Component {
                   >
                     <Dropdown.Menu>
                       {!edit && (
-                        <Dropdown.Item text="Edit Info" onClick={this.open} />
+                        <Dropdown.Item text={t('qra.editInfo')} onClick={this.open} />
                       )}
                       {edit && (
                         <Dropdown.Item
-                          text="Save Info"
+                          text={t('qra.saveInfo')}
                           onClick={this.handleOnSaveInfo}
                         />
                       )}
@@ -125,7 +125,7 @@ class QRAProfileInfo extends React.Component {
             <Form.Group widths="equal">
               <Form.Input
                 name="firstname"
-                label="First name"
+                label={t('qra.firstName')}
                 // width={6}
                 readOnly={!edit}
                 onChange={this.changeHandler}
@@ -133,7 +133,7 @@ class QRAProfileInfo extends React.Component {
               />
               <Form.Input
                 name="lastname"
-                label="Last name"
+                label={t('qra.lastName')}
                 // width={6}
                 readOnly={!edit}
                 onChange={this.changeHandler}
@@ -143,13 +143,13 @@ class QRAProfileInfo extends React.Component {
             <Form.Group widths="equal">
               <Form.Input
                 name="email"
-                label="Email"
+                label={t('qra.email')}
                 // width={5}
                 value={email ? email : ""}
               />
               <Form.Input
                 name="birthday"
-                label="Birthday"
+                label={t('qra.birthday')}
                 type="date"
                 // width={4}
                 readOnly={!edit}
@@ -172,7 +172,7 @@ class QRAProfileInfo extends React.Component {
             <Form.Group widths="equal">
               <Form.Input
                 name="address"
-                label="Address Line 1"
+                label={t('qra.addressLine1')}
                 // width={12}
                 readOnly={!edit}
                 onChange={this.changeHandler}
@@ -182,7 +182,7 @@ class QRAProfileInfo extends React.Component {
             <Form.Group widths="equal">
               <Form.Input
                 name="address2"
-                label="Address Line 2"
+                label={t('qra.addressLine2')}
                 // width={12}
                 readOnly={!edit}
                 onChange={this.changeHandler}
@@ -192,7 +192,7 @@ class QRAProfileInfo extends React.Component {
             <Form.Group widths="equal">
               <Form.Input
                 name="city"
-                label="City"
+                label={t('qra.city')}
                 width={5}
                 readOnly={!edit}
                 onChange={this.changeHandler}
@@ -200,7 +200,7 @@ class QRAProfileInfo extends React.Component {
               />
               <Form.Input
                 name="state"
-                label="State"
+                label={t('qra.state')}
                 width={3}
                 readOnly={!edit}
                 onChange={this.changeHandler}
@@ -208,7 +208,7 @@ class QRAProfileInfo extends React.Component {
               />
               <Form.Input
                 name="zipcode"
-                label="ZIP Code"
+                label={t('qra.zipCode')}
                 width={2}
                 readOnly={!edit}
                 onChange={this.changeHandler}
@@ -216,7 +216,7 @@ class QRAProfileInfo extends React.Component {
               />
 
               <Form.Field width={3}>
-                <label htmlFor="country">Country</label>
+                <label htmlFor="country">{t('qra.country')}</label>
                 <Dropdown
                   name="country"
                   onChange={this.changeHandler}
@@ -232,7 +232,7 @@ class QRAProfileInfo extends React.Component {
             <Form.Group>
               <Form.Input
                 name="cqzone"
-                label="CQ Zone"
+                label={t('qra.cqZone')}
                 width={3}
                 readOnly={!edit}
                 onChange={this.changeHandler}
@@ -240,7 +240,7 @@ class QRAProfileInfo extends React.Component {
               />
               <Form.Input
                 name="ituzone"
-                label="ITU Zone"
+                label={t('qra.ituZone')}
                 width={3}
                 readOnly={!edit}
                 onChange={this.changeHandler}
@@ -248,7 +248,7 @@ class QRAProfileInfo extends React.Component {
               />
               <Form.Input
                 name="gridlocator"
-                label="GRID Locator"
+                label={t('qra.gridLocator')}
                 width={3}
                 readOnly={!edit}
                 onChange={this.changeHandler}
@@ -256,7 +256,7 @@ class QRAProfileInfo extends React.Component {
               />
               <Form.Input
                 name="licenseclass"
-                label="License Class"
+                label={t('qra.licenseClass')}
                 width={3}
                 readOnly={!edit}
                 onChange={this.changeHandler}
@@ -265,7 +265,7 @@ class QRAProfileInfo extends React.Component {
 
               <Form.Input
                 name="iotadesignator"
-                label="IOTA Designator"
+                label={t('qra.iotaDesignator')}
                 // width={4}
                 readOnly={!edit}
                 onChange={this.changeHandler}
@@ -275,13 +275,13 @@ class QRAProfileInfo extends React.Component {
             <Form.Group inline>
               <Form.Input
                 name="qslinfo"
-                label="QSL Info"
+                label={t('qra.qsoInfo')}
                 width={13}
                 readOnly={!edit}
                 onChange={this.changeHandler}
                 value={qslinfo ? qslinfo : ""}
               />
-              <label>E.G. LOTW / eQSL / Postal Mail</label>
+              <label>{t('qra.qsoInfoEG')}</label>
             </Form.Group>
             {/* <Form.Group inline>
               <label>QSL by eQSL?</label>

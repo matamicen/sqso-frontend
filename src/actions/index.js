@@ -2,6 +2,7 @@ import API from '@aws-amplify/api';
 import Auth from '@aws-amplify/auth';
 import * as Sentry from '@sentry/browser';
 import { css } from 'glamor';
+import i18n from 'i18next';
 import { toast } from 'react-toastify';
 export const PUBLIC_SESSION = 'PUBLIC_SESSION';
 export const PREPARE_LOGIN = 'PREPARE_LOGIN';
@@ -39,7 +40,6 @@ export const FOLLOW_REQUEST = 'FOLLOW_REQUEST';
 export const FOLLOW_RECEIVE = 'FOLLOW_RECEIVE';
 export const QSO_DISLIKE = 'QSO_DISLIKE';
 export const QSO_LIKE = 'QSO_LIKE';
-
 export function doNotificationRead(idnotif = null, token) {
   return dispatch => {
     if (process.env.NODE_ENV !== 'production')
@@ -249,7 +249,7 @@ export function doNotificationReadResponse(idnotif) {
     idnotif: idnotif
   };
 }
-export function doDeleteQso(idqso, token) {
+function doDeleteQso(idqso, token) {
   return dispatch => {
     if (process.env.NODE_ENV !== 'production')
       window.gtag('event', 'qsoDelete_WEBDEV', {
@@ -275,7 +275,7 @@ export function doDeleteQso(idqso, token) {
     API.del(apiName, path, myInit)
       .then(response => {
         if (response.body.error === 0) {
-          toast.success('QSO Deleted', {
+          toast.success(i18n.t('qso.qsoDeleted'), {
             position: toast.POSITION.BOTTOM_RIGHT,
             className: css({
               background: '#8BD8BD !important'
@@ -558,6 +558,7 @@ export function doFetchUserInfo(token) {
   };
 }
 export function doRepost(idqso, token, qso) {
+  
   return dispatch => {
     if (process.env.NODE_ENV !== 'production')
       window.gtag('event', 'repost_WEBDEV', {
@@ -590,7 +591,7 @@ export function doRepost(idqso, token, qso) {
           qso.idqso_shared = qso.idqsos;
           qso.idqsos = response.body.message;
           qso.type = 'SHARE';
-          toast.success('QSO Reposted', {
+          toast.success(i18n.t('qso.qsoReposted'), {
             position: toast.POSITION.BOTTOM_RIGHT,
             className: css({
               background: '#8BD8BD !important'
@@ -631,6 +632,8 @@ export function doRepost(idqso, token, qso) {
       });
   };
 }
+
+
 export function doLikeQSO(idqso, idqra, qra, firstname, lastname, avatarpic) {
   return {
     type: QSO_LIKE,

@@ -14,7 +14,8 @@ import QRAProfileInfo from './QRAProfileInfo';
 import QRAProfileQsos from './QRAProfileQsos';
 
 
-const QRAProfile = ({t, props}) => {
+const QRAProfile = ( props) => {
+  const {t} = props;
   return (
     <div className="profile-container">
       <Dimmer active={props.loaderActive} page>

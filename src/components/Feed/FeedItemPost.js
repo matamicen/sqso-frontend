@@ -66,13 +66,13 @@ class FeedItemQSO extends React.Component {
 
     switch (this.props.qso.type) {
       case 'POST':
-        text = ' created a new post';
+        text = t('qso.createdPost');
         break;
       case 'LISTEN':
-        text = ' listened a QSO with';
+        text = t('qso.listenedQSO');
         break;
       case 'SHARE':
-        text = ' reposted a QSO';
+        text = t('qso.repostedQSO');
         break;
       default:
     }
@@ -113,7 +113,7 @@ class FeedItemQSO extends React.Component {
             </div>
             <div className="qso-header-info-post">
               <div>
-                <b>Date: </b>
+                <b>{t('qso.date')}: </b>
                 {date.toLocaleDateString('EN-US', { month: 'short' }) +
                   ' ' +
                   date.getDate() +
@@ -225,9 +225,9 @@ class FeedItemQSO extends React.Component {
               state: { from: this.props.location.pathname }
             })
           }
-          cancelButton="Cancel"
-          confirmButton="Login"
-          content="Please Login to perform this action"
+          cancelButton={t('global.cancel')}
+          confirmButton={t('auth.login')}
+          content={t('auth.loginToPerformAction')}
         />
       </Fragment>
     );

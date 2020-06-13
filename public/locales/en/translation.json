@@ -26,17 +26,66 @@
     "browserNotSupportTag": "Your browser does not support the video tag"
   },
   "auth": {
+    "login": "Login",
+    "loginRequired": "Login Required",
     "changePasswordHeader": "Change Password",
     "changePasswordButton": "Change Password",
     "placeholderOldPassword": "Old Password",
     "placeholderNewPassword": "New Password",
-    "placeholderPasswordConfirm":"New Password Confirmation",
+    "placeholderPasswordConfirm": "New Password Confirmation",
     "passwordTooShort": "Password is too short",
     "passwordsDontMatch": "New Password and Confirmation are not the same",
     "passwordChangedHeader": "Password Changed",
+    "loginToSeeField": "Please login to see this field",
+    "loginToPerformAction": "Please Login to perform this action",
     "passwordChangedContent": "Your password has been changed. Please login again!"
   },
   "global": {
-    "loading": "Loading"
+    "loading": "Loading",
+    "cancel": "Cancel",
+    "upgradePremium": "Upgrade to Premium",
+    "userMaxReached": "You've reached the maximum allowed for free users. Upgrade to Premium in our APP"
+  },
+  "notification": {
+    "congratulations": "Congratulations!!!",
+    "noPendingNotifications": "You don´t have any pending Notifications! :)"
+  },
+  "qso": {
+    "confirmRepost": "Confirm Repost?",
+    "playAudio": "Play Audio",
+    "qsoReposted": "QSO Reposted",
+    "qsoDeleted": "QSO Deleted",
+    "workedAQSO": " worked a QSO",
+    "createdPost": " created a new POST",
+    "listenedQSO": " listened a QSO",
+    "repostedQSO": " reposted a QSO",
+    "date": "Date",
+    "band": "Band",
+    "mode": "Mode",
+    "sharedContent": " shared content",
+    "writeComment": "Write a comment.."
+  },
+  "qra": {
+    "follow": "Follow",
+    "unfollow": "Unfollow",
+    "editInfo": "Edit Info",
+    "saveInfo": "Save Info",
+    "qsoInfo": "QSL Info",
+    "qsoInfoEG": "E.G. LOTW / eQSL / Postal Mail",
+    "iotaDesignator": "IOTA Designator",
+    "licenseClass": "License Class",
+    "gridLocator": "GRID Locator",
+    "ituZone": "ITU Zone",
+    "cqZone": "CQ Zone",
+    "country": "Country",
+    "zipCode": "ZIP Code",
+    "state": "State",
+    "city": "City",
+    "addressLine2": "Address Line 2",
+    "addressLine1": "Address Line 1",
+    "birthday": "Birthday",
+    "email": "Email",
+    "lastName": "Last name",
+    "firstName": "First name"
   }
 }

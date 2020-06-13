@@ -104,7 +104,7 @@ class QSOLikeTextModalItem extends React.PureComponent {
                 positive={!this.followed}
                 onClick={() => this.handleButtonClick(l.qra)}
               >
-                {this.followed ? 'Unfollow' : 'Follow'}
+                {this.followed ? t('qra.unfollow') : t('qra.follow')}
               </Button>
             )}
         </div>

@@ -58,16 +58,16 @@ class QSORePostButton extends React.Component {
               state: { from: this.props.location.pathname }
             })
           }
-          cancelButton="Cancel"
-          confirmButton="Login"
-          content="Please Login to perform this action"
+          cancelButton={t('global.cancel')}
+          confirmButton={t('auth.login')}
+          content={t('auth.loginToPerformAction')}
         />
         <Confirm
           size="mini"
           open={showConfirmationRequest}
           onCancel={() => this.setState({ showConfirmationRequest: false })}
           onConfirm={this.doRePost.bind(this)}
-          content="Confirm Repost?"
+          content={t('qso.confirmRepost')}
         />
       </Fragment>
     )

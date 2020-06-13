@@ -7,7 +7,8 @@ import Image from "semantic-ui-react/dist/commonjs/elements/Image";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 import "../../styles/style.css";
 import { MY_COUNTRIES_DATA } from "./countries.js";
-const QRAProfileHeader = ({t, props}) => {
+const QRAProfileHeader = (props) => {
+  const {t} = props; 
   let buttonText;
 
   if (props.followed) {

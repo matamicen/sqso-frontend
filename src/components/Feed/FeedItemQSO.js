@@ -73,13 +73,13 @@ class FeedItemQSO extends React.PureComponent {
 
     switch (this.props.qso.type) {
       case 'QSO':
-        text = ' worked a QSO';
+        text = t('qso.workedAQSO');
         break;
       case 'LISTEN':
-        text = ' listened a QSO';
+        text = t('qso.listenedQSO');
         break;
       case 'SHARE':
-        text = ' reposted a QSO';
+        text = t('qso.repostedQSO');
         break;
       default:
     }
@@ -119,12 +119,12 @@ class FeedItemQSO extends React.PureComponent {
             </div>
             <div className="qso-header-info">
               <div>
-                <b>Mode</b>
+                <b>{t('qso.mode')}</b>
                 <br />
                 {this.props.qso.mode}
               </div>
               <div>
-                <b>Band</b>
+                <b>{t('qso.band')}</b>
                 <br />
                 {this.props.qso.band}
               </div>
@@ -143,7 +143,7 @@ class FeedItemQSO extends React.PureComponent {
                 </div>
               )}
               <div>
-                <b>Date</b>
+                <b>{t('qso.date')}</b>
                 <br />
                 {date.toLocaleDateString('EN-US', { month: 'short' }) +
                   ' ' +
@@ -220,7 +220,7 @@ class FeedItemQSO extends React.PureComponent {
           {this.props.qso.links && (
             <FeedLinkList links={this.props.qso.links} />
           )}
-          <Divider hidden style={{ marginTop: '2vh', marginBottom: '2vh' }} />
+          <Divider hidden style={{ marginTop: '1vh' }} />
           <QSOLikeText qso={this.props.qso} likes={this.state.likes} />
           <Button.Group fluid basic>
             <QSOLikeButton
@@ -254,9 +254,9 @@ class FeedItemQSO extends React.PureComponent {
               state: { from: this.props.location.pathname }
             })
           }
-          cancelButton="Cancel"
-          confirmButton="Login"
-          content="Please Login to perform this action"
+          cancelButton={t('global.cancel')}
+          confirmButton={t('auth.login')}
+          content={t('auth.loginToPerformAction')}
         />
       </Fragment>
     );
