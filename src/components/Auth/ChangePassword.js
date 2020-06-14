@@ -117,7 +117,7 @@ class ChangePassword extends React.Component {
     fieldValidationErrors.passwordConfirm =
       this.state.password === this.state.passwordConfirm
         ? null
-        : t('auth.passwordsDontMatch')
+        : t('auth.newPasswordsDontMatch')
 
     this.setState({ formErrors: fieldValidationErrors })
 
@@ -175,7 +175,7 @@ class ChangePassword extends React.Component {
                   iconPosition="left"
                   type="password"
                   error={!!this.state.formErrors.password}
-                  placeholder={t('auth.placeholderOldPassword')}
+                  placeholder={t('auth.labelOldPassword')}
                   name="oldPassword"
                   onChange={this.changeHandler.bind(this)}
                 />{' '}
@@ -190,7 +190,7 @@ class ChangePassword extends React.Component {
                   iconPosition="left"
                   type="password"
                   error={!!this.state.formErrors.password}
-                  placeholder={t('auth.placeholderNewPassword')}
+                  placeholder={t('auth.labelNewPassword')}
                   name="password"
                   onChange={this.changeHandler.bind(this)}
                 />{' '}
@@ -205,7 +205,7 @@ class ChangePassword extends React.Component {
                   iconPosition="left"
                   type="password"
                   error={!!this.state.formErrors.passwordConfirm}
-                  placeholder={t('auth.placeholderPasswordConfirm')}
+                  placeholder={t('auth.labelNewPasswordConfirm')}
                   name="passwordConfirm"
                   onChange={this.changeHandler.bind(this)}
                 />{' '}

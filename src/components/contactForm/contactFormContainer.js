@@ -41,11 +41,11 @@ class contactForm extends React.Component {
     const {t} = this.props;
     const values = { email: '', message: '' };
     const validationSchema = Yup.object({
-      email: Yup.string('Enter your email')
-        .email('Enter a valid email')
-        .required('Email is required'),
-      message: Yup.string().required('Enter Message'),
-      recaptcha: Yup.string().required('Confirm Recaptcha')
+      email: Yup.string(t('forms.enterEmail'))
+        .email(t('forms.enterValidEmail'))
+        .required(t('forms.emailRequired')),
+      message: Yup.string().required(t('forms.enterMessage')),
+      recaptcha: Yup.string().required(t('forms.confirmRecaptcha'))
     });
 
     return (
@@ -64,7 +64,7 @@ class contactForm extends React.Component {
         >
           <Modal.Header>Contact Us</Modal.Header>
           <Modal.Content>
-            <p>Email Sent!</p>
+            <p>{t('qso.othersLikeThis')}Email Sent!</p>
           </Modal.Content>
         </Modal>
       </Fragment>

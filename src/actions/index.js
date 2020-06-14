@@ -249,7 +249,7 @@ export function doNotificationReadResponse(idnotif) {
     idnotif: idnotif
   };
 }
-function doDeleteQso(idqso, token) {
+export function doDeleteQso(idqso, token) {
   return dispatch => {
     if (process.env.NODE_ENV !== 'production')
       window.gtag('event', 'qsoDelete_WEBDEV', {

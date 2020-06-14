@@ -30,7 +30,7 @@ class QSOCommentItem extends React.Component {
         date.getDate() +
         ", " +
         date.getFullYear() +
-        " at " +
+        t('global.at') +
         date.getUTCHours() +
         ":" +
         (date.getMinutes() < 10 ? "0" : "") +

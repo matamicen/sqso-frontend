@@ -54,11 +54,11 @@ class QSOLikeText extends React.PureComponent {
       finalText =
         ' and ' +
         others +
-        (others > 1 ? ' others liked this' : ' other liked this') + (this.props.qso.type === 'POST' ? ' POST' : ' QSO');
+        (others > 1 ? t('qso.othersLikeThis') : t('qso.otherLikeThis')) + (this.props.qso.type === 'POST' ? ' POST' : ' QSO');
     } else {
       counter = likes.length;
       finalText =
-        ' liked this' + (this.props.qso.type === 'POST' ? ' POST' : ' QSO');
+      t('qso.likeThis') + (this.props.qso.type === 'POST' ? ' POST' : ' QSO');
     }
 
     if (counter === 0) return null;
@@ -91,7 +91,7 @@ class QSOLikeText extends React.PureComponent {
           outputText = outputText + finalText;
           break;
         case likes.length > 1 && a === counter - 2 && counter === likes.length: //Before Last
-          outputText = outputText + ' and ';
+          outputText = outputText + t('global.and') ;
           break;
         case likes.length > 1 && a <= counter - 2 && counter < likes.length: //Before Last
           outputText = outputText + ', ';

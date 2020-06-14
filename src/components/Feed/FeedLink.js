@@ -41,7 +41,7 @@ class FeedLink extends React.PureComponent {
     return (
       <Fragment>
         <Dimmer active={this.state.active} page>
-          <Loader>Loading QSO Link</Loader>
+          <Loader>{t('qso.loadingQSOLink')}</Loader>
         </Dimmer>
 
         <Modal

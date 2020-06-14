@@ -38,7 +38,7 @@ class PopupToFollow extends React.Component {
         <Button
           icon="remove user"
           onClick={() => this.unfollow()}
-          content="Unfollow"
+          content={t('qra.unfollow')}
           size="mini"
         />
       );
@@ -47,7 +47,7 @@ class PopupToFollow extends React.Component {
         <Button
           icon="add user"
           onClick={() => this.follow()}
-          content="Follow"
+          content={t('qra.follow')}
           size="mini"
         />
       );
