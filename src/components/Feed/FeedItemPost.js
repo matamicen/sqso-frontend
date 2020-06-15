@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -23,7 +24,6 @@ import QSOLikeText from './QSOLikeText';
 import QSORePostButton from './QSORePostButton';
 import QSOShareButtons from './QSOShareButtons';
 import './style.css';
-
 class FeedItemQSO extends React.Component {
   constructor() {
     super();
@@ -54,6 +54,8 @@ class FeedItemQSO extends React.Component {
     return null;
   }
   render() {
+    const {t} = this.props;
+
     let picList = this.props.qso.media.filter(media => media.type === 'image');
     let audioList = this.props.qso.media.filter(
       media => media.type === 'audio'
@@ -64,13 +66,13 @@ class FeedItemQSO extends React.Component {
 
     switch (this.props.qso.type) {
       case 'POST':
-        text = ' created a new post';
+        text = t('qso.createdPost');
         break;
       case 'LISTEN':
-        text = ' listened a QSO with';
+        text = t('qso.listenedQSO');
         break;
       case 'SHARE':
-        text = ' reposted a QSO';
+        text = t('qso.repostedQSO');
         break;
       default:
     }
@@ -111,7 +113,7 @@ class FeedItemQSO extends React.Component {
             </div>
             <div className="qso-header-info-post">
               <div>
-                <b>Date: </b>
+                <b>{t('qso.date')}: </b>
                 {date.toLocaleDateString('EN-US', { month: 'short' }) +
                   ' ' +
                   date.getDate() +
@@ -223,9 +225,9 @@ class FeedItemQSO extends React.Component {
               state: { from: this.props.location.pathname }
             })
           }
-          cancelButton="Cancel"
-          confirmButton="Login"
-          content="Please Login to perform this action"
+          cancelButton={t('global.cancel')}
+          confirmButton={t('auth.login')}
+          content={t('auth.loginToPerformAction')}
         />
       </Fragment>
     );
@@ -245,7 +247,7 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(FeedItemQSO)
+  )(withTranslation()(FeedItemQSO))
 );
 FeedItemQSO.propTypes = {
   qso: PropTypes.object.isRequired

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -21,7 +22,6 @@ import QSOLikeText from './QSOLikeText';
 import QSORePostButton from './QSORePostButton';
 import QSOShareButtons from './QSOShareButtons';
 import './style.css';
-
 class FeedItemRepost extends React.Component {
   constructor() {
     super();
@@ -61,6 +61,7 @@ class FeedItemRepost extends React.Component {
   }
 
   render() {
+    const {t} = this.props;
     const picList = this.props.qso.media.filter(
       media => media.type === 'image'
     );
@@ -73,14 +74,14 @@ class FeedItemRepost extends React.Component {
 
     switch (this.props.qso.original[0].type) {
       case 'QSO':
-        text = ' worked a QSO';
+        text = t('qso.workedAQSO');
         break;
       case 'LISTEN':
-        text = ' listened a QSO';
+        text = t('qso.listenedQSO');
 
         break;
       case 'POST':
-        text = ' created a new POST';
+        text = t('qso.createdPost');
 
         break;
       default:
@@ -117,11 +118,11 @@ class FeedItemRepost extends React.Component {
                   </Link>
                 }
               />
-              {' shared content'}
+              { t('qso.sharedContent')}
             </div>
             <div className="qso-header-info-post">
               <div>
-                <b>Date: </b>
+                <b>{ t('qso.date')}: </b>
                 {repostDate.toLocaleDateString('EN-US', { month: 'short' }) +
                   ' ' +
                   repostDate.getDate() +
@@ -152,7 +153,7 @@ class FeedItemRepost extends React.Component {
             </div>
           </div>
 
-          <Divider hidden />
+          {/* <Divider hidden /> */}
           <Segment raised>
             <div className="qso-header">
               <div className="qso-avatar">
@@ -186,14 +187,14 @@ class FeedItemRepost extends React.Component {
               <div className="qso-header-info">
                 {this.props.qso.original[0].mode && (
                   <div>
-                    <b>Mode</b>
+                    <b>{ t('qso.mode')}</b>
                     <br />
                     {this.props.qso.original[0].mode}
                   </div>
                 )}
                 {this.props.qso.original[0].band && (
                   <div>
-                    <b>Band </b>
+                    <b>{ t('qso.band')} </b>
                     <br />
                     {this.props.qso.original[0].band}
                   </div>
@@ -213,7 +214,7 @@ class FeedItemRepost extends React.Component {
                   </div>
                 )}
                 <div>
-                  <b>Date </b>
+                  <b>{ t('qso.date')} </b>
                   <br />
                   {date.toLocaleDateString('EN-US', { month: 'short' }) +
                     ' ' +
@@ -309,9 +310,9 @@ class FeedItemRepost extends React.Component {
               state: { from: this.props.location.pathname }
             })
           }
-          cancelButton="Cancel"
-          confirmButton="Login"
-          content="Please Login to perform this action"
+          cancelButton={ t('global.cancel')}
+          confirmButton={ t('auth.login')}
+          content={ t('auth.loginToPerformAction')}
         />
       </Fragment>
     );
@@ -368,5 +369,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(FeedItemRepost)
+  )(withTranslation()(FeedItemRepost))
 );

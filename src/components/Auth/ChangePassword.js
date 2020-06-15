@@ -1,6 +1,7 @@
 import Auth from '@aws-amplify/auth'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { withTranslation } from 'react-i18next'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
@@ -103,6 +104,7 @@ class ChangePassword extends React.Component {
   }
 
   validateFields () {
+    const {t} = this.props;
     const fieldValidationErrors = this.state.formErrors
 
     // password
@@ -110,12 +112,12 @@ class ChangePassword extends React.Component {
     const passwordValid = this.state.password.length >= 6
     fieldValidationErrors.password = passwordValid
       ? null
-      : 'Password is too short'
+      : t('auth.passwordTooShort')
 
     fieldValidationErrors.passwordConfirm =
       this.state.password === this.state.passwordConfirm
         ? null
-        : 'New Password and Confirmation are not the same'
+        : t('auth.newPasswordsDontMatch')
 
     this.setState({ formErrors: fieldValidationErrors })
 
@@ -128,6 +130,7 @@ class ChangePassword extends React.Component {
   }
 
   render () {
+    const {t} = this.props;
     return (
       <div className="global-container">
         <div className="site-header">
@@ -148,8 +151,8 @@ class ChangePassword extends React.Component {
             <Modal
               open={this.state.showModal}
               onClose={() => this.close()}
-              header="Password Changed"
-              content="Your password has been changed. Please login again!"
+              header={t('auth.passwordChangedHeader')}
+              content={t('auth.passwordChangedContent')}
               actions={[
                 {
                   key: 'done',
@@ -159,10 +162,10 @@ class ChangePassword extends React.Component {
               ]}
             />
             <Dimmer active={this.state.loader} page>
-              <Loader>Loading</Loader>
+              <Loader>{t('global.loading')}</Loader>
             </Dimmer>
             <Header as="h2" color="teal" textAlign="center">
-              Change Password
+            {}
             </Header>
             <Form onSubmit={() => this.handleChangePasswordButton()}>
               <Form.Field>
@@ -172,7 +175,7 @@ class ChangePassword extends React.Component {
                   iconPosition="left"
                   type="password"
                   error={!!this.state.formErrors.password}
-                  placeholder="Old Password"
+                  placeholder={t('auth.labelOldPassword')}
                   name="oldPassword"
                   onChange={this.changeHandler.bind(this)}
                 />{' '}
@@ -187,7 +190,7 @@ class ChangePassword extends React.Component {
                   iconPosition="left"
                   type="password"
                   error={!!this.state.formErrors.password}
-                  placeholder="New Password"
+                  placeholder={t('auth.labelNewPassword')}
                   name="password"
                   onChange={this.changeHandler.bind(this)}
                 />{' '}
@@ -202,7 +205,7 @@ class ChangePassword extends React.Component {
                   iconPosition="left"
                   type="password"
                   error={!!this.state.formErrors.passwordConfirm}
-                  placeholder="New Password Confirmation"
+                  placeholder={t('auth.labelNewPasswordConfirm')}
                   name="passwordConfirm"
                   onChange={this.changeHandler.bind(this)}
                 />{' '}
@@ -216,7 +219,7 @@ class ChangePassword extends React.Component {
               {this.state.changePasswordError && (
                 <Message negative content={this.state.changePasswordError} />
               )}
-              <Form.Button content="Change Password" />
+              <Form.Button content={t('auth.changePasswordButton')} />
             </Form>
           </Segment>
         </div>
@@ -262,5 +265,5 @@ export default withRouter(
     mapDispatchToProps,
     null,
     { pure: false }
-  )(ChangePassword)
+  )(withTranslation()(ChangePassword))
 )

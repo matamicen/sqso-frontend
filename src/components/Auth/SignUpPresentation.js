@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { CountryDropdown } from "react-country-region-selector";
+import { withTranslation } from 'react-i18next';
 import Recaptcha from "react-recaptcha";
 import { Link } from "react-router-dom";
 import Form from "semantic-ui-react/dist/commonjs/collections/Form";
@@ -33,7 +34,7 @@ const SignUpPresentation = props => {
     handleOnConfirm,
     handleCodeChange,
     handleResendCode,
-    confirmError
+    confirmError,t
   } = props;
 
   const change = (name, e) => {
@@ -65,7 +66,7 @@ const SignUpPresentation = props => {
               }}
             >
               <Header as="h2" color="teal" textAlign="center">
-                Sign Up to SuperQSO
+                {t('auth.titleSignup')}
               </Header>{" "}
               <Segment stacked>
                 <Form onSubmit={() => handleSubmit()}>
@@ -91,7 +92,7 @@ const SignUpPresentation = props => {
                     <Form.Input
                       fluid
                       iconPosition="left"
-                      label="First Name"
+                      label={t('auth.labelFirstName')}
                       error={touched.firstName && Boolean(errors.firstName)}
                       name="firstName"
                       onChange={change.bind(null, "firstName")}
@@ -107,7 +108,7 @@ const SignUpPresentation = props => {
                     <Form.Input
                       fluid
                       iconPosition="left"
-                      label="Last Name"
+                      label={t('auth.labelLastName')}
                       error={touched.lastName && Boolean(errors.lastName)}
                       name="lastName"
                       onChange={change.bind(null, "lastName")}
@@ -124,7 +125,7 @@ const SignUpPresentation = props => {
                       fluid
                       // icon="at"
                       iconPosition="left"
-                      label="Email"
+                      label={t('auth.labelEmail')}
                       error={touched.email && Boolean(errors.email)}
                       name="email"
                       onChange={change.bind(null, "email")}
@@ -138,7 +139,7 @@ const SignUpPresentation = props => {
                       fluid
                       // icon="at"
                       iconPosition="left"
-                      label="Email Confirmation"
+                      label={t('auth.labelEmailConfirmation')}
                       error={
                         touched.emailConfirm && Boolean(errors.emailConfirm)
                       }
@@ -155,7 +156,7 @@ const SignUpPresentation = props => {
                       fluid
                       icon="calendar"
                       iconPosition="left"
-                      label="Birthdate"
+                      label={t('auth.labelBirthDate')}
                       error={touched.birthDate && Boolean(errors.birthDate)}
                       name="birthDate"
                       onChange={change.bind(null, "birthDate")}
@@ -192,7 +193,7 @@ const SignUpPresentation = props => {
                       iconPosition="left"
                       type="password"
                       error={touched.password && Boolean(errors.password)}
-                      label="Password"
+                      label={t('auth.labelPassword')}
                       name="password"
                       onChange={change.bind(null, "password")}
                     />{" "}
@@ -210,7 +211,7 @@ const SignUpPresentation = props => {
                         touched.passwordConfirm &&
                         Boolean(errors.passwordConfirm)
                       }
-                      label="Password Confirmation"
+                      label={t('auth.labelPasswordConfirm')}
                       name="passwordConfirm"
                       onChange={change.bind(null, "passwordConfirm")}
                     />{" "}
@@ -235,16 +236,16 @@ const SignUpPresentation = props => {
                       id="terms"
                       label={
                         <label>
-                          I agree the{" "}
+                          {t('forms.iAgree')}{" "}
                           <Link target={"_blank"} to="/privacy">
-                            Privacy Policy
+                          {t('forms.privacyPolicy')}
                           </Link>{" "}
-                          and{" "}
+                          {t('global.and')}{" "}
                           <Link target={"_blank"} to="/terms">
                             {" "}
-                            Terms and Conditions
+                            {t('forms.termsAndConditions')}
                           </Link>
-                          . Others will be able to find you by CallSign.
+                          .{t('forms.willFindYouByCallsign')} 
                         </label>
                       }
                       onChange={change.bind(null, "terms")}
@@ -257,7 +258,7 @@ const SignUpPresentation = props => {
                   <Form.Button content="Register" type="submit" />
                 </Form>
               </Segment>
-              To claim your CallSign, send an email to support@superqso.com
+              {t('forms.claimCallsign')}
             </Grid.Column>
           </Grid>
         </div>
@@ -270,9 +271,7 @@ const SignUpPresentation = props => {
       <Modal size="small" open={showModalMessage}>
         <Modal.Content>
           <p>
-            You have 3 month of trial Premium Subscription! Enjoy SuperQso
-            59+100 !!! After the 3 month you can continue using SuperQso with
-            the FREE subscription.
+          {t('forms.trialPeriod')} 
           </p>
         </Modal.Content>
         <Modal.Actions>
@@ -301,10 +300,10 @@ const SignUpPresentation = props => {
                 }}
               >
                 <Header as="h2" color="teal" textAlign="center">
-                  Confirmation Code
+                {t('auth.confirmationCode')}
                 </Header>
                 <Header as="h3" color="teal" textAlign="center">
-                  Please verify your email inbox
+                {t('forms.verifyEmailInbox')}
                 </Header>
                 <Form>
                   <Form.Field>
@@ -337,4 +336,4 @@ const SignUpPresentation = props => {
   );
 };
 
-export default SignUpPresentation;
+export default withTranslation()(SignUpPresentation);

@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
+import { withTranslation } from 'react-i18next';
 import Header from 'semantic-ui-react/dist/commonjs/elements/Header';
 import Image from 'semantic-ui-react/dist/commonjs/elements/Image';
 import '../../styles/style.css';
 import Ad from '../Ad/Ad';
 import AppNavigation from '../Home/AppNavigation';
-
-const Download = props => (
+const Download = ({t}) => (
   <Fragment>
     <div className="global-container">
       <div className="site-header">
@@ -33,4 +33,4 @@ const Download = props => (
     </div>
   </Fragment>
 );
-export default Download;
+export default withTranslation()(Download);

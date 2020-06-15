@@ -3,11 +3,12 @@ import API from '@aws-amplify/api';
 import * as Sentry from '@sentry/browser';
 import React, { Component } from 'react';
 import Avatar from 'react-avatar';
+import { withTranslation } from 'react-i18next';
 import { Redirect } from 'react-router-dom';
 import { components } from 'react-select';
 import Async from 'react-select/async';
 import '../../styles/style.css';
-export default class NavigationSearch extends Component {
+class NavigationSearch extends Component {
   constructor(props) {
     super(props);
 
@@ -63,6 +64,7 @@ export default class NavigationSearch extends Component {
     }
   }
   render() {
+    const { t } = this.props;
     if (this.state.value) {
       this.setState({ value: null });
       return <Redirect to={'/' + this.state.value.qra} />;
@@ -76,7 +78,7 @@ export default class NavigationSearch extends Component {
           onChange={this.onChange.bind(this)}
           valueKey="qra"
           labelKey="name"
-          placeholder={'Search callsign'}
+          placeholder={t('navBar.searchCallsign')}
           loadOptions={this.getUsers.bind(this)}
           autoload={false}
           autosize={false}
@@ -90,7 +92,7 @@ export default class NavigationSearch extends Component {
     );
   }
 }
-
+export default (withTranslation()(NavigationSearch))
 const GRAVATAR_SIZE = 30;
 const Option = props => {
   const { data } = props;

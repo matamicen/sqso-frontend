@@ -1,12 +1,12 @@
 import React from 'react';
+import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import Menu from 'semantic-ui-react/dist/commonjs/collections/Menu';
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
 import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
 import '../../styles/style.css';
 import NavigationSearch from './NavigationSearch';
-
-const PublicNavigation = () => (
+const PublicNavigation = ({t}) => (
   <Menu fixed="top" style={{ height: '50px', display: 'flex' }}>
     <Menu.Item
       style={{ flex: '0 1 auto', justifyContent: 'center', padding: '0' }}
@@ -27,43 +27,43 @@ const PublicNavigation = () => (
       </Link>
     </Menu.Item>
     <Menu.Menu style={{ flex: '0 1 auto' }}>
-      <Dropdown item text='LOGIN' direction="left" style={{ width: '90px', padding: "4px", justifyContent: 'center' }}>
+      <Dropdown item text={t('navBar.titleLogin')} direction="left" style={{ width: '90px', padding: "4px", justifyContent: 'center' }}>
         <Dropdown.Menu>
           <Link
             to={{
               pathname: '/login'
             }}
           >
-            <Dropdown.Item>Login</Dropdown.Item>
+            <Dropdown.Item>{t('navBar.login')}</Dropdown.Item>
           </Link>
           <Link
             to={{
               pathname: '/signup'
             }}
           >
-            <Dropdown.Item>SignUp</Dropdown.Item>
+            <Dropdown.Item> {t('navBar.signUp')} </Dropdown.Item>
           </Link>
           <Dropdown.Divider />
           <Link to="/privacy">
-            <Dropdown.Item>Privacy Policy</Dropdown.Item>
+          <Dropdown.Item>{t('navBar.privacyPolicy')} </Dropdown.Item>
           </Link>
           <Link to="/terms">
-            <Dropdown.Item>Terms of Service</Dropdown.Item>
+          <Dropdown.Item>{t('navBar.termsOfService')}</Dropdown.Item>
           </Link>
           <Link to="/contact">
-            <Dropdown.Item>Contact Us</Dropdown.Item>
+          <Dropdown.Item>{t('navBar.contactUs')}</Dropdown.Item>
           </Link>
           <Link to="/FAQ">
-            <Dropdown.Item>¿Que es SuperQSO?</Dropdown.Item>
+          <Dropdown.Item>{t('navBar.whatIsSuperQSO')}</Dropdown.Item>
           </Link>
           <Link to="/tutorials">
             <Dropdown.Item>
-              <b>Tutorial</b>
+            <b>{t('navBar.tutorial')}</b>
             </Dropdown.Item>
           </Link>
           <Link to="/download">
             <Dropdown.Item>
-              <b>Download App</b>
+            <b>{t('navBar.downloadApp')}</b>
             </Dropdown.Item>
           </Link>
         </Dropdown.Menu>
@@ -72,4 +72,4 @@ const PublicNavigation = () => (
   </Menu>
 );
 
-export default PublicNavigation;
+export default (withTranslation()(PublicNavigation));

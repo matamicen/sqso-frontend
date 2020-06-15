@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -6,6 +7,7 @@ import Image from 'semantic-ui-react/dist/commonjs/elements/Image';
 import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
 import * as Actions from '../../actions';
 import QSOLikeTextModalItem from './QSOLikeTextModalItem';
+
 class QSOLikeText extends React.PureComponent {
   constructor() {
     super();
@@ -37,7 +39,7 @@ class QSOLikeText extends React.PureComponent {
   //   // });
   // }
   render() {
-    const { qso } = this.props;
+    const { qso, t } = this.props;
     let counter;
     let outputText = '';
     let finalText;
@@ -50,13 +52,13 @@ class QSOLikeText extends React.PureComponent {
       counter = maxLikers;
       others = likes.length - maxLikers;
       finalText =
-        ' and ' +
+      t('global.and') +
         others +
-        (others > 1 ? ' others liked this' : ' other liked this') + (this.props.qso.type === 'POST' ? ' POST' : ' QSO');
+        (others > 1 ? t('qso.othersLikeThis') : t('qso.otherLikeThis')) + (this.props.qso.type === 'POST' ? ' POST' : ' QSO');
     } else {
       counter = likes.length;
       finalText =
-        ' liked this' + (this.props.qso.type === 'POST' ? ' POST' : ' QSO');
+      t('qso.likeThis') + (this.props.qso.type === 'POST' ? ' POST' : ' QSO');
     }
 
     if (counter === 0) return null;
@@ -64,12 +66,12 @@ class QSOLikeText extends React.PureComponent {
     // if the first element in array does not have avatar -> reorder array
     if (likes[0].avatarpic === null) {
       let i = 0;
-      console.log(likes);
+      
       while (likes[0].avatarpic === null && i < likes.length) {
         let like = likes.splice(0, 1)[0];
-        console.log(likes);
+        
         likes.push(like);
-        console.log(likes);
+        
         i++;
       }
     }
@@ -81,17 +83,17 @@ class QSOLikeText extends React.PureComponent {
       outputText =
         outputText +
         (likes[a].qra === this.props.userData.currentQRA
-          ? 'You'
+          ? t('global.you')
           : likes[a].qra);
 
       switch (true) {
         case a === counter - 1: //Last QRA
           outputText = outputText + finalText;
           break;
-        case likes.length > 1 && a === counter - 2: //Before Last
-          outputText = outputText + ' and ';
+        case likes.length > 1 && a === counter - 2 && counter === likes.length: //Before Last
+          outputText = outputText + t('global.and') ;
           break;
-        case likes.length > 1 && a < counter - 2: //Before Last
+        case likes.length > 1 && a <= counter - 2 && counter < likes.length: //Before Last
           outputText = outputText + ', ';
           break;
         default:
@@ -173,5 +175,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(QSOLikeText)
+  )(withTranslation()(QSOLikeText))
 );

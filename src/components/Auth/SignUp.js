@@ -4,6 +4,7 @@ import * as Sentry from '@sentry/browser';
 import { Formik } from 'formik';
 import moment from 'moment';
 import React, { Fragment } from 'react';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -49,6 +50,7 @@ class SignUp extends React.Component {
   //   this.setState({ showModalTC: false });
   // }
   signUp(values) {
+    const {  t} = this.props;
     const email = this.state.email.toLowerCase();
     const password = this.state.password;
     const qra = this.state.qra.toUpperCase();
@@ -100,20 +102,18 @@ class SignUp extends React.Component {
         if (err.code === 'UserLambdaValidationException') {
           this.setState({
             dimmerActive: false,
-            signUpError: 'callsign/email already registered'
+            signUpError:t('auth.callsignAlreadyRegistered')
           });
         } else if (err.code === 'UsernameExistsException') {
           this.setState({
             dimmerActive: false,
-            signUpError: 'callsign/email already registered'
-          });
+            signUpError: t('auth.callsignAlreadyRegistered')          });
         } else if (
           err.message === 'SignUp is not permitted for this user pool'
         ) {
           this.setState({
             dimmerActive: false,
-            signUpError: 'SignUp is no available yet. Please wait a few days!'
-          });
+            signUpError: t('auth.signupNotAvailable')});
         } else {
           if (process.env.NODE_ENV !== 'production') {
             console.log(err);
@@ -224,7 +224,7 @@ class SignUp extends React.Component {
   }
 
   render() {
-    const { location } = this.props;
+    const { location , t} = this.props;
 
     if (this.props.isAuthenticated && !this.props.authenticating) {
       if (location.state && location.state.from) {
@@ -247,48 +247,48 @@ class SignUp extends React.Component {
       terms: ''
     };
     const validationSchema = Yup.object({
-      email: Yup.string('Enter your email')
-        .email('Enter a valid email')
-        .required('Email is required'),
+      email: Yup.string(t('auth.enterEmail'))
+        .email(t('auth.enterValidEmail'))
+        .required(t('auth.emailRequired')),
       emailConfirm: Yup.string()
         .required()
-        .oneOf([Yup.ref('email'), null], 'Emails must match'),
-      password: Yup.string('Enter a Password')
-        .min(6, 'Password is too short')
-        .required('Password is required'),
+        .oneOf([Yup.ref('email'), null], t('auth.emailsDontMatch')),
+      password: Yup.string(t('auth.passwordRequired'))
+        .min(6, t('auth.passwordTooShort'))
+        .required(t('auth.passwordRequired')),
       passwordConfirm: Yup.string()
         .required()
-        .oneOf([Yup.ref('password'), null], 'Passwords must match'),
-      qra: Yup.string('Enter your Callsign')
-        .required('Callsign is required')
-        .matches(/^[a-zA-Z0-9]+$/, 'Do not include / or any special symbols')
-        .min(3, 'Callsign is too short')
-        .max(10, 'Callsign is too long'),
+        .oneOf([Yup.ref('password'), null], t('auth.passwordDontMatch')),
+      qra: Yup.string(t('auth.callsignRequired'))
+        .required(t('auth.callsignRequired'))
+        .matches(/^[a-zA-Z0-9]+$/, t('auth.callsignSpecialChars'))
+        .min(3, t('auth.callsignShort'))
+        .max(10, t('auth.callsignLong')),
       birthDate: Yup.date()
-        .required('Enter your Date of Birth')
+      .required(t('auth.birthDateRequired'))
         .min(new Date(1900, 0, 1))
         .max(new Date())
-        .test('birthDate', 'You should be older than 13 years', value => {
+        .test('birthDate', t('auth.years13Restriction'), value => {
           return moment().diff(moment(value), 'years') >= 13;
         }),
       country: Yup.string().required(),
-      firstName: Yup.string().required('First Name is required'),
-      lastName: Yup.string().required('Last Name is required'),
-      recaptcha: Yup.string().required('Confirm Recaptcha'),
+      firstName: Yup.string().required(t('qso.firstNameRequired')),
+      lastName: Yup.string().required(t('auth.lastNameRequired')),
+      recaptcha: Yup.string().required(t('auth.confirmRecaptcha')),
       terms: Yup.bool()
-        .required('Accept Privacy Policy')
-        .oneOf([true], 'Accept Privacy Policy')
+        .required(t('auth.acceptPrivacy'))
+        .oneOf([true], t('auth.acceptPrivacy'))
     });
     return (
       <Fragment>
         <Dimmer active={this.state.dimmerLoginActive} page>
-          <Loader>Login User...</Loader>
+          <Loader>{t('auth..loadingUser')}</Loader>
         </Dimmer>
         <Dimmer active={this.state.dimmerActive} page>
-          <Loader>Validating User...</Loader>
+          <Loader>{t('auth.validatingUser')}</Loader>
         </Dimmer>
         <Dimmer active={this.state.dimmerValCodeActive} page>
-          <Loader>Validating Code...</Loader>
+          <Loader>{t('auth.validatingCode')}</Loader>
         </Dimmer>
         <Formik
           render={props => (
@@ -345,5 +345,6 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(SignUp)
+  )
+  (withTranslation()(SignUp))
 );

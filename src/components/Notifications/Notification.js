@@ -1,11 +1,12 @@
 import React from 'react';
+import { withTranslation } from 'react-i18next';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
 import Image from 'semantic-ui-react/dist/commonjs/elements/Image';
 import Feed from 'semantic-ui-react/dist/commonjs/views/Feed';
 import '../../styles/style.css';
-export default class Notification extends React.Component {
+class Notification extends React.Component {
   constructor(props) {
     super(props);
 
@@ -19,6 +20,7 @@ export default class Notification extends React.Component {
     );
   }
   formatNotification() {
+    const {t} = this.props;
     let notif = this.props.notification;
     var date = new Date(notif.UTC);
     var datetime = new Date(notif.DATETIME);
@@ -79,8 +81,8 @@ export default class Notification extends React.Component {
               </Feed.Date>
             </Feed.Summary>
             <Feed.Extra text>
-              {notif.mode ? 'Mode: ' + notif.mode : ''}
-              {notif.band ? ' | Band: ' + notif.band : ''}
+              {notif.mode ? t('qso.mode')+': ' + notif.mode : ''}
+              {notif.band ? ' | '+t('qso.band')+': ' + notif.band : ''}
               
               {notif.UTC
                 ? ' | UTC: ' +
@@ -118,8 +120,8 @@ export default class Notification extends React.Component {
               </Feed.Date>
             </Feed.Summary>
             <Feed.Extra text>
-              {notif.mode ? 'Mode: ' + notif.mode : ''}
-              {notif.band ? ' | Band: ' + notif.band : ''}
+            {notif.mode ? t('qso.mode')+': ' + notif.mode : ''}
+              {notif.band ? ' | '+t('qso.band')+': ' + notif.band : ''}
               
               {notif.UTC
                 ? ' | UTC: ' +
@@ -148,8 +150,8 @@ export default class Notification extends React.Component {
               </Feed.Date>
             </Feed.Summary>
             <Feed.Extra text>
-              {notif.mode ? 'Mode: ' + notif.mode : ''}
-              {notif.band ? ' | Band: ' + notif.band : ''}
+            {notif.mode ? t('qso.mode')+': ' + notif.mode : ''}
+              {notif.band ? ' | '+t('qso.band')+': ' + notif.band : ''}
               
               {notif.UTC
                 ? ' | UTC: ' +
@@ -207,6 +209,7 @@ export default class Notification extends React.Component {
     }
   }
   render() {
+    
     return (
       // <List.Item>
       //   <Image avatar src={this.props.notification.qra_avatarpic} />
@@ -243,3 +246,5 @@ export default class Notification extends React.Component {
     );
   }
 }
+
+export default withTranslation()(Notification)

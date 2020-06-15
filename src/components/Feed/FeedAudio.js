@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { Fragment } from 'react';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -41,6 +42,7 @@ class FeedAudio extends React.Component {
   }
 
   render() {
+    const {t} = this.props;
     const date = new Date(this.props.media.datetime);
     const onlyForRegistered = !!(
       this.props.index > 0 && !this.props.isAuthenticated
@@ -53,8 +55,8 @@ class FeedAudio extends React.Component {
               closeIcon
               open={this.state.promptPremium}
               onClose={() => this.setState({ promptPremium: false })}
-              header="Upgrade to Premium"
-              content="You've reached the maximum allowed for free users. Upgrade to Premium in our APP"
+              header={t('global.upgradePremium')}
+              content={t('global.userMaxReached')}
               actions={['OK']}
             />
             <Confirm
@@ -67,9 +69,9 @@ class FeedAudio extends React.Component {
                 })
               }
               onCancel={() => this.setState({ promptLogin: false })}
-              cancelButton="Cancel"
-              confirmButton="Login"
-              content="Please Login to perform this action"
+              cancelButton={t('global.cancel')}
+              confirmButton={t('auth.login')}
+              content={t('auth.loginToPerformAction')}
             />
             <div
               style={{
@@ -86,7 +88,7 @@ class FeedAudio extends React.Component {
                 style={{ background: '#8BD8BD', color: '#243665' }}
               />
               <span>
-                Play Audio{' '}
+              {t('qso.playAudio')}{' '}
                 {this.props.media.description && (
                   <span>
                     {' - '}
@@ -110,7 +112,7 @@ class FeedAudio extends React.Component {
                       state: { from: this.props.location.pathname }
                     }}
                   >
-                    {'  '}Login Required
+                    {'  '}{t('auth.loginRequired')}
                   </Link>
                 )}
               </span>
@@ -161,7 +163,7 @@ class FeedAudio extends React.Component {
                       state: { from: this.props.location.pathname }
                     }}
                   >
-                    {'  '}Login Required
+                    {'  '}{t('auth.loginRequired')}
                   </Link>
                 )}
               </p>
@@ -190,5 +192,5 @@ export default withRouter(
     mapDispatchToProps,
     null,
     { pure: false }
-  )(FeedAudio)
+  )(withTranslation()(FeedAudio))
 );

@@ -2,6 +2,7 @@ import Auth from '@aws-amplify/auth';
 import * as Sentry from '@sentry/browser';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -11,6 +12,7 @@ import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
 import * as Actions from '../../actions';
 import '../../styles/style.css';
 import NavigationSearch from './NavigationSearch';
+
 class AuthenticatedNavigation extends React.PureComponent {
   constructor() {
     super();
@@ -55,6 +57,7 @@ class AuthenticatedNavigation extends React.PureComponent {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <Menu fixed="top" style={{ height: '50px', display: 'flex' }}>
         <Menu.Item
@@ -95,43 +98,43 @@ class AuthenticatedNavigation extends React.PureComponent {
                   this.props.history.push('/' + this.props.currentQRA + '/bio')
                 }
               >
-                Edit My Profile
+                {t('navBar.editProfile')}
               </Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Item
                 onClick={() => this.props.history.push('/changepassword')}
               >
-                Change Password
+                {t('navBar.changePassword')}
               </Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Item onClick={() => this.props.history.push('/follow')}>
-                Who to Follow
+              {t('navBar.whoToFollow')}
               </Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Item onClick={this.logout.bind(this)}>
-                Log Out
+              {t('navBar.logOut')} 
               </Dropdown.Item>
               <Dropdown.Divider />
               <Link to="/privacy">
-                <Dropdown.Item>Privacy Policy</Dropdown.Item>
+                <Dropdown.Item>{t('navBar.privacyPolicy')} </Dropdown.Item>
               </Link>
               <Link to="/terms">
-                <Dropdown.Item>Terms of Service</Dropdown.Item>
+                <Dropdown.Item>{t('navBar.termsOfService')}</Dropdown.Item>
               </Link>
               <Link to="/contact">
-                <Dropdown.Item>Contact Us</Dropdown.Item>
+                <Dropdown.Item>{t('navBar.contactUs')}</Dropdown.Item>
               </Link>
               <Link to="/FAQ">
-                <Dropdown.Item>¿Que es SuperQSO?</Dropdown.Item>
+                <Dropdown.Item>{t('navBar.whatIsSuperQSO')}</Dropdown.Item>
               </Link>
               <Link to="/tutorials">
                 <Dropdown.Item>
-                  <b>Tutorial</b>
+                  <b>{t('navBar.tutorial')}</b>
                 </Dropdown.Item>
               </Link>
               <Link to="/download">
                 <Dropdown.Item>
-                  <b>Download App</b>
+                  <b>{t('navBar.downloadApp')}</b>
                 </Dropdown.Item>
               </Link>
             </Dropdown.Menu>
@@ -178,5 +181,5 @@ export default withRouter(
     mapDispatchToProps,
     null,
     { pure: false }
-  )(AuthenticatedNavigation)
+    )(withTranslation()(AuthenticatedNavigation))
 );
