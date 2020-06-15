@@ -12,9 +12,9 @@ const QRAProfileHeader = (props) => {
   let buttonText;
 
   if (props.followed) {
-    buttonText = "Unfollow";
+    buttonText = t('qra.unfollow');
   } else {
-    buttonText = "Follow";
+    buttonText = t('qra.follow');
   }
   var result = MY_COUNTRIES_DATA.filter((obj) => {
     return obj.key === props.qraInfo.country;
@@ -64,21 +64,21 @@ const QRAProfileHeader = (props) => {
             <div className="kpi">
               {props.qraInfo.views_counter ? (
                 <div style={{ marginRight: "5%" }}>
-                  Views: {props.qraInfo.views_counter}
+                  {t('qra.views')}: {props.qraInfo.views_counter}
                 </div>
               ) : (
                 ""
               )}
               {props.qraInfo.qsos_counter ? (
                 <div style={{ marginRight: "5%" }}>
-                  QSOs: {props.qraInfo.qsos_counter}
+                  {t('qra.qsos')}: {props.qraInfo.qsos_counter}
                 </div>
               ) : (
                 ""
               )}
               {props.qraInfo.followers_counter ? (
                 <div style={{ marginRight: "5%" }}>
-                  Followers: {props.qraInfo.followers_counter}
+                  {t('qra.followers')}: {props.qraInfo.followers_counter}
                 </div>
               ) : (
                 ""

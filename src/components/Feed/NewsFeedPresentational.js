@@ -1,12 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
 import { CellMeasurer, CellMeasurerCache } from 'react-virtualized/dist/commonjs/CellMeasurer';
 import List from 'react-virtualized/dist/commonjs/List';
 import WindowScroller from 'react-virtualized/dist/commonjs/WindowScroller';
-import Message from 'semantic-ui-react/dist/commonjs/collections/Message';
 import '../../styles/style.css';
 import FeedItem from './FeedItem';
 class NewsFeed extends React.Component {
@@ -148,30 +146,30 @@ class NewsFeed extends React.Component {
     this.setState({ list: [] });
   }
   render() {
-    const {t} = this.props;
+    
     const { rowCount, overscanRowCount } = this.state;
 
-    if (
-      this.props.list.length === 0 &&
-      this.props.qsosFetched &&
-      !this.props.fetchingQsos
-    ) {
-      return (
-        <Message negative>
-          <Message.Header>Your feed is empty! :(</Message.Header>
-          <p>
-            You are not following any CallSign, so we dont have anything to show
-            you here.
-          </p>
-          <p>
-            To start following a Callsign click <Link to={'/follow'}>here</Link>
-          </p>
-          <p>
-            To see the tutorials click <Link to={'/tutorials'}>here</Link>
-          </p>
-        </Message>
-      );
-    }
+    // if (
+    //   this.props.list.length === 0 &&
+    //   this.props.qsosFetched &&
+    //   !this.props.fetchingQsos
+    // ) {
+    //   return (
+    //     <Message negative>
+    //       <Message.Header>{t('global.feedEmpty')}</Message.Header>
+    //       <p>{t('qra.unfollow')}
+    //         You are not following any CallSign, so we dont have anything to show
+    //         you here.
+    //       </p>
+    //       <p>{t('qra.unfollow')}
+    //         To start following a Callsign click <Link to={'/follow'}>{t('qra.unfollow')}here</Link>
+    //       </p>
+    //       <p>{t('qra.unfollow')}
+    //         To see the tutorials click <Link to={'/tutorials'}>{t('qra.unfollow')}here</Link>
+    //       </p>
+    //     </Message>
+    //   );
+    // }
 
     return (
       <div className="WindowScrollerWrapper">

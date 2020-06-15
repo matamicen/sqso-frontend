@@ -300,7 +300,7 @@ const SignUpPresentation = props => {
                 }}
               >
                 <Header as="h2" color="teal" textAlign="center">
-                {t('forms.confirmationCode')}
+                {t('auth.confirmationCode')}
                 </Header>
                 <Header as="h3" color="teal" textAlign="center">
                 {t('forms.verifyEmailInbox')}

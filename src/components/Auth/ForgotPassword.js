@@ -92,6 +92,7 @@ class ForgotPassword extends React.Component {
   }
 
   validateFields() {
+    const {t} = this.props;
     const fieldValidationErrors = this.state.formErrors;
 
     // password
@@ -99,24 +100,25 @@ class ForgotPassword extends React.Component {
     const passwordValid = this.state.password.length >= 6;
     fieldValidationErrors.password = passwordValid
       ? ''
-      : 'Password is too short';
+      : t('auth.passwordTooShort')
 
     fieldValidationErrors.passwordConfirm =
       this.state.password === this.state.passwordConfirm
         ? ''
-        : 'Password and Confirmation are not the same';
+        : t('auth.newPasswordsDontMatch')
 
     this.setState({ formErrors: fieldValidationErrors });
   }
 
   validateEmail() {
+    const {t} = this.props;
     const fieldValidationErrors = this.state.formErrors;
 
     // email
     const emailValid = this.state.email.match(
       /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i
     );
-    fieldValidationErrors.email = emailValid ? '' : 'Email is not Valid';
+    fieldValidationErrors.email = emailValid ? '' : t('auth.enterValidEmail');
 
     this.setState({ formErrors: fieldValidationErrors });
   }
@@ -215,7 +217,7 @@ class ForgotPassword extends React.Component {
               }}
             >
               <Header as="h2" color="teal" textAlign="center">
-                Recover Account
+              {t('qra.recoverAccount')}
               </Header>
               <Form size="large">
                 <Segment stacked>
@@ -224,7 +226,7 @@ class ForgotPassword extends React.Component {
                       fluid
                       icon="user"
                       iconPosition="left"
-                      placeholder="email"
+                      placeholder={t('qra.email')}
                       error={!!this.state.formErrors.email}
                       name="email"
                       onChange={this.handleEmailChange.bind(this)}
@@ -251,7 +253,7 @@ class ForgotPassword extends React.Component {
                     onClose={this.handleOnCloseModal.bind(this)}
                     trigger={
                       <Button
-                        content="Submit"
+                        content={t('global.submit')}
                         onClick={() => this.handleChangePasswordButton()}
                       />
                     }
@@ -271,13 +273,13 @@ class ForgotPassword extends React.Component {
                             }}
                           >
                             <Header as="h2" color="teal" textAlign="center">
-                              Recover Account
+                            {t('qra.recoverAccount')}
                             </Header>
                             <Form>
                               <Form.Field>
                                 <Form.Input
                                   fluid
-                                  placeholder="Confirmation Code"
+                                  placeholder={t('auth.confirmationCode')}
                                   name="Code"
                                   onChange={this.handleCodeChange.bind(this)}
                                 />
@@ -289,7 +291,7 @@ class ForgotPassword extends React.Component {
                                   iconPosition="left"
                                   type="password"
                                   error={!!this.state.formErrors.password}
-                                  placeholder="Password"
+                                  placeholder={t('auth.labelPassword')}
                                   name="password"
                                   onChange={this.handlePasswordChange.bind(
                                     this
@@ -311,7 +313,7 @@ class ForgotPassword extends React.Component {
                                   error={
                                     !!this.state.formErrors.passwordConfirm
                                   }
-                                  placeholder="Password Confirmation"
+                                  placeholder={t('auth.labelNewPasswordConfirm')}
                                   name="passwordConfirm"
                                   onChange={this.handlePasswordConfirmChange.bind(
                                     this
@@ -339,7 +341,7 @@ class ForgotPassword extends React.Component {
                                 />
                               )}
                               <Form.Button
-                                content="Confirm Password"
+                                content={t('auth.unfollow')}
                                 onClick={() =>
                                   this.handleConfirmPasswordButton()
                                 }
@@ -353,12 +355,12 @@ class ForgotPassword extends React.Component {
                   <Modal
                     open={this.state.showMessageModal}
                     onClose={() => this.close()}
-                    header="Password Changed"
-                    content="Your password has been changed. Please login again!"
+                    header={t('auth.passwordChangedHeader')}
+                    content={t('auth.loginAgain')}
                     actions={[
                       {
                         key: 'done',
-                        content: 'Ok',
+                        content: t('global.ok'),
                         positive: true
                       }
                     ]}

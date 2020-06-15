@@ -54,7 +54,7 @@ var settings = {
 const qraFollowRecommendPresentational = ({t, active, follow, following, doFollow}) => (
   <div className="profile-container">
     <Dimmer active={active} page>
-      <Loader>Loading QRA...</Loader>
+      <Loader>{t('qra.loading')}</Loader>
     </Dimmer>
     {/* <Dimmer
       active={props.adActive}

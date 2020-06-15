@@ -20,6 +20,7 @@ class Notification extends React.Component {
     );
   }
   formatNotification() {
+    const {t} = this.props;
     let notif = this.props.notification;
     var date = new Date(notif.UTC);
     var datetime = new Date(notif.DATETIME);
@@ -80,8 +81,8 @@ class Notification extends React.Component {
               </Feed.Date>
             </Feed.Summary>
             <Feed.Extra text>
-              {notif.mode ? 'Mode: ' + notif.mode : ''}
-              {notif.band ? ' | Band: ' + notif.band : ''}
+              {notif.mode ? t('qso.mode')+': ' + notif.mode : ''}
+              {notif.band ? ' | '+t('qso.band')+': ' + notif.band : ''}
               
               {notif.UTC
                 ? ' | UTC: ' +
@@ -119,8 +120,8 @@ class Notification extends React.Component {
               </Feed.Date>
             </Feed.Summary>
             <Feed.Extra text>
-              {notif.mode ? 'Mode: ' + notif.mode : ''}
-              {notif.band ? ' | Band: ' + notif.band : ''}
+            {notif.mode ? t('qso.mode')+': ' + notif.mode : ''}
+              {notif.band ? ' | '+t('qso.band')+': ' + notif.band : ''}
               
               {notif.UTC
                 ? ' | UTC: ' +
@@ -149,8 +150,8 @@ class Notification extends React.Component {
               </Feed.Date>
             </Feed.Summary>
             <Feed.Extra text>
-              {notif.mode ? 'Mode: ' + notif.mode : ''}
-              {notif.band ? ' | Band: ' + notif.band : ''}
+            {notif.mode ? t('qso.mode')+': ' + notif.mode : ''}
+              {notif.band ? ' | '+t('qso.band')+': ' + notif.band : ''}
               
               {notif.UTC
                 ? ' | UTC: ' +
@@ -208,7 +209,7 @@ class Notification extends React.Component {
     }
   }
   render() {
-    const {t} = this.props;
+    
     return (
       // <List.Item>
       //   <Image avatar src={this.props.notification.qra_avatarpic} />

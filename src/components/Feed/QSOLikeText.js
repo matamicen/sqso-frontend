@@ -52,7 +52,7 @@ class QSOLikeText extends React.PureComponent {
       counter = maxLikers;
       others = likes.length - maxLikers;
       finalText =
-        ' and ' +
+      t('global.and') +
         others +
         (others > 1 ? t('qso.othersLikeThis') : t('qso.otherLikeThis')) + (this.props.qso.type === 'POST' ? ' POST' : ' QSO');
     } else {
@@ -83,7 +83,7 @@ class QSOLikeText extends React.PureComponent {
       outputText =
         outputText +
         (likes[a].qra === this.props.userData.currentQRA
-          ? 'You'
+          ? t('global.you')
           : likes[a].qra);
 
       switch (true) {

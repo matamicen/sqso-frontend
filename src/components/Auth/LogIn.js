@@ -43,10 +43,11 @@ class LogIn extends React.Component {
   }
 
   handleOnClickLogin() {
+    const {t} = this.props;
     this.setState({ dimmerActive: true });
     if (!this.state.email || !this.state.password) {
       this.setState({
-        loginError: { message: 'Please enter Email and Password' }
+        loginError: { message: t('auth.enterMailPassword')}
       });
     } else this.login();
   }
@@ -142,17 +143,18 @@ class LogIn extends React.Component {
   }
 
   async handleResendCode() {
+    const {t} = this.props;
     this.setState({ confirmError: '' });
     await Auth.resendSignUp(this.state.email)
       .then(() => {
         this.setState({
           loginError: {
             code: 'codeResent',
-            message: 'Code Resent for ' + this.state.email
+            message: t('auth.codeResent') + this.state.email
           },
           confirmError: {
             code: 'codeResent',
-            message: 'Code Resent for ' + this.state.email
+            message: t('auth.codeResent') + this.state.email
           },
           showModal: true
         });
@@ -207,7 +209,7 @@ class LogIn extends React.Component {
   }
 
   render() {
-    const { location, t } = this.props;
+    const { location, t} = this.props;
 
     if (this.props.isAuthenticated && !this.props.authenticating) {
       // alert("Please Logout before login again!");
@@ -225,13 +227,13 @@ class LogIn extends React.Component {
     return (
       <Fragment>
         <Dimmer active={this.state.dimmerLoginActive} page>
-          <Loader>Login User...</Loader>
+          <Loader>{t('auth.loadingUser')}</Loader>
         </Dimmer>
         <Dimmer active={this.state.dimmerActive} page>
-          <Loader>Validating User...</Loader>
+          <Loader>{t('auth.validatingUser')}</Loader>
         </Dimmer>
         <Dimmer active={this.state.dimmerValCodeActive} page>
-          <Loader>Validating Code...</Loader>
+          <Loader>{t('auth.validatingCode')}</Loader>
         </Dimmer>
 
         <div className="global-container">
@@ -256,7 +258,7 @@ class LogIn extends React.Component {
                 }}
               >
                 <Header as="h2" color="teal" textAlign="center">
-                  Login to your account
+                {t('auth.loginHeader')}
                 </Header>
                 <Form size="large">
                   <Segment stacked>
@@ -265,7 +267,7 @@ class LogIn extends React.Component {
                         fluid
                         icon="user"
                         iconPosition="left"
-                        placeholder="email"
+                        placeholder={t('auth.labelEmail')}
                         error={!!this.state.loginError}
                         name="email"
                         value={this.state.email}
@@ -282,7 +284,7 @@ class LogIn extends React.Component {
                         iconPosition="left"
                         type="password"
                         error={!!this.state.loginError}
-                        placeholder="Password"
+                        placeholder={t('auth.labelPassword')}
                         name="password"
                         onChange={this.handlePasswordChange.bind(this)}
                       />
@@ -298,11 +300,11 @@ class LogIn extends React.Component {
                       'UserNotConfirmedException' && (
                       <div>
                         <Button
-                          content="Resend Code"
+                          content={t('auth.resendCode')}
                           onClick={() => this.handleResendCode()}
                         />
                         <Button
-                          content="Confirm Code"
+                          content={t('auth.confirmCode')}
                           onClick={() => this.setState({ showModal: true })}
                         />
                       </div>
@@ -310,25 +312,25 @@ class LogIn extends React.Component {
                     {this.state.loginError.code !==
                       'UserNotConfirmedException' && (
                       <Button
-                        content="Login"
+                        content={t('auth.login')}
                         onClick={() => this.handleOnClickLogin()}
                       />
                     )}
                   </Segment>
                 </Form>
                 <Message>
-                  New to us?
+                {t('auth.newToUs')}
                   <Link
                     to={{
                       pathname: '/signup',
                       state: { from: this.props.location.pathname }
                     }}
-                  >
-                    Sign Up
+                  >{" "}
+                    {t('navBar.signUp')}
                   </Link>
                 </Message>
                 <Message>
-                  <Link to="/forgot"> Forgot Password?</Link>
+                  <Link to="/forgot"> {t('auth.forgotPassword')}</Link>
                 </Message>
               </Grid.Column>
             </Grid>

@@ -75,7 +75,7 @@ class Home extends React.Component {
     return (
       <Fragment>
         <Dimmer active={this.state.active} page>
-          <Loader>Loading QSOs...</Loader>
+          <Loader>{t('qso.loadingQSO')}</Loader>
         </Dimmer>
         {/* <Dimmer
           active={

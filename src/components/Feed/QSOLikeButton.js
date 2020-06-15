@@ -245,10 +245,9 @@ class QSOLikeButton extends React.Component {
               state: { from: this.props.location.pathname }
             })
           }
-          cancelButton="Cancel"
-          confirmButton="Login"
-          content="Please Login to perform this action"
-        />
+          cancelButton={t('global.cancel')}
+          confirmButton={t('auth.login')}
+          content={t('auth.loginToPerformAction')}        />
         <Button icon active={false} onClick={() => this.handleOnLike()}>
           <Icon name={icon} /> {this.likeCounter}{' '}
         </Button>

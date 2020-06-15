@@ -1,8 +1,4 @@
 {
-  "home": {
-    "welcome_to_react_translation": "Welcome to React Translate.",
-    "this_is_test_view": "This is the test view."
-  },
   "navBar": {
     "changePassword": "Change Password",
     "editProfile": "Edit my Profile",
@@ -27,6 +23,7 @@
     "browserNotSupportTag": "Your browser does not support the video tag"
   },
   "auth": {
+    "enterMailPassword": "Please enter Email and Password",
     "birthDateRequired": "Enter your Date of Birth",
     "callsignLong": "Callsign is too long",
     "callsignShort": "Callsign is too short",
@@ -41,6 +38,9 @@
     "validatingUser": "Validating User...",
     "loadingUser": "Login User...",
     "login": "Login",
+    "confirmCode": "Confirm Code",
+    "resendCode": "Resend Code",
+    "loginHeader": "Login to your account",
     "loginRequired": "Login Required",
     "changePasswordHeader": "Change Password",
     "changePasswordButton": "Change Password",
@@ -64,18 +64,56 @@
     "passwordRequired": "Password is required",
     "newPasswordsDontMatch": "New Password and Confirmation are not the same",
     "passwordChangedHeader": "Password Changed",
+    "confirmPassword": "Confirm Password",
+    "loginAgain": "Your password has been changed. Please login again!",
     "loginToSeeField": "Please login to see this field",
     "loginToPerformAction": "Please Login to perform this action",
     "passwordChangedContent": "Your password has been changed. Please login again!",
     "years13Restriction": "You should be older than 13 years",
-    "signupNotAvailable": "SignUp is no available yet. Please wait a few days!"
+    "signupNotAvailable": "SignUp is no available yet. Please wait a few days!",
+    "confirmationCode": "Confirmation Code",
+    "recoverAccount": "Recover Account",
+    "codeResent": "Code Resent for ",
+    "forgotPassword": "Forgot Password?",
+    "newToUs": "New To Us?"
+
   },
+  "reportContent":{
+    "fillFields": "Please fill all the fields",
+    "reportAudio": "Report Audio",
+    "reportContent": "Report Content",
+    "reportComment": "Report Comment",
+    "reportPhoto": "Report Photo",
+    "photoReported": "Photo Reported!",
+    "commentReported": "Comment Reported!",
+    "audioReported": "Audio Reported!",
+    "labelComments": "Comments",
+    "contentReported": "Content Reported!",
+    "deleteAudio": "Delete Audio",
+    "deletePhoto": "Delete Photo",
+    "deleteComment": "Delete Comment",
+    "deleteQSO": "Delete QSO",
+    "showQRCode": "Show QR Code",
+    "QRCode": "QR Code",
+    "QSLCard": "QSL Card",
+    "printQSLCard": "Print QSL Card",
+    "disablePopUps": "Please disable POPUP Blockers in order to get the PDF File",
+    "whyRemovePhoto": "Why do you think we should remove this photo?",
+    "whyRemoveAudio": "Why do you think we should remove this audio?",
+    "whyRemoveContent": "Why do you think we should remove this content?",
+    "helpUnderstandWhatsHappening": "Help Us Understand What's Happening"
+  } ,
   "global": {
+    
+    "ok": "OK",
     "at": " at ",
     "and": " and ",
     "loading": "Loading",
     "cancel": "Cancel",
+    "close": "Close",
+    "submit": "Submit",
     "upgradePremium": "Upgrade to Premium",
+    "imageContainNudity": "The image you try to upload contain Nudity or sexual content.",
     "userMaxReached": "You've reached the maximum allowed for free users. Upgrade to Premium in our APP"
   },
   "notification": {
@@ -83,7 +121,8 @@
     "noPendingNotifications": "You don´t have any pending Notifications! :)"
   },
   "qso": {
-    "loadingQSOLink": "Loading QSO Link",
+    "loadingQSOLink": "Loading QSO Link...",
+    "loadingQSO": "Loading QSO...",
     "confirmRepost": "Confirm Repost?",
     "playAudio": "Play Audio",
     "qsoReposted": "QSO Reposted",
@@ -103,10 +142,14 @@
     "likeThis": " liked this"
   },
   "qra": {
+    "loading": "Loading QRA...",
+    "views":"Vistas",
     "follow": "Follow",
     "unfollow": "Unfollow",
     "editInfo": "Edit Info",
     "saveInfo": "Save Info",
+    "editBio": "Edit Bio",
+    "saveBio": "Save Bio",
     "qsoInfo": "QSL Info",
     "qsoInfoEG": "E.G. LOTW / eQSL / Postal Mail",
     "iotaDesignator": "IOTA Designator",
@@ -123,16 +166,24 @@
     "birthday": "Birthday",
     "email": "Email",
     "lastName": "Last name",
-    "firstName": "First name"
+    "firstName": "First name",
+    "info": "Info",
+    "bio": "Bio",
+    "qsos": "QSO's",
+    "following": "Following", 
+    "followers": "Followers"
   },
   "forms": {
+    "contactUs": "Contact Us",
+    "send": "Send",
+    "message": "Message",
     "enterEmail": "Enter your email",
     "enterValidEmail": "Enter a valid email",
     "emailRequired": "Email is required",
     "enterMessage": "Enter Message",
     "confirmRecaptcha": "Confirm Recaptcha",
     "verifyEmailInbox": "Please verify your email inbox",
-    "confirmationCode": "Confirmation Code",
+
     "trialPeriod": "You have 3 month of trial Premium Subscription! Enjoy SuperQso 59+100 !!! After the 3 month you can continue using SuperQso with the FREE subscription.",
     "claimCallsign": "To claim your CallSign, send an email to support@superqso.com",
     "iAgree": "I agree the",

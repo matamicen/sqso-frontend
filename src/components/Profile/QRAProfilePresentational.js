@@ -65,28 +65,28 @@ const QRAProfile = ( props) => {
                 onClick={() => props.handleTabClick(1)}
                 active={props.tab === 1 ? true : false}
               >
-                QSO's
+                {t('qra.qsos')}
               </Button>
               <Button
                 style={{ flex: '1 1 auto' }}
                 onClick={() => props.handleTabClick(2)}
                 active={props.tab === 2 ? true : false}
               >
-                Bio
+                {t('qra.bio')}
               </Button>
               <Button
                 style={{ flex: '1 1 auto' }}
                 onClick={() => props.handleTabClick(3)}
                 active={props.tab === 3 ? true : false}
               >
-                Info
+                {t('qra.info')}
               </Button>
               <Button
                 style={{ flex: '1 1 auto' }}
                 onClick={() => props.handleTabClick(4)}
                 active={props.tab === 4 ? true : false}
               >
-                Following
+                {t('qra.following')}
               </Button>
             </div>
           </Segment>

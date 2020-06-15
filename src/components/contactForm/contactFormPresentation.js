@@ -47,13 +47,13 @@ const ContactFormPresentation = props => {
             }}
           >
             <Header as="h2" color="teal" textAlign="center">
-              Contact Us
+            {t('forms.contactUs')}
             </Header>
             <Form onSubmit={() => {}}>
               <Form.Field>
                 <Form.Input
                   fluid
-                  placeholder="Email"
+                  placeholder={t('qra.email')}
                   name="email"
                   value={email}
                   error={touched.email && Boolean(errors.email)}
@@ -66,7 +66,7 @@ const ContactFormPresentation = props => {
               )}
               <Form.TextArea
                 name="message"
-                placeholder="Message"
+                placeholder={t('forms.message')}
                 defaultValue={message}
                 error={touched.message && Boolean(errors.message)}
                 onChange={change.bind(null, "message")}
@@ -89,7 +89,7 @@ const ContactFormPresentation = props => {
               </Form.Field>
               <Form.Button
                 type="submit"
-                content="Send"
+                content={t('forms.send')}
                 onClick={handleSubmit}
               />
             </Form>

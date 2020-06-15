@@ -170,9 +170,9 @@ class QRAProfileBio extends React.Component {
           open={this.state.openPornConfirm}
           onCancel={() => this.setState({ openPornConfirm: false })}
           onConfirm={() => this.setState({ openPornConfirm: false })}
-          cancelButton="Cancel"
-          confirmButton="OK"
-          content="The image you try to upload contain Nudity or sexual content."
+          cancelButton={t('global.cancel')}
+          confirmButton={t('global.ok')}
+          content={t('global.imageContainNudity')}
         />
         <Segment raised>
           {this.props.isAuthenticated &&
@@ -190,11 +190,11 @@ class QRAProfileBio extends React.Component {
                 >
                   <Dropdown.Menu>
                     {!edit && (
-                      <Dropdown.Item text="Edit Bio" onClick={this.open} />
+                      <Dropdown.Item text={t('qra.editBio')} onClick={this.open} />
                     )}
                     {edit && (
                       <Dropdown.Item
-                        text="Save Bio"
+                        text={t('qra.saveBio')}
                         onClick={this.handleOnSaveBio}
                       />
                     )}
