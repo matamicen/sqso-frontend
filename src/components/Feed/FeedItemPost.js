@@ -114,7 +114,7 @@ class FeedItemQSO extends React.Component {
             <div className="qso-header-info-post">
               <div>
                 <b>{t('qso.date')}: </b>
-                {date.toLocaleDateString('EN-US', { month: 'short' }) +
+                {date.toLocaleDateString( { month: 'short' }) +
                   ' ' +
                   date.getDate() +
                   ', ' +
@@ -129,7 +129,7 @@ class FeedItemQSO extends React.Component {
               </div>
             </div>
 
-            {/* {date.toLocaleDateString("EN-US", {month: "short"}) + ' ' + date.getDate() + ', ' + date.getFullYear()} */}
+            {/* {date.toLocaleDateString("i18n.language", {month: "short"}) + ' ' + date.getDate() + ', ' + date.getFullYear()} */}
             <div
               className="qso-header-button"
               style={{

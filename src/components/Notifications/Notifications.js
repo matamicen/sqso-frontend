@@ -121,7 +121,7 @@ class Notifications extends React.Component {
           {this.props.notifications.length === 0 && (
             <Message negative>
               <Message.Header>{t('notification.congratulations')}</Message.Header>
-              <p>{t('notification.noPendingNotifications.searchCallsign')}</p>
+              <p>{t('notification.noPendingNotifications')}</p>
             </Message>
           )}
           {/* </List> */}

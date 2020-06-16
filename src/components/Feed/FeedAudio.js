@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import i18n from 'i18next';
 import React, { Fragment } from 'react';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
@@ -88,15 +89,15 @@ class FeedAudio extends React.Component {
                 style={{ background: '#8BD8BD', color: '#243665' }}
               />
               <span>
-              {t('qso.playAudio')}{' '}
+              {t('qso.playAudio')}{' - '}
                 {this.props.media.description && (
                   <span>
-                    {' - '}
+                    
                     <b>{this.props.media.description}</b>
                     {' - '}
                   </span>
                 )}
-                {date.toLocaleDateString('EN-US', { month: 'short' }) +
+                {date.toLocaleDateString(i18n.language, { month: 'short' }) +
                   ' ' +
                   date.getDate() +
                   ', ' +
@@ -147,7 +148,7 @@ class FeedAudio extends React.Component {
                     {' - '}
                   </span>
                 )}
-                {date.toLocaleDateString('EN-US', { month: 'short' }) +
+                {date.toLocaleDateString(i18n.language, { month: 'short' }) +
                   ' ' +
                   date.getDate() +
                   ', ' +

@@ -123,7 +123,7 @@ class FeedItemRepost extends React.Component {
             <div className="qso-header-info-post">
               <div>
                 <b>{ t('qso.date')}: </b>
-                {repostDate.toLocaleDateString('EN-US', { month: 'short' }) +
+                {repostDate.toLocaleDateString( { month: 'short' }) +
                   ' ' +
                   repostDate.getDate() +
                   ', ' +
@@ -216,7 +216,7 @@ class FeedItemRepost extends React.Component {
                 <div>
                   <b>{ t('qso.date')} </b>
                   <br />
-                  {date.toLocaleDateString('EN-US', { month: 'short' }) +
+                  {date.toLocaleDateString( { month: 'short' }) +
                     ' ' +
                     date.getDate() +
                     ', ' +

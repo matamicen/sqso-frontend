@@ -51,15 +51,29 @@ class QSOLikeText extends React.PureComponent {
     if (likes.length > maxLikers) {
       counter = maxLikers;
       others = likes.length - maxLikers;
+
       finalText =
-      t('global.and') +
+      t('qso.and') +
         others +
-        (others > 1 ? t('qso.othersLikeThis') : t('qso.otherLikeThis')) + (this.props.qso.type === 'POST' ? ' POST' : ' QSO');
-    } else {
+        (others > 1 ? t('qso.othersLikeThis') : t('qso.otherLikeThis'))
+        //  + (this.props.qso.type === 'POST' ? ' POST' : ' QSO');
+    } else if (likes.length === 1 && likes[0].qra === this.props.userData.currentQRA ) {
       counter = likes.length;
       finalText =
-      t('qso.likeThis') + (this.props.qso.type === 'POST' ? ' POST' : ' QSO');
+      t('qso.youLikeThis');
+      //  + (this.props.qso.type === 'POST' ? ' POST' : ' QSO');
+    } else if (likes.length === 1 && likes[0].qra !== this.props.userData.currentQRA ) {
+      counter = likes.length;
+      finalText =
+      t('qso.oneLikeThis');
+      //  + (this.props.qso.type === 'POST' ? ' POST' : ' QSO');
+    }else{
+      counter = likes.length;
+      finalText =
+      t('qso.manyLikeThis');
+      //  + (this.props.qso.type === 'POST' ? ' POST' : ' QSO');
     }
+
 
     if (counter === 0) return null;
 
@@ -75,7 +89,7 @@ class QSOLikeText extends React.PureComponent {
         i++;
       }
     }
-    outputText = "";
+    outputText = t('qso.startLikePhrase');
     for (let a = 0; a <= counter - 1; a++) {
       // if (qso.likes[a].avatarpic !== null
       // avatarPic = qso.likes[a].avatarpic;
@@ -91,7 +105,7 @@ class QSOLikeText extends React.PureComponent {
           outputText = outputText + finalText;
           break;
         case likes.length > 1 && a === counter - 2 && counter === likes.length: //Before Last
-          outputText = outputText + t('global.and') ;
+          outputText = outputText + t('qso.and') ;
           break;
         case likes.length > 1 && a <= counter - 2 && counter < likes.length: //Before Last
           outputText = outputText + ', ';

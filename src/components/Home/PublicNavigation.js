@@ -27,7 +27,7 @@ const PublicNavigation = ({t}) => (
       </Link>
     </Menu.Item>
     <Menu.Menu style={{ flex: '0 1 auto' }}>
-      <Dropdown item text={t('navBar.titleLogin')} direction="left" style={{ width: '90px', padding: "4px", justifyContent: 'center' }}>
+      <Dropdown item text={t('navBar.titleLogin')} direction="left" style={{ minWidth: '90px', padding: "4px", justifyContent: 'center' }}>
         <Dropdown.Menu>
           <Link
             to={{

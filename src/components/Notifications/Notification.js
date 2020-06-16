@@ -1,6 +1,7 @@
+import moment from 'moment';
+import 'moment/locale/es';
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
 import Image from 'semantic-ui-react/dist/commonjs/elements/Image';
@@ -24,7 +25,8 @@ class Notification extends React.Component {
     let notif = this.props.notification;
     var date = new Date(notif.UTC);
     var datetime = new Date(notif.DATETIME);
-    // console.log(date)
+    moment.locale();
+    
     switch (this.props.notification.activity_type) {
       case 1: //Follow
         if (this.props.currentQRA === notif.REF_QRA)
@@ -35,7 +37,7 @@ class Notification extends React.Component {
                   {notif.message}
                 </Link>
                 <Feed.Date>
-                  <Moment fromNow>{datetime}</Moment>
+                  {moment(datetime).fromNow()}
                 </Feed.Date>
               </Feed.Summary>
               <Feed.Extra text>{notif.comment}</Feed.Extra>
@@ -49,7 +51,7 @@ class Notification extends React.Component {
                   {notif.message}
                 </Link>
                 <Feed.Date>
-                  <Moment fromNow>{datetime}</Moment>
+                  {moment(datetime).fromNow()}
                 </Feed.Date>
               </Feed.Summary>
               <Feed.Extra text>{notif.comment}</Feed.Extra>
@@ -63,7 +65,7 @@ class Notification extends React.Component {
                 {notif.message}
               </Link>
               <Feed.Date>
-                <Moment fromNow>{datetime}</Moment>
+                {moment(datetime).fromNow()}
               </Feed.Date>
             </Feed.Summary>
             <Feed.Extra text>{notif.comment}</Feed.Extra>
@@ -77,7 +79,7 @@ class Notification extends React.Component {
                 {notif.message}
               </Link>
               <Feed.Date>
-                <Moment fromNow>{datetime}</Moment>
+                {moment(datetime).fromNow()}
               </Feed.Date>
             </Feed.Summary>
             <Feed.Extra text>
@@ -102,7 +104,7 @@ class Notification extends React.Component {
                 {notif.message}
               </Link>
               <Feed.Date>
-                <Moment fromNow>{datetime}</Moment>
+                {moment(datetime).fromNow()}
               </Feed.Date>
             </Feed.Summary>
             <Feed.Extra text>{notif.comment}</Feed.Extra>
@@ -116,7 +118,7 @@ class Notification extends React.Component {
                 {notif.message}
               </Link>
               <Feed.Date>
-                <Moment fromNow>{datetime}</Moment>
+                {moment(datetime).fromNow()}
               </Feed.Date>
             </Feed.Summary>
             <Feed.Extra text>
@@ -146,7 +148,7 @@ class Notification extends React.Component {
                 {notif.message}
               </Link>
               <Feed.Date>
-                <Moment fromNow>{datetime}</Moment>
+                {moment(datetime).fromNow()}
               </Feed.Date>
             </Feed.Summary>
             <Feed.Extra text>
@@ -176,7 +178,7 @@ class Notification extends React.Component {
                 {notif.message}
               </Link>
               <Feed.Date>
-                <Moment fromNow>{datetime}</Moment>
+                {moment(datetime).fromNow()}
               </Feed.Date>
             </Feed.Summary>
             <Feed.Extra text>{notif.comment}</Feed.Extra>
@@ -195,7 +197,7 @@ class Notification extends React.Component {
                 {notif.message}
               </Link>
               <Feed.Date>
-                <Moment fromNow>{datetime}</Moment>
+                {moment(datetime).fromNow()}
               </Feed.Date>
             </Feed.Summary>
             <Feed.Extra text>{notif.comment}</Feed.Extra>

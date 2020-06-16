@@ -1,5 +1,5 @@
 {
-    "navBar": {
+  "navBar": {
     "changePassword": "Cambiar Contraseña",
     "editProfile": "Editar mi Perfil",
     "logOut": "Salir",
@@ -77,7 +77,7 @@
     "forgotPassword": "¿Olvido su Contraseña?",
     "newToUs": "¿Es Nuevo?"
   },
-  "reportContent":{
+  "reportContent": {
     "fillFields": "Por favor complete todos los campos",
     "reportAudio": "Reportar Audio",
     "reportContent": "Reportar Contenido",
@@ -101,13 +101,12 @@
     "whyRemoveAudio": "Indique porque considera que deberiamos eliminar este audio",
     "whyRemoveContent": "Indique porque considera que deberiamos eliminar este contenido",
     "helpUnderstandWhatsHappening": "Ayudenos a entender que sucede"
-  } ,
+  },
   "global": {
-    
     "ok": "OK",
     "at": " a las ",
     "and": " y ",
-    "you": "a usted",
+    "you": "Tí",
     "loading": "Cargando...",
     "cancel": "Cancelar",
     "close": "Cerrar",
@@ -121,6 +120,7 @@
     "noPendingNotifications": "No tiene ninguna notificación pediente! :)"
   },
   "qso": {
+    "and": " y a ",
     "loadingQSOLink": "Cargando QSO Link...",
     "loadingQSO": "Cargando QSO...",
     "confirmRepost": "Confirma Repost?",
@@ -137,13 +137,16 @@
     "type": "Tipo",
     "sharedContent": " compartió",
     "writeComment": "Comenta..",
-    "othersLikeThis": " colegas les gustó este",
-    "otherLikeThis": " colega le gustó este",
-    "likeThis": " les gustó este"
+    "othersLikeThis": " personas más les gustó esto",
+    "otherLikeThis": " persona más les gustó esto",
+    "oneLikeThis": " le gustó esto",
+    "youLikeThis": " te gustó esto",
+    "manyLikeThis": " les gustó esto",
+    "startLikePhrase": "A "
   },
   "qra": {
     "loading": "Cargando QRA...",
-    "views":"Vistas",
+    "views": "Vistas",
     "follow": "Seguir",
     "unfollow": "Dejar de Seguir",
     "editInfo": "Editar Info",
@@ -170,7 +173,7 @@
     "info": "Info",
     "bio": "Bio",
     "qsos": "QSO's",
-    "following": "Siguiendo", 
+    "following": "Siguiendo",
     "followers": "Seguidores"
   },
   "forms": {
@@ -183,7 +186,6 @@
     "enterMessage": "Ingrese Mensaje",
     "confirmRecaptcha": "Confirmar Recaptcha",
     "verifyEmailInbox": "Verifique la bandeja de entrada de su Email",
-
     "trialPeriod": "Usted tiene 3 meses de prueba de nuestro Plan Premium! Disfrute SuperQso 59+100 !!! Después de los 3 meses puede continuar usando SuperQSO con un plan gratuito.",
     "claimCallsign": "Para reclamar su CALLSIGN, envie un email a support@superqso.com",
     "iAgree": "Acepto la ",

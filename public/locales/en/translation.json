@@ -121,6 +121,7 @@
     "noPendingNotifications": "You don´t have any pending Notifications! :)"
   },
   "qso": {
+    "and": " and ",
     "loadingQSOLink": "Loading QSO Link...",
     "loadingQSO": "Loading QSO...",
     "confirmRepost": "Confirm Repost?",
@@ -139,11 +140,14 @@
     "writeComment": "Write a comment..",
     "othersLikeThis": " others liked this",
     "otherLikeThis": " other liked this",
-    "likeThis": " liked this"
+    "oneLikeThis": " liked this",
+    "youLikeThis": " liked this",
+    "manyLikeThis": " liked this",
+    "startLikePhrase": ""
   },
   "qra": {
     "loading": "Loading QRA...",
-    "views":"Vistas",
+    "views":"Views",
     "follow": "Follow",
     "unfollow": "Unfollow",
     "editInfo": "Edit Info",
