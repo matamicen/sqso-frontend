@@ -51,7 +51,7 @@ class SignUp extends React.Component {
   // }
   signUp(values) {
     const {  t} = this.props;
-    const email = this.state.email.toLowerCase();
+    const email = this.state.email.toLowerCase().trim();
     const password = this.state.password;
     const qra = this.state.qra.toUpperCase();
     const birthDate = this.state.birthDate;

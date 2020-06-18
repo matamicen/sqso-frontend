@@ -217,7 +217,7 @@ class ForgotPassword extends React.Component {
               }}
             >
               <Header as="h2" color="teal" textAlign="center">
-              {t('qra.recoverAccount')}
+              {t('auth.recoverAccount')}
               </Header>
               <Form size="large">
                 <Segment stacked>
@@ -273,7 +273,7 @@ class ForgotPassword extends React.Component {
                             }}
                           >
                             <Header as="h2" color="teal" textAlign="center">
-                            {t('qra.recoverAccount')}
+                            {t('auth.recoverAccount')}
                             </Header>
                             <Form>
                               <Form.Field>
@@ -341,7 +341,7 @@ class ForgotPassword extends React.Component {
                                 />
                               )}
                               <Form.Button
-                                content={t('auth.unfollow')}
+                                content={t('global.submit')}
                                 onClick={() =>
                                   this.handleConfirmPasswordButton()
                                 }

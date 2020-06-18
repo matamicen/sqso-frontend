@@ -57,7 +57,7 @@ class LogIn extends React.Component {
     this.setState({ dimmerActive: true });
 
     const user = await Auth.signIn(
-      this.state.email.toLowerCase(),
+      this.state.email.toLowerCase().trim(),
       this.state.password
     ).catch(err => {
       this.setState({ dimmerActive: false });
@@ -145,16 +145,16 @@ class LogIn extends React.Component {
   async handleResendCode() {
     const {t} = this.props;
     this.setState({ confirmError: '' });
-    await Auth.resendSignUp(this.state.email)
+    await Auth.resendSignUp(this.state.email.trim())
       .then(() => {
         this.setState({
           loginError: {
             code: 'codeResent',
-            message: t('auth.codeResent') + this.state.email
+            message: t('auth.codeResent') + this.state.email.trim()
           },
           confirmError: {
             code: 'codeResent',
-            message: t('auth.codeResent') + this.state.email
+            message: t('auth.codeResent') + this.state.email.trim()
           },
           showModal: true
         });
