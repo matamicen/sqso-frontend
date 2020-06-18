@@ -1,5 +1,5 @@
 {
-    "navBar": {
+  "navBar": {
     "changePassword": "Cambiar Contraseña",
     "editProfile": "Editar mi Perfil",
     "logOut": "Salir",
@@ -7,7 +7,7 @@
     "login": "Ingresar",
     "titleLogin": "INGRESAR",
     "privacyPolicy": "Politica de Privacidad",
-    "termsOfService": "Términos de Servico",
+    "termsOfService": "Términos de Servicio",
     "contactUs": "Contactanos",
     "whatIsSuperQSO": "¿Qué es SuperQSO?",
     "downloadApp": "Descargar App",
@@ -35,7 +35,7 @@
     "emailRequired": "Email es obligatorio",
     "emailsDontMatch": "Emails deben coincidir",
     "validatingCode": "Validating Code...",
-    "validatingUser": "Validando Código...",
+    "validatingUser": "Validando Usuario...",
     "loadingUser": "Ingresando Usuario...",
     "login": "Ingresar",
     "confirmCode": "Confirmar Código",
@@ -77,7 +77,7 @@
     "forgotPassword": "¿Olvido su Contraseña?",
     "newToUs": "¿Es Nuevo?"
   },
-  "reportContent":{
+  "reportContent": {
     "fillFields": "Por favor complete todos los campos",
     "reportAudio": "Reportar Audio",
     "reportContent": "Reportar Contenido",
@@ -101,13 +101,12 @@
     "whyRemoveAudio": "Indique porque considera que deberiamos eliminar este audio",
     "whyRemoveContent": "Indique porque considera que deberiamos eliminar este contenido",
     "helpUnderstandWhatsHappening": "Ayudenos a entender que sucede"
-  } ,
+  },
   "global": {
-    
     "ok": "OK",
     "at": " a las ",
     "and": " y ",
-    "you": "a usted",
+    "you": "Tí",
     "loading": "Cargando...",
     "cancel": "Cancelar",
     "close": "Cerrar",
@@ -118,9 +117,17 @@
   },
   "notification": {
     "congratulations": "Felicitaciones!!!",
-    "noPendingNotifications": "No tiene ninguna notificación pediente! :)"
+    "noPendingNotifications": "No tiene ninguna notificación pediente! :)",
+    "includedYou": "{{QRA}} te incluyó en su nuevo QSO",
+    "includedOther": "{{QRA}} incluyó a {{QRA_REF}} en su nuevo QSO",
+    "followYou": "{{QRA}} comenzó a seguirte",
+    "followOther": "{{QRA}} comenzó a seguir {{QRA_REF}}",
+    "commentedQSO": "{{QRA}} comentó el QSO que tú creaste",
+    "updatedBio": "{{QRA}} comentó el QSO que estas participando",
+    "workedQSO": "{{QRA}} trabajó un QSO"    
   },
   "qso": {
+    "and": " y a ",
     "loadingQSOLink": "Cargando QSO Link...",
     "loadingQSO": "Cargando QSO...",
     "confirmRepost": "Confirma Repost?",
@@ -128,7 +135,7 @@
     "qsoReposted": "QSO Reposteado",
     "qsoDeleted": "QSO Eliminado",
     "workedAQSO": " trabajó un QSO",
-    "createdPost": " creó un nuevo POST",
+    "createdPost": " publicó",
     "listenedQSO": " escuchó un QSO",
     "repostedQSO": " reposteó un QSO",
     "date": "Fecha",
@@ -137,13 +144,17 @@
     "type": "Tipo",
     "sharedContent": " compartió",
     "writeComment": "Comenta..",
-    "othersLikeThis": " colegas les gustó este",
-    "otherLikeThis": " colega le gustó este",
-    "likeThis": " les gustó este"
+    "othersLikeThis": " personas más les gustó esto",
+    "otherLikeThis": " persona más les gustó esto",
+    "oneLikeThis": " le gustó esto",
+    "youLikeThis": " te gustó esto",
+    "manyLikeThis": " les gustó esto",
+    "startLikePhrase": "A ",
+    "likeModalHeader": "A estos colegas les gusta este "
   },
   "qra": {
     "loading": "Cargando QRA...",
-    "views":"Vistas",
+    "views": "Vistas",
     "follow": "Seguir",
     "unfollow": "Dejar de Seguir",
     "editInfo": "Editar Info",
@@ -170,7 +181,7 @@
     "info": "Info",
     "bio": "Bio",
     "qsos": "QSO's",
-    "following": "Siguiendo", 
+    "following": "Siguiendo",
     "followers": "Seguidores"
   },
   "forms": {
@@ -183,12 +194,11 @@
     "enterMessage": "Ingrese Mensaje",
     "confirmRecaptcha": "Confirmar Recaptcha",
     "verifyEmailInbox": "Verifique la bandeja de entrada de su Email",
-
     "trialPeriod": "Usted tiene 3 meses de prueba de nuestro Plan Premium! Disfrute SuperQso 59+100 !!! Después de los 3 meses puede continuar usando SuperQSO con un plan gratuito.",
     "claimCallsign": "Para reclamar su CALLSIGN, envie un email a support@superqso.com",
     "iAgree": "Acepto la ",
     "privacyPolicy": "Politica de Privacidad",
-    "termsAndConditions": "Terminos y Condiciones",
+    "termsAndConditions": "Términos y Condiciones",
     "willFindYouByCallsign": "Otros podran buscarme a través de mi CALLSIGN."
   },
   "qslCard": {

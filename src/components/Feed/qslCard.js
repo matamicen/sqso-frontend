@@ -75,7 +75,7 @@ async function QslCardPrint(props) {
     pdf.text(
       t('qso.date') +
         ': ' +
-        date.toLocaleDateString('EN-US', { month: 'short' }) +
+        date.toLocaleDateString( { month: 'short' }) +
         ' ' +
         date.getDate() +
         ', ' +

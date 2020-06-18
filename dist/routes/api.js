@@ -11,7 +11,7 @@ var _express = _interopRequireDefault(require("express"));
 
 // This file includes an optional API common in isomorphic applications
 // Of course, you should probably spin up your API elsewhere... but you get the idea
-const router = _express.default.Router();
+var router = _express.default.Router();
 
 router.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');

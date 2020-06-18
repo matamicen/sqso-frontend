@@ -88,7 +88,7 @@ class AuthenticatedNavigation extends React.PureComponent {
             item
             text={this.props.currentQRA}
             direction="left"
-            style={{ width: '90px', padding: "4px", justifyContent: 'center' }}
+            style={{ minWidth: '90px', padding: "4px", justifyContent: 'center' }}
           >
             <Dropdown.Menu>
               <Dropdown.Header content={this.props.currentQRA} />

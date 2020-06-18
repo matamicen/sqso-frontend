@@ -118,9 +118,17 @@
   },
   "notification": {
     "congratulations": "Congratulations!!!",
-    "noPendingNotifications": "You don´t have any pending Notifications! :)"
+    "noPendingNotifications": "You don´t have any pending Notifications! :)",
+    "includedYou": "{{QRA}} included you on his new QSO",
+    "includedOther": "{{QRA}} included {{QRA_REF}} on his new QSO",
+    "followYou": "{{QRA}} started to follow you",
+    "followOther": "{{QRA}} started to follow {{QRA_REF}}",
+    "commentedQSO": "{{QRA}} commented a QSO you are participating",
+    "updatedBio": "{{QRA}} commented a QSO you are participating",
+    "workedQSO": "{{QRA}} worked a QSO"
   },
   "qso": {
+    "and": " and ",
     "loadingQSOLink": "Loading QSO Link...",
     "loadingQSO": "Loading QSO...",
     "confirmRepost": "Confirm Repost?",
@@ -128,7 +136,7 @@
     "qsoReposted": "QSO Reposted",
     "qsoDeleted": "QSO Deleted",
     "workedAQSO": " worked a QSO",
-    "createdPost": " created a new POST",
+    "createdPost": " posted",
     "listenedQSO": " listened a QSO",
     "repostedQSO": " reposted a QSO",
     "date": "Date",
@@ -139,11 +147,15 @@
     "writeComment": "Write a comment..",
     "othersLikeThis": " others liked this",
     "otherLikeThis": " other liked this",
-    "likeThis": " liked this"
+    "oneLikeThis": " liked this",
+    "youLikeThis": " liked this",
+    "manyLikeThis": " liked this",
+    "startLikePhrase": "",
+    "likeModalHeader": "These Hams likes this"
   },
   "qra": {
     "loading": "Loading QRA...",
-    "views":"Vistas",
+    "views":"Views",
     "follow": "Follow",
     "unfollow": "Unfollow",
     "editInfo": "Edit Info",

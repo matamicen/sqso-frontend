@@ -25,7 +25,7 @@ class QSOCommentItem extends React.Component {
 
     if (this.props.comment.datetime) {
       timestamp =
-        date.toLocaleDateString("EN-US", { month: "short" }) +
+        date.toLocaleDateString("i18n.language", { month: "short" }) +
         " " +
         date.getDate() +
         ", " +
