@@ -966,7 +966,7 @@ export function doFetchNotifications(token) {
         } else console.log(response.body.message);
       })
       .catch(error => {
-        if (error.message === 'Request failed with status code 401') {
+        if (error.message === 'Request failed with status code 401' || error.message === "Network Error") {
           Auth.currentSession()
             .then(session => {
               console.log(session);

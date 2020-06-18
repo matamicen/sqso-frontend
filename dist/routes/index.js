@@ -16,7 +16,7 @@ var _replace_qso_tags = _interopRequireDefault(require("../replace_qso_tags"));
 var _universal = _interopRequireDefault(require("../universal"));
 
 // Any route that comes in, send it to the universalLoader
-const router = _express.default.Router();
+var router = _express.default.Router();
 
 router.get("/", _universal.default);
 router.use("/qso/:idQSO", _replace_qso_tags.default);

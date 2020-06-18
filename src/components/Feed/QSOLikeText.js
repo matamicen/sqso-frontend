@@ -151,7 +151,7 @@ class QSOLikeText extends React.PureComponent {
           }}
         >
           <Modal.Header>
-            These Hams likes this {qso.type === 'POST' ? ' POST' : ' QSO'}
+          {t('qso.likeModalHeader')} {qso.type === 'POST' ? ' POST' : ' QSO'}
           </Modal.Header>
           <Modal.Content>
             <Modal.Description>

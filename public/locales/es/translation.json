@@ -7,7 +7,7 @@
     "login": "Ingresar",
     "titleLogin": "INGRESAR",
     "privacyPolicy": "Politica de Privacidad",
-    "termsOfService": "Términos de Servico",
+    "termsOfService": "Términos de Servicio",
     "contactUs": "Contactanos",
     "whatIsSuperQSO": "¿Qué es SuperQSO?",
     "downloadApp": "Descargar App",
@@ -117,7 +117,14 @@
   },
   "notification": {
     "congratulations": "Felicitaciones!!!",
-    "noPendingNotifications": "No tiene ninguna notificación pediente! :)"
+    "noPendingNotifications": "No tiene ninguna notificación pediente! :)",
+    "includedYou": "{{QRA}} te incluyó en su nuevo QSO",
+    "includedOther": "{{QRA}} incluyó a {{QRA_REF}} en su nuevo QSO",
+    "followYou": "{{QRA}} comenzó a seguirte",
+    "followOther": "{{QRA}} comenzó a seguir {{QRA_REF}}",
+    "commentedQSO": "{{QRA}} comentó el QSO que tú creaste",
+    "updatedBio": "{{QRA}} comentó el QSO que estas participando",
+    "workedQSO": "{{QRA}} trabajó un QSO"    
   },
   "qso": {
     "and": " y a ",
@@ -142,7 +149,8 @@
     "oneLikeThis": " le gustó esto",
     "youLikeThis": " te gustó esto",
     "manyLikeThis": " les gustó esto",
-    "startLikePhrase": "A "
+    "startLikePhrase": "A ",
+    "likeModalHeader": "A estos colegas les gusta este "
   },
   "qra": {
     "loading": "Cargando QRA...",
@@ -190,7 +198,7 @@
     "claimCallsign": "Para reclamar su CALLSIGN, envie un email a support@superqso.com",
     "iAgree": "Acepto la ",
     "privacyPolicy": "Politica de Privacidad",
-    "termsAndConditions": "Terminos y Condiciones",
+    "termsAndConditions": "Términos y Condiciones",
     "willFindYouByCallsign": "Otros podran buscarme a través de mi CALLSIGN."
   },
   "qslCard": {

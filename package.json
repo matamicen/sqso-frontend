@@ -25,6 +25,7 @@
     "i18next": "^19.4.5",
     "i18next-browser-languagedetector": "^4.2.0",
     "i18next-http-backend": "^1.0.15",
+    "i18next-http-middleware": "^2.1.2",
     "ignore-styles": "^5.0.1",
     "immutable": "^3.8.2",
     "jspdf": "^1.5.3",
@@ -65,8 +66,9 @@
     "yup": "^0.27.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.3.4",
-    "@babel/node": "^7.8.7",
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
+    "@babel/node": "^7.10.1",
     "@babel/plugin-proposal-class-properties": "^7.7.4",
     "@babel/plugin-transform-runtime": "^7.7.4",
     "@babel/polyfill": "^7.7.0",
@@ -108,7 +110,8 @@
   },
   "scripts": {
     "babel": "yarn && babel server --out-dir dist && node ./dist/app",
-    "start": "yarn install --production &&  yarn build  && node ./dist/app",
+    
+    "start": "yarn install --production &&  yarn build  && nodemon --exec babel-node ./server/app ",
     "eb_test": "yarn install --production && yarn build && node dist/app",
     "static": "yarn && yarn sitemap && react-scripts start",
     "build": "react-scripts build",
@@ -116,7 +119,7 @@
     "coverage": "react-scripts test --env=jsdom coverage",
     "eject": "react-scripts eject",
     "serve": "set NODE_ENV=production && yarn build && nodemon --exec babel-node ./server/app.js",
-    "nodemon": "nodemon --exec babel-node ./server/app.js",
+    "nodemon": "yarn && yarn build && nodemon --exec npx babel-node ./server/app",
     "analyze": "npm run build && source-map-explorer build/static/js/main.* ",
     "sitemap": "node src/components/sitemap-builder.js",
     "getcountries": "get-countries -n MY_COUNTRIES_DATA -p /src/components/Profile/countries.js --no-flags",

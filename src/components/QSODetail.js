@@ -132,7 +132,7 @@ class QSODetail extends React.PureComponent {
     return (
       <div className="qsoDetail-container">
         <Dimmer active={this.state.active} page>
-          <Loader>{t('qra.loadingQSO')}</Loader>
+          <Loader>{t('qso.loadingQSO')}</Loader>
         </Dimmer>
 
         {/* <Dimmer

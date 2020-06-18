@@ -1,15 +1,18 @@
 import * as Sentry from '@sentry/browser';
 import fs from 'fs';
+import i18next from 'i18next';
 import path from 'path';
 import global_config from './global_config.json';
-
 // A simple helper function to prepare the HTML markup
 const prepHTML = (data, { html, head, body }) => {
   data = data.replace('</head>', `${head}</head>`);
   return data;
 };
 const replace_qso_tags = async (req, res) => {
+  i18next.changeLanguage(req.language)
+  const t = i18next.t.bind(i18next)
   console.log(req.params);
+  
 
   if (req.params['idQSO'] !== 'empty') {
     var apigClientFactory = require('aws-api-gateway-client').default;
@@ -60,29 +63,29 @@ const replace_qso_tags = async (req, res) => {
             if (qso.type === 'QSO' && qso.qras.length > 0) {
               title =
                 qso.qra +
-                ' started a QSO with ' +
+                t('qso.workedAQSO') +
                 qso.qras[0].qra +
-                ' - Band: ' +
+                t('qso.band') +
                 qso.band +
-                ' - Mode: ' +
+                t('qso.mode') +
                 qso.mode;
             }else if(qso.type === 'LISTEN' && qso.qras.length > 0) {
               title =
                 qso.qra +
-                ' listened a QSO with ' +
+                t('qso.listenedQSO') +
                 qso.qras[0].qra +
-                ' - Band: ' +
+                t('qso.band') +
                 qso.band +
-                ' - Mode: ' +
+                t('qso.mode') +
                 qso.mode;
             }else if(qso.type === 'POST' ) {
               title =
                 qso.qra +
-                ' created a new POST '
+                t('qso.createdPost');
             }else if(qso.type === 'SHARE' ) {
               title =
                 qso.qra +
-                ' shared a POST '
+                t('qso.sharedContent');
             }
 
             if (qso.media.length > 0) {

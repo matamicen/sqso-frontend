@@ -118,7 +118,14 @@
   },
   "notification": {
     "congratulations": "Congratulations!!!",
-    "noPendingNotifications": "You don´t have any pending Notifications! :)"
+    "noPendingNotifications": "You don´t have any pending Notifications! :)",
+    "includedYou": "{{QRA}} included you on his new QSO",
+    "includedOther": "{{QRA}} included {{QRA_REF}} on his new QSO",
+    "followYou": "{{QRA}} started to follow you",
+    "followOther": "{{QRA}} started to follow {{QRA_REF}}",
+    "commentedQSO": "{{QRA}} commented a QSO you are participating",
+    "updatedBio": "{{QRA}} commented a QSO you are participating",
+    "workedQSO": "{{QRA}} worked a QSO"
   },
   "qso": {
     "and": " and ",
@@ -143,7 +150,8 @@
     "oneLikeThis": " liked this",
     "youLikeThis": " liked this",
     "manyLikeThis": " liked this",
-    "startLikePhrase": ""
+    "startLikePhrase": "",
+    "likeModalHeader": "These Hams likes this"
   },
   "qra": {
     "loading": "Loading QRA...",
