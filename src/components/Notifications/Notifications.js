@@ -56,7 +56,7 @@ class Notifications extends React.Component {
   handleClose = () => this.setState({ adActive: false });
   render() {
     const {t} = this.props;
-    console.log(this.props.notifications)
+    
     return (
       <div className="notifications-container">
         <Dimmer active={this.state.active} page>

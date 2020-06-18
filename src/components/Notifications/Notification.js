@@ -62,7 +62,18 @@ class Notification extends React.Component {
               </Link>
               <Feed.Date>{moment(datetime).fromNow()}</Feed.Date>
             </Feed.Summary>
-            <Feed.Extra text>{notif.comment}</Feed.Extra>
+            <Feed.Extra text>
+              {notif.mode ? t('qso.mode') + ': ' + notif.mode : ''}
+              {notif.band ? ' | ' + t('qso.band') + ': ' + notif.band : ''}
+
+              {notif.UTC
+                ? ' | UTC: ' +
+                  date.getUTCHours() +
+                  ':' +
+                  (date.getMinutes() < 10 ? '0' : '') +
+                  date.getMinutes()
+                : ''}
+            </Feed.Extra>
           </Feed.Content>
         );
       case 12: //add QRA to QSO
