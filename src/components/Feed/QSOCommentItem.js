@@ -1,3 +1,4 @@
+import i18n from 'i18next';
 import React from "react";
 import { withTranslation } from 'react-i18next';
 import { connect } from "react-redux";
@@ -8,7 +9,6 @@ import Item from "semantic-ui-react/dist/commonjs/views/Item";
 import * as Actions from "../../actions";
 import PopupToFollow from "../PopupToFollow";
 import FeedOptionsMenu from "./FeedOptionsMenu";
-
 
 class QSOCommentItem extends React.Component {
   state = {
@@ -25,7 +25,7 @@ class QSOCommentItem extends React.Component {
 
     if (this.props.comment.datetime) {
       timestamp =
-        date.toLocaleDateString("i18n.language", { month: "short" }) +
+        date.toLocaleDateString(i18n.language, { month: "short" }) +
         " " +
         date.getDate() +
         ", " +

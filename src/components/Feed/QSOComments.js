@@ -58,6 +58,9 @@ class QSOComments extends React.Component {
       return { comments: props.qso.comments };
     return null;
   }
+  componentDidUpdate = () => {
+    this.props.recalculateRowHeight();
+  };
   render() {
     const {t} = this.props;
 
