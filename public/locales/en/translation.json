@@ -195,8 +195,9 @@
     "enterMessage": "Enter Message",
     "confirmRecaptcha": "Confirm Recaptcha",
     "verifyEmailInbox": "Please verify your email inbox",
-
+    "welcomeToSuperQSO": "Welcome to SuperQSO!",
     "trialPeriod": "You have 3 month of trial Premium Subscription! Enjoy SuperQso 59+100 !!! After the 3 month you can continue using SuperQso with the FREE subscription.",
+    "sendLicence": "Please send us your CALLSIGN licence to info@superqso.com in order to start using our APP.",
     "claimCallsign": "To claim your CallSign, send an email to support@superqso.com",
     "iAgree": "I agree the",
     "privacyPolicy": "Privacy Policy",

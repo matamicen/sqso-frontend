@@ -269,10 +269,14 @@ const SignUpPresentation = props => {
       </div>
 
       <Modal size="small" open={showModalMessage}>
+      <Header content={t('forms.welcomeToSuperQSO')}  />
         <Modal.Content>
           <p>
           {t('forms.trialPeriod')} 
           </p>
+          <p><b>
+          {t('forms.sendLicence')} 
+          </b></p>
         </Modal.Content>
         <Modal.Actions>
           <Button
