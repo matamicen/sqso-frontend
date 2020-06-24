@@ -13,7 +13,7 @@
     "downloadApp": "Descargar App",
     "tutorial": "Tutorial",
     "whoToFollow": "A quien Seguir",
-    "searchCallsign": "Buscar CALLSIGN"
+    "searchCallsign": "Buscar SD"
   },
   "whatIsSuperQSO": {
     "whatIsSuperQSO": "¿Qué es SuperQSO?",
@@ -25,11 +25,11 @@
   "auth": {
     "enterMailPassword": "Ingresar Email y Contraseña",
     "birthDateRequired": "Ingrese su Fecha de Nacimiento",
-    "callsignLong": "CALLSIGN muy largo",
-    "callsignShort": "CALLSIGN muy corto",
+    "callsignLong": "Señal Distintiva muy larga",
+    "callsignShort": "Señal Distintiva muy corta",
     "callsignSpecialChars": "No esta permitido incluir caracteres especiales",
-    "callsignRequired": "CALLSIGN es obligatorio",
-    "callsignAlreadyRegistered": "CALLSIGN o Email ya registrado",
+    "callsignRequired": "Señal Distintiva es obligatoria",
+    "callsignAlreadyRegistered": "Señal Distintiva o Email ya registrado",
     "enterEmail": "Ingrese su email",
     "enterValidEmail": "Ingrese un email válido",
     "emailRequired": "Email es obligatorio",
@@ -45,8 +45,11 @@
     "changePasswordHeader": "Cambiar Contraseña",
     "changePasswordButton": "Cambiar Contraseña",
     "confirmRecaptcha": "Confirmar Recaptcha",
+    "labelCallsign": "Señal Distintiva",
     "labelOldPassword": "Contraseña Anterior",
     "labelNewPassword": "Contraseña Nueva",
+    "labelPhone": "Teléfono",
+    "labelCountry": "País",
     "labelNewPasswordConfirm": "Confirmación nueva Contraseña",
     "labelPasswordConfirm": "Confirmación de Contraseña",
     "labelEmailConfirmation": "Confirmación de Email",
@@ -72,6 +75,8 @@
     "years13Restriction": "Debe ser mayor de 13 años",
     "signupNotAvailable": "Registración no disponible todavía. Espere unos dias!",
     "confirmationCode": "Código de Confirmación",
+    
+
     "recoverAccount": "Recuperar Cuenta",
     "codeResent": "Código reenviado para ",
     "forgotPassword": "¿Olvido su Contraseña?",
@@ -194,12 +199,15 @@
     "enterMessage": "Ingrese Mensaje",
     "confirmRecaptcha": "Confirmar Recaptcha",
     "verifyEmailInbox": "Verifique la bandeja de entrada de su Email",
+    "welcomeToSuperQSO": "Bienvenido a SuperQSO!",
     "trialPeriod": "Usted tiene 3 meses de prueba de nuestro Plan Premium! Disfrute SuperQso 59+100 !!! Después de los 3 meses puede continuar usando SuperQSO con un plan gratuito.",
-    "claimCallsign": "Para reclamar su CALLSIGN, envie un email a support@superqso.com",
+    "sendLicence": "Por favor envíanos tu licencia de radioaficionado emitida por tu país a info@superqso.com para poder empezar a usar SuperQSO con tu licencia. Te vamos a habilitar lo antes posible una vez recibida la licencia. ",
+    "downloadAPP": "Recordá que para publicar un QSO o Escucha se hace únicamente desde la APP en el celular, si no la tienes aún podes obtenerla de tú tienda de aplicaciones.",
+    "claimCallsign": "Para reclamar su Señal Distintiva, envie un email a support@superqso.com",
     "iAgree": "Acepto la ",
     "privacyPolicy": "Politica de Privacidad",
     "termsAndConditions": "Términos y Condiciones",
-    "willFindYouByCallsign": "Otros podran buscarme a través de mi CALLSIGN."
+    "willFindYouByCallsign": "Otros podran buscarme a través de mi Señal Distintiva."
   },
   "qslCard": {
     "scanWith": "Escanear con la APP de SuperQSO",

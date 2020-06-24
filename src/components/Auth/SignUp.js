@@ -27,6 +27,7 @@ class SignUp extends React.Component {
       firstName: '',
       lastName: '',
       country: '',
+      phone: '',
       code: '',
       showModal: false,
       // showModalTC: false,
@@ -58,6 +59,7 @@ class SignUp extends React.Component {
     const firstName = this.state.firstName;
     const lastName = this.state.lastName;
     const country = this.state.country;
+    const phone = this.state.phone;
 
     this.setState({ dimmerActive: true });
 
@@ -66,7 +68,8 @@ class SignUp extends React.Component {
       password: password,
       attributes: {
         email: email, // optional
-        birthdate: birthDate, // optional - E.164 number convention
+        birthdate: birthDate, // optional - E.164 number conventio
+        'custom:phone': phone,
         'custom:callsign': qra,
         'custom:country': country,
         'custom:firstName': firstName,
@@ -242,6 +245,7 @@ class SignUp extends React.Component {
       birthDate: '',
       firstName: '',
       lastName: '',
+      phone: '',
       country: '',
       recaptcha: '',
       terms: ''
@@ -323,7 +327,8 @@ class SignUp extends React.Component {
               birthDate: values.birthDate.trim(),
               firstName: values.firstName.trim(),
               lastName: values.lastName.trim(),
-              country: values.country.trim()
+              country: values.country.trim(),
+              phone: values.phone.trim()
               // showModalTC: true
             });
             this.signUp();
