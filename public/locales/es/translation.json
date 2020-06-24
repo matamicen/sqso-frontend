@@ -13,7 +13,7 @@
     "downloadApp": "Descargar App",
     "tutorial": "Tutorial",
     "whoToFollow": "A quien Seguir",
-    "searchCallsign": "Buscar CALLSIGN"
+    "searchCallsign": "Buscar SD"
   },
   "whatIsSuperQSO": {
     "whatIsSuperQSO": "¿Qué es SuperQSO?",
@@ -25,11 +25,11 @@
   "auth": {
     "enterMailPassword": "Ingresar Email y Contraseña",
     "birthDateRequired": "Ingrese su Fecha de Nacimiento",
-    "callsignLong": "CALLSIGN muy largo",
-    "callsignShort": "CALLSIGN muy corto",
+    "callsignLong": "Señal Distintiva muy larga",
+    "callsignShort": "Señal Distintiva muy corta",
     "callsignSpecialChars": "No esta permitido incluir caracteres especiales",
-    "callsignRequired": "CALLSIGN es obligatorio",
-    "callsignAlreadyRegistered": "CALLSIGN o Email ya registrado",
+    "callsignRequired": "Señal Distintiva es obligatoria",
+    "callsignAlreadyRegistered": "Señal Distintiva o Email ya registrado",
     "enterEmail": "Ingrese su email",
     "enterValidEmail": "Ingrese un email válido",
     "emailRequired": "Email es obligatorio",
@@ -197,11 +197,11 @@
     "welcomeToSuperQSO": "Bienvenido a SuperQSO!",
     "trialPeriod": "Usted tiene 3 meses de prueba de nuestro Plan Premium! Disfrute SuperQso 59+100 !!! Después de los 3 meses puede continuar usando SuperQSO con un plan gratuito.",
     "sendLicence": "Por favor envíenos su licencia a info@superqso.com para poder comenzar a utilizar nuestra APP.",
-    "claimCallsign": "Para reclamar su CALLSIGN, envie un email a support@superqso.com",
+    "claimCallsign": "Para reclamar su Señal Distintiva, envie un email a support@superqso.com",
     "iAgree": "Acepto la ",
     "privacyPolicy": "Politica de Privacidad",
     "termsAndConditions": "Términos y Condiciones",
-    "willFindYouByCallsign": "Otros podran buscarme a través de mi CALLSIGN."
+    "willFindYouByCallsign": "Otros podran buscarme a través de mi Señal Distintiva."
   },
   "qslCard": {
     "scanWith": "Escanear con la APP de SuperQSO",
