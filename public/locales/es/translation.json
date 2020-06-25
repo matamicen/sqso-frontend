@@ -129,8 +129,8 @@
     "includedOther": "{{QRA}} incluyó a {{QRA_REF}} en su nuevo QSO",
     "followYou": "{{QRA}} comenzó a seguirte",
     "followOther": "{{QRA}} comenzó a seguir {{QRA_REF}}",
-    "commentedQSO": "{{QRA}} comentó el QSO que tú creaste",
-    "updatedBio": "{{QRA}} comentó el QSO que estas participando",
+    "commentedQSO": "{{QRA}} comentó el QSO en el que participas",
+    "updatedBio": "{{QRA}} actualizó su biografía",
     "workedQSO": "{{QRA}} trabajó un QSO"    
   },
   "qso": {

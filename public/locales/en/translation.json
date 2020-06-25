@@ -129,7 +129,7 @@
     "followYou": "{{QRA}} started to follow you",
     "followOther": "{{QRA}} started to follow {{QRA_REF}}",
     "commentedQSO": "{{QRA}} commented a QSO you are participating",
-    "updatedBio": "{{QRA}} commented a QSO you are participating",
+    "updatedBio": "{{QRA}} updated his Biography",
     "workedQSO": "{{QRA}} worked a QSO"
   },
   "qso": {
