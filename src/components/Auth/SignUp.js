@@ -51,7 +51,7 @@ class SignUp extends React.Component {
   //   this.setState({ showModalTC: false });
   // }
   signUp(values) {
-    const {  t} = this.props;
+    const { t } = this.props;
     const email = this.state.email.toLowerCase().trim();
     const password = this.state.password;
     const qra = this.state.qra.toUpperCase();
@@ -105,18 +105,20 @@ class SignUp extends React.Component {
         if (err.code === 'UserLambdaValidationException') {
           this.setState({
             dimmerActive: false,
-            signUpError:t('auth.callsignAlreadyRegistered')
+            signUpError: t('auth.callsignAlreadyRegistered')
           });
         } else if (err.code === 'UsernameExistsException') {
           this.setState({
             dimmerActive: false,
-            signUpError: t('auth.callsignAlreadyRegistered')          });
+            signUpError: t('auth.callsignAlreadyRegistered')
+          });
         } else if (
           err.message === 'SignUp is not permitted for this user pool'
         ) {
           this.setState({
             dimmerActive: false,
-            signUpError: t('auth.signupNotAvailable')});
+            signUpError: t('auth.signupNotAvailable')
+          });
         } else {
           if (process.env.NODE_ENV !== 'production') {
             console.log(err);
@@ -175,7 +177,16 @@ class SignUp extends React.Component {
           dimmerLoginActive: true,
           showModalMessage: true
         });
-        // ReactG.event({ category: "QRA", action: "confirmCode" });
+        if (process.env.NODE_ENV !== 'production')
+          window.gtag('event', 'confirmCode_WEBDEV', {
+            event_category: 'User',
+            event_label: 'confirmCode'
+          });
+        else
+          window.gtag('event', 'confirmCode_WEBPRD', {
+            event_category: 'User',
+            event_label: 'confirmCode'
+          });
       })
       .catch(err => {
         if (process.env.NODE_ENV !== 'production') {
@@ -227,7 +238,7 @@ class SignUp extends React.Component {
   }
 
   render() {
-    const { location , t} = this.props;
+    const { location, t } = this.props;
 
     if (this.props.isAuthenticated && !this.props.authenticating) {
       if (location.state && location.state.from) {
@@ -269,14 +280,14 @@ class SignUp extends React.Component {
         .min(3, t('auth.callsignShort'))
         .max(10, t('auth.callsignLong')),
       birthDate: Yup.date()
-      .required(t('auth.birthDateRequired'))
+        .required(t('auth.birthDateRequired'))
         .min(new Date(1900, 0, 1))
         .max(new Date())
         .test('birthDate', t('auth.years13Restriction'), value => {
           return moment().diff(moment(value), 'years') >= 13;
         }),
       country: Yup.string().required(),
-      firstName: Yup.string().required(t('qso.firstNameRequired')),
+      firstName: Yup.string().required(t('auth.firstNameRequired')),
       lastName: Yup.string().required(t('auth.lastNameRequired')),
       recaptcha: Yup.string().required(t('auth.confirmRecaptcha')),
       terms: Yup.bool()
@@ -286,7 +297,7 @@ class SignUp extends React.Component {
     return (
       <Fragment>
         <Dimmer active={this.state.dimmerLoginActive} page>
-          <Loader>{t('auth..loadingUser')}</Loader>
+          <Loader>{t('auth.loadingUser')}</Loader>
         </Dimmer>
         <Dimmer active={this.state.dimmerActive} page>
           <Loader>{t('auth.validatingUser')}</Loader>
@@ -304,7 +315,6 @@ class SignUp extends React.Component {
               showModalMessage={this.state.showModalMessage}
               handleOnCloseModal={() => {
                 this.setState({ showModal: false });
-
               }}
               // handleOnAcceptModalTC={() => this.handleAcceptTC()}
               handleAcceptMessageModal={() => this.handleAcceptMessageModal()}
@@ -350,6 +360,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )
-  (withTranslation()(SignUp))
+  )(withTranslation()(SignUp))
 );

@@ -799,19 +799,19 @@ export function doFetchUserFeed(token, qra) {
 
   return dispatch => {
     window.gtag('config', 'G-H8G28LYKBY', {
-      custom_map: { dimension2: 'qra' }
+      custom_map: { dimension1: 'userQRA' }
     });
     if (process.env.NODE_ENV !== 'production')
       window.gtag('event', 'getUserFeed_WEBDEV', {
         event_category: 'User',
         event_label: 'getUserFeed',
-        qra: qra
+        userQRA: qra
       });
     else
       window.gtag('event', 'getUserFeed_WEBPRD', {
         event_category: 'User',
         event_label: 'getUserFeed',
-        qra: qra
+        userQRA: qra
       });
     dispatch(doRequestFeed());
     const apiName = 'superqso';
@@ -1184,13 +1184,13 @@ export function doFetchQsoLink(idqso) {
     window.gtag('event', 'qsoGetLinkDetail_WEBDEV', {
       event_category: 'QSO',
       event_label: 'getLinkDetail',
-      qso: idqso
+      qsoLink: idqso
     });
   else
     window.gtag('event', 'qsoGetLinkDetail_WEBPRD', {
       event_category: 'QSO',
       event_label: 'getLinkDetail',
-      qso: idqso
+      qsoLink: idqso
     });
 
   return dispatch => {

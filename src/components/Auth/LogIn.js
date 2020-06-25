@@ -34,6 +34,7 @@ class LogIn extends React.Component {
       email: '',
       error: null,
       loginError: false,
+      showModalMessage: false,
       confirmError: ''
     };
     // if (this.props.isAuthenticated && !this.props.authenticating) {
@@ -41,18 +42,22 @@ class LogIn extends React.Component {
     //   this.props.history.goBack();
     // }
   }
-
+  handleAcceptMessageModal() {
+    this.handleOnClickLogin();
+    this.setState({ showModalMessage: false });
+  }
   handleOnClickLogin() {
-    const {t} = this.props;
+    const { t } = this.props;
     this.setState({ dimmerActive: true });
     if (!this.state.email || !this.state.password) {
       this.setState({
-        loginError: { message: t('auth.enterMailPassword')}
+        loginError: { message: t('auth.enterMailPassword') }
       });
     } else this.login();
   }
 
   async login() {
+    const { t } = this.props;
     let token;
     this.setState({ dimmerActive: true });
 
@@ -60,8 +65,22 @@ class LogIn extends React.Component {
       this.state.email.toLowerCase().trim(),
       this.state.password
     ).catch(err => {
+      switch (err.code) {
+        case 'NotAuthorizedException':
+          this.setState({
+            loginError: { code: err.code, message: t('auth.userDisabled') }
+          });
+          break;
+        case 'UserNotConfirmedException':
+          this.setState({
+            loginError: { code: err.code, message: t('auth.userNotConfirmed') }
+          });
+          break;
+        default:
+          this.setState({ loginError: err });
+          break;
+      }
       this.setState({ dimmerActive: false });
-      this.setState({ loginError: err });
     });
 
     if (user) {
@@ -143,7 +162,7 @@ class LogIn extends React.Component {
   }
 
   async handleResendCode() {
-    const {t} = this.props;
+    const { t } = this.props;
     this.setState({ confirmError: '' });
     await Auth.resendSignUp(this.state.email.trim())
       .then(() => {
@@ -183,7 +202,8 @@ class LogIn extends React.Component {
       .then(data => {
         this.setState({
           dimmerValCodeActive: false,
-          dimmerLoginActive: true
+          dimmerLoginActive: true,
+          showModalMessage: true
         });
         if (process.env.NODE_ENV !== 'production')
           window.gtag('event', 'confirmCode_WEBDEV', {
@@ -195,8 +215,6 @@ class LogIn extends React.Component {
             event_category: 'User',
             event_label: 'confirmCode'
           });
-
-        this.handleOnClickLogin();
       })
       .catch(err => {
         this.setState({ dimmerValCodeActive: false });
@@ -209,7 +227,7 @@ class LogIn extends React.Component {
   }
 
   render() {
-    const { location, t} = this.props;
+    const { location, t } = this.props;
 
     if (this.props.isAuthenticated && !this.props.authenticating) {
       // alert("Please Logout before login again!");
@@ -258,7 +276,7 @@ class LogIn extends React.Component {
                 }}
               >
                 <Header as="h2" color="teal" textAlign="center">
-                {t('auth.loginHeader')}
+                  {t('auth.loginHeader')}
                 </Header>
                 <Form size="large">
                   <Segment stacked>
@@ -319,13 +337,14 @@ class LogIn extends React.Component {
                   </Segment>
                 </Form>
                 <Message>
-                {t('auth.newToUs')}
+                  {t('auth.newToUs')}
                   <Link
                     to={{
                       pathname: '/signup',
                       state: { from: this.props.location.pathname }
                     }}
-                  >{" "}
+                  >
+                    {' '}
                     {t('navBar.signUp')}
                   </Link>
                 </Message>
@@ -340,6 +359,25 @@ class LogIn extends React.Component {
             <Ad adslot="/21799560237/Login/left" width={160} height={600} />
           </div>
         </div>
+        <Modal size="small" open={this.state.showModalMessage}>
+          <Header content={t('forms.welcomeToSuperQSO')} />
+          <Modal.Content>
+            <p>{t('forms.trialPeriod')}</p>
+            <p>{t('forms.sendLicence')}</p>
+            <p>
+              <b>{t('forms.downloadAPP')}</b>
+            </p>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button
+              positive
+              icon="checkmark"
+              labelPosition="right"
+              content="OK"
+              onClick={() => this.handleAcceptMessageModal()}
+            />
+          </Modal.Actions>
+        </Modal>
         <Modal
           closeOnDimmerClick={false}
           closeIcon
@@ -361,16 +399,14 @@ class LogIn extends React.Component {
                   }}
                 >
                   <Header as="h2" color="teal" textAlign="center">
-                    Confirmation Code
+                    {t('auth.confirmationCode')}
                   </Header>
-                  <Header as="h3" color="teal" textAlign="center">
-                    Please verify your email inbox
-                  </Header>
+                  <p>{t('forms.verifyEmailInbox')}</p>
                   <Form>
                     <Form.Field>
                       <Form.Input
                         fluid
-                        placeholder="Confirmation Code"
+                        placeholder={t('auth.confirmationCode')}
                         name="Code"
                         onChange={this.handleCodeChange.bind(this)}
                       />
@@ -384,11 +420,11 @@ class LogIn extends React.Component {
                     )}
                     <div>
                       <Button
-                        content="Resend Code"
+                        content={t('auth.resendCode')}
                         onClick={() => this.handleResendCode()}
                       />
                       <Button
-                        content="Confirm Code"
+                        content={t('auth.confirmCode')}
                         onClick={() => this.handleOnConfirm()}
                       />
                     </div>
