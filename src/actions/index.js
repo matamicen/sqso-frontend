@@ -794,17 +794,24 @@ export function doReceiveUserBio(qra) {
     qra: qra
   };
 }
-export function doFetchUserFeed(token) {
+export function doFetchUserFeed(token, qra) {
+ 
+
   return dispatch => {
+    window.gtag('config', 'G-H8G28LYKBY', {
+      custom_map: { dimension2: 'qra' }
+    });
     if (process.env.NODE_ENV !== 'production')
       window.gtag('event', 'getUserFeed_WEBDEV', {
         event_category: 'User',
-        event_label: 'getUserFeed'
+        event_label: 'getUserFeed',
+        qra: qra
       });
     else
       window.gtag('event', 'getUserFeed_WEBPRD', {
         event_category: 'User',
-        event_label: 'getUserFeed'
+        event_label: 'getUserFeed',
+        qra: qra
       });
     dispatch(doRequestFeed());
     const apiName = 'superqso';
@@ -853,7 +860,7 @@ export function doFetchUserFeed(token) {
             .then(session => {
               token = session.idToken.jwtToken;
               dispatch(refreshToken(token));
-              dispatch(doFetchUserFeed(token));
+              dispatch(doFetchUserFeed(token, qra));
             })
             .catch(error => {
               if (process.env.NODE_ENV !== 'production') {
@@ -1001,6 +1008,16 @@ export function doFetchNotifications(token) {
 
 export function doFetchPublicFeed() {
   // console.log('doFetchPublicFeed');
+  if (process.env.NODE_ENV !== 'production')
+  window.gtag('event', 'getPublicFeed_WEBDEV', {
+    event_category: 'User',
+    event_label: 'getPublicFeed'
+  });
+else
+  window.gtag('event', 'getPublicFeed_WEBPRD', {
+    event_category: 'User',
+    event_label: 'getPublicFeed'
+  });
   return dispatch => {
     dispatch(doRequestFeed());
     const apiName = 'superqso';
