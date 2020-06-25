@@ -37,7 +37,7 @@ class Home extends React.Component {
       this.setState({ adActive: false });
 
     if (this.props.isAuthenticated)
-      this.props.actions.doFetchUserFeed(this.props.token);
+      this.props.actions.doFetchUserFeed(this.props.token, this.props.currentQRA);
     else {
       if (!visited) this.setState({ modalOpen: true });
       this.props.actions.doFetchPublicFeed();
@@ -176,6 +176,7 @@ const mapStateToProps = state => ({
   FetchingQSOS: state.FetchingQSOS,
   qsosFetched: state.qsosFetched,
   authenticating: state.userData.authenticating,
+  currentQRA: state.userData.currentQRA,
   isAuthenticated: state.userData.isAuthenticated,
   token: state.userData.token,
   account_type: state.userData.qra.account_type,

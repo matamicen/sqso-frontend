@@ -318,12 +318,13 @@ const SignUpPresentation = props => {
                   maxWidth: 450
                 }}
               >
-                <Header as="h2" color="teal" textAlign="center">
+                <Header as="h2"  textAlign="center">
                   {t('auth.confirmationCode')}
                 </Header>
-                <Header as="h3" color="teal" textAlign="center">
+                <p>
                   {t('forms.verifyEmailInbox')}
-                </Header>
+                </p>
+
                 <Form>
                   <Form.Field>
                     <Form.Input
