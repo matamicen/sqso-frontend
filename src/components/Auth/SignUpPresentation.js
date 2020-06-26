@@ -14,7 +14,7 @@ import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
 import Ad from '../Ad/Ad';
 import AppNavigation from '../Home/AppNavigation';
 
-const SignUpPresentation = props => {
+const SignUpPresentation = (props) => {
   const {
     values,
     errors,
@@ -36,7 +36,7 @@ const SignUpPresentation = props => {
     handleCodeChange,
     handleResendCode,
     confirmError,
-    t
+    t,
   } = props;
 
   const change = (name, e) => {
@@ -58,13 +58,13 @@ const SignUpPresentation = props => {
           <Grid
             textAlign="center"
             style={{
-              height: '100%'
+              height: '100%',
             }}
             verticalAlign="middle"
           >
             <Grid.Column
               style={{
-                maxWidth: 450
+                maxWidth: 450,
               }}
             >
               <Header as="h2" color="teal" textAlign="center">
@@ -83,7 +83,7 @@ const SignUpPresentation = props => {
                       onChange={change.bind(null, 'qra')}
                       onBlur={handleBlur}
                       style={{
-                        textTransform: 'uppercase'
+                        textTransform: 'uppercase',
                       }}
                     />{' '}
                     {touched.qra && errors.qra && (
@@ -99,7 +99,7 @@ const SignUpPresentation = props => {
                       name="firstName"
                       onChange={change.bind(null, 'firstName')}
                       style={{
-                        textTransform: 'uppercase'
+                        textTransform: 'uppercase',
                       }}
                     />{' '}
                     {touched.firstName && errors.firstName && (
@@ -115,7 +115,7 @@ const SignUpPresentation = props => {
                       name="lastName"
                       onChange={change.bind(null, 'lastName')}
                       style={{
-                        textTransform: 'uppercase'
+                        textTransform: 'uppercase',
                       }}
                     />{' '}
                     {touched.lastName && errors.lastName && (
@@ -173,9 +173,7 @@ const SignUpPresentation = props => {
                       // icon="at"
                       iconPosition="left"
                       label={t('auth.labelPhone')}
-                      error={
-                        touched.phone && Boolean(errors.phone)
-                      }
+                      error={touched.phone && Boolean(errors.phone)}
                       name="phone"
                       onChange={change.bind(null, 'phone')}
                     />{' '}
@@ -192,7 +190,7 @@ const SignUpPresentation = props => {
                       onChange={(_, e) => handleChange(e)}
                       onBlur={handleBlur}
                     />
-                 
+
                     {touched.country && errors.country && (
                       <Message negative content={errors.country} />
                     )}
@@ -234,7 +232,7 @@ const SignUpPresentation = props => {
                     <Recaptcha
                       sitekey="6Lcloo0UAAAAAP8Ur4aiBVbIrU6dWOGKDMwFrWiD"
                       render="explicit"
-                      verifyCallback={response => {
+                      verifyCallback={(response) => {
                         setFieldValue('recaptcha', response);
                       }}
                     />{' '}
@@ -266,7 +264,7 @@ const SignUpPresentation = props => {
                     )}
                   </Form.Field>
                   {signUpError && <Message negative content={signUpError} />}
-                  <Form.Button content= {t('global.submit')} type="submit" />
+                  <Form.Button content={t('global.submit')} type="submit" />
                 </Form>
               </Segment>
               {t('forms.claimCallsign')}
@@ -282,6 +280,7 @@ const SignUpPresentation = props => {
       <Modal size="small" open={showModalMessage}>
         <Header content={t('forms.welcomeToSuperQSO')} />
         <Modal.Content>
+          <p>{t('forms.betaPhase')}</p>
           <p>{t('forms.trialPeriod')}</p>
           <p>{t('forms.sendLicence')}</p>
           <p>
@@ -309,21 +308,19 @@ const SignUpPresentation = props => {
             <Grid
               textAlign="center"
               style={{
-                height: '100%'
+                height: '100%',
               }}
               verticalAlign="middle"
             >
               <Grid.Column
                 style={{
-                  maxWidth: 450
+                  maxWidth: 450,
                 }}
               >
-                <Header as="h2"  textAlign="center">
+                <Header as="h2" textAlign="center">
                   {t('auth.confirmationCode')}
                 </Header>
-                <p>
-                  {t('forms.verifyEmailInbox')}
-                </p>
+                <p>{t('forms.verifyEmailInbox')}</p>
 
                 <Form>
                   <Form.Field>

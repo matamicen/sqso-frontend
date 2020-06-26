@@ -159,7 +159,7 @@
     "likeModalHeader": "These Hams likes this"
   },
   "qra": {
-    "loading": "Loading QRA...",
+    "loading": "Loading Callsign...",
     "views":"Views",
     "follow": "Follow",
     "unfollow": "Unfollow",
@@ -201,6 +201,7 @@
     "confirmRecaptcha": "Confirm Recaptcha",
     "verifyEmailInbox": "We have sent the confirmation code to your email. Please enter the recived code to activate the account.",
     "welcomeToSuperQSO": "Welcome to SuperQSO!",
+    "betaPhase": "We want to inform you that we are still in Beta phase and you can experience some delay in user activation.",    
     "trialPeriod": "You have 3 month of trial Premium Subscription! Enjoy SuperQso 59+100 !!! After the 3 month you can continue using SuperQso with the FREE subscription.",
     "sendLicence": "Please send us your CALLSIGN licence to info@superqso.com in order to start using our APP.",
     "downloadAPP": "Remember that you can create a POST or SWL within the mobile APP only and not from the website. If you dont have the app yet, you can get it from the Apps marketplaces under the name: superqso",
