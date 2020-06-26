@@ -1,13 +1,13 @@
 import React from "react";
-import PopupToFollow from "../PopupToFollow";
-import Image from "semantic-ui-react/dist/commonjs/elements/Image";
+import { withTranslation } from 'react-i18next';
 import { Link } from "react-router-dom";
+import Image from "semantic-ui-react/dist/commonjs/elements/Image";
 import "../../styles/style.css";
-
-const QRAProfileFollowing = props => (
+import PopupToFollow from "../PopupToFollow";
+const QRAProfileFollowing = ({following, t}) => (
   <div className="profile-following">
-    {props.following
-      ? props.following.map((qra, i) => (
+    {following
+      ? following.map((qra, i) => (
           <div className="qra" key={qra.qra}>
             <div className="avatar">
               <Link to={"/" + qra.qra}>
@@ -31,4 +31,4 @@ const QRAProfileFollowing = props => (
       : ""}
   </div>
 );
-export default QRAProfileFollowing;
+export default withTranslation()(QRAProfileFollowing);

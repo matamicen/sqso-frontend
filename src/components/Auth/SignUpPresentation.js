@@ -1,17 +1,19 @@
-import React, { Fragment } from "react";
-import { CountryDropdown } from "react-country-region-selector";
-import Recaptcha from "react-recaptcha";
-import { Link } from "react-router-dom";
-import Form from "semantic-ui-react/dist/commonjs/collections/Form";
-import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
-import Message from "semantic-ui-react/dist/commonjs/collections/Message";
-import Button from "semantic-ui-react/dist/commonjs/elements/Button";
-import Header from "semantic-ui-react/dist/commonjs/elements/Header";
-import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
-import Checkbox from "semantic-ui-react/dist/commonjs/modules/Checkbox";
-import Modal from "semantic-ui-react/dist/commonjs/modules/Modal";
-import Ad from "../Ad/Ad";
-import AppNavigation from "../Home/AppNavigation";
+import React, { Fragment } from 'react';
+import { CountryDropdown } from 'react-country-region-selector';
+import { withTranslation } from 'react-i18next';
+import Recaptcha from 'react-recaptcha';
+import { Link } from 'react-router-dom';
+import Form from 'semantic-ui-react/dist/commonjs/collections/Form';
+import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid';
+import Message from 'semantic-ui-react/dist/commonjs/collections/Message';
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
+import Header from 'semantic-ui-react/dist/commonjs/elements/Header';
+import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment';
+import Checkbox from 'semantic-ui-react/dist/commonjs/modules/Checkbox';
+import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
+import Ad from '../Ad/Ad';
+import AppNavigation from '../Home/AppNavigation';
+
 const SignUpPresentation = props => {
   const {
     values,
@@ -33,7 +35,8 @@ const SignUpPresentation = props => {
     handleOnConfirm,
     handleCodeChange,
     handleResendCode,
-    confirmError
+    confirmError,
+    t
   } = props;
 
   const change = (name, e) => {
@@ -55,7 +58,7 @@ const SignUpPresentation = props => {
           <Grid
             textAlign="center"
             style={{
-              height: "100%"
+              height: '100%'
             }}
             verticalAlign="middle"
           >
@@ -65,8 +68,8 @@ const SignUpPresentation = props => {
               }}
             >
               <Header as="h2" color="teal" textAlign="center">
-                Sign Up to SuperQSO
-              </Header>{" "}
+                {t('auth.titleSignup')}
+              </Header>{' '}
               <Segment stacked>
                 <Form onSubmit={() => handleSubmit()}>
                   <Form.Field>
@@ -74,15 +77,15 @@ const SignUpPresentation = props => {
                       fluid
                       icon="user"
                       iconPosition="left"
-                      label="callsign"
+                      label={t('auth.labelCallsign')}
                       error={touched.qra && Boolean(errors.qra)}
                       name="qra"
-                      onChange={change.bind(null, "qra")}
+                      onChange={change.bind(null, 'qra')}
                       onBlur={handleBlur}
                       style={{
-                        textTransform: "uppercase"
+                        textTransform: 'uppercase'
                       }}
-                    />{" "}
+                    />{' '}
                     {touched.qra && errors.qra && (
                       <Message negative content={errors.qra} />
                     )}
@@ -91,14 +94,14 @@ const SignUpPresentation = props => {
                     <Form.Input
                       fluid
                       iconPosition="left"
-                      label="First Name"
+                      label={t('auth.labelFirstName')}
                       error={touched.firstName && Boolean(errors.firstName)}
                       name="firstName"
-                      onChange={change.bind(null, "firstName")}
+                      onChange={change.bind(null, 'firstName')}
                       style={{
-                        textTransform: "uppercase"
+                        textTransform: 'uppercase'
                       }}
-                    />{" "}
+                    />{' '}
                     {touched.firstName && errors.firstName && (
                       <Message negative content={errors.firstName} />
                     )}
@@ -107,14 +110,14 @@ const SignUpPresentation = props => {
                     <Form.Input
                       fluid
                       iconPosition="left"
-                      label="Last Name"
+                      label={t('auth.labelLastName')}
                       error={touched.lastName && Boolean(errors.lastName)}
                       name="lastName"
-                      onChange={change.bind(null, "lastName")}
+                      onChange={change.bind(null, 'lastName')}
                       style={{
-                        textTransform: "uppercase"
+                        textTransform: 'uppercase'
                       }}
-                    />{" "}
+                    />{' '}
                     {touched.lastName && errors.lastName && (
                       <Message negative content={errors.lastName} />
                     )}
@@ -124,11 +127,11 @@ const SignUpPresentation = props => {
                       fluid
                       // icon="at"
                       iconPosition="left"
-                      label="Email"
+                      label={t('auth.labelEmail')}
                       error={touched.email && Boolean(errors.email)}
                       name="email"
-                      onChange={change.bind(null, "email")}
-                    />{" "}
+                      onChange={change.bind(null, 'email')}
+                    />{' '}
                     {touched.email && errors.email && (
                       <Message negative content={errors.email} />
                     )}
@@ -138,13 +141,13 @@ const SignUpPresentation = props => {
                       fluid
                       // icon="at"
                       iconPosition="left"
-                      label="Email Confirmation"
+                      label={t('auth.labelEmailConfirmation')}
                       error={
                         touched.emailConfirm && Boolean(errors.emailConfirm)
                       }
                       name="emailConfirm"
-                      onChange={change.bind(null, "emailConfirm")}
-                    />{" "}
+                      onChange={change.bind(null, 'emailConfirm')}
+                    />{' '}
                     {touched.emailConfirm && errors.emailConfirm && (
                       <Message negative content={errors.emailConfirm} />
                     )}
@@ -155,13 +158,29 @@ const SignUpPresentation = props => {
                       fluid
                       icon="calendar"
                       iconPosition="left"
-                      label="Birthdate"
+                      label={t('auth.labelBirthDate')}
                       error={touched.birthDate && Boolean(errors.birthDate)}
                       name="birthDate"
-                      onChange={change.bind(null, "birthDate")}
-                    />{" "}
+                      onChange={change.bind(null, 'birthDate')}
+                    />{' '}
                     {touched.birthDate && errors.birthDate && (
                       <Message negative content={errors.birthDate} />
+                    )}
+                  </Form.Field>
+                  <Form.Field>
+                    <Form.Input
+                      fluid
+                      // icon="at"
+                      iconPosition="left"
+                      label={t('auth.labelPhone')}
+                      error={
+                        touched.phone && Boolean(errors.phone)
+                      }
+                      name="phone"
+                      onChange={change.bind(null, 'phone')}
+                    />{' '}
+                    {touched.phone && errors.phone && (
+                      <Message negative content={errors.phone} />
                     )}
                   </Form.Field>
                   <Form.Field>
@@ -169,18 +188,11 @@ const SignUpPresentation = props => {
                       name="country"
                       valueType="short"
                       value={values.country}
+                      defaultOptionLabel={t('auth.labelCountry')}
                       onChange={(_, e) => handleChange(e)}
                       onBlur={handleBlur}
                     />
-                    {/* <Form.Input
-                      fluid
-                      icon="world"
-                      iconPosition="left"
-                      placeholder="Country"
-                      error={touched.country && Boolean(errors.country)}
-                      name="country"
-                      onChange={change.bind(null, "country")}
-                    /> */}{" "}
+                 
                     {touched.country && errors.country && (
                       <Message negative content={errors.country} />
                     )}
@@ -192,10 +204,10 @@ const SignUpPresentation = props => {
                       iconPosition="left"
                       type="password"
                       error={touched.password && Boolean(errors.password)}
-                      label="Password"
+                      label={t('auth.labelPassword')}
                       name="password"
-                      onChange={change.bind(null, "password")}
-                    />{" "}
+                      onChange={change.bind(null, 'password')}
+                    />{' '}
                     {touched.password && errors.password && (
                       <Message negative content={errors.password} />
                     )}
@@ -210,10 +222,10 @@ const SignUpPresentation = props => {
                         touched.passwordConfirm &&
                         Boolean(errors.passwordConfirm)
                       }
-                      label="Password Confirmation"
+                      label={t('auth.labelPasswordConfirm')}
                       name="passwordConfirm"
-                      onChange={change.bind(null, "passwordConfirm")}
-                    />{" "}
+                      onChange={change.bind(null, 'passwordConfirm')}
+                    />{' '}
                     {touched.passwordConfirm && errors.passwordConfirm && (
                       <Message negative content={errors.passwordConfirm} />
                     )}
@@ -223,9 +235,9 @@ const SignUpPresentation = props => {
                       sitekey="6Lcloo0UAAAAAP8Ur4aiBVbIrU6dWOGKDMwFrWiD"
                       render="explicit"
                       verifyCallback={response => {
-                        setFieldValue("recaptcha", response);
+                        setFieldValue('recaptcha', response);
                       }}
-                    />{" "}
+                    />{' '}
                     {touched.recaptcha && errors.recaptcha && (
                       <Message negative content={errors.recaptcha} />
                     )}
@@ -235,29 +247,29 @@ const SignUpPresentation = props => {
                       id="terms"
                       label={
                         <label>
-                          I agree the{" "}
-                          <Link target={"_blank"} to="/privacy">
-                            Privacy Policy
-                          </Link>{" "}
-                          and{" "}
-                          <Link target={"_blank"} to="/terms">
-                            {" "}
-                            Terms and Conditions
+                          {t('forms.iAgree')}{' '}
+                          <Link target={'_blank'} to="/privacy">
+                            {t('forms.privacyPolicy')}
+                          </Link>{' '}
+                          {t('global.and')}{' '}
+                          <Link target={'_blank'} to="/terms">
+                            {' '}
+                            {t('forms.termsAndConditions')}
                           </Link>
-                          . Others will be able to find you by CallSign.
+                          .{t('forms.willFindYouByCallsign')}
                         </label>
                       }
-                      onChange={change.bind(null, "terms")}
+                      onChange={change.bind(null, 'terms')}
                     />
                     {touched.terms && errors.terms && (
                       <Message negative content={errors.terms} />
                     )}
                   </Form.Field>
                   {signUpError && <Message negative content={signUpError} />}
-                  <Form.Button content="Register" type="submit" />
+                  <Form.Button content= {t('global.submit')} type="submit" />
                 </Form>
               </Segment>
-              To claim your CallSign, send an email to support@superqso.com
+              {t('forms.claimCallsign')}
             </Grid.Column>
           </Grid>
         </div>
@@ -268,11 +280,12 @@ const SignUpPresentation = props => {
       </div>
 
       <Modal size="small" open={showModalMessage}>
+        <Header content={t('forms.welcomeToSuperQSO')} />
         <Modal.Content>
+          <p>{t('forms.trialPeriod')}</p>
+          <p>{t('forms.sendLicence')}</p>
           <p>
-            You have 3 month of trial Premium Subscription! Enjoy SuperQso
-            59+100 !!! After the 3 month you can continue using SuperQso with
-            the FREE subscription.
+            <b>{t('forms.downloadAPP')}</b>
           </p>
         </Modal.Content>
         <Modal.Actions>
@@ -285,13 +298,18 @@ const SignUpPresentation = props => {
           />
         </Modal.Actions>
       </Modal>
-      <Modal closeOnDimmerClick={false} closeIcon open={showModal} onClose={() => handleOnCloseModal()}>
+      <Modal
+        closeOnDimmerClick={false}
+        closeIcon
+        open={showModal}
+        onClose={() => handleOnCloseModal()}
+      >
         <Modal.Content>
           <Modal.Description>
             <Grid
               textAlign="center"
               style={{
-                height: "100%"
+                height: '100%'
               }}
               verticalAlign="middle"
             >
@@ -300,17 +318,18 @@ const SignUpPresentation = props => {
                   maxWidth: 450
                 }}
               >
-                <Header as="h2" color="teal" textAlign="center">
-                  Confirmation Code
+                <Header as="h2"  textAlign="center">
+                  {t('auth.confirmationCode')}
                 </Header>
-                <Header as="h3" color="teal" textAlign="center">
-                  Please verify your email inbox
-                </Header>
+                <p>
+                  {t('forms.verifyEmailInbox')}
+                </p>
+
                 <Form>
                   <Form.Field>
                     <Form.Input
                       fluid
-                      placeholder="Confirmation Code"
+                      placeholder={t('auth.confirmationCode')}
                       name="Code"
                       onChange={handleCodeChange.bind(this)}
                     />
@@ -319,11 +338,11 @@ const SignUpPresentation = props => {
                   {confirmError && <Message negative content={confirmError} />}
                   <div>
                     <Button
-                      content="Resend Code"
+                      content={t('auth.resendCode')}
                       onClick={() => handleResendCode()}
                     />
                     <Button
-                      content="Confirm Code"
+                      content={t('auth.confirmCode')}
                       onClick={() => handleOnConfirm()}
                     />
                   </div>
@@ -337,4 +356,4 @@ const SignUpPresentation = props => {
   );
 };
 
-export default SignUpPresentation;
+export default withTranslation()(SignUpPresentation);

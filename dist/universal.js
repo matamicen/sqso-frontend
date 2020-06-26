@@ -20,22 +20,23 @@ var _fs = _interopRequireDefault(require("fs"));
 // import createServerStore from './store';
 // import App from '../src/components/App';
 // A simple helper function to prepare the HTML markup
-const prepHTML = (data, {
-  html,
-  head,
-  body
-}) => {
+var prepHTML = (data, _ref) => {
+  var {
+    html,
+    head,
+    body
+  } = _ref;
   // data = data.replace('<html lang="en">', `<html ${html}`);
-  data = data.replace("</head>", `${head}</head>`); // data = data.replace('<div id="root"></div>', `<div id="root">${body}</div>`);
+  data = data.replace("</head>", "".concat(head, "</head>")); // data = data.replace('<div id="root"></div>', `<div id="root">${body}</div>`);
 
   return data;
 };
 
-const universalLoader = (req, res) => {
+var universalLoader = (req, res) => {
   // console.log(req.path);
   console.log(req.params); // Load in our HTML file from our build
 
-  const filePath = _path.default.resolve(__dirname, "../build/index.html");
+  var filePath = _path.default.resolve(__dirname, "../build/index.html");
 
   _fs.default.readFile(filePath, "utf8", (err, htmlData) => {
     // If there's an error... serve up something nasty
@@ -57,7 +58,7 @@ const universalLoader = (req, res) => {
     // Form the final HTML response
 
 
-    const html = prepHTML(htmlData, {
+    var html = prepHTML(htmlData, {
       // html: helmet.htmlAttributes.toString(),
       head: // helmet.title.toString() +
       '<meta name="og:title" content="SuperQSO HomePage"/>' + '<meta property="og:site_name" content="SuperQSO.com"/>' + '<meta property="og:description" content="SuperQSO.com"/>' // helmet.link.toString(),

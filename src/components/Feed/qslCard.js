@@ -3,6 +3,7 @@ import canvg from 'canvg';
 import QRCode from 'qrcode.react';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
+import { withTranslation } from 'react-i18next';
 import packageJson from '../../../package.json';
 const RELEASE = packageJson.version;
 if (process.env.NODE_ENV === 'production') {
@@ -19,7 +20,8 @@ if (process.env.NODE_ENV === 'production') {
     }
   });
 }
-export default async function QslCardPrint(props) {
+async function QslCardPrint(props) {
+  const { t } = props;
   try {
     const jsPDF = require('jspdf');
     const pdf = new jsPDF('l', 'in');
@@ -41,7 +43,7 @@ export default async function QslCardPrint(props) {
     var imgData = canvas.toDataURL('image/png');
     pdf.addImage(imgData, 'PNG', 6.4, 2.3, 0.5, 0.5);
     pdf.setFontSize(6);
-    pdf.text(6.2, 2.9, 'Scan with SuperQSO App');
+    pdf.text(6.2, 2.9, t('qslCard.scanWith'));
 
     /* QR CODE End*/
 
@@ -62,17 +64,18 @@ export default async function QslCardPrint(props) {
     var date = new Date(props.qso.datetime);
 
     pdf.setFontSize(7);
-    pdf.text(5.3, 2.4, 'Type: ' + props.qso.type);
+    pdf.text(5.3, 2.4, t('qso.type') + ': ' + props.qso.type);
     if (props.qso.type !== 'POST') {
-      pdf.text(5.3, 2.5, 'Mode: ' + props.qso.mode);
-      pdf.text(5.3, 2.6, 'Band: ' + props.qso.band);
+      pdf.text(5.3, 2.5, t('qso.mode') + ': ' + props.qso.mode);
+      pdf.text(5.3, 2.6, t('qso.band') + ': ' + props.qso.band);
       if (props.qso.db)
         pdf.text(5.3, 2.7, 'dB: ' + (props.qso.db ? props.qso.db : '59'));
       else pdf.text(5.3, 2.7, 'RST: ' + (props.qso.rst ? props.qso.rst : '59'));
     }
     pdf.text(
-      'Date: ' +
-        date.toLocaleDateString('EN-US', { month: 'short' }) +
+      t('qso.date') +
+        ': ' +
+        date.toLocaleDateString( { month: 'short' }) +
         ' ' +
         date.getDate() +
         ', ' +
@@ -93,14 +96,14 @@ export default async function QslCardPrint(props) {
 
     switch (props.qso.type) {
       case 'QSO':
-        text = 'Worked a QSO with ';
+        text = t('qslCard.workedQSO');
         break;
       case 'LISTEN':
-        text = 'Listened a QSO with';
+        text = t('qslCard.listenedQSO');
         break;
       case 'POST':
-        if (props.qso.qras.length > 0) text = 'Created a POST with';
-        else text = 'Created a POST';
+        if (props.qso.qras.length > 0) text = t('qslCard.createdPostWith');
+        else text = t('qslCard.createdPost');
         break;
       default:
         break;
@@ -215,7 +218,7 @@ async function showImages(media, pdf) {
 async function loadImage(url) {
   return new Promise(resolve => {
     let img = new Image();
-    img.crossOrigin = "anonymous";
+    img.crossOrigin = 'anonymous';
     img.onload = () => resolve(img);
     img.setAttribute('crossorigin', 'anonymous');
     img.src = url + '?nocache=true';
@@ -277,3 +280,4 @@ async function loadImage(url) {
 //     }
 //   });
 // }
+export default withTranslation()(QslCardPrint);

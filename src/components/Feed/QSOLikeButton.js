@@ -1,6 +1,7 @@
 import API from '@aws-amplify/api';
 import * as Sentry from '@sentry/browser';
 import React, { Fragment } from 'react';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -223,6 +224,7 @@ class QSOLikeButton extends React.Component {
   }
 
   render() {
+    const {t} = this.props;
     let icon;
 
     if (this.liked !== true && this.liked !== false) {
@@ -243,10 +245,9 @@ class QSOLikeButton extends React.Component {
               state: { from: this.props.location.pathname }
             })
           }
-          cancelButton="Cancel"
-          confirmButton="Login"
-          content="Please Login to perform this action"
-        />
+          cancelButton={t('global.cancel')}
+          confirmButton={t('auth.login')}
+          content={t('auth.loginToPerformAction')}        />
         <Button icon active={false} onClick={() => this.handleOnLike()}>
           <Icon name={icon} /> {this.likeCounter}{' '}
         </Button>
@@ -269,5 +270,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(QSOLikeButton)
+  )(withTranslation()(QSOLikeButton))
 );

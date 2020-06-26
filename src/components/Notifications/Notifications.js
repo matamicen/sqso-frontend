@@ -1,4 +1,5 @@
 import React from "react";
+import { withTranslation } from 'react-i18next';
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
@@ -12,7 +13,6 @@ import "../../styles/style.css";
 import Ad from "../Ad/Ad";
 import AppNavigation from "../Home/AppNavigation";
 import Notification from "./Notification";
-
 
 
 class Notifications extends React.Component {
@@ -55,6 +55,7 @@ class Notifications extends React.Component {
   handleOpen = () => this.setState({ adActive: true });
   handleClose = () => this.setState({ adActive: false });
   render() {
+    const {t} = this.props;
     
     return (
       <div className="notifications-container">
@@ -120,8 +121,8 @@ class Notifications extends React.Component {
           )}
           {this.props.notifications.length === 0 && (
             <Message negative>
-              <Message.Header>Congratulations!!!</Message.Header>
-              <p>You don´t have any pending Notifications! :)</p>
+              <Message.Header>{t('notification.congratulations')}</Message.Header>
+              <p>{t('notification.noPendingNotifications')}</p>
             </Message>
           )}
           {/* </List> */}
@@ -155,5 +156,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(Notifications)
+  )(withTranslation()(Notifications))
 );

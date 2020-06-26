@@ -2,6 +2,7 @@ import API from '@aws-amplify/api';
 import Auth from '@aws-amplify/auth';
 import * as Sentry from '@sentry/browser';
 import { css } from 'glamor';
+import i18n from 'i18next';
 import { toast } from 'react-toastify';
 export const PUBLIC_SESSION = 'PUBLIC_SESSION';
 export const PREPARE_LOGIN = 'PREPARE_LOGIN';
@@ -39,7 +40,6 @@ export const FOLLOW_REQUEST = 'FOLLOW_REQUEST';
 export const FOLLOW_RECEIVE = 'FOLLOW_RECEIVE';
 export const QSO_DISLIKE = 'QSO_DISLIKE';
 export const QSO_LIKE = 'QSO_LIKE';
-
 export function doNotificationRead(idnotif = null, token) {
   return dispatch => {
     if (process.env.NODE_ENV !== 'production')
@@ -275,7 +275,7 @@ export function doDeleteQso(idqso, token) {
     API.del(apiName, path, myInit)
       .then(response => {
         if (response.body.error === 0) {
-          toast.success('QSO Deleted', {
+          toast.success(i18n.t('qso.qsoDeleted'), {
             position: toast.POSITION.BOTTOM_RIGHT,
             className: css({
               background: '#8BD8BD !important'
@@ -558,6 +558,7 @@ export function doFetchUserInfo(token) {
   };
 }
 export function doRepost(idqso, token, qso) {
+  
   return dispatch => {
     if (process.env.NODE_ENV !== 'production')
       window.gtag('event', 'repost_WEBDEV', {
@@ -590,7 +591,7 @@ export function doRepost(idqso, token, qso) {
           qso.idqso_shared = qso.idqsos;
           qso.idqsos = response.body.message;
           qso.type = 'SHARE';
-          toast.success('QSO Reposted', {
+          toast.success(i18n.t('qso.qsoReposted'), {
             position: toast.POSITION.BOTTOM_RIGHT,
             className: css({
               background: '#8BD8BD !important'
@@ -631,6 +632,8 @@ export function doRepost(idqso, token, qso) {
       });
   };
 }
+
+
 export function doLikeQSO(idqso, idqra, qra, firstname, lastname, avatarpic) {
   return {
     type: QSO_LIKE,
@@ -791,17 +794,24 @@ export function doReceiveUserBio(qra) {
     qra: qra
   };
 }
-export function doFetchUserFeed(token) {
+export function doFetchUserFeed(token, qra) {
+ 
+
   return dispatch => {
+    window.gtag('config', 'G-H8G28LYKBY', {
+      custom_map: { dimension1: 'userQRA' }
+    });
     if (process.env.NODE_ENV !== 'production')
       window.gtag('event', 'getUserFeed_WEBDEV', {
         event_category: 'User',
-        event_label: 'getUserFeed'
+        event_label: 'getUserFeed',
+        userQRA: qra
       });
     else
       window.gtag('event', 'getUserFeed_WEBPRD', {
         event_category: 'User',
-        event_label: 'getUserFeed'
+        event_label: 'getUserFeed',
+        userQRA: qra
       });
     dispatch(doRequestFeed());
     const apiName = 'superqso';
@@ -850,7 +860,7 @@ export function doFetchUserFeed(token) {
             .then(session => {
               token = session.idToken.jwtToken;
               dispatch(refreshToken(token));
-              dispatch(doFetchUserFeed(token));
+              dispatch(doFetchUserFeed(token, qra));
             })
             .catch(error => {
               if (process.env.NODE_ENV !== 'production') {
@@ -963,7 +973,7 @@ export function doFetchNotifications(token) {
         } else console.log(response.body.message);
       })
       .catch(error => {
-        if (error.message === 'Request failed with status code 401') {
+        if (error.message === 'Request failed with status code 401' || error.message === "Network Error") {
           Auth.currentSession()
             .then(session => {
               console.log(session);
@@ -998,6 +1008,16 @@ export function doFetchNotifications(token) {
 
 export function doFetchPublicFeed() {
   // console.log('doFetchPublicFeed');
+  if (process.env.NODE_ENV !== 'production')
+  window.gtag('event', 'getPublicFeed_WEBDEV', {
+    event_category: 'User',
+    event_label: 'getPublicFeed'
+  });
+else
+  window.gtag('event', 'getPublicFeed_WEBPRD', {
+    event_category: 'User',
+    event_label: 'getPublicFeed'
+  });
   return dispatch => {
     dispatch(doRequestFeed());
     const apiName = 'superqso';
@@ -1164,13 +1184,13 @@ export function doFetchQsoLink(idqso) {
     window.gtag('event', 'qsoGetLinkDetail_WEBDEV', {
       event_category: 'QSO',
       event_label: 'getLinkDetail',
-      qso: idqso
+      qsoLink: idqso
     });
   else
     window.gtag('event', 'qsoGetLinkDetail_WEBPRD', {
       event_category: 'QSO',
       event_label: 'getLinkDetail',
-      qso: idqso
+      qsoLink: idqso
     });
 
   return dispatch => {

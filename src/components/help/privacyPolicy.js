@@ -1,8 +1,9 @@
 import React, { Fragment } from "react";
-import AppNavigation from "../Home/AppNavigation";
+import { withTranslation } from 'react-i18next';
 import "../../styles/style.css";
 import Ad from "../Ad/Ad";
-const PrivacyPolicy = props => (
+import AppNavigation from "../Home/AppNavigation";
+const PrivacyPolicy = ({t}) => (
   <Fragment>
     <div className="global-container">
       <div className="site-header">
@@ -260,4 +261,4 @@ const PrivacyPolicy = props => (
     </div>
   </Fragment>
 );
-export default PrivacyPolicy;
+export default withTranslation()(PrivacyPolicy);

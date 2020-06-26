@@ -7,6 +7,7 @@ import htmlToDraft from 'html-to-draftjs';
 import React, { Fragment } from 'react';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -17,7 +18,6 @@ import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
 import * as Actions from '../../actions';
 import global_config from '../../global_config.json';
 import '../../styles/style.css';
-
 class QRAProfileBio extends React.Component {
   constructor(props) {
     super(props);
@@ -162,6 +162,7 @@ class QRAProfileBio extends React.Component {
   };
   render() {
     const { edit, editorState } = this.state;
+    const {t} = this.props;
     return (
       <Fragment>
         <Confirm
@@ -169,9 +170,9 @@ class QRAProfileBio extends React.Component {
           open={this.state.openPornConfirm}
           onCancel={() => this.setState({ openPornConfirm: false })}
           onConfirm={() => this.setState({ openPornConfirm: false })}
-          cancelButton="Cancel"
-          confirmButton="OK"
-          content="The image you try to upload contain Nudity or sexual content."
+          cancelButton={t('global.cancel')}
+          confirmButton={t('global.ok')}
+          content={t('global.imageContainNudity')}
         />
         <Segment raised>
           {this.props.isAuthenticated &&
@@ -189,11 +190,11 @@ class QRAProfileBio extends React.Component {
                 >
                   <Dropdown.Menu>
                     {!edit && (
-                      <Dropdown.Item text="Edit Bio" onClick={this.open} />
+                      <Dropdown.Item text={t('qra.editBio')} onClick={this.open} />
                     )}
                     {edit && (
                       <Dropdown.Item
-                        text="Save Bio"
+                        text={t('qra.saveBio')}
                         onClick={this.handleOnSaveBio}
                       />
                     )}
@@ -270,5 +271,5 @@ export default withRouter(
     mapDispatchToProps,
     null,
     { pure: false }
-  )(QRAProfileBio)
+  )(withTranslation()(QRAProfileBio))
 );

@@ -1,4 +1,6 @@
+import i18n from 'i18next';
 import React from "react";
+import { withTranslation } from 'react-i18next';
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { bindActionCreators } from "redux";
@@ -7,7 +9,6 @@ import Item from "semantic-ui-react/dist/commonjs/views/Item";
 import * as Actions from "../../actions";
 import PopupToFollow from "../PopupToFollow";
 import FeedOptionsMenu from "./FeedOptionsMenu";
-
 
 class QSOCommentItem extends React.Component {
   state = {
@@ -18,17 +19,18 @@ class QSOCommentItem extends React.Component {
     this.props.recalculateRowHeight();
   };
   render() {
+    const {t} = this.props;
     var date = new Date(this.props.comment.datetime);
     var timestamp = "";
 
     if (this.props.comment.datetime) {
       timestamp =
-        date.toLocaleDateString("EN-US", { month: "short" }) +
+        date.toLocaleDateString(i18n.language, { month: "short" }) +
         " " +
         date.getDate() +
         ", " +
         date.getFullYear() +
-        " at " +
+        t('global.at') +
         date.getUTCHours() +
         ":" +
         (date.getMinutes() < 10 ? "0" : "") +
@@ -83,4 +85,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(QSOCommentItem);
+)(withTranslation()(QSOCommentItem));

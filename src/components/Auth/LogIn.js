@@ -2,6 +2,7 @@ import Amplify from '@aws-amplify/core';
 import * as Sentry from '@sentry/browser';
 import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Link, Redirect, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -33,6 +34,7 @@ class LogIn extends React.Component {
       email: '',
       error: null,
       loginError: false,
+      showModalMessage: false,
       confirmError: ''
     };
     // if (this.props.isAuthenticated && !this.props.authenticating) {
@@ -40,26 +42,45 @@ class LogIn extends React.Component {
     //   this.props.history.goBack();
     // }
   }
-
+  handleAcceptMessageModal() {
+    this.handleOnClickLogin();
+    this.setState({ showModalMessage: false });
+  }
   handleOnClickLogin() {
+    const { t } = this.props;
     this.setState({ dimmerActive: true });
     if (!this.state.email || !this.state.password) {
       this.setState({
-        loginError: { message: 'Please enter Email and Password' }
+        loginError: { message: t('auth.enterMailPassword') }
       });
     } else this.login();
   }
 
   async login() {
+    const { t } = this.props;
     let token;
     this.setState({ dimmerActive: true });
 
     const user = await Auth.signIn(
-      this.state.email.toLowerCase(),
+      this.state.email.toLowerCase().trim(),
       this.state.password
     ).catch(err => {
+      switch (err.code) {
+        case 'NotAuthorizedException':
+          this.setState({
+            loginError: { code: err.code, message: t('auth.userDisabled') }
+          });
+          break;
+        case 'UserNotConfirmedException':
+          this.setState({
+            loginError: { code: err.code, message: t('auth.userNotConfirmed') }
+          });
+          break;
+        default:
+          this.setState({ loginError: err });
+          break;
+      }
       this.setState({ dimmerActive: false });
-      this.setState({ loginError: err });
     });
 
     if (user) {
@@ -141,17 +162,18 @@ class LogIn extends React.Component {
   }
 
   async handleResendCode() {
+    const { t } = this.props;
     this.setState({ confirmError: '' });
-    await Auth.resendSignUp(this.state.email)
+    await Auth.resendSignUp(this.state.email.trim())
       .then(() => {
         this.setState({
           loginError: {
             code: 'codeResent',
-            message: 'Code Resent for ' + this.state.email
+            message: t('auth.codeResent') + this.state.email.trim()
           },
           confirmError: {
             code: 'codeResent',
-            message: 'Code Resent for ' + this.state.email
+            message: t('auth.codeResent') + this.state.email.trim()
           },
           showModal: true
         });
@@ -180,7 +202,8 @@ class LogIn extends React.Component {
       .then(data => {
         this.setState({
           dimmerValCodeActive: false,
-          dimmerLoginActive: true
+          dimmerLoginActive: true,
+          showModalMessage: true
         });
         if (process.env.NODE_ENV !== 'production')
           window.gtag('event', 'confirmCode_WEBDEV', {
@@ -192,8 +215,6 @@ class LogIn extends React.Component {
             event_category: 'User',
             event_label: 'confirmCode'
           });
-
-        this.handleOnClickLogin();
       })
       .catch(err => {
         this.setState({ dimmerValCodeActive: false });
@@ -206,7 +227,7 @@ class LogIn extends React.Component {
   }
 
   render() {
-    const { location } = this.props;
+    const { location, t } = this.props;
 
     if (this.props.isAuthenticated && !this.props.authenticating) {
       // alert("Please Logout before login again!");
@@ -224,13 +245,13 @@ class LogIn extends React.Component {
     return (
       <Fragment>
         <Dimmer active={this.state.dimmerLoginActive} page>
-          <Loader>Login User...</Loader>
+          <Loader>{t('auth.loadingUser')}</Loader>
         </Dimmer>
         <Dimmer active={this.state.dimmerActive} page>
-          <Loader>Validating User...</Loader>
+          <Loader>{t('auth.validatingUser')}</Loader>
         </Dimmer>
         <Dimmer active={this.state.dimmerValCodeActive} page>
-          <Loader>Validating Code...</Loader>
+          <Loader>{t('auth.validatingCode')}</Loader>
         </Dimmer>
 
         <div className="global-container">
@@ -255,7 +276,7 @@ class LogIn extends React.Component {
                 }}
               >
                 <Header as="h2" color="teal" textAlign="center">
-                  Login to your account
+                  {t('auth.loginHeader')}
                 </Header>
                 <Form size="large">
                   <Segment stacked>
@@ -264,7 +285,7 @@ class LogIn extends React.Component {
                         fluid
                         icon="user"
                         iconPosition="left"
-                        placeholder="email"
+                        placeholder={t('auth.labelEmail')}
                         error={!!this.state.loginError}
                         name="email"
                         value={this.state.email}
@@ -281,7 +302,7 @@ class LogIn extends React.Component {
                         iconPosition="left"
                         type="password"
                         error={!!this.state.loginError}
-                        placeholder="Password"
+                        placeholder={t('auth.labelPassword')}
                         name="password"
                         onChange={this.handlePasswordChange.bind(this)}
                       />
@@ -297,11 +318,11 @@ class LogIn extends React.Component {
                       'UserNotConfirmedException' && (
                       <div>
                         <Button
-                          content="Resend Code"
+                          content={t('auth.resendCode')}
                           onClick={() => this.handleResendCode()}
                         />
                         <Button
-                          content="Confirm Code"
+                          content={t('auth.confirmCode')}
                           onClick={() => this.setState({ showModal: true })}
                         />
                       </div>
@@ -309,25 +330,26 @@ class LogIn extends React.Component {
                     {this.state.loginError.code !==
                       'UserNotConfirmedException' && (
                       <Button
-                        content="Login"
+                        content={t('auth.login')}
                         onClick={() => this.handleOnClickLogin()}
                       />
                     )}
                   </Segment>
                 </Form>
                 <Message>
-                  New to us?
+                  {t('auth.newToUs')}
                   <Link
                     to={{
                       pathname: '/signup',
                       state: { from: this.props.location.pathname }
                     }}
                   >
-                    Sign Up
+                    {' '}
+                    {t('navBar.signUp')}
                   </Link>
                 </Message>
                 <Message>
-                  <Link to="/forgot"> Forgot Password?</Link>
+                  <Link to="/forgot"> {t('auth.forgotPassword')}</Link>
                 </Message>
               </Grid.Column>
             </Grid>
@@ -337,6 +359,25 @@ class LogIn extends React.Component {
             <Ad adslot="/21799560237/Login/left" width={160} height={600} />
           </div>
         </div>
+        <Modal size="small" open={this.state.showModalMessage}>
+          <Header content={t('forms.welcomeToSuperQSO')} />
+          <Modal.Content>
+            <p>{t('forms.trialPeriod')}</p>
+            <p>{t('forms.sendLicence')}</p>
+            <p>
+              <b>{t('forms.downloadAPP')}</b>
+            </p>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button
+              positive
+              icon="checkmark"
+              labelPosition="right"
+              content="OK"
+              onClick={() => this.handleAcceptMessageModal()}
+            />
+          </Modal.Actions>
+        </Modal>
         <Modal
           closeOnDimmerClick={false}
           closeIcon
@@ -358,16 +399,14 @@ class LogIn extends React.Component {
                   }}
                 >
                   <Header as="h2" color="teal" textAlign="center">
-                    Confirmation Code
+                    {t('auth.confirmationCode')}
                   </Header>
-                  <Header as="h3" color="teal" textAlign="center">
-                    Please verify your email inbox
-                  </Header>
+                  <p>{t('forms.verifyEmailInbox')}</p>
                   <Form>
                     <Form.Field>
                       <Form.Input
                         fluid
-                        placeholder="Confirmation Code"
+                        placeholder={t('auth.confirmationCode')}
                         name="Code"
                         onChange={this.handleCodeChange.bind(this)}
                       />
@@ -381,11 +420,11 @@ class LogIn extends React.Component {
                     )}
                     <div>
                       <Button
-                        content="Resend Code"
+                        content={t('auth.resendCode')}
                         onClick={() => this.handleResendCode()}
                       />
                       <Button
-                        content="Confirm Code"
+                        content={t('auth.confirmCode')}
                         onClick={() => this.handleOnConfirm()}
                       />
                     </div>
@@ -435,5 +474,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(LogIn)
+  )(withTranslation()(LogIn))
 );

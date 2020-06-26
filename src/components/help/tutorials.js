@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
+import { withTranslation } from 'react-i18next';
 import Header from 'semantic-ui-react/dist/commonjs/elements/Header';
 import global_config from '../../global_config.json';
 import '../../styles/style.css';
 import Ad from '../Ad/Ad';
 import AppNavigation from '../Home/AppNavigation';
-
-const Tutorials = props => (
+const Tutorials = ({t}) => (
   <Fragment>
     <div className="global-container">
       <div className="site-header">
@@ -235,4 +235,4 @@ const Tutorials = props => (
     </div>
   </Fragment>
 );
-export default Tutorials;
+export default withTranslation()(Tutorials);

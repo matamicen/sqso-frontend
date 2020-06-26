@@ -1,4 +1,5 @@
 import React from 'react';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import TextareaAutosize from 'react-textarea-autosize';
 import { bindActionCreators } from 'redux';
@@ -7,7 +8,6 @@ import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
 import Comment from 'semantic-ui-react/dist/commonjs/views/Comment';
 import * as Actions from '../../actions';
 import QSOCommentItem from './QSOCommentItem';
-
 class QSOComments extends React.Component {
   constructor() {
     super();
@@ -58,7 +58,12 @@ class QSOComments extends React.Component {
       return { comments: props.qso.comments };
     return null;
   }
+  componentDidUpdate = () => {
+    this.props.recalculateRowHeight();
+  };
   render() {
+    const {t} = this.props;
+
     let comments = null;
     if (this.state.comments) {
       comments = this.state.comments.map((comment, i) => (
@@ -83,7 +88,7 @@ class QSOComments extends React.Component {
               onHeightChange={this.props.recalculateRowHeight}
               fontSize= {12}
               style={{fontSize: "1.1rem", paddingTop: "5px", paddingBottom: "5px"}}
-              placeholder="Write a comment.."
+              placeholder={t('qso.writeComment')}
               rows={4}
             />
             
@@ -115,4 +120,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(QSOComments);
+)(withTranslation()(QSOComments));

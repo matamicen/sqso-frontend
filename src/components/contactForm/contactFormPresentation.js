@@ -1,12 +1,12 @@
 import React from "react";
+import { withTranslation } from 'react-i18next';
+import Recaptcha from "react-recaptcha";
+import Form from "semantic-ui-react/dist/commonjs/collections/Form";
 import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
+import Message from "semantic-ui-react/dist/commonjs/collections/Message";
+import Header from "semantic-ui-react/dist/commonjs/elements/Header";
 import Ad from "../Ad/Ad";
 import AppNavigation from "../Home/AppNavigation";
-import Header from "semantic-ui-react/dist/commonjs/elements/Header";
-import Form from "semantic-ui-react/dist/commonjs/collections/Form";
-import Message from "semantic-ui-react/dist/commonjs/collections/Message";
-import Recaptcha from "react-recaptcha";
-
 const ContactFormPresentation = props => {
   const {
     values: { email, message },
@@ -16,7 +16,7 @@ const ContactFormPresentation = props => {
     handleBlur,
     setFieldTouched,
     handleSubmit,
-    setFieldValue
+    setFieldValue,t
   } = props;
 
   const change = (name, e) => {
@@ -47,13 +47,13 @@ const ContactFormPresentation = props => {
             }}
           >
             <Header as="h2" color="teal" textAlign="center">
-              Contact Us
+            {t('forms.contactUs')}
             </Header>
             <Form onSubmit={() => {}}>
               <Form.Field>
                 <Form.Input
                   fluid
-                  placeholder="Email"
+                  placeholder={t('qra.email')}
                   name="email"
                   value={email}
                   error={touched.email && Boolean(errors.email)}
@@ -66,7 +66,7 @@ const ContactFormPresentation = props => {
               )}
               <Form.TextArea
                 name="message"
-                placeholder="Message"
+                placeholder={t('forms.message')}
                 defaultValue={message}
                 error={touched.message && Boolean(errors.message)}
                 onChange={change.bind(null, "message")}
@@ -89,7 +89,7 @@ const ContactFormPresentation = props => {
               </Form.Field>
               <Form.Button
                 type="submit"
-                content="Send"
+                content={t('forms.send')}
                 onClick={handleSubmit}
               />
             </Form>
@@ -104,4 +104,4 @@ const ContactFormPresentation = props => {
   );
 };
 
-export default ContactFormPresentation;
+export default withTranslation()(ContactFormPresentation);

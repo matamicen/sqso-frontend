@@ -1,11 +1,13 @@
+import moment from 'moment';
+import 'moment/locale/es';
 import React from 'react';
-import Moment from 'react-moment';
+import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
 import Image from 'semantic-ui-react/dist/commonjs/elements/Image';
 import Feed from 'semantic-ui-react/dist/commonjs/views/Feed';
 import '../../styles/style.css';
-export default class Notification extends React.Component {
+class Notification extends React.Component {
   constructor(props) {
     super(props);
 
@@ -19,52 +21,59 @@ export default class Notification extends React.Component {
     );
   }
   formatNotification() {
+    const { t } = this.props;
     let notif = this.props.notification;
     var date = new Date(notif.UTC);
     var datetime = new Date(notif.DATETIME);
-    // console.log(date)
+    moment.locale();
+
     switch (this.props.notification.activity_type) {
       case 1: //Follow
-        if (this.props.currentQRA === notif.REF_QRA)
-          return (
-            <Feed.Content>
-              <Feed.Summary>
-                <Link to={'/' + notif.QRA} onClick={this.handleOnClick}>
-                  {notif.message}
-                </Link>
-                <Feed.Date>
-                  <Moment fromNow>{datetime}</Moment>
-                </Feed.Date>
-              </Feed.Summary>
-              <Feed.Extra text>{notif.comment}</Feed.Extra>
-            </Feed.Content>
-          );
-        else
-          return (
-            <Feed.Content>
-              <Feed.Summary>
-                <Link to={'/' + notif.REF_QRA} onClick={this.handleOnClick}>
-                  {notif.message}
-                </Link>
-                <Feed.Date>
-                  <Moment fromNow>{datetime}</Moment>
-                </Feed.Date>
-              </Feed.Summary>
-              <Feed.Extra text>{notif.comment}</Feed.Extra>
-            </Feed.Content>
-          );
+        return (
+          <Feed.Content>
+            <Feed.Summary>
+              <Link
+                to={
+                  '/' + (this.props.currentQRA === notif.REF_QRA)
+                    ? notif.QRA
+                    : notif.REF_QRA
+                }
+                onClick={this.handleOnClick}
+              >
+                {this.props.currentQRA === notif.REF_QRA
+                  ? t('notification.followYou', { QRA: notif.QRA })
+                  : t('notification.followOther', {
+                      QRA: notif.QRA,
+                      QRA_REF: notif.REF_QRA
+                    })}
+              </Link>
+              <Feed.Date>{moment(datetime).fromNow()}</Feed.Date>
+            </Feed.Summary>
+            <Feed.Extra text>{notif.comment}</Feed.Extra>
+          </Feed.Content>
+        );
+
       case 10: //new QSO
         return (
           <Feed.Content>
             <Feed.Summary>
               <Link to={'/qso/' + notif.QSO_GUID} onClick={this.handleOnClick}>
-                {notif.message}
+                {t('notification.workedQSO', { QRA: notif.QRA })}
               </Link>
-              <Feed.Date>
-                <Moment fromNow>{datetime}</Moment>
-              </Feed.Date>
+              <Feed.Date>{moment(datetime).fromNow()}</Feed.Date>
             </Feed.Summary>
-            <Feed.Extra text>{notif.comment}</Feed.Extra>
+            <Feed.Extra text>
+              {notif.mode ? t('qso.mode') + ': ' + notif.mode : ''}
+              {notif.band ? ' | ' + t('qso.band') + ': ' + notif.band : ''}
+
+              {notif.UTC
+                ? ' | UTC: ' +
+                  date.getUTCHours() +
+                  ':' +
+                  (date.getMinutes() < 10 ? '0' : '') +
+                  date.getMinutes()
+                : ''}
+            </Feed.Extra>
           </Feed.Content>
         );
       case 12: //add QRA to QSO
@@ -72,16 +81,19 @@ export default class Notification extends React.Component {
           <Feed.Content>
             <Feed.Summary>
               <Link to={'/qso/' + notif.QSO_GUID} onClick={this.handleOnClick}>
-                {notif.message}
+                {this.props.currentQRA === notif.REF_QRA
+                  ? t('notification.includedYou', { QRA: notif.QRA })
+                  : t('notification.includedOther', {
+                      QRA: notif.QRA,
+                      QRA_REF: notif.REF_QRA
+                    })}
               </Link>
-              <Feed.Date>
-                <Moment fromNow>{datetime}</Moment>
-              </Feed.Date>
+              <Feed.Date>{moment(datetime).fromNow()}</Feed.Date>
             </Feed.Summary>
             <Feed.Extra text>
-              {notif.mode ? 'Mode: ' + notif.mode : ''}
-              {notif.band ? ' | Band: ' + notif.band : ''}
-              
+              {notif.mode ? t('qso.mode') + ': ' + notif.mode : ''}
+              {notif.band ? ' | ' + t('qso.band') + ': ' + notif.band : ''}
+
               {notif.UTC
                 ? ' | UTC: ' +
                   date.getUTCHours() +
@@ -97,11 +109,9 @@ export default class Notification extends React.Component {
           <Feed.Content>
             <Feed.Summary>
               <Link to={'/qso/' + notif.QSO_GUID} onClick={this.handleOnClick}>
-                {notif.message}
+                {t('notification.commentedQSO', { QRA: notif.QRA })}
               </Link>
-              <Feed.Date>
-                <Moment fromNow>{datetime}</Moment>
-              </Feed.Date>
+              <Feed.Date>{moment(datetime).fromNow()}</Feed.Date>
             </Feed.Summary>
             <Feed.Extra text>{notif.comment}</Feed.Extra>
           </Feed.Content>
@@ -113,14 +123,12 @@ export default class Notification extends React.Component {
               <Link to={'/qso/' + notif.QSO_GUID} onClick={this.handleOnClick}>
                 {notif.message}
               </Link>
-              <Feed.Date>
-                <Moment fromNow>{datetime}</Moment>
-              </Feed.Date>
+              <Feed.Date>{moment(datetime).fromNow()}</Feed.Date>
             </Feed.Summary>
             <Feed.Extra text>
-              {notif.mode ? 'Mode: ' + notif.mode : ''}
-              {notif.band ? ' | Band: ' + notif.band : ''}
-              
+              {notif.mode ? t('qso.mode') + ': ' + notif.mode : ''}
+              {notif.band ? ' | ' + t('qso.band') + ': ' + notif.band : ''}
+
               {notif.UTC
                 ? ' | UTC: ' +
                   date.getUTCHours() +
@@ -136,46 +144,15 @@ export default class Notification extends React.Component {
           // </Link>
           // // </List.Description>
         );
-      case 23: //add QSO Like
-        return (
-          <Feed.Content>
-            <Feed.Summary>
-              <Link to={'/qso/' + notif.QSO_GUID} onClick={this.handleOnClick}>
-                {notif.message}
-              </Link>
-              <Feed.Date>
-                <Moment fromNow>{datetime}</Moment>
-              </Feed.Date>
-            </Feed.Summary>
-            <Feed.Extra text>
-              {notif.mode ? 'Mode: ' + notif.mode : ''}
-              {notif.band ? ' | Band: ' + notif.band : ''}
-              
-              {notif.UTC
-                ? ' | UTC: ' +
-                  date.getUTCHours() +
-                  ':' +
-                  (date.getMinutes() < 10 ? '0' : '') +
-                  date.getMinutes()
-                : ''}
-            </Feed.Extra>
-          </Feed.Content>
-          // // <List.Description>
-          // <Link to={'/qso/' + notif.QSO_GUID} onClick={this.handleOnClick}>
-          //   {notif.message}
-          // </Link>
-          // // </List.Description>
-        );
+     
       case 50: //Bio updated
         return (
           <Feed.Content>
             <Feed.Summary>
               <Link to={'/' + notif.QRA} onClick={this.handleOnClick}>
-                {notif.message}
+                {t('notification.updatedBio', { QRA: notif.QRA })}
               </Link>
-              <Feed.Date>
-                <Moment fromNow>{datetime}</Moment>
-              </Feed.Date>
+              <Feed.Date>{moment(datetime).fromNow()}</Feed.Date>
             </Feed.Summary>
             <Feed.Extra text>{notif.comment}</Feed.Extra>
           </Feed.Content>
@@ -192,9 +169,7 @@ export default class Notification extends React.Component {
               <Link to={'/qso/' + notif.QSO_GUID} onClick={this.handleOnClick}>
                 {notif.message}
               </Link>
-              <Feed.Date>
-                <Moment fromNow>{datetime}</Moment>
-              </Feed.Date>
+              <Feed.Date>{moment(datetime).fromNow()}</Feed.Date>
             </Feed.Summary>
             <Feed.Extra text>{notif.comment}</Feed.Extra>
           </Feed.Content>
@@ -243,3 +218,5 @@ export default class Notification extends React.Component {
     );
   }
 }
+
+export default withTranslation()(Notification);
