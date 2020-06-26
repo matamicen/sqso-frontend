@@ -50,7 +50,7 @@
     "labelCallsign": "CALLSIGN",
     "labelOldPassword": "Old Password",
     "labelNewPassword": "New Password",
-    "labelPhone": "Phone Number",
+    "labelPhone": "Phone Number (optional)",
     "labelNewPasswordConfirm": "New Password Confirmation",
     "labelPasswordConfirm": "Password Confirmation",
     "labelEmailConfirmation": "Email Confirmation",

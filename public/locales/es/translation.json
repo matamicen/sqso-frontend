@@ -50,7 +50,7 @@
     "labelCallsign": "Señal Distintiva",
     "labelOldPassword": "Contraseña Anterior",
     "labelNewPassword": "Contraseña Nueva",
-    "labelPhone": "Teléfono",
+    "labelPhone": "Teléfono (opcional)",
     "labelCountry": "País",
     "labelNewPasswordConfirm": "Confirmación nueva Contraseña",
     "labelPasswordConfirm": "Confirmación de Contraseña",
