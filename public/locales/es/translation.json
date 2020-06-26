@@ -36,7 +36,7 @@
     "enterValidEmail": "Ingrese un email válido",
     "emailRequired": "Email es obligatorio",
     "emailsDontMatch": "Emails deben coincidir",
-    "validatingCode": "Validando Code...",
+    "validatingCode": "Validando Código de Confirmación...",
     "validatingUser": "Validando Usuario...",
     "loadingUser": "Cargando Usuario...",
     "login": "Ingresar",
