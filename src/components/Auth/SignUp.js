@@ -42,8 +42,9 @@ class SignUp extends React.Component {
   }
 
   handleAcceptMessageModal() {
-    this.login();
+    // this.login();
     this.setState({ showModalMessage: false });
+    this.props.history.push('/login');
   }
 
   // handleAcceptTC() {
