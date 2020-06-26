@@ -60,7 +60,7 @@ class Notifications extends React.Component {
     return (
       <div className="notifications-container">
         <Dimmer active={this.state.active} page>
-          <Loader>Loading</Loader>
+          <Loader>{t('global.loading')}</Loader>
         </Dimmer>
 
         {/* <Dimmer
