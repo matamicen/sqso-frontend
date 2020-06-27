@@ -134,6 +134,8 @@
     "workedQSO": "{{QRA}} trabajó un QSO"    
   },
   "qso": {
+    "postDeleted": "Esta publicación ha sido eliminada y no puede ser mostrada",
+    "notExist": "Esta publicación no existe",
     "and": " y a ",
     "loadingQSOLink": "Cargando QSO Link...",
     "loadingQSO": "Cargando QSO...",
@@ -202,6 +204,7 @@
     "confirmRecaptcha": "Confirmar Recaptcha",
     "verifyEmailInbox": "Enviamos el código de confirmación a su correo electrónico. Por favor ingrese el código para activar la cuenta.",
     "welcomeToSuperQSO": "Bienvenido a SuperQSO!",
+    "betaPhase": "Queremos informarle que todavía somos Beta y puede haber demoras en la activación de los usuarios.",
     "trialPeriod": "Usted tiene 3 meses de prueba de nuestro Plan Premium! Disfrute SuperQso 59+100 !!! Después de los 3 meses puede continuar usando SuperQSO con un plan gratuito.",
     "sendLicence": "Por favor envíanos tu licencia de radioaficionado emitida por tu país a info@superqso.com para poder empezar a usar SuperQSO con tu licencia. Te vamos a habilitar lo antes posible una vez recibida la licencia. ",
     "downloadAPP": "Recordá que para publicar un QSO o una SWL(Escucha) se hace únicamente desde la APP en el celular y no de superqso.com, si aún no tienes la APP puedes obtenerla de tú tienda de aplicaciones buscándola bajo el nombre: superqso",
@@ -212,7 +215,7 @@
     "willFindYouByCallsign": "Otros podran buscarme a través de mi Señal Distintiva."
   },
   "qslCard": {
-    "scanWith": "Escanear con la APP de SuperQSO",
+    "scanWith": "Usa la APP de SuperQSO",
     "createdPost": "Creó un POST",
     "createdPostWith": "Creó un POST con",
     "listenedQSO": "Escuchó un QSO con ",

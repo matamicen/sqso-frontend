@@ -108,8 +108,18 @@ class QSODetail extends React.PureComponent {
   handleOpen = () => this.setState({ adActive: true });
   handleClose = () => this.setState({ adActive: false, adClosed: true });
   render() {
-    const {t} = this.props;
-
+    const { t } = this.props;
+    let error;
+    switch (this.state.qsoError) {
+      case 'QSO does not exist':
+        error = t('qso.notExist');
+        break;
+      case 'This QSO was deleted and cannot be displayed':
+        error = t('qso.postDeleted');
+        break;
+      default:
+        error = this.state.qsoError;
+    }
     if (this.state.qsoError) {
       return (
         <Modal
@@ -118,7 +128,7 @@ class QSODetail extends React.PureComponent {
           size="small"
         >
           <Modal.Content>
-            <p align="center">{this.state.qsoError}</p>
+            <p align="center">{error}</p>
           </Modal.Content>
         </Modal>
       );
@@ -196,6 +206,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )
-  (withTranslation()(QSODetail))
+  )(withTranslation()(QSODetail))
 );

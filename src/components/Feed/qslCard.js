@@ -1,9 +1,9 @@
 import * as Sentry from '@sentry/browser';
 import canvg from 'canvg';
+import { default as i18n, default as i18next } from 'i18next';
 import QRCode from 'qrcode.react';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import { withTranslation } from 'react-i18next';
 import packageJson from '../../../package.json';
 const RELEASE = packageJson.version;
 if (process.env.NODE_ENV === 'production') {
@@ -21,7 +21,8 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 async function QslCardPrint(props) {
-  const { t } = props;
+  const t = i18next.t.bind(i18next)
+  
   try {
     const jsPDF = require('jspdf');
     const pdf = new jsPDF('l', 'in');
@@ -75,7 +76,7 @@ async function QslCardPrint(props) {
     pdf.text(
       t('qso.date') +
         ': ' +
-        date.toLocaleDateString( { month: 'short' }) +
+        date.toLocaleDateString(i18n.language, { month: 'short' }) +
         ' ' +
         date.getDate() +
         ', ' +
@@ -280,4 +281,4 @@ async function loadImage(url) {
 //     }
 //   });
 // }
-export default withTranslation()(QslCardPrint);
+export default QslCardPrint;

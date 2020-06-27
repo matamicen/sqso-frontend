@@ -19,7 +19,7 @@ const QRAProfile = ( props) => {
   return (
     <div className="profile-container">
       <Dimmer active={props.loaderActive} page>
-        <Loader>Loading callsign...</Loader>
+        <Loader>{t('qra.loading')}</Loader>
       </Dimmer>
       {/* <Dimmer
         active={props.adActive}

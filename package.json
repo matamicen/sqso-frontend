@@ -1,6 +1,6 @@
 {
   "name": "sqso-frontend",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "private": true,
   "homepage": "https://www.superqso.com/",
   "dependencies": {
@@ -110,7 +110,7 @@
   },
   "scripts": {
     "babel": "yarn && babel server --out-dir dist && node ./dist/app",
-    "start": "yarn install --production &&  yarn build  && nodemon --exec babel-node ./server/app ",
+    "start": "yarn install --production &&  yarn build  && node dist/app ",
     "eb_test": "yarn install --production && yarn build && node dist/app",
     "static": "yarn && yarn sitemap && react-scripts start",
     "build": "react-scripts build",
