@@ -109,7 +109,7 @@
     "helpUnderstandWhatsHappening": "Help Us Understand What's Happening"
   } ,
   "global": {
-    
+        "you": "You",
     "ok": "OK",
     "at": " at ",
     "and": " and ",
@@ -133,9 +133,11 @@
     "workedQSO": "{{QRA}} worked a QSO"
   },
   "qso": {
+    "postDeleted": "This Post was deleted and cannot be displayed",
+    "notExist": "This Post does not exist",
     "and": " and ",
     "loadingQSOLink": "Loading QSO Link...",
-    "loadingQSO": "Loading QSO...",
+    "loadingQSO": "Loading ...",
     "confirmRepost": "Confirm Repost?",
     "playAudio": "Play Audio",
     "qsoReposted": "QSO Reposted",

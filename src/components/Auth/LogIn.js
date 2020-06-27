@@ -362,6 +362,7 @@ class LogIn extends React.Component {
         <Modal size="small" open={this.state.showModalMessage}>
           <Header content={t('forms.welcomeToSuperQSO')} />
           <Modal.Content>
+          <p>{t('forms.betaPhase')}</p>
             <p>{t('forms.trialPeriod')}</p>
             <p>{t('forms.sendLicence')}</p>
             <p>
