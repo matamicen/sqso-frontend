@@ -134,6 +134,8 @@
     "workedQSO": "{{QRA}} trabajó un QSO"    
   },
   "qso": {
+    "postDeleted": "Esta publicación ha sido eliminada y no puede ser mostrada",
+    "notExist": "Esta publicación no existe",
     "and": " y a ",
     "loadingQSOLink": "Cargando QSO Link...",
     "loadingQSO": "Cargando QSO...",
@@ -213,7 +215,7 @@
     "willFindYouByCallsign": "Otros podran buscarme a través de mi Señal Distintiva."
   },
   "qslCard": {
-    "scanWith": "Escanear con la APP de SuperQSO",
+    "scanWith": "Usa la APP de SuperQSO",
     "createdPost": "Creó un POST",
     "createdPostWith": "Creó un POST con",
     "listenedQSO": "Escuchó un QSO con ",
