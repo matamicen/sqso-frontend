@@ -13,31 +13,34 @@ import '../../styles/style.css';
 import Ad from '../Ad/Ad';
 import FeedQSO from '../Feed/NewsFeedContainer';
 import AppNavigation from './AppNavigation';
-class Home extends React.Component {
+class Home extends React.PureComponent {
   state = {
     adActive: true,
     active: null,
-    modalOpen: false,
-    error: null, 
+    modalOpen: null,
+    error: null,
     videoAlreadyDisplayed: false
   };
 
   componentDidMount() {
-    let visited = localStorage["alreadyVisited"];
-    
-    if(visited) {
-         this.setState({ videoAlreadyDisplayed: true })
-         //do not view Popup
+    let visited = localStorage['alreadyVisited'];
+
+    if (visited) {
+      this.setState({ videoAlreadyDisplayed: true });
+      //do not view Popup
     } else {
-         //this is the first time
-         localStorage["alreadyVisited"] = true;
-         this.setState({ viewPopup: false});
+      //this is the first time
+
+      this.setState({ videoAlreadyDisplayed: false });
     }
     if (process.env.NODE_ENV !== 'production')
       this.setState({ adActive: false });
-
+    
     if (this.props.isAuthenticated)
-      this.props.actions.doFetchUserFeed(this.props.token, this.props.currentQRA);
+      this.props.actions.doFetchUserFeed(
+        this.props.token,
+        this.props.currentQRA
+      );
     else {
       if (!visited) this.setState({ modalOpen: true });
       this.props.actions.doFetchPublicFeed();
@@ -47,16 +50,16 @@ class Home extends React.Component {
       window.googletag.destroySlots();
       window.googletag
         .defineSlot(
-          "/22031658057/Home/home_left",
+          '/22031658057/Home/home_left',
           [160, 600],
-          "div-ads-instance-home-left"
+          'div-ads-instance-home-left'
         )
         .addService(window.googletag.pubads());
       window.googletag
         .defineSlot(
-          "/22031658057/Home/home_right",
+          '/22031658057/Home/home_right',
           [160, 600],
-          "div-ads-instance-home-right"
+          'div-ads-instance-home-right'
         )
         .addService(window.googletag.pubads());
       window.googletag.pubads().enableSingleRequest();
@@ -71,7 +74,8 @@ class Home extends React.Component {
     else if (!props.qsosFetched) return { active: true };
   }
   render() {
-    const {t} = this.props;
+    const { t } = this.props;
+    
     return (
       <Fragment>
         <Dimmer active={this.state.active} page>
@@ -128,9 +132,13 @@ class Home extends React.Component {
         </div>
         <Modal
           open={this.state.modalOpen}
-          onClose={() => this.setState({ modalOpen: false, videoAlreadyDisplayed: true })}
+          onClose={() => {
+            localStorage['alreadyVisited'] = true;
+            this.setState({ modalOpen: false, videoAlreadyDisplayed: true });
+          }}
           size="large"
-        ><Modal.Header>{t('whatIsSuperQSO.whatIsSuperQSO')}</Modal.Header>
+        >
+          <Modal.Header>{t('whatIsSuperQSO.whatIsSuperQSO')}</Modal.Header>
           <Modal.Content>
             <video width="100%" autoPlay controls controlsList="nodownload">
               <source
@@ -146,25 +154,38 @@ class Home extends React.Component {
             <Button
               color="facebook"
               onClick={() => {
-                this.setState({ modalOpen: false, videoAlreadyDisplayed: true });
+                this.setState({
+                  modalOpen: false,
+                  videoAlreadyDisplayed: true
+                });
+                localStorage['alreadyVisited'] = true;
                 this.props.history.push('/download');
               }}
             >
-               {t('whatIsSuperQSO.downloadApp')}
+              {t('whatIsSuperQSO.downloadApp')}
             </Button>
-            <Button onClick={() => {
-                this.setState({ modalOpen: false, videoAlreadyDisplayed: true });
+            <Button
+              onClick={() => {
+                this.setState({
+                  modalOpen: false,
+                  videoAlreadyDisplayed: true
+                });
+                localStorage['alreadyVisited'] = true;
                 this.props.history.push('/tutorials');
               }}
             >
               {t('whatIsSuperQSO.tutorial')}
             </Button>
-            <Button onClick={() => {
-                this.setState({ modalOpen: false, videoAlreadyDisplayed: true });
-                
+            <Button
+              onClick={() => {
+                localStorage['alreadyVisited'] = true;
+                this.setState({
+                  modalOpen: false,
+                  videoAlreadyDisplayed: true
+                });
               }}
             >
-             {t('whatIsSuperQSO.skip')}
+              {t('whatIsSuperQSO.skip')}
             </Button>
           </Modal.Actions>
         </Modal>
