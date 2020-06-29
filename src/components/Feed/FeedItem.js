@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
+import FeedItemAd from './FeedItemAd'
 import FeedItemPost from './FeedItemPost'
 import FeedItemQSO from './FeedItemQSO'
 import FeedItemRepost from './FeedItemRepost'
 
-// import FeedItemAd from './FeedItemAd'
 const FeedItem = props => {
   switch (props.type) {
     case 'QSO':
@@ -51,16 +51,16 @@ const FeedItem = props => {
           index={props.index}
         />
       )
-    // case "AD":
-    //   return (
-    //     <FeedItemAd
-    //       source={props.source}
-    //       ad={props.ad}
-    //       measure={props.measure}
-    //       recalculateRowHeight={props.recalculateRowHeight}
-    //       index={props.index}
-    //     />
-    //   );
+    case "AD":
+      return (
+        <FeedItemAd
+          source={props.source}
+          ad={props.ad}
+          measure={props.measure}
+          recalculateRowHeight={props.recalculateRowHeight}
+          index={props.index}
+        />
+      );
     default:
       return null
   }
