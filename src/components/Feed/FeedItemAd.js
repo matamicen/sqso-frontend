@@ -11,8 +11,8 @@ export default class FeedItemAd extends React.PureComponent {
           adslot="/22031658057/Home/home_feed"
           width={336}
           height={280}
-          id="div-ads-instance-home-feed"
-          displayOnly={true}
+          // id="div-ads-instance-home-feed"
+          displayOnly={false}
         />
       </Segment>
     );
