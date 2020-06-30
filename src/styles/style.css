@@ -1,4 +1,10 @@
-/* Follow */
+.adMobile {
+  display: none;
+}
+
+.adDesktop {
+  display: block;
+}
 
 .slick-slide {
   /* padding: 0 15px; */
@@ -322,6 +328,13 @@
 }
 /*--------------------------------*/
 @media (max-width: 910px) {
+  .adMobile {
+    display: block;
+  }
+  
+  .adDesktop {
+    display: none;
+  }
   .NavBar {
     /* padding: 2px; */
     width: 100%;
