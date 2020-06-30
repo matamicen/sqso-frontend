@@ -29,7 +29,7 @@ class Ads extends React.Component {
         window.googletag
           .defineSlot(
             this.props.adslot,
-            [this.props.width, this.props.height],
+            [[728,90],[728,350],[350,250]],
             this.id
           )
           .addService(window.googletag.pubads());
