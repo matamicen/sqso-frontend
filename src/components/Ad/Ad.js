@@ -42,7 +42,9 @@ class Ads extends React.Component {
         style={{
           width: this.props.width,
           height: this.props.height,
-          margin: "0 auto"
+          // margin: "0 auto",
+          padding: 'initial'
+          
         }}
       >
         <Waypoint onEnter={this.displayAd} />
