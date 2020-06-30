@@ -5,7 +5,7 @@ import Image from 'semantic-ui-react/dist/commonjs/elements/Image';
 import '../../styles/style.css';
 import Ad from '../Ad/Ad';
 import AppNavigation from '../Home/AppNavigation';
-const Download = ({t}) => (
+const Download = ({ t }) => (
   <Fragment>
     <div className="global-container">
       <div className="site-header">
@@ -23,7 +23,14 @@ const Download = ({t}) => (
           src="/en_badge_web_generic.png"
           size="medium"
           rounded
-          href="https://play.google.com/apps/internaltest/4701688562191638690"
+          href="https://play.google.com/store/apps/details?id=com.sqsomobile&hl=es_AR"
+          target="_blank"
+        />
+        <Image
+          src="/ios_en_badge_web_generic.png"
+          size="medium"
+          rounded
+          href="https://apps.apple.com/ar/app/superqso/id1478967853"
           target="_blank"
         />
       </div>
