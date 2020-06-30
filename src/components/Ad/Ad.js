@@ -18,12 +18,12 @@ class Ads extends React.Component {
   }
 
   get id() {
-    return (this.props.id || this.__id);
+    return (this.props.id || "div-ads-instance-" + this.__id);
   }
 
   async componentDidMount() {
-    //   console.log(this.id)
-    /*   //Comentado Adsense
+    
+
     if (!this.props.displayOnly)  
        await window.googletag.cmd.push(() => {
         window.googletag
@@ -33,8 +33,8 @@ class Ads extends React.Component {
             this.id
           )
           .addService(window.googletag.pubads());
-      }); */
-    //Comentado Adsense
+      }); 
+    
   }
   render() {
     return (
