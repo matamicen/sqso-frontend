@@ -1,10 +1,18 @@
+#banner {
+  position : fixed;
+  left : 50%;
+  margin-right: -50%;
+  transform : translate(-50%, -50%);
+  
+  }
 .adMobile {
   display: none;
   padding: initial;
 }
 
 .adDesktop {
-  display: block;
+  display: flex;
+  justify-content: center;
   padding: initial;
 
 }
@@ -332,7 +340,8 @@
 /*--------------------------------*/
 @media (max-width: 910px) {
   .adMobile {
-    display: block;
+    display: flex;
+    justify-content: center;
     padding: initial;
   }
   

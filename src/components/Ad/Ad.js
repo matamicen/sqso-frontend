@@ -1,7 +1,7 @@
-import PropTypes from "prop-types";
-import React from "react";
-import { Waypoint } from "react-waypoint";
-
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Waypoint } from 'react-waypoint';
+import '../../styles/style.css';
 let instance = 0;
 class Ads extends React.Component {
   static propTypes = {
@@ -18,23 +18,23 @@ class Ads extends React.Component {
   }
 
   get id() {
-    return (this.props.id || "div-ads-instance-" + this.__id);
+    return this.props.id || 'div-ads-instance-' + this.__id;
   }
 
   async componentDidMount() {
-    
-
-    if (!this.props.displayOnly)  
-       await window.googletag.cmd.push(() => {
+    if (!this.props.displayOnly)
+      await window.googletag.cmd.push(() => {
+        
         window.googletag
           .defineSlot(
             this.props.adslot,
-            [[728,90],[600,500],[300,250]],
+            [[600, 500], [300, 250]],
             this.id
           )
           .addService(window.googletag.pubads());
-      }); 
-    
+          
+          window.googletag.enableServices();
+      });
   }
   render() {
     return (
@@ -44,7 +44,6 @@ class Ads extends React.Component {
           height: this.props.height,
           // margin: "0 auto",
           padding: 'initial'
-          
         }}
       >
         <Waypoint onEnter={this.displayAd} />
@@ -56,6 +55,7 @@ class Ads extends React.Component {
   displayAd() {
     const id = this.id;
     window.googletag.cmd.push(function() {
+
       window.googletag.display(id);
     });
   }
