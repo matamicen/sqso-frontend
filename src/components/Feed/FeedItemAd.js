@@ -6,7 +6,7 @@ import Ad from '../Ad/Ad';
 export default class FeedItemAd extends React.PureComponent {
   render() {
     return (
-      <Segment raised secondary style={{ padding: "none" }}>
+      <Segment raised secondary style={{ padding: "initial" }}>
         <div className="adDesktop">
           <Ad
             adslot="/22031658057/Home/home_feed"

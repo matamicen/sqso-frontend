@@ -1,9 +1,12 @@
 .adMobile {
   display: none;
+  padding: initial;
 }
 
 .adDesktop {
   display: block;
+  padding: initial;
+
 }
 
 .slick-slide {
@@ -330,10 +333,12 @@
 @media (max-width: 910px) {
   .adMobile {
     display: block;
+    padding: initial;
   }
   
   .adDesktop {
     display: none;
+    padding: initial;
   }
   .NavBar {
     /* padding: 2px; */

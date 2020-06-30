@@ -29,7 +29,7 @@ class Ads extends React.Component {
         window.googletag
           .defineSlot(
             this.props.adslot,
-            [[728,90],[728,350],[350,250]],
+            [[728,90],[600,500],[300,250]],
             this.id
           )
           .addService(window.googletag.pubads());
@@ -42,7 +42,9 @@ class Ads extends React.Component {
         style={{
           width: this.props.width,
           height: this.props.height,
-          margin: "0 auto"
+          // margin: "0 auto",
+          padding: 'initial'
+          
         }}
       >
         <Waypoint onEnter={this.displayAd} />
