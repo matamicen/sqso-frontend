@@ -7,7 +7,7 @@ export default class FeedItemAd extends React.PureComponent {
   render() {
     return (
       <Segment raised secondary style={{ padding: "initial" }}>
-        <div className="adDesktop">
+        {/* <div className="adDesktop">
           <Ad
             adslot="/22031658057/Home/home_feed"
             width={600}
@@ -15,7 +15,7 @@ export default class FeedItemAd extends React.PureComponent {
             // id="div-ads-instance-home-feed"
             displayOnly={false}
           />
-        </div>
+        </div> */}
         <div className="adMobile">
           <Ad
             adslot="/22031658057/Home/home_feed"
