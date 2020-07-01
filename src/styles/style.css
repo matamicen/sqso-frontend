@@ -6,12 +6,16 @@
   
   }
 .adMobile {
-  display: none;
+  /* display: none; */
+  display: flex;
+  justify-content: center;
+  /* visibility: hidden; */
   padding: initial;
 }
 
 .adDesktop {
   display: flex;
+  visibility: visible;
   justify-content: center;
   padding: initial;
 
@@ -343,10 +347,12 @@
     display: flex;
     justify-content: center;
     padding: initial;
+    visibility: visible;
   }
   
   .adDesktop {
     display: none;
+    visibility: hidden;
     padding: initial;
   }
   .NavBar {
