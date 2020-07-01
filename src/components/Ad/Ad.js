@@ -23,18 +23,20 @@ class Ads extends React.Component {
 
   async componentDidMount() {
     if (!this.props.displayOnly)
-      await window.googletag.cmd.push(() => {
-        
-        window.googletag
-          .defineSlot(
-            this.props.adslot,
-            [[600, 500], [300, 250]],
-            this.id
-          )
-          .addService(window.googletag.pubads());
-          
-          window.googletag.enableServices();
-      });
+      // var mapping = window.googletag
+      //   .sizeMapping()
+      //   .addSize([1280, 910], [600, 500])
+      //   .addSize([0, 0], [300, 250])
+      //   .build();
+    await window.googletag.cmd.push(() => {
+      window.googletag
+        .defineSlot(this.props.adslot, [300, 250], this.id)
+        // .defineSizeMapping(mapping)
+        .addService(window.googletag.pubads());
+      // window.googletag.pubads().enableVideoAds();
+      window.googletag.pubads().enableSingleRequest();
+      window.googletag.enableServices();
+    });
   }
   render() {
     return (
@@ -55,7 +57,6 @@ class Ads extends React.Component {
   displayAd() {
     const id = this.id;
     window.googletag.cmd.push(function() {
-
       window.googletag.display(id);
     });
   }
