@@ -359,7 +359,7 @@ class LogIn extends React.Component {
             <Ad adslot="/21799560237/Login/left" width={160} height={600} />
           </div>
         </div>
-        <Modal size="small" open={true}>
+        <Modal size="small" open={this.state.showModalMessage}>
           <Header content={t('forms.welcomeToSuperQSO')} />
           <Modal.Content>
           <p>{t('forms.betaPhase')}</p>
