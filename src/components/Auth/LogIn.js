@@ -67,9 +67,22 @@ class LogIn extends React.Component {
     ).catch(err => {
       switch (err.code) {
         case 'NotAuthorizedException':
-          this.setState({
-            loginError: { code: err.code, message: t('auth.userDisabled') }
-          });
+          console.log(err);
+          if (err.message === 'Incorrect username or password.')
+            this.setState({
+              loginError: {
+                code: err.code,
+                message: t('auth.incorrectUserPass')
+              }
+            });
+          else if (err.message === 'User is disabled.')
+            this.setState({
+              loginError: { code: err.code, message: t('auth.userDisabled') }
+            });
+          else
+            this.setState({
+              loginError: err
+            });
           break;
         case 'UserNotConfirmedException':
           this.setState({
@@ -362,15 +375,17 @@ class LogIn extends React.Component {
         <Modal size="small" open={this.state.showModalMessage}>
           <Header content={t('forms.welcomeToSuperQSO')} />
           <Modal.Content>
-          <p>{t('forms.betaPhase')}</p>
+            <p>{t('forms.betaPhase')}</p>
             {/* <p>{t('forms.trialPeriod')}</p> */}
-            <p style={{color : "#243665"}}><b>{t('forms.sendLicence')}</b></p>
+            <p style={{ color: '#243665' }}>
+              <b>{t('forms.sendLicence')}</b>
+            </p>
             <p>
               <b>{t('forms.downloadAPP')}</b>
             </p>
           </Modal.Content>
           <Modal.Actions>
-          <Button
+            <Button
               color="facebook"
               onClick={() => {
                 this.setState({
