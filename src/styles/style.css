@@ -1,10 +1,22 @@
+#banner {
+  position : fixed;
+  left : 50%;
+  margin-right: -50%;
+  transform : translate(-50%, -50%);
+  
+  }
 .adMobile {
-  display: none;
+  /* display: none; */
+  display: flex;
+  justify-content: center;
+  /* visibility: hidden; */
   padding: initial;
 }
 
 .adDesktop {
-  display: block;
+  display: flex;
+  visibility: visible;
+  justify-content: center;
   padding: initial;
 
 }
@@ -332,12 +344,15 @@
 /*--------------------------------*/
 @media (max-width: 910px) {
   .adMobile {
-    display: block;
+    display: flex;
+    justify-content: center;
     padding: initial;
+    visibility: visible;
   }
   
   .adDesktop {
     display: none;
+    visibility: hidden;
     padding: initial;
   }
   .NavBar {
