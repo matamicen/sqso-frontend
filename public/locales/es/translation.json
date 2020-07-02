@@ -12,7 +12,7 @@
     "whatIsSuperQSO": "¿Qué es SuperQSO?",
     "downloadApp": "Descargar App",
     "tutorial": "Ver Tutoriales",
-    "whoToFollow": "A quien Seguir",
+    "whoToFollow": "A Quien Seguir",
     "searchCallsign": "Buscar SD"
   },
   "whatIsSuperQSO": {
@@ -23,6 +23,7 @@
     "browserNotSupportTag": "Su Navegador no soporta esta etiqueta"
   },
   "auth": {
+    "incorrectUserPass": "Usuario o contraseña incorrectas",
     "userDisabled": "El usuario no esta hablitado todavía debido a que no recibimos licencia. Envíela lo antes posible a info@superqso.com para que activemos su cuenta",
     "userNotConfirmed": "El usuario no ha ingresado los códigos de Confirmación enviados al Email",
     "enterMailPassword": "Ingresar Email y Contraseña",
@@ -220,5 +221,12 @@
     "createdPostWith": "Creó un POST con",
     "listenedQSO": "Escuchó un QSO con ",
     "workedQSO": "Trabajó un QSO con "
+  },
+  "whoToFollow":{
+    "qsosCreated": "QSOs Creados",
+    "callsignsYouTagged":"Señales Distintivas que has mencionado",
+    "callsignsTaggedYou":"Señales Distintivas que te han mencionado",
+    "callsignsFollowYou": "Señales Distintivas que te siguen",
+    "callsignsMostFollowed":"Señales Distintivas más seguidos"
   }
 }
