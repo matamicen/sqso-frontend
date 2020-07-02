@@ -1,3 +1,4 @@
+import i18n from 'i18next';
 import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
 import { withTranslation } from 'react-i18next';
@@ -114,7 +115,7 @@ class FeedItemQSO extends React.Component {
             <div className="qso-header-info-post">
               <div>
                 <b>{t('qso.date')}: </b>
-                {date.toLocaleDateString( { month: 'short' }) +
+                {date.toLocaleDateString(i18n.language, { month: 'short' }) +
                   ' ' +
                   date.getDate() +
                   ', ' +
