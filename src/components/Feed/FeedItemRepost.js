@@ -1,3 +1,4 @@
+import i18n from 'i18next';
 import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
 import { withTranslation } from 'react-i18next';
@@ -123,7 +124,7 @@ class FeedItemRepost extends React.Component {
             <div className="qso-header-info-post">
               <div>
                 <b>{ t('qso.date')}: </b>
-                {repostDate.toLocaleDateString( { month: 'short' }) +
+                {repostDate.toLocaleDateString(i18n.language, { month: 'short' }) +
                   ' ' +
                   repostDate.getDate() +
                   ', ' +
@@ -216,7 +217,7 @@ class FeedItemRepost extends React.Component {
                 <div>
                   <b>{ t('qso.date')} </b>
                   <br />
-                  {date.toLocaleDateString( { month: 'short' }) +
+                  {date.toLocaleDateString(i18n.language, { month: 'short' }) +
                     ' ' +
                     date.getDate() +
                     ', ' +
