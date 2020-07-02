@@ -77,6 +77,7 @@ class AuthenticatedNavigation extends React.PureComponent {
           <Link
             to="/"
             onClick={() => {
+              this.props.actions.doFetchUserInfo(this.props.token);
               if (this.props.isAuthenticated)
                 this.props.actions.doFetchUserFeed(
                   this.props.token,
