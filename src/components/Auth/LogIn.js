@@ -359,17 +359,42 @@ class LogIn extends React.Component {
             <Ad adslot="/21799560237/Login/left" width={160} height={600} />
           </div>
         </div>
-        <Modal size="small" open={this.state.showModalMessage}>
+        <Modal size="small" open={true}>
           <Header content={t('forms.welcomeToSuperQSO')} />
           <Modal.Content>
           <p>{t('forms.betaPhase')}</p>
-            <p>{t('forms.trialPeriod')}</p>
-            <p>{t('forms.sendLicence')}</p>
+            {/* <p>{t('forms.trialPeriod')}</p> */}
+            <p style={{color : "#243665"}}><b>{t('forms.sendLicence')}</b></p>
             <p>
               <b>{t('forms.downloadAPP')}</b>
             </p>
           </Modal.Content>
           <Modal.Actions>
+          <Button
+              color="facebook"
+              onClick={() => {
+                this.setState({
+                  modalOpen: false,
+                  videoAlreadyDisplayed: true
+                });
+                localStorage['alreadyVisited'] = true;
+                this.props.history.push('/download');
+              }}
+            >
+              {t('whatIsSuperQSO.downloadApp')}
+            </Button>
+            <Button
+              onClick={() => {
+                this.setState({
+                  modalOpen: false,
+                  videoAlreadyDisplayed: true
+                });
+                localStorage['alreadyVisited'] = true;
+                this.props.history.push('/tutorials');
+              }}
+            >
+              {t('whatIsSuperQSO.tutorial')}
+            </Button>
             <Button
               positive
               icon="checkmark"
