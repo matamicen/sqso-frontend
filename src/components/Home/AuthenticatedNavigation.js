@@ -68,12 +68,28 @@ class AuthenticatedNavigation extends React.PureComponent {
             <img src="/logoDesk.jpg" alt="SuperQSO.com" className="desktop" />
           </Link>
         </Menu.Item>
-        <Menu.Item style={{ flex: '1 1 auto', justifyContent: 'center', padding: "5px" }}>
+        <Menu.Item
+          style={{ flex: '1 1 auto', justifyContent: 'center', padding: '5px' }}
+        >
           <NavigationSearch />
         </Menu.Item>
-        <Menu.Item style={{  padding: "10px" }}>
-          <Link to="/">
-            <Icon.Group size="large" >
+        <Menu.Item style={{ padding: '10px' }}>
+          <Link
+            to="/"
+            onClick={() => {
+              this.props.actions.doFetchUserInfo(this.props.token);
+              if (this.props.isAuthenticated)
+                this.props.actions.doFetchUserFeed(
+                  this.props.token,
+                  this.props.currentQRA
+                );
+              else {
+                
+                this.props.actions.doFetchPublicFeed();
+              }
+            }}
+          >
+            <Icon.Group size="large">
               <Icon name="home" />
             </Icon.Group>
           </Link>
@@ -88,7 +104,11 @@ class AuthenticatedNavigation extends React.PureComponent {
             item
             text={this.props.currentQRA}
             direction="left"
-            style={{ minWidth: '90px', padding: "4px", justifyContent: 'center' }}
+            style={{
+              minWidth: '90px',
+              padding: '4px',
+              justifyContent: 'center'
+            }}
           >
             <Dropdown.Menu>
               <Dropdown.Header content={this.props.currentQRA} />
@@ -108,11 +128,11 @@ class AuthenticatedNavigation extends React.PureComponent {
               </Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Item onClick={() => this.props.history.push('/follow')}>
-              {t('navBar.whoToFollow')}
+                {t('navBar.whoToFollow')}
               </Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Item onClick={this.logout.bind(this)}>
-              {t('navBar.logOut')} 
+                {t('navBar.logOut')}
               </Dropdown.Item>
               <Dropdown.Divider />
               <Link to="/privacy">
@@ -170,6 +190,8 @@ AuthenticatedNavigation.propTypes = {
 };
 const mapStateToProps = state => ({
   currentQRA: state.userData.currentQRA,
+  isAuthenticated: state.userData.isAuthenticated,
+  token: state.userData.token,
   notifications: state.userData.notifications
 });
 const mapDispatchToProps = dispatch => ({
@@ -181,5 +203,5 @@ export default withRouter(
     mapDispatchToProps,
     null,
     { pure: false }
-    )(withTranslation()(AuthenticatedNavigation))
+  )(withTranslation()(AuthenticatedNavigation))
 );

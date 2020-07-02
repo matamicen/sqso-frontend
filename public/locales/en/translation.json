@@ -23,6 +23,7 @@
     "browserNotSupportTag": "Your browser does not support the video tag"
   },
   "auth": {
+    "incorrectUserPass": "Incorrect username or password.",
     "userDisabled": "The user is not enabled yet since we didn't receive a copy of your issued ham license. Send it ASAP to info@superqso.com in order to enable your account",
     "userNotConfirmed": "The user did not enter the Confirmation Code sent to the email",
     "enterMailPassword": "Please enter Email and Password",
@@ -219,5 +220,12 @@
     "createdPostWith": "Created a POST with",
     "listenedQSO": "Listened a QSO with",
     "workedQSO": "Worked a QSO with "
+  },
+  "whoToFollow":{
+    "qsosCreated": "Qsos Created",
+    "callsignsYouTagged":"Callsigns that you have already tagged",
+    "callsignsTaggedYou":"Callsigns that already tagged you",
+    "callsignsFollowYou": "Callsigns that follow you",
+    "callsignsMostFollowed":"Callsigns most followed"
   }
 }

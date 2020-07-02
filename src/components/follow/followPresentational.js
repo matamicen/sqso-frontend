@@ -1,18 +1,18 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Slider from "react-slick";
-import Button from "semantic-ui-react/dist/commonjs/elements/Button";
-import Header from "semantic-ui-react/dist/commonjs/elements/Header";
-import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
-import Image from "semantic-ui-react/dist/commonjs/elements/Image";
-import Loader from "semantic-ui-react/dist/commonjs/elements/Loader";
-import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
-import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer";
-import Card from "semantic-ui-react/dist/commonjs/views/Card";
-import "../../styles/style.css";
-import Ad from "../Ad/Ad";
-import AppNavigation from "../Home/AppNavigation";
-
+import React from 'react';
+import { withTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+import Slider from 'react-slick';
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
+import Header from 'semantic-ui-react/dist/commonjs/elements/Header';
+import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
+import Image from 'semantic-ui-react/dist/commonjs/elements/Image';
+import Loader from 'semantic-ui-react/dist/commonjs/elements/Loader';
+import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment';
+import Dimmer from 'semantic-ui-react/dist/commonjs/modules/Dimmer';
+import Card from 'semantic-ui-react/dist/commonjs/views/Card';
+import '../../styles/style.css';
+import Ad from '../Ad/Ad';
+import AppNavigation from '../Home/AppNavigation';
 
 var settings = {
   // dots: false,
@@ -51,7 +51,13 @@ var settings = {
     }
   ]
 };
-const qraFollowRecommendPresentational = ({t, active, follow, following, doFollow}) => (
+const qraFollowRecommendPresentational = ({
+  t,
+  active,
+  follow,
+  following,
+  doFollow
+}) => (
   <div className="profile-container">
     <Dimmer active={active} page>
       <Loader>{t('qra.loading')}</Loader>
@@ -85,40 +91,40 @@ const qraFollowRecommendPresentational = ({t, active, follow, following, doFollo
 
     <div className="profile-main">
       <Header as="h1" attached="top" textAlign="center">
-        Who to Follow
+        {t('navBar.whoToFollow')}
       </Header>
       {follow.followingMe && follow.followingMe.length > 0 && (
         <Segment>
           <Header as="h3" block>
-            Callsigns that follow you
+            {t('whoToFollow.callsignsFollowYou')}
           </Header>
           <Slider {...settings}>
             {follow.followingMe.map((qra, i) => (
               <div key={i}>
-                <Card raised style={{ height: "14em" }}>
+                <Card raised style={{ height: '14em' }}>
                   <Card.Content>
-                    <Card.Header style={{ width: "max-content" }}>
-                      <Link to={"/" + qra.qra}>{qra.qra}</Link>
+                    <Card.Header style={{ width: 'max-content' }}>
+                      <Link to={'/' + qra.qra}>{qra.qra}</Link>
                       <Image floated="right" size="mini" src={qra.avatarpic} />
                     </Card.Header>
                     <Card.Meta>
-                      {(qra.firstname ? qra.firstname : "") +
-                        " " +
-                        (qra.lastname ? qra.lastname : "")}
+                      {(qra.firstname ? qra.firstname : '') +
+                        ' ' +
+                        (qra.lastname ? qra.lastname : '')}
                     </Card.Meta>
                     <Card.Description>
                       <Icon name="microphone" />
-                      {qra.qsos_counter} Qsos Created
+                      {qra.qsos_counter} {t('whoToFollow.qsosCreated')}
                       <br />
                       <Icon name="user" />
-                      {qra.followers_counter} Followers
+                      {qra.followers_counter} {t('qra.followers')}
                     </Card.Description>
                   </Card.Content>
                   <Card.Content extra>
                     <div className="ui two buttons">
                       {following.some(o => o.qra === qra.qra) ? (
                         <Button basic color="grey">
-                          Following
+                          {t('qra.following')}
                         </Button>
                       ) : (
                         <Button
@@ -126,7 +132,7 @@ const qraFollowRecommendPresentational = ({t, active, follow, following, doFollo
                           color="green"
                           onClick={() => doFollow(qra.qra)}
                         >
-                          Follow
+                          {t('qra.follow')}
                         </Button>
                       )}
                     </div>
@@ -140,28 +146,28 @@ const qraFollowRecommendPresentational = ({t, active, follow, following, doFollo
       {follow.taggedMe && follow.taggedMe.length > 0 && (
         <Segment>
           <Header as="h3" block>
-            Callsigns that already tagged you
+            {t('whoToFollow.callsignsTaggedYou')}
           </Header>
           <Slider {...settings}>
             {follow.taggedMe.map((qra, i) => (
               <div key={i}>
-                <Card raised style={{ height: "14em" }}>
+                <Card raised style={{ height: '14em' }}>
                   <Card.Content>
-                    <Card.Header style={{ width: "max-content" }}>
-                      <Link to={"/" + qra.qra}>{qra.qra}</Link>
+                    <Card.Header style={{ width: 'max-content' }}>
+                      <Link to={'/' + qra.qra}>{qra.qra}</Link>
                       <Image floated="right" size="mini" src={qra.avatarpic} />
                     </Card.Header>
                     <Card.Meta>
-                      {(qra.firstname ? qra.firstname : "") +
-                        " " +
-                        (qra.lastname ? qra.lastname : "")}
+                      {(qra.firstname ? qra.firstname : '') +
+                        ' ' +
+                        (qra.lastname ? qra.lastname : '')}
                     </Card.Meta>
                     <Card.Description>
                       <Icon name="microphone" />
-                      {qra.qsos_counter} Qsos Created
+                      {qra.qsos_counter} {t('whoToFollow.qsosCreated')}
                       <br />
                       <Icon name="user" />
-                      {qra.followers_counter} Followers
+                      {qra.followers_counter} {t('qra.followers')}
                     </Card.Description>
                   </Card.Content>
 
@@ -169,7 +175,7 @@ const qraFollowRecommendPresentational = ({t, active, follow, following, doFollo
                     <div className="ui two buttons">
                       {following.some(o => o.qra === qra.qra) ? (
                         <Button basic color="grey">
-                          Following
+                          {t('qra.following')}
                         </Button>
                       ) : (
                         <Button
@@ -177,7 +183,7 @@ const qraFollowRecommendPresentational = ({t, active, follow, following, doFollo
                           color="green"
                           onClick={() => doFollow(qra.qra)}
                         >
-                          Follow
+                          {t('qra.follow')}
                         </Button>
                       )}
                     </div>
@@ -191,42 +197,42 @@ const qraFollowRecommendPresentational = ({t, active, follow, following, doFollo
       {follow.taggedByMe && follow.taggedByMe.length > 0 && (
         <Segment>
           <Header as="h3" block>
-            Callsigns that you have already tagged
+            {t('whoToFollow.callsignsYouTagged')}
           </Header>
           <Slider {...settings}>
             {follow.taggedByMe.map((qra, i) => (
               <div
                 key={i}
                 style={{
-                  marginTop: "1em",
-                  marginLeft: "1em",
-                  paddingRight: "1em",
-                  padding: "5px"
+                  marginTop: '1em',
+                  marginLeft: '1em',
+                  paddingRight: '1em',
+                  padding: '5px'
                 }}
               >
-                <Card raised style={{ height: "14em" }}>
+                <Card raised style={{ height: '14em' }}>
                   <Card.Content>
-                    <Card.Header style={{ width: "max-content" }}>
-                      <Link to={"/" + qra.qra}>{qra.qra}</Link>
+                    <Card.Header style={{ width: 'max-content' }}>
+                      <Link to={'/' + qra.qra}>{qra.qra}</Link>
                       <Image
                         floated="right"
                         size="mini"
                         src={
-                          qra.avatarpic ? qra.avatarpic : "/emptyprofile.png"
+                          qra.avatarpic ? qra.avatarpic : '/emptyprofile.png'
                         }
                       />
                     </Card.Header>
                     <Card.Meta>
-                      {(qra.firstname ? qra.firstname : "") +
-                        " " +
-                        (qra.lastname ? qra.lastname : "")}
+                      {(qra.firstname ? qra.firstname : '') +
+                        ' ' +
+                        (qra.lastname ? qra.lastname : '')}
                     </Card.Meta>
                     <Card.Description>
                       <Icon name="microphone" />
-                      {qra.qsos_counter} Qsos Created
+                      {qra.qsos_counter} {t('whoToFollow.qsosCreated')}
                       <br />
                       <Icon name="user" />
-                      {qra.followers_counter} Followers
+                      {qra.followers_counter} {t('qra.followers')}
                     </Card.Description>
                   </Card.Content>
 
@@ -234,7 +240,7 @@ const qraFollowRecommendPresentational = ({t, active, follow, following, doFollo
                     <div className="ui two buttons">
                       {following.some(o => o.qra === qra.qra) ? (
                         <Button basic color="grey">
-                          Following
+                          {t('qra.following')}
                         </Button>
                       ) : (
                         <Button
@@ -242,7 +248,7 @@ const qraFollowRecommendPresentational = ({t, active, follow, following, doFollo
                           color="green"
                           onClick={() => doFollow(qra.qra)}
                         >
-                          Follow
+                          {t('qra.follow')}
                         </Button>
                       )}
                     </div>
@@ -256,48 +262,48 @@ const qraFollowRecommendPresentational = ({t, active, follow, following, doFollo
       {follow.topFollowed && (
         <Segment>
           <Header as="h3" block>
-            Callsigns most followed
+            {t('whoToFollow.callsignsMostFollowed')}
           </Header>
           <Slider {...settings}>
             {follow.topFollowed.map((qra, i) => (
               <div
                 key={i}
                 style={{
-                  marginTop: "1em",
-                  marginLeft: "1em"
+                  marginTop: '1em',
+                  marginLeft: '1em'
                 }}
               >
-                <Card raised style={{ height: "14em" }}>
+                <Card raised style={{ height: '14em' }}>
                   <Card.Content>
-                    <Card.Header style={{ width: "max-content" }}>
-                      <Link to={"/" + qra.qra}>{qra.qra}</Link>
+                    <Card.Header style={{ width: 'max-content' }}>
+                      <Link to={'/' + qra.qra}>{qra.qra}</Link>
                       <Image
                         floated="right"
                         size="mini"
                         src={
-                          qra.avatarpic ? qra.avatarpic : "/emptyprofile.png"
+                          qra.avatarpic ? qra.avatarpic : '/emptyprofile.png'
                         }
                       />
                     </Card.Header>
 
                     <Card.Meta>
-                      {(qra.firstname ? qra.firstname : "") +
-                        " " +
-                        (qra.lastname ? qra.lastname : "")}
+                      {(qra.firstname ? qra.firstname : '') +
+                        ' ' +
+                        (qra.lastname ? qra.lastname : '')}
                     </Card.Meta>
                     <Card.Description>
                       <Icon name="microphone" />
-                      {qra.qsos_counter} Qsos Created
+                      {qra.qsos_counter} {t('whoToFollow.qsosCreated')}
                       <br />
                       <Icon name="user" />
-                      {qra.followers_counter} Followers
+                      {qra.followers_counter} {t('qra.followers')}
                     </Card.Description>
                   </Card.Content>
                   <Card.Content extra>
                     <div className="ui two buttons">
                       {following.some(o => o.qra === qra.qra) ? (
                         <Button basic color="grey">
-                          Following
+                          {t('qra.following')}
                         </Button>
                       ) : (
                         <Button
@@ -305,7 +311,7 @@ const qraFollowRecommendPresentational = ({t, active, follow, following, doFollo
                           color="green"
                           onClick={() => doFollow(qra.qra)}
                         >
-                          Follow
+                          {t('qra.follow')}
                         </Button>
                       )}
                     </div>
@@ -329,4 +335,4 @@ const qraFollowRecommendPresentational = ({t, active, follow, following, doFollo
     </div>
   </div>
 );
-export default qraFollowRecommendPresentational;
+export default withTranslation()(qraFollowRecommendPresentational);
