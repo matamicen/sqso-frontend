@@ -34,9 +34,9 @@ class Notification extends React.Component {
             <Feed.Summary>
               <Link
                 to={
-                  '/' + (this.props.currentQRA === notif.REF_QRA)
+                  '/' + ((this.props.currentQRA === notif.REF_QRA)
                     ? notif.QRA
-                    : notif.REF_QRA
+                    : notif.REF_QRA)
                 }
                 onClick={this.handleOnClick}
               >
