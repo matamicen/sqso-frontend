@@ -71,16 +71,20 @@ class FeedItemQSO extends React.PureComponent {
     const commentsCounter = '(' + this.props.qso.comments.length + ')';
 
     let text;
+    let shareText;
 
     switch (this.props.qso.type) {
       case 'QSO':
         text = t('qso.workedAQSO');
+        shareText = t('qso.checkOutQSO');
         break;
       case 'LISTEN':
         text = t('qso.listenedQSO');
+        shareText = t('qso.checkOutQSO');
         break;
       case 'SHARE':
         text = t('qso.repostedQSO');
+        shareText = t('qso.checkOutPost');
         break;
       default:
     }
@@ -235,7 +239,7 @@ class FeedItemQSO extends React.PureComponent {
               </div>
             </Button>
             <QSORePostButton qso={this.props.qso} />
-            <QSOShareButtons idqso={this.props.qso.GUID_URL} />
+            <QSOShareButtons idqso={this.props.qso.GUID_URL} title={shareText} />
           </Button.Group>
           {this.props.qso.showComments && (
             <QSOComments

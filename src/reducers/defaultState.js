@@ -179,17 +179,18 @@ function generalReducers(state = initialState, action) {
       });
       return newStore;
     case COMMENT_ADD:
+      console.log(action)
       newStore = Object.assign({}, state, {
         ...state,
         qsos: state.qsos.map(qso => {
           if (qso.idqsos === action.idqso) {
-            qso.comments = action.comments;
+            qso.comments = [...qso.comments, action.comment ];
           }
           return qso;
         }),
         qso_link:
           state.qso_link && state.qso_link.idqsos === action.idqso
-            ? { ...state.qso_link, comments: action.comments }
+            ? { ...state.qso_link, comments: [...state.qso_link.comments, action.comment] }
             : state.qso_link ,
         qra: state.qra
           ? {
@@ -198,7 +199,7 @@ function generalReducers(state = initialState, action) {
                 state.qra && state.qra.qsos
                   ? state.qra.qsos.map(qso => {
                       if (qso.idqsos === action.idqso) {
-                        qso.comments = action.comments;
+                        qso.comments = [...qso.comments, action.comment ];
                       }
                       return qso;
                     })
@@ -210,7 +211,7 @@ function generalReducers(state = initialState, action) {
           state.qso && state.qso.idqsos
             ? {
                 ...state.qso,
-                comments: action.comments
+                comments: [...state.qso.comments, action.comment]
               }
             : {}
       });

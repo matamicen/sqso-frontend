@@ -75,7 +75,7 @@ class QSOCommentItem extends React.Component {
                         src={this.props.comment.avatarpic}
                         circular
                       />
-                    )}
+                    )}{' '}
                     <span style={{ fontSize: '1.2rem' }}>
                       {this.props.comment.qra.toUpperCase()}{' '}
                       {this.props.comment.firstname}{' '}

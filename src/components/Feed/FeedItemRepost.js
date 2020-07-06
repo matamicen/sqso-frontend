@@ -72,17 +72,19 @@ class FeedItemRepost extends React.Component {
     const commentsCounter = '(' + this.props.qso.comments.length + ')';
 
     let text;
-
+    let shareText;
     switch (this.props.qso.original[0].type) {
       case 'QSO':
         text = t('qso.workedAQSO');
+        shareText = t('qso.checkOutQSO');
         break;
       case 'LISTEN':
         text = t('qso.listenedQSO');
-
+        shareText = t('qso.checkOutQSO');
         break;
       case 'POST':
         text = t('qso.createdPost');
+        shareText = t('qso.checkOutPost');
 
         break;
       default:
@@ -290,7 +292,7 @@ class FeedItemRepost extends React.Component {
               {this.props.qso.comments.length > 0 && commentsCounter}
             </Button>
             <QSORePostButton qso={this.props.qso} />
-            <QSOShareButtons idqso={this.props.qso.GUID_URL} />
+            <QSOShareButtons idqso={this.props.qso.GUID_URL} title={shareText} />
           </Button.Group>
 
           {this.props.qso.showComments && (
