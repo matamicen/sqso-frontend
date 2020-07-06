@@ -204,6 +204,7 @@ class Notification extends React.Component {
       <Feed.Event>
         {' '}
         <Feed.Label>
+          <Link to={'/' + this.props.notification.QRA} onClick={this.handleOnClick}>
           <Image
             avatar
             src={
@@ -212,6 +213,8 @@ class Notification extends React.Component {
                 : '/emptyprofile.png'
             }
           />
+              </Link>
+          
         </Feed.Label>
         {this.formatNotification()}{' '}
       </Feed.Event>
