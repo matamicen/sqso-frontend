@@ -8,12 +8,12 @@ import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
 import Comment from 'semantic-ui-react/dist/commonjs/views/Comment';
 import * as Actions from '../../actions';
 import QSOCommentItem from './QSOCommentItem';
-class QSOComments extends React.Component {
+class QSOComments extends React.PureComponent {
   constructor() {
     super();
     this.state = {
       comments: [],
-      comment: ""
+      comment: ''
     };
 
     this.handleAddComment = this.handleAddComment.bind(this);
@@ -30,13 +30,12 @@ class QSOComments extends React.Component {
 
   handleAddComment = e => {
     // e.preventDefault();
-     if (this.state.comment === "") return;
+    if (this.state.comment === '') return;
 
-    
     let datetime = new Date();
     let comment = {
       qra: this.props.qra.toUpperCase(),
-      comment: this.state.comment ,
+      comment: this.state.comment,
       datetime: datetime
     };
     this.setState({ comment: comment });
@@ -44,9 +43,12 @@ class QSOComments extends React.Component {
     //   comments: this.state.comments.concat(comment)
     // });
     // e.target.comment.value = null;
-    this.setState({comment:""})
+    this.setState({ comment: '' });
     this.props.recalculateRowHeight();
-
+    comment.firstname = this.props.firstname;
+    comment.lastname = this.props.lastname;
+    comment.avatarpic = this.props.avatarpic;
+    
     this.props.actions.doCommentAdd(
       this.props.qso.idqsos,
       comment,
@@ -62,7 +64,7 @@ class QSOComments extends React.Component {
     this.props.recalculateRowHeight();
   };
   render() {
-    const {t} = this.props;
+    const { t } = this.props;
 
     let comments = null;
     if (this.state.comments) {
@@ -81,17 +83,20 @@ class QSOComments extends React.Component {
       form = (
         <Form size="mini" reply onSubmit={this.handleAddComment}>
           <Form.Group>
-            
             <TextareaAutosize
               value={this.state.comment}
               onChange={e => this.setState({ comment: e.target.value })}
               onHeightChange={this.props.recalculateRowHeight}
-              fontSize= {12}
-              style={{fontSize: "1.1rem", paddingTop: "5px", paddingBottom: "5px"}}
+              fontSize={12}
+              style={{
+                fontSize: '1.1rem',
+                paddingTop: '5px',
+                paddingBottom: '5px'
+              }}
               placeholder={t('qso.writeComment')}
               rows={4}
             />
-            
+
             <Button size="mini" content="Add" />
           </Form.Group>
         </Form>
@@ -111,6 +116,9 @@ class QSOComments extends React.Component {
 const mapStateToProps = state => ({
   token: state.userData.token,
   qra: state.userData.currentQRA,
+  firstname: state.userData.qra.firstname,
+  lastname: state.userData.qra.lastname,
+  avatarpic: state.userData.qra.avatarpic,
   isAuthenticated: state.userData.isAuthenticated
 });
 const mapDispatchToProps = dispatch => ({

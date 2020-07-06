@@ -25,7 +25,7 @@ import QSOLikeText from './QSOLikeText';
 import QSORePostButton from './QSORePostButton';
 import QSOShareButtons from './QSOShareButtons';
 import './style.css';
-class FeedItemQSO extends React.Component {
+class FeedItemPost extends React.PureComponent {
   constructor() {
     super();
     this.state = { comments: [], likes: [], error: null };
@@ -61,6 +61,7 @@ class FeedItemQSO extends React.Component {
     let audioList = this.props.qso.media.filter(
       media => media.type === 'audio'
     );
+    
     const commentsCounter = '(' + this.props.qso.comments.length + ')';
 
     let text;
@@ -248,8 +249,8 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(withTranslation()(FeedItemQSO))
+  )(withTranslation()(FeedItemPost))
 );
-FeedItemQSO.propTypes = {
+FeedItemPost.propTypes = {
   qso: PropTypes.object.isRequired
 };
