@@ -134,6 +134,8 @@
     "workedQSO": "{{QRA}} worked a QSO"
   },
   "qso": {
+    "repost": "repost",
+    "share": "share",
     "checkOutPost": "Checkout this post...",
     "checkOutQSO": "Checkout this QSO...",    
     "add": "Add" ,

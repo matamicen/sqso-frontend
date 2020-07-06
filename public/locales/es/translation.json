@@ -135,6 +135,8 @@
     "workedQSO": "{{QRA}} trabajó un QSO"    
   },
   "qso": {
+    "repost": "republicar",
+    "share": "compartir",
     "checkOutPost": "Mirá esta publicación...",
     "checkOutQSO": "Mirá este QSO...",
     "add": "Agregar" ,
@@ -143,7 +145,7 @@
     "and": " y a ",
     "loadingQSOLink": "Cargando QSO Link...",
     "loadingQSO": "Cargando...",
-    "confirmRepost": "Confirma Repost?",
+    "confirmRepost": "¿Está seguro que quiere republicar esto?",
     "playAudio": "Reproducir Audio",
     "qsoReposted": "QSO Reposteado",
     "qsoDeleted": "QSO Eliminado",
