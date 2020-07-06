@@ -134,6 +134,9 @@
     "workedQSO": "{{QRA}} worked a QSO"
   },
   "qso": {
+    "checkOutPost": "Checkout this post...",
+    "checkOutQSO": "Checkout this QSO...",    
+    "add": "Add" ,
     "postDeleted": "This Post was deleted and cannot be displayed",
     "notExist": "This Post does not exist",
     "and": " and ",

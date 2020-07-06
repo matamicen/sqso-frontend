@@ -3,7 +3,7 @@ import { withTranslation } from 'react-i18next';
 import { FacebookIcon, FacebookShareButton, TwitterIcon, TwitterShareButton, WhatsappIcon, WhatsappShareButton } from 'react-share';
 // import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
 import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
-const QSOShareButtons = ({ idqso, t }) => {
+const QSOShareButtons = ({ idqso, t, title }) => {
   return (
     // <Button icon as="div">
     //   <Icon name="share alternate" />
@@ -18,9 +18,9 @@ const QSOShareButtons = ({ idqso, t }) => {
       style={{ textAlign: 'center' }}
     >
       <Dropdown.Menu>
-        <Dropdown.Item style={{ textAlign: 'center' }}>
+        <Dropdown.Item style={{ display:"flex", justifyContent: "center" }}>
           <WhatsappShareButton
-            title="CheckOut this QSO"
+            title={title}
             url={window.location.origin + '/qso/' + idqso}
             beforeOnClick={() => {
               if (process.env.NODE_ENV !== 'production')
@@ -38,9 +38,9 @@ const QSOShareButtons = ({ idqso, t }) => {
             <WhatsappIcon size={20} round={true} />
           </WhatsappShareButton>
         </Dropdown.Item>
-        <Dropdown.Item style={{ textAlign: 'center' }}>
+        <Dropdown.Item style={{ display:"flex", justifyContent: "center"}}>
           <FacebookShareButton
-            quote="CheckOut this QSO"
+            quote={title}
             url={window.location.origin + '/qso/' + idqso}
             beforeOnClick={() => {
               if (process.env.NODE_ENV !== 'production')
@@ -63,10 +63,10 @@ const QSOShareButtons = ({ idqso, t }) => {
             </FacebookShareCount> */}
           </FacebookShareButton>
         </Dropdown.Item>
-        <Dropdown.Item style={{ textAlign: 'center' }}>
+        <Dropdown.Item style={{ display:"flex", justifyContent: "center" }}>
           <div>
           <TwitterShareButton
-            title="CheckOut this QSO"
+            title={title}
             url={window.location.origin + '/qso/' + idqso}
             beforeOnClick={() => {
               if (process.env.NODE_ENV !== 'production')
@@ -81,9 +81,10 @@ const QSOShareButtons = ({ idqso, t }) => {
                 });
             }}
           >
-            <TwitterIcon size={20} round={true} />
+            <TwitterIcon size={20} round={true} /> 
             {/* <Icon name="twitter" /> */}
           </TwitterShareButton>
+
           </div>
         </Dropdown.Item>
       </Dropdown.Menu>

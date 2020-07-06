@@ -135,6 +135,9 @@
     "workedQSO": "{{QRA}} trabajó un QSO"    
   },
   "qso": {
+    "checkOutPost": "Mirá esta publicación...",
+    "checkOutQSO": "Mirá este QSO...",
+    "add": "Agregar" ,
     "postDeleted": "Esta publicación ha sido eliminada y no puede ser mostrada",
     "notExist": "Esta publicación no existe",
     "and": " y a ",
