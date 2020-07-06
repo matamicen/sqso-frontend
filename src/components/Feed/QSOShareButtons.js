@@ -27,11 +27,11 @@ const QSOShareButtons = ({ idqso, t, title }) => {
           // labeled
           // button
           className="icon"
-          style={{ textAlign: 'center', alignSelf: 'center' }}
+          style={{ zIndex: 10,textAlign: 'center', alignSelf: 'center' }}
         >
           <Dropdown.Menu>
             <Dropdown.Item
-              style={{ display: 'flex', justifyContent: 'center' }}
+              style={{  display: 'flex', justifyContent: 'center' }}
             >
               <div style={{display:"grid"}}>
               <WhatsappShareButton
