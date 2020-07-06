@@ -173,6 +173,7 @@ export function doCommentAdd(idqso, comment, token) {
         event_category: 'QSO',
         event_label: 'commentAdd'
       });
+    dispatch(doCommentAddResponse(idqso, comment));
     const apiName = 'superqso';
     const path = '/qso-comment';
     const myInit = {
@@ -188,7 +189,6 @@ export function doCommentAdd(idqso, comment, token) {
     API.post(apiName, path, myInit)
       .then(response => {
         if (response.body.error === 0) {
-          dispatch(doCommentAddResponse(idqso, response.body.message));
         } else console.log(response.body.message);
       })
       .catch(error => {
@@ -223,11 +223,11 @@ export function doCommentAdd(idqso, comment, token) {
       });
   };
 }
-export function doCommentAddResponse(idqso = null, comments = []) {
+export function doCommentAddResponse(idqso = null, comment) {
   return {
     type: COMMENT_ADD,
     idqso: idqso,
-    comments: comments
+    comment: comment
   };
 }
 export function refreshToken(token) {
@@ -558,7 +558,6 @@ export function doFetchUserInfo(token) {
   };
 }
 export function doRepost(idqso, token, qso) {
-  
   return dispatch => {
     if (process.env.NODE_ENV !== 'production')
       window.gtag('event', 'repost_WEBDEV', {
@@ -633,15 +632,14 @@ export function doRepost(idqso, token, qso) {
   };
 }
 
-
 export function doLikeQSO(idqso, idqra, qra, firstname, lastname, avatarpic) {
   return {
     type: QSO_LIKE,
     idqso: idqso,
     idqra: idqra,
-    qra: qra, 
-    firstname: firstname, 
-    lastname: lastname, 
+    qra: qra,
+    firstname: firstname,
+    lastname: lastname,
     avatarpic: avatarpic
   };
 }
@@ -795,8 +793,6 @@ export function doReceiveUserBio(qra) {
   };
 }
 export function doFetchUserFeed(token, qra) {
- 
-
   return dispatch => {
     window.gtag('config', 'G-H8G28LYKBY', {
       custom_map: { dimension1: 'userQRA' }
@@ -973,7 +969,10 @@ export function doFetchNotifications(token) {
         } else console.log(response.body.message);
       })
       .catch(error => {
-        if (error.message === 'Request failed with status code 401' || error.message === "Network Error") {
+        if (
+          error.message === 'Request failed with status code 401' ||
+          error.message === 'Network Error'
+        ) {
           Auth.currentSession()
             .then(session => {
               console.log(session);
@@ -1009,15 +1008,15 @@ export function doFetchNotifications(token) {
 export function doFetchPublicFeed() {
   // console.log('doFetchPublicFeed');
   if (process.env.NODE_ENV !== 'production')
-  window.gtag('event', 'getPublicFeed_WEBDEV', {
-    event_category: 'User',
-    event_label: 'getPublicFeed'
-  });
-else
-  window.gtag('event', 'getPublicFeed_WEBPRD', {
-    event_category: 'User',
-    event_label: 'getPublicFeed'
-  });
+    window.gtag('event', 'getPublicFeed_WEBDEV', {
+      event_category: 'User',
+      event_label: 'getPublicFeed'
+    });
+  else
+    window.gtag('event', 'getPublicFeed_WEBPRD', {
+      event_category: 'User',
+      event_label: 'getPublicFeed'
+    });
   return dispatch => {
     dispatch(doRequestFeed());
     const apiName = 'superqso';

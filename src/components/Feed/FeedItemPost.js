@@ -25,7 +25,7 @@ import QSOLikeText from './QSOLikeText';
 import QSORePostButton from './QSORePostButton';
 import QSOShareButtons from './QSOShareButtons';
 import './style.css';
-class FeedItemQSO extends React.Component {
+class FeedItemPost extends React.PureComponent {
   constructor() {
     super();
     this.state = { comments: [], likes: [], error: null };
@@ -61,19 +61,24 @@ class FeedItemQSO extends React.Component {
     let audioList = this.props.qso.media.filter(
       media => media.type === 'audio'
     );
+    
     const commentsCounter = '(' + this.props.qso.comments.length + ')';
 
     let text;
+    let shareText;
 
     switch (this.props.qso.type) {
       case 'POST':
         text = t('qso.createdPost');
+        shareText = t('qso.checkOutPost');
         break;
       case 'LISTEN':
         text = t('qso.listenedQSO');
+        shareText = t('qso.checkOutQSO');
         break;
       case 'SHARE':
         text = t('qso.repostedQSO');
+        shareText = t('qso.checkOutQSO');
         break;
       default:
     }
@@ -206,7 +211,7 @@ class FeedItemQSO extends React.Component {
               </div>
             </Button>
             <QSORePostButton qso={this.props.qso} />
-            <QSOShareButtons idqso={this.props.qso.GUID_URL} />
+            <QSOShareButtons idqso={this.props.qso.GUID_URL} title={shareText} />
           </Button.Group>
           {this.props.qso.showComments && (
             <QSOComments
@@ -248,8 +253,8 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(withTranslation()(FeedItemQSO))
+  )(withTranslation()(FeedItemPost))
 );
-FeedItemQSO.propTypes = {
+FeedItemPost.propTypes = {
   qso: PropTypes.object.isRequired
 };

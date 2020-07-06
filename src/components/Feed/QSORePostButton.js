@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { Fragment } from 'react'
+import { default as React, Fragment } from 'react'
 import { withTranslation } from 'react-i18next'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
@@ -39,14 +39,17 @@ class QSORePostButton extends React.Component {
   // close = () => {
   //   this.setState({ showReportContent: false });
   // };
-
+s
   render () {
     const {t} = this.props; 
     const { showConfirmationRequest } = this.state
     return (
       <Fragment>
         <Button icon onClick={() => this.openConfirmationRequest()}>
+          <div style={{display: "grid", justifyItems: "center"}}>
           <Icon name="retweet" />
+          <span style={{fontSize:"small"}}>{t('qso.repost')}</span>
+          </div>
         </Button>
         <Confirm
           size="mini"
