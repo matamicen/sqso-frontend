@@ -587,9 +587,9 @@ export function doRepost(idqso, token, qso) {
       .then(response => {
         if (response.body.error !== 0) console.log(response.body.message);
         else {
-          qso.idqso_shared = qso.idqsos;
-          qso.idqsos = response.body.message;
-          qso.type = 'SHARE';
+          // qso.idqso_shared = qso.idqsos;
+          // qso.idqsos = response.body.message;
+          // qso.type = 'SHARE';
           toast.success(i18n.t('qso.qsoReposted'), {
             position: toast.POSITION.BOTTOM_RIGHT,
             className: css({
