@@ -34,9 +34,9 @@ class Notification extends React.Component {
             <Feed.Summary>
               <Link
                 to={
-                  '/' + (this.props.currentQRA === notif.REF_QRA)
+                  '/' + ((this.props.currentQRA === notif.REF_QRA)
                     ? notif.QRA
-                    : notif.REF_QRA
+                    : notif.REF_QRA)
                 }
                 onClick={this.handleOnClick}
               >
@@ -204,6 +204,7 @@ class Notification extends React.Component {
       <Feed.Event>
         {' '}
         <Feed.Label>
+          <Link to={'/' + this.props.notification.QRA} onClick={this.handleOnClick}>
           <Image
             avatar
             src={
@@ -212,6 +213,8 @@ class Notification extends React.Component {
                 : '/emptyprofile.png'
             }
           />
+              </Link>
+          
         </Feed.Label>
         {this.formatNotification()}{' '}
       </Feed.Event>

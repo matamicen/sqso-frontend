@@ -14,11 +14,10 @@ import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
 const QSOShareButtons = ({ idqso, t, title }) => {
 
   return (
-    // <Button icon as="div">
-    //   <Icon name="share alternate" />
+
     <Button >
       <div style={{ display: 'grid', justifyItems: 'center' }}>
-        {/* <Icon name="retweet" /> */}
+
         <Dropdown
           // text="Filter Posts"
           icon="share alternate"
@@ -27,11 +26,11 @@ const QSOShareButtons = ({ idqso, t, title }) => {
           // labeled
           // button
           className="icon"
-          style={{ textAlign: 'center', alignSelf: 'center' }}
+          style={{ zIndex: 10,textAlign: 'center', alignSelf: 'center' }}
         >
           <Dropdown.Menu>
             <Dropdown.Item
-              style={{ display: 'flex', justifyContent: 'center' }}
+              style={{  display: 'flex', justifyContent: 'center' }}
             >
               <div style={{display:"grid"}}>
               <WhatsappShareButton
@@ -50,13 +49,9 @@ const QSOShareButtons = ({ idqso, t, title }) => {
                     });
                 }}
               >
-                <WhatsappIcon size={20} round={true} />
+                <WhatsappIcon size={40} round={true} />
               </WhatsappShareButton>
-            {/* </Dropdown.Item>
-            <Dropdown.Item */}
-              {/* style={{ display: 'flex', justifyContent: 'center' }} */}
-            {/* > */}
-              {/* <div> */}
+
               <FacebookShareButton
                 quote={title}
                 url={window.location.origin + '/qso/' + idqso}
@@ -73,15 +68,10 @@ const QSOShareButtons = ({ idqso, t, title }) => {
                     });
                 }}
               >
-                <FacebookIcon size={20} round={true} />
+                <FacebookIcon size={40} round={true} />
 
               </FacebookShareButton>
-              {/* </div> */}
-            {/* </Dropdown.Item>
-            <Dropdown.Item */}
-              {/* style={{ display: 'flex', justifyContent: 'center' }} */}
-            {/* > */}
-              {/* <div> */}
+
                 <TwitterShareButton
                   title={title}
                   url={window.location.origin + '/qso/' + idqso}
@@ -98,10 +88,10 @@ const QSOShareButtons = ({ idqso, t, title }) => {
                       });
                   }}
                 >
-                  <TwitterIcon size={20} round={true} />
-                  {/* <Icon name="twitter" /> */}
+                  <TwitterIcon size={40} round={true} />
+                  
                 </TwitterShareButton>
-              {/* </div> */}
+              
               </div>
             </Dropdown.Item>
           </Dropdown.Menu>

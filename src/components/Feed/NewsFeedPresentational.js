@@ -125,12 +125,19 @@ class NewsFeed extends React.Component {
     this.state._list.forceUpdateGrid();
   }
   static getDerivedStateFromProps(props, state) {
+    if (props.list.length !== state.list.length) {
+     
+      // this._cache.clearAll();
+      // this._list.recomputeRowHeights();
+      state._list.forceUpdateGrid();
+    }
     if (props.list) return { list: props.list };
     //Default
     return null;
   }
 
   componentDidUpdate(prevProps, prevState) {
+
     if (
       prevProps.list.length > 0 &&
       prevProps.list.length !== prevState.list.length &&
