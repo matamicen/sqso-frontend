@@ -77,14 +77,29 @@ class AuthenticatedNavigation extends React.PureComponent {
           <Link
             to="/"
             onClick={() => {
-              this.props.actions.doFetchUserInfo(this.props.token);
-              if (this.props.isAuthenticated)
-                this.props.actions.doFetchUserFeed(
-                  this.props.token,
-                  this.props.currentQRA
-                );
-              else {
+              Auth.currentSession()
+                .then(session => {
+                  this.props.actions.refreshToken(session.idToken.jwtToken);
+                  this.props.actions.doFetchUserInfo(this.props.token);
+                  this.props.actions.doFetchUserFeed(
+                    this.props.token,
+                    this.props.currentQRA
+                  );
+                })
+                .catch(error => {
+                  if (process.env.NODE_ENV !== 'production') {
+                    console.log(error);
+                  } else {
+                    Sentry.configureScope(function(scope) {
+                      scope.setExtra('ENV', process.env.NODE_ENV);
+                    });
+                    Sentry.captureException(error);
+                  }
+                });
+              
+              if (!this.props.isAuthenticated)
                 
+               {
                 this.props.actions.doFetchPublicFeed();
               }
             }}
