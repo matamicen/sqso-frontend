@@ -43,8 +43,9 @@ class LogIn extends React.Component {
     // }
   }
   handleAcceptMessageModal() {
-    this.handleOnClickLogin();
+    // this.handleOnClickLogin();
     this.setState({ showModalMessage: false });
+    this.props.history.push('/login');
   }
   handleOnClickLogin() {
     const { t } = this.props;
