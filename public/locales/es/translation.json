@@ -126,8 +126,8 @@
   "notification": {
     "congratulations": "Felicitaciones!!!",
     "noPendingNotifications": "No tiene ninguna notificación pediente! :)",
-    "includedYou": "{{QRA}} te incluyó a tí en su nuevo QSO",
-    "includedOther": "{{QRA}} incluyó a {{QRA_REF}} en su nuevo QSO",
+    "includedYou": "{{QRA}} te incluyó a tí en su publicación",
+    "includedOther": "{{QRA}} incluyó a {{QRA_REF}} en su publicación",
     "followYou": "{{QRA}} comenzó a seguirte",
     "followOther": "{{QRA}} comenzó a seguir {{QRA_REF}}",
     "commentedQSO": "{{QRA}} comentó el QSO en el que participas",
