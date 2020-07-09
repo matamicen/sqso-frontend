@@ -63,7 +63,7 @@ class FeedItemRepost extends React.Component {
   }
 
   render() {
-    const {t} = this.props;
+    const { t } = this.props;
     const picList = this.props.qso.media.filter(
       media => media.type === 'image'
     );
@@ -86,7 +86,14 @@ class FeedItemRepost extends React.Component {
       case 'POST':
         text = t('qso.createdPost');
         shareText = t('qso.checkOutPost');
-
+        break;
+      case 'QAP':
+        text = t('qso.createdQAP');
+        shareText = t('qso.checkOutQAP');
+        break;
+      case 'FLDDAY':
+        text = t('qso.createdFLDDAY');
+        shareText = t('qso.checkOutFLDDAY');
         break;
       default:
     }
@@ -122,12 +129,14 @@ class FeedItemRepost extends React.Component {
                   </Link>
                 }
               />
-              { t('qso.sharedContent')}
+              {t('qso.sharedContent')}
             </div>
             <div className="qso-header-info-post">
               <div>
-                <b>{ t('qso.date')}: </b>
-                {repostDate.toLocaleDateString(i18n.language, { month: 'short' }) +
+                <b>{t('qso.date')}: </b>
+                {repostDate.toLocaleDateString(i18n.language, {
+                  month: 'short'
+                }) +
                   ' ' +
                   repostDate.getDate() +
                   ', ' +
@@ -191,14 +200,14 @@ class FeedItemRepost extends React.Component {
               <div className="qso-header-info">
                 {this.props.qso.original[0].mode && (
                   <div>
-                    <b>{ t('qso.mode')}</b>
+                    <b>{t('qso.mode')}</b>
                     <br />
                     {this.props.qso.original[0].mode}
                   </div>
                 )}
                 {this.props.qso.original[0].band && (
                   <div>
-                    <b>{ t('qso.band')} </b>
+                    <b>{t('qso.band')} </b>
                     <br />
                     {this.props.qso.original[0].band}
                   </div>
@@ -218,7 +227,7 @@ class FeedItemRepost extends React.Component {
                   </div>
                 )}
                 <div>
-                  <b>{ t('qso.date')} </b>
+                  <b>{t('qso.date')} </b>
                   <br />
                   {date.toLocaleDateString(i18n.language, { month: 'short' }) +
                     ' ' +
@@ -293,7 +302,10 @@ class FeedItemRepost extends React.Component {
               {this.props.qso.comments.length > 0 && commentsCounter}
             </Button>
             <QSORePostButton qso={this.props.qso} />
-            <QSOShareButtons idqso={this.props.qso.GUID_URL} title={shareText} />
+            <QSOShareButtons
+              idqso={this.props.qso.GUID_URL}
+              title={shareText}
+            />
           </Button.Group>
 
           {this.props.qso.showComments && (
@@ -314,9 +326,9 @@ class FeedItemRepost extends React.Component {
               state: { from: this.props.location.pathname }
             })
           }
-          cancelButton={ t('global.cancel')}
-          confirmButton={ t('auth.login')}
-          content={ t('auth.loginToPerformAction')}
+          cancelButton={t('global.cancel')}
+          confirmButton={t('auth.login')}
+          content={t('auth.loginToPerformAction')}
         />
       </Fragment>
     );

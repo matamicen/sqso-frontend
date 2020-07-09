@@ -74,13 +74,13 @@ class FeedItemPost extends React.PureComponent {
         text = t('qso.createdPost');
         shareText = t('qso.checkOutPost');
         break;
-      case 'LISTEN':
-        text = t('qso.listenedQSO');
-        shareText = t('qso.checkOutQSO');
+      case 'QAP':
+        text = t('qso.createdQAP');
+        shareText = t('qso.checkOutQAP');
         break;
-      case 'SHARE':
-        text = t('qso.repostedQSO');
-        shareText = t('qso.checkOutQSO');
+      case 'FLDDAY':
+        text = t('qso.createdFLDDAY');
+        shareText = t('qso.checkOutFLDDAY');
         break;
       default:
     }

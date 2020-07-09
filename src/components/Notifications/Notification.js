@@ -34,7 +34,8 @@ class Notification extends React.Component {
             <Feed.Summary>
               <Link
                 to={
-                  '/' + ((this.props.currentQRA === notif.REF_QRA)
+                  '/' +
+                  (this.props.currentQRA === notif.REF_QRA
                     ? notif.QRA
                     : notif.REF_QRA)
                 }
@@ -68,6 +69,192 @@ class Notification extends React.Component {
 
               {notif.UTC
                 ? ' | UTC: ' +
+                  date.getUTCHours() +
+                  ':' +
+                  (date.getMinutes() < 10 ? '0' : '') +
+                  date.getMinutes()
+                : ''}
+            </Feed.Extra>
+          </Feed.Content>
+        );
+      case 60: //Listen QSO
+        return (
+          <Feed.Content>
+            <Feed.Summary>
+              <Link to={'/qso/' + notif.QSO_GUID} onClick={this.handleOnClick}>
+                {t('notification.listenedQSO', { QRA: notif.QRA })}
+              </Link>
+              <Feed.Date>{moment(datetime).fromNow()}</Feed.Date>
+            </Feed.Summary>
+            <Feed.Extra text>
+              {notif.mode ? t('qso.mode') + ': ' + notif.mode : ''}
+              {notif.band ? ' | ' + t('qso.band') + ': ' + notif.band : ''}
+
+              {notif.UTC
+                ? ' | UTC: ' +
+                  date.getUTCHours() +
+                  ':' +
+                  (date.getMinutes() < 10 ? '0' : '') +
+                  date.getMinutes()
+                : ''}
+            </Feed.Extra>
+          </Feed.Content>
+        );
+      case 61: //QAP
+        return (
+          <Feed.Content>
+            <Feed.Summary>
+              <Link to={'/qso/' + notif.QSO_GUID} onClick={this.handleOnClick}>
+                {t('notification.createdQAP', { QRA: notif.QRA })}
+              </Link>
+              <Feed.Date>{moment(datetime).fromNow()}</Feed.Date>
+            </Feed.Summary>
+            <Feed.Extra text>
+              {notif.UTC
+                ? 'UTC: ' +
+                  date.getUTCHours() +
+                  ':' +
+                  (date.getMinutes() < 10 ? '0' : '') +
+                  date.getMinutes()
+                : ''}
+            </Feed.Extra>
+          </Feed.Content>
+        );
+      case 62: //FieldDay
+        return (
+          <Feed.Content>
+            <Feed.Summary>
+              <Link to={'/qso/' + notif.QSO_GUID} onClick={this.handleOnClick}>
+                {t('notification.createdFLDDAY', { QRA: notif.QRA })}
+              </Link>
+              <Feed.Date>{moment(datetime).fromNow()}</Feed.Date>
+            </Feed.Summary>
+            <Feed.Extra text>
+              {notif.UTC
+                ? 'UTC: ' +
+                  date.getUTCHours() +
+                  ':' +
+                  (date.getMinutes() < 10 ? '0' : '') +
+                  date.getMinutes()
+                : ''}
+            </Feed.Extra>
+          </Feed.Content>
+        );
+      case 63: //new POST
+        return (
+          <Feed.Content>
+            <Feed.Summary>
+              <Link to={'/qso/' + notif.QSO_GUID} onClick={this.handleOnClick}>
+                {t('notification.createdPOST', { QRA: notif.QRA })}
+              </Link>
+              <Feed.Date>{moment(datetime).fromNow()}</Feed.Date>
+            </Feed.Summary>
+            <Feed.Extra text>
+              {notif.mode ? t('qso.mode') + ': ' + notif.mode : ''}
+              {notif.band ? ' | ' + t('qso.band') + ': ' + notif.band : ''}
+
+              {notif.UTC
+                ? ' | UTC: ' +
+                  date.getUTCHours() +
+                  ':' +
+                  (date.getMinutes() < 10 ? '0' : '') +
+                  date.getMinutes()
+                : ''}
+            </Feed.Extra>
+          </Feed.Content>
+        );
+      case 64: //shared QSO
+        return (
+          <Feed.Content>
+            <Feed.Summary>
+              <Link to={'/qso/' + notif.QSO_GUID} onClick={this.handleOnClick}>
+                {t('notification.sharedQSO', { QRA: notif.QRA })}
+              </Link>
+              <Feed.Date>{moment(datetime).fromNow()}</Feed.Date>
+            </Feed.Summary>
+            <Feed.Extra text>
+              {notif.UTC
+                ? 'UTC: ' +
+                  date.getUTCHours() +
+                  ':' +
+                  (date.getMinutes() < 10 ? '0' : '') +
+                  date.getMinutes()
+                : ''}
+            </Feed.Extra>
+          </Feed.Content>
+        );
+      case 65: //shared Listen
+        return (
+          <Feed.Content>
+            <Feed.Summary>
+              <Link to={'/qso/' + notif.QSO_GUID} onClick={this.handleOnClick}>
+                {t('notification.sharedLISTEN', { QRA: notif.QRA })}
+              </Link>
+              <Feed.Date>{moment(datetime).fromNow()}</Feed.Date>
+            </Feed.Summary>
+            <Feed.Extra text>
+              {notif.UTC
+                ? 'UTC: ' +
+                  date.getUTCHours() +
+                  ':' +
+                  (date.getMinutes() < 10 ? '0' : '') +
+                  date.getMinutes()
+                : ''}
+            </Feed.Extra>
+          </Feed.Content>
+        );
+      case 66: //shared QAP
+        return (
+          <Feed.Content>
+            <Feed.Summary>
+              <Link to={'/qso/' + notif.QSO_GUID} onClick={this.handleOnClick}>
+                {t('notification.sharedQAP', { QRA: notif.QRA })}
+              </Link>
+              <Feed.Date>{moment(datetime).fromNow()}</Feed.Date>
+            </Feed.Summary>
+            <Feed.Extra text>
+              {notif.UTC
+                ? 'UTC: ' +
+                  date.getUTCHours() +
+                  ':' +
+                  (date.getMinutes() < 10 ? '0' : '') +
+                  date.getMinutes()
+                : ''}
+            </Feed.Extra>
+          </Feed.Content>
+        );
+      case 67: //Share FieldDay
+        return (
+          <Feed.Content>
+            <Feed.Summary>
+              <Link to={'/qso/' + notif.QSO_GUID} onClick={this.handleOnClick}>
+                {t('notification.sharedFLDDAY', { QRA: notif.QRA })}
+              </Link>
+              <Feed.Date>{moment(datetime).fromNow()}</Feed.Date>
+            </Feed.Summary>
+            <Feed.Extra text>
+              {notif.UTC
+                ? 'UTC: ' +
+                  date.getUTCHours() +
+                  ':' +
+                  (date.getMinutes() < 10 ? '0' : '') +
+                  date.getMinutes()
+                : ''}
+            </Feed.Extra>
+          </Feed.Content>
+        );
+      case 68: //Share Other
+        return (
+          <Feed.Content>
+            <Feed.Summary>
+              <Link to={'/qso/' + notif.QSO_GUID} onClick={this.handleOnClick}>
+                {t('notification.sharedPOST', { QRA: notif.QRA })}
+              </Link>
+              <Feed.Date>{moment(datetime).fromNow()}</Feed.Date>
+            </Feed.Summary>
+            <Feed.Extra text>
+              {notif.UTC
+                ? 'UTC: ' +
                   date.getUTCHours() +
                   ':' +
                   (date.getMinutes() < 10 ? '0' : '') +
@@ -144,7 +331,7 @@ class Notification extends React.Component {
           // </Link>
           // // </List.Description>
         );
-     
+
       case 50: //Bio updated
         return (
           <Feed.Content>
@@ -163,58 +350,29 @@ class Notification extends React.Component {
           // // </List.Description>
         );
       default:
-        return (
-          <Feed.Content>
-            <Feed.Summary>
-              <Link to={'/qso/' + notif.QSO_GUID} onClick={this.handleOnClick}>
-                {notif.message}
-              </Link>
-              <Feed.Date>{moment(datetime).fromNow()}</Feed.Date>
-            </Feed.Summary>
-            <Feed.Extra text>{notif.comment}</Feed.Extra>
-          </Feed.Content>
-          // // <List.Description>
-          // <Link to={'/qso/' + notif.QSO_GUID} onClick={this.handleOnClick}>
-          //   {notif.message}
-          // </Link>
-          // // </List.Description>
-        );
+        return null;
     }
   }
   render() {
     return (
-      // <List.Item>
-      //   <Image avatar src={this.props.notification.qra_avatarpic} />
-      //   <List.Content>{this.formatNotification()}</List.Content>
-      // </List.Item>
-      // <Table.Row>
-      //   <Table.Cell>
-      //     <Image
-      //       avatar
-      //       src={
-      //         this.props.notification.qra_avatarpic
-      //           ? this.props.notification.qra_avatarpic
-      //           : "/emptyprofile.png"
-      //       }
-      //     />
-      //   </Table.Cell>
-      //   <Table.Cell>{this.formatNotification()}</Table.Cell>
-      // </Table.Row>
+
 
       <Feed.Event>
         {' '}
         <Feed.Label>
-          <Link to={'/' + this.props.notification.QRA} onClick={this.handleOnClick}>
-          <Image
-            avatar
-            src={
-              this.props.notification.qra_avatarpic
-                ? this.props.notification.qra_avatarpic
-                : '/emptyprofile.png'
-            }
-          />
-              </Link>
-          
+          <Link
+            to={'/' + this.props.notification.QRA}
+            onClick={this.handleOnClick}
+          >
+            <Image
+              avatar
+              src={
+                this.props.notification.qra_avatarpic
+                  ? this.props.notification.qra_avatarpic
+                  : '/emptyprofile.png'
+              }
+            />
+          </Link>
         </Feed.Label>
         {this.formatNotification()}{' '}
       </Feed.Event>
