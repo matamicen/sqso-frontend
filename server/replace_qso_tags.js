@@ -9,18 +9,17 @@ const prepHTML = (data, { html, head, body }) => {
   return data;
 };
 const replace_qso_tags = async (req, res) => {
-  i18next.changeLanguage(req.language)
-  const t = i18next.t.bind(i18next)
+  i18next.changeLanguage(req.language);
+  const t = i18next.t.bind(i18next);
   console.log(req.params);
-  
 
   if (req.params['idQSO'] !== 'empty') {
     var apigClientFactory = require('aws-api-gateway-client').default;
 
-      var config = {
-        invokeUrl: global_config.apiEndpoint
-      };
-    
+    var config = {
+      invokeUrl: global_config.apiEndpoint
+    };
+
     var apigClient = apigClientFactory.newClient(config);
     var params = {};
     var pathTemplate = '/qso-metadata-get';
@@ -60,32 +59,35 @@ const replace_qso_tags = async (req, res) => {
           let image = null;
           if (!result.data.errorMessage && result.data.body.error === 0) {
             let qso = result.data.body.message;
-            if (qso.type === 'QSO' && qso.qras.length > 0) {
-              title =
-                qso.qra +
-                t('qso.workedAQSO') +
-                qso.qras[0].qra +
-                t('qso.band') +
-                qso.band +
-                t('qso.mode') +
-                qso.mode;
-            }else if(qso.type === 'LISTEN' && qso.qras.length > 0) {
-              title =
-                qso.qra +
-                t('qso.listenedQSO') +
-                qso.qras[0].qra +
-                t('qso.band') +
-                qso.band +
-                t('qso.mode') +
-                qso.mode;
-            }else if(qso.type === 'POST' ) {
-              title =
-                qso.qra +
-                t('qso.createdPost');
-            }else if(qso.type === 'SHARE' ) {
-              title =
-                qso.qra +
-                t('qso.sharedContent');
+            switch (qso.type) {
+              case 'QSO':
+                if (qso.qras.length > 0)
+                  title =
+                    qso.qra +
+                    t('qso.workedAQSO') +
+                    qso.qras[0].qra +
+                    t('qso.band') +
+                    qso.band +
+                    t('qso.mode') +
+                    qso.mode;
+              case 'LISTEN':
+                if (qso.qras.length > 0)
+                  title =
+                    qso.qra +
+                    t('qso.listenedQSO') +
+                    qso.qras[0].qra +
+                    t('qso.band') +
+                    qso.band +
+                    t('qso.mode') +
+                    qso.mode;
+              case 'POST':
+                title = qso.qra + t('qso.createdPost');
+              case 'QAP':
+                title = qso.qra + t('qso.createdQAP');
+              case 'FLDDAY':
+                title = qso.qra + t('qso.createdFLDDAY');
+              case 'SHARE':
+                title = qso.qra + t('qso.sharedContent');
             }
 
             if (qso.media.length > 0) {
@@ -114,8 +116,7 @@ const replace_qso_tags = async (req, res) => {
       .catch(function(result) {
         if (process.env.NODE_ENV !== 'production') {
           console.log(result);
-        }
-        else {
+        } else {
           Sentry.configureScope(function(scope) {
             scope.setExtra('ENV', process.env.NODE_ENV);
           });
