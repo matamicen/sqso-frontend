@@ -154,7 +154,7 @@ class Notification extends React.Component {
               {notif.band ? ' | ' + t('qso.band') + ': ' + notif.band : ''}
 
               {notif.UTC
-                ? ' | UTC: ' +
+                ? 'UTC: ' +
                   date.getUTCHours() +
                   ':' +
                   (date.getMinutes() < 10 ? '0' : '') +
