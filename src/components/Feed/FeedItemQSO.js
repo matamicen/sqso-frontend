@@ -61,7 +61,7 @@ class FeedItemQSO extends React.PureComponent {
   }
 
   render() {
-    const {t} = this.props;
+    const { t } = this.props;
     const picList = this.props.qso.media.filter(
       media => media.type === 'image'
     );
@@ -179,7 +179,12 @@ class FeedItemQSO extends React.PureComponent {
                 guid={this.props.qso.GUID_QR}
                 qso={this.props.qso}
                 optionsCaller="FeedItem"
-                QslCard={true}
+                QslCard={
+                  this.props.currentQRA === this.props.qso.qra ||
+                  this.props.qso.qras.some(
+                    o => o.qra === this.props.currentQRA
+                  )
+                }
               />
             </div>
           </div>
@@ -239,7 +244,10 @@ class FeedItemQSO extends React.PureComponent {
               </div>
             </Button>
             <QSORePostButton qso={this.props.qso} />
-            <QSOShareButtons idqso={this.props.qso.GUID_URL} title={shareText} />
+            <QSOShareButtons
+              idqso={this.props.qso.GUID_URL}
+              title={shareText}
+            />
           </Button.Group>
           {this.props.qso.showComments && (
             <QSOComments
