@@ -179,7 +179,7 @@ function generalReducers(state = initialState, action) {
       });
       return newStore;
     case COMMENT_ADD:
-      console.log(action)
+      
       newStore = Object.assign({}, state, {
         ...state,
         qsos: state.qsos.map(qso => {

@@ -71,7 +71,7 @@
     display: grid;
     grid-template-columns: 50px auto 10px;
     /* grid-gap: 1em; */
-    grid-template-rows: 20px auto ;
+    grid-template-rows: auto auto ;
     grid-template-areas: "profileSection actionSection buttonSection" "profileSection infoSection buttonSection";
     /* justify-content: space-evenly; */
   }
@@ -86,6 +86,7 @@
   }
   
   .qso-header-action {
+    
     font-size: 1.3rem;
     /*grid-column: span 4;*/
     grid-area: actionSection;

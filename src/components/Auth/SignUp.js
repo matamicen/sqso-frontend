@@ -201,42 +201,42 @@ class SignUp extends React.Component {
       });
   }
 
-  async login() {
-    let token;
-    this.setState({ active: true });
+  // async login() {
+  //   let token;
+  //   this.setState({ active: true });
 
-    const user = await Auth.signIn(this.state.email, this.state.password).catch(
-      err => {
-        console.log(err);
-      }
-    );
+  //   const user = await Auth.signIn(this.state.email, this.state.password).catch(
+  //     err => {
+  //       console.log(err);
+  //     }
+  //   );
 
-    if (user) {
-      await this.props.actions.doStartingLogin();
-      token = user.signInUserSession.idToken.jwtToken;
-      const credentials = await Auth.currentCredentials();
-      if (!credentials.data) {
-        await Auth.signOut();
+  //   if (user) {
+  //     await this.props.actions.doStartingLogin();
+  //     token = user.signInUserSession.idToken.jwtToken;
+  //     const credentials = await Auth.currentCredentials();
+  //     if (!credentials.data) {
+  //       await Auth.signOut();
 
-        this.props.actions.doSetPublicSession();
-      } else {
-        await this.props.actions.doLogin(
-          token,
-          user.signInUserSession.idToken.payload['custom:callsign'],
-          credentials.data.IdentityId
-        );
-        await this.props.actions.doFetchUserInfo(token);
-        Sentry.configureScope(scope => {
-          scope.setUser({
-            qra: user.signInUserSession.idToken.payload['custom:callsign']
-          });
-        });
-        this.setState({ dimmerLoginActive: false });
-        // ReactG.event({ category: "QRA", action: "login" });
-        this.props.history.push('/follow');
-      }
-    }
-  }
+  //       this.props.actions.doSetPublicSession();
+  //     } else {
+  //       await this.props.actions.doLogin(
+  //         token,
+  //         user.signInUserSession.idToken.payload['custom:callsign'],
+  //         credentials.data.IdentityId
+  //       );
+  //       await this.props.actions.doFetchUserInfo(token);
+  //       Sentry.configureScope(scope => {
+  //         scope.setUser({
+  //           qra: user.signInUserSession.idToken.payload['custom:callsign']
+  //         });
+  //       });
+  //       this.setState({ dimmerLoginActive: false });
+  //       // ReactG.event({ category: "QRA", action: "login" });
+  //       this.props.history.push('/follow');
+  //     }
+  //   }
+  // }
 
   render() {
     const { location, t } = this.props;
