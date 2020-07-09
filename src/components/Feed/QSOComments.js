@@ -48,11 +48,12 @@ class QSOComments extends React.PureComponent {
     comment.firstname = this.props.firstname;
     comment.lastname = this.props.lastname;
     comment.avatarpic = this.props.avatarpic;
-    
+    console.log(this.props.qso)
     this.props.actions.doCommentAdd(
       this.props.qso.idqsos,
       comment,
-      this.props.token
+      this.props.token,
+      this.props.qso.idqso_shared
     );
   };
   static getDerivedStateFromProps(props, prevState) {

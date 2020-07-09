@@ -161,7 +161,7 @@ export function doCommentDelete(idcomment, idqso, token) {
       });
   };
 }
-export function doCommentAdd(idqso, comment, token) {
+export function doCommentAdd(idqso, comment, token, idqso_shared) {
   return dispatch => {
     if (process.env.NODE_ENV !== 'production')
       window.gtag('event', 'qsoCommentAdd_WEBDEV', {
@@ -178,7 +178,7 @@ export function doCommentAdd(idqso, comment, token) {
     const path = '/qso-comment';
     const myInit = {
       body: {
-        qso: idqso,
+        qso: idqso_shared ? idqso_shared : idqso,
         comment: comment.comment,
         datetime: comment.datetime
       }, // replace this with attributes you need
