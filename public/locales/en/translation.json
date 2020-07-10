@@ -143,6 +143,7 @@
     "sharedPOST": "{{QRA}} reposted a post"    
   },
   "qso": {
+    "callsignTagged": "Callsigns tagged",
     "repost": "repost",
     "share": "share",
     "checkOutPost": "Checkout this post...",
@@ -169,7 +170,7 @@
     "band": "Band",
     "mode": "Mode",
     "type": "Type",
-    "sharedContent": " shared content",
+    "sharedContent": " reposted a post",
     "writeComment": "Write a comment..",
     "othersLikeThis": " others liked this",
     "otherLikeThis": " other liked this",

@@ -144,6 +144,7 @@
     "sharedPOST": "{{QRA}} reposteó una publicación"
   },
   "qso": {
+    "callsignTagged": "SD etiquetadas",
     "repost": "republicar",
     "share": "compartir",
     "checkOutPost": "Mirá esta publicación...",
@@ -170,7 +171,7 @@
     "band": "Banda",
     "mode": "Modo",
     "type": "Tipo",
-    "sharedContent": " compartió",
+    "sharedContent": " reposteó una publicación",
     "writeComment": "Comenta..",
     "othersLikeThis": " personas más les gustó esto",
     "otherLikeThis": " persona más les gustó esto",
