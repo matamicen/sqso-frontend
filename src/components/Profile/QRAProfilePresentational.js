@@ -13,9 +13,8 @@ import QRAProfileHeader from './QRAProfileHeader';
 import QRAProfileInfo from './QRAProfileInfo';
 import QRAProfileQsos from './QRAProfileQsos';
 
-
-const QRAProfile = ( props) => {
-  const {t} = props;
+const QRAProfile = props => {
+  const { t } = props;
   return (
     <div className="profile-container">
       <Dimmer active={props.loaderActive} page>
@@ -39,13 +38,13 @@ const QRAProfile = ( props) => {
         <AppNavigation />
       </div>
       <div className="site-left">
-      <Ad
-            adslot="/22031658057/qraDetail/qraDetail_left"
-            width={160}
-            height={600}
-            id="div-ads-instance-qraDetail-left"
-            displayOnly={true}
-          />
+        <Ad
+          adslot="/22031658057/qraDetail/qraDetail_left"
+          width={160}
+          height={600}
+          id="div-ads-instance-qraDetail-left"
+          displayOnly={true}
+        />
       </div>
       {!props.active && props.qra && (
         <div className="profile-main">
@@ -61,28 +60,44 @@ const QRAProfile = ( props) => {
           <Segment basic style={{ padding: '0px' }}>
             <div className="profile-buttons">
               <Button
-                style={{ flex: '1 1 auto' }}
+                style={{
+                  flex: '1 1 auto',
+                  paddingLeft: '1px',
+                  paddingRight: '1px'
+                }}
                 onClick={() => props.handleTabClick(1)}
                 active={props.tab === 1 ? true : false}
               >
                 {t('qra.qsos')}
               </Button>
               <Button
-                style={{ flex: '1 1 auto' }}
+                style={{
+                  flex: '1 1 auto',
+                  paddingLeft: '1px',
+                  paddingRight: '1px'
+                }}
                 onClick={() => props.handleTabClick(2)}
                 active={props.tab === 2 ? true : false}
               >
                 {t('qra.bio')}
               </Button>
               <Button
-                style={{ flex: '1 1 auto' }}
+                style={{
+                  flex: '1 1 auto',
+                  paddingLeft: '1px',
+                  paddingRight: '1px'
+                }}
                 onClick={() => props.handleTabClick(3)}
                 active={props.tab === 3 ? true : false}
               >
                 {t('qra.info')}
               </Button>
               <Button
-                style={{ flex: '1 1 auto' }}
+                style={{
+                  flex: '1 1 auto',
+                  paddingLeft: '1px',
+                  paddingRight: '1px'
+                }}
                 onClick={() => props.handleTabClick(4)}
                 active={props.tab === 4 ? true : false}
               >
@@ -117,14 +132,13 @@ const QRAProfile = ( props) => {
         </div>
       )}
       <div className="site-right">
-      <Ad
-            adslot="/22031658057/qraDetail/qraDetail_right"
-            width={160}
-            height={600}
-            id="div-ads-instance-qraDetail-right"
-            displayOnly={true}
-          />
-        
+        <Ad
+          adslot="/22031658057/qraDetail/qraDetail_right"
+          width={160}
+          height={600}
+          id="div-ads-instance-qraDetail-right"
+          displayOnly={true}
+        />
       </div>
     </div>
   );

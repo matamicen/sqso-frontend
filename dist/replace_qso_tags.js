@@ -87,14 +87,24 @@ var replace_qso_tags = /*#__PURE__*/function () {
               if (!result.data.errorMessage && result.data.body.error === 0) {
                 var qso = result.data.body.message;
 
-                if (qso.type === 'QSO' && qso.qras.length > 0) {
-                  title = qso.qra + t('qso.workedAQSO') + qso.qras[0].qra + t('qso.band') + qso.band + t('qso.mode') + qso.mode;
-                } else if (qso.type === 'LISTEN' && qso.qras.length > 0) {
-                  title = qso.qra + t('qso.listenedQSO') + qso.qras[0].qra + t('qso.band') + qso.band + t('qso.mode') + qso.mode;
-                } else if (qso.type === 'POST') {
-                  title = qso.qra + t('qso.createdPost');
-                } else if (qso.type === 'SHARE') {
-                  title = qso.qra + t('qso.sharedContent');
+                switch (qso.type) {
+                  case 'QSO':
+                    if (qso.qras.length > 0) title = qso.qra + t('qso.workedAQSO') + qso.qras[0].qra + t('qso.band') + qso.band + t('qso.mode') + qso.mode;
+
+                  case 'LISTEN':
+                    if (qso.qras.length > 0) title = qso.qra + t('qso.listenedQSO') + qso.qras[0].qra + t('qso.band') + qso.band + t('qso.mode') + qso.mode;
+
+                  case 'POST':
+                    title = qso.qra + t('qso.createdPost');
+
+                  case 'QAP':
+                    title = qso.qra + t('qso.createdQAP');
+
+                  case 'FLDDAY':
+                    title = qso.qra + t('qso.createdFLDDAY');
+
+                  case 'SHARE':
+                    title = qso.qra + t('qso.sharedContent');
                 }
 
                 if (qso.media.length > 0) {
