@@ -35,12 +35,13 @@ class Home extends React.PureComponent {
     }
     if (process.env.NODE_ENV !== 'production')
       this.setState({ adActive: false });
-    
+
     if (this.props.isAuthenticated)
-      this.props.actions.doFetchUserFeed(
-        this.props.token,
-        this.props.currentQRA
-      );
+      // this.props.actions.doFetchUserFeed(
+      //   this.props.token,
+      //   this.props.currentQRA
+      // );
+      this.props.actions.doFetchPublicFeed(this.props.currentQRA);
     else {
       if (!visited) this.setState({ modalOpen: true });
       this.props.actions.doFetchPublicFeed();
@@ -75,7 +76,7 @@ class Home extends React.PureComponent {
   }
   render() {
     const { t } = this.props;
-    
+
     return (
       <Fragment>
         <Dimmer active={this.state.active} page>
