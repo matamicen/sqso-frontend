@@ -81,10 +81,11 @@ class AuthenticatedNavigation extends React.PureComponent {
                 .then(session => {
                   this.props.actions.refreshToken(session.idToken.jwtToken);
                   this.props.actions.doFetchUserInfo(this.props.token);
-                  this.props.actions.doFetchUserFeed(
-                    this.props.token,
-                    this.props.currentQRA
-                  );
+                  this.props.actions.doFetchPublicFeed(this.props.currentQRA);
+                  // this.props.actions.doFetchUserFeed(
+                  //   this.props.token,
+                  //   this.props.currentQRA
+                  // );
                 })
                 .catch(error => {
                   if (process.env.NODE_ENV !== 'production') {

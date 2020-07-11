@@ -1005,17 +1005,22 @@ export function doFetchNotifications(token) {
   };
 }
 
-export function doFetchPublicFeed() {
+export function doFetchPublicFeed(qra) {
   // console.log('doFetchPublicFeed');
+  window.gtag('config', 'G-H8G28LYKBY', {
+    custom_map: { dimension1: 'userQRA' }
+  });
   if (process.env.NODE_ENV !== 'production')
     window.gtag('event', 'getPublicFeed_WEBDEV', {
       event_category: 'User',
-      event_label: 'getPublicFeed'
+      event_label: 'getPublicFeed',
+      userQRA: qra
     });
   else
     window.gtag('event', 'getPublicFeed_WEBPRD', {
       event_category: 'User',
-      event_label: 'getPublicFeed'
+      event_label: 'getPublicFeed',
+      userQRA: qra
     });
   return dispatch => {
     dispatch(doRequestFeed());
