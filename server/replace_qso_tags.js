@@ -59,35 +59,38 @@ const replace_qso_tags = async (req, res) => {
           let image = null;
           if (!result.data.errorMessage && result.data.body.error === 0) {
             let qso = result.data.body.message;
+
             switch (qso.type) {
               case 'QSO':
                 if (qso.qras.length > 0)
-                  title =
-                    qso.qra +
-                    t('qso.workedAQSO') +
-                    qso.qras[0].qra +
-                    t('qso.band') +
-                    qso.band +
-                    t('qso.mode') +
-                    qso.mode;
+                  title = t('qso.workedQSO', {
+                    QRA: qso.qra,
+                    QRA2: qso.qras[0].qra,
+                    band: qso.band,
+                    mode: qso.mode
+                  });
+                break;
               case 'LISTEN':
                 if (qso.qras.length > 0)
-                  title =
-                    qso.qra +
-                    t('qso.listenedQSO') +
-                    qso.qras[0].qra +
-                    t('qso.band') +
-                    qso.band +
-                    t('qso.mode') +
-                    qso.mode;
+                  title = t('qso.listenedQSO', {
+                    QRA: qso.qra,
+                    QRA2: qso.qras[0].qra,
+                    band: qso.band,
+                    mode: qso.mode
+                  });
+                break;
               case 'POST':
-                title = qso.qra + t('qso.createdPost');
+                title = t('qso.createdPOST', { QRA: qso.qra });
+                break;
               case 'QAP':
-                title = qso.qra + t('qso.createdQAP');
+                title = t('qso.createdQAP', { QRA: qso.qra });
+                break;
               case 'FLDDAY':
-                title = qso.qra + t('qso.createdFLDDAY');
+                title = t('qso.createdFLDDAY', { QRA: qso.qra });
+                break;
               case 'SHARE':
-                title = qso.qra + t('qso.sharedContent');
+                title = t('qso.sharedContent', { QRA: qso.qra });
+                break;
             }
 
             if (qso.media.length > 0) {
@@ -97,6 +100,7 @@ const replace_qso_tags = async (req, res) => {
                 '"/>';
             }
           }
+
           const html = await prepHTML(htmlData, {
             head:
               '<meta name="og:title" content="' +
