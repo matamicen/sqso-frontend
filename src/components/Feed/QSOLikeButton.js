@@ -104,7 +104,7 @@ class QSOLikeButton extends React.Component {
     let path = '/qso-like';
     let myInit = {
       body: {
-        qso: this.props.qso.idqsos
+        qso: this.props.qso.idqso_shared ? this.props.qso.idqso_shared: this.props.qso.idqsos
       }, // replace this with attributes you need
       headers: {
         Authorization: this.props.token
@@ -140,6 +140,7 @@ class QSOLikeButton extends React.Component {
   }
 
   doUnLike() {
+
     let apiName = 'superqso';
     let path = '/qso-like';
     let myInit = {
