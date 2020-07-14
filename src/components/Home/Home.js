@@ -40,7 +40,7 @@ class Home extends React.PureComponent {
       // );
       this.props.actions.doFetchPublicFeed(this.props.currentQRA);
     else {
-      if (!visited) this.setState({ modalOpen: true });
+      // if (!visited) this.setState({ modalOpen: true });
       this.props.actions.doFetchPublicFeed();
     }
     //Comentado Adsense
