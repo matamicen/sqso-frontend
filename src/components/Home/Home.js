@@ -3,12 +3,9 @@ import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
 import Loader from 'semantic-ui-react/dist/commonjs/elements/Loader';
 import Dimmer from 'semantic-ui-react/dist/commonjs/modules/Dimmer';
-import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
 import * as Actions from '../../actions';
-import global_config from '../../global_config.json';
 import '../../styles/style.css';
 import Ad from '../Ad/Ad';
 import FeedQSO from '../Feed/NewsFeedContainer';
@@ -19,20 +16,20 @@ class Home extends React.PureComponent {
     active: null,
     modalOpen: null,
     error: null,
-    videoAlreadyDisplayed: false
+    // videoAlreadyDisplayed: false
   };
 
   componentDidMount() {
-    let visited = localStorage['alreadyVisited'];
+    // let visited = localStorage['alreadyVisited'];
 
-    if (visited) {
-      this.setState({ videoAlreadyDisplayed: true });
-      //do not view Popup
-    } else {
-      //this is the first time
+    // if (visited) {
+    //   this.setState({ videoAlreadyDisplayed: true });
+    //   //do not view Popup
+    // } else {
+    //   //this is the first time
 
-      this.setState({ videoAlreadyDisplayed: false });
-    }
+    //   this.setState({ videoAlreadyDisplayed: false });
+    // }
     if (process.env.NODE_ENV !== 'production')
       this.setState({ adActive: false });
 
@@ -131,7 +128,7 @@ class Home extends React.PureComponent {
             {/* <img src='/bannerDescarga.gif' alt="Download APP and work your first QSO"/> */}
           </div>
         </div>
-        <Modal
+        {/* <Modal
           open={this.state.modalOpen}
           onClose={() => {
             localStorage['alreadyVisited'] = true;
@@ -189,7 +186,7 @@ class Home extends React.PureComponent {
               {t('whatIsSuperQSO.skip')}
             </Button>
           </Modal.Actions>
-        </Modal>
+        </Modal> */}
       </Fragment>
     );
   }
