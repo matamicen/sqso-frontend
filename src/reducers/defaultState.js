@@ -466,7 +466,7 @@ function generalReducers(state = initialState, action) {
         qso: action.qso,
         FetchingQSO: false,
         QSOFetched: true,
-
+        qsoError: null,
         userData: {
           ...state.userData,
           qra: {
