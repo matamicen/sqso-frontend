@@ -124,7 +124,10 @@ class QSODetail extends React.PureComponent {
       return (
         <Modal
           open={this.state.qsoError ? true : false}
-          onClose={() => this.props.history.push('/')}
+          onClose={() => {
+            this.setState({ qsoError: null });
+            this.props.history.push('/');
+          }}
           size="small"
         >
           <Modal.Content>
