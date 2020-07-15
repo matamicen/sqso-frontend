@@ -32,6 +32,7 @@ export const DELETE_MEDIA = 'DELETE_MEDIA';
 export const DELETE_QSO = 'DELETE_QSO';
 export const COMMENT_DELETE = 'COMMENT_DELETE';
 export const COMMENT_ADD = 'COMMENT_ADD';
+export const COMMENT_ADD_UPDATE = 'COMMENT_ADD_UPDATE';
 export const NOTIFICATION_READ = 'NOTIFICATION_READ';
 export const RECEIVE_NOTIFICATIONS = 'RECEIVE_NOTIFICATIONS';
 export const FOLLOW_CLEAR = 'FOLLOW_CLEAR';
@@ -161,7 +162,7 @@ export function doCommentDelete(idcomment, idqso, token) {
       });
   };
 }
-export function doCommentAdd(idqso, comment, token, idqso_shared) {
+export function doCommentAdd(idqso, comment, token, idqso_shared = null) {
   return dispatch => {
     if (process.env.NODE_ENV !== 'production')
       window.gtag('event', 'qsoCommentAdd_WEBDEV', {
@@ -189,6 +190,8 @@ export function doCommentAdd(idqso, comment, token, idqso_shared) {
     API.post(apiName, path, myInit)
       .then(response => {
         if (response.body.error === 0) {
+          
+          dispatch(doCommentAddApiResponse(idqso, comment, response.body.message));
         } else console.log(response.body.message);
       })
       .catch(error => {
@@ -221,6 +224,14 @@ export function doCommentAdd(idqso, comment, token, idqso_shared) {
           }
         }
       });
+  };
+}
+export function doCommentAddApiResponse(idqso = null, comment, idcomment) {
+  return {
+    type: COMMENT_ADD_UPDATE,
+    idqso: idqso,
+    comment: {...comment, idqsos_comments: idcomment},
+    idqsos_comments: idcomment
   };
 }
 export function doCommentAddResponse(idqso = null, comment) {
