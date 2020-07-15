@@ -45,10 +45,14 @@ class QSOComments extends React.PureComponent {
     // e.target.comment.value = null;
     this.setState({ comment: '' });
     this.props.recalculateRowHeight();
+
     comment.firstname = this.props.firstname;
     comment.lastname = this.props.lastname;
     comment.avatarpic = this.props.avatarpic;
-    console.log(this.props.qso)
+    comment.idqso = this.props.qso.idqso_shared
+      ? this.props.qso.idqso_shared
+      : this.props.qso.idqsos;
+
     this.props.actions.doCommentAdd(
       this.props.qso.idqsos,
       comment,
@@ -98,7 +102,7 @@ class QSOComments extends React.PureComponent {
               rows={4}
             />
 
-            <Button size="mini" content={t('qso.add')}/>
+            <Button size="mini" content={t('qso.add')} />
           </Form.Group>
         </Form>
       );

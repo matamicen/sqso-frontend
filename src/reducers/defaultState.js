@@ -1,4 +1,41 @@
-import { CLEAR_QRA, CLEAR_QSO, CLEAR_QSO_LINK, COMMENT_ADD, COMMENT_DELETE, DELETE_MEDIA, DELETE_QSO, FOLLOW_CLEAR, FOLLOW_RECEIVE, FOLLOW_REQUEST, LOGIN, LOGOUT, NOTIFICATION_READ, PREPARE_LOGIN, PUBLIC_SESSION, QSO_DISLIKE, QSO_LIKE, RECEIVE_FEED, RECEIVE_FOLLOWERS, RECEIVE_NOTIFICATIONS, RECEIVE_QRA, RECEIVE_QRA_ERROR, RECEIVE_QSO, RECEIVE_QSO_ERROR, RECEIVE_QSO_LINK, RECEIVE_QSO_MEDIA_COUNTER, RECEIVE_USERINFO, RECEIVE_USER_BIO, RECEIVE_USER_DATA_INFO, REFRESH_TOKEN, REPOST_QSO, REQUEST_FEED, REQUEST_QRA, REQUEST_QSO, REQUEST_USERINFO } from '../actions';
+import {
+  CLEAR_QRA,
+  CLEAR_QSO,
+  CLEAR_QSO_LINK,
+  COMMENT_ADD,
+  COMMENT_ADD_UPDATE,
+  COMMENT_DELETE,
+  DELETE_MEDIA,
+  DELETE_QSO,
+  FOLLOW_CLEAR,
+  FOLLOW_RECEIVE,
+  FOLLOW_REQUEST,
+  LOGIN,
+  LOGOUT,
+  NOTIFICATION_READ,
+  PREPARE_LOGIN,
+  PUBLIC_SESSION,
+  QSO_DISLIKE,
+  QSO_LIKE,
+  RECEIVE_FEED,
+  RECEIVE_FOLLOWERS,
+  RECEIVE_NOTIFICATIONS,
+  RECEIVE_QRA,
+  RECEIVE_QRA_ERROR,
+  RECEIVE_QSO,
+  RECEIVE_QSO_ERROR,
+  RECEIVE_QSO_LINK,
+  RECEIVE_QSO_MEDIA_COUNTER,
+  RECEIVE_USERINFO,
+  RECEIVE_USER_BIO,
+  RECEIVE_USER_DATA_INFO,
+  REFRESH_TOKEN,
+  REPOST_QSO,
+  REQUEST_FEED,
+  REQUEST_QRA,
+  REQUEST_QSO,
+  REQUEST_USERINFO
+} from '../actions';
 
 const initialState = {
   userData: {
@@ -87,12 +124,10 @@ function generalReducers(state = initialState, action) {
 
       return newStore;
     case QSO_LIKE:
-      
-
       let like = {
         idqso: action.idqso,
         idqra: action.idqra,
-        qra: action.qra, 
+        qra: action.qra,
         firstname: action.firstname,
         lastname: action.lastname,
         avatarpic: action.avatarpic
@@ -108,7 +143,7 @@ function generalReducers(state = initialState, action) {
         qso_link:
           state.qso_link && state.qso_link.idqsos === action.idqso
             ? { ...state.qso_link, likes: [...state.qso_link.likes, like] }
-            :  state.qso_link ,
+            : state.qso_link,
         qra: state.qra
           ? {
               ...state.qra,
@@ -135,7 +170,6 @@ function generalReducers(state = initialState, action) {
 
       return newStore;
     case QSO_DISLIKE:
-      
       newStore = Object.assign({}, state, {
         ...state,
         qsos: state.qsos.map(qso => {
@@ -145,12 +179,16 @@ function generalReducers(state = initialState, action) {
 
           return qso;
         }),
-        qso_link: state.qso_link ? {
-          ...state.qso_link,
-          likes: state.qso_link.likes
-            ? state.qso_link.likes.filter(like => like.idqra !== action.idqra)
-            : []
-        }: null,
+        qso_link: state.qso_link
+          ? {
+              ...state.qso_link,
+              likes: state.qso_link.likes
+                ? state.qso_link.likes.filter(
+                    like => like.idqra !== action.idqra
+                  )
+                : []
+            }
+          : null,
         qra: state.qra
           ? {
               ...state.qra,
@@ -178,20 +216,40 @@ function generalReducers(state = initialState, action) {
             : {}
       });
       return newStore;
-    case COMMENT_ADD:
-      
+    case COMMENT_ADD_UPDATE:
       newStore = Object.assign({}, state, {
         ...state,
         qsos: state.qsos.map(qso => {
           if (qso.idqsos === action.idqso) {
-            qso.comments = [...qso.comments, action.comment ];
+            qso.comments = qso.comments.map(c => {
+              if (
+                c.qra === action.comment.qra &&
+                c.comment === action.comment.comment &&
+                c.datetime === action.comment.datetime
+              )
+                return action.comment;
+              else return c;
+            });
           }
+
           return qso;
         }),
-        qso_link:
-          state.qso_link && state.qso_link.idqsos === action.idqso
-            ? { ...state.qso_link, comments: [...state.qso_link.comments, action.comment] }
-            : state.qso_link ,
+        qso_link: state.qso_link
+          ? {
+              ...state.qso_link,
+              comments: state.qso_link.comments
+                ? state.qso_link.comments.map(c => {
+                  if (
+                    c.qra === action.comment.qra &&
+                    c.comment === action.comment.comment &&
+                    c.datetime === action.comment.datetime
+                  )
+                    return action.comment;
+                  else return c;
+                })
+                : []
+            }
+          : null,
         qra: state.qra
           ? {
               ...state.qra,
@@ -199,7 +257,64 @@ function generalReducers(state = initialState, action) {
                 state.qra && state.qra.qsos
                   ? state.qra.qsos.map(qso => {
                       if (qso.idqsos === action.idqso) {
-                        qso.comments = [...qso.comments, action.comment ];
+                        qso.comments = qso.comments.map(c => {
+                          if (
+                            c.qra === action.comment.qra &&
+                            c.comment === action.comment.comment &&
+                            c.datetime === action.comment.datetime
+                          )
+                            return action.comment;
+                          else return c;
+                        });
+                      }
+                      return qso;
+                    })
+                  : []
+            }
+          : null,
+        qso:
+          state.qso && state.qso.idqsos
+            ? {
+                ...state.qso,
+                comments: state.qso.comments
+                  .map(c => {
+                    if (
+                      c.qra === action.comment.qra &&
+                      c.comment === action.comment.comment &&
+                      c.datetime === action.comment.datetime
+                    )
+                      return action.comment;
+                    else return c;
+                  })
+              }
+            : {}
+      });
+
+      return newStore;
+    case COMMENT_ADD:
+      newStore = Object.assign({}, state, {
+        ...state,
+        qsos: state.qsos.map(qso => {
+          if (qso.idqsos === action.idqso) {
+            qso.comments = [...qso.comments, action.comment];
+          }
+          return qso;
+        }),
+        qso_link:
+          state.qso_link && state.qso_link.idqsos === action.idqso
+            ? {
+                ...state.qso_link,
+                comments: [...state.qso_link.comments, action.comment]
+              }
+            : state.qso_link,
+        qra: state.qra
+          ? {
+              ...state.qra,
+              qsos:
+                state.qra && state.qra.qsos
+                  ? state.qra.qsos.map(qso => {
+                      if (qso.idqsos === action.idqso) {
+                        qso.comments = [...qso.comments, action.comment];
                       }
                       return qso;
                     })
@@ -229,14 +344,16 @@ function generalReducers(state = initialState, action) {
 
           return qso;
         }),
-        qso_link: state.qso_link ? {
-          ...state.qso_link,
-          comments: state.qso_link.comments
-            ? state.qso_link.comments.filter(
-                comment => comment.idqsos_comments !== action.idcomment
-              )
-            : []
-        }: null,
+        qso_link: state.qso_link
+          ? {
+              ...state.qso_link,
+              comments: state.qso_link.comments
+                ? state.qso_link.comments.filter(
+                    comment => comment.idqsos_comments !== action.idcomment
+                  )
+                : []
+            }
+          : null,
         qra: state.qra
           ? {
               ...state.qra,
