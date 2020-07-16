@@ -50,7 +50,7 @@ class NavigationSearch extends Component {
             console.log(error);
           } else {
             Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.NODE_ENV);
+              scope.setExtra('ENV', process.env.REACT_APP_STAGE);
             });
             Sentry.captureException(error);
           }

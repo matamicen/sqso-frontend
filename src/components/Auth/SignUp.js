@@ -125,7 +125,7 @@ class SignUp extends React.Component {
             console.log(err);
           } else
             Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.NODE_ENV);
+              scope.setExtra('ENV', process.env.REACT_APP_STAGE);
             });
           Sentry.captureException(err);
           this.setState({ dimmerActive: false, signUpError: err.message });
@@ -156,7 +156,7 @@ class SignUp extends React.Component {
           console.log(err);
         } else
           Sentry.configureScope(function(scope) {
-            scope.setExtra('ENV', process.env.NODE_ENV);
+            scope.setExtra('ENV', process.env.REACT_APP_STAGE);
           });
         Sentry.captureException(err);
         this.setState({ confirmError: err });
@@ -194,7 +194,7 @@ class SignUp extends React.Component {
           console.log(err);
         } else
           Sentry.configureScope(function(scope) {
-            scope.setExtra('ENV', process.env.NODE_ENV);
+            scope.setExtra('ENV', process.env.REACT_APP_STAGE);
           });
         Sentry.captureException(err);
         this.setState({ dimmerValCodeActive: false, confirmError: err });

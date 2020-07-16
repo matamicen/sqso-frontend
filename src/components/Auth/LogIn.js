@@ -197,7 +197,7 @@ class LogIn extends React.Component {
           console.log(err);
         } else {
           Sentry.configureScope(function(scope) {
-            scope.setExtra('ENV', process.env.NODE_ENV);
+            scope.setExtra('ENV', process.env.REACT_APP_STAGE);
           });
           Sentry.captureException(err);
         }

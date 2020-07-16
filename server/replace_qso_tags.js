@@ -47,7 +47,7 @@ const replace_qso_tags = async (req, res) => {
               console.error('Read error', err);
             }
             Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.NODE_ENV);
+              scope.setExtra('ENV', process.env.REACT_APP_STAGE);
             });
             Sentry.captureException(err);
 
@@ -122,7 +122,7 @@ const replace_qso_tags = async (req, res) => {
           console.log(result);
         } else {
           Sentry.configureScope(function(scope) {
-            scope.setExtra('ENV', process.env.NODE_ENV);
+            scope.setExtra('ENV', process.env.REACT_APP_STAGE);
           });
           Sentry.captureException(result);
         }
