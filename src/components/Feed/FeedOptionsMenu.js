@@ -49,7 +49,7 @@ class FeedOptionsMenu extends React.PureComponent {
     QslCardPrint(this.props);
   }
   handleOnSubmitReportComment(e) {
-    if (process.env.NODE_ENV !== 'production')
+    if (process.env.REACT_APP_STAGE !== 'production')
       window.gtag('event', 'reportComment_WEBDEV', {
         event_category: 'QSO',
         event_label: 'reportComment'
@@ -102,7 +102,7 @@ class FeedOptionsMenu extends React.PureComponent {
   }
   handleOnSubmitReportQso(e) {
     const { t } = this.props;
-    if (process.env.NODE_ENV !== 'production')
+    if (process.env.REACT_APP_STAGE !== 'production')
       window.gtag('event', 'reportQSO_WEBDEV', {
         event_category: 'QSO',
         event_label: 'reportQSO'
@@ -154,7 +154,7 @@ class FeedOptionsMenu extends React.PureComponent {
   }
   handleOnSubmitReportMedia(e) {
     const { t } = this.props;
-    if (process.env.NODE_ENV !== 'production')
+    if (process.env.REACT_APP_STAGE !== 'production')
       window.gtag('event', 'reportMedia_WEBDEV', {
         event_category: 'QSO',
         event_label: 'reportMedia'

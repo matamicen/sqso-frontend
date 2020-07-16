@@ -140,7 +140,7 @@ class SignUp extends React.Component {
   async handleResendCode() {
     await Auth.resendSignUp(this.state.email.toLowerCase())
       .then(() => {
-        if (process.env.NODE_ENV !== 'production')
+        if (process.env.REACT_APP_STAGE !== 'production')
           window.gtag('event', 'resendCode_WEBDEV', {
             event_category: 'User',
             event_label: 'resendCode'
@@ -178,7 +178,7 @@ class SignUp extends React.Component {
           dimmerLoginActive: true,
           showModalMessage: true
         });
-        if (process.env.NODE_ENV !== 'production')
+        if (process.env.REACT_APP_STAGE !== 'production')
           window.gtag('event', 'confirmCode_WEBDEV', {
             event_category: 'User',
             event_label: 'confirmCode'
