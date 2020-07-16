@@ -32,6 +32,8 @@ Amplify.configure(AwsExports);
 
 class App extends Component {
   async componentDidMount() {
+    console.log("process.env.AMPLIFY_ENV")
+    console.log(process.env.AMPLIFY_ENV)
     this.props.actions.doStartingLogin();
     const session = await Auth.currentSession().catch(error => {
       this.props.actions.doLogout();
@@ -49,6 +51,7 @@ class App extends Component {
 
         this.props.actions.doSetPublicSession();
       } else {
+
         this.props.actions.doLogin(
           session.idToken.jwtToken,
           session.idToken.payload['custom:callsign'].toUpperCase(),

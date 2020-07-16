@@ -78,8 +78,6 @@
     "years13Restriction": "Debe ser mayor de 13 años",
     "signupNotAvailable": "Registración no disponible todavía. Espere unos dias!",
     "confirmationCode": "Código de Confirmación",
-    
-
     "recoverAccount": "Recuperar Cuenta",
     "codeResent": "Código reenviado para ",
     "forgotPassword": "¿Olvido su Contraseña?",
@@ -137,13 +135,15 @@
     "createdQAP": "{{QRA}} publicó que está QAP",
     "createdFLDDAY": "{{QRA}} promocionó una activación",
     "createdPOST": "{{QRA}} creó una publicación",
-    "sharedQSO" :"{{QRA}} republicó un QSO",
+    "sharedQSO": "{{QRA}} republicó un QSO",
     "sharedLISTEN": "{{QRA}} republicó una escucha de un QSO",
     "sharedQAP": "{{QRA}} republicó un QAP",
     "sharedFLDDAY": "{{QRA}} republicó una activación",
     "sharedPOST": "{{QRA}} republicó una publicación"
   },
   "qso": {
+    "audioPlays": " - {{count}} Reproducción",
+    "audioPlays_plural": " - {{count}} Reproducciones",
     "callsignTagged": "SD etiquetadas",
     "repost": "republicar",
     "share": "compartir",
@@ -151,7 +151,7 @@
     "checkOutQSO": "Mirá este QSO...",
     "checkOutQAP": "Mirá quien va a estar QAP...",
     "checkOutFLDDAY": "Mirá esta activación...",
-    "add": "Agregar" ,
+    "add": "Agregar",
     "postDeleted": "Esta publicación ha sido eliminada y no puede ser mostrada",
     "notExist": "Esta publicación no existe",
     "and": " y a ",
@@ -241,11 +241,11 @@
     "listenedQSO": "Escuchó un QSO con ",
     "workedQSO": "Trabajó un QSO con "
   },
-  "whoToFollow":{
+  "whoToFollow": {
     "qsosCreated": "QSOs Creados",
-    "callsignsYouTagged":"Señales Distintivas que has mencionado",
-    "callsignsTaggedYou":"Señales Distintivas que te han mencionado",
+    "callsignsYouTagged": "Señales Distintivas que has mencionado",
+    "callsignsTaggedYou": "Señales Distintivas que te han mencionado",
     "callsignsFollowYou": "Señales Distintivas que te siguen",
-    "callsignsMostFollowed":"Señales Distintivas más seguidos"
+    "callsignsMostFollowed": "Señales Distintivas más seguidos"
   }
 }
