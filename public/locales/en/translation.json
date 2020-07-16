@@ -143,6 +143,8 @@
     "sharedPOST": "{{QRA}} reposted a post"    
   },
   "qso": {
+    "audioPlays": " - {{count}} Play",
+    "audioPlays_plural": " - {{count}} Plays",
     "callsignTagged": "Callsigns tagged",
     "repost": "repost",
     "share": "share",

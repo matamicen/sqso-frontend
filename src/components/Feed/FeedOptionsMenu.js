@@ -1,15 +1,12 @@
 import API from '@aws-amplify/api';
 import * as Sentry from '@sentry/browser';
-import QRCode from 'qrcode.react';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { withTranslation } from 'react-i18next';
 import Recaptcha from 'react-recaptcha';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Form from 'semantic-ui-react/dist/commonjs/collections/Form';
-import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid';
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
-import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment';
 import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
 import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
 import * as Actions from '../../actions';
@@ -229,9 +226,16 @@ class FeedOptionsMenu extends React.PureComponent {
                 onClose={this.closeReportedContent}
                 size="tiny"
                 closeIcon
-                trigger={<Dropdown.Item icon="warning" text={t('reportContent.reportPhoto')} />}
+                trigger={
+                  <Dropdown.Item
+                    icon="warning"
+                    text={t('reportContent.reportPhoto')}
+                  />
+                }
               >
-                <Modal.Header>{t('reportContent.helpUnderstandWhatsHappening')}</Modal.Header>
+                <Modal.Header>
+                  {t('reportContent.helpUnderstandWhatsHappening')}
+                </Modal.Header>
                 <Modal.Content>
                   <Form onSubmit={this.handleOnSubmitReportMedia.bind(this)}>
                     <Form.TextArea
@@ -264,7 +268,9 @@ class FeedOptionsMenu extends React.PureComponent {
                       onClose={this.close}
                       size="small"
                     >
-                      <Modal.Header>{t('reportContent.reportPhoto')}</Modal.Header>
+                      <Modal.Header>
+                        {t('reportContent.reportPhoto')}
+                      </Modal.Header>
                       <Modal.Content>
                         <p>{t('reportContent.photoReported')}</p>
                       </Modal.Content>
@@ -302,9 +308,16 @@ class FeedOptionsMenu extends React.PureComponent {
                 onClose={this.closeReportedContent}
                 size="tiny"
                 closeIcon
-                trigger={<Dropdown.Item icon="warning" text={t('reportContent.reportAudio')}/>}
+                trigger={
+                  <Dropdown.Item
+                    icon="warning"
+                    text={t('reportContent.reportAudio')}
+                  />
+                }
               >
-                <Modal.Header>{t('reportContent.helpUnderstandWhatsHappening')}</Modal.Header>
+                <Modal.Header>
+                  {t('reportContent.helpUnderstandWhatsHappening')}
+                </Modal.Header>
                 <Modal.Content>
                   <Form onSubmit={this.handleOnSubmitReportMedia.bind(this)}>
                     <Form.TextArea
@@ -313,7 +326,7 @@ class FeedOptionsMenu extends React.PureComponent {
                       label={t('reportContent.labelComments')}
                       placeholder={t('reportContent.whyRemoveAudio')}
                     />
-                    <Form.Input name="email" label={t('auth.labelEmail')}/>
+                    <Form.Input name="email" label={t('auth.labelEmail')} />
                     <Form.Input
                       type="hidden"
                       name="idmedia"
@@ -337,7 +350,9 @@ class FeedOptionsMenu extends React.PureComponent {
                       onClose={this.close}
                       size="small"
                     >
-                      <Modal.Header>{t('reportContent.reportAudio')}</Modal.Header>
+                      <Modal.Header>
+                        {t('reportContent.reportAudio')}
+                      </Modal.Header>
                       <Modal.Content>
                         <p>{t('reportContent.audioReported')}</p>
                       </Modal.Content>
@@ -365,72 +380,89 @@ class FeedOptionsMenu extends React.PureComponent {
             )}
           {/* END FEED AUDIO DELETE CONTENT */}
           {/* FEED ITEM QR CODE */}
-          {this.props.optionsCaller === 'FeedItem' && (
-            <Modal
-              size="tiny"
-              closeIcon
-              trigger={<Dropdown.Item icon="qrcode" text={t('reportContent.showQRCode')} />}
-            >
-              <Modal.Header>{t('reportContent.QRCode')}</Modal.Header>
-              <Modal.Content>
-                <Grid centered>
-                  <Segment raised>
-                    <QRCode value={this.props.guid} />
-                  </Segment>
-                </Grid>
-              </Modal.Content>
-            </Modal>
-            // <Modal
-            //   size="tiny"
-            //   closeIcon
-            //   open={showReportContent}
-            //   onOpen={this.openReportedContent}
-            //   onClose={this.closeReportedContent}
-            //   trigger={<Dropdown.Item icon="warning" text="Report Content" />}
-            // >
-            //   <Modal.Header>{t('reportContent.helpUnderstandWhatsHappening')}</Modal.Header>
-            //   <Modal.Content>
-            //     <Form onSubmit={this.handleOnSubmitReportQso.bind(this)}>
-            //       <Form.TextArea
-            //         required
-            //         name="comments"
-            //         label="Comments"
-            //         placeholder="Why do you think we should remove this content?"
-            //         autoFocus
-            //       />
-            //       {/* <Form.Input name="email" label={t(auth.labelEmail')/> */}
-            //       <Form.Field>
-            //         <Recaptcha
-            //           sitekey="6Lf1VL8UAAAAAEyE2sQHbSr-tbH3_fwZqxEXEg-l"
-            //           render="explicit"
-            //           verifyCallback={response => {
-            //             this.setState({ recaptchaToken: response });
-            //           }}
-            //         />{" "}
-            //       </Form.Field>
-            //       <Form.Button>Submit</Form.Button>
-            //     </Form>
-            //     <Modal
-            //       open={showMessage}
-            //       onOpen={this.open}
-            //       onClose={this.close}
-            //       size="small"
-            //     >
-            //       <Modal.Header>Report Content</Modal.Header>
-            //       <Modal.Content>
-            //         <p>Content Reported!</p>
-            //       </Modal.Content>
-            //       <Modal.Actions>
-            //         <Button
-            //           icon="check"
-            //           content="Close"
-            //           onClick={this.close}
-            //         />
-            //       </Modal.Actions>
-            //     </Modal>
-            //   </Modal.Content>
-            // </Modal>
-          )}
+          {this.props.optionsCaller === 'FeedItem' &&
+            this.props.currentQRA === this.props.qso_owner && (
+              <Fragment>
+                {/* <Modal
+                size="tiny"
+                closeIcon
+                trigger={
+                  <Dropdown.Item
+                    icon="qrcode"
+                    text={t('reportContent.showQRCode')}
+                  />
+                }
+              >
+                <Modal.Header>{t('reportContent.QRCode')}</Modal.Header>
+                <Modal.Content>
+                  <Grid centered>
+                    <Segment raised>
+                      <QRCode value={this.props.guid} />
+                    </Segment>
+                  </Grid>
+                </Modal.Content>
+              </Modal> */}
+                <Modal
+                  size="tiny"
+                  closeIcon
+                  open={showReportContent}
+                  onOpen={this.openReportedContent}
+                  onClose={this.closeReportedContent}
+                  trigger={
+                    <Dropdown.Item
+                      icon="warning"
+                      text={t('reportContent.reportContent')}
+                    />
+                  }
+                >
+                  <Modal.Header>
+                    {t('reportContent.helpUnderstandWhatsHappening')}
+                  </Modal.Header>
+                  <Modal.Content>
+                    <Form onSubmit={this.handleOnSubmitReportQso.bind(this)}>
+                      <Form.TextArea
+                        required
+                        name="comments"
+                        label={t('reportContent.labelComments')}
+                        placeholder={t('reportContent.whyRemoveContent')}
+                        autoFocus
+                      />
+                      <Form.Input name="email" label={t('auth.labelEmail')} />
+                      <Form.Field>
+                        <Recaptcha
+                          sitekey="6Lf1VL8UAAAAAEyE2sQHbSr-tbH3_fwZqxEXEg-l"
+                          render="explicit"
+                          verifyCallback={response => {
+                            this.setState({ recaptchaToken: response });
+                          }}
+                        />{' '}
+                      </Form.Field>
+                      <Form.Button>{t('global.submit')}</Form.Button>
+                    </Form>
+                    <Modal
+                      open={showMessage}
+                      onOpen={this.open}
+                      onClose={this.close}
+                      size="small"
+                    >
+                      <Modal.Header>
+                        {t('reportContent.reportContent')}
+                      </Modal.Header>
+                      <Modal.Content>
+                        <p>{t('reportContent.contentReported')}</p>
+                      </Modal.Content>
+                      <Modal.Actions>
+                        <Button
+                          icon="check"
+                          content={t('global.close')}
+                          onClick={this.close}
+                        />
+                      </Modal.Actions>
+                    </Modal>
+                  </Modal.Content>
+                </Modal>
+              </Fragment>
+            )}
           {/* END FEED ITEM QR CODE */}
           {/* FEED ITEM DELETE QSO*/}
           {this.props.optionsCaller === 'FeedItem' &&
@@ -443,23 +475,26 @@ class FeedOptionsMenu extends React.PureComponent {
             )}
           {/* END FEED ITEM DELETE QSO*/}
           {/* FEED ITEM PRINT QSL CARD*/}
-          {this.props.optionsCaller === 'FeedItem' &&
-            this.props.QslCard
-            && (
-              <Modal
-                trigger={<Dropdown.Item icon="print" text={t('reportContent.printQSLCard')} />}
-                header={t('reportContent.QSLCard')}
-                content={t('reportContent.disablePopUps')}
-                onActionClick={this.printQSLCard.bind(this)}
-                actions={[
-                  {
-                    key: 'done',
-                    content: t('reportContent.printQSLCard'),
-                    positive: true
-                  }
-                ]}
-              />
-            )}
+          {this.props.optionsCaller === 'FeedItem' && this.props.QslCard && (
+            <Modal
+              trigger={
+                <Dropdown.Item
+                  icon="print"
+                  text={t('reportContent.printQSLCard')}
+                />
+              }
+              header={t('reportContent.QSLCard')}
+              content={t('reportContent.disablePopUps')}
+              onActionClick={this.printQSLCard.bind(this)}
+              actions={[
+                {
+                  key: 'done',
+                  content: t('reportContent.printQSLCard'),
+                  positive: true
+                }
+              ]}
+            />
+          )}
           {/* END FEED ITEM QSL CARD*/}
           {/* FEED ITEM REPORT QSO*/}
           {this.props.optionsCaller === 'FeedItem' &&
@@ -471,9 +506,16 @@ class FeedOptionsMenu extends React.PureComponent {
                 onClose={this.closeReportedContent}
                 size="tiny"
                 closeIcon
-                trigger={<Dropdown.Item icon="warning" text={t('reportContent.reportContent')} />}
+                trigger={
+                  <Dropdown.Item
+                    icon="warning"
+                    text={t('reportContent.reportContent')}
+                  />
+                }
               >
-                <Modal.Header>{t('reportContent.helpUnderstandWhatsHappening')}</Modal.Header>
+                <Modal.Header>
+                  {t('reportContent.helpUnderstandWhatsHappening')}
+                </Modal.Header>
                 <Modal.Content>
                   <Form onSubmit={this.handleOnSubmitReportQso.bind(this)}>
                     <Form.TextArea
@@ -482,7 +524,7 @@ class FeedOptionsMenu extends React.PureComponent {
                       label={t('reportContent.labelComments')}
                       placeholder={t('reportContent.whyRemoveContent')}
                     />
-                    <Form.Input name="email" label={t('auth.labelEmail')}/>
+                    <Form.Input name="email" label={t('auth.labelEmail')} />
                     <Form.Field>
                       <Recaptcha
                         sitekey="6Lf1VL8UAAAAAEyE2sQHbSr-tbH3_fwZqxEXEg-l"
@@ -500,7 +542,9 @@ class FeedOptionsMenu extends React.PureComponent {
                       onClose={this.close}
                       size="small"
                     >
-                      <Modal.Header>{t('reportContent.reportContent')}</Modal.Header>
+                      <Modal.Header>
+                        {t('reportContent.reportContent')}
+                      </Modal.Header>
                       <Modal.Content>
                         <p>{t('reportContent.contentReported')}</p>
                       </Modal.Content>
@@ -527,9 +571,16 @@ class FeedOptionsMenu extends React.PureComponent {
                 onClose={this.closeReportedContent}
                 size="tiny"
                 closeIcon
-                trigger={<Dropdown.Item icon="warning" text={t('reportContent.reportContent')} />}
+                trigger={
+                  <Dropdown.Item
+                    icon="warning"
+                    text={t('reportContent.reportContent')}
+                  />
+                }
               >
-                <Modal.Header>{t('reportContent.helpUnderstandWhatsHappening')}</Modal.Header>
+                <Modal.Header>
+                  {t('reportContent.helpUnderstandWhatsHappening')}
+                </Modal.Header>
                 <Modal.Content>
                   <Form onSubmit={this.handleOnSubmitReportComment.bind(this)}>
                     <Form.TextArea
@@ -556,7 +607,9 @@ class FeedOptionsMenu extends React.PureComponent {
                       onClose={this.close}
                       size="small"
                     >
-                      <Modal.Header>{t('reportContent.reportComment')}</Modal.Header>
+                      <Modal.Header>
+                        {t('reportContent.reportComment')}
+                      </Modal.Header>
                       <Modal.Content>
                         <p>{t('reportContent.commentReported')}</p>
                       </Modal.Content>

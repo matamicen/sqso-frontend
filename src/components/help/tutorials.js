@@ -5,7 +5,7 @@ import global_config from '../../global_config.json';
 import '../../styles/style.css';
 import Ad from '../Ad/Ad';
 import AppNavigation from '../Home/AppNavigation';
-const Tutorials = ({t}) => (
+const Tutorials = ({ t }) => (
   <Fragment>
     <div className="global-container">
       <div className="site-header">
@@ -14,18 +14,33 @@ const Tutorials = ({t}) => (
       <div className="site-left">
         <Ad adslot="/21799560237/Signup/left" width={160} height={600} />
       </div>
-      <div className="site-main"  onContextMenu={(e)=> e.preventDefault()}>
+      <div className="site-main" onContextMenu={e => e.preventDefault()}>
         <Header as="h2" dividing>
           Tutorial Completo
-          <Header.Subheader>Si queres aprender un tema en particular, mira los siguientes videos. Este video fue realizado por Matias (LU2ACH) </Header.Subheader>
+          <Header.Subheader>
+            Si queres aprender un tema en particular, mira los siguientes
+            videos. Este video fue realizado por Matias (LU2ACH){' '}
+          </Header.Subheader>
         </Header>
 
-        <video  width="100%"  controls controlsList="nodownload">
+        <video
+          width="100%"
+          controls
+          controlsList="nodownload"
+          onPlay={() => {
+            if (process.env.NODE_ENV !== 'production')
+              window.gtag('event', 'tutorialPlay_WEBDEV', {
+                video_name: 'tutorialCompleto'
+              });
+            else
+              window.gtag('event', 'tutorialPlay_WEBPRD', {
+                video_name: 'tutorialCompleto'
+              });
+          }}
+        >
           <source
-            src={global_config.s3Cloudfront + "/faq/tutorialCompleto_j.mp4"}
+            src={global_config.s3Cloudfront + 'https://d1dwfud4bi54v7.cloudfront.net/faq/tutorialCompleto_j.mp4'}
             type="video/mp4"
-            
-            
           />
           Your browser does not support the video tag.
         </video>
@@ -33,9 +48,18 @@ const Tutorials = ({t}) => (
           Tutorial por Temas
         </Header>
         <Header as="h3">¿Como postear un QSO?</Header>
-        <video width="100%" controls controlsList="nodownload">
+        <video width="100%" controls controlsList="nodownload" onPlay={() => {
+            if (process.env.NODE_ENV !== 'production')
+              window.gtag('event', 'tutorialPlay_WEBDEV', {
+                video_name: 'PostQSO_alta'
+              });
+            else
+              window.gtag('event', 'tutorialPlay_WEBPRD', {
+                video_name: 'PostQSO_alta'
+              });
+          }}>
           <source
-            src={global_config.s3Cloudfront + "/faq/PostQSO_alta_j.mp4"}
+            src={global_config.s3Cloudfront + '/faq/PostQSO_alta_j.mp4'}
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -55,9 +79,18 @@ const Tutorials = ({t}) => (
           damos la posibilidad de escucharse realmente como esta saliendo en
           nuestra estación.
         </p>
-        <video width="100%" controls controlsList="nodownload">
+        <video width="100%" controls controlsList="nodownload" onPlay={() => {
+            if (process.env.NODE_ENV !== 'production')
+              window.gtag('event', 'tutorialPlay_WEBDEV', {
+                video_name: 'Post+de+una+escucha'
+              });
+            else
+              window.gtag('event', 'tutorialPlay_WEBPRD', {
+                video_name: 'Post+de+una+escucha'
+              });
+          }}>
           <source
-            src={global_config.s3Cloudfront + "/faq/Post+de+una+escucha_j.mp4"}
+            src={global_config.s3Cloudfront + '/faq/Post+de+una+escucha_j.mp4'}
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -77,9 +110,18 @@ const Tutorials = ({t}) => (
           esta bueno ponerle el callsign de tu amigo asi ese post lo recibe el
           tambien y no necesita buscarlo.
         </p>
-        <video width="100%" controls controlsList="nodownload">
+        <video width="100%" controls controlsList="nodownload" onPlay={() => {
+            if (process.env.NODE_ENV !== 'production')
+              window.gtag('event', 'tutorialPlay_WEBDEV', {
+                video_name: 'PostANY'
+              });
+            else
+              window.gtag('event', 'tutorialPlay_WEBPRD', {
+                video_name: 'PostANY'
+              });
+          }}>
           <source
-            src={global_config.s3Cloudfront + "/faq/PostANY_j.mp4"}
+            src={global_config.s3Cloudfront + '/faq/PostANY_j.mp4'}
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -97,9 +139,18 @@ const Tutorials = ({t}) => (
         <Header as="h3">¿Como empiezo a seguir(Follow) a un colega?</Header>
         <p>Podes empezar a seguir a un colega desde la APP y la Web.</p>
 
-        <video width="100%" controls controlsList="nodownload">
+        <video width="100%" controls controlsList="nodownload" onPlay={() => {
+            if (process.env.NODE_ENV !== 'production')
+              window.gtag('event', 'tutorialPlay_WEBDEV', {
+                video_name: 'Seguir+a+un+colega'
+              });
+            else
+              window.gtag('event', 'tutorialPlay_WEBPRD', {
+                video_name: 'Seguir+a+un+colega'
+              });
+          }}>
           <source
-            src={global_config.s3Cloudfront + "/faq/Seguir+a+un+colega_j.mp4"}
+            src={global_config.s3Cloudfront + '/faq/Seguir+a+un+colega_j.mp4'}
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -112,9 +163,18 @@ const Tutorials = ({t}) => (
           que te interese para ver mas detalle de la misma.
         </p>
         <p> Desde la WEB haces click en la campanita arriba a la derecha.</p>
-        <video width="100%" controls controlsList="nodownload">
+        <video width="100%" controls controlsList="nodownload" onPlay={() => {
+            if (process.env.NODE_ENV !== 'production')
+              window.gtag('event', 'tutorialPlay_WEBDEV', {
+                video_name: 'Leer+notificaciones'
+              });
+            else
+              window.gtag('event', 'tutorialPlay_WEBPRD', {
+                video_name: 'Leer+notificaciones'
+              });
+          }}>
           <source
-            src={global_config.s3Cloudfront + "/faq/Leer+notificaciones_j.mp4"}
+            src={global_config.s3Cloudfront + '/faq/Leer+notificaciones_j.mp4'}
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -136,9 +196,18 @@ const Tutorials = ({t}) => (
           QSL CARD. (Recorda que debes tener habilitados los POPUPS en el
           navegador WEB par que se puede generar el PDF de la tarjeta QSL)
         </p>
-        <video width="100%" controls controlsList="nodownload">
+        <video width="100%" controls controlsList="nodownload" onPlay={() => {
+            if (process.env.NODE_ENV !== 'production')
+              window.gtag('event', 'tutorialPlay_WEBDEV', {
+                video_name: 'Imprimir+tarjeta+QSL'
+              });
+            else
+              window.gtag('event', 'tutorialPlay_WEBPRD', {
+                video_name: 'Imprimir+tarjeta+QSL'
+              });
+          }}>
           <source
-            src={global_config.s3Cloudfront + "/faq/Imprimir+tarjeta+QSL_j.mp4"}
+            src={global_config.s3Cloudfront + '/faq/Imprimir+tarjeta+QSL_j.mp4'}
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -153,9 +222,21 @@ const Tutorials = ({t}) => (
           En la APP, seleccionas SCAN, luego SCAN QSL CARD y apuntas la camara
           del celular al codigo QR de la tarjeta.
         </p>
-        <video width="100%" controls controlsList="nodownload">
+        <video width="100%" controls controlsList="nodownload" onPlay={() => {
+            if (process.env.NODE_ENV !== 'production')
+              window.gtag('event', 'tutorialPlay_WEBDEV', {
+                video_name: 'Escanear+c%C3%B3digo+QR+de+tarjeta+QSL'
+              });
+            else
+              window.gtag('event', 'tutorialPlay_WEBPRD', {
+                video_name: 'Escanear+c%C3%B3digo+QR+de+tarjeta+QSL'
+              });
+          }}>
           <source
-            src={global_config.s3Cloudfront + "/faq/Escanear+c%C3%B3digo+QR+de+tarjeta+QSL_j.mp4"}
+            src={
+              global_config.s3Cloudfront +
+              '/faq/Escanear+c%C3%B3digo+QR+de+tarjeta+QSL_j.mp4'
+            }
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -172,9 +253,21 @@ const Tutorials = ({t}) => (
           POST.
         </p>
 
-        <video width="100%" controls controlsList="nodownload">
+        <video width="100%" controls controlsList="nodownload" onPlay={() => {
+            if (process.env.NODE_ENV !== 'production')
+              window.gtag('event', 'tutorialPlay_WEBDEV', {
+                video_name: 'Compartir+en+redes+sociales+desde+la+APP'
+              });
+            else
+              window.gtag('event', 'tutorialPlay_WEBPRD', {
+                video_name: 'Compartir+en+redes+sociales+desde+la+APP'
+              });
+          }}>
           <source
-            src={global_config.s3Cloudfront + "/faq/Compartir+en+redes+sociales+desde+la+APP_j.mp4"}
+            src={
+              global_config.s3Cloudfront +
+              '/faq/Compartir+en+redes+sociales+desde+la+APP_j.mp4'
+            }
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -187,9 +280,21 @@ const Tutorials = ({t}) => (
           Si, para compartir el post desde la WEB estando en el POST se debe
           hacer click en compartir.
         </p>
-        <video width="100%" controls controlsList="nodownload">
+        <video width="100%" controls controlsList="nodownload" onPlay={() => {
+            if (process.env.NODE_ENV !== 'production')
+              window.gtag('event', 'tutorialPlay_WEBDEV', {
+                video_name: 'Compartir+en+redes+sociales+desde+la+Web'
+              });
+            else
+              window.gtag('event', 'tutorialPlay_WEBPRD', {
+                video_name: 'Compartir+en+redes+sociales+desde+la+Web'
+              });
+          }}>
           <source
-            src={global_config.s3Cloudfront + "/faq/Compartir+en+redes+sociales+desde+la+Web_j.mp4"}
+            src={
+              global_config.s3Cloudfront +
+              '/faq/Compartir+en+redes+sociales+desde+la+Web_j.mp4'
+            }
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -200,9 +305,21 @@ const Tutorials = ({t}) => (
           ¿Como hago para hacer un comentarios, repostear o poner me gusta en un
           POST?
         </Header>
-        <video width="100%" controls controlsList="nodownload">
+        <video width="100%" controls controlsList="nodownload" onPlay={() => {
+            if (process.env.NODE_ENV !== 'production')
+              window.gtag('event', 'tutorialPlay_WEBDEV', {
+                video_name: 'Comentar%2C+Like+y+Repostear'
+              });
+            else
+              window.gtag('event', 'tutorialPlay_WEBPRD', {
+                video_name: 'Comentar%2C+Like+y+Repostear'
+              });
+          }}>
           <source
-            src={global_config.s3Cloudfront + "/faq/Comentar%2C+Like+y+Repostear_j.mp4"}
+            src={
+              global_config.s3Cloudfront +
+              '/faq/Comentar%2C+Like+y+Repostear_j.mp4'
+            }
             type="video/mp4"
             controlsList="nodownload"
           />

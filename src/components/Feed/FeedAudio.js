@@ -43,7 +43,7 @@ class FeedAudio extends React.Component {
   }
 
   render() {
-    const {t} = this.props;
+    const { t } = this.props;
     const date = new Date(this.props.media.datetime);
     const onlyForRegistered = !!(
       this.props.index > 0 && !this.props.isAuthenticated
@@ -89,10 +89,10 @@ class FeedAudio extends React.Component {
                 style={{ background: '#8BD8BD', color: '#243665' }}
               />
               <span>
-              {t('qso.playAudio')}{' - '}
+                {t('qso.playAudio')}
+                {' - '}
                 {this.props.media.description && (
                   <span>
-                    
                     <b>{this.props.media.description}</b>
                     {' - '}
                   </span>
@@ -105,7 +105,15 @@ class FeedAudio extends React.Component {
                 {date.getUTCHours() +
                   ':' +
                   (date.getMinutes() < 10 ? '0' : '') +
-                  date.getMinutes()}
+                  date.getMinutes()}{' '}
+                {this.props.media.views_counter > 0 && (
+                  <span style={{ fontSize: 'medium', color: 'gray' }}>
+                    {' '}
+                    {t('qso.audioPlays', {
+                      count: this.props.media.views_counter
+                    })}
+                  </span>
+                )}
                 {onlyForRegistered && (
                   <Link
                     to={{
@@ -113,7 +121,8 @@ class FeedAudio extends React.Component {
                       state: { from: this.props.location.pathname }
                     }}
                   >
-                    {'  '}{t('auth.loginRequired')}
+                    {'  '}
+                    {t('auth.loginRequired')}
                   </Link>
                 )}
               </span>
@@ -157,6 +166,14 @@ class FeedAudio extends React.Component {
                   ':' +
                   (date.getMinutes() < 10 ? '0' : '') +
                   date.getMinutes()}
+                {this.props.media.views_counter > 0 && (
+                  <span style={{ fontSize: 'medium', color: 'gray' }}>
+                    {' '}
+                    {t('qso.audioPlays', {
+                      count: this.props.media.views_counter + 1
+                    })}
+                  </span>
+                )}
                 {onlyForRegistered && (
                   <Link
                     to={{
@@ -164,7 +181,8 @@ class FeedAudio extends React.Component {
                       state: { from: this.props.location.pathname }
                     }}
                   >
-                    {'  '}{t('auth.loginRequired')}
+                    {'  '}
+                    {t('auth.loginRequired')}
                   </Link>
                 )}
               </p>
