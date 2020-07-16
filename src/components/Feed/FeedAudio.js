@@ -166,6 +166,14 @@ class FeedAudio extends React.Component {
                   ':' +
                   (date.getMinutes() < 10 ? '0' : '') +
                   date.getMinutes()}
+                {this.props.media.views_counter > 0 && (
+                  <span style={{ fontSize: 'medium', color: 'gray' }}>
+                    {' '}
+                    {t('qso.audioPlays', {
+                      count: this.props.media.views_counter + 1
+                    })}
+                  </span>
+                )}
                 {onlyForRegistered && (
                   <Link
                     to={{
