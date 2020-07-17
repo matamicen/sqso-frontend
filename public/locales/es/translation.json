@@ -101,7 +101,7 @@
     "showQRCode": "Mostrar Código QR",
     "QRCode": "Código QR",
     "QSLCard": "Tarjeta QSL",
-    "printQSLCard": "Imprimir Tarjeta QSL",
+    "printQSLCard": "Descargar Tarjeta QSL",
     "disablePopUps": "Neceista deshabilitar los bloqueadores de POPUP para imprimir la tarjeta QSO",
     "whyRemovePhoto": "Indique porque considera que deberiamos eliminar esta imagen",
     "whyRemoveAudio": "Indique porque considera que deberiamos eliminar este audio",

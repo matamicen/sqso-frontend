@@ -64,7 +64,7 @@ var replace_qra_tags = (req, res) => {
               console.error('Read error', err);
             } else {
               Sentry.configureScope(function (scope) {
-                scope.setExtra('ENV', process.env.NODE_ENV);
+                scope.setExtra('ENV', process.env.REACT_APP_STAGE);
               });
               Sentry.captureException(err);
             }
@@ -97,7 +97,7 @@ var replace_qra_tags = (req, res) => {
         console.log(result);
       } else {
         Sentry.configureScope(function (scope) {
-          scope.setExtra('ENV', process.env.NODE_ENV);
+          scope.setExtra('ENV', process.env.REACT_APP_STAGE);
         });
         Sentry.captureException(result);
       }

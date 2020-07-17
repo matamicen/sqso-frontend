@@ -32,8 +32,7 @@ Amplify.configure(AwsExports);
 
 class App extends Component {
   async componentDidMount() {
-    console.log("process.env.AMPLIFY_ENV")
-    console.log(process.env.REACT_APP_STAGE)
+
     this.props.actions.doStartingLogin();
     const session = await Auth.currentSession().catch(error => {
       this.props.actions.doLogout();
