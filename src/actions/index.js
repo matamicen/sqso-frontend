@@ -1575,7 +1575,68 @@ export function doQsoMediaPlay(idMedia, token, idqso) {
       });
   };
 }
+export function doQsoMediaPlayPublic(idMedia, idqso) {
+  if (process.env.REACT_APP_STAGE !== 'production')
+    window.gtag('event', 'qsoMediaPlay_WEBDEV', {
+      event_category: 'QSO',
+      event_label: 'mediaPlayPublic'
+    });
+  else
+    window.gtag('event', 'qsoMediaPlay_WEBPRD', {
+      event_category: 'QSO',
+      event_label: 'mediaPlayPublic'
+    });
+  return dispatch => {
+    const apiName = 'superqso';
+    const path = '/qso/media-play-public';
+    const myInit = {
+      body: {
+        idmedia: idMedia,
+        idqso: idqso
+      }, // replace this with attributes you need
+      headers: {
+        // Authorization: token
+      } // OPTIONAL
+    };
+    API.post(apiName, path, myInit)
+      .then(response => {
+        console.log(response)
+        if (response.body.error > 0) console.error(response.body.message);
+        else dispatch(doReceiveMediaCounter(response.body.message));
+      })
+      .catch(error => {
+        console.log(error)
+        if (error.message === 'Request failed with status code 401') {
+          Auth.currentSession()
+            .then(session => {
 
+              dispatch(doQsoMediaPlayPublic(idMedia, idqso));
+            })
+            .catch(error => {
+              if (process.env.NODE_ENV !== 'production') {
+                console.log(error);
+              } else {
+                Sentry.configureScope(function(scope) {
+                  scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+                });
+
+                Sentry.captureException(error);
+              }
+              dispatch(doLogout());
+            });
+        } else {
+          if (process.env.NODE_ENV !== 'production') {
+            console.log(error.message);
+          } else {
+            Sentry.configureScope(function(scope) {
+              scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+            });
+            Sentry.captureException(error);
+          }
+        }
+      });
+  };
+}
 export function doReceiveMediaCounter(data) {
   return {
     type: RECEIVE_QSO_MEDIA_COUNTER,
