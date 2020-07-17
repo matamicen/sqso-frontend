@@ -82,9 +82,8 @@
     "codeResent": "Code Resent for ",
     "forgotPassword": "Forgot Password?",
     "newToUs": "New To Us?"
-
   },
-  "reportContent":{
+  "reportContent": {
     "fillFields": "Please fill all the fields",
     "reportAudio": "Report Audio",
     "reportContent": "Report Content",
@@ -102,15 +101,15 @@
     "showQRCode": "Show QR Code",
     "QRCode": "QR Code",
     "QSLCard": "QSL Card",
-    "printQSLCard": "Print QSL Card",
+    "printQSLCard": "Download QSL Card",
     "disablePopUps": "Please disable POPUP Blockers in order to get the PDF File",
     "whyRemovePhoto": "Why do you think we should remove this photo?",
     "whyRemoveAudio": "Why do you think we should remove this audio?",
     "whyRemoveContent": "Why do you think we should remove this content?",
     "helpUnderstandWhatsHappening": "Help Us Understand What's Happening"
-  } ,
+  },
   "global": {
-        "you": "You",
+    "you": "You",
     "ok": "OK",
     "at": " at ",
     "and": " and ",
@@ -136,11 +135,11 @@
     "createdQAP": "{{QRA}} posted that is QAP",
     "createdFLDDAY": "{{QRA}} promoted a Field Day",
     "createdPOST": "{{QRA}} created a POST",
-    "sharedQSO" :"{{QRA}} reposted a QSO",
+    "sharedQSO": "{{QRA}} reposted a QSO",
     "sharedLISTEN": "{{QRA}} reposted a QSO listen",
     "sharedQAP": "{{QRA}} reposted a QAP",
     "sharedFLDDAY": "{{QRA}} reposted a field day",
-    "sharedPOST": "{{QRA}} reposted a post"    
+    "sharedPOST": "{{QRA}} reposted a post"
   },
   "qso": {
     "audioPlays": " - {{count}} Play",
@@ -149,10 +148,10 @@
     "repost": "repost",
     "share": "share",
     "checkOutPost": "Checkout this post...",
-    "checkOutQSO": "Checkout this QSO...",    
+    "checkOutQSO": "Checkout this QSO...",
     "checkOutQAP": "Checkout who is QAP...",
     "checkOutFLDDAY": "Checkot this field day...",
-    "add": "Add" ,
+    "add": "Add",
     "postDeleted": "This Post was deleted and cannot be displayed",
     "notExist": "This Post does not exist",
     "and": " and ",
@@ -165,7 +164,7 @@
     "workedAQSO": " worked a QSO",
     "createdPost": " created a new POST",
     "createdQAP": " posted that is QAP",
-    "createdFLDDAY": " promoted a Field Day",    
+    "createdFLDDAY": " promoted a Field Day",
     "listenedQSO": " listened a QSO",
     "repostedQSO": " reposted a QSO",
     "date": "Date",
@@ -184,7 +183,7 @@
   },
   "qra": {
     "loading": "Loading Callsign...",
-    "views":"Views",
+    "views": "Views",
     "follow": "Follow",
     "unfollow": "Unfollow",
     "editInfo": "Edit Info",
@@ -211,7 +210,7 @@
     "info": "Info",
     "bio": "Bio",
     "qsos": "QSO's",
-    "following": "Following", 
+    "following": "Following",
     "followers": "Followers"
   },
   "forms": {
@@ -225,7 +224,7 @@
     "confirmRecaptcha": "Confirm Recaptcha",
     "verifyEmailInbox": "We have sent the confirmation code to your email. Please enter the recived code to activate the account.",
     "welcomeToSuperQSO": "Welcome to SuperQSO!",
-    "betaPhase": "We want to inform you that we are still in Beta phase and you can experience some delay in user activation.",    
+    "betaPhase": "We want to inform you that we are still in Beta phase and you can experience some delay in user activation.",
     "trialPeriod": "You have 3 month of trial Premium Subscription! Enjoy SuperQso 59+100 !!! After the 3 month you can continue using SuperQso with the FREE subscription.",
     "sendLicence": "Please send us your CALLSIGN licence to info@superqso.com in order to start using our APP.",
     "downloadAPP": "Remember that you can create a POST or SWL within the mobile APP only and not from the website. If you dont have the app yet, you can get it from the Apps marketplaces under the name: superqso",
@@ -242,11 +241,11 @@
     "listenedQSO": "Listened a QSO with",
     "workedQSO": "Worked a QSO with "
   },
-  "whoToFollow":{
+  "whoToFollow": {
     "qsosCreated": "Qsos Created",
-    "callsignsYouTagged":"Callsigns that you have already tagged",
-    "callsignsTaggedYou":"Callsigns that already tagged you",
+    "callsignsYouTagged": "Callsigns that you have already tagged",
+    "callsignsTaggedYou": "Callsigns that already tagged you",
     "callsignsFollowYou": "Callsigns that follow you",
-    "callsignsMostFollowed":"Callsigns most followed"
+    "callsignsMostFollowed": "Callsigns most followed"
   }
 }
