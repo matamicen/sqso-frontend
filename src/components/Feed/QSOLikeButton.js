@@ -114,7 +114,7 @@ class QSOLikeButton extends React.Component {
       .then(response => {
         if (response.body.error > 0) {
         } else {
-          if (process.env.NODE_ENV !== 'production') {
+          if (process.env.REACT_APP_STAGE !== 'production') {
             window.gtag('event', 'qsoLiked_WEBDEV', {
               event_category: 'QSO',
               event_label: 'liked'
@@ -132,7 +132,7 @@ class QSOLikeButton extends React.Component {
           console.log(error);
         } else {
           Sentry.configureScope(function(scope) {
-            scope.setExtra('ENV', process.env.NODE_ENV);
+            scope.setExtra('ENV', process.env.REACT_APP_STAGE);
           });
           Sentry.captureException(error);
         }
@@ -155,7 +155,7 @@ class QSOLikeButton extends React.Component {
       .then(response => {
         if (response.body.error > 0) {
         } else {
-          if (process.env.NODE_ENV !== 'production') {
+          if (process.env.REACT_APP_STAGE !== 'production') {
             window.gtag('event', 'qsoUnliked_WEBDEV', {
               event_category: 'QSO',
               event_label: 'unliked'
@@ -173,7 +173,7 @@ class QSOLikeButton extends React.Component {
           console.log(error);
         } else {
           Sentry.configureScope(function(scope) {
-            scope.setExtra('ENV', process.env.NODE_ENV);
+            scope.setExtra('ENV', process.env.REACT_APP_STAGE);
           });
           Sentry.captureException(error);
         }

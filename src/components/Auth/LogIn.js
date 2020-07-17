@@ -126,7 +126,7 @@ class LogIn extends React.Component {
           window.gtag('config', 'G-H8G28LYKBY', {
             custom_map: { dimension1: 'userQRA' }
           });
-          if (process.env.NODE_ENV !== 'production')
+          if (process.env.REACT_APP_STAGE !== 'production')
             window.gtag('event', 'userLogin_WEBDEV', {
               event_category: 'User',
               event_label: 'login',
@@ -197,7 +197,7 @@ class LogIn extends React.Component {
           console.log(err);
         } else {
           Sentry.configureScope(function(scope) {
-            scope.setExtra('ENV', process.env.NODE_ENV);
+            scope.setExtra('ENV', process.env.REACT_APP_STAGE);
           });
           Sentry.captureException(err);
         }
@@ -219,7 +219,7 @@ class LogIn extends React.Component {
           dimmerLoginActive: true,
           showModalMessage: true
         });
-        if (process.env.NODE_ENV !== 'production')
+        if (process.env.REACT_APP_STAGE !== 'production')
           window.gtag('event', 'confirmCode_WEBDEV', {
             event_category: 'User',
             event_label: 'confirmCode'

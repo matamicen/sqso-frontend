@@ -142,10 +142,14 @@ class FeedAudio extends React.Component {
                 preload="none"
                 controlsList="nodownload"
                 onPlay={() =>
-                  this.props.isAuthenticated &&
+                  this.props.isAuthenticated ?
                   this.props.actions.doQsoMediaPlay(
                     this.props.media.idqsos_media,
                     this.props.token,
+                    this.props.media.idqso
+                  ): this.props.actions.doQsoMediaPlayPublic(
+                    this.props.media.idqsos_media,
+                    
                     this.props.media.idqso
                   )
                 }

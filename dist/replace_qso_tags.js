@@ -74,7 +74,7 @@ var replace_qso_tags = /*#__PURE__*/function () {
                 }
 
                 Sentry.configureScope(function (scope) {
-                  scope.setExtra('ENV', process.env.NODE_ENV);
+                  scope.setExtra('ENV', process.env.REACT_APP_STAGE);
                 });
                 Sentry.captureException(err);
                 return res.status(404).end();
@@ -158,7 +158,7 @@ var replace_qso_tags = /*#__PURE__*/function () {
           console.log(result);
         } else {
           Sentry.configureScope(function (scope) {
-            scope.setExtra('ENV', process.env.NODE_ENV);
+            scope.setExtra('ENV', process.env.REACT_APP_STAGE);
           });
           Sentry.captureException(result);
         }
