@@ -6,10 +6,10 @@
   
   }
 .adMobile {
-  /* display: none; */
-  display: flex;
+  display: none;
+  
   justify-content: center;
-  /* visibility: hidden; */
+  visibility: hidden;
   padding: initial;
 }
 
@@ -345,13 +345,15 @@
 @media (max-width: 910px) {
   .adMobile {
     display: flex;
+    visibility: visible;
     justify-content: center;
     padding: initial;
-    visibility: visible;
   }
   
   .adDesktop {
     display: none;
+    
+    justify-content: center;
     visibility: hidden;
     padding: initial;
   }
