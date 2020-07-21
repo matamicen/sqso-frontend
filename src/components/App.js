@@ -1,6 +1,13 @@
 import Auth from '@aws-amplify/auth';
 import Amplify from '@aws-amplify/core';
 import * as Sentry from '@sentry/browser';
+import {
+  CognitoAccessToken,
+  CognitoIdToken,
+  CognitoRefreshToken,
+  CognitoUser,
+  CognitoUserSession
+} from 'amazon-cognito-identity-js';
 import PropTypes from 'prop-types';
 import React, { Component, Suspense } from 'react';
 import { withTranslation } from 'react-i18next';
@@ -32,7 +39,13 @@ Amplify.configure(AwsExports);
 
 class App extends Component {
   async componentDidMount() {
-
+    document.addEventListener('message', event => this.loginFromApp(event));
+    this.login();
+  }
+  componentWillUnmount() {
+    window.removeEventListener('message', () => {})
+  }
+  async login() {
     this.props.actions.doStartingLogin();
     const session = await Auth.currentSession().catch(error => {
       this.props.actions.doLogout();
@@ -50,7 +63,6 @@ class App extends Component {
 
         this.props.actions.doSetPublicSession();
       } else {
-
         this.props.actions.doLogin(
           session.idToken.jwtToken,
           session.idToken.payload['custom:callsign'].toUpperCase(),
@@ -69,9 +81,48 @@ class App extends Component {
       this.props.actions.doSetPublicSession();
     }
   }
+  async loginFromApp(event) {
+    this.setState({ data: JSON.stringify(event.data) });
+    console.log(event.data);
+    alert(event.data);
+    let mobileSession = JSON.parse(event.data);
 
+    //
+    const localSession = new CognitoUserSession({
+      IdToken: new CognitoIdToken({
+        IdToken: mobileSession.idToken.jwtToken
+      }),
+      RefreshToken: new CognitoRefreshToken({
+        RefreshToken: mobileSession.refreshToken
+      }),
+      AccessToken: new CognitoAccessToken({
+        AccessToken: mobileSession.accessToken.jwtToken
+      })
+    });
+
+    const localUser = new CognitoUser({
+      Username: mobileSession.accessToken.payload.username,
+      Pool: Auth.userPool,
+      Storage: Auth.userPool.storage
+    });
+    localUser.setSignInUserSession(localSession);
+
+    // this seems like a hack
+    Auth.currentCredentials = async () => localSession;
+
+    try {
+      // await Auth.currentSession();
+      console.warn(`mobile login current session!!`);
+      alert(`mobile login current session!!`);
+      this.login();
+      ///  store.dispatch(silentReloginAction());
+    } catch (ex) {
+      console.warn(`mobile login ${ex}`);
+      alert(`mobile login ${ex}`);
+    }
+  }
   render() {
-    const {t} = this.props;
+    const { t } = this.props;
     return (
       <Suspense fallback={<div>{t('global.loading')}</div>}>
         <Switch>
