@@ -9,29 +9,48 @@ import {
   CognitoUserSession
 } from 'amazon-cognito-identity-js';
 import PropTypes from 'prop-types';
-import React, { Component, Suspense } from 'react';
+import React, { Component, lazy, Suspense } from 'react';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import * as Actions from '../actions';
 import AwsExports from '../aws-exports';
-import ChangePassword from './Auth/ChangePassword';
-import ForgotPassword from './Auth/ForgotPassword';
-import LogIn from './Auth/LogIn';
-import SignUp from './Auth/SignUp';
-import ContactForm from './contactForm';
-import ErrorBoundary from './ErrorBoundary';
-import Follow from './follow';
-import Download from './help/download';
-import FAQ from './help/faq';
-import PrivacyPolicy from './help/privacyPolicy';
-import TermsOfService from './help/termsOfServcice';
-import Tutorials from './help/tutorials';
-import Home from './Home/Home';
-import Notifications from './Notifications/Notifications';
-import QRAProfileContainer from './Profile/QRAProfileContainer';
-import QSODetail from './QSODetail';
+
+// import PrivacyPolicy from './help/privacyPolicy';
+// import TermsOfService from './help/termsOfServcice';
+// import Tutorials from './help/tutorials';
+// import ChangePassword from './Auth/ChangePassword';
+const ChangePassword = lazy(() => import('./Auth/ChangePassword'));
+// import ForgotPassword from './Auth/ForgotPassword';
+const ForgotPassword = lazy(() => import('./Auth/ForgotPassword'));
+// import ContactForm from './contactForm';
+const ContactForm = lazy(() => import('./contactForm'));
+// import ErrorBoundary from './ErrorBoundary';
+const ErrorBoundary = lazy(() => import('./ErrorBoundary'));
+// import Follow from './follow';
+const Follow = lazy(() => import('./follow'));
+// import Download from './help/download';
+const Download = lazy(() => import('./help/download'));
+// import FAQ from './help/faq';
+const FAQ = lazy(() => import('./help/faq'));
+// import PrivacyPolicy from './help/privacyPolicy';
+const PrivacyPolicy = lazy(() => import('./help/privacyPolicy'));
+const TermsOfService = lazy(() => import('./help/termsOfServcice'));
+const Tutorials = lazy(() => import('./help/tutorials'));
+// import QRAProfileContainer from './Profile/QRAProfileContainer';
+
+const QRAProfileContainer = lazy(() => import('./Profile/QRAProfileContainer'));
+// import Notifications from './Notifications/Notifications';
+const Notifications = lazy(() => import('./Notifications/Notifications'));
+// import QSODetail from './QSODetail';
+const QSODetail = lazy(() => import('./QSODetail'));
+// import LogIn from './Auth/LogIn';
+const LogIn = lazy(() => import('./Auth/LogIn'));
+// import SignUp from './Auth/SignUp';
+const SignUp = lazy(() => import('./Auth/SignUp'));
+// import Home from './Home/Home';
+const Home = lazy(() => import('./Home/Home'));
 // if (process.env.NODE_ENV !== 'production') {     const {whyDidYouUpdate} =
 // require('why-did-you-update')     whyDidYouUpdate(React)   }
 
@@ -43,7 +62,7 @@ class App extends Component {
     this.login();
   }
   componentWillUnmount() {
-    window.removeEventListener('message', () => {})
+    window.removeEventListener('message', () => {});
   }
   async login() {
     this.props.actions.doStartingLogin();
@@ -82,9 +101,8 @@ class App extends Component {
     }
   }
   async loginFromApp(event) {
+    if (process.env.REACT_APP_STAGE !== 'production') alert('event triggered');
     this.setState({ data: JSON.stringify(event.data) });
-    console.log(event.data);
-    alert(event.data);
     let mobileSession = JSON.parse(event.data);
 
     //
@@ -112,8 +130,10 @@ class App extends Component {
 
     try {
       // await Auth.currentSession();
-      console.warn(`mobile login current session!!`);
-      alert(`mobile login current session!!`);
+      if (process.env.REACT_APP_STAGE !== 'production') {
+        console.warn(`mobile login current session!!`);
+        alert(`mobile login current session!!`);
+      }
       this.login();
       ///  store.dispatch(silentReloginAction());
     } catch (ex) {
