@@ -13,7 +13,7 @@
     "downloadApp": "Descargar App",
     "tutorial": "Ver Tutoriales",
     "whoToFollow": "A Quien Seguir",
-    "searchCallsign": "Buscar SD"
+    "searchCallsign": "Buscar SD / Colega"
   },
   "whatIsSuperQSO": {
     "whatIsSuperQSO": "¿Qué es SuperQSO?",
@@ -144,7 +144,7 @@
   "qso": {
     "audioPlays": " - {{count}} Reproducción",
     "audioPlays_plural": " - {{count}} Reproducciones",
-    "callsignTagged": "SD etiquetadas",
+    "callsignTagged": "SD/Colegas etiquetadas",
     "repost": "republicar",
     "share": "compartir",
     "checkOutPost": "Mirá esta publicación...",
@@ -182,7 +182,7 @@
     "likeModalHeader": "A estos colegas les gusta este "
   },
   "qra": {
-    "loading": "Cargando SD...",
+    "loading": "Cargando SD/Colega...",
     "views": "Vistas",
     "follow": "Seguir",
     "unfollow": "Dejar de Seguir",
