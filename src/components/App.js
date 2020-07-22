@@ -10,6 +10,7 @@ import {
 } from 'amazon-cognito-identity-js';
 import PropTypes from 'prop-types';
 import React, { Component, lazy, Suspense } from 'react';
+import { isIOS, isMobile } from 'react-device-detect';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Route, Switch, withRouter } from 'react-router-dom';
@@ -51,6 +52,7 @@ const LogIn = lazy(() => import('./Auth/LogIn'));
 const SignUp = lazy(() => import('./Auth/SignUp'));
 // import Home from './Home/Home';
 const Home = lazy(() => import('./Home/Home'));
+
 // if (process.env.NODE_ENV !== 'production') {     const {whyDidYouUpdate} =
 // require('why-did-you-update')     whyDidYouUpdate(React)   }
 
@@ -64,21 +66,25 @@ class App extends Component {
     };
   }
   async componentDidMount() {
-    document.addEventListener('message', event => this.loginFromApp(event));
-    window.addEventListener('message', event => this.loginFromApp(event));
+    if (isMobile) {
+      if (isIOS)
+        window.addEventListener('message', event => this.loginFromApp(event));
+      else
+        document.addEventListener('message', event => this.loginFromApp(event));
+    }
     this.login();
   }
   componentWillUnmount() {
-    window.removeEventListener('message', () => {});
+    if (isIOS) window.removeEventListener('message', () => {});
+    else document.removeEventListener('message', () => {});
   }
   async login() {
     this.props.actions.doStartingLogin();
 
     const session = await Auth.currentSession().catch(error => {
-      console.log(error);
       this.props.actions.doLogout();
     });
-    console.log(session);
+
     if (
       session &&
       session.idToken &&
@@ -110,12 +116,11 @@ class App extends Component {
     }
   }
   async loginFromApp(event) {
-
     // if (process.env.REACT_APP_STAGE !== 'production') alert('event triggered');
     this.setState({ data: JSON.stringify(event.data) });
     let mobileSession = JSON.parse(event.data);
     this.setState({ mobileSession: mobileSession });
-    console.log(mobileSession);
+    // console.log(mobileSession);
     const localSession = new CognitoUserSession({
       IdToken: new CognitoIdToken({
         IdToken: mobileSession.idToken.jwtToken
