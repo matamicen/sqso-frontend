@@ -65,6 +65,7 @@ class App extends Component {
   }
   async componentDidMount() {
     document.addEventListener('message', event => this.loginFromApp(event));
+    window.addEventListener('message', event => this.loginFromApp(event));
     this.login();
   }
   componentWillUnmount() {
