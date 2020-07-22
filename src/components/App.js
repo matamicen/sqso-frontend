@@ -57,6 +57,12 @@ const Home = lazy(() => import('./Home/Home'));
 Amplify.configure(AwsExports);
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      mobileSession: null
+    };
+  }
   async componentDidMount() {
     document.addEventListener('message', event => this.loginFromApp(event));
     this.login();
@@ -66,10 +72,12 @@ class App extends Component {
   }
   async login() {
     this.props.actions.doStartingLogin();
+
     const session = await Auth.currentSession().catch(error => {
+      console.log(error);
       this.props.actions.doLogout();
     });
-
+    console.log(session);
     if (
       session &&
       session.idToken &&
@@ -101,11 +109,12 @@ class App extends Component {
     }
   }
   async loginFromApp(event) {
-    if (process.env.REACT_APP_STAGE !== 'production') alert('event triggered');
+
+    // if (process.env.REACT_APP_STAGE !== 'production') alert('event triggered');
     this.setState({ data: JSON.stringify(event.data) });
     let mobileSession = JSON.parse(event.data);
-
-    //
+    this.setState({ mobileSession: mobileSession });
+    console.log(mobileSession);
     const localSession = new CognitoUserSession({
       IdToken: new CognitoIdToken({
         IdToken: mobileSession.idToken.jwtToken
@@ -126,19 +135,49 @@ class App extends Component {
     localUser.setSignInUserSession(localSession);
 
     // this seems like a hack
-    Auth.currentCredentials = async () => localSession;
+    // Auth.currentCredentials = async () => localSession;
 
     try {
-      // await Auth.currentSession();
+      let session = await Auth.currentSession().catch(error => {
+        console.log(error);
+        this.props.actions.doLogout();
+      });
+      console.log(session);
+      // alert(session.idToken.jwtToken)
+      if (
+        session &&
+        session.idToken &&
+        session.idToken.payload['custom:callsign']
+      ) {
+        const credentials = await Auth.currentCredentials();
+
+        if (!credentials.data) {
+          await Auth.signOut();
+
+          this.props.actions.doSetPublicSession();
+        } else {
+          this.props.actions.doLogin(
+            session.idToken.jwtToken,
+            session.idToken.payload['custom:callsign'].toUpperCase(),
+            credentials.data.IdentityId
+          );
+          this.props.actions.doFetchUserInfo(session.idToken.jwtToken);
+          Sentry.configureScope(scope => {
+            scope.setUser({
+              qra: session.idToken.payload['custom:callsign'].toUpperCase()
+            });
+          });
+        }
+      }
       if (process.env.REACT_APP_STAGE !== 'production') {
         console.warn(`mobile login current session!!`);
-        alert(`mobile login current session!!`);
+        // alert(`mobile login current session!!`);
       }
-      this.login();
+      // this.login();
       ///  store.dispatch(silentReloginAction());
     } catch (ex) {
       console.warn(`mobile login ${ex}`);
-      alert(`mobile login ${ex}`);
+      // alert(`mobile login ${ex}`);
     }
   }
   render() {
