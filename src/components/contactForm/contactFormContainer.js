@@ -62,9 +62,9 @@ class contactForm extends React.Component {
           onClose={() => this.props.history.push('/')}
           size="small"
         >
-          <Modal.Header>Contact Us</Modal.Header>
+          <Modal.Header>'form.contactUs'</Modal.Header>
           <Modal.Content>
-            <p>{t('qso.othersLikeThis')}Email Sent!</p>
+            <p>{t('form.formSent')}</p>
           </Modal.Content>
         </Modal>
       </Fragment>

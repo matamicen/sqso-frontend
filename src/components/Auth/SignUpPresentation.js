@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { CountryDropdown } from 'react-country-region-selector';
+import ReCAPTCHA from 'react-google-recaptcha';
 import { withTranslation } from 'react-i18next';
-import Recaptcha from 'react-recaptcha';
 import { Link } from 'react-router-dom';
 import Form from 'semantic-ui-react/dist/commonjs/collections/Form';
 import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid';
@@ -14,7 +14,7 @@ import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
 import Ad from '../Ad/Ad';
 import AppNavigation from '../Home/AppNavigation';
 
-const SignUpPresentation = (props) => {
+const SignUpPresentation = props => {
   const {
     values,
     errors,
@@ -36,7 +36,7 @@ const SignUpPresentation = (props) => {
     handleCodeChange,
     handleResendCode,
     confirmError,
-    t,
+    t
   } = props;
 
   const change = (name, e) => {
@@ -58,13 +58,13 @@ const SignUpPresentation = (props) => {
           <Grid
             textAlign="center"
             style={{
-              height: '100%',
+              height: '100%'
             }}
             verticalAlign="middle"
           >
             <Grid.Column
               style={{
-                maxWidth: 450,
+                maxWidth: 450
               }}
             >
               <Header as="h2" color="teal" textAlign="center">
@@ -83,7 +83,7 @@ const SignUpPresentation = (props) => {
                       onChange={change.bind(null, 'qra')}
                       onBlur={handleBlur}
                       style={{
-                        textTransform: 'uppercase',
+                        textTransform: 'uppercase'
                       }}
                     />{' '}
                     {touched.qra && errors.qra && (
@@ -99,7 +99,7 @@ const SignUpPresentation = (props) => {
                       name="firstName"
                       onChange={change.bind(null, 'firstName')}
                       style={{
-                        textTransform: 'uppercase',
+                        textTransform: 'uppercase'
                       }}
                     />{' '}
                     {touched.firstName && errors.firstName && (
@@ -115,7 +115,7 @@ const SignUpPresentation = (props) => {
                       name="lastName"
                       onChange={change.bind(null, 'lastName')}
                       style={{
-                        textTransform: 'uppercase',
+                        textTransform: 'uppercase'
                       }}
                     />{' '}
                     {touched.lastName && errors.lastName && (
@@ -229,13 +229,13 @@ const SignUpPresentation = (props) => {
                     )}
                   </Form.Field>
                   <Form.Field>
-                    <Recaptcha
+                    <ReCAPTCHA
                       sitekey="6Lcloo0UAAAAAP8Ur4aiBVbIrU6dWOGKDMwFrWiD"
-                      render="explicit"
-                      verifyCallback={(response) => {
-                        setFieldValue('recaptcha', response);
-                      }}
-                    />{' '}
+                      onChange={response =>
+                        setFieldValue('recaptcha', response)
+                      }
+                    />
+                    
                     {touched.recaptcha && errors.recaptcha && (
                       <Message negative content={errors.recaptcha} />
                     )}
@@ -282,37 +282,39 @@ const SignUpPresentation = (props) => {
         <Modal.Content>
           <p>{t('forms.betaPhase')}</p>
           {/* <p>{t('forms.trialPeriod')}</p> */}
-          <p style={{color : "#243665"}}><b>{t('forms.sendLicence')}</b></p>
+          <p style={{ color: '#243665' }}>
+            <b>{t('forms.sendLicence')}</b>
+          </p>
           <p>
             <b>{t('forms.downloadAPP')}</b>
           </p>
         </Modal.Content>
         <Modal.Actions>
-        <Button
-              color="facebook"
-              onClick={() => {
-                this.setState({
-                  modalOpen: false,
-                  videoAlreadyDisplayed: true
-                });
-                localStorage['alreadyVisited'] = true;
-                this.props.history.push('/download');
-              }}
-            >
-              {t('whatIsSuperQSO.downloadApp')}
-            </Button>
-            <Button
-              onClick={() => {
-                this.setState({
-                  modalOpen: false,
-                  videoAlreadyDisplayed: true
-                });
-                localStorage['alreadyVisited'] = true;
-                this.props.history.push('/tutorials');
-              }}
-            >
-              {t('whatIsSuperQSO.tutorial')}
-            </Button>
+          <Button
+            color="facebook"
+            onClick={() => {
+              this.setState({
+                modalOpen: false,
+                videoAlreadyDisplayed: true
+              });
+              localStorage['alreadyVisited'] = true;
+              this.props.history.push('/download');
+            }}
+          >
+            {t('whatIsSuperQSO.downloadApp')}
+          </Button>
+          <Button
+            onClick={() => {
+              this.setState({
+                modalOpen: false,
+                videoAlreadyDisplayed: true
+              });
+              localStorage['alreadyVisited'] = true;
+              this.props.history.push('/tutorials');
+            }}
+          >
+            {t('whatIsSuperQSO.tutorial')}
+          </Button>
           <Button
             positive
             icon="checkmark"
@@ -333,13 +335,13 @@ const SignUpPresentation = (props) => {
             <Grid
               textAlign="center"
               style={{
-                height: '100%',
+                height: '100%'
               }}
               verticalAlign="middle"
             >
               <Grid.Column
                 style={{
-                  maxWidth: 450,
+                  maxWidth: 450
                 }}
               >
                 <Header as="h2" textAlign="center">
