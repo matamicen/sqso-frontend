@@ -12,7 +12,20 @@
   visibility: hidden;
   padding: initial;
 }
+.socialMobile {
+  display: none;
+  
+  /* justify-content: center; */
+  visibility: hidden;
+  padding: initial;
+}
+.socialDesktop {
+  display: grid;
+  visibility: visible;
+  /* justify-content: center; */
+  padding: initial;
 
+}
 .adDesktop {
   display: flex;
   visibility: visible;
@@ -343,6 +356,20 @@
 }
 /*--------------------------------*/
 @media (max-width: 910px) {
+  .socialMobile {
+    display: grid;
+    visibility: visible;
+    /* justify-content: center; */
+    padding: initial;
+  }
+  
+  .socialDesktop {
+    display: none;
+    
+    /* justify-content: center; */
+    visibility: hidden;
+    padding: initial;
+  }
   .adMobile {
     display: flex;
     visibility: visible;

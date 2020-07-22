@@ -60,7 +60,7 @@ class FeedOptionsMenu extends React.PureComponent {
         event_label: 'reportComment'
       });
     var datetime = new Date();
-    e.preventDefault();
+    // e.preventDefault();
     if (
       !e.target.comments.value ||
       !e.target.email.value ||
@@ -101,6 +101,7 @@ class FeedOptionsMenu extends React.PureComponent {
       });
   }
   handleOnSubmitReportQso(e) {
+    // e.preventDefault();
     const { t } = this.props;
     if (process.env.REACT_APP_STAGE !== 'production')
       window.gtag('event', 'reportQSO_WEBDEV', {
@@ -113,7 +114,7 @@ class FeedOptionsMenu extends React.PureComponent {
         event_label: 'reportQSO'
       });
     var datetime = new Date();
-    e.preventDefault();
+   
     if (
       !e.target.comments.value ||
       !e.target.email.value ||
@@ -165,7 +166,7 @@ class FeedOptionsMenu extends React.PureComponent {
         event_label: 'reportMedia'
       });
     var datetime = new Date();
-    e.preventDefault();
+    // e.preventDefault();
     if (
       !e.target.comments.value ||
       !e.target.email.value ||
