@@ -1,8 +1,8 @@
 import API from '@aws-amplify/api';
 import * as Sentry from '@sentry/browser';
 import React, { Fragment } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
 import { withTranslation } from 'react-i18next';
-import Recaptcha from 'react-recaptcha';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Form from 'semantic-ui-react/dist/commonjs/collections/Form';
@@ -49,6 +49,7 @@ class FeedOptionsMenu extends React.PureComponent {
     QslCardPrint(this.props);
   }
   handleOnSubmitReportComment(e) {
+    const { t } = this.props;
     if (process.env.REACT_APP_STAGE !== 'production')
       window.gtag('event', 'reportComment_WEBDEV', {
         event_category: 'QSO',
@@ -63,42 +64,45 @@ class FeedOptionsMenu extends React.PureComponent {
     // e.preventDefault();
     if (
       !e.target.comments.value ||
-      !e.target.email.value ||
+      // !e.target.email.value ||
       !this.state.recaptchaToken
     )
-      alert('Please fill all the fields');
-    let apiName = 'superqso';
-    let path = '/content-reported';
-    let myInit = {
-      body: {
-        idqso: this.props.idqso,
-        idcomment: this.props.idcomment,
-        detail: e.target.comments.value,
-        datetime: datetime,
-        email: e.target.email.value
-      }, // replace this with attributes you need
-      headers: {
-        // Authorization: this.props.token
-      } // OPTIONAL
-    };
-    API.post(apiName, path, myInit)
-      .then(response => {
-        if (response.body.error > 0) {
-        } else {
-          this.open();
-          //ReactG.event({ category: "QSO", action: "contentReported" });
-        }
-      })
-      .catch(error => {
-        if (process.env.NODE_ENV !== 'production') {
-          console.log(error);
-        } else {
-          Sentry.configureScope(function(scope) {
-            scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-          });
-          Sentry.captureException(error);
-        }
-      });
+      alert(t('reportContent.fillFields'));
+    else {
+      this.setState({recaptchaToken: null})
+      let apiName = 'superqso';
+      let path = '/content-reported';
+      let myInit = {
+        body: {
+          idqso: this.props.idqso,
+          idcomment: this.props.idcomment,
+          detail: e.target.comments.value,
+          datetime: datetime,
+          email: e.target.email.value
+        }, // replace this with attributes you need
+        headers: {
+          // Authorization: this.props.token
+        } // OPTIONAL
+      };
+      API.post(apiName, path, myInit)
+        .then(response => {
+          if (response.body.error > 0) {
+          } else {
+            this.open();
+            //ReactG.event({ category: "QSO", action: "contentReported" });
+          }
+        })
+        .catch(error => {
+          if (process.env.NODE_ENV !== 'production') {
+            console.log(error);
+          } else {
+            Sentry.configureScope(function(scope) {
+              scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+            });
+            Sentry.captureException(error);
+          }
+        });
+    }
   }
   handleOnSubmitReportQso(e) {
     // e.preventDefault();
@@ -114,44 +118,46 @@ class FeedOptionsMenu extends React.PureComponent {
         event_label: 'reportQSO'
       });
     var datetime = new Date();
-   
+  
     if (
       !e.target.comments.value ||
-      !e.target.email.value ||
+      // !e.target.email.value ||
       !this.state.recaptchaToken
     )
       alert(t('reportContent.fillFields'));
-
-    let apiName = 'superqso';
-    let path = '/content-reported';
-    let myInit = {
-      body: {
-        idqso: this.props.idqso,
-        detail: e.target.comments.value,
-        datetime: datetime,
-        email: e.target.email.value
-      }, // replace this with attributes you need
-      headers: {
-        // Authorization: this.props.token
-      } // OPTIONAL
-    };
-    API.post(apiName, path, myInit)
-      .then(response => {
-        if (response.error > 0) {
-        } else {
-          this.open();
-        }
-      })
-      .catch(error => {
-        if (process.env.NODE_ENV !== 'production') {
-          console.log(error);
-        } else {
-          Sentry.configureScope(function(scope) {
-            scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-          });
-          Sentry.captureException(error);
-        }
-      });
+    else {
+      this.setState({recaptchaToken: null})
+      let apiName = 'superqso';
+      let path = '/content-reported';
+      let myInit = {
+        body: {
+          idqso: this.props.idqso,
+          detail: e.target.comments.value,
+          datetime: datetime,
+          email: e.target.email.value
+        }, // replace this with attributes you need
+        headers: {
+          // Authorization: this.props.token
+        } // OPTIONAL
+      };
+      API.post(apiName, path, myInit)
+        .then(response => {
+          if (response.error > 0) {
+          } else {
+            this.open();
+          }
+        })
+        .catch(error => {
+          if (process.env.NODE_ENV !== 'production') {
+            console.log(error);
+          } else {
+            Sentry.configureScope(function(scope) {
+              scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+            });
+            Sentry.captureException(error);
+          }
+        });
+    }
   }
   handleOnSubmitReportMedia(e) {
     const { t } = this.props;
@@ -169,42 +175,44 @@ class FeedOptionsMenu extends React.PureComponent {
     // e.preventDefault();
     if (
       !e.target.comments.value ||
-      !e.target.email.value ||
+      // !e.target.email.value ||
       !this.state.recaptchaToken
     )
       alert(t('reportContent.fillFields'));
-
-    let apiName = 'superqso';
-    let path = '/content-reported';
-    let myInit = {
-      body: {
-        idqso: this.props.idqso,
-        idmedia: e.target.idmedia.value,
-        detail: e.target.comments.value,
-        datetime: datetime,
-        email: e.target.email.value
-      }, // replace this with attributes you need
-      headers: {
-        // Authorization: this.props.token
-      } // OPTIONAL
-    };
-    API.post(apiName, path, myInit)
-      .then(response => {
-        if (response.body.error > 0) {
-        } else {
-          this.open();
-        }
-      })
-      .catch(error => {
-        if (process.env.NODE_ENV !== 'production') {
-          console.log(error);
-        } else {
-          Sentry.configureScope(function(scope) {
-            scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-          });
-          Sentry.captureException(error);
-        }
-      });
+    else {
+      this.setState({recaptchaToken: null})
+      let apiName = 'superqso';
+      let path = '/content-reported';
+      let myInit = {
+        body: {
+          idqso: this.props.idqso,
+          idmedia: e.target.idmedia.value,
+          detail: e.target.comments.value,
+          datetime: datetime,
+          email: e.target.email.value
+        }, // replace this with attributes you need
+        headers: {
+          // Authorization: this.props.token
+        } // OPTIONAL
+      };
+      API.post(apiName, path, myInit)
+        .then(response => {
+          if (response.body.error > 0) {
+          } else {
+            this.open();
+          }
+        })
+        .catch(error => {
+          if (process.env.NODE_ENV !== 'production') {
+            console.log(error);
+          } else {
+            Sentry.configureScope(function(scope) {
+              scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+            });
+            Sentry.captureException(error);
+          }
+        });
+    }
   }
   render() {
     const { showMessage, showReportContent } = this.state;
@@ -238,7 +246,7 @@ class FeedOptionsMenu extends React.PureComponent {
                   {t('reportContent.helpUnderstandWhatsHappening')}
                 </Modal.Header>
                 <Modal.Content>
-                  <Form onSubmit={this.handleOnSubmitReportMedia.bind(this)}>
+                  <Form onSubmit={(e)=>this.handleOnSubmitReportMedia(e)}>
                     <Form.TextArea
                       required
                       name="comments"
@@ -251,14 +259,15 @@ class FeedOptionsMenu extends React.PureComponent {
                       name="idmedia"
                       value={this.props.idqsos_media}
                     />
+
                     <Form.Field>
-                      <Recaptcha
+                      <ReCAPTCHA
                         sitekey="6Lf1VL8UAAAAAEyE2sQHbSr-tbH3_fwZqxEXEg-l"
-                        render="explicit"
-                        verifyCallback={response => {
-                          this.setState({ recaptchaToken: response });
-                        }}
-                      />{' '}
+                        onChange={response =>
+                          this.setState({ recaptchaToken: response })
+                        }
+                      />
+                     
                     </Form.Field>
                     <Form.Button>{t('global.submit')}</Form.Button>
 
@@ -320,7 +329,7 @@ class FeedOptionsMenu extends React.PureComponent {
                   {t('reportContent.helpUnderstandWhatsHappening')}
                 </Modal.Header>
                 <Modal.Content>
-                  <Form onSubmit={this.handleOnSubmitReportMedia.bind(this)}>
+                  <Form onSubmit={(e)=>this.handleOnSubmitReportMedia(e)}>
                     <Form.TextArea
                       required
                       name="comments"
@@ -334,13 +343,13 @@ class FeedOptionsMenu extends React.PureComponent {
                       value={this.props.idqsos_media}
                     />
                     <Form.Field>
-                      <Recaptcha
+                      <ReCAPTCHA
                         sitekey="6Lf1VL8UAAAAAEyE2sQHbSr-tbH3_fwZqxEXEg-l"
-                        render="explicit"
-                        verifyCallback={response => {
-                          this.setState({ recaptchaToken: response });
-                        }}
-                      />{' '}
+                        onChange={response =>
+                          this.setState({ recaptchaToken: response })
+                        }
+                      />
+                    
                     </Form.Field>
                     <Form.Button>{t('global.submit')}</Form.Button>
 
@@ -420,7 +429,7 @@ class FeedOptionsMenu extends React.PureComponent {
                     {t('reportContent.helpUnderstandWhatsHappening')}
                   </Modal.Header>
                   <Modal.Content>
-                    <Form onSubmit={this.handleOnSubmitReportQso.bind(this)}>
+                    <Form onSubmit={(e)=> this.handleOnSubmitReportQso(e)}>
                       <Form.TextArea
                         required
                         name="comments"
@@ -430,13 +439,13 @@ class FeedOptionsMenu extends React.PureComponent {
                       />
                       <Form.Input name="email" label={t('auth.labelEmail')} />
                       <Form.Field>
-                        <Recaptcha
+                        <ReCAPTCHA
                           sitekey="6Lf1VL8UAAAAAEyE2sQHbSr-tbH3_fwZqxEXEg-l"
-                          render="explicit"
-                          verifyCallback={response => {
-                            this.setState({ recaptchaToken: response });
-                          }}
-                        />{' '}
+                          onChange={response =>
+                            this.setState({ recaptchaToken: response })
+                          }
+                        />
+                      
                       </Form.Field>
                       <Form.Button>{t('global.submit')}</Form.Button>
                     </Form>
@@ -518,7 +527,7 @@ class FeedOptionsMenu extends React.PureComponent {
                   {t('reportContent.helpUnderstandWhatsHappening')}
                 </Modal.Header>
                 <Modal.Content>
-                  <Form onSubmit={this.handleOnSubmitReportQso.bind(this)}>
+                  <Form onSubmit={(e)=>this.handleOnSubmitReportQso(e)}>
                     <Form.TextArea
                       required
                       name="comments"
@@ -527,13 +536,13 @@ class FeedOptionsMenu extends React.PureComponent {
                     />
                     <Form.Input name="email" label={t('auth.labelEmail')} />
                     <Form.Field>
-                      <Recaptcha
+                      <ReCAPTCHA
                         sitekey="6Lf1VL8UAAAAAEyE2sQHbSr-tbH3_fwZqxEXEg-l"
-                        render="explicit"
-                        verifyCallback={response => {
-                          this.setState({ recaptchaToken: response });
-                        }}
-                      />{' '}
+                        onChange={response =>
+                          this.setState({ recaptchaToken: response })
+                        }
+                      />
+                   
                     </Form.Field>
                     <Form.Button>{t('global.submit')}</Form.Button>
 
@@ -583,7 +592,7 @@ class FeedOptionsMenu extends React.PureComponent {
                   {t('reportContent.helpUnderstandWhatsHappening')}
                 </Modal.Header>
                 <Modal.Content>
-                  <Form onSubmit={this.handleOnSubmitReportComment.bind(this)}>
+                  <Form onSubmit={(e)=>this.handleOnSubmitReportComment(e)}>
                     <Form.TextArea
                       required
                       name="comments"
@@ -592,13 +601,13 @@ class FeedOptionsMenu extends React.PureComponent {
                     />
                     <Form.Input name="email" label={t('qra.email')} />
                     <Form.Field>
-                      <Recaptcha
+                      <ReCAPTCHA
                         sitekey="6Lf1VL8UAAAAAEyE2sQHbSr-tbH3_fwZqxEXEg-l"
-                        render="explicit"
-                        verifyCallback={response => {
-                          this.setState({ recaptchaToken: response });
-                        }}
-                      />{' '}
+                        onChange={response =>
+                          this.setState({ recaptchaToken: response })
+                        }
+                      />
+                     
                     </Form.Field>
                     <Form.Button>{t('global.submit')}</Form.Button>
 
