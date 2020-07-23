@@ -157,8 +157,7 @@ class App extends Component {
     }
   }
   componentWillUnmount() {
-    if (isIOS) window.removeEventListener('message', () => {});
-    else document.removeEventListener('message', () => {});
+    if (!isIOS) document.removeEventListener('message', () => {});
   }
   async login() {
     this.props.actions.doStartingLogin();
