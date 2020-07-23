@@ -1,20 +1,38 @@
+.link-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-size: 1.1rem;
+  color: #4183c4;
+  margin-bottom: 5px;
+  text-decoration: none;
+}
+
+.link-button:hover,
+.link-button:focus {
+  text-decoration: none;
+}
 #banner {
-  position : fixed;
-  left : 50%;
+  position: fixed;
+  left: 50%;
   margin-right: -50%;
-  transform : translate(-50%, -50%);
-  
-  }
+  transform: translate(-50%, -50%);
+}
 .adMobile {
   display: none;
-  
+
   justify-content: center;
   visibility: hidden;
   padding: initial;
 }
 .socialMobile {
   display: none;
-  
+
   /* justify-content: center; */
   visibility: hidden;
   padding: initial;
@@ -24,14 +42,12 @@
   visibility: visible;
   /* justify-content: center; */
   padding: initial;
-
 }
 .adDesktop {
   display: flex;
   visibility: visible;
   justify-content: center;
   padding: initial;
-
 }
 
 .slick-slide {
@@ -49,7 +65,6 @@
 /* HOME */
 .notifIcon {
   display: flex;
-  
 }
 /*logo mobile*/
 .mobile {
@@ -75,7 +90,7 @@
   grid-template-columns: 160px 730px 160px;
   /* grid-gap: 1em; */
   grid-template-rows: 60px auto;
-  grid-template-areas: "pageHeader pageHeader pageHeader" "leftSection mainSection rightSection";
+  grid-template-areas: 'pageHeader pageHeader pageHeader' 'leftSection mainSection rightSection';
   justify-content: space-evenly;
 }
 
@@ -116,19 +131,19 @@
 /* FEED ITEMS */
 
 .feed-item-comments {
-  overflow: "visible";
+  overflow: 'visible';
 }
 
 .feed-item-qras {
   display: flex;
   overflow-x: auto;
-  overflow-y:hidden;
+  overflow-y: hidden;
   justify-content: flex-start;
 }
 
 .feed-item-qras::before,
 .feed-item-qras::after {
-  content: "";
+  content: '';
   /* Insert pseudo-element */
   margin: auto;
   /* Make it push flex items to the center */
@@ -151,7 +166,7 @@
   grid-template-columns: 160px 730px 160px;
   /* grid-gap: 1em; */
   grid-template-rows: 60px auto;
-  grid-template-areas: "pageHeader pageHeader pageHeader" "leftSection mainSection rightSection";
+  grid-template-areas: 'pageHeader pageHeader pageHeader' 'leftSection mainSection rightSection';
   justify-content: space-evenly;
   margin: 1em;
 }
@@ -309,7 +324,7 @@
   grid-template-columns: 160px 570px 160px;
   /* grid-gap: 1em; */
   grid-template-rows: 60px auto;
-  grid-template-areas: "pageHeader pageHeader pageHeader" "leftSection mainSection rightSection";
+  grid-template-areas: 'pageHeader pageHeader pageHeader' 'leftSection mainSection rightSection';
   justify-content: space-evenly;
 }
 
@@ -328,7 +343,7 @@
   grid-template-columns: 160px 570px 160px;
   /* grid-gap: 1em; */
   grid-template-rows: 60px auto;
-  grid-template-areas: "pageHeader pageHeader pageHeader" "leftSection mainSection rightSection";
+  grid-template-areas: 'pageHeader pageHeader pageHeader' 'leftSection mainSection rightSection';
   justify-content: space-evenly;
 }
 
@@ -362,10 +377,10 @@
     /* justify-content: center; */
     padding: initial;
   }
-  
+
   .socialDesktop {
     display: none;
-    
+
     /* justify-content: center; */
     visibility: hidden;
     padding: initial;
@@ -376,10 +391,10 @@
     justify-content: center;
     padding: initial;
   }
-  
+
   .adDesktop {
     display: none;
-    
+
     justify-content: center;
     visibility: hidden;
     padding: initial;
@@ -408,7 +423,7 @@
   .global-container {
     grid-template-columns: repeat(1, 100%);
     grid-template-rows: 60px auto;
-    grid-template-areas: "pageHeader" "mainSection";
+    grid-template-areas: 'pageHeader' 'mainSection';
     justify-content: space-between;
   }
   .site-header {
@@ -434,7 +449,7 @@
     grid-template-columns: repeat(1, 100%);
     /* grid-gap: 1em; */
     grid-template-rows: 60px auto;
-    grid-template-areas: "pageHeader" "mainSection";
+    grid-template-areas: 'pageHeader' 'mainSection';
     justify-content: space-between;
   }
   .profile-main {
@@ -447,7 +462,7 @@
   .qsoDetail-container {
     grid-template-columns: repeat(1, 100%);
     grid-template-rows: 60px auto;
-    grid-template-areas: "pageHeader" "mainSection";
+    grid-template-areas: 'pageHeader' 'mainSection';
     justify-content: space-between;
   }
   .qsoDetail-main {
@@ -460,7 +475,7 @@
   .notifications-container {
     grid-template-columns: repeat(1, 100%);
     grid-template-rows: 70px auto;
-    grid-template-areas: "pageHeader" "mainSection";
+    grid-template-areas: 'pageHeader' 'mainSection';
     justify-content: space-between;
   }
   .notifications-main {

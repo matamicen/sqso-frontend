@@ -45,9 +45,9 @@ class FeedAudio extends React.Component {
   render() {
     const { t } = this.props;
     const date = new Date(this.props.media.datetime);
-    const onlyForRegistered = !!(
-      this.props.index > 0 && !this.props.isAuthenticated
-    );
+    // const onlyForRegistered = !!(
+    //   this.props.index > 0 && !this.props.isAuthenticated
+    // );
     if (this.props.media.url) {
       if (this.state.audioNotVisible) {
         return (
