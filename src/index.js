@@ -13,14 +13,13 @@ import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 // import { googleAnalytics } from "../reactGAMiddlewares";
 import 'semantic-ui-css/semantic.css';
-import 'slick-carousel/slick/slick-theme.css';
-import 'slick-carousel/slick/slick.css';
 import packageJson from '../package.json';
 import App from './components/App';
 import "./config/i18n";
 import GA from './GoogleAnalytics';
 import './ReactotronConfig';
 import reducer from './reducers';
+
 const RELEASE = packageJson.version;
 if (process.env.NODE_ENV === 'production') {
   Sentry.init({
