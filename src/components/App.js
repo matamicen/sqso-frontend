@@ -67,12 +67,93 @@ class App extends Component {
   }
   async componentDidMount() {
     if (isMobile) {
-      if (isIOS)
-        window.addEventListener('message', event => this.loginFromApp(event));
-      else
-        document.addEventListener('message', event => this.loginFromApp(event));
+      if (isIOS) {
+        // window.addEventListener('message', event => this.loginFromApp(event));
+        window.WebViewBridge = {
+          onMessage: this._onMessage
+        };
+        const event = new Event('WebViewBridge');
+        window.dispatchEvent(event);
+        // this._postMessage({ helloFromWebPage: true });
+      } else
+        document.addEventListener('message', event =>
+          this.loginFromAndroid(event)
+        );
     }
     this.login();
+  }
+  async _onMessage(data) {
+    // Should log "helloFromRN" on load.
+    console.log(data);
+    // if (process.env.REACT_APP_STAGE !== 'production') alert('event triggered');
+    // this.setState({ data: JSON.stringify(event.data) });
+    let mobileSession = data;
+    this.setState({ mobileSession: mobileSession });
+    // console.log(mobileSession);
+    const localSession = new CognitoUserSession({
+      IdToken: new CognitoIdToken({
+        IdToken: mobileSession.idToken.jwtToken
+      }),
+      RefreshToken: new CognitoRefreshToken({
+        RefreshToken: mobileSession.refreshToken
+      }),
+      AccessToken: new CognitoAccessToken({
+        AccessToken: mobileSession.accessToken.jwtToken
+      })
+    });
+
+    const localUser = new CognitoUser({
+      Username: mobileSession.accessToken.payload.username,
+      Pool: Auth.userPool,
+      Storage: Auth.userPool.storage
+    });
+    localUser.setSignInUserSession(localSession);
+
+    // this seems like a hack
+    // Auth.currentCredentials = async () => localSession;
+
+    try {
+      let session = await Auth.currentSession().catch(error => {
+        console.log(error);
+        this.props.actions.doLogout();
+      });
+      console.log(session);
+      // alert(session.idToken.jwtToken)
+      if (
+        session &&
+        session.idToken &&
+        session.idToken.payload['custom:callsign']
+      ) {
+        const credentials = await Auth.currentCredentials();
+
+        if (!credentials.data) {
+          await Auth.signOut();
+
+          this.props.actions.doSetPublicSession();
+        } else {
+          this.props.actions.doLogin(
+            session.idToken.jwtToken,
+            session.idToken.payload['custom:callsign'].toUpperCase(),
+            credentials.data.IdentityId
+          );
+          this.props.actions.doFetchUserInfo(session.idToken.jwtToken);
+          Sentry.configureScope(scope => {
+            scope.setUser({
+              qra: session.idToken.payload['custom:callsign'].toUpperCase()
+            });
+          });
+        }
+      }
+      if (process.env.REACT_APP_STAGE !== 'production') {
+        console.warn(`mobile login current session!!`);
+        // alert(`mobile login current session!!`);
+      }
+      // this.login();
+      ///  store.dispatch(silentReloginAction());
+    } catch (ex) {
+      console.warn(`mobile login ${ex}`);
+      // alert(`mobile login ${ex}`);
+    }
   }
   componentWillUnmount() {
     if (isIOS) window.removeEventListener('message', () => {});
@@ -115,7 +196,7 @@ class App extends Component {
       this.props.actions.doSetPublicSession();
     }
   }
-  async loginFromApp(event) {
+  async loginFromAndroid(event) {
     // if (process.env.REACT_APP_STAGE !== 'production') alert('event triggered');
     this.setState({ data: JSON.stringify(event.data) });
     let mobileSession = JSON.parse(event.data);
