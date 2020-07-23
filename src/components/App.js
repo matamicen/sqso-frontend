@@ -15,9 +15,10 @@ import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
+import 'slick-carousel/slick/slick-theme.css';
+import 'slick-carousel/slick/slick.css';
 import * as Actions from '../actions';
 import AwsExports from '../aws-exports';
-
 // import PrivacyPolicy from './help/privacyPolicy';
 // import TermsOfService from './help/termsOfServcice';
 // import Tutorials from './help/tutorials';
@@ -86,8 +87,8 @@ class App extends Component {
     // Should log "helloFromRN" on load.
     console.log(data);
     // if (process.env.REACT_APP_STAGE !== 'production') alert('event triggered');
-    // this.setState({ data: JSON.stringify(event.data) });
-    let mobileSession = data;
+    this.setState({ data: JSON.stringify(data) });
+    let mobileSession = JSON.parse(data);
     this.setState({ mobileSession: mobileSession });
     // console.log(mobileSession);
     const localSession = new CognitoUserSession({
