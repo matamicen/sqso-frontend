@@ -3,7 +3,7 @@ import i18n from 'i18next';
 import React, { Fragment } from 'react';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { Confirm, Modal } from 'semantic-ui-react';
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
@@ -23,23 +23,23 @@ class FeedAudio extends React.Component {
   }
 
   onClick() {
-    if (this.props.isAuthenticated) {
-      if (
-        this.props.qraUserData.monthly_audio_play >
-        this.props.qraUserData.account_type.web_qso_audio_play
-      ) {
-        this.setState({ promptPremium: true });
-      } else {
+    // if (this.props.isAuthenticated) {
+      // if (
+      //   this.props.qraUserData.monthly_audio_play >
+      //   this.props.qraUserData.account_type.web_qso_audio_play
+      // ) {
+      //   this.setState({ promptPremium: true });
+      // } else {
         this.props.recalculateRowHeight();
         this.setState({ audioNotVisible: false });
-      }
-    } else {
-      if (this.props.index > 0) this.setState({ promptLogin: true });
-      else {
-        this.props.recalculateRowHeight();
-        this.setState({ audioNotVisible: false });
-      }
-    }
+      // }
+    // } else {
+    //   if (this.props.index > 0) this.setState({ promptLogin: true });
+    //   else {
+    //     this.props.recalculateRowHeight();
+    //     this.setState({ audioNotVisible: false });
+    //   }
+    // }
   }
 
   render() {
@@ -114,7 +114,7 @@ class FeedAudio extends React.Component {
                     })}
                   </span>
                 )}
-                {onlyForRegistered && (
+                {/* {onlyForRegistered && (
                   <Link
                     to={{
                       pathname: '/login',
@@ -124,7 +124,7 @@ class FeedAudio extends React.Component {
                     {'  '}
                     {t('auth.loginRequired')}
                   </Link>
-                )}
+                )} */}
               </span>
             </div>
           </Fragment>
@@ -178,7 +178,7 @@ class FeedAudio extends React.Component {
                     })}
                   </span>
                 )}
-                {onlyForRegistered && (
+                {/* {onlyForRegistered && (
                   <Link
                     to={{
                       pathname: '/login',
@@ -188,7 +188,7 @@ class FeedAudio extends React.Component {
                     {'  '}
                     {t('auth.loginRequired')}
                   </Link>
-                )}
+                )} */}
               </p>
             </div>
           </Fragment>
