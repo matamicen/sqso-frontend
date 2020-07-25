@@ -19,6 +19,7 @@ const config = {
     ]
   },
   Storage: {
+
     bucket: 'sqsovpcrds-sqsobucket-1cbtj8fwlc47a', // REQUIRED -  Amazon S3 bucket
     region: 'us-east-1', // OPTIONAL -  Amazon service region
     identityPoolId: 'us-east-1:630321b3-e3c0-4886-a6a8-1d7e66a192d9'
