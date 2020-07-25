@@ -6,8 +6,7 @@ const config = {
     userPoolWebClientId: '32ouiqpjfne8l0vnsasplhmgvr',
     mandatorySignIn: false,
     aws_mandatory_sign_in: 'enable',
-    bucket: 'sqso',
-    
+    bucket: 'sqso'
   },
 
   API: {
@@ -30,5 +29,5 @@ const config = {
     // OPTIONAL -  Amazon service region
     region: 'us-east-1'
   }
-};
-export default config;
+}
+export default config

@@ -1,6 +1,14 @@
 import Auth from '@aws-amplify/auth';
 import Amplify from '@aws-amplify/core';
 import * as Sentry from '@sentry/browser';
+import {
+  CognitoAccessToken,
+  CognitoIdToken,
+  CognitoRefreshToken,
+  CognitoUser,
+  CognitoUserSession
+} from 'amazon-cognito-identity-js';
+import AWS from 'aws-sdk';
 import PropTypes from 'prop-types';
 import React, { Component, lazy, Suspense } from 'react';
 import { isIOS, isMobile } from 'react-device-detect';
@@ -12,21 +20,25 @@ import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import * as Actions from '../actions';
 import AwsExports from '../aws-exports';
-
+AWS.config.update({ region: 'us-east-1' });
+// import PrivacyPolicy from './help/privacyPolicy';
+// import TermsOfService from './help/termsOfServcice';
+// import Tutorials from './help/tutorials';
+// import ChangePassword from './Auth/ChangePassword';
 const ChangePassword = lazy(() => import('./Auth/ChangePassword'));
-
+// import ForgotPassword from './Auth/ForgotPassword';
 const ForgotPassword = lazy(() => import('./Auth/ForgotPassword'));
-
+// import ContactForm from './contactForm';
 const ContactForm = lazy(() => import('./contactForm'));
-
+// import ErrorBoundary from './ErrorBoundary';
 const ErrorBoundary = lazy(() => import('./ErrorBoundary'));
-
+// import Follow from './follow';
 const Follow = lazy(() => import('./follow'));
-
+// import Download from './help/download';
 const Download = lazy(() => import('./help/download'));
-
+// import FAQ from './help/faq';
 const FAQ = lazy(() => import('./help/faq'));
-
+// import PrivacyPolicy from './help/privacyPolicy';
 const PrivacyPolicy = lazy(() => import('./help/privacyPolicy'));
 const TermsOfService = lazy(() => import('./help/termsOfServcice'));
 const Tutorials = lazy(() => import('./help/tutorials'));
@@ -61,7 +73,7 @@ class App extends Component {
       if (isIOS) {
         // window.addEventListener('message', event => this.loginFromApp(event));
         window.WebViewBridge = {
-          onMessage: this._onMessage.bind(this)
+          onMessage: this._onMessage
         };
         const event = new Event('WebViewBridge');
         window.dispatchEvent(event);
@@ -75,68 +87,69 @@ class App extends Component {
   }
   async _onMessage(data) {
     // Should log "helloFromRN" on load.
-    // alert(data);
-    let token;
+    alert(data);
     console.log(data);
     // if (process.env.REACT_APP_STAGE !== 'production') alert('event triggered');
     // this.setState({ data: JSON.stringify(data) });
     let mobileSession = JSON.parse(data);
-     // let mobileSession= {userlogin: "lisandrolan@gmail.com",userpwd: "sabrina"}
-     this.setState({ mobileSession: mobileSession });
-     console.log(mobileSession);
-     const user = await Auth.signIn(
-       mobileSession.userlogin.toLowerCase().trim(),
-       mobileSession.userpwd
-     ).catch(err => {
-       console.log(err);
-       this.props.actions.doLogout();
-     });
- 
-     if (user) {
-       if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
-         this.props.history.push({
-           pathname: '/changepassword',
-           data: { user: user, newPasswordRequired: true }
-         });
-       } else {
-         await this.props.actions.doStartingLogin();
-         token = user.signInUserSession.idToken.jwtToken;
-         const credentials = await Auth.currentCredentials();
- 
-         if (!credentials.authenticated) {
-           await Auth.signOut();
- 
-           this.props.actions.doSetPublicSession();
-         } else {
-           await this.props.actions.doLogin(
-             token,
-             user.signInUserSession.idToken.payload['custom:callsign'],
-             credentials.IdentityId
-           );
-           await this.props.actions.doFetchUserInfo(token);
-           Sentry.configureScope(scope => {
-             scope.setUser({
-               qra: user.signInUserSession.idToken.payload['custom:callsign']
-             });
-           });
-           window.gtag('config', 'G-H8G28LYKBY', {
-             custom_map: { dimension1: 'userQRA' }
-           });
-           if (process.env.REACT_APP_STAGE !== 'production')
-             window.gtag('event', 'userLogin_WEBDEV', {
-               event_category: 'User',
-               event_label: 'login',
-               userQRA: user.signInUserSession.idToken.payload['custom:callsign']
-             });
-           else
-             window.gtag('event', 'userLogin_WEBPRD', {
-               event_category: 'User',
-               event_label: 'login',
-               userQRA: user.signInUserSession.idToken.payload['custom:callsign']
-             });
-         }
-       }
-     }
+    alert(mobileSession);
+    // this.setState({ mobileSession: mobileSession });
+    // console.log(mobileSession);
+    const localSession = new CognitoUserSession({
+      IdToken: new CognitoIdToken({
+        IdToken: mobileSession.idToken.jwtToken
+      }),
+      RefreshToken: new CognitoRefreshToken({
+        RefreshToken: mobileSession.refreshToken
+      }),
+      AccessToken: new CognitoAccessToken({
+        AccessToken: mobileSession.accessToken.jwtToken
+      })
+    });
+
+    const localUser = new CognitoUser({
+      Username: mobileSession.accessToken.payload.username,
+      Pool: Auth.userPool,
+      Storage: Auth.userPool.storage
+    });
+    localUser.setSignInUserSession(localSession);
+    console.log('credentials');
+    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+      IdentityPoolId: 'us-east-1:daa39e2c-c363-4b97-91a9-de1ae54c7590',
+      RoleArn:
+        'arn:aws:iam::591848583596:role/sqsoSAM-App-13BJR5X0FFHWB-CognitoAuthorizedRole-1049EMLTTB2NF',
+      AccountId: '591848583596 ', // your AWS account ID
+      Logins: {
+        'cognito-idp.us-east-1.amazonaws.com/us-east-1_IZ0rymzBv':
+          mobileSession.idToken.jwtToken
+      }
+    });
+
+    // await AWS.config.credentials.get();
+    await AWS.config.credentials.getPromise()
+    console.log(AWS.config.credentials)
+    if (!AWS.config.credentials) {
+      await Auth.signOut();
+
+      await this.props.actions.doSetPublicSession();
+    } else {
+      await this.props.actions.doLogin(
+        AWS.config.credentials.params.WebIdentityToken,
+        mobileSession.idToken.payload['custom:callsign'].toUpperCase(),
+        AWS.config.credentials.params.identityId
+      );
+      await this.props.actions.doFetchUserInfo(
+        AWS.config.credentials.params.WebIdentityToken
+      );
+      Sentry.configureScope(scope => {
+        scope.setUser({
+          qra: mobileSession.idToken.payload[
+            'custom:callsign'
+          ].toUpperCase()
+        });
+      });
+    }
+
   }
   componentWillUnmount() {
     if (!isIOS) document.removeEventListener('message', () => {});
@@ -179,68 +192,67 @@ class App extends Component {
     }
   }
   async loginFromAndroid(event) {
-    
-    let token;
-    // alert('loginFromAndroid');
+    alert('loginFromAndroid');
     // if (process.env.REACT_APP_STAGE !== 'production') alert('event triggered');
     this.setState({ data: JSON.stringify(event.data) });
-     let mobileSession = JSON.parse(event.data);
-    // let mobileSession= {userlogin: "lisandrolan@gmail.com",userpwd: "sabrina"}
+    let mobileSession = JSON.parse(event.data);
     this.setState({ mobileSession: mobileSession });
     console.log(mobileSession);
-    const user = await Auth.signIn(
-      mobileSession.userlogin.toLowerCase().trim(),
-      mobileSession.userpwd
-    ).catch(err => {
-      console.log(err);
-      this.props.actions.doLogout();
+    const localSession = new CognitoUserSession({
+      IdToken: new CognitoIdToken({
+        IdToken: mobileSession.idToken.jwtToken
+      }),
+      RefreshToken: new CognitoRefreshToken({
+        RefreshToken: mobileSession.refreshToken
+      }),
+      AccessToken: new CognitoAccessToken({
+        AccessToken: mobileSession.accessToken.jwtToken
+      })
     });
 
-    if (user) {
-      if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
-        this.props.history.push({
-          pathname: '/changepassword',
-          data: { user: user, newPasswordRequired: true }
-        });
-      } else {
-        await this.props.actions.doStartingLogin();
-        token = user.signInUserSession.idToken.jwtToken;
-        const credentials = await Auth.currentCredentials();
-
-        if (!credentials.authenticated) {
-          await Auth.signOut();
-
-          this.props.actions.doSetPublicSession();
-        } else {
-          await this.props.actions.doLogin(
-            token,
-            user.signInUserSession.idToken.payload['custom:callsign'],
-            credentials.IdentityId
-          );
-          await this.props.actions.doFetchUserInfo(token);
-          Sentry.configureScope(scope => {
-            scope.setUser({
-              qra: user.signInUserSession.idToken.payload['custom:callsign']
-            });
-          });
-          window.gtag('config', 'G-H8G28LYKBY', {
-            custom_map: { dimension1: 'userQRA' }
-          });
-          if (process.env.REACT_APP_STAGE !== 'production')
-            window.gtag('event', 'userLogin_WEBDEV', {
-              event_category: 'User',
-              event_label: 'login',
-              userQRA: user.signInUserSession.idToken.payload['custom:callsign']
-            });
-          else
-            window.gtag('event', 'userLogin_WEBPRD', {
-              event_category: 'User',
-              event_label: 'login',
-              userQRA: user.signInUserSession.idToken.payload['custom:callsign']
-            });
-        }
+    const localUser = new CognitoUser({
+      Username: mobileSession.accessToken.payload.username,
+      Pool: Auth.userPool,
+      Storage: Auth.userPool.storage
+    });
+    localUser.setSignInUserSession(localSession);
+    console.log('credentials');
+    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+      IdentityPoolId: 'us-east-1:daa39e2c-c363-4b97-91a9-de1ae54c7590',
+      RoleArn:
+        'arn:aws:iam::591848583596:role/sqsoSAM-App-13BJR5X0FFHWB-CognitoAuthorizedRole-1049EMLTTB2NF',
+      AccountId: '591848583596 ', // your AWS account ID
+      Logins: {
+        'cognito-idp.us-east-1.amazonaws.com/us-east-1_IZ0rymzBv':
+          mobileSession.idToken.jwtToken
       }
+    });
+
+    // await AWS.config.credentials.get();
+    await AWS.config.credentials.getPromise()
+    console.log(AWS.config.credentials)
+    if (!AWS.config.credentials) {
+      await Auth.signOut();
+
+      await this.props.actions.doSetPublicSession();
+    } else {
+      await this.props.actions.doLogin(
+        AWS.config.credentials.params.WebIdentityToken,
+        mobileSession.idToken.payload['custom:callsign'].toUpperCase(),
+        AWS.config.credentials.params.identityId
+      );
+      await this.props.actions.doFetchUserInfo(
+        AWS.config.credentials.params.WebIdentityToken
+      );
+      Sentry.configureScope(scope => {
+        scope.setUser({
+          qra: mobileSession.idToken.payload[
+            'custom:callsign'
+          ].toUpperCase()
+        });
+      });
     }
+
   }
   render() {
     const { t } = this.props;
