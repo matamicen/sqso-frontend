@@ -10,7 +10,6 @@
     "@aws-amplify/storage": "^3.2.10",
     "@sentry/browser": "^5.0.8",
     "aws-api-gateway-client": "^0.2.12",
-    "aws-sdk": "^2.719.0",
     "body-parser": "^1.18.2",
     "canvg": "^1.5.2",
     "compression": "^1.7.2",
