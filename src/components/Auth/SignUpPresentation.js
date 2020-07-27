@@ -303,7 +303,7 @@ const SignUpPresentation = props => {
           >
             {t('whatIsSuperQSO.downloadApp')}
           </Button>
-          <Button
+          {/* <Button
             onClick={() => {
               this.setState({
                 modalOpen: false,
@@ -314,7 +314,7 @@ const SignUpPresentation = props => {
             }}
           >
             {t('whatIsSuperQSO.tutorial')}
-          </Button>
+          </Button> */}
           <Button
             positive
             icon="checkmark"
