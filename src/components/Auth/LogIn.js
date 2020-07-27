@@ -401,7 +401,7 @@ class LogIn extends React.Component {
             >
               {t('whatIsSuperQSO.downloadApp')}
             </Button>
-            <Button
+            {/* <Button
               onClick={() => {
                 this.setState({
                   modalOpen: false,
@@ -412,7 +412,7 @@ class LogIn extends React.Component {
               }}
             >
               {t('whatIsSuperQSO.tutorial')}
-            </Button>
+            </Button> */}
             <Button
               positive
               icon="checkmark"

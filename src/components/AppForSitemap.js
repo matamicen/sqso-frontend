@@ -10,7 +10,7 @@ export default (
     <Route path="/terms" />
     <Route path="/privacy" />
     <Route path="/faq" />
-    <Route path="/tutorials" />
+    {/* <Route path="/tutorials" /> */}
     <Route path="/download" />
     <Route path="/changepassword" />
     <Route path="/notifications" />

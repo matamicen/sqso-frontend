@@ -29,7 +29,7 @@ const FAQ = lazy(() => import('./help/faq'));
 
 const PrivacyPolicy = lazy(() => import('./help/privacyPolicy'));
 const TermsOfService = lazy(() => import('./help/termsOfServcice'));
-const Tutorials = lazy(() => import('./help/tutorials'));
+// const Tutorials = lazy(() => import('./help/tutorials'));
 // import QRAProfileContainer from './Profile/QRAProfileContainer';
 
 const QRAProfileContainer = lazy(() => import('./Profile/QRAProfileContainer'));
@@ -379,7 +379,7 @@ class App extends Component {
               </ErrorBoundary>
             )}
           />
-          <Route
+          {/* <Route
             exact
             path="/tutorials"
             location={{
@@ -391,7 +391,7 @@ class App extends Component {
                 <Tutorials />
               </ErrorBoundary>
             )}
-          />
+          /> */}
           <Route
             exact
             path="/download"
