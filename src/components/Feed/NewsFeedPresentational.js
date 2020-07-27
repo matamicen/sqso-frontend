@@ -7,6 +7,10 @@ import List from 'react-virtualized/dist/commonjs/List';
 import WindowScroller from 'react-virtualized/dist/commonjs/WindowScroller';
 import '../../styles/style.css';
 import FeedItem from './FeedItem';
+let cache = new CellMeasurerCache({
+  fixedWidth: true,
+  defaultHeight: 40
+});
 class NewsFeed extends React.Component {
   constructor(props) {
     super(props);
@@ -23,10 +27,7 @@ class NewsFeed extends React.Component {
       _list: null
     };
     this._ref = null;
-    this._cache = new CellMeasurerCache({
-      fixedWidth: true,
-      defaultHeight: 40
-    });
+    this._cache = cache;
     this._setRef = this._setRef.bind(this);
     this._onScrollToRowChange = this._onScrollToRowChange.bind(this);
     // this._isRowLoaded = this
@@ -92,12 +93,13 @@ class NewsFeed extends React.Component {
   }
 
   _onScrollToRowChange(event) {
+    
     const { list } = this.state.list;
     let scrollToIndex = Math.min(
       list.length - 1,
       parseInt(event.target.value, 10)
     );
-
+console.log(scrollToIndex)
     if (isNaN(scrollToIndex)) {
       scrollToIndex = undefined;
     }
@@ -194,6 +196,7 @@ class NewsFeed extends React.Component {
                   height={height}
                   isScrolling={isScrolling}
                   scrollTop={scrollTop}
+                  // scrollToRow={this.state.scrollToIndex}
                   onScroll={onChildScroll}
                   overscanRowCount={overscanRowCount}
                   rowCount={rowCount}

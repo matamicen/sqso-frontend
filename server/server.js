@@ -1,10 +1,10 @@
 import bodyParser from 'body-parser';
-import compression from 'compression';
 import express from 'express';
 import i18next from 'i18next';
 import i18nextMiddleware from 'i18next-http-middleware';
 import morgan from 'morgan';
 import path from 'path';
+import shrinkRay from 'shrink-ray';
 import index from './routes/index';
 // Create our express app (using the port optionally specified)
 const app = express();
@@ -66,7 +66,13 @@ i18next
 app.use(i18nextMiddleware.handle(i18next));
 
 // Compress, parse, and log
-app.use(compression());
+// app.use(compression());
+ 
+app.use(shrinkRay({
+  brotli: {
+      quality: 9 // Compression level configurable from 1 to 11
+  }
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('dev'));
