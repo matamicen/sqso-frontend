@@ -1098,7 +1098,7 @@ export function doFetchPublicFeed(qra) {
     const path = '/qso-public-list';
     const myInit = {
       body: {}, // replace this with attributes you need
-      headers: {"Accept-Encoding":"*"} // OPTIONAL
+      headers: {} // OPTIONAL
     };
     API.get(apiName, path, myInit)
       .then(response => {
