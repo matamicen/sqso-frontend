@@ -7,7 +7,7 @@ import List from 'react-virtualized/dist/commonjs/List';
 import WindowScroller from 'react-virtualized/dist/commonjs/WindowScroller';
 import '../../styles/style.css';
 import FeedItem from './FeedItem';
-class NewsFeed extends React.Component {
+class NewsFeed extends React.PureComponent {
   constructor(props) {
     super(props);
     var list = this.props.list;
