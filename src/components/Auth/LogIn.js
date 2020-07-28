@@ -66,9 +66,10 @@ class LogIn extends React.Component {
       this.state.email.toLowerCase().trim(),
       this.state.password
     ).catch(err => {
+      
       switch (err.code) {
         case 'NotAuthorizedException':
-          console.log(err);
+          
           if (err.message === 'Incorrect username or password.')
             this.setState({
               loginError: {
@@ -107,7 +108,8 @@ class LogIn extends React.Component {
         await this.props.actions.doStartingLogin();
         token = user.signInUserSession.idToken.jwtToken;
         const credentials = await Auth.currentCredentials();
-        if (!credentials.data) {
+        
+        if (!credentials.authenticated) {
           await Auth.signOut();
 
           this.props.actions.doSetPublicSession();
@@ -115,7 +117,7 @@ class LogIn extends React.Component {
           await this.props.actions.doLogin(
             token,
             user.signInUserSession.idToken.payload['custom:callsign'],
-            credentials.data.IdentityId
+            credentials.IdentityId
           );
           await this.props.actions.doFetchUserInfo(token);
           Sentry.configureScope(scope => {
@@ -399,7 +401,7 @@ class LogIn extends React.Component {
             >
               {t('whatIsSuperQSO.downloadApp')}
             </Button>
-            <Button
+            {/* <Button
               onClick={() => {
                 this.setState({
                   modalOpen: false,
@@ -410,7 +412,7 @@ class LogIn extends React.Component {
               }}
             >
               {t('whatIsSuperQSO.tutorial')}
-            </Button>
+            </Button> */}
             <Button
               positive
               icon="checkmark"

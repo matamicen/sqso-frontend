@@ -2,38 +2,135 @@ import Auth from '@aws-amplify/auth';
 import Amplify from '@aws-amplify/core';
 import * as Sentry from '@sentry/browser';
 import PropTypes from 'prop-types';
-import React, { Component, Suspense } from 'react';
+import React, { Component, lazy, Suspense } from 'react';
+import { isIOS, isMobile } from 'react-device-detect';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
+import 'slick-carousel/slick/slick-theme.css';
+import 'slick-carousel/slick/slick.css';
 import * as Actions from '../actions';
 import AwsExports from '../aws-exports';
-import ChangePassword from './Auth/ChangePassword';
-import ForgotPassword from './Auth/ForgotPassword';
-import LogIn from './Auth/LogIn';
-import SignUp from './Auth/SignUp';
-import ContactForm from './contactForm';
-import ErrorBoundary from './ErrorBoundary';
-import Follow from './follow';
-import Download from './help/download';
-import FAQ from './help/faq';
-import PrivacyPolicy from './help/privacyPolicy';
-import TermsOfService from './help/termsOfServcice';
-import Tutorials from './help/tutorials';
-import Home from './Home/Home';
-import Notifications from './Notifications/Notifications';
-import QRAProfileContainer from './Profile/QRAProfileContainer';
-import QSODetail from './QSODetail';
+// const Tutorials = lazy(() => import('./help/tutorials'));
+// import QRAProfileContainer from './Profile/QRAProfileContainer';
+
+const ChangePassword = lazy(() => import('./Auth/ChangePassword'));
+const ForgotPassword = lazy(() => import('./Auth/ForgotPassword'));
+const ContactForm = lazy(() => import('./contactForm'));
+const ErrorBoundary = lazy(() => import('./ErrorBoundary'));
+const Follow = lazy(() => import('./follow'));
+const Download = lazy(() => import('./help/download'));
+const FAQ = lazy(() => import('./help/faq'));
+const PrivacyPolicy = lazy(() => import('./help/privacyPolicy'));
+const TermsOfService = lazy(() => import('./help/termsOfServcice'));
+const QRAProfileContainer = lazy(() => import('./Profile/QRAProfileContainer'));
+const Notifications = lazy(() => import('./Notifications/Notifications'));
+const QSODetail = lazy(() => import('./QSODetail'));
+const LogIn = lazy(() => import('./Auth/LogIn'));
+const SignUp = lazy(() => import('./Auth/SignUp'));
+const Home = lazy(() => import('./Home/Home'));
+
 // if (process.env.NODE_ENV !== 'production') {     const {whyDidYouUpdate} =
 // require('why-did-you-update')     whyDidYouUpdate(React)   }
 
 Amplify.configure(AwsExports);
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      mobileSession: null
+    };
+  }
   async componentDidMount() {
+    if (isMobile) {
+      if (isIOS) {
+        // window.addEventListener('message', event => this.loginFromApp(event));
+        window.WebViewBridge = {
+          onMessage: this._onMessage.bind(this)
+        };
+        const event = new Event('WebViewBridge');
+        window.dispatchEvent(event);
+        // this._postMessage({ helloFromWebPage: true });
+      } else
+        document.addEventListener('message', event =>
+          this.loginFromAndroid(event)
+        );
+    }
+    this.login();
+  }
+  async _onMessage(data) {
+    // Should log "helloFromRN" on load.
+    // alert(data);
+    let token;
+    console.log(data);
+    // if (process.env.REACT_APP_STAGE !== 'production') alert('event triggered');
+    // this.setState({ data: JSON.stringify(data) });
+    let mobileSession = JSON.parse(data);
+    // let mobileSession= {userlogin: "lisandrolan@gmail.com",userpwd: "sabrina"}
+    this.setState({ mobileSession: mobileSession });
 
+    const user = await Auth.signIn(
+      mobileSession.userlogin.toLowerCase().trim(),
+      mobileSession.userpwd
+    ).catch(err => {
+      console.log(err);
+      this.props.actions.doLogout();
+    });
+
+    if (user) {
+      if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
+        this.props.history.push({
+          pathname: '/changepassword',
+          data: { user: user, newPasswordRequired: true }
+        });
+      } else {
+        await this.props.actions.doStartingLogin();
+        token = user.signInUserSession.idToken.jwtToken;
+        const credentials = await Auth.currentCredentials();
+
+        if (!credentials.authenticated) {
+          await Auth.signOut();
+
+          this.props.actions.doSetPublicSession();
+        } else {
+          await this.props.actions.doLogin(
+            token,
+            user.signInUserSession.idToken.payload['custom:callsign'],
+            credentials.IdentityId
+          );
+          await this.props.actions.doFetchUserInfo(token);
+          Sentry.configureScope(scope => {
+            scope.setUser({
+              qra: user.signInUserSession.idToken.payload['custom:callsign']
+            });
+          });
+          window.gtag('config', 'G-H8G28LYKBY', {
+            custom_map: { dimension1: 'userQRA' }
+          });
+          if (process.env.REACT_APP_STAGE !== 'production')
+            window.gtag('event', 'userLogin_WEBDEV', {
+              event_category: 'User',
+              event_label: 'login',
+              userQRA: user.signInUserSession.idToken.payload['custom:callsign']
+            });
+          else
+            window.gtag('event', 'userLogin_WEBPRD', {
+              event_category: 'User',
+              event_label: 'login',
+              userQRA: user.signInUserSession.idToken.payload['custom:callsign']
+            });
+        }
+      }
+    }
+  }
+  componentWillUnmount() {
+    if (!isIOS) document.removeEventListener('message', () => {});
+  }
+  async login() {
     this.props.actions.doStartingLogin();
+
     const session = await Auth.currentSession().catch(error => {
       this.props.actions.doLogout();
     });
@@ -45,16 +142,15 @@ class App extends Component {
     ) {
       const credentials = await Auth.currentCredentials();
 
-      if (!credentials.data) {
+      if (!credentials.authenticated) {
         await Auth.signOut();
 
         this.props.actions.doSetPublicSession();
       } else {
-
         this.props.actions.doLogin(
           session.idToken.jwtToken,
           session.idToken.payload['custom:callsign'].toUpperCase(),
-          credentials.data.IdentityId
+          credentials.IdentityId
         );
         this.props.actions.doFetchUserInfo(session.idToken.jwtToken);
         Sentry.configureScope(scope => {
@@ -69,9 +165,71 @@ class App extends Component {
       this.props.actions.doSetPublicSession();
     }
   }
+  async loginFromAndroid(event) {
+    let token;
+    // alert('loginFromAndroid');
+    // if (process.env.REACT_APP_STAGE !== 'production') alert('event triggered');
+    this.setState({ data: JSON.stringify(event.data) });
+    let mobileSession = JSON.parse(event.data);
+    // let mobileSession= {userlogin: "lisandrolan@gmail.com",userpwd: "sabrina"}
+    this.setState({ mobileSession: mobileSession });
+    console.log(mobileSession);
+    const user = await Auth.signIn(
+      mobileSession.userlogin.toLowerCase().trim(),
+      mobileSession.userpwd
+    ).catch(err => {
+      console.log(err);
+      this.props.actions.doLogout();
+    });
 
+    if (user) {
+      if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
+        this.props.history.push({
+          pathname: '/changepassword',
+          data: { user: user, newPasswordRequired: true }
+        });
+      } else {
+        await this.props.actions.doStartingLogin();
+        token = user.signInUserSession.idToken.jwtToken;
+        const credentials = await Auth.currentCredentials();
+
+        if (!credentials.authenticated) {
+          await Auth.signOut();
+
+          this.props.actions.doSetPublicSession();
+        } else {
+          await this.props.actions.doLogin(
+            token,
+            user.signInUserSession.idToken.payload['custom:callsign'],
+            credentials.IdentityId
+          );
+          await this.props.actions.doFetchUserInfo(token);
+          Sentry.configureScope(scope => {
+            scope.setUser({
+              qra: user.signInUserSession.idToken.payload['custom:callsign']
+            });
+          });
+          window.gtag('config', 'G-H8G28LYKBY', {
+            custom_map: { dimension1: 'userQRA' }
+          });
+          if (process.env.REACT_APP_STAGE !== 'production')
+            window.gtag('event', 'userLogin_WEBDEV', {
+              event_category: 'User',
+              event_label: 'login',
+              userQRA: user.signInUserSession.idToken.payload['custom:callsign']
+            });
+          else
+            window.gtag('event', 'userLogin_WEBPRD', {
+              event_category: 'User',
+              event_label: 'login',
+              userQRA: user.signInUserSession.idToken.payload['custom:callsign']
+            });
+        }
+      }
+    }
+  }
   render() {
-    const {t} = this.props;
+    const { t } = this.props;
     return (
       <Suspense fallback={<div>{t('global.loading')}</div>}>
         <Switch>
@@ -207,7 +365,7 @@ class App extends Component {
               </ErrorBoundary>
             )}
           />
-          <Route
+          {/* <Route
             exact
             path="/tutorials"
             location={{
@@ -219,7 +377,7 @@ class App extends Component {
                 <Tutorials />
               </ErrorBoundary>
             )}
-          />
+          /> */}
           <Route
             exact
             path="/download"

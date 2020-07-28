@@ -13,7 +13,7 @@
     "downloadApp": "Descargar App",
     "tutorial": "Ver Tutoriales",
     "whoToFollow": "A Quien Seguir",
-    "searchCallsign": "Buscar SD"
+    "searchCallsign": "Buscar SD (Ej: LU2ACH)"
   },
   "whatIsSuperQSO": {
     "whatIsSuperQSO": "¿Qué es SuperQSO?",
@@ -120,6 +120,7 @@
     "upgradePremium": "Suscribite al Plan Premium",
     "imageContainNudity": "La imagen que intenta subir contiene desnudos o contenido sexual",
     "userMaxReached": "Ha alcanzado el máximo permitido para usuarios gratuitos. Suscribite al Plan Premium en nuestra APP"
+   
   },
   "notification": {
     "congratulations": "Felicitaciones!!!",
@@ -144,12 +145,12 @@
   "qso": {
     "audioPlays": " - {{count}} Reproducción",
     "audioPlays_plural": " - {{count}} Reproducciones",
-    "callsignTagged": "SD etiquetadas",
+    "callsignTagged": "SD/Colegas etiquetadas",
     "repost": "republicar",
     "share": "compartir",
     "checkOutPost": "Mirá esta publicación...",
     "checkOutQSO": "Mirá este QSO...",
-    "checkOutQAP": "Mirá quien va a estar QAP...",
+    "checkOutQAP": "Mirá quien está QAP...",
     "checkOutFLDDAY": "Mirá esta activación...",
     "add": "Agregar",
     "postDeleted": "Esta publicación ha sido eliminada y no puede ser mostrada",
@@ -182,7 +183,7 @@
     "likeModalHeader": "A estos colegas les gusta este "
   },
   "qra": {
-    "loading": "Cargando SD...",
+    "loading": "Cargando SD/Colega...",
     "views": "Vistas",
     "follow": "Seguir",
     "unfollow": "Dejar de Seguir",
@@ -214,6 +215,7 @@
     "followers": "Seguidores"
   },
   "forms": {
+    "formSent": "Mensaje Enviado!",
     "contactUs": "Contactános",
     "send": "Enviar",
     "message": "Mensaje",

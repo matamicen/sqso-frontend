@@ -214,6 +214,7 @@
     "followers": "Followers"
   },
   "forms": {
+    "formSent": "Message Sent!",
     "contactUs": "Contact Us",
     "send": "Send",
     "message": "Message",

@@ -6,8 +6,8 @@ import { bindActionCreators } from 'redux';
 import Image from 'semantic-ui-react/dist/commonjs/elements/Image';
 import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
 import * as Actions from '../../actions';
+import '../../styles/style.css';
 import QSOLikeTextModalItem from './QSOLikeTextModalItem';
-
 class QSOLikeText extends React.PureComponent {
   constructor() {
     super();
@@ -53,39 +53,41 @@ class QSOLikeText extends React.PureComponent {
       others = likes.length - maxLikers;
 
       finalText =
-      t('qso.and') +
+        t('qso.and') +
         others +
-        (others > 1 ? t('qso.othersLikeThis') : t('qso.otherLikeThis'))
-        //  + (this.props.qso.type === 'POST' ? ' POST' : ' QSO');
-    } else if (likes.length === 1 && likes[0].qra === this.props.userData.currentQRA ) {
-      counter = likes.length;
-      finalText =
-      t('qso.youLikeThis');
+        (others > 1 ? t('qso.othersLikeThis') : t('qso.otherLikeThis'));
       //  + (this.props.qso.type === 'POST' ? ' POST' : ' QSO');
-    } else if (likes.length === 1 && likes[0].qra !== this.props.userData.currentQRA ) {
+    } else if (
+      likes.length === 1 &&
+      likes[0].qra === this.props.userData.currentQRA
+    ) {
       counter = likes.length;
-      finalText =
-      t('qso.oneLikeThis');
+      finalText = t('qso.youLikeThis');
       //  + (this.props.qso.type === 'POST' ? ' POST' : ' QSO');
-    }else{
+    } else if (
+      likes.length === 1 &&
+      likes[0].qra !== this.props.userData.currentQRA
+    ) {
       counter = likes.length;
-      finalText =
-      t('qso.manyLikeThis');
+      finalText = t('qso.oneLikeThis');
+      //  + (this.props.qso.type === 'POST' ? ' POST' : ' QSO');
+    } else {
+      counter = likes.length;
+      finalText = t('qso.manyLikeThis');
       //  + (this.props.qso.type === 'POST' ? ' POST' : ' QSO');
     }
-
 
     if (counter === 0) return null;
 
     // if the first element in array does not have avatar -> reorder array
     if (likes[0].avatarpic === null) {
       let i = 0;
-      
+
       while (likes[0].avatarpic === null && i < likes.length) {
         let like = likes.splice(0, 1)[0];
-        
+
         likes.push(like);
-        
+
         i++;
       }
     }
@@ -105,7 +107,7 @@ class QSOLikeText extends React.PureComponent {
           outputText = outputText + finalText;
           break;
         case likes.length > 1 && a === counter - 2 && counter === likes.length: //Before Last
-          outputText = outputText + t('qso.and') ;
+          outputText = outputText + t('qso.and');
           break;
         case likes.length > 1 && a <= counter - 2 && counter < likes.length: //Before Last
           outputText = outputText + ', ';
@@ -116,7 +118,21 @@ class QSOLikeText extends React.PureComponent {
     }
     return (
       <Fragment>
-        <a
+        <button
+          type="button"
+          className="link-button"
+          onClick={() => this.setState({ showModal: true })}
+        >
+          {likes[0].avatarpic && (
+            <Image
+              style={{ height: '1.5rem', width: 'auto', marginRigth: '5px' }}
+              src={likes[0].avatarpic}
+              circular
+            />
+          )}
+          <span style={{ alignSelf: 'center' }}>{outputText}</span>
+        </button>
+        {/* <a
           style={{
             cursor: 'pointer',
             fontSize: '1.1rem',
@@ -134,7 +150,7 @@ class QSOLikeText extends React.PureComponent {
             />
           )}
           <span>{outputText}</span>
-        </a>
+        </a> */}
         <Modal
           size="tiny"
           centered={true}
@@ -151,7 +167,7 @@ class QSOLikeText extends React.PureComponent {
           }}
         >
           <Modal.Header>
-          {t('qso.likeModalHeader')} {qso.type === 'POST' ? ' POST' : ' QSO'}
+            {t('qso.likeModalHeader')} {qso.type === 'POST' ? ' POST' : ' QSO'}
           </Modal.Header>
           <Modal.Content>
             <Modal.Description>

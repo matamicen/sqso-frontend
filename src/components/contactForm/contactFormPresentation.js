@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
 import { withTranslation } from 'react-i18next';
-import Recaptcha from "react-recaptcha";
-import Form from "semantic-ui-react/dist/commonjs/collections/Form";
-import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
-import Message from "semantic-ui-react/dist/commonjs/collections/Message";
-import Header from "semantic-ui-react/dist/commonjs/elements/Header";
-import Ad from "../Ad/Ad";
-import AppNavigation from "../Home/AppNavigation";
+import Form from 'semantic-ui-react/dist/commonjs/collections/Form';
+import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid';
+import Message from 'semantic-ui-react/dist/commonjs/collections/Message';
+import Header from 'semantic-ui-react/dist/commonjs/elements/Header';
+import Ad from '../Ad/Ad';
+import AppNavigation from '../Home/AppNavigation';
 const ContactFormPresentation = props => {
   const {
     values: { email, message },
@@ -16,7 +16,8 @@ const ContactFormPresentation = props => {
     handleBlur,
     setFieldTouched,
     handleSubmit,
-    setFieldValue,t
+    setFieldValue,
+    t
   } = props;
 
   const change = (name, e) => {
@@ -37,7 +38,7 @@ const ContactFormPresentation = props => {
         <Grid
           textAlign="center"
           style={{
-            height: "100%"
+            height: '100%'
           }}
           verticalAlign="middle"
         >
@@ -47,7 +48,7 @@ const ContactFormPresentation = props => {
             }}
           >
             <Header as="h2" color="teal" textAlign="center">
-            {t('forms.contactUs')}
+              {t('forms.contactUs')}
             </Header>
             <Form onSubmit={() => {}}>
               <Form.Field>
@@ -57,7 +58,7 @@ const ContactFormPresentation = props => {
                   name="email"
                   value={email}
                   error={touched.email && Boolean(errors.email)}
-                  onChange={change.bind(null, "email")}
+                  onChange={change.bind(null, 'email')}
                   onBlur={handleBlur}
                 />
               </Form.Field>
@@ -69,20 +70,19 @@ const ContactFormPresentation = props => {
                 placeholder={t('forms.message')}
                 defaultValue={message}
                 error={touched.message && Boolean(errors.message)}
-                onChange={change.bind(null, "message")}
+                onChange={change.bind(null, 'message')}
                 onBlur={handleBlur}
               />
               {touched.message && errors.message && (
                 <Message content={errors.message} />
               )}
               <Form.Field>
-                <Recaptcha
+                <ReCAPTCHA
                   sitekey="6LeiVL8UAAAAAIQSELqMu1FpyRsiazdA233cV4u7"
-                  render="explicit"
-                  verifyCallback={response => {
-                    setFieldValue("recaptcha", response);
-                  }}
-                />{" "}
+                  onChange={response =>
+                    setFieldValue('recaptcha', response)}
+                />
+              
                 {touched.token && errors.token && (
                   <Message negative content={errors.token} />
                 )}

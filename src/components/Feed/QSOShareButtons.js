@@ -12,65 +12,60 @@ import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
 // import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
 import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
 const QSOShareButtons = ({ idqso, t, title }) => {
-
   return (
-
-    <Button >
+    <Button>
       <div style={{ display: 'grid', justifyItems: 'center' }}>
-
         <Dropdown
           // text="Filter Posts"
           icon="share alternate"
           floating
-          
           // labeled
           // button
           className="icon"
-          style={{ zIndex: 10,textAlign: 'center', alignSelf: 'center' }}
+          style={{ zIndex: 10, textAlign: 'center', alignSelf: 'center' }}
         >
           <Dropdown.Menu>
             <Dropdown.Item
-              style={{  display: 'flex', justifyContent: 'center' }}
+              style={{ display: 'flex', justifyContent: 'center' }}
             >
-              <div style={{display:"grid"}}>
-              <WhatsappShareButton
-                title={title}
-                url={window.location.origin + '/qso/' + idqso}
-                beforeOnClick={() => {
-                  if (process.env.REACT_APP_STAGE !== 'production')
-                    window.gtag('event', 'qsoShareWAPP_WEBDEV', {
-                      event_category: 'QSO',
-                      event_label: 'shareWAPP'
-                    });
-                  else
-                    window.gtag('event', 'qsoShareWAPP_WEBPRD', {
-                      event_category: 'QSO',
-                      event_label: 'shareWAPP'
-                    });
-                }}
-              >
-                <WhatsappIcon size={40} round={true} />
-              </WhatsappShareButton>
+              <div className="socialDesktop">
+                <WhatsappShareButton
+                  title={title}
+                  url={window.location.origin + '/qso/' + idqso}
+                  beforeOnClick={() => {
+                    if (process.env.REACT_APP_STAGE !== 'production')
+                      window.gtag('event', 'qsoShareWAPP_WEBDEV', {
+                        event_category: 'QSO',
+                        event_label: 'shareWAPP'
+                      });
+                    else
+                      window.gtag('event', 'qsoShareWAPP_WEBPRD', {
+                        event_category: 'QSO',
+                        event_label: 'shareWAPP'
+                      });
+                  }}
+                >
+                  <WhatsappIcon size={40} round={true} />
+                </WhatsappShareButton>
 
-              <FacebookShareButton
-                quote={title}
-                url={window.location.origin + '/qso/' + idqso}
-                beforeOnClick={() => {
-                  if (process.env.REACT_APP_STAGE !== 'production')
-                    window.gtag('event', 'qsoShareFB_WEBDEV', {
-                      event_category: 'QSO',
-                      event_label: 'shareFB'
-                    });
-                  else
-                    window.gtag('event', 'qsoShareFB_WEBPRD', {
-                      event_category: 'QSO',
-                      event_label: 'shareFB'
-                    });
-                }}
-              >
-                <FacebookIcon size={40} round={true} />
-
-              </FacebookShareButton>
+                <FacebookShareButton
+                  quote={title}
+                  url={window.location.origin + '/qso/' + idqso}
+                  beforeOnClick={() => {
+                    if (process.env.REACT_APP_STAGE !== 'production')
+                      window.gtag('event', 'qsoShareFB_WEBDEV', {
+                        event_category: 'QSO',
+                        event_label: 'shareFB'
+                      });
+                    else
+                      window.gtag('event', 'qsoShareFB_WEBPRD', {
+                        event_category: 'QSO',
+                        event_label: 'shareFB'
+                      });
+                  }}
+                >
+                  <FacebookIcon size={40} round={true} />
+                </FacebookShareButton>
 
                 <TwitterShareButton
                   title={title}
@@ -89,9 +84,47 @@ const QSOShareButtons = ({ idqso, t, title }) => {
                   }}
                 >
                   <TwitterIcon size={40} round={true} />
-                  
                 </TwitterShareButton>
-              
+              </div>
+              <div className="socialMobile">
+                <a
+                  href={
+                    'whatsapp://send?text=' +
+                    encodeURIComponent(
+                      title + ' ' + window.location.origin + '/qso/' + idqso
+                    )
+                  }
+                  data-action="share/whatsapp/share"
+                >
+                  {' '}
+                  <WhatsappIcon size={40} round={true} />
+                </a>
+                <a
+                  href={
+                    'http://www.facebook.com/sharer.php?u=' +
+                    encodeURIComponent(window.location.origin +
+                      '/qso/' +
+                      idqso) +
+                    '&quote=' +
+                    encodeURIComponent(title)
+                  }
+                >
+                  
+                  <FacebookIcon size={40} round={true} />
+                </a>
+                <a
+                  href={
+                    'https://twitter.com/intent/tweet?url=' +
+                    encodeURIComponent(window.location.origin +
+                      '/qso/' +
+                      idqso) +
+                    '&text=' +
+                    encodeURIComponent(title)
+                  }
+                >
+                  
+                  <TwitterIcon size={40} round={true} />
+                </a>
               </div>
             </Dropdown.Item>
           </Dropdown.Menu>

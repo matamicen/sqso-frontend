@@ -16,7 +16,7 @@ class NewsFeed extends React.Component {
       loadedRowsMap: {},
       scrollToIndex: undefined,
       loadingRowCount: 0,
-      overscanRowCount: 10,
+      overscanRowCount: 3,
       list: list,
       randomScrollToIndex: null,
       rowCount: list.length,
@@ -147,11 +147,13 @@ class NewsFeed extends React.Component {
       this._cache.clearAll();
       // this._list.recomputeRowHeights();
       this.state._list.forceUpdateGrid();
+      
     }
   }
   componentWillUnmount() {
-    this.setState({ list: [] });
+    // this.setState({ list: [] });
   }
+
   render() {
     
     const { rowCount, overscanRowCount } = this.state;
@@ -200,7 +202,7 @@ class NewsFeed extends React.Component {
                   rowHeight={this._cache.rowHeight}
                   rowRenderer={this._rowRenderer}
                   width={width}
-                  style={{ overflow: 'visible' }}
+                  // style={{ overflow: 'visible' }}
                 />
               )}
             </AutoSizer>
