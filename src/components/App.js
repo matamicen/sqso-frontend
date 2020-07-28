@@ -12,36 +12,23 @@ import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import * as Actions from '../actions';
 import AwsExports from '../aws-exports';
-
-const ChangePassword = lazy(() => import('./Auth/ChangePassword'));
-
-const ForgotPassword = lazy(() => import('./Auth/ForgotPassword'));
-
-const ContactForm = lazy(() => import('./contactForm'));
-
-const ErrorBoundary = lazy(() => import('./ErrorBoundary'));
-
-const Follow = lazy(() => import('./follow'));
-
-const Download = lazy(() => import('./help/download'));
-
-const FAQ = lazy(() => import('./help/faq'));
-
-const PrivacyPolicy = lazy(() => import('./help/privacyPolicy'));
-const TermsOfService = lazy(() => import('./help/termsOfServcice'));
 // const Tutorials = lazy(() => import('./help/tutorials'));
 // import QRAProfileContainer from './Profile/QRAProfileContainer';
 
+const ChangePassword = lazy(() => import('./Auth/ChangePassword'));
+const ForgotPassword = lazy(() => import('./Auth/ForgotPassword'));
+const ContactForm = lazy(() => import('./contactForm'));
+const ErrorBoundary = lazy(() => import('./ErrorBoundary'));
+const Follow = lazy(() => import('./follow'));
+const Download = lazy(() => import('./help/download'));
+const FAQ = lazy(() => import('./help/faq'));
+const PrivacyPolicy = lazy(() => import('./help/privacyPolicy'));
+const TermsOfService = lazy(() => import('./help/termsOfServcice'));
 const QRAProfileContainer = lazy(() => import('./Profile/QRAProfileContainer'));
-// import Notifications from './Notifications/Notifications';
 const Notifications = lazy(() => import('./Notifications/Notifications'));
-// import QSODetail from './QSODetail';
 const QSODetail = lazy(() => import('./QSODetail'));
-// import LogIn from './Auth/LogIn';
 const LogIn = lazy(() => import('./Auth/LogIn'));
-// import SignUp from './Auth/SignUp';
 const SignUp = lazy(() => import('./Auth/SignUp'));
-// import Home from './Home/Home';
 const Home = lazy(() => import('./Home/Home'));
 
 // if (process.env.NODE_ENV !== 'production') {     const {whyDidYouUpdate} =
@@ -81,62 +68,62 @@ class App extends Component {
     // if (process.env.REACT_APP_STAGE !== 'production') alert('event triggered');
     // this.setState({ data: JSON.stringify(data) });
     let mobileSession = JSON.parse(data);
-     // let mobileSession= {userlogin: "lisandrolan@gmail.com",userpwd: "sabrina"}
-     this.setState({ mobileSession: mobileSession });
-     console.log(mobileSession);
-     const user = await Auth.signIn(
-       mobileSession.userlogin.toLowerCase().trim(),
-       mobileSession.userpwd
-     ).catch(err => {
-       console.log(err);
-       this.props.actions.doLogout();
-     });
- 
-     if (user) {
-       if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
-         this.props.history.push({
-           pathname: '/changepassword',
-           data: { user: user, newPasswordRequired: true }
-         });
-       } else {
-         await this.props.actions.doStartingLogin();
-         token = user.signInUserSession.idToken.jwtToken;
-         const credentials = await Auth.currentCredentials();
- 
-         if (!credentials.authenticated) {
-           await Auth.signOut();
- 
-           this.props.actions.doSetPublicSession();
-         } else {
-           await this.props.actions.doLogin(
-             token,
-             user.signInUserSession.idToken.payload['custom:callsign'],
-             credentials.IdentityId
-           );
-           await this.props.actions.doFetchUserInfo(token);
-           Sentry.configureScope(scope => {
-             scope.setUser({
-               qra: user.signInUserSession.idToken.payload['custom:callsign']
-             });
-           });
-           window.gtag('config', 'G-H8G28LYKBY', {
-             custom_map: { dimension1: 'userQRA' }
-           });
-           if (process.env.REACT_APP_STAGE !== 'production')
-             window.gtag('event', 'userLogin_WEBDEV', {
-               event_category: 'User',
-               event_label: 'login',
-               userQRA: user.signInUserSession.idToken.payload['custom:callsign']
-             });
-           else
-             window.gtag('event', 'userLogin_WEBPRD', {
-               event_category: 'User',
-               event_label: 'login',
-               userQRA: user.signInUserSession.idToken.payload['custom:callsign']
-             });
-         }
-       }
-     }
+    // let mobileSession= {userlogin: "lisandrolan@gmail.com",userpwd: "sabrina"}
+    this.setState({ mobileSession: mobileSession });
+
+    const user = await Auth.signIn(
+      mobileSession.userlogin.toLowerCase().trim(),
+      mobileSession.userpwd
+    ).catch(err => {
+      console.log(err);
+      this.props.actions.doLogout();
+    });
+
+    if (user) {
+      if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
+        this.props.history.push({
+          pathname: '/changepassword',
+          data: { user: user, newPasswordRequired: true }
+        });
+      } else {
+        await this.props.actions.doStartingLogin();
+        token = user.signInUserSession.idToken.jwtToken;
+        const credentials = await Auth.currentCredentials();
+
+        if (!credentials.authenticated) {
+          await Auth.signOut();
+
+          this.props.actions.doSetPublicSession();
+        } else {
+          await this.props.actions.doLogin(
+            token,
+            user.signInUserSession.idToken.payload['custom:callsign'],
+            credentials.IdentityId
+          );
+          await this.props.actions.doFetchUserInfo(token);
+          Sentry.configureScope(scope => {
+            scope.setUser({
+              qra: user.signInUserSession.idToken.payload['custom:callsign']
+            });
+          });
+          window.gtag('config', 'G-H8G28LYKBY', {
+            custom_map: { dimension1: 'userQRA' }
+          });
+          if (process.env.REACT_APP_STAGE !== 'production')
+            window.gtag('event', 'userLogin_WEBDEV', {
+              event_category: 'User',
+              event_label: 'login',
+              userQRA: user.signInUserSession.idToken.payload['custom:callsign']
+            });
+          else
+            window.gtag('event', 'userLogin_WEBPRD', {
+              event_category: 'User',
+              event_label: 'login',
+              userQRA: user.signInUserSession.idToken.payload['custom:callsign']
+            });
+        }
+      }
+    }
   }
   componentWillUnmount() {
     if (!isIOS) document.removeEventListener('message', () => {});
@@ -179,12 +166,11 @@ class App extends Component {
     }
   }
   async loginFromAndroid(event) {
-    
     let token;
     // alert('loginFromAndroid');
     // if (process.env.REACT_APP_STAGE !== 'production') alert('event triggered');
     this.setState({ data: JSON.stringify(event.data) });
-     let mobileSession = JSON.parse(event.data);
+    let mobileSession = JSON.parse(event.data);
     // let mobileSession= {userlogin: "lisandrolan@gmail.com",userpwd: "sabrina"}
     this.setState({ mobileSession: mobileSession });
     console.log(mobileSession);
