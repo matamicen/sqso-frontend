@@ -59,9 +59,9 @@
   padding: 1px;
 }
 
-.ReactVirtualized__Grid__innerScrollContainer {
+/* .ReactVirtualized__Grid__innerScrollContainer {
   overflow: visible !important;
-}
+} */
 /* HOME */
 .notifIcon {
   display: flex;
