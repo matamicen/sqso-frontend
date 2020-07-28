@@ -45,8 +45,7 @@ class App extends Component {
   }
   async componentDidMount() {
     if (isMobile) {
-      if (isIOS) {
-        // window.addEventListener('message', event => this.loginFromApp(event));
+      if (isIOS) {        
         window.WebViewBridge = {
           onMessage: this._onMessage.bind(this)
         };
