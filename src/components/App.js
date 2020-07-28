@@ -45,18 +45,17 @@ class App extends Component {
   }
   async componentDidMount() {
     if (isMobile) {
-      // if (isIOS) {
-        // window.addEventListener('message', event => this.loginFromApp(event));
+      if (isIOS) {        
         window.WebViewBridge = {
           onMessage: this._onMessage.bind(this)
         };
         const event = new Event('WebViewBridge');
         window.dispatchEvent(event);
         // this._postMessage({ helloFromWebPage: true });
-      // } else
-      //   document.addEventListener('message', event =>
-      //     this.loginFromAndroid(event)
-      //   );
+      } else
+        document.addEventListener('message', event =>
+          this.loginFromAndroid(event)
+        );
     }
     this.login();
   }
