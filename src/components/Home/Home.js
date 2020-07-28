@@ -15,7 +15,7 @@ class Home extends React.PureComponent {
     adActive: true,
     active: null,
     modalOpen: null,
-    error: null,
+    error: null
     // videoAlreadyDisplayed: false
   };
 
@@ -33,15 +33,18 @@ class Home extends React.PureComponent {
     if (process.env.NODE_ENV !== 'production')
       this.setState({ adActive: false });
 
-    if (this.props.isAuthenticated)
-      // this.props.actions.doFetchUserFeed(
-      //   this.props.token,
-      //   this.props.currentQRA
-      // );
-      this.props.actions.doFetchPublicFeed(this.props.currentQRA);
-    else {
-      // if (!visited) this.setState({ modalOpen: true });
-      this.props.actions.doFetchPublicFeed();
+    if (this.props.qsos.length === 0) {
+      if (this.props.isAuthenticated) {
+        
+        // this.props.actions.doFetchUserFeed(
+        //   this.props.token,
+        //   this.props.currentQRA
+        // );
+        this.props.actions.doFetchPublicFeed(this.props.currentQRA);
+      } else {
+        // if (!visited) this.setState({ modalOpen: true });
+        this.props.actions.doFetchPublicFeed();
+      }
     }
     //Comentado Adsense
     window.googletag.cmd.push(function() {
@@ -68,8 +71,8 @@ class Home extends React.PureComponent {
   handleClose = () => this.setState({ adActive: false });
 
   static getDerivedStateFromProps(props, state) {
-    if (props.qsosFetched) return { active: false };
-    else if (!props.qsosFetched) return { active: true };
+    if (props.qsos.length > 0) return { active: false };
+    else if (props.qsos.length === 0) return { active: true };
   }
   render() {
     const { t } = this.props;
@@ -114,7 +117,7 @@ class Home extends React.PureComponent {
           </div>
 
           <div className="site-main">
-            {this.props.qsosFetched && <FeedQSO />}
+            {this.props.qsos.length > 0 && <FeedQSO />}
           </div>
 
           <div className="site-right">
@@ -198,6 +201,7 @@ const mapStateToProps = state => ({
   currentQRA: state.userData.currentQRA,
   isAuthenticated: state.userData.isAuthenticated,
   token: state.userData.token,
+  qsos: state.qsos,
   account_type: state.userData.qra.account_type,
   public: state.userData.public
 });
