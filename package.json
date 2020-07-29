@@ -1,6 +1,10 @@
 {
   "name": "sqso-frontend",
+<<<<<<< HEAD
   "version": "1.7.7",
+=======
+  "version": "1.7.4",
+>>>>>>> 8b8c910... v1.7.4
   "private": true,
   "homepage": "https://www.superqso.com/",
   "dependencies": {
