@@ -1,4 +1,5 @@
 import API from '@aws-amplify/api';
+import Auth from '@aws-amplify/auth';
 import Storage from '@aws-amplify/storage';
 import * as Sentry from '@sentry/browser';
 import { ContentState, convertToRaw, EditorState } from 'draft-js';
@@ -68,7 +69,7 @@ class QRAProfileBio extends React.Component {
     };
     return new Promise((resolve, reject) => {
       try {
-        const cognitoUser = await Auth.currentAuthenticatedUser();
+        const cognitoUser = Auth.currentAuthenticatedUser();
         const currentSession = cognitoUser.signInUserSession;
         cognitoUser.refreshSession(
           currentSession.refreshToken,
