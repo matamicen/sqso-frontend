@@ -76,27 +76,45 @@ class AuthenticatedNavigation extends React.PureComponent {
         <Menu.Item style={{ padding: '10px' }}>
           <Link
             to="/"
-            onClick={() => {
-              Auth.currentSession()
-                .then(session => {
-                  this.props.actions.refreshToken(session.idToken.jwtToken);
-                  this.props.actions.doFetchUserInfo(this.props.token);
-                  this.props.actions.doFetchPublicFeed(this.props.currentQRA);
-                  // this.props.actions.doFetchUserFeed(
-                  //   this.props.token,
-                  //   this.props.currentQRA
-                  // );
-                })
-                .catch(error => {
-                  if (process.env.NODE_ENV !== 'production') {
-                    console.log(error);
-                  } else {
-                    Sentry.configureScope(function(scope) {
-                      scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-                    });
-                    Sentry.captureException(error);
-                  }
-                });
+            onClick={async () => {
+              try {
+                // const cognitoUser = await Auth.currentAuthenticatedUser();
+                // const currentSession = cognitoUser.signInUserSession;
+                // cognitoUser.refreshSession(
+                //   currentSession.refreshToken,
+                //   (error, session) => {
+                //     if (error) {if (process.env.NODE_ENV !== 'production') {
+                //       console.log('Unable to refresh Token');
+                //       console.log(error);
+                //     } else {
+                //       Sentry.configureScope(function(scope) {
+                //         scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+                //       });
+                //       Sentry.captureException(error);
+                //     }}
+                    
+                //     let token = session.idToken.jwtToken;
+                const currentSession = await Auth.currentSession();
+                const token = currentSession.getIdToken().getJwtToken();
+ 
+                    this.props.actions.refreshToken(token);
+                    this.props.actions.doFetchUserInfo(this.props.token);
+                    this.props.actions.doFetchPublicFeed(this.props.currentQRA);
+                //   }
+                // );
+              } catch (error) {
+                if (process.env.NODE_ENV !== 'production') {
+                  console.log('Unable to refresh Token');
+                  console.log(error);
+                } else {
+                  Sentry.configureScope(function(scope) {
+                    scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+                  });
+                  Sentry.captureException(error);
+                }
+               
+              }
+            
               
               if (!this.props.isAuthenticated)
                 

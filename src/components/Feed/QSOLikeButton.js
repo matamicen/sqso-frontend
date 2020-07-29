@@ -1,4 +1,5 @@
 import API from '@aws-amplify/api';
+import Auth from '@aws-amplify/auth';
 import * as Sentry from '@sentry/browser';
 import React, { Fragment } from 'react';
 import { withTranslation } from 'react-i18next';
@@ -99,85 +100,156 @@ class QSOLikeButton extends React.Component {
     }
     return null;
   }
-  doLike() {
-    let apiName = 'superqso';
-    let path = '/qso-like';
-    let myInit = {
-      body: {
-        qso: this.props.qso.idqso_shared ? this.props.qso.idqso_shared: this.props.qso.idqsos
-      }, // replace this with attributes you need
-      headers: {
-        Authorization: this.props.token
-      } // OPTIONAL
-    };
-    API.post(apiName, path, myInit)
-      .then(response => {
-        if (response.body.error > 0) {
-        } else {
-          if (process.env.REACT_APP_STAGE !== 'production') {
-            window.gtag('event', 'qsoLiked_WEBDEV', {
-              event_category: 'QSO',
-              event_label: 'liked'
-            });
-          } else {
-            window.gtag('event', 'qsoLiked_WEBPRD', {
-              event_category: 'QSO',
-              event_label: 'liked'
-            });
-          }
-        }
-      })
-      .catch(error => {
-        if (process.env.NODE_ENV !== 'production') {
-          console.log(error);
-        } else {
-          Sentry.configureScope(function(scope) {
-            scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-          });
-          Sentry.captureException(error);
-        }
+  async doLike(token = null) {
+    if (process.env.REACT_APP_STAGE !== 'production') {
+      window.gtag('event', 'qsoLiked_WEBDEV', {
+        event_category: 'QSO',
+        event_label: 'liked'
       });
+    } else {
+      window.gtag('event', 'qsoLiked_WEBPRD', {
+        event_category: 'QSO',
+        event_label: 'liked'
+      });
+    }
+    try {
+      // const cognitoUser = await Auth.currentAuthenticatedUser();
+      // const currentSession = cognitoUser.signInUserSession;
+      // cognitoUser.refreshSession(
+      //   currentSession.refreshToken,
+      //   (error, session) => {
+      //     if (process.env.NODE_ENV !== 'production') {
+      //       console.log('Unable to refresh Token');
+      //       console.log(error);
+      //     } else {
+      //       Sentry.configureScope(function(scope) {
+      //         scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+      //       });
+      //       Sentry.captureException(error);
+      //     }
+      //     // console.log('session', err, session);
+      //     let token = session.idToken.jwtToken;
+      const currentSession = await Auth.currentSession();
+      const token = currentSession.getIdToken().getJwtToken();
+          this.props.actions.refreshToken(token);
+       
+          let apiName = 'superqso';
+          let path = '/qso-like';
+          let myInit = {
+            body: {
+              qso: this.props.qso.idqso_shared
+                ? this.props.qso.idqso_shared
+                : this.props.qso.idqsos
+            }, // replace this with attributes you need
+            headers: {
+              Authorization: token ? token : this.props.token
+            } // OPTIONAL
+          };
+          API.post(apiName, path, myInit)
+            .then(response => {
+              if (response.body.error > 0) {
+              } else {
+              }
+            })
+            .catch(async error => {
+              if (process.env.NODE_ENV !== 'production') {
+                console.log(error.message);
+              } else {
+                Sentry.configureScope(function(scope) {
+                  scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+                });
+                Sentry.captureException(error);
+              }
+            });
+      //   }
+      // );
+    } catch (error) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('Unable to refresh Token');
+        console.log(error);
+      } else {
+        Sentry.configureScope(function(scope) {
+          scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+        });
+        Sentry.captureException(error);
+      }
+    }
   }
 
-  doUnLike() {
-
-    let apiName = 'superqso';
-    let path = '/qso-like';
-    let myInit = {
-      body: {
-        qso: this.props.qso.idqso_shared ? this.props.qso.idqso_shared: this.props.qso.idqsos
-      }, // replace this with attributes you need
-      headers: {
-        Authorization: this.props.token
-      } // OPTIONAL
-    };
-    API.del(apiName, path, myInit)
-      .then(response => {
-        if (response.body.error > 0) {
-        } else {
-          if (process.env.REACT_APP_STAGE !== 'production') {
-            window.gtag('event', 'qsoUnliked_WEBDEV', {
-              event_category: 'QSO',
-              event_label: 'unliked'
-            });
-          } else {
-            window.gtag('event', 'qsoUnliked_WEBPRD', {
-              event_category: 'QSO',
-              event_label: 'unliked'
-            });
-          }
-        }
-      })
-      .catch(error => {
-        if (process.env.NODE_ENV !== 'production') {
-          console.log(error);
-        } else {
-          Sentry.configureScope(function(scope) {
-            scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-          });
-          Sentry.captureException(error);
-        }
+  async doUnLike(token = null) {
+    if (process.env.REACT_APP_STAGE !== 'production') {
+      window.gtag('event', 'qsoUnliked_WEBDEV', {
+        event_category: 'QSO',
+        event_label: 'unliked'
       });
+    } else {
+      window.gtag('event', 'qsoUnliked_WEBPRD', {
+        event_category: 'QSO',
+        event_label: 'unliked'
+      });
+    }
+    try {
+      // const cognitoUser = await Auth.currentAuthenticatedUser();
+      // const currentSession = cognitoUser.signInUserSession;
+      // cognitoUser.refreshSession(
+      //   currentSession.refreshToken,
+      //   (error, session) => {
+      //     if (process.env.NODE_ENV !== 'production') {
+      //       console.log('Unable to refresh Token');
+      //       console.log(error);
+      //     } else {
+      //       Sentry.configureScope(function(scope) {
+      //         scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+      //       });
+      //       Sentry.captureException(error);
+      //     }
+      //     // console.log('session', err, session);
+      //     let token = session.idToken.jwtToken;
+      const currentSession = await Auth.currentSession();
+      const token = currentSession.getIdToken().getJwtToken();
+          this.props.actions.refreshToken(token);
+          let apiName = 'superqso';
+          let path = '/qso-like';
+          let myInit = {
+            body: {
+              qso: this.props.qso.idqso_shared
+                ? this.props.qso.idqso_shared
+                : this.props.qso.idqsos
+            }, // replace this with attributes you need
+            headers: {
+              Authorization: token ? token : this.props.token
+            } // OPTIONAL
+          };
+          API.del(apiName, path, myInit)
+            .then(response => {
+              if (response.body.error > 0) {
+              } else {
+
+              }
+            })
+            .catch(async error => {
+              if (process.env.NODE_ENV !== 'production') {
+                console.log(error.message);
+              } else {
+                Sentry.configureScope(function(scope) {
+                  scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+                });
+                Sentry.captureException(error);
+              }
+            });
+      //   }
+      // );
+    } catch (error) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('Unable to refresh Token');
+        console.log(error);
+      } else {
+        Sentry.configureScope(function(scope) {
+          scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+        });
+        Sentry.captureException(error);
+      }
+    }
   }
 
   handleOnLike() {
@@ -225,7 +297,7 @@ class QSOLikeButton extends React.Component {
   }
 
   render() {
-    const {t} = this.props;
+    const { t } = this.props;
     let icon;
 
     if (this.liked !== true && this.liked !== false) {
@@ -248,7 +320,8 @@ class QSOLikeButton extends React.Component {
           }
           cancelButton={t('global.cancel')}
           confirmButton={t('auth.login')}
-          content={t('auth.loginToPerformAction')}        />
+          content={t('auth.loginToPerformAction')}
+        />
         <Button icon active={false} onClick={() => this.handleOnLike()}>
           <Icon name={icon} /> {this.likeCounter}{' '}
         </Button>

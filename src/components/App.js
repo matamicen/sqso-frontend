@@ -1,8 +1,9 @@
 import Auth from '@aws-amplify/auth';
 import Amplify from '@aws-amplify/core';
+import loadable from '@loadable/component';
 import * as Sentry from '@sentry/browser';
 import PropTypes from 'prop-types';
-import React, { Component, lazy, Suspense } from 'react';
+import React, { Component, Suspense } from 'react';
 import { isIOS, isMobile } from 'react-device-detect';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
@@ -15,21 +16,23 @@ import AwsExports from '../aws-exports';
 // const Tutorials = lazy(() => import('./help/tutorials'));
 // import QRAProfileContainer from './Profile/QRAProfileContainer';
 
-const ChangePassword = lazy(() => import('./Auth/ChangePassword'));
-const ForgotPassword = lazy(() => import('./Auth/ForgotPassword'));
-const ContactForm = lazy(() => import('./contactForm'));
-const ErrorBoundary = lazy(() => import('./ErrorBoundary'));
-const Follow = lazy(() => import('./follow'));
-const Download = lazy(() => import('./help/download'));
-const FAQ = lazy(() => import('./help/faq'));
-const PrivacyPolicy = lazy(() => import('./help/privacyPolicy'));
-const TermsOfService = lazy(() => import('./help/termsOfServcice'));
-const QRAProfileContainer = lazy(() => import('./Profile/QRAProfileContainer'));
-const Notifications = lazy(() => import('./Notifications/Notifications'));
-const QSODetail = lazy(() => import('./QSODetail'));
-const LogIn = lazy(() => import('./Auth/LogIn'));
-const SignUp = lazy(() => import('./Auth/SignUp'));
-const Home = lazy(() => import('./Home/Home'));
+const ChangePassword = loadable(() => import('./Auth/ChangePassword'));
+const ForgotPassword = loadable(() => import('./Auth/ForgotPassword'));
+const ContactForm = loadable(() => import('./contactForm'));
+const ErrorBoundary = loadable(() => import('./ErrorBoundary'));
+const Follow = loadable(() => import('./follow'));
+const Download = loadable(() => import('./help/download'));
+const FAQ = loadable(() => import('./help/faq'));
+const PrivacyPolicy = loadable(() => import('./help/privacyPolicy'));
+const TermsOfService = loadable(() => import('./help/termsOfServcice'));
+const QRAProfileContainer = loadable(() =>
+  import('./Profile/QRAProfileContainer')
+);
+const Notifications = loadable(() => import('./Notifications/Notifications'));
+const QSODetail = loadable(() => import('./QSODetail'));
+const LogIn = loadable(() => import('./Auth/LogIn'));
+const SignUp = loadable(() => import('./Auth/SignUp'));
+const Home = loadable(() => import('./Home/Home'));
 
 // if (process.env.NODE_ENV !== 'production') {     const {whyDidYouUpdate} =
 // require('why-did-you-update')     whyDidYouUpdate(React)   }
@@ -45,7 +48,7 @@ class App extends Component {
   }
   async componentDidMount() {
     if (isMobile) {
-      if (isIOS) {        
+      if (isIOS) {
         window.WebViewBridge = {
           onMessage: this._onMessage.bind(this)
         };
@@ -97,7 +100,7 @@ class App extends Component {
           await this.props.actions.doLogin(
             token,
             user.signInUserSession.idToken.payload['custom:callsign'],
-            credentials.IdentityId
+            credentials.identityId
           );
           await this.props.actions.doFetchUserInfo(token);
           Sentry.configureScope(scope => {
@@ -146,10 +149,10 @@ class App extends Component {
 
         this.props.actions.doSetPublicSession();
       } else {
-        this.props.actions.doLogin(
+        await this.props.actions.doLogin(
           session.idToken.jwtToken,
           session.idToken.payload['custom:callsign'].toUpperCase(),
-          credentials.IdentityId
+          credentials.identityId
         );
         this.props.actions.doFetchUserInfo(session.idToken.jwtToken);
         Sentry.configureScope(scope => {
@@ -200,7 +203,7 @@ class App extends Component {
           await this.props.actions.doLogin(
             token,
             user.signInUserSession.idToken.payload['custom:callsign'],
-            credentials.IdentityId
+            credentials.identityId
           );
           await this.props.actions.doFetchUserInfo(token);
           Sentry.configureScope(scope => {

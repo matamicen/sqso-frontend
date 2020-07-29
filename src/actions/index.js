@@ -42,7 +42,7 @@ export const FOLLOW_RECEIVE = 'FOLLOW_RECEIVE';
 export const QSO_DISLIKE = 'QSO_DISLIKE';
 export const QSO_LIKE = 'QSO_LIKE';
 export function doNotificationRead(idnotif = null, token) {
-  return dispatch => {
+  return async dispatch => {
     if (process.env.REACT_APP_STAGE !== 'production')
       window.gtag('event', 'notificationRead_WEBDEV', {
         event_category: 'User',
@@ -53,49 +53,44 @@ export function doNotificationRead(idnotif = null, token) {
         event_category: 'User',
         event_label: 'notificationRead'
       });
-    const apiName = 'superqso';
-    const path = '/qra-notification/set-read';
-    const myInit = {
-      body: {
-        idqra_notifications: idnotif
-      }, // replace this with attributes you need
-      headers: {
-        Authorization: token
-      } // OPTIONAL
-    };
-    API.post(apiName, path, myInit)
-      .then(response => {
-        if (response.body.error === 0) {
-          dispatch(doNotificationReadResponse(idnotif));
-        } else console.log(response.body.message);
-      })
-      .catch(async error => {
-        if (error.message === 'Request failed with status code 401') {
-          try {
-            const cognitoUser = await Auth.currentAuthenticatedUser();
-            const currentSession = cognitoUser.signInUserSession;
-            cognitoUser.refreshSession(
-              currentSession.refreshToken,
-              (err, session) => {
-                // console.log('session', err, session);
-                token = session.idToken.jwtToken;
-                dispatch(refreshToken(token));
-                dispatch(doNotificationRead(idnotif, token));
-              }
-            );
-          } catch (error) {
-            if (process.env.NODE_ENV !== 'production') {
-              console.log('Unable to refresh Token');
-              console.log(error);
-            } else {
-              Sentry.configureScope(function(scope) {
-                scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-              });
-              Sentry.captureException(error);
-            }
-            dispatch(doLogout());
-          }
-        } else {
+    try {
+      // const cognitoUser = Auth.currentAuthenticatedUser();
+      // const currentSession = cognitoUser.signInUserSession;
+      // cognitoUser.refreshSession(
+      //   currentSession.refreshToken,
+
+      //   (error, session) => {
+      //     if (process.env.NODE_ENV !== 'production') {
+      //       console.log('Unable to refresh Token');
+      //       console.log(error);
+      //     } else {
+      //       Sentry.configureScope(function(scope) {
+      //         scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+      //       });
+      //       Sentry.captureException(error);
+      //     }
+      const currentSession = await Auth.currentSession();
+      
+      const token = currentSession.getIdToken().getJwtToken();
+
+      dispatch(refreshToken(token));
+      const apiName = 'superqso';
+      const path = '/qra-notification/set-read';
+      const myInit = {
+        body: {
+          idqra_notifications: idnotif
+        }, // replace this with attributes you need
+        headers: {
+          Authorization: token
+        } // OPTIONAL
+      };
+      API.post(apiName, path, myInit)
+        .then(response => {
+          if (response.body.error === 0) {
+            dispatch(doNotificationReadResponse(idnotif));
+          } else console.log(response.body.message);
+        })
+        .catch(async error => {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
           } else {
@@ -104,12 +99,25 @@ export function doNotificationRead(idnotif = null, token) {
             });
             Sentry.captureException(error);
           }
-        }
-      });
+        });
+      //   }
+      // );
+    } catch (error) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('Unable to refresh Token');
+        console.log(error);
+      } else {
+        Sentry.configureScope(function(scope) {
+          scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+        });
+        Sentry.captureException(error);
+      }
+      dispatch(doLogout());
+    }
   };
 }
 export function doCommentDelete(idcomment, idqso, token) {
-  return dispatch => {
+  return async dispatch => {
     if (process.env.REACT_APP_STAGE !== 'production')
       window.gtag('event', 'qsoCommentDel_WEBDEV', {
         event_category: 'QSO',
@@ -120,50 +128,44 @@ export function doCommentDelete(idcomment, idqso, token) {
         event_category: 'QSO',
         event_label: 'commentDel'
       });
-    const apiName = 'superqso';
-    const path = '/qso-comment';
-    const myInit = {
-      body: {
-        idcomment: idcomment,
-        qso: idqso
-      }, // replace this with attributes you need
-      headers: {
-        Authorization: token
-      } // OPTIONAL
-    };
-    API.del(apiName, path, myInit)
-      .then(response => {
-        if (response.body.error === 0) {
-          dispatch(doCommentDeleteResponse(idcomment, idqso));
-        } else console.log(response.body.message);
-      })
-      .catch(async error => {
-        if (error.message === 'Request failed with status code 401') {
-          try {
-            const cognitoUser = await Auth.currentAuthenticatedUser();
-            const currentSession = cognitoUser.signInUserSession;
-            cognitoUser.refreshSession(
-              currentSession.refreshToken,
-              (err, session) => {
-                // console.log('session', err, session);
-                token = session.idToken.jwtToken;
-                dispatch(refreshToken(token));
-                dispatch(doCommentDelete(idcomment, idqso, token));
-              }
-            );
-          } catch (error) {
-            if (process.env.NODE_ENV !== 'production') {
-              console.log('Unable to refresh Token');
-              console.log(error);
-            } else {
-              Sentry.configureScope(function(scope) {
-                scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-              });
-              Sentry.captureException(error);
-            }
-            dispatch(doLogout());
-          }
-        } else {
+    try {
+      // const cognitoUser = Auth.currentAuthenticatedUser();
+      // const currentSession = cognitoUser.signInUserSession;
+      // cognitoUser.refreshSession(
+      //   currentSession.refreshToken,
+      //   (error, session) => {
+      //     if (process.env.NODE_ENV !== 'production') {
+      //       console.log('Unable to refresh Token');
+      //       console.log(error);
+      //     } else {
+      //       Sentry.configureScope(function(scope) {
+      //         scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+      //       });
+      //       Sentry.captureException(error);
+      //     }
+      //     token = session.idToken.jwtToken;
+      const currentSession = await Auth.currentSession();
+      
+      const token = currentSession.getIdToken().getJwtToken();
+      dispatch(refreshToken(token));
+      const apiName = 'superqso';
+      const path = '/qso-comment';
+      const myInit = {
+        body: {
+          idcomment: idcomment,
+          qso: idqso
+        }, // replace this with attributes you need
+        headers: {
+          Authorization: token
+        } // OPTIONAL
+      };
+      API.del(apiName, path, myInit)
+        .then(response => {
+          if (response.body.error === 0) {
+            dispatch(doCommentDeleteResponse(idcomment, idqso));
+          } else console.log(response.body.message);
+        })
+        .catch(async error => {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
           } else {
@@ -172,12 +174,25 @@ export function doCommentDelete(idcomment, idqso, token) {
             });
             Sentry.captureException(error);
           }
-        }
-      });
+        });
+      //   }
+      // );
+    } catch (error) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('Unable to refresh Token');
+        console.log(error);
+      } else {
+        Sentry.configureScope(function(scope) {
+          scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+        });
+        Sentry.captureException(error);
+      }
+      dispatch(doLogout());
+    }
   };
 }
 export function doCommentAdd(idqso, comment, token, idqso_shared = null) {
-  return dispatch => {
+  return async dispatch => {
     if (process.env.REACT_APP_STAGE !== 'production')
       window.gtag('event', 'qsoCommentAdd_WEBDEV', {
         event_category: 'QSO',
@@ -189,53 +204,47 @@ export function doCommentAdd(idqso, comment, token, idqso_shared = null) {
         event_label: 'commentAdd'
       });
     dispatch(doCommentAddResponse(idqso, comment));
-    const apiName = 'superqso';
-    const path = '/qso-comment';
-    const myInit = {
-      body: {
-        qso: idqso_shared ? idqso_shared : idqso,
-        comment: comment.comment,
-        datetime: comment.datetime
-      }, // replace this with attributes you need
-      headers: {
-        Authorization: token
-      } // OPTIONAL
-    };
-    API.post(apiName, path, myInit)
-      .then(response => {
-        if (response.body.error === 0) {
-          dispatch(
-            doCommentAddApiResponse(idqso, comment, response.body.message)
-          );
-        } else console.log(response.body.message);
-      })
-      .catch(async error => {
-        if (error.message === 'Request failed with status code 401') {
-          try {
-            const cognitoUser = await Auth.currentAuthenticatedUser();
-            const currentSession = cognitoUser.signInUserSession;
-            cognitoUser.refreshSession(
-              currentSession.refreshToken,
-              (err, session) => {
-                // console.log('session', err, session);
-                token = session.idToken.jwtToken;
-                dispatch(refreshToken(token));
-                dispatch(doCommentAdd(idqso, comment, token, idqso_shared));
-              }
+    try {
+      // const cognitoUser = Auth.currentAuthenticatedUser();
+      // const currentSession = cognitoUser.signInUserSession;
+      // cognitoUser.refreshSession(
+      //   currentSession.refreshToken,
+      //   (error, session) => {
+      //     if (process.env.NODE_ENV !== 'production') {
+      //       console.log('Unable to refresh Token');
+      //       console.log(error);
+      //     } else {
+      //       Sentry.configureScope(function(scope) {
+      //         scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+      //       });
+      //       Sentry.captureException(error);
+      //     }
+      //     token = session.idToken.jwtToken;
+      const currentSession = await Auth.currentSession();
+      
+      const token = currentSession.getIdToken().getJwtToken();
+      dispatch(refreshToken(token));
+      const apiName = 'superqso';
+      const path = '/qso-comment';
+      const myInit = {
+        body: {
+          qso: idqso_shared ? idqso_shared : idqso,
+          comment: comment.comment,
+          datetime: comment.datetime
+        }, // replace this with attributes you need
+        headers: {
+          Authorization: token
+        } // OPTIONAL
+      };
+      API.post(apiName, path, myInit)
+        .then(response => {
+          if (response.body.error === 0) {
+            dispatch(
+              doCommentAddApiResponse(idqso, comment, response.body.message)
             );
-          } catch (error) {
-            if (process.env.NODE_ENV !== 'production') {
-              console.log('Unable to refresh Token');
-              console.log(error);
-            } else {
-              Sentry.configureScope(function(scope) {
-                scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-              });
-              Sentry.captureException(error);
-            }
-            dispatch(doLogout());
-          }
-        } else {
+          } else console.log(response.body.message);
+        })
+        .catch(async error => {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
           } else {
@@ -244,8 +253,21 @@ export function doCommentAdd(idqso, comment, token, idqso_shared = null) {
             });
             Sentry.captureException(error);
           }
-        }
-      });
+        });
+      //   }
+      // );
+    } catch (error) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('Unable to refresh Token');
+        console.log(error);
+      } else {
+        Sentry.configureScope(function(scope) {
+          scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+        });
+        Sentry.captureException(error);
+      }
+      dispatch(doLogout());
+    }
   };
 }
 export function doCommentAddApiResponse(idqso = null, comment, idcomment) {
@@ -283,7 +305,7 @@ export function doNotificationReadResponse(idnotif) {
   };
 }
 export function doDeleteQso(idqso, token) {
-  return dispatch => {
+  return async dispatch => {
     if (process.env.REACT_APP_STAGE !== 'production')
       window.gtag('event', 'qsoDelete_WEBDEV', {
         event_category: 'QSO',
@@ -294,56 +316,49 @@ export function doDeleteQso(idqso, token) {
         event_category: 'QSO',
         event_label: 'delete'
       });
-
-    const apiName = 'superqso';
-    const path = '/qsonew';
-    const myInit = {
-      body: {
-        qso: idqso
-      }, // replace this with attributes you need
-      headers: {
-        Authorization: token
-      } // OPTIONAL
-    };
-    API.del(apiName, path, myInit)
-      .then(response => {
-        if (response.body.error === 0) {
-          toast.success(i18n.t('qso.qsoDeleted'), {
-            position: toast.POSITION.BOTTOM_RIGHT,
-            className: css({
-              background: '#8BD8BD !important'
-            })
-          });
-          dispatch(doDeleteQsoResponse(idqso));
-        } else console.log(response.body.message);
-      })
-      .catch(async error => {
-        if (error.message === 'Request failed with status code 401') {
-          try {
-            const cognitoUser = await Auth.currentAuthenticatedUser();
-            const currentSession = cognitoUser.signInUserSession;
-            cognitoUser.refreshSession(
-              currentSession.refreshToken,
-              (err, session) => {
-                // console.log('session', err, session);
-                token = session.idToken.jwtToken;
-                dispatch(refreshToken(token));
-                dispatch(doDeleteQso(idqso, token));
-              }
-            );
-          } catch (error) {
-            if (process.env.NODE_ENV !== 'production') {
-              console.log('Unable to refresh Token');
-              console.log(error);
-            } else {
-              Sentry.configureScope(function(scope) {
-                scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-              });
-              Sentry.captureException(error);
-            }
-            dispatch(doLogout());
-          }
-        } else {
+    try {
+      // const cognitoUser = Auth.currentAuthenticatedUser();
+      // const currentSession = cognitoUser.signInUserSession;
+      // cognitoUser.refreshSession(
+      //   currentSession.refreshToken,
+      //   (error, session) => {
+      //     if (process.env.NODE_ENV !== 'production') {
+      //       console.log('Unable to refresh Token');
+      //       console.log(error);
+      //     } else {
+      //       Sentry.configureScope(function(scope) {
+      //         scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+      //       });
+      //       Sentry.captureException(error);
+      //     }
+      //     token = session.idToken.jwtToken;
+      const currentSession = await Auth.currentSession();
+      
+      const token = currentSession.getIdToken().getJwtToken();
+      dispatch(refreshToken(token));
+      const apiName = 'superqso';
+      const path = '/qsonew';
+      const myInit = {
+        body: {
+          qso: idqso
+        }, // replace this with attributes you need
+        headers: {
+          Authorization: token
+        } // OPTIONAL
+      };
+      API.del(apiName, path, myInit)
+        .then(response => {
+          if (response.body.error === 0) {
+            toast.success(i18n.t('qso.qsoDeleted'), {
+              position: toast.POSITION.BOTTOM_RIGHT,
+              className: css({
+                background: '#8BD8BD !important'
+              })
+            });
+            dispatch(doDeleteQsoResponse(idqso));
+          } else console.log(response.body.message);
+        })
+        .catch(async error => {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
           } else {
@@ -352,8 +367,21 @@ export function doDeleteQso(idqso, token) {
             });
             Sentry.captureException(error);
           }
-        }
-      });
+        });
+      //   }
+      // );
+    } catch (error) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('Unable to refresh Token');
+        console.log(error);
+      } else {
+        Sentry.configureScope(function(scope) {
+          scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+        });
+        Sentry.captureException(error);
+      }
+      dispatch(doLogout());
+    }
   };
 }
 
@@ -365,7 +393,7 @@ export function doDeleteQsoResponse(idqso = null) {
 }
 
 export function doDeleteMedia(idmedia, idqso, token) {
-  return dispatch => {
+  return async dispatch => {
     if (process.env.REACT_APP_STAGE !== 'production')
       window.gtag('event', 'qsoMediaDelete_WEBDEV', {
         event_category: 'QSO',
@@ -376,52 +404,45 @@ export function doDeleteMedia(idmedia, idqso, token) {
         event_category: 'QSO',
         event_label: 'mediaDelete'
       });
+    try {
+      // const cognitoUser = Auth.currentAuthenticatedUser();
+      // const currentSession = cognitoUser.signInUserSession;
+      // cognitoUser.refreshSession(
+      //   currentSession.refreshToken,
+      //   (error, session) => {
+      //     if (process.env.NODE_ENV !== 'production') {
+      //       console.log('Unable to refresh Token');
+      //       console.log(error);
+      //     } else {
+      //       Sentry.configureScope(function(scope) {
+      //         scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+      //       });
+      //       Sentry.captureException(error);
+      //     }
+      //     token = session.idToken.jwtToken;
+      const currentSession = await Auth.currentSession();
+      const token = currentSession.getIdToken().getJwtToken();
+      dispatch(refreshToken(token));
 
-    const apiName = 'superqso';
-    const path = '/qsomediaadd';
-    const myInit = {
-      body: {
-        idmedia: idmedia,
-        qso: idqso
-      }, // replace this with attributes you need
-      headers: {
-        Authorization: token
-      } // OPTIONAL
-    };
-    API.del(apiName, path, myInit)
-      .then(response => {
-        // console.log(response)
-        if (response.body.error === 0) {
-          dispatch(doDeleteMediaResponse(idmedia, idqso));
-        } else console.log(response.body.message);
-      })
-      .catch(async error => {
-        if (error.message === 'Request failed with status code 401') {
-          try {
-            const cognitoUser = await Auth.currentAuthenticatedUser();
-            const currentSession = cognitoUser.signInUserSession;
-            cognitoUser.refreshSession(
-              currentSession.refreshToken,
-              (err, session) => {
-                // console.log('session', err, session);
-                token = session.idToken.jwtToken;
-                dispatch(refreshToken(token));
-                dispatch(doDeleteMedia(idmedia, idqso, token));
-              }
-            );
-          } catch (error) {
-            if (process.env.NODE_ENV !== 'production') {
-              console.log('Unable to refresh Token');
-              console.log(error);
-            } else {
-              Sentry.configureScope(function(scope) {
-                scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-              });
-              Sentry.captureException(error);
-            }
-            dispatch(doLogout());
-          }
-        } else {
+      const apiName = 'superqso';
+      const path = '/qsomediaadd';
+      const myInit = {
+        body: {
+          idmedia: idmedia,
+          qso: idqso
+        }, // replace this with attributes you need
+        headers: {
+          Authorization: token
+        } // OPTIONAL
+      };
+      API.del(apiName, path, myInit)
+        .then(response => {
+          // console.log(response)
+          if (response.body.error === 0) {
+            dispatch(doDeleteMediaResponse(idmedia, idqso));
+          } else console.log(response.body.message);
+        })
+        .catch(async error => {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
           } else {
@@ -430,8 +451,21 @@ export function doDeleteMedia(idmedia, idqso, token) {
             });
             Sentry.captureException(error);
           }
-        }
-      });
+        });
+      //   }
+      // );
+    } catch (error) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('Unable to refresh Token');
+        console.log(error);
+      } else {
+        Sentry.configureScope(function(scope) {
+          scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+        });
+        Sentry.captureException(error);
+      }
+      dispatch(doLogout());
+    }
   };
 }
 export function doDeleteMediaResponse(idmedia = null, idqso = null) {
@@ -549,56 +583,50 @@ export function doReceiveFeed(qsos) {
   };
 }
 export function doFetchUserInfo(token) {
-  return dispatch => {
-    dispatch(doRequestUserInfo());
-    const apiName = 'superqso';
-    const path = '/user-info';
-    const myInit = {
-      body: {}, // replace this with attributes you need
-      headers: {
-        Authorization: token
-      } // OPTIONAL
-    };
-    API.get(apiName, path, myInit)
-      .then(response => {
-        if (response.body.error === 0) {
-          dispatch(
-            doReceiveUserInfo(
-              response.body.message.followers,
-              response.body.message.following,
-              response.body.message.qra,
-              response.body.message.notifications
-            )
-          );
-        } else console.log(response.body.message);
-      })
-      .catch(async error => {
-        if (error.message === 'Request failed with status code 401') {
-          try {
-            const cognitoUser = await Auth.currentAuthenticatedUser();
-            const currentSession = cognitoUser.signInUserSession;
-            cognitoUser.refreshSession(
-              currentSession.refreshToken,
-              (err, session) => {
-                // console.log('session', err, session);
-                token = session.idToken.jwtToken;
-                dispatch(refreshToken(token));
-                dispatch(doFetchUserInfo(token));
-              }
+  return async dispatch => {
+    try {
+      const currentSession = await Auth.currentSession();
+      const token = currentSession.getIdToken().getJwtToken();
+      // const cognitoUser = await Auth.currentAuthenticatedUser();
+      // const currentSession = await cognitoUser.signInUserSession;
+      // await  cognitoUser.refreshSession(
+      //   currentSession.refreshToken,
+      //   (error, session) => {
+      //     if (process.env.NODE_ENV !== 'production') {
+      //       console.log('Unable to refresh Token');
+      //       console.log(error);
+      //     } else {
+      //       Sentry.configureScope(function(scope) {
+      //         scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+      //       });
+      //       Sentry.captureException(error);
+      //     }
+      // token = session.idToken.jwtToken;
+
+      dispatch(refreshToken(token));
+      dispatch(doRequestUserInfo());
+      const apiName = 'superqso';
+      const path = '/user-info';
+      const myInit = {
+        body: {}, // replace this with attributes you need
+        headers: {
+          Authorization: token
+        } // OPTIONAL
+      };
+      API.get(apiName, path, myInit)
+        .then(response => {
+          if (response.body.error === 0) {
+            dispatch(
+              doReceiveUserInfo(
+                response.body.message.followers,
+                response.body.message.following,
+                response.body.message.qra,
+                response.body.message.notifications
+              )
             );
-          } catch (error) {
-            if (process.env.NODE_ENV !== 'production') {
-              console.log('Unable to refresh Token');
-              console.log(error);
-            } else {
-              Sentry.configureScope(function(scope) {
-                scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-              });
-              Sentry.captureException(error);
-            }
-            dispatch(doLogout());
-          }
-        } else {
+          } else console.log(response.body.message);
+        })
+        .catch(async error => {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
           } else {
@@ -607,12 +635,25 @@ export function doFetchUserInfo(token) {
             });
             Sentry.captureException(error);
           }
-        }
-      });
+        });
+      // }
+      // );
+    } catch (error) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('Unable to refresh Token');
+        console.log(error);
+      } else {
+        Sentry.configureScope(function(scope) {
+          scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+        });
+        Sentry.captureException(error);
+      }
+      dispatch(doLogout());
+    }
   };
 }
 export function doRepost(idqso, token, qso) {
-  return dispatch => {
+  return async dispatch => {
     if (process.env.REACT_APP_STAGE !== 'production')
       window.gtag('event', 'repost_WEBDEV', {
         event_category: 'QSO',
@@ -623,63 +664,56 @@ export function doRepost(idqso, token, qso) {
         event_category: 'QSO',
         event_label: 'repost'
       });
-    dispatch(doRequestUserInfo());
-    const apiName = 'superqso';
-    const path = '/qso-share';
-    var datetime = new Date();
-    const myInit = {
-      body: {
-        qso: idqso,
-        datetime: datetime,
-        type: 'SHARE'
-      }, // replace this with attributes you need
-      headers: {
-        Authorization: token
-      } // OPTIONAL
-    };
-    API.post(apiName, path, myInit)
-      .then(response => {
-        if (response.body.error !== 0) console.log(response.body.message);
-        else {
-          // qso.idqso_shared = qso.idqsos;
-          // qso.idqsos = response.body.message;
-          // qso.type = 'SHARE';
-          toast.success(i18n.t('qso.qsoReposted'), {
-            position: toast.POSITION.BOTTOM_RIGHT,
-            className: css({
-              background: '#8BD8BD !important'
-            })
-          });
-          // dispatch(doAddRepostToFeed(qso)); #TODO
-        }
-      })
-      .catch(async error => {
-        if (error.message === 'Request failed with status code 401') {
-          try {
-            const cognitoUser = await Auth.currentAuthenticatedUser();
-            const currentSession = cognitoUser.signInUserSession;
-            cognitoUser.refreshSession(
-              currentSession.refreshToken,
-              (err, session) => {
-                // console.log('session', err, session);
-                token = session.idToken.jwtToken;
-                dispatch(refreshToken(token));
-                dispatch(doRepost(idqso, token, qso));
-              }
-            );
-          } catch (error) {
-            if (process.env.NODE_ENV !== 'production') {
-              console.log('Unable to refresh Token');
-              console.log(error);
-            } else {
-              Sentry.configureScope(function(scope) {
-                scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-              });
-              Sentry.captureException(error);
-            }
-            dispatch(doLogout());
+    try {
+      // const cognitoUser = Auth.currentAuthenticatedUser();
+      // const currentSession = cognitoUser.signInUserSession;
+      // cognitoUser.refreshSession(
+      //   currentSession.refreshToken,
+      //   (error, session) => {
+      //     if (process.env.NODE_ENV !== 'production') {
+      //       console.log('Unable to refresh Token');
+      //       console.log(error);
+      //     } else {
+      //       Sentry.configureScope(function(scope) {
+      //         scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+      //       });
+      //       Sentry.captureException(error);
+      //     }
+      //     token = session.idToken.jwtToken;
+      const currentSession = await Auth.currentSession();
+      const token = currentSession.getIdToken().getJwtToken();
+      dispatch(refreshToken(token));
+      dispatch(doRequestUserInfo());
+      const apiName = 'superqso';
+      const path = '/qso-share';
+      var datetime = new Date();
+      const myInit = {
+        body: {
+          qso: idqso,
+          datetime: datetime,
+          type: 'SHARE'
+        }, // replace this with attributes you need
+        headers: {
+          Authorization: token
+        } // OPTIONAL
+      };
+      API.post(apiName, path, myInit)
+        .then(response => {
+          if (response.body.error !== 0) console.log(response.body.message);
+          else {
+            // qso.idqso_shared = qso.idqsos;
+            // qso.idqsos = response.body.message;
+            // qso.type = 'SHARE';
+            toast.success(i18n.t('qso.qsoReposted'), {
+              position: toast.POSITION.BOTTOM_RIGHT,
+              className: css({
+                background: '#8BD8BD !important'
+              })
+            });
+            // dispatch(doAddRepostToFeed(qso)); #TODO
           }
-        } else {
+        })
+        .catch(async error => {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
           } else {
@@ -688,8 +722,21 @@ export function doRepost(idqso, token, qso) {
             });
             Sentry.captureException(error);
           }
-        }
-      });
+        });
+      //   }
+      // );
+    } catch (error) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('Unable to refresh Token');
+        console.log(error);
+      } else {
+        Sentry.configureScope(function(scope) {
+          scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+        });
+        Sentry.captureException(error);
+      }
+      dispatch(doLogout());
+    }
   };
 }
 
@@ -720,7 +767,7 @@ export function doAddRepostToFeed(qso) {
   };
 }
 export function doSaveUserInfo(token, qra) {
-  return dispatch => {
+  return async dispatch => {
     if (process.env.REACT_APP_STAGE !== 'production')
       window.gtag('event', 'UserInfoUpdate_WEBDEV', {
         event_category: 'User',
@@ -731,49 +778,42 @@ export function doSaveUserInfo(token, qra) {
         event_category: 'User',
         event_label: 'UserInfoUpdate'
       });
-    dispatch(doRequestUserInfo());
-    const apiName = 'superqso';
-    const path = '/qra-info/info';
-    const myInit = {
-      body: {
-        qra: qra
-      }, // replace this with attributes you need
-      headers: {
-        Authorization: token
-      } // OPTIONAL
-    };
-    API.post(apiName, path, myInit)
-      .then(response => {
-        if (response.body.error !== 0) console.log(response.body.message);
-        else dispatch(doReceiveUserDataInfo(response.body.message));
-      })
-      .catch(async error => {
-        if (error.message === 'Request failed with status code 401') {
-          try {
-            const cognitoUser = await Auth.currentAuthenticatedUser();
-            const currentSession = cognitoUser.signInUserSession;
-            cognitoUser.refreshSession(
-              currentSession.refreshToken,
-              (err, session) => {
-                // console.log('session', err, session);
-                token = session.idToken.jwtToken;
-                dispatch(refreshToken(token));
-                dispatch(doSaveUserInfo(token, qra));
-              }
-            );
-          } catch (error) {
-            if (process.env.NODE_ENV !== 'production') {
-              console.log('Unable to refresh Token');
-              console.log(error);
-            } else {
-              Sentry.configureScope(function(scope) {
-                scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-              });
-              Sentry.captureException(error);
-            }
-            dispatch(doLogout());
-          }
-        } else {
+    try {
+      // const cognitoUser = Auth.currentAuthenticatedUser();
+      // const currentSession = cognitoUser.signInUserSession;
+      // cognitoUser.refreshSession(
+      //   currentSession.refreshToken,
+      //   (error, session) => {
+      //     if (process.env.NODE_ENV !== 'production') {
+      //       console.log('Unable to refresh Token');
+      //       console.log(error);
+      //     } else {
+      //       Sentry.configureScope(function(scope) {
+      //         scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+      //       });
+      //       Sentry.captureException(error);
+      //     }
+      const currentSession = await Auth.currentSession();
+      const token = currentSession.getIdToken().getJwtToken();
+
+      dispatch(refreshToken(token));
+      dispatch(doRequestUserInfo());
+      const apiName = 'superqso';
+      const path = '/qra-info/info';
+      const myInit = {
+        body: {
+          qra: qra
+        }, // replace this with attributes you need
+        headers: {
+          Authorization: token
+        } // OPTIONAL
+      };
+      API.post(apiName, path, myInit)
+        .then(response => {
+          if (response.body.error !== 0) console.log(response.body.message);
+          else dispatch(doReceiveUserDataInfo(response.body.message));
+        })
+        .catch(async error => {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
           } else {
@@ -782,8 +822,21 @@ export function doSaveUserInfo(token, qra) {
             });
             Sentry.captureException(error);
           }
-        }
-      });
+        });
+      //   }
+      // );
+    } catch (error) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('Unable to refresh Token');
+        console.log(error);
+      } else {
+        Sentry.configureScope(function(scope) {
+          scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+        });
+        Sentry.captureException(error);
+      }
+      dispatch(doLogout());
+    }
   };
 }
 export function doReceiveUserDataInfo(qra) {
@@ -793,7 +846,7 @@ export function doReceiveUserDataInfo(qra) {
   };
 }
 export function doSaveUserBio(token, bio, identityId) {
-  return dispatch => {
+  return async dispatch => {
     if (process.env.REACT_APP_STAGE !== 'production')
       window.gtag('event', 'UserBioUpdate_WEBDEV', {
         event_category: 'User',
@@ -804,50 +857,44 @@ export function doSaveUserBio(token, bio, identityId) {
         event_category: 'User',
         event_label: 'UserBioUpdate'
       });
-    const apiName = 'superqso';
-    const path = '/qra-info/bio';
-    const myInit = {
-      body: {
-        bio: bio,
-        identityId: identityId
-      }, // replace this with attributes you need
-      headers: {
-        Authorization: token
-      } // OPTIONAL
-    };
+    try {
+      // const cognitoUser = Auth.currentAuthenticatedUser();
+      // const currentSession = cognitoUser.signInUserSession;
+      // cognitoUser.refreshSession(
+      //   currentSession.refreshToken,
+      //   (error, session) => {
+      //     if (process.env.NODE_ENV !== 'production') {
+      //       console.log('Unable to refresh Token');
+      //       console.log(error);
+      //     } else {
+      //       Sentry.configureScope(function(scope) {
+      //         scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+      //       });
+      //       Sentry.captureException(error);
+      //     }
+      //     token = session.idToken.jwtToken;
+      const currentSession = await Auth.currentSession();
+      const token = currentSession.getIdToken().getJwtToken();
+      dispatch(refreshToken(token));
 
-    API.post(apiName, path, myInit)
-      .then(response => {
-        if (response.body.error !== 0) console.log(response.body.message);
-        else dispatch(doReceiveUserBio(response.body.message));
-      })
-      .catch(async error => {
-        if (error.message === 'Request failed with status code 401') {
-          try {
-            const cognitoUser = await Auth.currentAuthenticatedUser();
-            const currentSession = cognitoUser.signInUserSession;
-            cognitoUser.refreshSession(
-              currentSession.refreshToken,
-              (err, session) => {
-                // console.log('session', err, session);
-                token = session.idToken.jwtToken;
-                dispatch(refreshToken(token));
-                dispatch(doSaveUserBio(token, bio, identityId));
-              }
-            );
-          } catch (error) {
-            if (process.env.NODE_ENV !== 'production') {
-              console.log('Unable to refresh Token');
-              console.log(error);
-            } else {
-              Sentry.configureScope(function(scope) {
-                scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-              });
-              Sentry.captureException(error);
-            }
-            dispatch(doLogout());
-          }
-        } else {
+      const apiName = 'superqso';
+      const path = '/qra-info/bio';
+      const myInit = {
+        body: {
+          bio: bio,
+          identityId: identityId
+        }, // replace this with attributes you need
+        headers: {
+          Authorization: token
+        } // OPTIONAL
+      };
+
+      API.post(apiName, path, myInit)
+        .then(response => {
+          if (response.body.error !== 0) console.log(response.body.message);
+          else dispatch(doReceiveUserBio(response.body.message));
+        })
+        .catch(async error => {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
           } else {
@@ -856,8 +903,21 @@ export function doSaveUserBio(token, bio, identityId) {
             });
             Sentry.captureException(error);
           }
-        }
-      });
+        });
+      //   }
+      // );
+    } catch (error) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('Unable to refresh Token');
+        console.log(error);
+      } else {
+        Sentry.configureScope(function(scope) {
+          scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+        });
+        Sentry.captureException(error);
+      }
+      dispatch(doLogout());
+    }
   };
 }
 
@@ -868,7 +928,7 @@ export function doReceiveUserBio(qra) {
   };
 }
 export function doFetchUserFeed(token, qra) {
-  return dispatch => {
+  return async dispatch => {
     window.gtag('config', 'G-H8G28LYKBY', {
       custom_map: { dimension1: 'userQRA' }
     });
@@ -884,52 +944,45 @@ export function doFetchUserFeed(token, qra) {
         event_label: 'getUserFeed',
         userQRA: qra
       });
-    dispatch(doRequestFeed());
-    const apiName = 'superqso';
-    const path = '/qso-get-user-feed';
-    const myInit = {
-      body: {}, // replace this with attributes you need
-      headers: {
-        Authorization: token
-      } // OPTIONAL
-    };
-    API.get(apiName, path, myInit)
-      .then(response => {
-        if (response.body.error === 0) {
-          if (response.body.message.length > 0)
-            dispatch(doReceiveFeed(response.body.message));
-          else {
-            dispatch(doFetchPublicFeed(qra));
-          }
-        } else console.log(response.body.message);
-      })
-      .catch(async error => {
-        if (error.message === 'Request failed with status code 401') {
-          try {
-            const cognitoUser = await Auth.currentAuthenticatedUser();
-            const currentSession = cognitoUser.signInUserSession;
-            cognitoUser.refreshSession(
-              currentSession.refreshToken,
-              (err, session) => {
-                // console.log('session', err, session);
-                token = session.idToken.jwtToken;
-                dispatch(refreshToken(token));
-                dispatch(doFetchUserFeed(token, qra));
-              }
-            );
-          } catch (error) {
-            if (process.env.NODE_ENV !== 'production') {
-              console.log('Unable to refresh Token');
-              console.log(error);
-            } else {
-              Sentry.configureScope(function(scope) {
-                scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-              });
-              Sentry.captureException(error);
+    try {
+      // const cognitoUser = Auth.currentAuthenticatedUser();
+      // const currentSession = cognitoUser.signInUserSession;
+      // cognitoUser.refreshSession(
+      //   currentSession.refreshToken,
+      //   (error, session) => {
+      //     if (process.env.NODE_ENV !== 'production') {
+      //       console.log('Unable to refresh Token');
+      //       console.log(error);
+      //     } else {
+      //       Sentry.configureScope(function(scope) {
+      //         scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+      //       });
+      //       Sentry.captureException(error);
+      //     }
+      //     token = session.idToken.jwtToken;
+      const currentSession = await Auth.currentSession();
+      const token = currentSession.getIdToken().getJwtToken();
+      dispatch(refreshToken(token));
+      dispatch(doRequestFeed());
+      const apiName = 'superqso';
+      const path = '/qso-get-user-feed';
+      const myInit = {
+        body: {}, // replace this with attributes you need
+        headers: {
+          Authorization: token
+        } // OPTIONAL
+      };
+      API.get(apiName, path, myInit)
+        .then(response => {
+          if (response.body.error === 0) {
+            if (response.body.message.length > 0)
+              dispatch(doReceiveFeed(response.body.message));
+            else {
+              dispatch(doFetchPublicFeed(qra));
             }
-            dispatch(doLogout());
-          }
-        } else {
+          } else console.log(response.body.message);
+        })
+        .catch(async error => {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
           } else {
@@ -938,12 +991,25 @@ export function doFetchUserFeed(token, qra) {
             });
             Sentry.captureException(error);
           }
-        }
-      });
+        });
+      //   }
+      // );
+    } catch (error) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('Unable to refresh Token');
+        console.log(error);
+      } else {
+        Sentry.configureScope(function(scope) {
+          scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+        });
+        Sentry.captureException(error);
+      }
+      dispatch(doLogout());
+    }
   };
 }
 export function doFollowFetch(token) {
-  return dispatch => {
+  return async dispatch => {
     if (process.env.REACT_APP_STAGE !== 'production')
       window.gtag('event', 'getRecFollow_WEBDEV', {
         event_category: 'User',
@@ -954,48 +1020,41 @@ export function doFollowFetch(token) {
         event_category: 'User',
         event_label: 'getRecFollow'
       });
-    dispatch(doFollowRequest());
-    const apiName = 'superqso';
-    const path = '/qra/getRecFollowers';
-    const myInit = {
-      body: {}, // replace this with attributes you need
-      headers: {
-        Authorization: token
-      } // OPTIONAL
-    };
-    API.get(apiName, path, myInit)
-      .then(response => {
-        if (response.body.error === 0) {
-          dispatch(doFollowReceive(response.body.message));
-        } else console.log(response.body.message);
-      })
-      .catch(async error => {
-        if (error.message === 'Request failed with status code 401') {
-          try {
-            const cognitoUser = await Auth.currentAuthenticatedUser();
-            const currentSession = cognitoUser.signInUserSession;
-            cognitoUser.refreshSession(
-              currentSession.refreshToken,
-              (err, session) => {
-                // console.log('session', err, session);
-                token = session.idToken.jwtToken;
-                dispatch(refreshToken(token));
-                dispatch(doFollowFetch(token));
-              }
-            );
-          } catch (error) {
-            if (process.env.NODE_ENV !== 'production') {
-              console.log('Unable to refresh Token');
-              console.log(error);
-            } else {
-              Sentry.configureScope(function(scope) {
-                scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-              });
-              Sentry.captureException(error);
-            }
-            dispatch(doLogout());
-          }
-        } else {
+    try {
+      // const cognitoUser = Auth.currentAuthenticatedUser();
+      // const currentSession = cognitoUser.signInUserSession;
+      // cognitoUser.refreshSession(
+      //   currentSession.refreshToken,
+      //   (error, session) => {
+      //     if (process.env.NODE_ENV !== 'production') {
+      //       console.log('Unable to refresh Token');
+      //       console.log(error);
+      //     } else {
+      //       Sentry.configureScope(function(scope) {
+      //         scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+      //       });
+      //       Sentry.captureException(error);
+      //     }
+      //     token = session.idToken.jwtToken;
+      const currentSession = await Auth.currentSession();
+      const token = currentSession.getIdToken().getJwtToken();
+      dispatch(refreshToken(token));
+      dispatch(doFollowRequest());
+      const apiName = 'superqso';
+      const path = '/qra/getRecFollowers';
+      const myInit = {
+        body: {}, // replace this with attributes you need
+        headers: {
+          Authorization: token
+        } // OPTIONAL
+      };
+      API.get(apiName, path, myInit)
+        .then(response => {
+          if (response.body.error === 0) {
+            dispatch(doFollowReceive(response.body.message));
+          } else console.log(response.body.message);
+        })
+        .catch(async error => {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
           } else {
@@ -1004,12 +1063,25 @@ export function doFollowFetch(token) {
             });
             Sentry.captureException(error);
           }
-        }
-      });
+        });
+      //   }
+      // );
+    } catch (error) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('Unable to refresh Token');
+        console.log(error);
+      } else {
+        Sentry.configureScope(function(scope) {
+          scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+        });
+        Sentry.captureException(error);
+      }
+      dispatch(doLogout());
+    }
   };
 }
 export function doFetchNotifications(token) {
-  return dispatch => {
+  return async dispatch => {
     if (process.env.REACT_APP_STAGE !== 'production')
       window.gtag('event', 'NotificationGet_WEBDEV', {
         event_category: 'User',
@@ -1020,48 +1092,41 @@ export function doFetchNotifications(token) {
         event_category: 'User',
         event_label: 'NotificationGet'
       });
-    dispatch(doRequestFeed());
-    const apiName = 'superqso';
-    const path = '/qra-notification';
-    const myInit = {
-      body: {}, // replace this with attributes you need
-      headers: {
-        Authorization: token
-      } // OPTIONAL
-    };
-    API.get(apiName, path, myInit)
-      .then(response => {
-        if (response.body.error === 0) {
-          dispatch(doReceiveNotifications(response.body.message));
-        } else console.log(response.body.message);
-      })
-      .catch(async error => {
-        if (error.message === 'Request failed with status code 401') {
-          try {
-            const cognitoUser = await Auth.currentAuthenticatedUser();
-            const currentSession = cognitoUser.signInUserSession;
-            cognitoUser.refreshSession(
-              currentSession.refreshToken,
-              (err, session) => {
-                // console.log('session', err, session);
-                token = session.idToken.jwtToken;
-                dispatch(refreshToken(token));
-                dispatch(doFetchNotifications(token));
-              }
-            );
-          } catch (error) {
-            if (process.env.NODE_ENV !== 'production') {
-              console.log('Unable to refresh Token');
-              console.log(error);
-            } else {
-              Sentry.configureScope(function(scope) {
-                scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-              });
-              Sentry.captureException(error);
-            }
-            dispatch(doLogout());
-          }
-        } else {
+    try {
+      // const cognitoUser = Auth.currentAuthenticatedUser();
+      // const currentSession = cognitoUser.signInUserSession;
+      // cognitoUser.refreshSession(
+      //   currentSession.refreshToken,
+      //   (error, session) => {
+      //     if (process.env.NODE_ENV !== 'production') {
+      //       console.log('Unable to refresh Token');
+      //       console.log(error);
+      //     } else {
+      //       Sentry.configureScope(function(scope) {
+      //         scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+      //       });
+      //       Sentry.captureException(error);
+      //     }
+      //     token = session.idToken.jwtToken;
+      const currentSession = await Auth.currentSession();
+      const token = currentSession.getIdToken().getJwtToken();
+      dispatch(refreshToken(token));
+      dispatch(doRequestFeed());
+      const apiName = 'superqso';
+      const path = '/qra-notification';
+      const myInit = {
+        body: {}, // replace this with attributes you need
+        headers: {
+          Authorization: token
+        } // OPTIONAL
+      };
+      API.get(apiName, path, myInit)
+        .then(response => {
+          if (response.body.error === 0) {
+            dispatch(doReceiveNotifications(response.body.message));
+          } else console.log(response.body.message);
+        })
+        .catch(async error => {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
           } else {
@@ -1070,29 +1135,74 @@ export function doFetchNotifications(token) {
             });
             Sentry.captureException(error);
           }
-        }
-      });
+        });
+      //   }
+      // );
+    } catch (error) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('Unable to refresh Token');
+        console.log(error);
+      } else {
+        Sentry.configureScope(function(scope) {
+          scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+        });
+        Sentry.captureException(error);
+      }
+      dispatch(doLogout());
+    }
   };
 }
 
-export function doFetchPublicFeed(qra) {
+export function doFetchPublicFeed(qra = null) {
   // console.log('doFetchPublicFeed');
   window.gtag('config', 'G-H8G28LYKBY', {
     custom_map: { dimension1: 'userQRA' }
   });
-  if (process.env.REACT_APP_STAGE !== 'production')
-    window.gtag('event', 'getPublicFeed_WEBDEV', {
-      event_category: 'User',
-      event_label: 'getPublicFeed',
-      userQRA: qra
-    });
-  else
-    window.gtag('event', 'getPublicFeed_WEBPRD', {
-      event_category: 'User',
-      event_label: 'getPublicFeed',
-      userQRA: qra
-    });
+  if (!qra) {
+    if (process.env.REACT_APP_STAGE !== 'production')
+      window.gtag('event', 'getPublicFeed_WEBDEV', {
+        event_category: 'User',
+        event_label: 'getPublicFeed',
+        userQRA: qra
+      });
+    else
+      window.gtag('event', 'getPublicFeed_WEBPRD', {
+        event_category: 'User',
+        event_label: 'getPublicFeed',
+        userQRA: qra
+      });
+  } else {
+    if (process.env.REACT_APP_STAGE !== 'production')
+      window.gtag('event', 'getUserFeed_WEBDEV', {
+        event_category: 'User',
+        event_label: 'getUserFeed',
+        userQRA: qra
+      });
+    else
+      window.gtag('event', 'getUserFeed_WEBPRD', {
+        event_category: 'User',
+        event_label: 'getUserFeed',
+        userQRA: qra
+      });
+  }
   return dispatch => {
+    // try {
+    //   const cognitoUser = Auth.currentAuthenticatedUser();
+    //   const currentSession = cognitoUser.signInUserSession;
+    //   cognitoUser.refreshSession(
+    //     currentSession.refreshToken,
+    //     (error, session) => {
+    //       if (process.env.NODE_ENV !== 'production') {
+    //         console.log('Unable to refresh Token');
+    //         console.log(error);
+    //       } else {
+    //         Sentry.configureScope(function(scope) {
+    //           scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+    //         });
+    //         Sentry.captureException(error);
+    //       }
+    //       let token = session.idToken.jwtToken;
+    //       dispatch(refreshToken(token));
     dispatch(doRequestFeed());
     const apiName = 'superqso';
     const path = '/qso-public-list';
@@ -1108,42 +1218,29 @@ export function doFetchPublicFeed(qra) {
         } else console.log(response.body.message);
       })
       .catch(async error => {
-        if (error.message === 'Request failed with status code 401') {
-          try {
-            const cognitoUser = await Auth.currentAuthenticatedUser();
-            const currentSession = cognitoUser.signInUserSession;
-            cognitoUser.refreshSession(
-              currentSession.refreshToken,
-              (err, session) => {
-                // console.log('session', err, session);
-                let token = session.idToken.jwtToken;
-                dispatch(refreshToken(token));
-                dispatch(doFetchPublicFeed(qra));
-              }
-            );
-          } catch (error) {
-            if (process.env.NODE_ENV !== 'production') {
-              console.log('Unable to refresh Token');
-              console.log(error);
-            } else {
-              Sentry.configureScope(function(scope) {
-                scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-              });
-              Sentry.captureException(error);
-            }
-            dispatch(doLogout());
-          }
+        if (process.env.NODE_ENV !== 'production') {
+          console.log(error.message);
         } else {
-          if (process.env.NODE_ENV !== 'production') {
-            console.log(error.message);
-          } else {
-            Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-            });
-            Sentry.captureException(error);
-          }
+          Sentry.configureScope(function(scope) {
+            scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+          });
+          Sentry.captureException(error);
         }
       });
+    //     }
+    //   );
+    // } catch (error) {
+    //   if (process.env.NODE_ENV !== 'production') {
+    //     console.log('Unable to refresh Token');
+    //     console.log(error);
+    //   } else {
+    //     Sentry.configureScope(function(scope) {
+    //       scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+    //     });
+    //     Sentry.captureException(error);
+    //   }
+    //   dispatch(doLogout());
+    // }
   };
 }
 
@@ -1201,48 +1298,33 @@ export function doFetchQSO(idqso, token = null) {
       qso: idqso
     });
   if (token) {
-    return dispatch => {
-      const apiName = 'superqso';
-      const path = '/qso-detail/secured';
-      const myInit = {
-        body: {
-          guid: idqso
-        }, // replace this with attributes you need
-        headers: {
-          Authorization: token
-        } // OPTIONAL
-      };
-      API.post(apiName, path, myInit)
-        .then(response => {
-          dispatch(doReceiveQSO(response.body.message, response.body.error));
-        })
-        .catch(async error => {
-          if (error.message === 'Request failed with status code 401') {
-            try {
-              const cognitoUser = await Auth.currentAuthenticatedUser();
-              const currentSession = cognitoUser.signInUserSession;
-              cognitoUser.refreshSession(
-                currentSession.refreshToken,
-                (err, session) => {
-                  // console.log('session', err, session);
-                  token = session.idToken.jwtToken;
-                  dispatch(refreshToken(token));
-                  dispatch(doFetchQSO(idqso, token));
-                }
-              );
-            } catch (error) {
-              if (process.env.NODE_ENV !== 'production') {
-                console.log('Unable to refresh Token');
-                console.log(error);
-              } else {
-                Sentry.configureScope(function(scope) {
-                  scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-                });
-                Sentry.captureException(error);
-              }
-              dispatch(doLogout());
-            }
-          } else {
+    return async dispatch => {
+      try {
+        // const cognitoUser = Auth.currentAuthenticatedUser();
+        // const currentSession = cognitoUser.signInUserSession;
+        // cognitoUser.refreshSession(
+        //   currentSession.refreshToken,
+        //   (err, session) => {
+        //     // console.log('session', err, session);
+        //     token = session.idToken.jwtToken;
+        const currentSession = await Auth.currentSession();
+        const token = currentSession.getIdToken().getJwtToken();
+        dispatch(refreshToken(token));
+        const apiName = 'superqso';
+        const path = '/qso-detail/secured';
+        const myInit = {
+          body: {
+            guid: idqso
+          }, // replace this with attributes you need
+          headers: {
+            Authorization: token
+          } // OPTIONAL
+        };
+        API.post(apiName, path, myInit)
+          .then(response => {
+            dispatch(doReceiveQSO(response.body.message, response.body.error));
+          })
+          .catch(async error => {
             if (process.env.NODE_ENV !== 'production') {
               console.log(error.message);
             } else {
@@ -1251,11 +1333,33 @@ export function doFetchQSO(idqso, token = null) {
               });
               Sentry.captureException(error);
             }
-          }
-        });
+          });
+        //   }
+        // );
+      } catch (error) {
+        if (process.env.NODE_ENV !== 'production') {
+          console.log('Unable to refresh Token');
+          console.log(error);
+        } else {
+          Sentry.configureScope(function(scope) {
+            scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+          });
+          Sentry.captureException(error);
+        }
+        dispatch(doLogout());
+      }
     };
   } else {
     return dispatch => {
+      // try {
+      //   const cognitoUser = Auth.currentAuthenticatedUser();
+      //   const currentSession = cognitoUser.signInUserSession;
+      //   cognitoUser.refreshSession(
+      //     currentSession.refreshToken,
+      //     (err, session) => {
+      //       // console.log('session', err, session);
+      //       token = session.idToken.jwtToken;
+      //       dispatch(refreshToken(token));
       const apiName = 'superqso';
       const path = '/qso-detail';
       const myInit = {
@@ -1271,42 +1375,29 @@ export function doFetchQSO(idqso, token = null) {
           dispatch(doReceiveQSO(response.body.message, response.body.error));
         })
         .catch(async error => {
-          if (error.message === 'Request failed with status code 401') {
-            try {
-              const cognitoUser = await Auth.currentAuthenticatedUser();
-              const currentSession = cognitoUser.signInUserSession;
-              cognitoUser.refreshSession(
-                currentSession.refreshToken,
-                (err, session) => {
-                  // console.log('session', err, session);
-                  token = session.idToken.jwtToken;
-                  dispatch(refreshToken(token));
-                  dispatch(doFetchQSO(idqso, token));
-                }
-              );
-            } catch (error) {
-              if (process.env.NODE_ENV !== 'production') {
-                console.log('Unable to refresh Token');
-                console.log(error);
-              } else {
-                Sentry.configureScope(function(scope) {
-                  scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-                });
-                Sentry.captureException(error);
-              }
-              dispatch(doLogout());
-            }
+          if (process.env.NODE_ENV !== 'production') {
+            console.log(error.message);
           } else {
-            if (process.env.NODE_ENV !== 'production') {
-              console.log(error.message);
-            } else {
-              Sentry.configureScope(function(scope) {
-                scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-              });
-              Sentry.captureException(error);
-            }
+            Sentry.configureScope(function(scope) {
+              scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+            });
+            Sentry.captureException(error);
           }
         });
+      //     }
+      //   );
+      // } catch (error) {
+      //   if (process.env.NODE_ENV !== 'production') {
+      //     console.log('Unable to refresh Token');
+      //     console.log(error);
+      //   } else {
+      //     Sentry.configureScope(function(scope) {
+      //       scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+      //     });
+      //     Sentry.captureException(error);
+      //   }
+      //   dispatch(doLogout());
+      // }
     };
   }
 }
@@ -1328,6 +1419,23 @@ export function doFetchQsoLink(idqso) {
     });
 
   return dispatch => {
+    // try {
+    //   const cognitoUser = Auth.currentAuthenticatedUser();
+    //   const currentSession = cognitoUser.signInUserSession;
+    //   cognitoUser.refreshSession(
+    //     currentSession.refreshToken,
+    //     (error, session) => {
+    //       if (process.env.NODE_ENV !== 'production') {
+    //         console.log('Unable to refresh Token');
+    //         console.log(error);
+    //       } else {
+    //         Sentry.configureScope(function(scope) {
+    //           scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+    //         });
+    //         Sentry.captureException(error);
+    //       }
+    //       let token = session.idToken.jwtToken;
+    //       dispatch(refreshToken(token));
     const apiName = 'superqso';
     const path = '/qso-detail';
     const myInit = {
@@ -1345,42 +1453,29 @@ export function doFetchQsoLink(idqso) {
         } else console.log(response.body.message);
       })
       .catch(async error => {
-        if (error.message === 'Request failed with status code 401') {
-          try {
-            const cognitoUser = await Auth.currentAuthenticatedUser();
-            const currentSession = cognitoUser.signInUserSession;
-            cognitoUser.refreshSession(
-              currentSession.refreshToken,
-              (err, session) => {
-                // console.log('session', err, session);
-                let token = session.idToken.jwtToken;
-                dispatch(refreshToken(token));
-                dispatch(doFetchQsoLink(idqso));
-              }
-            );
-          } catch (error) {
-            if (process.env.NODE_ENV !== 'production') {
-              console.log('Unable to refresh Token');
-              console.log(error);
-            } else {
-              Sentry.configureScope(function(scope) {
-                scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-              });
-              Sentry.captureException(error);
-            }
-            dispatch(doLogout());
-          }
+        if (process.env.NODE_ENV !== 'production') {
+          console.log(error.message);
         } else {
-          if (process.env.NODE_ENV !== 'production') {
-            console.log(error.message);
-          } else {
-            Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-            });
-            Sentry.captureException(error);
-          }
+          Sentry.configureScope(function(scope) {
+            scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+          });
+          Sentry.captureException(error);
         }
       });
+    //     }
+    //   );
+    // } catch (error) {
+    //   if (process.env.NODE_ENV !== 'production') {
+    //     console.log('Unable to refresh Token');
+    //     console.log(error);
+    //   } else {
+    //     Sentry.configureScope(function(scope) {
+    //       scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+    //     });
+    //     Sentry.captureException(error);
+    //   }
+    //   dispatch(doLogout());
+    // }
   };
 }
 
@@ -1402,49 +1497,34 @@ export function doFetchQRA(qra, token = null) {
       qra: qra
     });
   if (token) {
-    return dispatch => {
-      const apiName = 'superqso';
-      const path = '/qra-info/secured';
-      const myInit = {
-        body: {
-          qra: qra
-        }, // replace this with attributes you need
-        headers: {
-          Authorization: token
-        } // PTIONAL
-      };
-      dispatch(doRequestQRA());
-      API.post(apiName, path, myInit)
-        .then(response =>
-          dispatch(doReceiveQRA(response.body.message, response.body.error))
-        )
-        .catch(async error => {
-          if (error.message === 'Request failed with status code 401') {
-            try {
-              const cognitoUser = await Auth.currentAuthenticatedUser();
-              const currentSession = cognitoUser.signInUserSession;
-              cognitoUser.refreshSession(
-                currentSession.refreshToken,
-                (err, session) => {
-                  // console.log('session', err, session);
-                  token = session.idToken.jwtToken;
-                  dispatch(refreshToken(token));
-                  dispatch(doFetchQRA(qra, (token = null)));
-                }
-              );
-            } catch (error) {
-              if (process.env.NODE_ENV !== 'production') {
-                console.log('Unable to refresh Token');
-                console.log(error);
-              } else {
-                Sentry.configureScope(function(scope) {
-                  scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-                });
-                Sentry.captureException(error);
-              }
-              dispatch(doLogout());
-            }
-          } else {
+    return async dispatch => {
+      try {
+        // const cognitoUser = Auth.currentAuthenticatedUser();
+        // const currentSession = cognitoUser.signInUserSession;
+        // cognitoUser.refreshSession(
+        //   currentSession.refreshToken,
+        //   (err, session) => {
+        //     // console.log('session', err, session);
+        //     token = session.idToken.jwtToken;
+        const currentSession = await Auth.currentSession();
+        const token = currentSession.getIdToken().getJwtToken();
+        dispatch(refreshToken(token));
+        const apiName = 'superqso';
+        const path = '/qra-info/secured';
+        const myInit = {
+          body: {
+            qra: qra
+          }, // replace this with attributes you need
+          headers: {
+            Authorization: token
+          } // PTIONAL
+        };
+        dispatch(doRequestQRA());
+        API.post(apiName, path, myInit)
+          .then(response =>
+            dispatch(doReceiveQRA(response.body.message, response.body.error))
+          )
+          .catch(async error => {
             if (process.env.NODE_ENV !== 'production') {
               console.log(error.message);
             } else {
@@ -1453,11 +1533,33 @@ export function doFetchQRA(qra, token = null) {
               });
               Sentry.captureException(error);
             }
-          }
-        });
+          });
+        //   }
+        // );
+      } catch (error) {
+        if (process.env.NODE_ENV !== 'production') {
+          console.log('Unable to refresh Token');
+          console.log(error);
+        } else {
+          Sentry.configureScope(function(scope) {
+            scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+          });
+          Sentry.captureException(error);
+        }
+        dispatch(doLogout());
+      }
     };
   } else {
     return dispatch => {
+      // try {
+      //   const cognitoUser = Auth.currentAuthenticatedUser();
+      //   const currentSession = cognitoUser.signInUserSession;
+      //   cognitoUser.refreshSession(
+      //     currentSession.refreshToken,
+      //     (err, session) => {
+      //       // console.log('session', err, session);
+      //       token = session.idToken.jwtToken;
+      //       dispatch(refreshToken(token));
       const apiName = 'superqso';
       const path = '/qra-info';
       const myInit = {
@@ -1474,42 +1576,29 @@ export function doFetchQRA(qra, token = null) {
           dispatch(doReceiveQRA(response.body.message, response.body.error));
         })
         .catch(async error => {
-          if (error.message === 'Request failed with status code 401') {
-            try {
-              const cognitoUser = await Auth.currentAuthenticatedUser();
-              const currentSession = cognitoUser.signInUserSession;
-              cognitoUser.refreshSession(
-                currentSession.refreshToken,
-                (err, session) => {
-                  // console.log('session', err, session);
-                  token = session.idToken.jwtToken;
-                  dispatch(refreshToken(token));
-                  dispatch(doFetchQRA(qra, (token = null)));
-                }
-              );
-            } catch (error) {
-              if (process.env.NODE_ENV !== 'production') {
-                console.log('Unable to refresh Token');
-                console.log(error);
-              } else {
-                Sentry.configureScope(function(scope) {
-                  scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-                });
-                Sentry.captureException(error);
-              }
-              dispatch(doLogout());
-            }
+          if (process.env.NODE_ENV !== 'production') {
+            console.log(error.message);
           } else {
-            if (process.env.NODE_ENV !== 'production') {
-              console.log(error.message);
-            } else {
-              Sentry.configureScope(function(scope) {
-                scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-              });
-              Sentry.captureException(error);
-            }
+            Sentry.configureScope(function(scope) {
+              scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+            });
+            Sentry.captureException(error);
           }
         });
+      //     }
+      //   );
+      // } catch (error) {
+      //   if (process.env.NODE_ENV !== 'production') {
+      //     console.log('Unable to refresh Token');
+      //     console.log(error);
+      //   } else {
+      //     Sentry.configureScope(function(scope) {
+      //       scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+      //     });
+      //     Sentry.captureException(error);
+      //   }
+      //   dispatch(doLogout());
+      // }
     };
   }
 }
@@ -1526,53 +1615,46 @@ export function doFollowQRA(token, follower) {
       event_label: 'follow'
     });
 
-  return dispatch => {
-    const apiName = 'superqso';
-    const path = '/qra-follower';
-    const myInit = {
-      body: {
-        qra: follower,
-        datetime: new Date()
-      }, // replace this with attributes you need
-      headers: {
-        Authorization: token
-      } // OPTIONAL
-    };
-    API.post(apiName, path, myInit)
-      .then(response => {
-        if (response.body.error === 0) {
-          dispatch(doReceiveFollowers(response.body.message));
-        } else if (process.env.NODE_ENV !== 'production') {
-          console.log(response.body.message);
-        }
-      })
-      .catch(async error => {
-        if (error.message === 'Request failed with status code 401') {
-          try {
-            const cognitoUser = await Auth.currentAuthenticatedUser();
-            const currentSession = cognitoUser.signInUserSession;
-            cognitoUser.refreshSession(
-              currentSession.refreshToken,
-              (err, session) => {
-                // console.log('session', err, session);
-                token = session.idToken.jwtToken;
-                dispatch(refreshToken(token));
-                dispatch(doFollowQRA(token, follower));
-              }
-            );
-          } catch (error) {
-            if (process.env.NODE_ENV !== 'production') {
-              console.log('Unable to refresh Token');
-              console.log(error);
-            } else {
-              Sentry.configureScope(function(scope) {
-                scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-              });
-              Sentry.captureException(error);
-            }
-            dispatch(doLogout());
+  return async dispatch => {
+    try {
+      // const cognitoUser = Auth.currentAuthenticatedUser();
+      // const currentSession = cognitoUser.signInUserSession;
+      // cognitoUser.refreshSession(
+      //   currentSession.refreshToken,
+      //   (error, session) => {
+      //     if (process.env.NODE_ENV !== 'production') {
+      //       console.log('Unable to refresh Token');
+      //       console.log(error);
+      //     } else {
+      //       Sentry.configureScope(function(scope) {
+      //         scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+      //       });
+      //       Sentry.captureException(error);
+      //     }
+      //     token = session.idToken.jwtToken;
+      const currentSession = await Auth.currentSession();
+      const token = currentSession.getIdToken().getJwtToken();
+      dispatch(refreshToken(token));
+      const apiName = 'superqso';
+      const path = '/qra-follower';
+      const myInit = {
+        body: {
+          qra: follower,
+          datetime: new Date()
+        }, // replace this with attributes you need
+        headers: {
+          Authorization: token
+        } // OPTIONAL
+      };
+      API.post(apiName, path, myInit)
+        .then(response => {
+          if (response.body.error === 0) {
+            dispatch(doReceiveFollowers(response.body.message));
+          } else if (process.env.NODE_ENV !== 'production') {
+            console.log(response.body.message);
           }
-        } else {
+        })
+        .catch(async error => {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
           } else {
@@ -1581,8 +1663,21 @@ export function doFollowQRA(token, follower) {
             });
             Sentry.captureException(error);
           }
-        }
-      });
+        });
+      //   }
+      // );
+    } catch (error) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('Unable to refresh Token');
+        console.log(error);
+      } else {
+        Sentry.configureScope(function(scope) {
+          scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+        });
+        Sentry.captureException(error);
+      }
+      dispatch(doLogout());
+    }
   };
 }
 
@@ -1599,48 +1694,39 @@ export function doUnfollowQRA(token, follower) {
     });
 
   return dispatch => {
-    const apiName = 'superqso';
-    const path = '/qra-follower';
-    const myInit = {
-      body: {
-        qra: follower
-      }, // replace this with attributes you need
-      headers: {
-        Authorization: token
-      } // OPTIONAL
-    };
-    API.del(apiName, path, myInit)
-      .then(response => {
-        if (response.body.error > 0) console.error(response.body.message);
-        else dispatch(doReceiveFollowers(response.body.message));
-      })
-      .catch(async error => {
-        if (error.message === 'Request failed with status code 401') {
-          try {
-            const cognitoUser = await Auth.currentAuthenticatedUser();
-            const currentSession = cognitoUser.signInUserSession;
-            cognitoUser.refreshSession(
-              currentSession.refreshToken,
-              (err, session) => {
-                // console.log('session', err, session);
-                token = session.idToken.jwtToken;
-                dispatch(refreshToken(token));
-                dispatch(doUnfollowQRA(token, follower));
-              }
-            );
-          } catch (error) {
-            if (process.env.NODE_ENV !== 'production') {
-              console.log('Unable to refresh Token');
-              console.log(error);
-            } else {
-              Sentry.configureScope(function(scope) {
-                scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-              });
-              Sentry.captureException(error);
-            }
-            dispatch(doLogout());
-          }
-        } else {
+    try {
+      // const cognitoUser = Auth.currentAuthenticatedUser();
+      // const currentSession = cognitoUser.signInUserSession;
+      // cognitoUser.refreshSession(
+      //   currentSession.refreshToken,
+      //   (error, session) => {
+      //     if (process.env.NODE_ENV !== 'production') {
+      //       console.log('Unable to refresh Token');
+      //       console.log(error);
+      //     } else {
+      //       Sentry.configureScope(function(scope) {
+      //         scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+      //       });
+      //       Sentry.captureException(error);
+      //     }
+      //     token = session.idToken.jwtToken;
+      dispatch(refreshToken(token));
+      const apiName = 'superqso';
+      const path = '/qra-follower';
+      const myInit = {
+        body: {
+          qra: follower
+        }, // replace this with attributes you need
+        headers: {
+          Authorization: token
+        } // OPTIONAL
+      };
+      API.del(apiName, path, myInit)
+        .then(response => {
+          if (response.body.error > 0) console.error(response.body.message);
+          else dispatch(doReceiveFollowers(response.body.message));
+        })
+        .catch(async error => {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
           } else {
@@ -1649,8 +1735,21 @@ export function doUnfollowQRA(token, follower) {
             });
             Sentry.captureException(error);
           }
-        }
-      });
+        });
+      //   }
+      // );
+    } catch (error) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('Unable to refresh Token');
+        console.log(error);
+      } else {
+        Sentry.configureScope(function(scope) {
+          scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+        });
+        Sentry.captureException(error);
+      }
+      dispatch(doLogout());
+    }
   };
 }
 
@@ -1719,50 +1818,43 @@ export function doQsoMediaPlay(idMedia, token, idqso) {
       event_category: 'QSO',
       event_label: 'mediaPlay'
     });
-  return dispatch => {
-    const apiName = 'superqso';
-    const path = '/qso/media-play';
-    const myInit = {
-      body: {
-        idmedia: idMedia,
-        idqso: idqso
-      }, // replace this with attributes you need
-      headers: {
-        Authorization: token
-      } // OPTIONAL
-    };
-    API.post(apiName, path, myInit)
-      .then(response => {
-        if (response.body.error > 0) console.error(response.body.message);
-        else dispatch(doReceiveMediaCounter(response.body.message));
-      })
-      .catch(async error => {
-        if (error.message === 'Request failed with status code 401') {
-          try {
-            const cognitoUser = await Auth.currentAuthenticatedUser();
-            const currentSession = cognitoUser.signInUserSession;
-            cognitoUser.refreshSession(
-              currentSession.refreshToken,
-              (err, session) => {
-                // console.log('session', err, session);
-                token = session.idToken.jwtToken;
-                dispatch(refreshToken(token));
-                dispatch(doQsoMediaPlay(idMedia, token, idqso));
-              }
-            );
-          } catch (error) {
-            if (process.env.NODE_ENV !== 'production') {
-              console.log('Unable to refresh Token');
-              console.log(error);
-            } else {
-              Sentry.configureScope(function(scope) {
-                scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-              });
-              Sentry.captureException(error);
-            }
-            dispatch(doLogout());
-          }
-        } else {
+  return async dispatch => {
+    try {
+      // const cognitoUser = Auth.currentAuthenticatedUser();
+      // const currentSession = cognitoUser.signInUserSession;
+      // cognitoUser.refreshSession(
+      //   currentSession.refreshToken,
+      //   (error, session) => {
+      //     if (process.env.NODE_ENV !== 'production') {
+      //       console.log('Unable to refresh Token');
+      //       console.log(error);
+      //     } else {
+      //       Sentry.configureScope(function(scope) {
+      //         scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+      //       });
+      //       Sentry.captureException(error);
+      //     }
+      //     token = session.idToken.jwtToken;
+      const currentSession = await Auth.currentSession();
+      const token = currentSession.getIdToken().getJwtToken();
+      dispatch(refreshToken(token));
+      const apiName = 'superqso';
+      const path = '/qso/media-play';
+      const myInit = {
+        body: {
+          idmedia: idMedia,
+          idqso: idqso
+        }, // replace this with attributes you need
+        headers: {
+          Authorization: token
+        } // OPTIONAL
+      };
+      API.post(apiName, path, myInit)
+        .then(response => {
+          if (response.body.error > 0) console.error(response.body.message);
+          else dispatch(doReceiveMediaCounter(response.body.message));
+        })
+        .catch(async error => {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
           } else {
@@ -1771,8 +1863,21 @@ export function doQsoMediaPlay(idMedia, token, idqso) {
             });
             Sentry.captureException(error);
           }
-        }
-      });
+        });
+      //   }
+      // );
+    } catch (error) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('Unable to refresh Token');
+        console.log(error);
+      } else {
+        Sentry.configureScope(function(scope) {
+          scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+        });
+        Sentry.captureException(error);
+      }
+      dispatch(doLogout());
+    }
   };
 }
 export function doQsoMediaPlayPublic(idMedia, idqso) {
@@ -1787,6 +1892,23 @@ export function doQsoMediaPlayPublic(idMedia, idqso) {
       event_label: 'mediaPlayPublic'
     });
   return dispatch => {
+    // try {
+    //   const cognitoUser = Auth.currentAuthenticatedUser();
+    //   const currentSession = cognitoUser.signInUserSession;
+    //   cognitoUser.refreshSession(
+    //     currentSession.refreshToken,
+    //     (error, session) => {
+    //       if (process.env.NODE_ENV !== 'production') {
+    //         console.log('Unable to refresh Token');
+    //         console.log(error);
+    //       } else {
+    //         Sentry.configureScope(function(scope) {
+    //           scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+    //         });
+    //         Sentry.captureException(error);
+    //       }
+    //       let token = session.idToken.jwtToken;
+    //       dispatch(refreshToken(token));
     const apiName = 'superqso';
     const path = '/qso/media-play-public';
     const myInit = {
@@ -1800,47 +1922,33 @@ export function doQsoMediaPlayPublic(idMedia, idqso) {
     };
     API.post(apiName, path, myInit)
       .then(response => {
-        console.log(response);
         if (response.body.error > 0) console.error(response.body.message);
         else dispatch(doReceiveMediaCounter(response.body.message));
       })
       .catch(async error => {
-        if (error.message === 'Request failed with status code 401') {
-          try {
-            const cognitoUser = await Auth.currentAuthenticatedUser();
-            const currentSession = cognitoUser.signInUserSession;
-            cognitoUser.refreshSession(
-              currentSession.refreshToken,
-              (err, session) => {
-                // console.log('session', err, session);
-                let token = session.idToken.jwtToken;
-                dispatch(refreshToken(token));
-                dispatch(doQsoMediaPlayPublic(idMedia, idqso));
-              }
-            );
-          } catch (error) {
-            if (process.env.NODE_ENV !== 'production') {
-              console.log('Unable to refresh Token');
-              console.log(error);
-            } else {
-              Sentry.configureScope(function(scope) {
-                scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-              });
-              Sentry.captureException(error);
-            }
-            dispatch(doLogout());
-          }
+        if (process.env.NODE_ENV !== 'production') {
+          console.log(error.message);
         } else {
-          if (process.env.NODE_ENV !== 'production') {
-            console.log(error.message);
-          } else {
-            Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-            });
-            Sentry.captureException(error);
-          }
+          Sentry.configureScope(function(scope) {
+            scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+          });
+          Sentry.captureException(error);
         }
       });
+    //     }
+    //   );
+    // } catch (error) {
+    //   if (process.env.NODE_ENV !== 'production') {
+    //     console.log('Unable to refresh Token');
+    //     console.log(error);
+    //   } else {
+    //     Sentry.configureScope(function(scope) {
+    //       scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+    //     });
+    //     Sentry.captureException(error);
+    //   }
+    //   dispatch(doLogout());
+    // }
   };
 }
 export function doReceiveMediaCounter(data) {
@@ -1861,48 +1969,41 @@ export function doQslCardPrint(idqso, token) {
       event_category: 'QSO',
       event_label: 'QSLCardPrint'
     });
-  return dispatch => {
-    const apiName = 'superqso';
-    const path = '/qso/qslcard-print';
-    const myInit = {
-      body: {
-        idqso: idqso
-      }, // replace this with attributes you need
-      headers: {
-        Authorization: token
-      } // OPTIONAL
-    };
-    API.post(apiName, path, myInit)
-      .then(response => {
-        if (response.body.error > 0) console.error(response.body.message);
-      })
-      .catch(async error => {
-        if (error.message === 'Request failed with status code 401') {
-          try {
-            const cognitoUser = await Auth.currentAuthenticatedUser();
-            const currentSession = cognitoUser.signInUserSession;
-            cognitoUser.refreshSession(
-              currentSession.refreshToken,
-              (err, session) => {
-                // console.log('session', err, session);
-                token = session.idToken.jwtToken;
-                dispatch(refreshToken(token));
-                dispatch(doQslCardPrint(idqso, token));
-              }
-            );
-          } catch (error) {
-            if (process.env.NODE_ENV !== 'production') {
-              console.log('Unable to refresh Token');
-              console.log(error);
-            } else {
-              Sentry.configureScope(function(scope) {
-                scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-              });
-              Sentry.captureException(error);
-            }
-            dispatch(doLogout());
-          }
-        } else {
+  return async dispatch => {
+    try {
+      // const cognitoUser = Auth.currentAuthenticatedUser();
+      // const currentSession = cognitoUser.signInUserSession;
+      // cognitoUser.refreshSession(
+      //   currentSession.refreshToken,
+      //   (error, session) => {
+      //     if (process.env.NODE_ENV !== 'production') {
+      //       console.log('Unable to refresh Token');
+      //       console.log(error);
+      //     } else {
+      //       Sentry.configureScope(function(scope) {
+      //         scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+      //       });
+      //       Sentry.captureException(error);
+      //     }
+      //     token = session.idToken.jwtToken;
+      const currentSession = await Auth.currentSession();
+      const token = currentSession.getIdToken().getJwtToken();
+      dispatch(refreshToken(token));
+      const apiName = 'superqso';
+      const path = '/qso/qslcard-print';
+      const myInit = {
+        body: {
+          idqso: idqso
+        }, // replace this with attributes you need
+        headers: {
+          Authorization: token
+        } // OPTIONAL
+      };
+      API.post(apiName, path, myInit)
+        .then(response => {
+          if (response.body.error > 0) console.error(response.body.message);
+        })
+        .catch(async error => {
           if (process.env.NODE_ENV !== 'production') {
             console.log(error.message);
           } else {
@@ -1911,7 +2012,20 @@ export function doQslCardPrint(idqso, token) {
             });
             Sentry.captureException(error);
           }
-        }
-      });
+        });
+      //   }
+      // );
+    } catch (error) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('Unable to refresh Token');
+        console.log(error);
+      } else {
+        Sentry.configureScope(function(scope) {
+          scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+        });
+        Sentry.captureException(error);
+      }
+      dispatch(doLogout());
+    }
   };
 }
