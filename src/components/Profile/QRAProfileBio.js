@@ -67,83 +67,114 @@ class QRAProfileBio extends React.Component {
       private: 'myPrivatePrefix/'
     };
     return new Promise((resolve, reject) => {
-      let folder = 'bio/' + file.name;
-
-      Storage.put(folder, file, {
-        customPrefix: customPrefix,
-        level: 'protected',
-        contentType: 'image/png'
-      })
-        .then(result => {
-          let filepath;
-
-          filepath =
-            global_config.s3Cloudfront +
-            '/1/' +
-            encodeURIComponent(this.props.identityId) +
-            '/' +
-            encodeURIComponent(result.key);
-          //CHECK NSFW
-          let apiName = 'superqso';
-          let path = '/nsfw-check';
-          let myInit = {
-            body: {
-              url: filepath
-            },
-            headers: {
-              Authorization: this.props.token
+      try {
+        const cognitoUser = await Auth.currentAuthenticatedUser();
+        const currentSession = cognitoUser.signInUserSession;
+        cognitoUser.refreshSession(
+          currentSession.refreshToken,
+          (error, session) => {
+            if (process.env.NODE_ENV !== 'production') {
+              console.log('Unable to refresh Token');
+              console.log(error);
+            } else {
+              Sentry.configureScope(function(scope) {
+                scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+              });
+              Sentry.captureException(error);
             }
-          };
-          API.post(apiName, path, myInit)
-            .then(response => {
-              if (response.body.error > 0) {
-                //NSFW
-                Storage.remove(result.key, { level: 'protected' })
-                  .then(result => resolve(true))
-                  .catch(error => {
-                    if (process.env.NODE_ENV !== 'production') {
-                      console.log(error);
-                    } else {
-                      Sentry.configureScope(function(scope) {
-                        scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-                      });
-                      Sentry.captureException(error);
+            // console.log('session', err, session);
+            let token = session.idToken.jwtToken;
+            this.props.actions.refreshToken(token);
+             let folder = 'bio/' + file.name;
+
+              Storage.put(folder, file, {
+                customPrefix: customPrefix,
+                level: 'protected',
+                contentType: 'image/png'
+              })
+                .then(result => {
+                  let filepath;
+
+                  filepath =
+                    global_config.s3Cloudfront +
+                    '/1/' +
+                    encodeURIComponent(this.props.identityId) +
+                    '/' +
+                    encodeURIComponent(result.key);
+                  //CHECK NSFW
+                  let apiName = 'superqso';
+                  let path = '/nsfw-check';
+                  let myInit = {
+                    body: {
+                      url: filepath
+                    },
+                    headers: {
+                      Authorization: token
                     }
-                    reject(error);
-                  });
-                this.setState({ openPornConfirm: true });
-              }
-              //SFW
-              else
-                resolve({
-                  data: {
-                    link: filepath
+                  };
+                  API.post(apiName, path, myInit)
+                    .then(response => {
+                      if (response.body.error > 0) {
+                        //NSFW
+                        Storage.remove(result.key, { level: 'protected' })
+                          .then(result => resolve(true))
+                          .catch(error => {
+                            if (process.env.NODE_ENV !== 'production') {
+                              console.log(error);
+                            } else {
+                              Sentry.configureScope(function(scope) {
+                                scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+                              });
+                              Sentry.captureException(error);
+                            }
+                            reject(error);
+                          });
+                        this.setState({ openPornConfirm: true });
+                      }
+                      //SFW
+                      else
+                        resolve({
+                          data: {
+                            link: filepath
+                          }
+                        });
+                    })
+                    .catch(error => {
+                      if (process.env.NODE_ENV !== 'production') {
+                        console.log(error);
+                      } else {
+                        Sentry.configureScope(function(scope) {
+                          scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+                        });
+                        Sentry.captureException(error);
+                      }
+                      reject(error);
+                    });
+                })
+                .catch(error => {
+                  if (process.env.NODE_ENV !== 'production') {
+                    console.log(error);
+                  } else {
+                    Sentry.configureScope(function(scope) {
+                      scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+                    });
+                    Sentry.captureException(error);
                   }
+                  reject(error);
                 });
-            })
-            .catch(error => {
-              if (process.env.NODE_ENV !== 'production') {
-                console.log(error);
-              } else {
-                Sentry.configureScope(function(scope) {
-                  scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-                });
-                Sentry.captureException(error);
-              }
-              reject(error);
-            });
-        })
-        .catch(error => {
-          if (process.env.NODE_ENV !== 'production') {
-            console.log(error);
-          } else {
-            Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-            });
-            Sentry.captureException(error);
-          }
-          reject(error);
-        });
+          });
+        } catch (error) {
+        if (process.env.NODE_ENV !== 'production') {
+          console.log('Unable to refresh Token');
+          console.log(error);
+        } else {
+          Sentry.configureScope(function(scope) {
+            scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+          });
+          Sentry.captureException(error);
+        }
+      }
+  
     });
   }
 
