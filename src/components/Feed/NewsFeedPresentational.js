@@ -125,7 +125,8 @@ class NewsFeed extends React.PureComponent {
     this.state._list.forceUpdateGrid();
   }
   static getDerivedStateFromProps(props, state) {
-    if (props.list.length !== state.list.length) {
+
+    if (props.list.length !== state.list.length || props.list !== state.list) {
      
       // this._cache.clearAll();
       // this._list.recomputeRowHeights();
@@ -139,11 +140,18 @@ class NewsFeed extends React.PureComponent {
   componentDidUpdate(prevProps, prevState) {
 
     if (
-      prevProps.list.length > 0 &&
+      prevProps.list.length > 0 &&    
       prevProps.list.length !== prevState.list.length &&
       ((prevProps.qsosFetched && !prevProps.fetchingQsos) ||
         (prevProps.QRAFetched && !prevProps.FetchingQRA))
     ) {
+      this._cache.clearAll();
+      // this._list.recomputeRowHeights();
+      this.state._list.forceUpdateGrid();
+      
+    }
+    if (  this.state.list !== prevState.list )
+    {
       this._cache.clearAll();
       // this._list.recomputeRowHeights();
       this.state._list.forceUpdateGrid();
