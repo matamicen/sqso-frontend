@@ -78,28 +78,30 @@ class AuthenticatedNavigation extends React.PureComponent {
             to="/"
             onClick={async () => {
               try {
-                const cognitoUser = await Auth.currentAuthenticatedUser();
-                const currentSession = cognitoUser.signInUserSession;
-                cognitoUser.refreshSession(
-                  currentSession.refreshToken,
-                  (error, session) => {
-                    if (error) {if (process.env.NODE_ENV !== 'production') {
-                      console.log('Unable to refresh Token');
-                      console.log(error);
-                    } else {
-                      Sentry.configureScope(function(scope) {
-                        scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-                      });
-                      Sentry.captureException(error);
-                    }}
+                // const cognitoUser = await Auth.currentAuthenticatedUser();
+                // const currentSession = cognitoUser.signInUserSession;
+                // cognitoUser.refreshSession(
+                //   currentSession.refreshToken,
+                //   (error, session) => {
+                //     if (error) {if (process.env.NODE_ENV !== 'production') {
+                //       console.log('Unable to refresh Token');
+                //       console.log(error);
+                //     } else {
+                //       Sentry.configureScope(function(scope) {
+                //         scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+                //       });
+                //       Sentry.captureException(error);
+                //     }}
                     
-                    let token = session.idToken.jwtToken;
+                //     let token = session.idToken.jwtToken;
+                const currentSession = await Auth.currentSession();
+                const token = currentSession.getIdToken().getJwtToken();
  
                     this.props.actions.refreshToken(token);
                     this.props.actions.doFetchUserInfo(this.props.token);
                     this.props.actions.doFetchPublicFeed(this.props.currentQRA);
-                  }
-                );
+                //   }
+                // );
               } catch (error) {
                 if (process.env.NODE_ENV !== 'production') {
                   console.log('Unable to refresh Token');

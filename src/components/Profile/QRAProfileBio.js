@@ -67,24 +67,26 @@ class QRAProfileBio extends React.Component {
       protected: '1/',
       private: 'myPrivatePrefix/'
     };
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       try {
-        const cognitoUser = Auth.currentAuthenticatedUser();
-        const currentSession = cognitoUser.signInUserSession;
-        cognitoUser.refreshSession(
-          currentSession.refreshToken,
-          (error, session) => {
-            if (process.env.NODE_ENV !== 'production') {
-              console.log('Unable to refresh Token');
-              console.log(error);
-            } else {
-              Sentry.configureScope(function(scope) {
-                scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-              });
-              Sentry.captureException(error);
-            }
-            // console.log('session', err, session);
-            let token = session.idToken.jwtToken;
+        // const cognitoUser = Auth.currentAuthenticatedUser();
+        // const currentSession = cognitoUser.signInUserSession;
+        // cognitoUser.refreshSession(
+        //   currentSession.refreshToken,
+        //   (error, session) => {
+        //     if (process.env.NODE_ENV !== 'production') {
+        //       console.log('Unable to refresh Token');
+        //       console.log(error);
+        //     } else {
+        //       Sentry.configureScope(function(scope) {
+        //         scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+        //       });
+        //       Sentry.captureException(error);
+        //     }
+        //     // console.log('session', err, session);
+        //     let token = session.idToken.jwtToken;
+        const currentSession = await Auth.currentSession();
+        const token = currentSession.getIdToken().getJwtToken();
             this.props.actions.refreshToken(token);
              let folder = 'bio/' + file.name;
 
@@ -163,7 +165,7 @@ class QRAProfileBio extends React.Component {
                   }
                   reject(error);
                 });
-          });
+          // });
         } catch (error) {
         if (process.env.NODE_ENV !== 'production') {
           console.log('Unable to refresh Token');
