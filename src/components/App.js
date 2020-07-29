@@ -25,7 +25,9 @@ const Download = loadable(() => import('./help/download'));
 const FAQ = loadable(() => import('./help/faq'));
 const PrivacyPolicy = loadable(() => import('./help/privacyPolicy'));
 const TermsOfService = loadable(() => import('./help/termsOfServcice'));
-const QRAProfileContainer = loadable(() => import('./Profile/QRAProfileContainer'));
+const QRAProfileContainer = loadable(() =>
+  import('./Profile/QRAProfileContainer')
+);
 const Notifications = loadable(() => import('./Notifications/Notifications'));
 const QSODetail = loadable(() => import('./QSODetail'));
 const LogIn = loadable(() => import('./Auth/LogIn'));
@@ -46,7 +48,7 @@ class App extends Component {
   }
   async componentDidMount() {
     if (isMobile) {
-      if (isIOS) {        
+      if (isIOS) {
         window.WebViewBridge = {
           onMessage: this._onMessage.bind(this)
         };
@@ -98,7 +100,7 @@ class App extends Component {
           await this.props.actions.doLogin(
             token,
             user.signInUserSession.idToken.payload['custom:callsign'],
-            credentials.IdentityId
+            credentials.identityId
           );
           await this.props.actions.doFetchUserInfo(token);
           Sentry.configureScope(scope => {
@@ -147,10 +149,10 @@ class App extends Component {
 
         this.props.actions.doSetPublicSession();
       } else {
-        this.props.actions.doLogin(
+        await this.props.actions.doLogin(
           session.idToken.jwtToken,
           session.idToken.payload['custom:callsign'].toUpperCase(),
-          credentials.IdentityId
+          credentials.identityId
         );
         this.props.actions.doFetchUserInfo(session.idToken.jwtToken);
         Sentry.configureScope(scope => {
@@ -201,7 +203,7 @@ class App extends Component {
           await this.props.actions.doLogin(
             token,
             user.signInUserSession.idToken.payload['custom:callsign'],
-            credentials.IdentityId
+            credentials.identityId
           );
           await this.props.actions.doFetchUserInfo(token);
           Sentry.configureScope(scope => {
