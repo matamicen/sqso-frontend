@@ -113,22 +113,24 @@ class QSOLikeButton extends React.Component {
       });
     }
     try {
-      const cognitoUser = await Auth.currentAuthenticatedUser();
-      const currentSession = cognitoUser.signInUserSession;
-      cognitoUser.refreshSession(
-        currentSession.refreshToken,
-        (error, session) => {
-          if (process.env.NODE_ENV !== 'production') {
-            console.log('Unable to refresh Token');
-            console.log(error);
-          } else {
-            Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-            });
-            Sentry.captureException(error);
-          }
-          // console.log('session', err, session);
-          let token = session.idToken.jwtToken;
+      // const cognitoUser = await Auth.currentAuthenticatedUser();
+      // const currentSession = cognitoUser.signInUserSession;
+      // cognitoUser.refreshSession(
+      //   currentSession.refreshToken,
+      //   (error, session) => {
+      //     if (process.env.NODE_ENV !== 'production') {
+      //       console.log('Unable to refresh Token');
+      //       console.log(error);
+      //     } else {
+      //       Sentry.configureScope(function(scope) {
+      //         scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+      //       });
+      //       Sentry.captureException(error);
+      //     }
+      //     // console.log('session', err, session);
+      //     let token = session.idToken.jwtToken;
+      const currentSession = await Auth.currentSession();
+      const token = currentSession.getIdToken().getJwtToken();
           this.props.actions.refreshToken(token);
        
           let apiName = 'superqso';
@@ -159,8 +161,8 @@ class QSOLikeButton extends React.Component {
                 Sentry.captureException(error);
               }
             });
-        }
-      );
+      //   }
+      // );
     } catch (error) {
       if (process.env.NODE_ENV !== 'production') {
         console.log('Unable to refresh Token');
@@ -187,22 +189,24 @@ class QSOLikeButton extends React.Component {
       });
     }
     try {
-      const cognitoUser = await Auth.currentAuthenticatedUser();
-      const currentSession = cognitoUser.signInUserSession;
-      cognitoUser.refreshSession(
-        currentSession.refreshToken,
-        (error, session) => {
-          if (process.env.NODE_ENV !== 'production') {
-            console.log('Unable to refresh Token');
-            console.log(error);
-          } else {
-            Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-            });
-            Sentry.captureException(error);
-          }
-          // console.log('session', err, session);
-          let token = session.idToken.jwtToken;
+      // const cognitoUser = await Auth.currentAuthenticatedUser();
+      // const currentSession = cognitoUser.signInUserSession;
+      // cognitoUser.refreshSession(
+      //   currentSession.refreshToken,
+      //   (error, session) => {
+      //     if (process.env.NODE_ENV !== 'production') {
+      //       console.log('Unable to refresh Token');
+      //       console.log(error);
+      //     } else {
+      //       Sentry.configureScope(function(scope) {
+      //         scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+      //       });
+      //       Sentry.captureException(error);
+      //     }
+      //     // console.log('session', err, session);
+      //     let token = session.idToken.jwtToken;
+      const currentSession = await Auth.currentSession();
+      const token = currentSession.getIdToken().getJwtToken();
           this.props.actions.refreshToken(token);
           let apiName = 'superqso';
           let path = '/qso-like';
@@ -233,8 +237,8 @@ class QSOLikeButton extends React.Component {
                 Sentry.captureException(error);
               }
             });
-        }
-      );
+      //   }
+      // );
     } catch (error) {
       if (process.env.NODE_ENV !== 'production') {
         console.log('Unable to refresh Token');
