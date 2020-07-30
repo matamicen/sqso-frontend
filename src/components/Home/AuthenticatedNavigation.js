@@ -10,6 +10,7 @@ import Menu from 'semantic-ui-react/dist/commonjs/collections/Menu';
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
 import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
 import * as Actions from '../../actions';
+import global_config from '../../global_config.json';
 import '../../styles/style.css';
 import NavigationSearch from './NavigationSearch';
 
@@ -64,8 +65,8 @@ class AuthenticatedNavigation extends React.PureComponent {
           style={{ flex: '0 1 auto', justifyContent: 'center', padding: '0' }}
         >
           <Link to="/">
-            <img src="/logoMobile.jpg" alt="SuperQSO.com" className="mobile" />
-            <img src="/logoDesk.jpg" alt="SuperQSO.com" className="desktop" />
+            <img src={global_config.s3Cloudfront +"/logoMobile.jpg"} alt="SuperQSO.com" className="mobile" />
+            <img src={global_config.s3Cloudfront +"/logoDesk.jpg"} alt="SuperQSO.com" className="desktop" />
           </Link>
         </Menu.Item>
         <Menu.Item
