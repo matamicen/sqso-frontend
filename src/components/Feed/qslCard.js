@@ -5,6 +5,7 @@ import QRCode from 'qrcode.react';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import packageJson from '../../../package.json';
+import global_config from '../../global_config.json';
 const RELEASE = packageJson.version;
 if (process.env.NODE_ENV === 'production') {
   Sentry.init({
@@ -121,7 +122,7 @@ async function QslCardPrint(props) {
       pdf.roundedRect(2.9, 3.1, 2.6, 0.7, 0.1, 0.1, 'FD');
     }
     /*QSO LOGO */
-    imgData = await loadImage('/logoMobile.jpg');
+    imgData = await loadImage(global_config.s3Cloudfront + '/logoMobile.jpg');
     pdf.addImage(imgData, 'JPEG', 5.8, 3.1, 1.09, 0.7, 'logo', 'FAST');
 
     if (props.qso.qras[0]) {
