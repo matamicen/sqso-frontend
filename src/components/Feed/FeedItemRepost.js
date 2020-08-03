@@ -264,13 +264,15 @@ class FeedItemRepost extends React.Component {
               style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
             />
             {this.props.qso.qras.length > 0 && (
-              <Segment>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+               <Segment compact className="feed-item-qras-outer">
                 <QRAs
                   avatarpic={this.props.qso.original[0].avatarpic}
                   qso_owner={this.props.qso.original[0].qra}
                   qras={this.props.qso.qras}
                 />
               </Segment>
+              </div>
             )}
             {picList.length > 0 && (
               <FeedImage

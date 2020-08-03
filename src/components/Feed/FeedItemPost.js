@@ -57,13 +57,13 @@ class FeedItemPost extends React.PureComponent {
     return null;
   }
   render() {
-    const {t} = this.props;
+    const { t } = this.props;
 
     let picList = this.props.qso.media.filter(media => media.type === 'image');
     let audioList = this.props.qso.media.filter(
       media => media.type === 'audio'
     );
-    
+
     const commentsCounter = '(' + this.props.qso.comments.length + ')';
 
     let text;
@@ -106,7 +106,6 @@ class FeedItemPost extends React.PureComponent {
                   }}
                 />
               </Link>
-              
             </div>
             <div className="qso-header-action">
               <PopupToFollow
@@ -160,13 +159,15 @@ class FeedItemPost extends React.PureComponent {
             style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
           />
           {this.props.qso.qras.length > 0 && (
-            <Segment>
-              <QRAs
-                avatarpic={this.props.qso.avatarpic}
-                qso_owner={this.props.qso.qra}
-                qras={this.props.qso.qras}
-              />
-            </Segment>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+               <Segment compact className="feed-item-qras-segment">
+                <QRAs
+                  avatarpic={this.props.qso.avatarpic}
+                  qso_owner={this.props.qso.qra}
+                  qras={this.props.qso.qras}
+                />
+              </Segment>
+            </div>
           )}
           {picList.length > 0 && (
             <Fragment>
@@ -213,7 +214,10 @@ class FeedItemPost extends React.PureComponent {
               </div>
             </Button>
             <QSORePostButton qso={this.props.qso} />
-            <QSOShareButtons idqso={this.props.qso.GUID_URL} title={shareText} />
+            <QSOShareButtons
+              idqso={this.props.qso.GUID_URL}
+              title={shareText}
+            />
           </Button.Group>
           {this.props.qso.showComments && (
             <QSOComments

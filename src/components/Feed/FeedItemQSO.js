@@ -181,9 +181,7 @@ class FeedItemQSO extends React.PureComponent {
                 optionsCaller="FeedItem"
                 QslCard={
                   this.props.currentQRA === this.props.qso.qra ||
-                  this.props.qso.qras.some(
-                    o => o.qra === this.props.currentQRA
-                  )
+                  this.props.qso.qras.some(o => o.qra === this.props.currentQRA)
                 }
               />
             </div>
@@ -192,13 +190,16 @@ class FeedItemQSO extends React.PureComponent {
             hidden
             style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
           />
-          <Segment>
-            <QRAs
-              avatarpic={this.props.qso.avatarpic}
-              qso_owner={this.props.qso.qra}
-              qras={this.props.qso.qras}
-            />
-          </Segment>
+
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <Segment compact  className="feed-item-qras-segment">
+              <QRAs
+                avatarpic={this.props.qso.avatarpic}
+                qso_owner={this.props.qso.qra}
+                qras={this.props.qso.qras}
+              />
+            </Segment>
+          </div>
           {picList.length > 0 && (
             <Fragment>
               <Divider
