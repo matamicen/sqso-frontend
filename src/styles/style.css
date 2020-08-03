@@ -79,7 +79,7 @@
   height: 48px;
 }
 .image {
-  height: 40vh;
+  height: 50vh;
 }
 .NavBar {
   /* padding: 2px; */
@@ -417,7 +417,7 @@
     display: none;
   }
   .image {
-    height: 29vh;
+    height: 40vh;
   }
 
   .global-container {
