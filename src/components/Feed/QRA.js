@@ -16,8 +16,8 @@ export default class QRA extends React.Component {
         <div
           style={{
             justifySelf: "center",
-            width: "60px",
-            height: "60px"
+            width: "40px",
+            height: "40px"
           }}
         >
           <Link to={"/" + this.props.qra}>
@@ -35,7 +35,7 @@ export default class QRA extends React.Component {
         <div
           style={{
             justifySelf: "center",
-            fontSize: "1.2rem"
+            fontSize: "0.9rem"
           }}
         >
           <PopupToFollow
