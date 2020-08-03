@@ -79,7 +79,7 @@
   height: 48px;
 }
 .image {
-  height: 40vh;
+  height: 50vh;
 }
 .NavBar {
   /* padding: 2px; */
@@ -133,12 +133,21 @@
 .feed-item-comments {
   overflow: 'visible';
 }
-
+.feed-item-qras-segment {
+  padding-top: 1vh;
+  padding-bottom: 0.5vh;
+  min-width: 30%;
+  text-align: center;
+}
 .feed-item-qras {
+  
   display: flex;
   overflow-x: auto;
   overflow-y: hidden;
   justify-content: flex-start;
+flex-wrap: wrap;
+gap: 10px;
+
 }
 
 .feed-item-qras::before,
@@ -149,9 +158,6 @@
   /* Make it push flex items to the center */
 }
 
-.feed-item-qras-qra {
-  margin-right: 15px;
-}
 
 .slick-prev:before,
 .slick-next:before {
@@ -417,7 +423,7 @@
     display: none;
   }
   .image {
-    height: 29vh;
+    height: 40vh;
   }
 
   .global-container {

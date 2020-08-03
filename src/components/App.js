@@ -45,7 +45,7 @@ class App extends Component {
   }
   async componentDidMount() {
     if (isMobile) {
-      if (isIOS) {        
+      if (isIOS) {
         window.WebViewBridge = {
           onMessage: this._onMessage.bind(this)
         };
@@ -60,15 +60,9 @@ class App extends Component {
     this.login();
   }
   async _onMessage(data) {
-    // Should log "helloFromRN" on load.
-    // alert(data);
     let token;
-    console.log(data);
-    // if (process.env.REACT_APP_STAGE !== 'production') alert('event triggered');
-    // this.setState({ data: JSON.stringify(data) });
+
     let mobileSession = JSON.parse(data);
-    // let mobileSession= {userlogin: "lisandrolan@gmail.com",userpwd: "sabrina"}
-    this.setState({ mobileSession: mobileSession });
 
     const user = await Auth.signIn(
       mobileSession.userlogin.toLowerCase().trim(),
@@ -166,11 +160,9 @@ class App extends Component {
   }
   async loginFromAndroid(event) {
     let token;
-    // alert('loginFromAndroid');
-    // if (process.env.REACT_APP_STAGE !== 'production') alert('event triggered');
-    this.setState({ data: JSON.stringify(event.data) });
+
     let mobileSession = JSON.parse(event.data);
-    // let mobileSession= {userlogin: "lisandrolan@gmail.com",userpwd: "sabrina"}
+
     this.setState({ mobileSession: mobileSession });
     console.log(mobileSession);
     const user = await Auth.signIn(

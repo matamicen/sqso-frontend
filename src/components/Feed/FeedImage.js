@@ -70,11 +70,12 @@ class FeedImage extends React.Component {
             <div key={m.idqsos_media}>
               <h3>
                 <img
-                  className="image"
+                  // className="image"
                   src={m.url}
                   key={m.idqsos_media}
                   alt={m.description ? m.description : "no description"}
                   onClick={() => this.open()}
+                  onLoad={()=> this.props.measure()}
                   style={{
                     objectFit: "contain",
                     width: "100%",
@@ -124,6 +125,11 @@ class FeedImage extends React.Component {
                     alt={m.description ? m.description : "no description"}
                     size="large"
                     src={m.url}
+                    style={{
+                      objectFit: "contain",
+                      width: "100%",
+                      margin: "0 auto"
+                    }}
                   />
 
                   <p style={{textAlign :"center"}}>{m.description}</p>
