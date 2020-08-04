@@ -24,15 +24,15 @@ class FeedAudio extends React.Component {
 
   onClick() {
     // if (this.props.isAuthenticated) {
-      // if (
-      //   this.props.qraUserData.monthly_audio_play >
-      //   this.props.qraUserData.account_type.web_qso_audio_play
-      // ) {
-      //   this.setState({ promptPremium: true });
-      // } else {
-        this.props.recalculateRowHeight();
-        this.setState({ audioNotVisible: false });
-      // }
+    // if (
+    //   this.props.qraUserData.monthly_audio_play >
+    //   this.props.qraUserData.account_type.web_qso_audio_play
+    // ) {
+    //   this.setState({ promptPremium: true });
+    // } else {
+    this.props.recalculateRowHeight();
+    this.setState({ audioNotVisible: false });
+    // }
     // } else {
     //   if (this.props.index > 0) this.setState({ promptLogin: true });
     //   else {
@@ -82,30 +82,35 @@ class FeedAudio extends React.Component {
               }}
             >
               <Button
-                size="large"
+                size="medium"
                 circular
                 icon="play"
                 onClick={this.onClick}
                 style={{ background: '#8BD8BD', color: '#243665' }}
               />
               <span>
-                {t('qso.playAudio')}
-                {' - '}
+                <span style={{ fontSize: 'medium' }}>
+                  {t('qso.playAudio')}
+                  {' - '}
+                </span>
                 {this.props.media.description && (
                   <span>
                     <b>{this.props.media.description}</b>
                     {' - '}
                   </span>
                 )}
-                {date.toLocaleDateString(i18n.language, { month: 'short' }) +
-                  ' ' +
-                  date.getDate() +
-                  ', ' +
-                  date.getFullYear()}{' '}
-                {date.getUTCHours() +
-                  ':' +
-                  (date.getMinutes() < 10 ? '0' : '') +
-                  date.getMinutes()}{' '}
+                <span style={{ fontSize: 'medium' }}>
+                  {date.toLocaleDateString(i18n.language, { month: 'short' }) +
+                    ' ' +
+                    date.getDate() +
+                    ', ' +
+                    date.getFullYear()}{' '}
+                  {date.getUTCHours() +
+                    ':' +
+                    (date.getMinutes() < 10 ? '0' : '') +
+                    date.getMinutes()}{' '}
+                </span>
+
                 {this.props.media.views_counter > 0 && (
                   <span style={{ fontSize: 'medium', color: 'gray' }}>
                     {' '}
@@ -142,16 +147,17 @@ class FeedAudio extends React.Component {
                 preload="none"
                 controlsList="nodownload"
                 onPlay={() =>
-                  this.props.isAuthenticated ?
-                  this.props.actions.doQsoMediaPlay(
-                    this.props.media.idqsos_media,
-                    this.props.token,
-                    this.props.media.idqso
-                  ): this.props.actions.doQsoMediaPlayPublic(
-                    this.props.media.idqsos_media,
-                    
-                    this.props.media.idqso
-                  )
+                  this.props.isAuthenticated
+                    ? this.props.actions.doQsoMediaPlay(
+                        this.props.media.idqsos_media,
+                        this.props.token,
+                        this.props.media.idqso
+                      )
+                    : this.props.actions.doQsoMediaPlayPublic(
+                        this.props.media.idqsos_media,
+
+                        this.props.media.idqso
+                      )
                 }
               />
               <p>

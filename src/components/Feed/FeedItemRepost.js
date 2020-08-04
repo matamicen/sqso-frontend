@@ -292,7 +292,7 @@ class FeedItemRepost extends React.Component {
             )}
           </Segment>
 
-          <Divider hidden style={{ marginTop: '2vh', marginBottom: '2vh' }} />
+          <Divider hidden style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }} />
           <QSOLikeText qso={this.props.qso} likes={this.state.likes} />
           <Button.Group widths="4" basic>
             <QSOLikeButton

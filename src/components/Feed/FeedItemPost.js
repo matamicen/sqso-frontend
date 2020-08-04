@@ -136,7 +136,6 @@ class FeedItemPost extends React.PureComponent {
               </div>
             </div>
 
-            {/* {date.toLocaleDateString("i18n.language", {month: "short"}) + ' ' + date.getDate() + ', ' + date.getFullYear()} */}
             <div
               className="qso-header-button"
               style={{
@@ -154,13 +153,13 @@ class FeedItemPost extends React.PureComponent {
             </div>
           </div>
 
-          <Divider
-            hidden
-            style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
-          />
           {this.props.qso.qras.length > 0 && (
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-               <Segment compact className="feed-item-qras-segment">
+              <Divider
+                hidden
+                style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
+              />
+              <Segment compact className="feed-item-qras-segment">
                 <QRAs
                   avatarpic={this.props.qso.avatarpic}
                   qso_owner={this.props.qso.qra}
@@ -173,7 +172,7 @@ class FeedItemPost extends React.PureComponent {
             <Fragment>
               <Divider
                 hidden
-                style={{ marginTop: '1vh', marginBottom: '1vh' }}
+                style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
               />
               <FeedImage
                 img={picList}
@@ -187,7 +186,7 @@ class FeedItemPost extends React.PureComponent {
             <Fragment>
               <Divider
                 hidden
-                style={{ marginTop: '1vh', marginBottom: '1vh' }}
+                style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
               />
               <FeedAudioList
                 mediaList={audioList}
@@ -200,7 +199,10 @@ class FeedItemPost extends React.PureComponent {
           {this.props.qso.links && (
             <FeedLinkList links={this.props.qso.links} />
           )}
-          <Divider hidden style={{ marginTop: '2vh', marginBottom: '2vh' }} />
+          <Divider
+            hidden
+            style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
+          />
           <QSOLikeText qso={this.props.qso} likes={this.state.likes} />
           <Button.Group fluid basic>
             <QSOLikeButton

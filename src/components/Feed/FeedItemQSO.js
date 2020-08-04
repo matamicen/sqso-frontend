@@ -204,7 +204,7 @@ class FeedItemQSO extends React.PureComponent {
             <Fragment>
               <Divider
                 hidden
-                style={{ marginTop: '1vh', marginBottom: '1vh' }}
+                 style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
               />
               <FeedImage
                 img={picList}
@@ -218,7 +218,7 @@ class FeedItemQSO extends React.PureComponent {
             <Fragment>
               <Divider
                 hidden
-                style={{ marginTop: '1vh', marginBottom: '1vh' }}
+                 style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
               />
               <FeedAudioList
                 mediaList={audioList}
