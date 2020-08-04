@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserView, MobileView } from 'react-device-detect';
 import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import Menu from 'semantic-ui-react/dist/commonjs/collections/Menu';
@@ -13,16 +14,20 @@ const PublicNavigation = ({ t }) => (
       style={{ flex: '0 1 auto', justifyContent: 'center', padding: '0' }}
     >
       <Link to="/">
-        <img
-          src={global_config.s3Cloudfront + '/logoMobile.jpg'}
-          alt="SuperQSO.com"
-          className="mobile"
-        />
-        <img
-          src={global_config.s3Cloudfront + '/logoDesk.jpg'}
-          alt="SuperQSO.com"
-          className="desktop"
-        />
+      <MobileView>
+              <img
+                src={global_config.s3Cloudfront + '/superqsoIconAzul.png'}
+                alt="SuperQSO.com"
+                className="mobile"
+              />
+            </MobileView>
+            <BrowserView>
+              <img
+                src={global_config.s3Cloudfront + '/logoDesk.jpg'}
+                alt="SuperQSO.com"
+                className="desktop"
+              />
+            </BrowserView>
       </Link>
     </Menu.Item>
     <Menu.Item
@@ -30,7 +35,7 @@ const PublicNavigation = ({ t }) => (
     >
       <NavigationSearch />
     </Menu.Item>
-    <Menu.Item style={{ padding: '10px' }}>
+    <Menu.Item style={{ padding: '5px' }}>
       <Link to="/">
         <Icon.Group size="large">
           <Icon name="home" />
