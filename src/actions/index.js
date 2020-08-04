@@ -43,12 +43,7 @@ export const QSO_DISLIKE = 'QSO_DISLIKE';
 export const QSO_LIKE = 'QSO_LIKE';
 export function doNotificationRead(idnotif = null, token) {
   return async dispatch => {
-    if (process.env.REACT_APP_STAGE !== 'production')
-      window.gtag('event', 'notificationRead_WEBDEV', {
-        event_category: 'User',
-        event_label: 'notificationRead'
-      });
-    else
+    if (process.env.REACT_APP_STAGE === 'production')
       window.gtag('event', 'notificationRead_WEBPRD', {
         event_category: 'User',
         event_label: 'notificationRead'
@@ -70,7 +65,7 @@ export function doNotificationRead(idnotif = null, token) {
       //       Sentry.captureException(error);
       //     }
       const currentSession = await Auth.currentSession();
-      
+
       const token = currentSession.getIdToken().getJwtToken();
 
       dispatch(refreshToken(token));
@@ -118,12 +113,7 @@ export function doNotificationRead(idnotif = null, token) {
 }
 export function doCommentDelete(idcomment, idqso, token) {
   return async dispatch => {
-    if (process.env.REACT_APP_STAGE !== 'production')
-      window.gtag('event', 'qsoCommentDel_WEBDEV', {
-        event_category: 'QSO',
-        event_label: 'commentDel'
-      });
-    else
+    if (process.env.REACT_APP_STAGE === 'production')
       window.gtag('event', 'qsoCommentDel_WEBPRD', {
         event_category: 'QSO',
         event_label: 'commentDel'
@@ -145,7 +135,7 @@ export function doCommentDelete(idcomment, idqso, token) {
       //     }
       //     token = session.idToken.jwtToken;
       const currentSession = await Auth.currentSession();
-      
+
       const token = currentSession.getIdToken().getJwtToken();
       dispatch(refreshToken(token));
       const apiName = 'superqso';
@@ -193,12 +183,7 @@ export function doCommentDelete(idcomment, idqso, token) {
 }
 export function doCommentAdd(idqso, comment, token, idqso_shared = null) {
   return async dispatch => {
-    if (process.env.REACT_APP_STAGE !== 'production')
-      window.gtag('event', 'qsoCommentAdd_WEBDEV', {
-        event_category: 'QSO',
-        event_label: 'commentAdd'
-      });
-    else
+    if (process.env.REACT_APP_STAGE === 'production')
       window.gtag('event', 'qsoCommentAdd_WEBPRD', {
         event_category: 'QSO',
         event_label: 'commentAdd'
@@ -221,7 +206,7 @@ export function doCommentAdd(idqso, comment, token, idqso_shared = null) {
       //     }
       //     token = session.idToken.jwtToken;
       const currentSession = await Auth.currentSession();
-      
+
       const token = currentSession.getIdToken().getJwtToken();
       dispatch(refreshToken(token));
       const apiName = 'superqso';
@@ -306,12 +291,7 @@ export function doNotificationReadResponse(idnotif) {
 }
 export function doDeleteQso(idqso, token) {
   return async dispatch => {
-    if (process.env.REACT_APP_STAGE !== 'production')
-      window.gtag('event', 'qsoDelete_WEBDEV', {
-        event_category: 'QSO',
-        event_label: 'delete'
-      });
-    else
+    if (process.env.REACT_APP_STAGE === 'production')
       window.gtag('event', 'qsoDelete_WEBPRD', {
         event_category: 'QSO',
         event_label: 'delete'
@@ -333,7 +313,7 @@ export function doDeleteQso(idqso, token) {
       //     }
       //     token = session.idToken.jwtToken;
       const currentSession = await Auth.currentSession();
-      
+
       const token = currentSession.getIdToken().getJwtToken();
       dispatch(refreshToken(token));
       const apiName = 'superqso';
@@ -394,12 +374,7 @@ export function doDeleteQsoResponse(idqso = null) {
 
 export function doDeleteMedia(idmedia, idqso, token) {
   return async dispatch => {
-    if (process.env.REACT_APP_STAGE !== 'production')
-      window.gtag('event', 'qsoMediaDelete_WEBDEV', {
-        event_category: 'QSO',
-        event_label: 'mediaDelete'
-      });
-    else
+    if (process.env.REACT_APP_STAGE === 'production')
       window.gtag('event', 'qsoMediaDelete_WEBPRD', {
         event_category: 'QSO',
         event_label: 'mediaDelete'
@@ -513,13 +488,7 @@ export function doLogin(token, qra, identityId) {
   window.gtag('config', 'G-H8G28LYKBY', {
     custom_map: { dimension1: 'userQRA' }
   });
-  if (process.env.REACT_APP_STAGE !== 'production')
-    window.gtag('event', 'userLogin_WEBDEV', {
-      event_category: 'User',
-      event_label: 'Login',
-      userQRA: qra
-    });
-  else
+  if (process.env.REACT_APP_STAGE === 'production')
     window.gtag('event', 'userLogin_WEBPRD', {
       event_category: 'User',
       event_label: 'Login',
@@ -535,12 +504,7 @@ export function doLogin(token, qra, identityId) {
 }
 
 export function doLogout() {
-  if (process.env.REACT_APP_STAGE !== 'production')
-    window.gtag('event', 'userLogout_WEBDEV', {
-      event_category: 'User',
-      event_label: 'Logout'
-    });
-  else
+  if (process.env.REACT_APP_STAGE === 'production')
     window.gtag('event', 'userLogout_WEBPRD', {
       event_category: 'User',
       event_label: 'Logout'
@@ -654,12 +618,7 @@ export function doFetchUserInfo(token) {
 }
 export function doRepost(idqso, token, qso) {
   return async dispatch => {
-    if (process.env.REACT_APP_STAGE !== 'production')
-      window.gtag('event', 'repost_WEBDEV', {
-        event_category: 'QSO',
-        event_label: 'repost'
-      });
-    else
+    if (process.env.REACT_APP_STAGE === 'production')
       window.gtag('event', 'repost_WEBPRD', {
         event_category: 'QSO',
         event_label: 'repost'
@@ -768,12 +727,7 @@ export function doAddRepostToFeed(qso) {
 }
 export function doSaveUserInfo(token, qra) {
   return async dispatch => {
-    if (process.env.REACT_APP_STAGE !== 'production')
-      window.gtag('event', 'UserInfoUpdate_WEBDEV', {
-        event_category: 'User',
-        event_label: 'UserInfoUpdate'
-      });
-    else
+    if (process.env.REACT_APP_STAGE === 'production')
       window.gtag('event', 'UserInfoUpdate_WEBPRD', {
         event_category: 'User',
         event_label: 'UserInfoUpdate'
@@ -847,12 +801,7 @@ export function doReceiveUserDataInfo(qra) {
 }
 export function doSaveUserBio(token, bio, identityId) {
   return async dispatch => {
-    if (process.env.REACT_APP_STAGE !== 'production')
-      window.gtag('event', 'UserBioUpdate_WEBDEV', {
-        event_category: 'User',
-        event_label: 'UserBioUpdate'
-      });
-    else
+    if (process.env.REACT_APP_STAGE === 'production')
       window.gtag('event', 'UserBioUpdate_WEBPRD', {
         event_category: 'User',
         event_label: 'UserBioUpdate'
@@ -932,13 +881,7 @@ export function doFetchUserFeed(token, qra) {
     window.gtag('config', 'G-H8G28LYKBY', {
       custom_map: { dimension1: 'userQRA' }
     });
-    if (process.env.REACT_APP_STAGE !== 'production')
-      window.gtag('event', 'getUserFeed_WEBDEV', {
-        event_category: 'User',
-        event_label: 'getUserFeed',
-        userQRA: qra
-      });
-    else
+    if (process.env.REACT_APP_STAGE === 'production')
       window.gtag('event', 'getUserFeed_WEBPRD', {
         event_category: 'User',
         event_label: 'getUserFeed',
@@ -1010,12 +953,7 @@ export function doFetchUserFeed(token, qra) {
 }
 export function doFollowFetch(token) {
   return async dispatch => {
-    if (process.env.REACT_APP_STAGE !== 'production')
-      window.gtag('event', 'getRecFollow_WEBDEV', {
-        event_category: 'User',
-        event_label: 'getRecFollow'
-      });
-    else
+    if (process.env.REACT_APP_STAGE === 'production')
       window.gtag('event', 'getRecFollow_WEBPRD', {
         event_category: 'User',
         event_label: 'getRecFollow'
@@ -1082,12 +1020,7 @@ export function doFollowFetch(token) {
 }
 export function doFetchNotifications(token) {
   return async dispatch => {
-    if (process.env.REACT_APP_STAGE !== 'production')
-      window.gtag('event', 'NotificationGet_WEBDEV', {
-        event_category: 'User',
-        event_label: 'NotificationGet'
-      });
-    else
+    if (process.env.REACT_APP_STAGE === 'production')
       window.gtag('event', 'NotificationGet_WEBPRD', {
         event_category: 'User',
         event_label: 'NotificationGet'
@@ -1159,26 +1092,14 @@ export function doFetchPublicFeed(qra = null) {
     custom_map: { dimension1: 'userQRA' }
   });
   if (!qra) {
-    if (process.env.REACT_APP_STAGE !== 'production')
-      window.gtag('event', 'getPublicFeed_WEBDEV', {
-        event_category: 'User',
-        event_label: 'getPublicFeed',
-        userQRA: qra
-      });
-    else
+    if (process.env.REACT_APP_STAGE === 'production')
       window.gtag('event', 'getPublicFeed_WEBPRD', {
         event_category: 'User',
         event_label: 'getPublicFeed',
         userQRA: qra
       });
   } else {
-    if (process.env.REACT_APP_STAGE !== 'production')
-      window.gtag('event', 'getUserFeed_WEBDEV', {
-        event_category: 'User',
-        event_label: 'getUserFeed',
-        userQRA: qra
-      });
-    else
+    if (process.env.REACT_APP_STAGE === 'production')
       window.gtag('event', 'getUserFeed_WEBPRD', {
         event_category: 'User',
         event_label: 'getUserFeed',
@@ -1285,13 +1206,7 @@ export function doFetchQSO(idqso, token = null) {
     custom_map: { dimension2: 'qso' }
   });
 
-  if (process.env.REACT_APP_STAGE !== 'production')
-    window.gtag('event', 'qsoGetDetail_WEBDEV', {
-      event_category: 'QSO',
-      event_label: 'getDetail',
-      qso: idqso
-    });
-  else
+  if (process.env.REACT_APP_STAGE === 'production')
     window.gtag('event', 'qsoGetDetail_WEBPRD', {
       event_category: 'QSO',
       event_label: 'getDetail',
@@ -1405,13 +1320,7 @@ export function doFetchQsoLink(idqso) {
   window.gtag('config', 'G-H8G28LYKBY', {
     custom_map: { dimension2: 'qsoLink' }
   });
-  if (process.env.REACT_APP_STAGE !== 'production')
-    window.gtag('event', 'qsoGetLinkDetail_WEBDEV', {
-      event_category: 'QSO',
-      event_label: 'getLinkDetail',
-      qsoLink: idqso
-    });
-  else
+  if (process.env.REACT_APP_STAGE === 'production')
     window.gtag('event', 'qsoGetLinkDetail_WEBPRD', {
       event_category: 'QSO',
       event_label: 'getLinkDetail',
@@ -1484,13 +1393,7 @@ export function doFetchQRA(qra, token = null) {
     custom_map: { dimension3: 'qra' }
   });
 
-  if (process.env.REACT_APP_STAGE !== 'production')
-    window.gtag('event', 'qraGetDetail_WEBDEV', {
-      event_category: 'QRA',
-      event_label: 'getDetail',
-      qra: qra
-    });
-  else
+  if (process.env.REACT_APP_STAGE === 'production')
     window.gtag('event', 'qraGetDetail_WEBPRD', {
       event_category: 'QRA',
       event_label: 'getDetail',
@@ -1604,12 +1507,7 @@ export function doFetchQRA(qra, token = null) {
 }
 
 export function doFollowQRA(token, follower) {
-  if (process.env.REACT_APP_STAGE !== 'production')
-    window.gtag('event', 'qraFollow_WEBDEV', {
-      event_category: 'User',
-      event_label: 'follow'
-    });
-  else
+  if (process.env.REACT_APP_STAGE === 'production')
     window.gtag('event', 'qraFollow_WEBPRD', {
       event_category: 'User',
       event_label: 'follow'
@@ -1682,12 +1580,7 @@ export function doFollowQRA(token, follower) {
 }
 
 export function doUnfollowQRA(token, follower) {
-  if (process.env.REACT_APP_STAGE !== 'production')
-    window.gtag('event', 'qraUnfollow_WEBDEV', {
-      event_category: 'User',
-      event_label: 'unfollow'
-    });
-  else
+  if (process.env.REACT_APP_STAGE === 'production')
     window.gtag('event', 'qraUnfollow_WEBPRD', {
       event_category: 'User',
       event_label: 'unfollow'
@@ -1808,12 +1701,7 @@ export function doReceiveFollowers(following) {
 }
 
 export function doQsoMediaPlay(idMedia, token, idqso) {
-  if (process.env.REACT_APP_STAGE !== 'production')
-    window.gtag('event', 'qsoMediaPlay_WEBDEV', {
-      event_category: 'QSO',
-      event_label: 'mediaPlay'
-    });
-  else
+  if (process.env.REACT_APP_STAGE === 'production')
     window.gtag('event', 'qsoMediaPlay_WEBPRD', {
       event_category: 'QSO',
       event_label: 'mediaPlay'
@@ -1881,12 +1769,7 @@ export function doQsoMediaPlay(idMedia, token, idqso) {
   };
 }
 export function doQsoMediaPlayPublic(idMedia, idqso) {
-  if (process.env.REACT_APP_STAGE !== 'production')
-    window.gtag('event', 'qsoMediaPlay_WEBDEV', {
-      event_category: 'QSO',
-      event_label: 'mediaPlayPublic'
-    });
-  else
+  if (process.env.REACT_APP_STAGE === 'production')
     window.gtag('event', 'qsoMediaPlay_WEBPRD', {
       event_category: 'QSO',
       event_label: 'mediaPlayPublic'
@@ -1959,12 +1842,7 @@ export function doReceiveMediaCounter(data) {
 }
 
 export function doQslCardPrint(idqso, token) {
-  if (process.env.REACT_APP_STAGE !== 'production')
-    window.gtag('event', 'qsoQSLCardPrint_WEBDEV', {
-      event_category: 'QSO',
-      event_label: 'QSLCardPrint'
-    });
-  else
+  if (process.env.REACT_APP_STAGE === 'production')
     window.gtag('event', 'qsoQSLCardPrint_WEBPRD', {
       event_category: 'QSO',
       event_label: 'QSLCardPrint'

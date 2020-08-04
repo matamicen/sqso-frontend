@@ -28,11 +28,8 @@ const Tutorials = ({ t }) => (
           controls
           controlsList="nodownload"
           onPlay={() => {
-            if (process.env.NODE_ENV !== 'production')
-              window.gtag('event', 'tutorialPlay_WEBDEV', {
-                video_name: 'tutorialCompleto'
-              });
-            else
+            if (process.env.NODE_ENV === 'production')
+ 
               window.gtag('event', 'tutorialPlay_WEBPRD', {
                 video_name: 'tutorialCompleto'
               });
@@ -49,11 +46,8 @@ const Tutorials = ({ t }) => (
         </Header>
         <Header as="h3">¿Como postear un QSO?</Header>
         <video width="100%" controls controlsList="nodownload" onPlay={() => {
-            if (process.env.REACT_APP_STAGE !== 'production')
-              window.gtag('event', 'tutorialPlay_WEBDEV', {
-                video_name: 'PostQSO_alta'
-              });
-            else
+            if (process.env.NODE_ENV === 'production')
+           
               window.gtag('event', 'tutorialPlay_WEBPRD', {
                 video_name: 'PostQSO_alta'
               });
@@ -80,11 +74,8 @@ const Tutorials = ({ t }) => (
           nuestra estación.
         </p>
         <video width="100%" controls controlsList="nodownload" onPlay={() => {
-            if (process.env.REACT_APP_STAGE !== 'production')
-              window.gtag('event', 'tutorialPlay_WEBDEV', {
-                video_name: 'Post+de+una+escucha'
-              });
-            else
+           if (process.env.NODE_ENV === 'production')
+            
               window.gtag('event', 'tutorialPlay_WEBPRD', {
                 video_name: 'Post+de+una+escucha'
               });
@@ -111,11 +102,8 @@ const Tutorials = ({ t }) => (
           tambien y no necesita buscarlo.
         </p>
         <video width="100%" controls controlsList="nodownload" onPlay={() => {
-            if (process.env.REACT_APP_STAGE !== 'production')
-              window.gtag('event', 'tutorialPlay_WEBDEV', {
-                video_name: 'PostANY'
-              });
-            else
+            if (process.env.NODE_ENV === 'production')
+            
               window.gtag('event', 'tutorialPlay_WEBPRD', {
                 video_name: 'PostANY'
               });
@@ -140,11 +128,8 @@ const Tutorials = ({ t }) => (
         <p>Podes empezar a seguir a un colega desde la APP y la Web.</p>
 
         <video width="100%" controls controlsList="nodownload" onPlay={() => {
-            if (process.env.REACT_APP_STAGE !== 'production')
-              window.gtag('event', 'tutorialPlay_WEBDEV', {
-                video_name: 'Seguir+a+un+colega'
-              });
-            else
+           if (process.env.NODE_ENV === 'production')
+              
               window.gtag('event', 'tutorialPlay_WEBPRD', {
                 video_name: 'Seguir+a+un+colega'
               });
@@ -164,11 +149,8 @@ const Tutorials = ({ t }) => (
         </p>
         <p> Desde la WEB haces click en la campanita arriba a la derecha.</p>
         <video width="100%" controls controlsList="nodownload" onPlay={() => {
-            if (process.env.REACT_APP_STAGE !== 'production')
-              window.gtag('event', 'tutorialPlay_WEBDEV', {
-                video_name: 'Leer+notificaciones'
-              });
-            else
+            if (process.env.NODE_ENV === 'production')
+              
               window.gtag('event', 'tutorialPlay_WEBPRD', {
                 video_name: 'Leer+notificaciones'
               });
@@ -197,11 +179,8 @@ const Tutorials = ({ t }) => (
           navegador WEB par que se puede generar el PDF de la tarjeta QSL)
         </p>
         <video width="100%" controls controlsList="nodownload" onPlay={() => {
-            if (process.env.REACT_APP_STAGE !== 'production')
-              window.gtag('event', 'tutorialPlay_WEBDEV', {
-                video_name: 'Imprimir+tarjeta+QSL'
-              });
-            else
+            if (process.env.NODE_ENV === 'production')
+              
               window.gtag('event', 'tutorialPlay_WEBPRD', {
                 video_name: 'Imprimir+tarjeta+QSL'
               });
@@ -223,11 +202,8 @@ const Tutorials = ({ t }) => (
           del celular al codigo QR de la tarjeta.
         </p>
         <video width="100%" controls controlsList="nodownload" onPlay={() => {
-            if (process.env.REACT_APP_STAGE !== 'production')
-              window.gtag('event', 'tutorialPlay_WEBDEV', {
-                video_name: 'Escanear+c%C3%B3digo+QR+de+tarjeta+QSL'
-              });
-            else
+            if (process.env.NODE_ENV === 'production')
+         
               window.gtag('event', 'tutorialPlay_WEBPRD', {
                 video_name: 'Escanear+c%C3%B3digo+QR+de+tarjeta+QSL'
               });
@@ -254,11 +230,8 @@ const Tutorials = ({ t }) => (
         </p>
 
         <video width="100%" controls controlsList="nodownload" onPlay={() => {
-            if (process.env.REACT_APP_STAGE !== 'production')
-              window.gtag('event', 'tutorialPlay_WEBDEV', {
-                video_name: 'Compartir+en+redes+sociales+desde+la+APP'
-              });
-            else
+            if (process.env.NODE_ENV === 'production')
+             
               window.gtag('event', 'tutorialPlay_WEBPRD', {
                 video_name: 'Compartir+en+redes+sociales+desde+la+APP'
               });
@@ -281,11 +254,8 @@ const Tutorials = ({ t }) => (
           hacer click en compartir.
         </p>
         <video width="100%" controls controlsList="nodownload" onPlay={() => {
-            if (process.env.REACT_APP_STAGE !== 'production')
-              window.gtag('event', 'tutorialPlay_WEBDEV', {
-                video_name: 'Compartir+en+redes+sociales+desde+la+Web'
-              });
-            else
+            if (process.env.NODE_ENV === 'production')
+            
               window.gtag('event', 'tutorialPlay_WEBPRD', {
                 video_name: 'Compartir+en+redes+sociales+desde+la+Web'
               });
@@ -306,11 +276,8 @@ const Tutorials = ({ t }) => (
           POST?
         </Header>
         <video width="100%" controls controlsList="nodownload" onPlay={() => {
-            if (process.env.REACT_APP_STAGE !== 'production')
-              window.gtag('event', 'tutorialPlay_WEBDEV', {
-                video_name: 'Comentar%2C+Like+y+Repostear'
-              });
-            else
+            if (process.env.NODE_ENV === 'production')
+           
               window.gtag('event', 'tutorialPlay_WEBPRD', {
                 video_name: 'Comentar%2C+Like+y+Repostear'
               });

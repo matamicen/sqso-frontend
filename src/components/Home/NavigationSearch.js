@@ -21,6 +21,11 @@ class NavigationSearch extends Component {
     this.setState({ value: value });
   }
   getUsers(input) {
+    if (process.env.REACT_APP_STAGE === 'production')
+    window.gtag('event', 'qraNavBarSearch_WEBPRD', {
+      event_category: 'qra',
+      event_label: 'navBarSearch'
+    });
     let result = [];
     if (!input) {
       return Promise.resolve({ options: [] });
@@ -69,7 +74,15 @@ class NavigationSearch extends Component {
       this.setState({ value: null });
       return <Redirect to={'/' + this.state.value.qra} />;
     }
+    const customStyles = {
+      control: base => ({
+        ...base,
+        height: 40,
+        minHeight: 40,
+        fontSize: "0.8rem"
 
+      })
+    };
     return (
       <div className="NavBar">
         <Async
@@ -83,6 +96,7 @@ class NavigationSearch extends Component {
           autoload={false}
           autosize={false}
           autoclear={true}
+          styles={customStyles}
           components={{
             Option
           }}

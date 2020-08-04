@@ -417,7 +417,8 @@ gap: 10px;
   .mobile {
     display: block;
     padding: 0;
-    height: 49px;
+    margin: 3px;
+    height: 40px;
   }
   .desktop {
     display: none;
