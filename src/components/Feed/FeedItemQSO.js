@@ -11,6 +11,7 @@ import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider';
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
 import Image from 'semantic-ui-react/dist/commonjs/elements/Image';
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment';
+import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
 import * as Actions from '../../actions';
 import '../../styles/style.css';
 import PopupToFollow from '../PopupToFollow';
@@ -28,21 +29,12 @@ import './style.css';
 class FeedItemQSO extends React.PureComponent {
   constructor() {
     super();
-    this.state = { comments: [], likes: [], error: null };
+    this.state = { showComments: false, comments: [], likes: [], error: null };
 
     this.recalculateRowHeight = this.recalculateRowHeight.bind(this);
   }
 
-  handleOnComment(e) {
-    if (!this.props.isAuthenticated && this.props.qso.comments.length === 0)
-      this.setState({ openLogin: true });
-    else if (this.props.currentQRA || this.props.qso.comments.length > 0) {
-      this.props.showComments(this.props.index);
-      this.recalculateRowHeight();
-    }
-    // this.recalculateRowHeight(); this.props.recalculateRowHeight()
-  }
-
+  
   recalculateRowHeight() {
     if (this.props.recalculateRowHeight) {
       this.props.recalculateRowHeight(this.props.index);
@@ -61,6 +53,7 @@ class FeedItemQSO extends React.PureComponent {
   }
 
   render() {
+    
     const { t } = this.props;
     const picList = this.props.qso.media.filter(
       media => media.type === 'image'
@@ -235,7 +228,7 @@ class FeedItemQSO extends React.PureComponent {
               qso={this.props.qso}
               recalculateRowHeight={this.recalculateRowHeight}
             />
-            <Button onClick={e => this.handleOnComment(e)}>
+            <Button onClick={() => this.setState({ showComments: true })}>
               <div>
                 <Icon name="comment outline" />{' '}
                 {this.props.qso.comments.length > 0 && commentsCounter}
@@ -247,13 +240,33 @@ class FeedItemQSO extends React.PureComponent {
               title={shareText}
             />
           </Button.Group>
-          {this.props.qso.showComments && (
-            <QSOComments
-              qso={this.props.qso}
-              comments={this.state.comments}
-              recalculateRowHeight={this.recalculateRowHeight}
-            />
-          )}
+
+          <Modal
+            size="tiny"
+            centered={true}
+            closeIcon={{
+              style: { top: '0.0535rem', right: '0rem' },
+              color: 'black',
+              name: 'close'
+            }}
+            open={this.state.showComments}
+            onClose={()=>this.setState({ showComments: false })}
+            style={{
+              //height: '90%',
+              overflowY: 'auto'
+            }}
+          >
+            <Modal.Header>{t('qso.comments')} </Modal.Header>
+            <Modal.Content>
+              <Modal.Description>
+                <QSOComments
+                  qso={this.props.qso}
+                  comments={this.state.comments}
+                  recalculateRowHeight={this.recalculateRowHeight}
+                />        
+              </Modal.Description>
+            </Modal.Content>
+          </Modal>
         </Segment>
         <Confirm
           size="mini"
@@ -275,13 +288,13 @@ class FeedItemQSO extends React.PureComponent {
 }
 FeedItemQSO.propTypes = {
   currentQRA: PropTypes.string,
-  showComments: PropTypes.func,
+  
   recalculateRowHeight: PropTypes.func,
   measure: PropTypes.string,
   index: PropTypes.string
 };
 const mapStateToProps = (state, qsos) => ({
-  isAuthenticated: state.userData.isAuthenticated,
+  
   fetchingQSOS: state.FetchingQSOS,
   qsosFetched: state.qsosFetched,
   currentQRA: state.userData.currentQRA
