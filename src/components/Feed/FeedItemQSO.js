@@ -191,20 +191,17 @@ class FeedItemQSO extends React.PureComponent {
             style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
           />
 
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <Segment compact  className="feed-item-qras-segment">
-              <QRAs
-                avatarpic={this.props.qso.avatarpic}
-                qso_owner={this.props.qso.qra}
-                qras={this.props.qso.qras}
-              />
-            </Segment>
-          </div>
+          <QRAs
+            avatarpic={this.props.qso.avatarpic}
+            qso_owner={this.props.qso.qra}
+            qras={this.props.qso.qras}
+          />
+
           {picList.length > 0 && (
             <Fragment>
               <Divider
                 hidden
-                 style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
+                style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
               />
               <FeedImage
                 img={picList}
@@ -218,7 +215,7 @@ class FeedItemQSO extends React.PureComponent {
             <Fragment>
               <Divider
                 hidden
-                 style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
+                style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
               />
               <FeedAudioList
                 mediaList={audioList}

@@ -154,19 +154,18 @@ class FeedItemPost extends React.PureComponent {
           </div>
 
           {this.props.qso.qras.length > 0 && (
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <Fragment>
               <Divider
                 hidden
                 style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
               />
-              <Segment compact className="feed-item-qras-segment">
-                <QRAs
-                  avatarpic={this.props.qso.avatarpic}
-                  qso_owner={this.props.qso.qra}
-                  qras={this.props.qso.qras}
-                />
-              </Segment>
-            </div>
+
+              <QRAs
+                avatarpic={this.props.qso.avatarpic}
+                qso_owner={this.props.qso.qra}
+                qras={this.props.qso.qras}
+              />
+            </Fragment>
           )}
           {picList.length > 0 && (
             <Fragment>
