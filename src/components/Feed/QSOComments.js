@@ -23,6 +23,12 @@ class QSOComments extends React.PureComponent {
   }
 
   componentDidMount() {
+    if (process.env.REACT_APP_STAGE === 'production')
+
+      window.gtag('event', 'qsoCommentModalOpen_WEBPRD', {
+        event_category: 'qso',
+        event_label: 'commentModalOpen'
+      });
     if (this.props.qso.comments) {
       this.setState({ comments: this.props.qso.comments });
     }

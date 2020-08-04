@@ -50,12 +50,8 @@ class FeedOptionsMenu extends React.PureComponent {
   }
   handleOnSubmitReportComment(e) {
     const { t } = this.props;
-    if (process.env.REACT_APP_STAGE !== 'production')
-      window.gtag('event', 'reportComment_WEBDEV', {
-        event_category: 'QSO',
-        event_label: 'reportComment'
-      });
-    else
+    if (process.env.REACT_APP_STAGE === 'production')
+     
       window.gtag('event', 'reportContent_WEBPRD', {
         event_category: 'QSO',
         event_label: 'reportComment'
@@ -107,12 +103,8 @@ class FeedOptionsMenu extends React.PureComponent {
   handleOnSubmitReportQso(e) {
     // e.preventDefault();
     const { t } = this.props;
-    if (process.env.REACT_APP_STAGE !== 'production')
-      window.gtag('event', 'reportQSO_WEBDEV', {
-        event_category: 'QSO',
-        event_label: 'reportQSO'
-      });
-    else
+    if (process.env.REACT_APP_STAGE === 'production')
+
       window.gtag('event', 'reportContent_WEBPRD', {
         event_category: 'QSO',
         event_label: 'reportQSO'
@@ -161,12 +153,8 @@ class FeedOptionsMenu extends React.PureComponent {
   }
   handleOnSubmitReportMedia(e) {
     const { t } = this.props;
-    if (process.env.REACT_APP_STAGE !== 'production')
-      window.gtag('event', 'reportMedia_WEBDEV', {
-        event_category: 'QSO',
-        event_label: 'reportMedia'
-      });
-    else
+    if (process.env.REACT_APP_STAGE === 'production')
+
       window.gtag('event', 'reportMedia_WEBPRD', {
         event_category: 'QSO',
         event_label: 'reportMedia'

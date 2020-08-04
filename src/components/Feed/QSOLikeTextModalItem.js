@@ -13,6 +13,11 @@ class QSOLikeTextModalItem extends React.PureComponent {
     this.state = { followed: null };
   }
   componentDidMount() {
+    if (process.env.REACT_APP_STAGE === 'production')
+    window.gtag('event', 'qsoLikeModalOpen_WEBPRD', {
+      event_category: 'qso',
+      event_label: 'qsoLikeModalOpen'
+    });
     // this.setState({ likes: this.props.qso ? this.props.qso.likes : [] });
   }
   // static getDerivedStateFromProps(props, prevState) {

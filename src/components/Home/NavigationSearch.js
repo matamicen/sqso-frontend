@@ -21,6 +21,11 @@ class NavigationSearch extends Component {
     this.setState({ value: value });
   }
   getUsers(input) {
+    if (process.env.REACT_APP_STAGE === 'production')
+    window.gtag('event', 'qraNavBarSearch_WEBPRD', {
+      event_category: 'qra',
+      event_label: 'navBarSearch'
+    });
     let result = [];
     if (!input) {
       return Promise.resolve({ options: [] });

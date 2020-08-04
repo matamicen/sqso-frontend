@@ -50,7 +50,13 @@ class FeedImage extends React.Component {
   }
 
   close = () => this.setState({ showModal: false });
-  open = () => this.setState({ showModal: true });
+  open = () => {
+    if (process.env.REACT_APP_STAGE === 'production')
+    window.gtag('event', 'qsoImageModalOpen_WEBPRD', {
+      event_category: 'qso',
+      event_label: 'imageModalOpen'
+    });
+    this.setState({ showModal: true });}
   render() {
     var settings = {
       infinite: true,
@@ -132,7 +138,7 @@ class FeedImage extends React.Component {
                     }}
                   />
 
-                  <p style={{fontSize: 'medium', textAlign :"center"}}>{m.description}</p>
+                  <p style={{fontSize: 'small', textAlign :"center"}}>{m.description}</p>
                 </div>
               ))}
             </Modal.Description>
