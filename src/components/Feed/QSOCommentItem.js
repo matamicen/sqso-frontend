@@ -16,7 +16,7 @@ class QSOCommentItem extends React.Component {
   };
 
   componentDidUpdate = () => {
-    this.props.recalculateRowHeight();
+    // this.props.recalculateRowHeight();
   };
   render() {
     const { t } = this.props;

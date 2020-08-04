@@ -11,6 +11,7 @@ import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider';
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
 import Image from 'semantic-ui-react/dist/commonjs/elements/Image';
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment';
+import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
 import * as Actions from '../../actions';
 import '../../styles/style.css';
 import PopupToFollow from '../PopupToFollow';
@@ -28,19 +29,11 @@ import './style.css';
 class FeedItemPost extends React.PureComponent {
   constructor() {
     super();
-    this.state = { comments: [], likes: [], error: null };
-    this.handleOnComment = this.handleOnComment.bind(this);
+    this.state = { showComments: false, comments: [], likes: [], error: null };
+    
     this.recalculateRowHeight = this.recalculateRowHeight.bind(this);
   }
-  handleOnComment = () => {
-    if (!this.props.isAuthenticated && this.props.qso.comments.length === 0)
-      this.setState({ openLogin: true });
-    else if (this.props.currentQRA || this.props.qso.comments.length > 0) {
-      this.props.showComments(this.props.index);
-      this.recalculateRowHeight();
-    }
-    // this.recalculateRowHeight(); this.props.recalculateRowHeight()
-  };
+
 
   recalculateRowHeight() {
     if (this.props.recalculateRowHeight)
@@ -136,7 +129,6 @@ class FeedItemPost extends React.PureComponent {
               </div>
             </div>
 
-            {/* {date.toLocaleDateString("i18n.language", {month: "short"}) + ' ' + date.getDate() + ', ' + date.getFullYear()} */}
             <div
               className="qso-header-button"
               style={{
@@ -154,26 +146,25 @@ class FeedItemPost extends React.PureComponent {
             </div>
           </div>
 
-          <Divider
-            hidden
-            style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
-          />
           {this.props.qso.qras.length > 0 && (
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-               <Segment compact className="feed-item-qras-segment">
-                <QRAs
-                  avatarpic={this.props.qso.avatarpic}
-                  qso_owner={this.props.qso.qra}
-                  qras={this.props.qso.qras}
-                />
-              </Segment>
-            </div>
+            <Fragment>
+              <Divider
+                hidden
+                style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
+              />
+
+              <QRAs
+                avatarpic={this.props.qso.avatarpic}
+                qso_owner={this.props.qso.qra}
+                qras={this.props.qso.qras}
+              />
+            </Fragment>
           )}
           {picList.length > 0 && (
             <Fragment>
               <Divider
                 hidden
-                style={{ marginTop: '1vh', marginBottom: '1vh' }}
+                style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
               />
               <FeedImage
                 img={picList}
@@ -187,7 +178,7 @@ class FeedItemPost extends React.PureComponent {
             <Fragment>
               <Divider
                 hidden
-                style={{ marginTop: '1vh', marginBottom: '1vh' }}
+                style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
               />
               <FeedAudioList
                 mediaList={audioList}
@@ -200,14 +191,17 @@ class FeedItemPost extends React.PureComponent {
           {this.props.qso.links && (
             <FeedLinkList links={this.props.qso.links} />
           )}
-          <Divider hidden style={{ marginTop: '2vh', marginBottom: '2vh' }} />
+          <Divider
+            hidden
+            style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
+          />
           <QSOLikeText qso={this.props.qso} likes={this.state.likes} />
           <Button.Group fluid basic>
             <QSOLikeButton
               qso={this.props.qso}
               recalculateRowHeight={this.recalculateRowHeight}
             />
-            <Button onClick={e => this.handleOnComment(e)}>
+              <Button onClick={() => this.setState({ showComments: true })}>
               <div>
                 <Icon name="comment outline" />{' '}
                 {this.props.qso.comments.length > 0 && commentsCounter}
@@ -219,13 +213,34 @@ class FeedItemPost extends React.PureComponent {
               title={shareText}
             />
           </Button.Group>
-          {this.props.qso.showComments && (
-            <QSOComments
+          <Modal
+            size="tiny"
+            centered={true}
+            closeIcon={{
+              style: { top: '0.0535rem', right: '0rem' },
+              color: 'black',
+              name: 'close'
+            }}
+            open={this.state.showComments}
+            onClose={()=>this.setState({ showComments: false })}
+            style={{
+              //height: '90%',
+              overflowY: 'auto'
+            }}
+          >
+            <Modal.Header>{t('qso.comments')} </Modal.Header>
+            <Modal.Content>
+              <Modal.Description>
+              <QSOComments
               qso={this.props.qso}
               comments={this.state.comments}
-              recalculateRowHeight={this.recalculateRowHeight}
-            />
-          )}
+              // recalculateRowHeight={this.recalculateRowHeight}
+            />    
+              </Modal.Description>
+            </Modal.Content>
+          </Modal>
+          
+          
         </Segment>
         <Confirm
           size="mini"

@@ -143,6 +143,7 @@
     "sharedPOST": "{{QRA}} republicó una publicación"
   },
   "qso": {
+    "comments": "Comentarios",
     "audioPlays": " - {{count}} Reproducción",
     "audioPlays_plural": " - {{count}} Reproducciones",
     "callsignTagged": "SD/Colegas etiquetadas",

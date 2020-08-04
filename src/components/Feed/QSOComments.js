@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import TextareaAutosize from 'react-textarea-autosize';
 import { bindActionCreators } from 'redux';
+import Confirm from 'semantic-ui-react/dist/commonjs/addons/Confirm';
 import Form from 'semantic-ui-react/dist/commonjs/collections/Form';
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
 import Comment from 'semantic-ui-react/dist/commonjs/views/Comment';
@@ -13,7 +15,8 @@ class QSOComments extends React.PureComponent {
     super();
     this.state = {
       comments: [],
-      comment: ''
+      comment: '',
+      openLogin: false
     };
 
     this.handleAddComment = this.handleAddComment.bind(this);
@@ -29,36 +32,39 @@ class QSOComments extends React.PureComponent {
   };
 
   handleAddComment = e => {
-    // e.preventDefault();
-    if (this.state.comment === '') return;
+    if (!this.props.isAuthenticated) this.setState({ openLogin: true });
+    else {
+      // e.preventDefault();
+      if (this.state.comment === '') return;
 
-    let datetime = new Date();
-    let comment = {
-      qra: this.props.qra.toUpperCase(),
-      comment: this.state.comment,
-      datetime: datetime
-    };
-    this.setState({ comment: comment });
-    // this.setState({
-    //   comments: this.state.comments.concat(comment)
-    // });
-    // e.target.comment.value = null;
-    this.setState({ comment: '' });
-    this.props.recalculateRowHeight();
+      let datetime = new Date();
+      let comment = {
+        qra: this.props.qra.toUpperCase(),
+        comment: this.state.comment,
+        datetime: datetime
+      };
+      this.setState({ comment: comment });
+      // this.setState({
+      //   comments: this.state.comments.concat(comment)
+      // });
+      // e.target.comment.value = null;
+      this.setState({ comment: '' });
+      // this.props.recalculateRowHeight();
 
-    comment.firstname = this.props.firstname;
-    comment.lastname = this.props.lastname;
-    comment.avatarpic = this.props.avatarpic;
-    comment.idqso = this.props.qso.idqso_shared
-      ? this.props.qso.idqso_shared
-      : this.props.qso.idqsos;
+      comment.firstname = this.props.firstname;
+      comment.lastname = this.props.lastname;
+      comment.avatarpic = this.props.avatarpic;
+      comment.idqso = this.props.qso.idqso_shared
+        ? this.props.qso.idqso_shared
+        : this.props.qso.idqsos;
 
-    this.props.actions.doCommentAdd(
-      this.props.qso.idqsos,
-      comment,
-      this.props.token,
-      this.props.qso.idqso_shared
-    );
+      this.props.actions.doCommentAdd(
+        this.props.qso.idqsos,
+        comment,
+        this.props.token,
+        this.props.qso.idqso_shared
+      );
+    }
   };
   static getDerivedStateFromProps(props, prevState) {
     if (props.qso.comments !== prevState.comments)
@@ -66,7 +72,7 @@ class QSOComments extends React.PureComponent {
     return null;
   }
   componentDidUpdate = () => {
-    this.props.recalculateRowHeight();
+    // this.props.recalculateRowHeight();
   };
   render() {
     const { t } = this.props;
@@ -77,44 +83,57 @@ class QSOComments extends React.PureComponent {
         <QSOCommentItem
           key={i}
           comment={comment}
-          recalculateRowHeight={this.props.recalculateRowHeight}
+          // recalculateRowHeight={this.props.recalculateRowHeight}
         />
       ));
     }
 
     let form = null;
 
-    if (this.props.isAuthenticated) {
-      form = (
-        <Form size="mini" reply onSubmit={this.handleAddComment}>
-          <Form.Group>
-            <TextareaAutosize
-              value={this.state.comment}
-              onChange={e => this.setState({ comment: e.target.value })}
-              onHeightChange={this.props.recalculateRowHeight}
-              fontSize={12}
-              style={{
-                fontSize: '1.1rem',
-                paddingTop: '5px',
-                paddingBottom: '5px'
-              }}
-              placeholder={t('qso.writeComment')}
-              rows={4}
-            />
+    form = (
+      <Form size="mini" reply onSubmit={() => this.handleAddComment()}>
+        <Form.Group>
+          <TextareaAutosize
+            value={this.state.comment}
+            onChange={e => this.setState({ comment: e.target.value })}
+            // onHeightChange={this.props.recalculateRowHeight}
+            fontSize={12}
+            style={{
+              fontSize: '1.1rem',
+              paddingTop: '5px',
+              paddingBottom: '5px'
+            }}
+            placeholder={t('qso.writeComment')}
+            rows={4}
+          />
 
-            <Button size="mini" content={t('qso.add')} />
-          </Form.Group>
-        </Form>
-      );
-    }
-    if (comments || form)
-      return (
+          <Button size="mini" content={t('qso.add')} />
+        </Form.Group>
+      </Form>
+    );
+
+    return (
+      <Fragment>
         <Comment.Group threaded>
           {comments}
           {form}
         </Comment.Group>
-      );
-    else return null;
+        <Confirm
+          size="mini"
+          open={this.state.openLogin}
+          onCancel={() => this.setState({ openLogin: false })}
+          onConfirm={() =>
+            this.props.history.push({
+              pathname: '/login',
+              state: { from: this.props.location.pathname }
+            })
+          }
+          cancelButton={t('global.cancel')}
+          confirmButton={t('auth.login')}
+          content={t('auth.loginToPerformAction')}
+        />
+      </Fragment>
+    );
   }
 }
 
@@ -130,7 +149,7 @@ const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(Actions, dispatch)
 });
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(withTranslation()(QSOComments));
+)(withTranslation()(QSOComments)));

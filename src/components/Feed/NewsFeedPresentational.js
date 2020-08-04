@@ -37,7 +37,7 @@ class NewsFeed extends React.PureComponent {
     //     .bind(this)
     this._rowRenderer = this._rowRenderer.bind(this);
     this.recalculateRowHeight = this.recalculateRowHeight.bind(this);
-    this.showComments = this.showComments.bind(this);
+    
     this._setListRef = this._setListRef.bind(this);
   }
 
@@ -81,7 +81,7 @@ class NewsFeed extends React.PureComponent {
                 source={row.source}
                 measure={measure}
                 recalculateRowHeight={this.recalculateRowHeight}
-                showComments={index => this.showComments(index)}
+               
                 index={index}
               />
             </div>
@@ -108,13 +108,7 @@ class NewsFeed extends React.PureComponent {
   _setListRef = ref => {
     this.setState({ _list: ref });
   };
-  showComments = index => {
-    let localList = this.state.list;
-    localList[index].qso.showComments = !this.state.list[index].qso
-      .showComments;
-    this.setState({ list: localList });
-    if (!localList[index].qso.showComments) this.recalculateRowHeight();
-  };
+
 
   recalculateRowHeight(index) {
     this._cache.clearAll();

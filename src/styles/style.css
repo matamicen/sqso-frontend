@@ -133,12 +133,12 @@
 .feed-item-comments {
   overflow: 'visible';
 }
-.feed-item-qras-segment {
+/* .feed-item-qras-segment {
   padding-top: 1vh;
   padding-bottom: 0.5vh;
   min-width: 30%;
   text-align: center;
-}
+} */
 .feed-item-qras {
   
   display: flex;
