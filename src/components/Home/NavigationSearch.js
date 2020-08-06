@@ -22,10 +22,10 @@ class NavigationSearch extends Component {
   }
   getUsers(input) {
     if (process.env.REACT_APP_STAGE === 'production')
-    window.gtag('event', 'qraNavBarSearch_WEBPRD', {
-      event_category: 'qra',
-      event_label: 'navBarSearch'
-    });
+      window.gtag('event', 'qraNavBarSearch_WEBPRD', {
+        event_category: 'qra',
+        event_label: 'navBarSearch'
+      });
     let result = [];
     if (!input) {
       return Promise.resolve({ options: [] });
@@ -79,35 +79,36 @@ class NavigationSearch extends Component {
         ...base,
         height: 40,
         minHeight: 40,
-        fontSize: "0.8rem"
-
+        fontSize: '0.8rem'
       })
     };
     return (
       <div className="NavBar">
-        <Async
-          multi={false}
-          value={this.state.value}
-          onChange={this.onChange.bind(this)}
-          valueKey="qra"
-          labelKey="name"
-          placeholder={t('navBar.searchCallsign')}
-          loadOptions={this.getUsers.bind(this)}
-          autoload={false}
-          autosize={false}
-          autoclear={true}
-          styles={customStyles}
-          components={{
-            Option
-          }}
-          backspaceRemoves={true}
-          optionClassName="needsclick"
-        />
+        <div className="needsclick">
+          <Async
+            multi={false}
+            value={this.state.value}
+            onChange={this.onChange.bind(this)}
+            valueKey="qra"
+            labelKey="name"
+            placeholder={t('navBar.searchCallsign')}
+            loadOptions={this.getUsers.bind(this)}
+            autoload={false}
+            autosize={false}
+            autoclear={true}
+            styles={customStyles}
+            components={{
+              Option
+            }}
+            backspaceRemoves={true}
+            className="needsclick"
+          />
+        </div>
       </div>
     );
   }
 }
-export default (withTranslation()(NavigationSearch))
+export default withTranslation()(NavigationSearch);
 const GRAVATAR_SIZE = 30;
 const Option = props => {
   const { data } = props;
