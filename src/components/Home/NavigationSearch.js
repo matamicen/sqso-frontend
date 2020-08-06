@@ -101,6 +101,7 @@ class NavigationSearch extends Component {
             Option
           }}
           backspaceRemoves={true}
+          optionClassName="needsclick"
         />
       </div>
     );
