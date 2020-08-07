@@ -25,9 +25,9 @@ class NavigationSearch extends React.PureComponent {
     mc.add(new Hammer.Tap({ event: 'singletap' }));
 
     mc.on('singletap doubletap', () => {
-      window.postMessage("Sending data from WebView");
-      this.setState({ openSearch: true });
-      this.inputRef.focus();
+      window.ReactNativeWebView.postMessage("Hello!")
+      // this.setState({ openSearch: true });
+      // this.inputRef.focus();
     }); // remove ()
   }
   onChange(value) {
@@ -107,7 +107,7 @@ class NavigationSearch extends React.PureComponent {
         <div id="select" className="NavBar">
           <Async
             openMenuOnFocus
-            menuIsOpen={this.state.openSearch}
+            // menuIsOpen={this.state.openSearch}
             multi={false}
             value={this.state.value}
             onChange={this.onChange.bind(this)}
