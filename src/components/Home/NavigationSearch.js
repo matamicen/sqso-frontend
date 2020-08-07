@@ -1,31 +1,43 @@
 // import 'react-select/dist/react-select.css';
 import API from '@aws-amplify/api';
 import * as Sentry from '@sentry/browser';
-import React, { Component } from 'react';
+import Hammer from 'hammerjs';
+import React from 'react';
 import Avatar from 'react-avatar';
 import { withTranslation } from 'react-i18next';
 import { Redirect } from 'react-router-dom';
 import { components } from 'react-select';
 import Async from 'react-select/async';
 import '../../styles/style.css';
-class NavigationSearch extends Component {
+class NavigationSearch extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
+      openSearch: false,
       value: null
     };
   }
-
+  componentDidMount() {
+    const viewerImage = document.getElementById("select")
+    var mc = new Hammer.Manager(viewerImage);
+    mc.add( new Hammer.Tap({ event: 'singletap' }) );
+    
+    mc.on("singletap doubletap", () => {
+      
+      this.setState({openSearch: true})
+      this.DOMNode.focus();
+    }); // remove ()
+  }
   onChange(value) {
     this.setState({ value: value });
   }
   getUsers(input) {
     if (process.env.REACT_APP_STAGE === 'production')
-    window.gtag('event', 'qraNavBarSearch_WEBPRD', {
-      event_category: 'qra',
-      event_label: 'navBarSearch'
-    });
+      window.gtag('event', 'qraNavBarSearch_WEBPRD', {
+        event_category: 'qra',
+        event_label: 'navBarSearch'
+      });
     let result = [];
     if (!input) {
       return Promise.resolve({ options: [] });
@@ -68,6 +80,7 @@ class NavigationSearch extends Component {
       // return json.message; });
     }
   }
+ 
   render() {
     const { t } = this.props;
     if (this.state.value) {
@@ -79,13 +92,18 @@ class NavigationSearch extends Component {
         ...base,
         height: 40,
         minHeight: 40,
-        fontSize: "0.8rem"
-
+        width: '100%',
+        fontSize: '0.8rem'
       })
     };
     return (
-      <div className="NavBar">
+      <div id="select" className="NavBar" >
         <Async
+          openOnFocus
+          ref={ref => {
+            this.DOMNode = ref;
+          }}
+          menuIsOpen={this.state.openSearch}
           multi={false}
           value={this.state.value}
           onChange={this.onChange.bind(this)}
@@ -96,18 +114,17 @@ class NavigationSearch extends Component {
           autoload={false}
           autosize={false}
           autoclear={true}
-          styles={customStyles}
+          // styles={customStyles}
           components={{
             Option
           }}
           backspaceRemoves={true}
-          optionClassName="needsclick"
         />
       </div>
     );
   }
 }
-export default (withTranslation()(NavigationSearch))
+export default withTranslation()(NavigationSearch);
 const GRAVATAR_SIZE = 30;
 const Option = props => {
   const { data } = props;
