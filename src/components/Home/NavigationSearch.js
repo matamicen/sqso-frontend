@@ -2,31 +2,32 @@
 import API from '@aws-amplify/api';
 import * as Sentry from '@sentry/browser';
 import Hammer from 'hammerjs';
-import React from 'react';
+import React, { Fragment } from 'react';
 import Avatar from 'react-avatar';
 import { withTranslation } from 'react-i18next';
 import { Redirect } from 'react-router-dom';
 import { components } from 'react-select';
 import Async from 'react-select/async';
 import '../../styles/style.css';
+
 class NavigationSearch extends React.PureComponent {
   constructor(props) {
     super(props);
-
+    this.inputRef = null;
     this.state = {
       openSearch: false,
       value: null
     };
   }
   componentDidMount() {
-    const viewerImage = document.getElementById("select")
+    const viewerImage = document.getElementById('root');
     var mc = new Hammer.Manager(viewerImage);
-    mc.add( new Hammer.Tap({ event: 'singletap' }) );
-    
-    mc.on("singletap doubletap", () => {
-      
-      this.setState({openSearch: true})
-      this.DOMNode.focus();
+    mc.add(new Hammer.Tap({ event: 'singletap' }));
+
+    mc.on('singletap doubletap', () => {
+      window.postMessage("Sending data from WebView");
+      this.setState({ openSearch: true });
+      this.inputRef.focus();
     }); // remove ()
   }
   onChange(value) {
@@ -80,7 +81,7 @@ class NavigationSearch extends React.PureComponent {
       // return json.message; });
     }
   }
- 
+
   render() {
     const { t } = this.props;
     if (this.state.value) {
@@ -97,30 +98,36 @@ class NavigationSearch extends React.PureComponent {
       })
     };
     return (
-      <div id="select" className="NavBar" >
-        <Async
-          openOnFocus
-          ref={ref => {
-            this.DOMNode = ref;
+      <Fragment>
+        <div
+          ref={inputRef => {
+            this.inputRef = inputRef;
           }}
-          menuIsOpen={this.state.openSearch}
-          multi={false}
-          value={this.state.value}
-          onChange={this.onChange.bind(this)}
-          valueKey="qra"
-          labelKey="name"
-          placeholder={t('navBar.searchCallsign')}
-          loadOptions={this.getUsers.bind(this)}
-          autoload={false}
-          autosize={false}
-          autoclear={true}
-          // styles={customStyles}
-          components={{
-            Option
-          }}
-          backspaceRemoves={true}
         />
-      </div>
+        <div id="select" className="NavBar">
+          <Async
+            openMenuOnFocus
+            menuIsOpen={this.state.openSearch}
+            multi={false}
+            value={this.state.value}
+            onChange={this.onChange.bind(this)}
+            valueKey="qra"
+            labelKey="name"
+            placeholder={t('navBar.searchCallsign')}
+            loadOptions={this.getUsers.bind(this)}
+            autoload={false}
+            autosize={false}
+            autoclear={true}
+            isSearchable={true}
+            inputProps={{ readOnly: false }}
+            // styles={customStyles}
+            components={{
+              Option
+            }}
+            backspaceRemoves={true}
+          />
+        </div>
+      </Fragment>
     );
   }
 }
