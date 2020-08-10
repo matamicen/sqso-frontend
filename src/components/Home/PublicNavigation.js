@@ -7,7 +7,7 @@ import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
 import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
 import global_config from '../../global_config.json';
 import '../../styles/style.css';
-import NavigationSearch from './NavigationSearch';
+import ServerAutoSuggest from './server.autosuggest';
 const PublicNavigation = ({ t }) => (
   <Menu fixed="top" style={{ height: '50px', display: 'flex' }}>
     <Menu.Item
@@ -31,9 +31,9 @@ const PublicNavigation = ({ t }) => (
       </Link>
     </Menu.Item>
     <Menu.Item
-      style={{ flex: '1 1 auto', justifyContent: 'center', padding: '5px' }}
+      style={{ flex: '1 1 auto', padding: '5px' }}
     >
-      <NavigationSearch />
+      <ServerAutoSuggest />
     </Menu.Item>
     <Menu.Item style={{ padding: '5px' }}>
       <Link to="/">

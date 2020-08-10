@@ -13,7 +13,7 @@ import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
 import * as Actions from '../../actions';
 import global_config from '../../global_config.json';
 import '../../styles/style.css';
-import NavigationSearch from './NavigationSearch';
+import ServerAutoSuggest from './server.autosuggest';
 class AuthenticatedNavigation extends React.PureComponent {
   constructor() {
     super();
@@ -82,9 +82,9 @@ class AuthenticatedNavigation extends React.PureComponent {
           </Link>
         </Menu.Item>
         <Menu.Item
-          style={{ flex: '1 1 auto', justifyContent: 'center', padding: '5px' }}
+          style={{ flex: '1 1 auto', padding: '5px' }}
         >
-          <NavigationSearch />
+          <ServerAutoSuggest />
         </Menu.Item>
         <Menu.Item style={{ padding: '5px' }}>
           <Link
