@@ -118,6 +118,7 @@ export function doCommentDelete(idcomment, idqso, token) {
         event_category: 'QSO',
         event_label: 'commentDel'
       });
+      dispatch(doCommentDeleteResponse(idcomment, idqso));
     try {
       // const cognitoUser = Auth.currentAuthenticatedUser();
       // const currentSession = cognitoUser.signInUserSession;
@@ -152,7 +153,7 @@ export function doCommentDelete(idcomment, idqso, token) {
       API.del(apiName, path, myInit)
         .then(response => {
           if (response.body.error === 0) {
-            dispatch(doCommentDeleteResponse(idcomment, idqso));
+           
           } else console.log(response.body.message);
         })
         .catch(async error => {

@@ -7,21 +7,29 @@ import '../../styles/style.css';
 import NewsFeed from './NewsFeedPresentational';
 
 class NewsFeedContainer extends React.PureComponent {
+  state = { qsos: this.props.qsos };
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      this.props.qsos &&
+      JSON.stringify(this.props.qsos) !== JSON.stringify(prevProps.qsos)
+    )
+      this.setState({ qsos: this.props.qsos });
+  }
   render() {
     let qsos = [];
-    if (this.props.qsos && this.props.qsos.length > 0) {
-      for (let i = 0; i < this.props.qsos.length; i++) {
-        qsos.push({
-          qso: this.props.qsos[i],
-          type: this.props.qsos[i].type,
-          source: this.props.qsos[i].source ? this.props.qsos[i].source : null
-        });
-      }
+    // if (this.props.qsos && this.props.qsos.length > 0) {
+    for (let i = 0; i < this.state.qsos.length; i++) {
+      qsos.push({
+        qso: this.state.qsos[i],
+        type: this.state.qsos[i].type,
+        source: this.state.qsos[i].source ? this.state.qsos[i].source : null
+      });
     }
+    // }
 
     return (
       <Fragment>
-        {this.props.qsos && (
+        {this.state.qsos && (
           <NewsFeed
             list={qsos}
             fetchingQSOS={this.props.fetchingQSOS}

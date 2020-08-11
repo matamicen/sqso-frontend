@@ -34,7 +34,6 @@ class FeedItemQSO extends React.PureComponent {
     this.recalculateRowHeight = this.recalculateRowHeight.bind(this);
   }
 
-  
   recalculateRowHeight() {
     if (this.props.recalculateRowHeight) {
       this.props.recalculateRowHeight(this.props.index);
@@ -42,18 +41,25 @@ class FeedItemQSO extends React.PureComponent {
   }
 
   //     }
-  static getDerivedStateFromProps(props, prevState) {
-    if (props.qso.comments !== prevState.comments) {
-      return { comments: props.qso.comments };
-    }
-    if (props.qso.likes !== prevState.likes) {
-      return { likes: props.qso.likes };
-    }
-    return null;
+  // static getDerivedStateFromProps(props, prevState) {
+  //   if (props.qso.comments !== prevState.comments) {
+  //     console.log('update');
+  //     return { qso: props.qso, comments: props.qso.comments };
+  //   }
+  //   if (props.qso.likes !== prevState.likes) {
+  //     return { qso: props.qso, likes: props.qso.likes };
+  //   }
+  //   return null;
+  // }
+  componentDidUpdate(prevProps, prevState) {
+    if (JSON.stringify(this.props.qso) !== JSON.stringify(prevProps.qso))
+      this.setState({
+        qso: this.props.qso,
+        comments: this.props.qso.comments,
+        likes: this.props.qso.likes
+      });
   }
-
   render() {
-    
     const { t } = this.props;
     const picList = this.props.qso.media.filter(
       media => media.type === 'image'
@@ -250,7 +256,7 @@ class FeedItemQSO extends React.PureComponent {
               name: 'close'
             }}
             open={this.state.showComments}
-            onClose={()=>this.setState({ showComments: false })}
+            onClose={() => this.setState({ showComments: false })}
             style={{
               //height: '90%',
               overflowY: 'auto'
@@ -260,10 +266,11 @@ class FeedItemQSO extends React.PureComponent {
             <Modal.Content>
               <Modal.Description>
                 <QSOComments
+                  index={this.props.index}
                   qso={this.props.qso}
-                  comments={this.state.comments}
+                  comments={this.props.comments}
                   recalculateRowHeight={this.recalculateRowHeight}
-                />        
+                />
               </Modal.Description>
             </Modal.Content>
           </Modal>
@@ -288,13 +295,12 @@ class FeedItemQSO extends React.PureComponent {
 }
 FeedItemQSO.propTypes = {
   currentQRA: PropTypes.string,
-  
+
   recalculateRowHeight: PropTypes.func,
   measure: PropTypes.string,
   index: PropTypes.string
 };
 const mapStateToProps = (state, qsos) => ({
-  
   fetchingQSOS: state.FetchingQSOS,
   qsosFetched: state.qsosFetched,
   currentQRA: state.userData.currentQRA

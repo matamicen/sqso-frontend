@@ -29,11 +29,24 @@ import './style.css';
 class FeedItemPost extends React.PureComponent {
   constructor() {
     super();
-    this.state = { showComments: false, comments: [], likes: [], error: null };
-    
+    this.state = {
+      showComments: false,
+      comments: [],
+      likes: [],
+      error: null,
+      qso: null
+    };
+
     this.recalculateRowHeight = this.recalculateRowHeight.bind(this);
   }
-
+  componentDidUpdate(prevProps, prevState) {
+    if (JSON.stringify(this.props.qso) !== JSON.stringify(prevProps.qso))
+      this.setState({
+        qso: this.props.qso,
+        comments: this.props.qso.comments,
+        likes: this.props.qso.likes
+      });
+  }
 
   recalculateRowHeight() {
     if (this.props.recalculateRowHeight)
@@ -41,14 +54,14 @@ class FeedItemPost extends React.PureComponent {
   }
 
   //     }
-  static getDerivedStateFromProps(props, prevState) {
-    if (props.qso.comments !== prevState.comments)
-      return { comments: props.qso.comments };
-    if (props.qso.likes !== prevState.likes) {
-      return { likes: props.qso.likes };
-    }
-    return null;
-  }
+  // static getDerivedStateFromProps(props, prevState) {
+  //   if (props.qso.comments !== prevState.comments)
+  //     return { comments: props.qso.comments };
+  //   if (props.qso.likes !== prevState.likes) {
+  //     return { likes: props.qso.likes };
+  //   }
+  //   return null;
+  // }
   render() {
     const { t } = this.props;
 
@@ -201,7 +214,7 @@ class FeedItemPost extends React.PureComponent {
               qso={this.props.qso}
               recalculateRowHeight={this.recalculateRowHeight}
             />
-              <Button onClick={() => this.setState({ showComments: true })}>
+            <Button onClick={() => this.setState({ showComments: true })}>
               <div>
                 <Icon name="comment outline" />{' '}
                 {this.props.qso.comments.length > 0 && commentsCounter}
@@ -222,7 +235,7 @@ class FeedItemPost extends React.PureComponent {
               name: 'close'
             }}
             open={this.state.showComments}
-            onClose={()=>this.setState({ showComments: false })}
+            onClose={() => this.setState({ showComments: false })}
             style={{
               //height: '90%',
               overflowY: 'auto'
@@ -231,16 +244,15 @@ class FeedItemPost extends React.PureComponent {
             <Modal.Header>{t('qso.comments')} </Modal.Header>
             <Modal.Content>
               <Modal.Description>
-              <QSOComments
-              qso={this.props.qso}
-              comments={this.state.comments}
-              // recalculateRowHeight={this.recalculateRowHeight}
-            />    
+                <QSOComments
+                  index={this.props.index}
+                  qso={this.props.qso}
+                  comments={this.props.comments}
+                  recalculateRowHeight={this.recalculateRowHeight}
+                />
               </Modal.Description>
             </Modal.Content>
           </Modal>
-          
-          
         </Segment>
         <Confirm
           size="mini"
