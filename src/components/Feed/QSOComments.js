@@ -14,7 +14,7 @@ class QSOComments extends React.PureComponent {
   constructor() {
     super();
     this.state = {
-      comments: [],
+      comments:  [],
       comment: '',
       openLogin: false
     };
@@ -24,18 +24,14 @@ class QSOComments extends React.PureComponent {
 
   componentDidMount() {
     if (process.env.REACT_APP_STAGE === 'production')
-
       window.gtag('event', 'qsoCommentModalOpen_WEBPRD', {
         event_category: 'qso',
         event_label: 'commentModalOpen'
       });
-    if (this.props.qso.comments) {
-      this.setState({ comments: this.props.qso.comments });
-    }
+    // if (this.props.qso.comments) {
+    //   this.setState({ comments: this.props.qso.comments });
+    // }
   }
-  componentDidUpdate = () => {
-    // this.props.recalculateRowHeight();
-  };
 
   handleAddComment = e => {
     if (!this.props.isAuthenticated) this.setState({ openLogin: true });
@@ -73,13 +69,22 @@ class QSOComments extends React.PureComponent {
     }
   };
   static getDerivedStateFromProps(props, prevState) {
-    if (props.qso.comments !== prevState.comments)
-      return { comments: props.qso.comments };
+
+    if (props.qsos[props.index].comments !== prevState.comments)
+      return { index: props.index, 
+        comments: props.qsos[props.index].comments };
     return null;
   }
-  componentDidUpdate = () => {
-    // this.props.recalculateRowHeight();
-  };
+  // componentDidUpdate(prevProps, prevState) {
+  //   console.log(this.props.qsos[this.props.index].comments)
+  //   if (
+  //     JSON.stringify(this.props.qsos[this.props.index].comments) !== JSON.stringify(prevProps.qsos[this.props.index].comments)
+  //   )
+  //     this.setState({
+  //       index:this.props.index,
+  //       comments: this.props.comments
+  //     });
+  // }
   render() {
     const { t } = this.props;
 
@@ -144,6 +149,7 @@ class QSOComments extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
+  qsos: state.qsos,
   token: state.userData.token,
   qra: state.userData.currentQRA,
   firstname: state.userData.qra.firstname,
@@ -155,7 +161,9 @@ const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(Actions, dispatch)
 });
 
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withTranslation()(QSOComments)));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(withTranslation()(QSOComments))
+);

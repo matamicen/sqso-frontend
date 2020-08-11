@@ -14,25 +14,23 @@ const PublicNavigation = ({ t }) => (
       style={{ flex: '0 1 auto', justifyContent: 'center', padding: '0' }}
     >
       <Link to="/">
-      <MobileView>
-              <img
-                src={global_config.s3Cloudfront + '/superqsoIconAzul.png'}
-                alt="SuperQSO.com"
-                className="mobile"
-              />
-            </MobileView>
-            <BrowserView>
-              <img
-                src={global_config.s3Cloudfront + '/logoDesk.jpg'}
-                alt="SuperQSO.com"
-                className="desktop"
-              />
-            </BrowserView>
+        <MobileView>
+          <img
+            src={global_config.s3Cloudfront + '/superqsoIconAzul.png'}
+            alt="SuperQSO.com"
+            className="mobile"
+          />
+        </MobileView>
+        <BrowserView>
+          <img
+            src={global_config.s3Cloudfront + '/logoDesk.jpg'}
+            alt="SuperQSO.com"
+            className="desktop"
+          />
+        </BrowserView>
       </Link>
     </Menu.Item>
-    <Menu.Item
-      style={{ flex: '1 1 auto', padding: '5px' }}
-    >
+    <Menu.Item style={{ flex: '1 1 auto', padding: '5px' }}>
       <ServerAutoSuggest />
     </Menu.Item>
     <Menu.Item style={{ padding: '5px' }}>

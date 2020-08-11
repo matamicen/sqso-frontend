@@ -39,16 +39,23 @@ class FeedItemRepost extends React.Component {
     }
   }
 
-  static getDerivedStateFromProps(props, prevState) {
-    if (props.qso.comments !== prevState.comments) {
-      return {showComments: false, comments: props.qso.comments };
-    }
-    if (props.qso.likes !== prevState.likes) {
-      return { likes: props.qso.likes };
-    }
-    return null;
+  // static getDerivedStateFromProps(props, prevState) {
+  //   if (props.qso.comments !== prevState.comments) {
+  //     return {showComments: false, comments: props.qso.comments };
+  //   }
+  //   if (props.qso.likes !== prevState.likes) {
+  //     return { likes: props.qso.likes };
+  //   }
+  //   return null;
+  // }
+  componentDidUpdate(prevProps, prevState) {
+    if (JSON.stringify(this.props.qso) !== JSON.stringify(prevProps.qso))
+      this.setState({
+        qso: this.props.qso,
+        comments: this.props.qso.comments,
+        likes: this.props.qso.likes
+      });
   }
-
   render() {
     const { t } = this.props;
     const picList = this.props.qso.media.filter(
@@ -318,10 +325,11 @@ class FeedItemRepost extends React.Component {
             <Modal.Content>
               <Modal.Description>
               <QSOComments
-              qso={this.props.qso}
-              comments={this.state.comments}
-              recalculateRowHeight={this.recalculateRowHeight}
-            />       
+                  index={this.props.index}
+                  qso={this.props.qso}
+                  comments={this.props.comments}
+                  recalculateRowHeight={this.recalculateRowHeight}
+                />   
               </Modal.Description>
             </Modal.Content>
           </Modal>
