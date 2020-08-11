@@ -15,6 +15,7 @@ import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
 import * as Actions from '../../actions';
 import '../../styles/style.css';
 import PopupToFollow from '../PopupToFollow';
+import TextToFollow from '../TextToFollow';
 import FeedAudioList from './FeedAudioList';
 import FeedImage from './FeedImage';
 import FeedLinkList from './FeedLinkList';
@@ -123,6 +124,7 @@ class FeedItemPost extends React.PureComponent {
                 }
               />
               {text}
+              <TextToFollow qra={this.props.qso.qra} />
             </div>
             <div className="qso-header-info-post">
               <div>
