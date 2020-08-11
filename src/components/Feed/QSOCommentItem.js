@@ -9,6 +9,7 @@ import Comment from 'semantic-ui-react/dist/commonjs/views/Comment';
 import Item from 'semantic-ui-react/dist/commonjs/views/Item';
 import * as Actions from '../../actions';
 import PopupToFollow from '../PopupToFollow';
+import TextToFollow from '../TextToFollow';
 import FeedOptionsMenu from './FeedOptionsMenu';
 class QSOCommentItem extends React.Component {
   state = {
@@ -58,14 +59,14 @@ class QSOCommentItem extends React.Component {
             <PopupToFollow
               qra={this.props.comment.qra}
               trigger={
-                <Link to={'/' + this.props.comment.qra}>
-                  {' '}
-                  <div
-                    style={{
-                      display: 'flex'
-                    }}
-                  >
-                    {this.props.comment.avatarpic && (
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center'
+                  }}
+                >
+                  {this.props.comment.avatarpic && (
+                    <Link to={'/' + this.props.comment.qra}>
                       <Image
                         style={{
                           height: '1.5rem',
@@ -75,14 +76,17 @@ class QSOCommentItem extends React.Component {
                         src={this.props.comment.avatarpic}
                         circular
                       />
-                    )}{' '}
+                    </Link>
+                  )}{' '}
+                  <Link to={'/' + this.props.comment.qra}>
                     <span style={{ fontSize: '1.2rem' }}>
                       {this.props.comment.qra.toUpperCase()}{' '}
                       {this.props.comment.firstname}{' '}
                       {this.props.comment.lastname}{' '}
                     </span>
-                  </div>
-                </Link>
+                  </Link>{' '}
+                  <TextToFollow qra={this.props.comment.qra} />
+                </div>
               }
             />
           </Comment.Author>

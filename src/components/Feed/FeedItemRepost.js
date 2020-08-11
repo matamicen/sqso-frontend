@@ -14,6 +14,7 @@ import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment';
 import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
 import * as Actions from '../../actions';
 import PopupToFollow from '../PopupToFollow';
+import TextToFollow from '../TextToFollow';
 import FeedAudioList from './FeedAudioList';
 import FeedImage from './FeedImage';
 import FeedOptionsMenu from './FeedOptionsMenu';
@@ -124,6 +125,7 @@ class FeedItemRepost extends React.Component {
                 }
               />
               {t('qso.sharedContent')}
+              <TextToFollow qra={this.props.qso.qra} />
             </div>
             <div className="qso-header-info-post">
               <div>
@@ -190,6 +192,7 @@ class FeedItemRepost extends React.Component {
                   }
                 />
                 {text}
+                <TextToFollow qra={this.props.qso.original[0].qra} />
               </div>
               <div className="qso-header-info">
                 {this.props.qso.original[0].mode && (
