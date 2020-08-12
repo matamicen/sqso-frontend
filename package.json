@@ -1,6 +1,6 @@
 {
   "name": "sqso-frontend",
-  "version": "1.7.7",
+  "version": "1.8.0",
   "private": true,
   "homepage": "https://www.superqso.com/",
   "dependencies": {
@@ -34,6 +34,7 @@
     "prop-types": "^15.6.0",
     "qrcode.react": "^0.8.0",
     "react": "^16.9.0",
+    "react-autosuggest": "^10.0.2",
     "react-avatar": "^3.4.6",
     "react-country-region-selector": "^1.4.3",
     "react-device-detect": "^1.13.1",
@@ -46,7 +47,6 @@
     "react-router-dom": "^5.0.0",
     "react-router-sitemap": "^1.2.0",
     "react-scripts": "^3.4.1",
-    "react-select": "^3.0.8",
     "react-share": "3.0.0",
     "react-slick": "^0.25.2",
     "react-textarea-autosize": "^8.0.1",

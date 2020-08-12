@@ -13,8 +13,9 @@ import AppNavigation from './AppNavigation';
 class Home extends React.PureComponent {
   state = {
     adActive: true,
-    active: null,
+    active: true,
     modalOpen: null,
+    qsos: [],
     error: null
     // videoAlreadyDisplayed: false
   };
@@ -35,7 +36,6 @@ class Home extends React.PureComponent {
 
     if (this.props.qsos.length === 0) {
       if (this.props.isAuthenticated) {
-        
         // this.props.actions.doFetchUserFeed(
         //   this.props.token,
         //   this.props.currentQRA
@@ -70,9 +70,14 @@ class Home extends React.PureComponent {
   handleOpen = () => this.setState({ adActive: true });
   handleClose = () => this.setState({ adActive: false });
 
-  static getDerivedStateFromProps(props, state) {
-    if (props.qsos.length > 0) return { active: false };
-    else if (props.qsos.length === 0) return { active: true };
+  // static getDerivedStateFromProps(props, state) {
+  //   if (props.qsos.length > 0) return { active: false };
+  //   else if (props.qsos.length === 0) return { active: true };
+  // }
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.qsos.length > 0)
+      this.setState({ qsos: this.props.qsos, active: false });
+    // else if (props.qsos.length === 0) return { active: true };
   }
   render() {
     const { t } = this.props;
@@ -104,33 +109,33 @@ class Home extends React.PureComponent {
           <div className="site-header">
             <AppNavigation />
           </div>
-          <div className="site-left">
-            <Ad
-              adslot="/22031658057/Home/home_left"
-              width={160}
-              height={600}
-              id="div-ads-instance-home-left"
-              displayOnly={true}
-            />
+          {this.state.qsos.length > 0 && (
+            <Fragment>
+              <div className="site-left">
+                <Ad
+                  adslot="/22031658057/Home/home_left"
+                  width={160}
+                  height={600}
+                  id="div-ads-instance-home-left"
+                  displayOnly={true}
+                />
+              </div>
 
-            {/* <img src='/bannerDescarga.gif' alt="Download APP and work your first QSO"/> */}
-          </div>
+              <div className="site-main"><FeedQSO /></div>
 
-          <div className="site-main">
-            {this.props.qsos.length > 0 && <FeedQSO />}
-          </div>
-
-          <div className="site-right">
-            <Ad
-              adslot="/22031658057/Home/home_right"
-              width={160}
-              height={600}
-              id="div-ads-instance-home-right"
-              displayOnly={true}
-            />
-            {/* <img src='/bannerDescarga.gif' alt="Download APP and work your first QSO"/> */}
-          </div>
+              <div className="site-right">
+                <Ad
+                  adslot="/22031658057/Home/home_right"
+                  width={160}
+                  height={600}
+                  id="div-ads-instance-home-right"
+                  displayOnly={true}
+                />
+              </div>
+            </Fragment>
+          )}
         </div>
+
         {/* <Modal
           open={this.state.modalOpen}
           onClose={() => {

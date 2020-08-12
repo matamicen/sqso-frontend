@@ -13,6 +13,11 @@ class QSOLikeTextModalItem extends React.PureComponent {
     this.state = { followed: null };
   }
   componentDidMount() {
+    if (process.env.REACT_APP_STAGE === 'production')
+    window.gtag('event', 'qsoLikeModalOpen_WEBPRD', {
+      event_category: 'qso',
+      event_label: 'qsoLikeModalOpen'
+    });
     // this.setState({ likes: this.props.qso ? this.props.qso.likes : [] });
   }
   // static getDerivedStateFromProps(props, prevState) {
@@ -33,11 +38,7 @@ class QSOLikeTextModalItem extends React.PureComponent {
         this.setState({ followed: this.followed });
       }
     }
-    // this.setState(prevState => {
-    //   return {
-    //     followed: !prevState.followed
-    //   };
-    // });
+
   }
   render() {
     const { l, t } = this.props;
@@ -81,9 +82,9 @@ class QSOLikeTextModalItem extends React.PureComponent {
           }}
         >
           <Link to={'/' + l.qra}>
-            <span style={{ fontSize: 'large' }}>{l.qra}</span>
+            <span style={{ fontSize: '1.5rem' }}>{l.qra}</span>
             <br />
-            <span style={{ fontSize: 'medium' }}>
+            <span style={{ fontSize: '1rem' }}>
               {l.firstname + ' ' + l.lastname}
             </span>
           </Link>
@@ -95,7 +96,7 @@ class QSOLikeTextModalItem extends React.PureComponent {
             padding: '0'
           }}
         >
-          {this.props.isAuthenticated &&
+          {this.props.isAuthenticated && !this.followed &&
             l.qra !== this.props.userData.currentQRA && (
               <Button
                 style={{

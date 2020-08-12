@@ -101,12 +101,8 @@ class QSOLikeButton extends React.Component {
     return null;
   }
   async doLike(token = null) {
-    if (process.env.REACT_APP_STAGE !== 'production') {
-      window.gtag('event', 'qsoLiked_WEBDEV', {
-        event_category: 'QSO',
-        event_label: 'liked'
-      });
-    } else {
+    if (process.env.REACT_APP_STAGE === 'production') {
+
       window.gtag('event', 'qsoLiked_WEBPRD', {
         event_category: 'QSO',
         event_label: 'liked'
@@ -177,12 +173,8 @@ class QSOLikeButton extends React.Component {
   }
 
   async doUnLike(token = null) {
-    if (process.env.REACT_APP_STAGE !== 'production') {
-      window.gtag('event', 'qsoUnliked_WEBDEV', {
-        event_category: 'QSO',
-        event_label: 'unliked'
-      });
-    } else {
+    if (process.env.REACT_APP_STAGE === 'production') {
+
       window.gtag('event', 'qsoUnliked_WEBPRD', {
         event_category: 'QSO',
         event_label: 'unliked'

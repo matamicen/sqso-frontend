@@ -48,7 +48,7 @@ s
         <Button icon onClick={() => this.openConfirmationRequest()}>
           <div style={{display: "grid", justifyItems: "center"}}>
           <Icon name="retweet" />
-          <span style={{fontSize:"small"}}>{t('qso.repost')}</span>
+          <span style={{fontSize:"1rem"}}>{t('qso.repost')}</span>
           </div>
         </Button>
         <Confirm

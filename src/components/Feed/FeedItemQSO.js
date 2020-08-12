@@ -14,6 +14,7 @@ import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment';
 import * as Actions from '../../actions';
 import '../../styles/style.css';
 import PopupToFollow from '../PopupToFollow';
+import TextToFollow from '../TextToFollow';
 import FeedAudioList from './FeedAudioList';
 import FeedImage from './FeedImage';
 import FeedLinkList from './FeedLinkList';
@@ -28,19 +29,9 @@ import './style.css';
 class FeedItemQSO extends React.PureComponent {
   constructor() {
     super();
-    this.state = { comments: [], likes: [], error: null };
+    this.state = { showComments: false, comments: [], likes: [], error: null };
 
     this.recalculateRowHeight = this.recalculateRowHeight.bind(this);
-  }
-
-  handleOnComment(e) {
-    if (!this.props.isAuthenticated && this.props.qso.comments.length === 0)
-      this.setState({ openLogin: true });
-    else if (this.props.currentQRA || this.props.qso.comments.length > 0) {
-      this.props.showComments(this.props.index);
-      this.recalculateRowHeight();
-    }
-    // this.recalculateRowHeight(); this.props.recalculateRowHeight()
   }
 
   recalculateRowHeight() {
@@ -50,16 +41,24 @@ class FeedItemQSO extends React.PureComponent {
   }
 
   //     }
-  static getDerivedStateFromProps(props, prevState) {
-    if (props.qso.comments !== prevState.comments) {
-      return { comments: props.qso.comments };
-    }
-    if (props.qso.likes !== prevState.likes) {
-      return { likes: props.qso.likes };
-    }
-    return null;
+  // static getDerivedStateFromProps(props, prevState) {
+  //   if (props.qso.comments !== prevState.comments) {
+  //     console.log('update');
+  //     return { qso: props.qso, comments: props.qso.comments };
+  //   }
+  //   if (props.qso.likes !== prevState.likes) {
+  //     return { qso: props.qso, likes: props.qso.likes };
+  //   }
+  //   return null;
+  // }
+  componentDidUpdate(prevProps, prevState) {
+    if (JSON.stringify(this.props.qso) !== JSON.stringify(prevProps.qso))
+      this.setState({
+        qso: this.props.qso,
+        comments: this.props.qso.comments,
+        likes: this.props.qso.likes
+      });
   }
-
   render() {
     const { t } = this.props;
     const picList = this.props.qso.media.filter(
@@ -109,7 +108,9 @@ class FeedItemQSO extends React.PureComponent {
                     height: '50px'
                   }}
                 />
+                
               </Link>
+              <TextToFollow qra={this.props.qso.qra} />
             </div>
             <div className="qso-header-action">
               <PopupToFollow
@@ -121,6 +122,7 @@ class FeedItemQSO extends React.PureComponent {
                 }
               />
               {text}
+              
             </div>
             <div className="qso-header-info">
               <div>
@@ -191,20 +193,17 @@ class FeedItemQSO extends React.PureComponent {
             style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
           />
 
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <Segment compact  className="feed-item-qras-segment">
-              <QRAs
-                avatarpic={this.props.qso.avatarpic}
-                qso_owner={this.props.qso.qra}
-                qras={this.props.qso.qras}
-              />
-            </Segment>
-          </div>
+          <QRAs
+            avatarpic={this.props.qso.avatarpic}
+            qso_owner={this.props.qso.qra}
+            qras={this.props.qso.qras}
+          />
+
           {picList.length > 0 && (
             <Fragment>
               <Divider
                 hidden
-                style={{ marginTop: '1vh', marginBottom: '1vh' }}
+                style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
               />
               <FeedImage
                 img={picList}
@@ -218,7 +217,7 @@ class FeedItemQSO extends React.PureComponent {
             <Fragment>
               <Divider
                 hidden
-                style={{ marginTop: '1vh', marginBottom: '1vh' }}
+                style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
               />
               <FeedAudioList
                 mediaList={audioList}
@@ -238,7 +237,7 @@ class FeedItemQSO extends React.PureComponent {
               qso={this.props.qso}
               recalculateRowHeight={this.recalculateRowHeight}
             />
-            <Button onClick={e => this.handleOnComment(e)}>
+            <Button onClick={() => this.setState({ showComments: true })}>
               <div>
                 <Icon name="comment outline" />{' '}
                 {this.props.qso.comments.length > 0 && commentsCounter}
@@ -250,10 +249,14 @@ class FeedItemQSO extends React.PureComponent {
               title={shareText}
             />
           </Button.Group>
-          {this.props.qso.showComments && (
+
+          {this.state.showComments && (
             <QSOComments
+              showComments={this.state.showComments}
+              doClose={() => this.setState({ showComments: false })}
+              index={this.props.index}
               qso={this.props.qso}
-              comments={this.state.comments}
+              comments={this.props.comments}
               recalculateRowHeight={this.recalculateRowHeight}
             />
           )}
@@ -278,13 +281,12 @@ class FeedItemQSO extends React.PureComponent {
 }
 FeedItemQSO.propTypes = {
   currentQRA: PropTypes.string,
-  showComments: PropTypes.func,
+
   recalculateRowHeight: PropTypes.func,
   measure: PropTypes.string,
   index: PropTypes.string
 };
 const mapStateToProps = (state, qsos) => ({
-  isAuthenticated: state.userData.isAuthenticated,
   fetchingQSOS: state.FetchingQSOS,
   qsosFetched: state.qsosFetched,
   currentQRA: state.userData.currentQRA

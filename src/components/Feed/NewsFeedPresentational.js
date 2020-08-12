@@ -37,7 +37,7 @@ class NewsFeed extends React.PureComponent {
     //     .bind(this)
     this._rowRenderer = this._rowRenderer.bind(this);
     this.recalculateRowHeight = this.recalculateRowHeight.bind(this);
-    this.showComments = this.showComments.bind(this);
+    
     this._setListRef = this._setListRef.bind(this);
   }
 
@@ -81,7 +81,7 @@ class NewsFeed extends React.PureComponent {
                 source={row.source}
                 measure={measure}
                 recalculateRowHeight={this.recalculateRowHeight}
-                showComments={index => this.showComments(index)}
+               
                 index={index}
               />
             </div>
@@ -108,13 +108,7 @@ class NewsFeed extends React.PureComponent {
   _setListRef = ref => {
     this.setState({ _list: ref });
   };
-  showComments = index => {
-    let localList = this.state.list;
-    localList[index].qso.showComments = !this.state.list[index].qso
-      .showComments;
-    this.setState({ list: localList });
-    if (!localList[index].qso.showComments) this.recalculateRowHeight();
-  };
+
 
   recalculateRowHeight(index) {
     this._cache.clearAll();
@@ -124,39 +118,40 @@ class NewsFeed extends React.PureComponent {
     //     .recomputeRowHeights(index);
     this.state._list.forceUpdateGrid();
   }
-  static getDerivedStateFromProps(props, state) {
+  // static getDerivedStateFromProps(props, state) {
 
-    if (props.list.length !== state.list.length || props.list !== state.list) {
+    // if (props.list.length !== state.list.length || props.list !== state.list) {
      
-      // this._cache.clearAll();
-      // this._list.recomputeRowHeights();
-      state._list.forceUpdateGrid();
-    }
-    if (props.list) return { list: props.list };
-    //Default
-    return null;
-  }
+    //   // this._cache.clearAll();
+    //   // this._list.recomputeRowHeights();
+    //   state._list.forceUpdateGrid();
+    // }
+    // if (props.list) return { list: props.list };
+    // //Default
+    // return null;
+  // }
 
   componentDidUpdate(prevProps, prevState) {
-
+    
     if (
-      prevProps.list.length > 0 &&    
-      prevProps.list.length !== prevState.list.length &&
-      ((prevProps.qsosFetched && !prevProps.fetchingQsos) ||
-        (prevProps.QRAFetched && !prevProps.FetchingQRA))
+      this.props.list.length > 0 &&    
+      JSON.stringify(this.props.list) !== JSON.stringify(prevProps.list)
+      // ((prevProps.qsosFetched && !prevProps.fetchingQsos) ||
+      //   (prevProps.QRAFetched && !prevProps.FetchingQRA))
     ) {
+      this.setState({list: this.props.list})
       this._cache.clearAll();
       // this._list.recomputeRowHeights();
       this.state._list.forceUpdateGrid();
       
     }
-    if (  this.state.list !== prevState.list )
-    {
-      this._cache.clearAll();
-      // this._list.recomputeRowHeights();
-      this.state._list.forceUpdateGrid();
+    // if (  this.state.list !== prevState.list )
+    // {
+    //   this._cache.clearAll();
+    //   // this._list.recomputeRowHeights();
+    //   this.state._list.forceUpdateGrid();
       
-    }
+    // }
   }
   componentWillUnmount() {
     // this.setState({ list: [] });

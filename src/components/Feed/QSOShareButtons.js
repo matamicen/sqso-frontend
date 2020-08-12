@@ -33,12 +33,8 @@ const QSOShareButtons = ({ idqso, t, title }) => {
                   title={title}
                   url={window.location.origin + '/qso/' + idqso}
                   beforeOnClick={() => {
-                    if (process.env.REACT_APP_STAGE !== 'production')
-                      window.gtag('event', 'qsoShareWAPP_WEBDEV', {
-                        event_category: 'QSO',
-                        event_label: 'shareWAPP'
-                      });
-                    else
+                    if (process.env.REACT_APP_STAGE === 'production')
+
                       window.gtag('event', 'qsoShareWAPP_WEBPRD', {
                         event_category: 'QSO',
                         event_label: 'shareWAPP'
@@ -52,12 +48,8 @@ const QSOShareButtons = ({ idqso, t, title }) => {
                   quote={title}
                   url={window.location.origin + '/qso/' + idqso}
                   beforeOnClick={() => {
-                    if (process.env.REACT_APP_STAGE !== 'production')
-                      window.gtag('event', 'qsoShareFB_WEBDEV', {
-                        event_category: 'QSO',
-                        event_label: 'shareFB'
-                      });
-                    else
+                    if (process.env.REACT_APP_STAGE === 'production')
+
                       window.gtag('event', 'qsoShareFB_WEBPRD', {
                         event_category: 'QSO',
                         event_label: 'shareFB'
@@ -71,12 +63,8 @@ const QSOShareButtons = ({ idqso, t, title }) => {
                   title={title}
                   url={window.location.origin + '/qso/' + idqso}
                   beforeOnClick={() => {
-                    if (process.env.REACT_APP_STAGE !== 'production')
-                      window.gtag('event', 'qsoShareTW_WEBDEV', {
-                        event_category: 'QSO',
-                        event_label: 'shareTW'
-                      });
-                    else
+                    if (process.env.REACT_APP_STAGE === 'production')
+
                       window.gtag('event', 'qsoShareTW_WEBPRD', {
                         event_category: 'QSO',
                         event_label: 'shareTW'
@@ -129,7 +117,7 @@ const QSOShareButtons = ({ idqso, t, title }) => {
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-        <span style={{ fontSize: 'small' }}>{t('qso.share')}</span>
+        <span style={{ fontSize: '1rem' }}>{t('qso.share')}</span>
       </div>
     </Button>
   );

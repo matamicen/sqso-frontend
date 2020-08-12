@@ -13,7 +13,7 @@
     "downloadApp": "Descargar App",
     "tutorial": "Ver Tutoriales",
     "whoToFollow": "A Quien Seguir",
-    "searchCallsign": "Buscar SD (Ej: LU2ACH)"
+    "searchCallsign": "BUSCAR SD (Ej: LU2ACH)"
   },
   "whatIsSuperQSO": {
     "whatIsSuperQSO": "¿Qué es SuperQSO?",
@@ -143,6 +143,7 @@
     "sharedPOST": "{{QRA}} republicó una publicación"
   },
   "qso": {
+    "comments": "Comentarios",
     "audioPlays": " - {{count}} Reproducción",
     "audioPlays_plural": " - {{count}} Reproducciones",
     "callsignTagged": "SD/Colegas etiquetadas",
@@ -159,7 +160,7 @@
     "loadingQSOLink": "Cargando QSO Link...",
     "loadingQSO": "Cargando...",
     "confirmRepost": "¿Está seguro que quiere republicar esto?",
-    "playAudio": "Reproducir Audio",
+    "playAudio": "Reproducir",
     "qsoReposted": "Republicado con éxito!",
     "qsoDeleted": "QSO Eliminado",
     "workedAQSO": " trabajó un QSO",

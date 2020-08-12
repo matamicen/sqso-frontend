@@ -89,13 +89,8 @@ class SignUp extends React.Component {
         window.gtag('config', 'G-H8G28LYKBY', {
           custom_map: { dimension1: 'userQRA' }
         });
-        if (process.env.NODE_ENV !== 'production')
-          window.gtag('event', 'userSignUp_WEBDEV', {
-            event_category: 'User',
-            event_label: 'signUp',
-            userQRA: qra
-          });
-        else
+        if (process.env.NODE_ENV === 'production')
+       
           window.gtag('event', 'userSignUp_WEBPRD', {
             event_category: 'User',
             event_label: 'signUP',
@@ -140,12 +135,8 @@ class SignUp extends React.Component {
   async handleResendCode() {
     await Auth.resendSignUp(this.state.email.toLowerCase())
       .then(() => {
-        if (process.env.REACT_APP_STAGE !== 'production')
-          window.gtag('event', 'resendCode_WEBDEV', {
-            event_category: 'User',
-            event_label: 'resendCode'
-          });
-        else
+        if (process.env.REACT_APP_STAGE === 'production')
+         
           window.gtag('event', 'resendCode_WEBPRD', {
             event_category: 'User',
             event_label: 'resendCode'
@@ -178,12 +169,8 @@ class SignUp extends React.Component {
           dimmerLoginActive: true,
           showModalMessage: true
         });
-        if (process.env.REACT_APP_STAGE !== 'production')
-          window.gtag('event', 'confirmCode_WEBDEV', {
-            event_category: 'User',
-            event_label: 'confirmCode'
-          });
-        else
+        if (process.env.REACT_APP_STAGE === 'production')
+       
           window.gtag('event', 'confirmCode_WEBPRD', {
             event_category: 'User',
             event_label: 'confirmCode'

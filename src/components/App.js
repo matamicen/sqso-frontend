@@ -102,13 +102,8 @@ class App extends Component {
           window.gtag('config', 'G-H8G28LYKBY', {
             custom_map: { dimension1: 'userQRA' }
           });
-          if (process.env.REACT_APP_STAGE !== 'production')
-            window.gtag('event', 'userLogin_WEBDEV', {
-              event_category: 'User',
-              event_label: 'login',
-              userQRA: user.signInUserSession.idToken.payload['custom:callsign']
-            });
-          else
+          if (process.env.REACT_APP_STAGE === 'production')
+           
             window.gtag('event', 'userLogin_WEBPRD', {
               event_category: 'User',
               event_label: 'login',
@@ -203,13 +198,8 @@ class App extends Component {
           window.gtag('config', 'G-H8G28LYKBY', {
             custom_map: { dimension1: 'userQRA' }
           });
-          if (process.env.REACT_APP_STAGE !== 'production')
-            window.gtag('event', 'userLogin_WEBDEV', {
-              event_category: 'User',
-              event_label: 'login',
-              userQRA: user.signInUserSession.idToken.payload['custom:callsign']
-            });
-          else
+          if (process.env.REACT_APP_STAGE === 'production')
+           
             window.gtag('event', 'userLogin_WEBPRD', {
               event_category: 'User',
               event_label: 'login',

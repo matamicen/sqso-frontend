@@ -2,6 +2,7 @@ import Auth from '@aws-amplify/auth';
 import * as Sentry from '@sentry/browser';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { BrowserView, MobileView } from 'react-device-detect';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
@@ -12,8 +13,7 @@ import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
 import * as Actions from '../../actions';
 import global_config from '../../global_config.json';
 import '../../styles/style.css';
-import NavigationSearch from './NavigationSearch';
-
+import ServerAutoSuggest from './server.autosuggest';
 class AuthenticatedNavigation extends React.PureComponent {
   constructor() {
     super();
@@ -65,27 +65,38 @@ class AuthenticatedNavigation extends React.PureComponent {
           style={{ flex: '0 1 auto', justifyContent: 'center', padding: '0' }}
         >
           <Link to="/">
-            <img src={global_config.s3Cloudfront +"/logoMobile.jpg"} alt="SuperQSO.com" className="mobile" />
-            <img src={global_config.s3Cloudfront +"/logoDesk.jpg"} alt="SuperQSO.com" className="desktop" />
+            <MobileView>
+              <img
+                src={global_config.s3Cloudfront + '/superqsoIconAzul.png'}
+                alt="SuperQSO.com"
+                className="mobile"
+              />
+            </MobileView>
+            <BrowserView>
+              <img
+                src={global_config.s3Cloudfront + '/logoDesk.jpg'}
+                alt="SuperQSO.com"
+                className="desktop"
+              />
+            </BrowserView>
           </Link>
         </Menu.Item>
         <Menu.Item
-          style={{ flex: '1 1 auto', justifyContent: 'center', padding: '5px' }}
+          style={{ flex: '1 1 auto', padding: '5px' }}
         >
-          <NavigationSearch />
+          <ServerAutoSuggest />
         </Menu.Item>
-        <Menu.Item style={{ padding: '10px' }}>
+        <Menu.Item style={{ padding: '5px' }}>
           <Link
             to="/"
             onClick={async () => {
               try {
-               
                 const currentSession = await Auth.currentSession();
                 const token = currentSession.getIdToken().getJwtToken();
- 
-                    this.props.actions.refreshToken(token);
-                    this.props.actions.doFetchUserInfo(this.props.token);
-                    this.props.actions.doFetchPublicFeed(this.props.currentQRA);
+
+                this.props.actions.refreshToken(token);
+                this.props.actions.doFetchUserInfo(this.props.token);
+                this.props.actions.doFetchPublicFeed(this.props.currentQRA);
                 //   }
                 // );
               } catch (error) {
@@ -98,13 +109,9 @@ class AuthenticatedNavigation extends React.PureComponent {
                   });
                   Sentry.captureException(error);
                 }
-               
               }
-            
-              
-              if (!this.props.isAuthenticated)
-                
-               {
+
+              if (!this.props.isAuthenticated) {
                 this.props.actions.doFetchPublicFeed();
               }
             }}

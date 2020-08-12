@@ -1,11 +1,9 @@
-import React from "react";
+import React from 'react';
 import { withTranslation } from 'react-i18next';
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import Button from "semantic-ui-react/dist/commonjs/elements/Button";
-import Popup from "semantic-ui-react/dist/commonjs/modules/Popup";
-import * as Actions from "../actions";
-import "../styles/style.css";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as Actions from '../actions';
+import '../styles/style.css';
 
 class PopupToFollow extends React.PureComponent {
   state = {
@@ -31,40 +29,19 @@ class PopupToFollow extends React.PureComponent {
     return null;
   }
   render = () => {
-    const {t} = this.props;
+    const { t } = this.props;
     let button;
-    if (this.state.isFollowing)
-      button = (
-        <Button
-          icon="remove user"
-          onClick={() => this.unfollow()}
-          content={t('qra.unfollow')}
-          size="mini"
-        />
-      );
-    else
-      button = (
-        <Button
-          icon="add user"
-          onClick={() => this.follow()}
-          content={t('qra.follow')}
-          size="mini"
-        />
-      );
-
-    if (this.props.isAuthenticated && this.props.currentQRA !== this.props.qra)
+    if (this.props.isAuthenticated && this.props.currentQRA !== this.props.qra && !this.state.isFollowing)
       return (
-        <Popup
-          trigger={this.props.trigger}
-          content={button}
-          position="top left"
-          flowing
-          hoverable
-          // hideOnScroll
-          // size="mini"
-        />
+        <button
+          type="button"
+          className="link-button-follow"
+          onClick={() => this.follow()}
+        >
+          <span style={{ alignSelf: 'center' }}>{t('qra.follow')}</span>
+        </button>
       );
-    else return this.props.trigger;
+    else return null;
   };
 }
 
@@ -84,5 +61,4 @@ export default connect(
   mapDispatchToProps,
   null,
   { pure: false }
-)
-(withTranslation()(PopupToFollow));
+)(withTranslation()(PopupToFollow));

@@ -13,6 +13,7 @@ import Image from 'semantic-ui-react/dist/commonjs/elements/Image';
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment';
 import * as Actions from '../../actions';
 import PopupToFollow from '../PopupToFollow';
+import TextToFollow from '../TextToFollow';
 import FeedAudioList from './FeedAudioList';
 import FeedImage from './FeedImage';
 import FeedOptionsMenu from './FeedOptionsMenu';
@@ -27,41 +28,33 @@ class FeedItemRepost extends React.Component {
   constructor() {
     super();
     this.state = { comments: [], likes: [], error: null };
-    this.handleOnComment = this.handleOnComment.bind(this);
+
     this.recalculateRowHeight = this.recalculateRowHeight.bind(this);
   }
 
-  handleOnComment(e) {
-    if (!this.props.isAuthenticated && this.props.qso.comments.length === 0)
-      this.setState({ openLogin: true });
-    else if (this.props.currentQRA || this.props.qso.comments.length > 0) {
-      this.props.showComments(this.props.index);
-      this.recalculateRowHeight();
-    }
-    // this.recalculateRowHeight(); this.props.recalculateRowHeight()
-  }
-
-  // componentDidUpdate(prevProps, prevState) {
-  //     if ((this.state.showComment !== prevState.showComment) && (this.props.recalculateRowHeight))
-  //         this.props.recalculateRowHeight(this.props.index);
-
-  //     }
   recalculateRowHeight() {
     if (this.props.recalculateRowHeight) {
       this.props.recalculateRowHeight(this.props.index);
     }
   }
 
-  static getDerivedStateFromProps(props, prevState) {
-    if (props.qso.comments !== prevState.comments) {
-      return { comments: props.qso.comments };
-    }
-    if (props.qso.likes !== prevState.likes) {
-      return { likes: props.qso.likes };
-    }
-    return null;
+  // static getDerivedStateFromProps(props, prevState) {
+  //   if (props.qso.comments !== prevState.comments) {
+  //     return {showComments: false, comments: props.qso.comments };
+  //   }
+  //   if (props.qso.likes !== prevState.likes) {
+  //     return { likes: props.qso.likes };
+  //   }
+  //   return null;
+  // }
+  componentDidUpdate(prevProps, prevState) {
+    if (JSON.stringify(this.props.qso) !== JSON.stringify(prevProps.qso))
+      this.setState({
+        qso: this.props.qso,
+        comments: this.props.qso.comments,
+        likes: this.props.qso.likes
+      });
   }
-
   render() {
     const { t } = this.props;
     const picList = this.props.qso.media.filter(
@@ -119,6 +112,7 @@ class FeedItemRepost extends React.Component {
                   }}
                 />
               </Link>
+              <TextToFollow qra={this.props.qso.qra} />
             </div>
             <div className="qso-header-action">
               <PopupToFollow
@@ -185,6 +179,7 @@ class FeedItemRepost extends React.Component {
                     }}
                   />
                 </Link>
+                <TextToFollow qra={this.props.qso.original[0].qra} />
               </div>
               <div className="qso-header-action">
                 <PopupToFollow
@@ -259,20 +254,19 @@ class FeedItemRepost extends React.Component {
                 />
               </div>
             </div>
-            <Divider
-              hidden
-              style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
-            />
+
             {this.props.qso.qras.length > 0 && (
-              <div style={{ display: 'flex', justifyContent: 'center' }}>
-               <Segment compact className="feed-item-qras-outer">
+              <Fragment>
+                <Divider
+                  hidden
+                  style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
+                />
                 <QRAs
                   avatarpic={this.props.qso.original[0].avatarpic}
                   qso_owner={this.props.qso.original[0].qra}
                   qras={this.props.qso.qras}
                 />
-              </Segment>
-              </div>
+              </Fragment>
             )}
             {picList.length > 0 && (
               <FeedImage
@@ -292,14 +286,17 @@ class FeedItemRepost extends React.Component {
             )}
           </Segment>
 
-          <Divider hidden style={{ marginTop: '2vh', marginBottom: '2vh' }} />
+          <Divider
+            hidden
+            style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
+          />
           <QSOLikeText qso={this.props.qso} likes={this.state.likes} />
           <Button.Group widths="4" basic>
             <QSOLikeButton
               qso={this.props.qso}
               recalculateRowHeight={this.recalculateRowHeight}
             />
-            <Button onClick={e => this.handleOnComment(e)}>
+            <Button onClick={() => this.setState({ showComments: true })}>
               <Icon name="comment outline" />{' '}
               {this.props.qso.comments.length > 0 && commentsCounter}
             </Button>
@@ -310,10 +307,13 @@ class FeedItemRepost extends React.Component {
             />
           </Button.Group>
 
-          {this.props.qso.showComments && (
+          {this.state.showComments && (
             <QSOComments
+              showComments={this.state.showComments}
+              doClose={() => this.setState({ showComments: false })}
+              index={this.props.index}
               qso={this.props.qso}
-              comments={this.state.comments}
+              comments={this.props.comments}
               recalculateRowHeight={this.recalculateRowHeight}
             />
           )}
@@ -355,14 +355,13 @@ FeedItemRepost.propTypes = {
     comments: PropTypes.array,
     original: PropTypes.array,
     media: PropTypes.array,
-    qra: PropTypes.string,
-    showComments: PropTypes.bool
+    qra: PropTypes.string
   }),
   location: PropTypes.shape({
     // pathname: PropTypes.string,
     // data: PropTypes.shape({ newPasswordRequired: PropTypes.bool })
   }),
-  showComments: PropTypes.func,
+
   recalculateRowHeight: PropTypes.func,
   index: PropTypes.number
   // isAuthenticated: PropTypes.bool,
