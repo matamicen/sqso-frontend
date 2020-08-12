@@ -11,7 +11,6 @@ import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider';
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
 import Image from 'semantic-ui-react/dist/commonjs/elements/Image';
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment';
-import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
 import * as Actions from '../../actions';
 import PopupToFollow from '../PopupToFollow';
 import TextToFollow from '../TextToFollow';
@@ -29,11 +28,10 @@ class FeedItemRepost extends React.Component {
   constructor() {
     super();
     this.state = { comments: [], likes: [], error: null };
-    
+
     this.recalculateRowHeight = this.recalculateRowHeight.bind(this);
   }
 
-  
   recalculateRowHeight() {
     if (this.props.recalculateRowHeight) {
       this.props.recalculateRowHeight(this.props.index);
@@ -298,7 +296,7 @@ class FeedItemRepost extends React.Component {
               qso={this.props.qso}
               recalculateRowHeight={this.recalculateRowHeight}
             />
-               <Button onClick={() => this.setState({ showComments: true })}>
+            <Button onClick={() => this.setState({ showComments: true })}>
               <Icon name="comment outline" />{' '}
               {this.props.qso.comments.length > 0 && commentsCounter}
             </Button>
@@ -309,35 +307,16 @@ class FeedItemRepost extends React.Component {
             />
           </Button.Group>
 
-          <Modal
-            size="tiny"
-            centered={true}
-            closeIcon={{
-              style: { top: '0.0535rem', right: '0rem' },
-              color: 'black',
-              name: 'close'
-            }}
-            open={this.state.showComments}
-            onClose={()=>this.setState({ showComments: false })}
-            style={{
-              //height: '90%',
-              overflowY: 'auto'
-            }}
-          >
-            <Modal.Header>{t('qso.comments')} </Modal.Header>
-            <Modal.Content>
-              <Modal.Description>
-              <QSOComments
-                  index={this.props.index}
-                  qso={this.props.qso}
-                  comments={this.props.comments}
-                  recalculateRowHeight={this.recalculateRowHeight}
-                />   
-              </Modal.Description>
-            </Modal.Content>
-          </Modal>
-            
-         
+          {this.state.showComments && (
+            <QSOComments
+              showComments={this.state.showComments}
+              doClose={() => this.setState({ showComments: false })}
+              index={this.props.index}
+              qso={this.props.qso}
+              comments={this.props.comments}
+              recalculateRowHeight={this.recalculateRowHeight}
+            />
+          )}
         </Segment>
         <Confirm
           size="mini"
@@ -376,14 +355,13 @@ FeedItemRepost.propTypes = {
     comments: PropTypes.array,
     original: PropTypes.array,
     media: PropTypes.array,
-    qra: PropTypes.string,
-    
+    qra: PropTypes.string
   }),
   location: PropTypes.shape({
     // pathname: PropTypes.string,
     // data: PropTypes.shape({ newPasswordRequired: PropTypes.bool })
   }),
-  
+
   recalculateRowHeight: PropTypes.func,
   index: PropTypes.number
   // isAuthenticated: PropTypes.bool,

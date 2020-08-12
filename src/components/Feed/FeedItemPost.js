@@ -11,7 +11,6 @@ import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider';
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
 import Image from 'semantic-ui-react/dist/commonjs/elements/Image';
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment';
-import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
 import * as Actions from '../../actions';
 import '../../styles/style.css';
 import PopupToFollow from '../PopupToFollow';
@@ -228,33 +227,16 @@ class FeedItemPost extends React.PureComponent {
               title={shareText}
             />
           </Button.Group>
-          <Modal
-            size="tiny"
-            centered={true}
-            closeIcon={{
-              style: { top: '0.0535rem', right: '0rem' },
-              color: 'black',
-              name: 'close'
-            }}
-            open={this.state.showComments}
-            onClose={() => this.setState({ showComments: false })}
-            style={{
-              //height: '90%',
-              overflowY: 'auto'
-            }}
-          >
-            <Modal.Header>{t('qso.comments')} </Modal.Header>
-            <Modal.Content>
-              <Modal.Description>
+          {this.state.showComments &&
                 <QSOComments
+                  showComments={this.state.showComments}
+                  doClose={()=>this.setState({showComments: false})}
                   index={this.props.index}
                   qso={this.props.qso}
                   comments={this.props.comments}
                   recalculateRowHeight={this.recalculateRowHeight}
                 />
-              </Modal.Description>
-            </Modal.Content>
-          </Modal>
+          }
         </Segment>
         <Confirm
           size="mini"
