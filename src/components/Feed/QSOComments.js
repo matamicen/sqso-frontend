@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import Confirm from 'semantic-ui-react/dist/commonjs/addons/Confirm';
 import Form from 'semantic-ui-react/dist/commonjs/collections/Form';
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
+import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
 import Comment from 'semantic-ui-react/dist/commonjs/views/Comment';
 import * as Actions from '../../actions';
 import QSOCommentItem from './QSOCommentItem';
@@ -14,9 +15,10 @@ class QSOComments extends React.PureComponent {
   constructor() {
     super();
     this.state = {
-      comments:  [],
+      comments: [],
       comment: '',
-      openLogin: false
+      openLogin: false,
+      qso: { comments: [] }
     };
 
     this.handleAddComment = this.handleAddComment.bind(this);
@@ -28,9 +30,9 @@ class QSOComments extends React.PureComponent {
         event_category: 'qso',
         event_label: 'commentModalOpen'
       });
-    // if (this.props.qso.comments) {
-    //   this.setState({ comments: this.props.qso.comments });
-    // }
+    if (this.props.qso.comments) {
+      this.setState({ comments: this.props.qso.comments });
+    }
   }
 
   handleAddComment = e => {
@@ -68,23 +70,23 @@ class QSOComments extends React.PureComponent {
       );
     }
   };
-  static getDerivedStateFromProps(props, prevState) {
-
-    if (props.qsos[props.index].comments !== prevState.comments)
-      return { index: props.index, 
-        comments: props.qsos[props.index].comments };
-    return null;
-  }
-  // componentDidUpdate(prevProps, prevState) {
-  //   console.log(this.props.qsos[this.props.index].comments)
-  //   if (
-  //     JSON.stringify(this.props.qsos[this.props.index].comments) !== JSON.stringify(prevProps.qsos[this.props.index].comments)
-  //   )
-  //     this.setState({
-  //       index:this.props.index,
-  //       comments: this.props.comments
-  //     });
+  // static getDerivedStateFromProps(props, prevState) {
+  //   if (props.qsos[props.index].comments !== prevState.comments)
+  //     return { index: props.index, comments: props.qsos[props.index].comments };
+  //   return null;
   // }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      JSON.stringify(this.props.qso.comments) !==
+      JSON.stringify(this.state.comments)
+    )
+      this.setState({
+        index: this.props.index,
+        comments: this.props.qso.comments,
+        qso: this.props.qso
+      });
+  }
   render() {
     const { t } = this.props;
 
@@ -125,10 +127,32 @@ class QSOComments extends React.PureComponent {
 
     return (
       <Fragment>
-        <Comment.Group threaded>
-          {comments}
-          {form}
-        </Comment.Group>
+        <Modal
+          size="tiny"
+          centered={true}
+          closeIcon={{
+            style: { top: '0.0535rem', right: '0rem' },
+            color: 'black',
+            name: 'close'
+          }}
+          open={this.props.showComments}
+          onClose={() => this.props.doClose()}
+          style={{
+            //height: '90%',
+            overflowY: 'auto'
+          }}
+        >
+          <Modal.Header>{t('qso.comments')} </Modal.Header>
+          <Modal.Content>
+            <Modal.Description>
+              <Comment.Group threaded>
+                {comments}
+                {form}
+              </Comment.Group>
+            </Modal.Description>
+          </Modal.Content>
+        </Modal>
+
         <Confirm
           size="mini"
           open={this.state.openLogin}
