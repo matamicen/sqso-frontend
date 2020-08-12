@@ -3,13 +3,14 @@
   display: grid;
   grid-template-columns: 50px auto 10px;
   /* grid-gap: 1em; */
-  grid-template-rows: 20px auto ;
+  grid-template-rows: 25px auto ;
   grid-template-areas: "profileSection actionSection buttonSection" "profileSection infoSection buttonSection";
   /* justify-content: space-evenly; */
 }
 
 .qso-avatar {
   grid-area: profileSection;
+  text-align: center;
   /* position: fixed; */
   /* grid-column: 1 / 4;
     grid-row: 1; */
@@ -24,6 +25,7 @@
   /* grid-column: 2;
     grid-row: 2; */
   /* max-width: 730px; */
+  align-self: end;
   margin-left: 4px;
 }
 
@@ -50,6 +52,7 @@
   text-align: center;
   font-size: 1rem;
   line-height: 2em;
+  align-self: center;
   /* position: sticky;
   top: 60px;
   left: 0;
@@ -78,6 +81,7 @@
   
   .qso-avatar {
     grid-area: profileSection;
+    text-align: center;
     /* position: fixed; */
     /* grid-column: 1 / 4;
       grid-row: 1; */
@@ -87,12 +91,13 @@
   
   .qso-header-action {
     
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     /*grid-column: span 4;*/
     grid-area: actionSection;
     /* grid-column: 2;
       grid-row: 2; */
     /* max-width: 730px; */
+    align-self: end;
     margin-left: 4px;
 
   }
@@ -104,7 +109,7 @@
     display: flex;
     justify-content: space-between;
     text-align: center;
-    font-size: 1rem;
+    font-size: 0.8rem;
     line-height: 1.2em;
     /* position: sticky;
     top: 60px;
@@ -120,6 +125,7 @@
     text-align: center;
     font-size: 1rem;
     line-height: 2em;
+    align-self: center;
     /* position: sticky;
     top: 60px;
     left: 0;

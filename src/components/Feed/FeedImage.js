@@ -138,7 +138,7 @@ class FeedImage extends React.Component {
                     }}
                   />
 
-                  <p style={{fontSize: 'small', textAlign :"center"}}>{m.description}</p>
+                  <p style={{fontSize: '1rem', textAlign :"center"}}>{m.description}</p>
                 </div>
               ))}
             </Modal.Description>
