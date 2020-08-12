@@ -112,6 +112,7 @@ class FeedItemRepost extends React.Component {
                   }}
                 />
               </Link>
+              <TextToFollow qra={this.props.qso.qra} />
             </div>
             <div className="qso-header-action">
               <PopupToFollow
@@ -123,7 +124,6 @@ class FeedItemRepost extends React.Component {
                 }
               />
               {t('qso.sharedContent')}
-              <TextToFollow qra={this.props.qso.qra} />
             </div>
             <div className="qso-header-info-post">
               <div>
@@ -179,6 +179,7 @@ class FeedItemRepost extends React.Component {
                     }}
                   />
                 </Link>
+                <TextToFollow qra={this.props.qso.original[0].qra} />
               </div>
               <div className="qso-header-action">
                 <PopupToFollow
@@ -190,7 +191,6 @@ class FeedItemRepost extends React.Component {
                   }
                 />
                 {text}
-                <TextToFollow qra={this.props.qso.original[0].qra} />
               </div>
               <div className="qso-header-info">
                 {this.props.qso.original[0].mode && (
