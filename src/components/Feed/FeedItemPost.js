@@ -111,7 +111,9 @@ class FeedItemPost extends React.PureComponent {
                     height: '50px'
                   }}
                 />
+                
               </Link>
+              <TextToFollow qra={this.props.qso.qra} />
             </div>
             <div className="qso-header-action">
               <PopupToFollow
@@ -123,7 +125,7 @@ class FeedItemPost extends React.PureComponent {
                 }
               />
               {text}
-              <TextToFollow qra={this.props.qso.qra} />
+              
             </div>
             <div className="qso-header-info-post">
               <div>

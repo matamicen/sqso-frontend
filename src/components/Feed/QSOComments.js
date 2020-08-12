@@ -43,7 +43,7 @@ class QSOComments extends React.PureComponent {
 
       let datetime = new Date();
       let comment = {
-        qra: this.props.qra.toUpperCase(),
+        qra: this.props.currentQRA.toUpperCase(),
         comment: this.state.comment,
         datetime: datetime
       };
@@ -96,6 +96,7 @@ class QSOComments extends React.PureComponent {
         <QSOCommentItem
           key={i}
           comment={comment}
+          currentQRA= {this.props.currentQRA}
           // recalculateRowHeight={this.props.recalculateRowHeight}
         />
       ));
@@ -174,8 +175,9 @@ class QSOComments extends React.PureComponent {
 
 const mapStateToProps = state => ({
   qsos: state.qsos,
+  
   token: state.userData.token,
-  qra: state.userData.currentQRA,
+  currentQRA: state.userData.currentQRA,
   firstname: state.userData.qra.firstname,
   lastname: state.userData.qra.lastname,
   avatarpic: state.userData.qra.avatarpic,

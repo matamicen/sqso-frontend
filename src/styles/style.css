@@ -1,3 +1,7 @@
+.ui.segment {
+  margin: 0.5rem 0em;
+  padding: 0.5em 0.5em;
+}
 .link-button-follow {
   background-color: transparent;
   border: none;
@@ -160,14 +164,12 @@
   text-align: center;
 } */
 .feed-item-qras {
-  
   display: flex;
   overflow-x: auto;
   overflow-y: hidden;
   justify-content: flex-start;
-flex-wrap: wrap;
-gap: 10px;
-
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .feed-item-qras::before,
@@ -177,7 +179,6 @@ gap: 10px;
   margin: auto;
   /* Make it push flex items to the center */
 }
-
 
 .slick-prev:before,
 .slick-next:before {
@@ -194,7 +195,7 @@ gap: 10px;
   grid-template-rows: 60px auto;
   grid-template-areas: 'pageHeader pageHeader pageHeader' 'leftSection mainSection rightSection';
   justify-content: space-evenly;
-  margin: 1em;
+  margin: 0.5em;
 }
 
 .profile-main {
@@ -260,11 +261,11 @@ gap: 10px;
 }
 
 .profile-header .inner .detail .qra {
-  font-size: -webkit-xxx-large;
+  font-size: 4rem;
 }
 
 .profile-header .inner .detail .name {
-  font-size: x-large;
+  font-size: 2rem;
 }
 .profile-header .inner .detail .kpi {
   display: flex;
@@ -522,11 +523,11 @@ gap: 10px;
     align-self: flex-start;
   }
   .profile-header .inner .detail .qra {
-    font-size: xx-large;
+    font-size: 3rem;
     /* margin-left: 10%; */
   }
   .profile-header .inner .detail .name {
-    font-size: x-large;
+    font-size: 1.5rem;
     /* margin-left: 10%; */
   }
   /* .profile-header .inner .detail .follow {

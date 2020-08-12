@@ -117,7 +117,7 @@ const QSOShareButtons = ({ idqso, t, title }) => {
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-        <span style={{ fontSize: 'small' }}>{t('qso.share')}</span>
+        <span style={{ fontSize: '1rem' }}>{t('qso.share')}</span>
       </div>
     </Button>
   );

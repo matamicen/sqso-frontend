@@ -82,24 +82,24 @@ class FeedAudio extends React.Component {
               }}
             >
               <Button
-                size="medium"
+                size="small"
                 circular
                 icon="play"
                 onClick={this.onClick}
                 style={{ background: '#8BD8BD', color: '#243665' }}
               />
               <span>
-                <span style={{ fontSize: 'medium' }}>
+                <span style={{ fontSize: '1rem' }}>
                   {t('qso.playAudio')}
                   {' - '}
                 </span>
                 {this.props.media.description && (
-                  <span>
+                   <span style={{ fontSize: '1em' }}>
                     <b>{this.props.media.description}</b>
                     {' - '}
                   </span>
                 )}
-                <span style={{ fontSize: 'medium' }}>
+                <span style={{ fontSize: '1rem' }}>
                   {date.toLocaleDateString(i18n.language, { month: 'short' }) +
                     ' ' +
                     date.getDate() +
@@ -112,7 +112,7 @@ class FeedAudio extends React.Component {
                 </span>
 
                 {this.props.media.views_counter > 0 && (
-                  <span style={{ fontSize: 'medium', color: 'gray' }}>
+                  <span style={{ fontSize: '1rem', color: 'gray' }}>
                     {' '}
                     {t('qso.audioPlays', {
                       count: this.props.media.views_counter
@@ -177,7 +177,7 @@ class FeedAudio extends React.Component {
                   (date.getMinutes() < 10 ? '0' : '') +
                   date.getMinutes()}
                 {this.props.media.views_counter > 0 && (
-                  <span style={{ fontSize: 'medium', color: 'gray' }}>
+                  <span style={{ fontSize: '1rem', color: 'gray' }}>
                     {' '}
                     {t('qso.audioPlays', {
                       count: this.props.media.views_counter + 1
