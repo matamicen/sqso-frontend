@@ -63,7 +63,7 @@ class App extends Component {
     let token;
 
     let mobileSession = JSON.parse(data);
-
+    this.props.actions.doSetEmbedded();
     const user = await Auth.signIn(
       mobileSession.userlogin.toLowerCase().trim(),
       mobileSession.userpwd
@@ -103,7 +103,6 @@ class App extends Component {
             custom_map: { dimension1: 'userQRA' }
           });
           if (process.env.REACT_APP_STAGE === 'production')
-           
             window.gtag('event', 'userLogin_WEBPRD', {
               event_category: 'User',
               event_label: 'login',
@@ -154,12 +153,13 @@ class App extends Component {
     }
   }
   async loginFromAndroid(event) {
+    this.props.actions.doSetEmbedded();
     let token;
 
     let mobileSession = JSON.parse(event.data);
-
+    
     this.setState({ mobileSession: mobileSession });
-    console.log(mobileSession);
+    
     const user = await Auth.signIn(
       mobileSession.userlogin.toLowerCase().trim(),
       mobileSession.userpwd
@@ -199,7 +199,6 @@ class App extends Component {
             custom_map: { dimension1: 'userQRA' }
           });
           if (process.env.REACT_APP_STAGE === 'production')
-           
             window.gtag('event', 'userLogin_WEBPRD', {
               event_category: 'User',
               event_label: 'login',

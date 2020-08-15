@@ -41,6 +41,7 @@ export const FOLLOW_REQUEST = 'FOLLOW_REQUEST';
 export const FOLLOW_RECEIVE = 'FOLLOW_RECEIVE';
 export const QSO_DISLIKE = 'QSO_DISLIKE';
 export const QSO_LIKE = 'QSO_LIKE';
+export const EMBEDDED_SESSION = 'EMBEDDED_SESSION';
 export function doNotificationRead(idnotif = null, token) {
   return async dispatch => {
     if (process.env.REACT_APP_STAGE === 'production')
@@ -483,6 +484,11 @@ export function doStartingLogin() {
 export function doSetPublicSession() {
   return {
     type: PUBLIC_SESSION
+  };
+}
+export function doSetEmbedded(){
+  return {
+    type: EMBEDDED_SESSION
   };
 }
 export function doLogin(token, qra, identityId) {

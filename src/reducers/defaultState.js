@@ -7,7 +7,31 @@ import {
   COMMENT_DELETE,
   DELETE_MEDIA,
   DELETE_QSO,
-  FOLLOW_CLEAR,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  EMBEDDED_SESSION, FOLLOW_CLEAR,
   FOLLOW_RECEIVE,
   FOLLOW_REQUEST,
   LOGIN,
@@ -31,6 +55,7 @@ import {
   RECEIVE_USER_DATA_INFO,
   REFRESH_TOKEN,
   REPOST_QSO,
+
   REQUEST_FEED,
   REQUEST_QRA,
   REQUEST_QSO,
@@ -70,7 +95,8 @@ const initialState = {
   qraError: null,
   followFetched: false,
   followFetching: false,
-  follow: {}
+  follow: {},
+  embeddedSession: false
 };
 
 // define a reducer with an initialized state action
@@ -239,14 +265,14 @@ function generalReducers(state = initialState, action) {
               ...state.qso_link,
               comments: state.qso_link.comments
                 ? state.qso_link.comments.map(c => {
-                  if (
-                    c.qra === action.comment.qra &&
-                    c.comment === action.comment.comment &&
-                    c.datetime === action.comment.datetime
-                  )
-                    return action.comment;
-                  else return c;
-                })
+                    if (
+                      c.qra === action.comment.qra &&
+                      c.comment === action.comment.comment &&
+                      c.datetime === action.comment.datetime
+                    )
+                      return action.comment;
+                    else return c;
+                  })
                 : []
             }
           : null,
@@ -276,16 +302,15 @@ function generalReducers(state = initialState, action) {
           state.qso && state.qso.idqsos
             ? {
                 ...state.qso,
-                comments: state.qso.comments
-                  .map(c => {
-                    if (
-                      c.qra === action.comment.qra &&
-                      c.comment === action.comment.comment &&
-                      c.datetime === action.comment.datetime
-                    )
-                      return action.comment;
-                    else return c;
-                  })
+                comments: state.qso.comments.map(c => {
+                  if (
+                    c.qra === action.comment.qra &&
+                    c.comment === action.comment.comment &&
+                    c.datetime === action.comment.datetime
+                  )
+                    return action.comment;
+                  else return c;
+                })
               }
             : {}
       });
@@ -621,7 +646,13 @@ function generalReducers(state = initialState, action) {
         FetchingQSO: true
       });
       return newStore;
-
+    case EMBEDDED_SESSION:
+      
+      newStore = Object.assign({}, state, {
+        ...state,
+        embeddedSession: true
+      });
+      return newStore;
     case PUBLIC_SESSION: {
       const publicSessionUserData = {
         ...state.userData,
