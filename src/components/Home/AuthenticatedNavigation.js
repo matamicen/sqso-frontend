@@ -170,14 +170,7 @@ class AuthenticatedNavigation extends React.PureComponent {
               <Link to="/contact">
                 <Dropdown.Item>{t('navBar.contactUs')}</Dropdown.Item>
               </Link>
-              <Link to="/FAQ">
-                <Dropdown.Item>{t('navBar.whatIsSuperQSO')}</Dropdown.Item>
-              </Link>
-              {/* <Link to="/tutorials">
-                <Dropdown.Item>
-                  <b>{t('navBar.tutorial')}</b>
-                </Dropdown.Item>
-              </Link> */}
+             
               <Link to="/download">
                 <Dropdown.Item>
                   <b>{t('navBar.downloadApp')}</b>
