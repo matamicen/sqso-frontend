@@ -179,6 +179,11 @@ class QRAProfileContainer extends React.PureComponent {
       !this.followed
     ) {
       if (this.props.isAuthenticated) {
+        if (process.env.REACT_APP_STAGE === 'production')
+        window.gtag('event', 'qraFollowProfile_WEBPRD', {
+          event_category: 'User',
+          event_label: 'follow'
+        });
         this.props.actions.doFollowQRA(
           this.props.token,
           this.props.match.params.qra
