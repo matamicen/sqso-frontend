@@ -108,7 +108,6 @@ class FeedItemQSO extends React.PureComponent {
                     height: '50px'
                   }}
                 />
-                
               </Link>
               <TextToFollow qra={this.props.qso.qra} />
             </div>
@@ -122,7 +121,6 @@ class FeedItemQSO extends React.PureComponent {
                 }
               />
               {text}
-              
             </div>
             <div className="qso-header-info">
               <div>
@@ -231,7 +229,11 @@ class FeedItemQSO extends React.PureComponent {
             <FeedLinkList links={this.props.qso.links} />
           )}
           <Divider hidden style={{ marginTop: '1vh' }} />
-          <QSOLikeText qso={this.props.qso} likes={this.state.likes} />
+          <QSOLikeText
+            qso={this.props.qso}
+            likes={this.state.likes}
+            recalculateRowHeight={this.recalculateRowHeight}
+          />
           <Button.Group fluid basic>
             <QSOLikeButton
               qso={this.props.qso}

@@ -16,8 +16,8 @@ export default class QRAs extends React.Component {
             display: 'inline-flex',
             overflowX: 'auto',
             overflowY: 'hidden',
-            justifyContent: 'center',
-            gap: '10px'
+            justifyContent: 'start',
+            gap: '1vh'
           }}
         >
           {/* <div className="feed-item-qras"> */}

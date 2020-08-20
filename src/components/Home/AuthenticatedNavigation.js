@@ -59,68 +59,67 @@ class AuthenticatedNavigation extends React.PureComponent {
 
   render() {
     const { t } = this.props;
+
     return (
       <Menu fixed="top" style={{ height: '50px', display: 'flex' }}>
         <Menu.Item
           style={{ flex: '0 1 auto', justifyContent: 'center', padding: '0' }}
         >
-          <Link to="/">
-            <MobileView>
-              <img
-                src={global_config.s3Cloudfront + '/superqsoIconAzul.png'}
-                alt="SuperQSO.com"
-                className="mobile"
-              />
-            </MobileView>
-            <BrowserView>
-              <img
-                src={global_config.s3Cloudfront + '/logoDesk.jpg'}
-                alt="SuperQSO.com"
-                className="desktop"
-              />
-            </BrowserView>
-          </Link>
+          <MobileView>
+            <img
+              src={global_config.s3Cloudfront + '/superqsoIconAzul.png'}
+              alt="SuperQSO.com"
+              className="mobile"
+            />
+          </MobileView>
+          <BrowserView>
+            <img
+              src={global_config.s3Cloudfront + '/logoDesk.jpg'}
+              alt="SuperQSO.com"
+              className="desktop"
+            />
+          </BrowserView>
         </Menu.Item>
-        <Menu.Item
-          style={{ flex: '1 1 auto', padding: '5px' }}
-        >
+        <Menu.Item style={{ flex: '1 1 auto', padding: '5px' }}>
           <ServerAutoSuggest />
         </Menu.Item>
-        <Menu.Item style={{ padding: '5px' }}>
-          <Link
-            to="/"
-            onClick={async () => {
-              try {
-                const currentSession = await Auth.currentSession();
-                const token = currentSession.getIdToken().getJwtToken();
+        {!this.props.embeddedSession && (
+          <Menu.Item style={{ padding: '5px' }}>
+            <Link
+              to="/"
+              onClick={async () => {
+                try {
+                  const currentSession = await Auth.currentSession();
+                  const token = currentSession.getIdToken().getJwtToken();
 
-                this.props.actions.refreshToken(token);
-                this.props.actions.doFetchUserInfo(this.props.token);
-                this.props.actions.doFetchPublicFeed(this.props.currentQRA);
-                //   }
-                // );
-              } catch (error) {
-                if (process.env.NODE_ENV !== 'production') {
-                  console.log('Unable to refresh Token');
-                  console.log(error);
-                } else {
-                  Sentry.configureScope(function(scope) {
-                    scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-                  });
-                  Sentry.captureException(error);
+                  this.props.actions.refreshToken(token);
+                  this.props.actions.doFetchUserInfo(this.props.token);
+                  this.props.actions.doFetchPublicFeed(this.props.currentQRA);
+                  //   }
+                  // );
+                } catch (error) {
+                  if (process.env.NODE_ENV !== 'production') {
+                    console.log('Unable to refresh Token');
+                    console.log(error);
+                  } else {
+                    Sentry.configureScope(function(scope) {
+                      scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+                    });
+                    Sentry.captureException(error);
+                  }
                 }
-              }
 
-              if (!this.props.isAuthenticated) {
-                this.props.actions.doFetchPublicFeed();
-              }
-            }}
-          >
-            <Icon.Group size="large">
-              <Icon name="home" />
-            </Icon.Group>
-          </Link>
-        </Menu.Item>
+                if (!this.props.isAuthenticated) {
+                  this.props.actions.doFetchPublicFeed();
+                }
+              }}
+            >
+              <Icon.Group size="large">
+                <Icon name="home" />
+              </Icon.Group>
+            </Link>
+          </Menu.Item>
+        )}
         <div className="notifIcon">
           <Menu.Item>
             <Link to="/notifications">{this.notificationIcon()}</Link>
@@ -171,14 +170,7 @@ class AuthenticatedNavigation extends React.PureComponent {
               <Link to="/contact">
                 <Dropdown.Item>{t('navBar.contactUs')}</Dropdown.Item>
               </Link>
-              <Link to="/FAQ">
-                <Dropdown.Item>{t('navBar.whatIsSuperQSO')}</Dropdown.Item>
-              </Link>
-              {/* <Link to="/tutorials">
-                <Dropdown.Item>
-                  <b>{t('navBar.tutorial')}</b>
-                </Dropdown.Item>
-              </Link> */}
+             
               <Link to="/download">
                 <Dropdown.Item>
                   <b>{t('navBar.downloadApp')}</b>
@@ -219,6 +211,7 @@ const mapStateToProps = state => ({
   currentQRA: state.userData.currentQRA,
   isAuthenticated: state.userData.isAuthenticated,
   token: state.userData.token,
+  embeddedSession: state.embeddedSession,
   notifications: state.userData.notifications
 });
 const mapDispatchToProps = dispatch => ({

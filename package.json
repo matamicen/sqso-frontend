@@ -1,6 +1,6 @@
 {
   "name": "sqso-frontend",
-  "version": "1.7.7",
+  "version": "1.8.1",
   "private": true,
   "homepage": "https://www.superqso.com/",
   "dependencies": {
@@ -111,6 +111,7 @@
     "tslint-plugin-prettier": "^2.3.0",
     "uglify-js-brunch": "^2.10.0",
     "url-loader": "^4.1.0",
+    "webpack-bundle-analyzer": "^3.8.0",
     "webpack-cli": "^3.3.12",
     "why-did-you-update": "^0.1.1"
   },
@@ -125,6 +126,7 @@
     "eject": "react-scripts eject",
     "serve": "set NODE_ENV=production && yarn build && nodemon --exec babel-node ./server/app.js",
     "nodemon": "yarn && yarn build --profile && nodemon --exec npx babel-node ./server/app",
+    "stats": "yarn && yarn build \"--stats\" && webpack-bundle-analyzer build/bundle-stats.json generateStatsFile=true",
     "analyze": "yarn && yarn build && source-map-explorer build/static/js/main.* ",
     "sitemap": "node src/components/sitemap-builder.js",
     "getcountries": "get-countries -n MY_COUNTRIES_DATA -p /src/components/Profile/countries.js --no-flags",

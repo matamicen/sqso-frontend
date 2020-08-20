@@ -61,6 +61,7 @@ class QSOLikeText extends React.PureComponent {
       likes.length === 1 &&
       likes[0].qra === this.props.userData.currentQRA
     ) {
+      this.props.recalculateRowHeight();
       counter = likes.length;
       finalText = t('qso.youLikeThis');
       //  + (this.props.qso.type === 'POST' ? ' POST' : ' QSO');

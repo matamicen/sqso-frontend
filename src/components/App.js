@@ -44,7 +44,17 @@ class App extends Component {
     };
   }
   async componentDidMount() {
+    
+    let query = new URLSearchParams(this.props.location.search);
+    console.log(query.get('embedded'))
     if (isMobile) {
+      if (query.get('embedded')) this.props.actions.doSetEmbedded();
+
+      window.addEventListener('newURLfromWebView', event => {
+        alert(event);
+        console.log(event);
+        this.props.actions.doSetEmbedded();
+      });
       if (isIOS) {
         window.WebViewBridge = {
           onMessage: this._onMessage.bind(this)
@@ -52,18 +62,29 @@ class App extends Component {
         const event = new Event('WebViewBridge');
         window.dispatchEvent(event);
         // this._postMessage({ helloFromWebPage: true });
-      } else
+      } else {
         document.addEventListener('message', event =>
           this.loginFromAndroid(event)
         );
+        // console.log('android');
+        // window.addEventListener('WebViewBridge', event => {
+        //   // console.log(event);
+        //   // this.loginFromAndroid(event)F
+        //   this._onMessage.bind(this);
+        // });
+
+        // const event = new Event('WebViewBridge');
+        // document.dispatchEvent(event);
+      }
     }
     this.login();
   }
   async _onMessage(data) {
+    console.log('_onMessage');
     let token;
 
     let mobileSession = JSON.parse(data);
-
+    this.props.actions.doSetEmbedded();
     const user = await Auth.signIn(
       mobileSession.userlogin.toLowerCase().trim(),
       mobileSession.userpwd
@@ -103,7 +124,6 @@ class App extends Component {
             custom_map: { dimension1: 'userQRA' }
           });
           if (process.env.REACT_APP_STAGE === 'production')
-           
             window.gtag('event', 'userLogin_WEBPRD', {
               event_category: 'User',
               event_label: 'login',
@@ -154,57 +174,60 @@ class App extends Component {
     }
   }
   async loginFromAndroid(event) {
+    console.log('loginFromAndroid');
+    this.props.actions.doSetEmbedded();
     let token;
 
     let mobileSession = JSON.parse(event.data);
 
     this.setState({ mobileSession: mobileSession });
-    console.log(mobileSession);
-    const user = await Auth.signIn(
-      mobileSession.userlogin.toLowerCase().trim(),
-      mobileSession.userpwd
-    ).catch(err => {
-      console.log(err);
-      this.props.actions.doLogout();
-    });
+    if (mobileSession.userlogin) {
+      const user = await Auth.signIn(
+        mobileSession.userlogin.toLowerCase().trim(),
+        mobileSession.userpwd
+      ).catch(err => {
+        console.log(err);
+        this.props.actions.doLogout();
+      });
 
-    if (user) {
-      if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
-        this.props.history.push({
-          pathname: '/changepassword',
-          data: { user: user, newPasswordRequired: true }
-        });
-      } else {
-        await this.props.actions.doStartingLogin();
-        token = user.signInUserSession.idToken.jwtToken;
-        const credentials = await Auth.currentCredentials();
-
-        if (!credentials.authenticated) {
-          await Auth.signOut();
-
-          this.props.actions.doSetPublicSession();
+      if (user) {
+        if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
+          this.props.history.push({
+            pathname: '/changepassword',
+            data: { user: user, newPasswordRequired: true }
+          });
         } else {
-          await this.props.actions.doLogin(
-            token,
-            user.signInUserSession.idToken.payload['custom:callsign'],
-            credentials.identityId
-          );
-          await this.props.actions.doFetchUserInfo(token);
-          Sentry.configureScope(scope => {
-            scope.setUser({
-              qra: user.signInUserSession.idToken.payload['custom:callsign']
+          await this.props.actions.doStartingLogin();
+          token = user.signInUserSession.idToken.jwtToken;
+          const credentials = await Auth.currentCredentials();
+
+          if (!credentials.authenticated) {
+            await Auth.signOut();
+
+            this.props.actions.doSetPublicSession();
+          } else {
+            await this.props.actions.doLogin(
+              token,
+              user.signInUserSession.idToken.payload['custom:callsign'],
+              credentials.identityId
+            );
+            await this.props.actions.doFetchUserInfo(token);
+            Sentry.configureScope(scope => {
+              scope.setUser({
+                qra: user.signInUserSession.idToken.payload['custom:callsign']
+              });
             });
-          });
-          window.gtag('config', 'G-H8G28LYKBY', {
-            custom_map: { dimension1: 'userQRA' }
-          });
-          if (process.env.REACT_APP_STAGE === 'production')
-           
-            window.gtag('event', 'userLogin_WEBPRD', {
-              event_category: 'User',
-              event_label: 'login',
-              userQRA: user.signInUserSession.idToken.payload['custom:callsign']
+            window.gtag('config', 'G-H8G28LYKBY', {
+              custom_map: { dimension1: 'userQRA' }
             });
+            if (process.env.REACT_APP_STAGE === 'production')
+              window.gtag('event', 'userLogin_WEBPRD', {
+                event_category: 'User',
+                event_label: 'login',
+                userQRA:
+                  user.signInUserSession.idToken.payload['custom:callsign']
+              });
+          }
         }
       }
     }
