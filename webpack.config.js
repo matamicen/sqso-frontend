@@ -2,6 +2,7 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var BrotliPlugin = require('brotli-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin')
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 var path = require('path');
 module.exports = function override(config, env) {
   config = {
@@ -67,7 +68,10 @@ module.exports = function override(config, env) {
         threshold: 10240,
         minRatio: 0.8
       }),
-      new MiniCssExtractPlugin()
+      new MiniCssExtractPlugin(),
+      new BundleAnalyzerPlugin({
+        analyzerMode: "static",
+      })
     ]
   };
   return config;
