@@ -111,7 +111,6 @@ class FeedItemPost extends React.PureComponent {
                     height: '50px'
                   }}
                 />
-                
               </Link>
               <TextToFollow qra={this.props.qso.qra} />
             </div>
@@ -125,7 +124,6 @@ class FeedItemPost extends React.PureComponent {
                 }
               />
               {text}
-              
             </div>
             <div className="qso-header-info-post">
               <div>
@@ -211,7 +209,11 @@ class FeedItemPost extends React.PureComponent {
             hidden
             style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
           />
-          <QSOLikeText qso={this.props.qso} likes={this.state.likes} />
+          <QSOLikeText
+            qso={this.props.qso}
+            likes={this.state.likes}
+            recalculateRowHeight={this.recalculateRowHeight}
+          />
           <Button.Group fluid basic>
             <QSOLikeButton
               qso={this.props.qso}
@@ -229,16 +231,16 @@ class FeedItemPost extends React.PureComponent {
               title={shareText}
             />
           </Button.Group>
-          {this.state.showComments &&
-                <QSOComments
-                  showComments={this.state.showComments}
-                  doClose={()=>this.setState({showComments: false})}
-                  index={this.props.index}
-                  qso={this.props.qso}
-                  comments={this.props.comments}
-                  recalculateRowHeight={this.recalculateRowHeight}
-                />
-          }
+          {this.state.showComments && (
+            <QSOComments
+              showComments={this.state.showComments}
+              doClose={() => this.setState({ showComments: false })}
+              index={this.props.index}
+              qso={this.props.qso}
+              comments={this.props.comments}
+              recalculateRowHeight={this.recalculateRowHeight}
+            />
+          )}
         </Segment>
         <Confirm
           size="mini"

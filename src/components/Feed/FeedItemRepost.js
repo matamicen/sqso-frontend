@@ -290,7 +290,11 @@ class FeedItemRepost extends React.Component {
             hidden
             style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
           />
-          <QSOLikeText qso={this.props.qso} likes={this.state.likes} />
+          <QSOLikeText
+            qso={this.props.qso}
+            likes={this.state.likes}
+            recalculateRowHeight={this.recalculateRowHeight}
+          />
           <Button.Group widths="4" basic>
             <QSOLikeButton
               qso={this.props.qso}
