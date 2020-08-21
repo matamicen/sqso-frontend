@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
-import * as Actions from "../../actions";
-import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
+import * as Actions from "../../actions";
 import QraFollowRecommendPresentational from "./followPresentational";
 
 class QRAfollowRecommend extends React.PureComponent {
@@ -22,6 +22,11 @@ class QRAfollowRecommend extends React.PureComponent {
   }
   doFollow = param => {
     if (this.props.isAuthenticated)
+    if (process.env.REACT_APP_STAGE === 'production')
+    window.gtag('event', 'qraFollowRecommended_WEBPRD', {
+      event_category: 'User',
+      event_label: 'follow'
+    });
       this.props.actions.doFollowQRA(this.props.token, param);
   };
   doUnfollow = param => {

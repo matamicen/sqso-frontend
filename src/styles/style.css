@@ -1,3 +1,6 @@
+.ReactVirtualized__Grid__innerScrollContainer {
+  overflow: visible !important;
+}
 .ui.segment {
   margin: 0.5rem 0em;
   padding: 0.5em 0.5em;

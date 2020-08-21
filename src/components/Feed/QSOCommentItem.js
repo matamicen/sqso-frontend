@@ -23,6 +23,11 @@ class QSOCommentItem extends React.Component {
     if (!this.props.userData.token) return null;
     if (this.props.userData.isAuthenticated) {
       if (!this.followed) {
+        if (process.env.REACT_APP_STAGE === 'production')
+        window.gtag('event', 'qraFollowComment_WEBPRD', {
+          event_category: 'User',
+          event_label: 'follow'
+        });
         this.props.actions.doFollowQRA(this.props.token, idqra);
         this.followed = true;
         this.setState({ followed: this.followed });

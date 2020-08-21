@@ -172,6 +172,7 @@
     "band": "Band",
     "mode": "Mode",
     "type": "Type",
+    "POST": "Post",
     "sharedContent": " reposted a post",
     "writeComment": "Write a comment..",
     "othersLikeThis": " others liked this",
