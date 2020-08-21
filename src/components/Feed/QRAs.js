@@ -16,7 +16,7 @@ export default class QRAs extends React.Component {
             display: 'inline-flex',
             overflowX: 'auto',
             overflowY: 'hidden',
-            justifyContent: 'start',
+            justifyContent: 'inherit',
             gap: '1vh'
           }}
         >
