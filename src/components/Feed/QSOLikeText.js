@@ -168,7 +168,7 @@ class QSOLikeText extends React.PureComponent {
           }}
         >
           <Modal.Header>
-            {t('qso.likeModalHeader')} {qso.type === 'POST' ? ' POST' : ' QSO'}
+            {t('qso.likeModalHeader')} {qso.type === 'POST' ? t('qso.POST') : ' QSO'}
           </Modal.Header>
           <Modal.Content>
             <Modal.Description>

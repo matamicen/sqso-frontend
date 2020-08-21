@@ -173,6 +173,7 @@
     "band": "Banda",
     "mode": "Modo",
     "type": "Tipo",
+    "POST": "Publicación",
     "sharedContent": " republicó una publicación",
     "writeComment": "Comenta..",
     "othersLikeThis": " personas más les gustó esto",
@@ -239,8 +240,8 @@
   },
   "qslCard": {
     "scanWith": "Usa la APP de SuperQSO",
-    "createdPost": "Creó un POST",
-    "createdPostWith": "Creó un POST con",
+    "createdPost": "Creó una Publicación",
+    "createdPostWith": "Creó una Publicación  con",
     "listenedQSO": "Escuchó un QSO con ",
     "workedQSO": "Trabajó un QSO con "
   },
