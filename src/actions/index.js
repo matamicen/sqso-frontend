@@ -1514,11 +1514,7 @@ export function doFetchQRA(qra, token = null) {
 }
 
 export function doFollowQRA(token, follower) {
-  if (process.env.REACT_APP_STAGE === 'production')
-    window.gtag('event', 'qraFollow_WEBPRD', {
-      event_category: 'User',
-      event_label: 'follow'
-    });
+
 
   return async dispatch => {
     try {

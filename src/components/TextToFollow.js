@@ -13,6 +13,11 @@ class PopupToFollow extends React.PureComponent {
 
   follow = () => {
     this.setState({ isFollowing: true });
+    if (process.env.REACT_APP_STAGE === 'production')
+    window.gtag('event', 'qraFollowFeed_WEBPRD', {
+      event_category: 'User',
+      event_label: 'follow'
+    });
     this.props.actions.doFollowQRA(this.props.token, this.props.qra);
   };
   unfollow = () => {

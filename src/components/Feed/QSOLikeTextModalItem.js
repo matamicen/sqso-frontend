@@ -14,10 +14,10 @@ class QSOLikeTextModalItem extends React.PureComponent {
   }
   componentDidMount() {
     if (process.env.REACT_APP_STAGE === 'production')
-    window.gtag('event', 'qsoLikeModalOpen_WEBPRD', {
-      event_category: 'qso',
-      event_label: 'qsoLikeModalOpen'
-    });
+      window.gtag('event', 'qsoLikeModalOpen_WEBPRD', {
+        event_category: 'qso',
+        event_label: 'qsoLikeModalOpen'
+      });
     // this.setState({ likes: this.props.qso ? this.props.qso.likes : [] });
   }
   // static getDerivedStateFromProps(props, prevState) {
@@ -29,6 +29,11 @@ class QSOLikeTextModalItem extends React.PureComponent {
     if (!this.props.userData.token) return null;
     if (this.props.userData.isAuthenticated) {
       if (!this.followed) {
+        if (process.env.REACT_APP_STAGE === 'production')
+        window.gtag('event', 'qraFollowLike_WEBPRD', {
+          event_category: 'User',
+          event_label: 'follow'
+        });
         this.props.actions.doFollowQRA(this.props.userData.token, idqra);
         this.followed = true;
         this.setState({ followed: this.followed });
@@ -38,11 +43,9 @@ class QSOLikeTextModalItem extends React.PureComponent {
         this.setState({ followed: this.followed });
       }
     }
-
   }
   render() {
     const { l, t } = this.props;
-
 
     if (
       this.props.isAuthenticated &&
@@ -64,15 +67,17 @@ class QSOLikeTextModalItem extends React.PureComponent {
             paddingRigth: '5px'
           }}
         >
-          <Image
-            src={l.avatarpic ? l.avatarpic : '/emptyprofile.png'}
-            size="mini"
-            avatar
-            style={{
-              width: '50px',
-              height: '50px'
-            }}
-          />
+          <Link to={'/' + l.qra}>
+            <Image
+              src={l.avatarpic ? l.avatarpic : '/emptyprofile.png'}
+              size="mini"
+              avatar
+              style={{
+                width: '50px',
+                height: '50px'
+              }}
+            />
+          </Link>
         </div>
         <div
           style={{
@@ -96,7 +101,8 @@ class QSOLikeTextModalItem extends React.PureComponent {
             padding: '0'
           }}
         >
-          {this.props.isAuthenticated && !this.followed &&
+          {this.props.isAuthenticated &&
+            !this.followed &&
             l.qra !== this.props.userData.currentQRA && (
               <Button
                 style={{
