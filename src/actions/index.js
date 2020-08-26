@@ -759,6 +759,7 @@ export function doSaveUserInfo(token, qra) {
 
       dispatch(refreshToken(token));
       dispatch(doRequestUserInfo());
+      dispatch(doReceiveUserDataInfo(qra))
       const apiName = 'superqso';
       const path = '/qra-info/info';
       const myInit = {
@@ -772,7 +773,7 @@ export function doSaveUserInfo(token, qra) {
       API.post(apiName, path, myInit)
         .then(response => {
           if (response.body.error !== 0) console.log(response.body.message);
-          else dispatch(doReceiveUserDataInfo(response.body.message));
+          // else dispatch(doReceiveUserDataInfo(response.body.message));
         })
         .catch(async error => {
           if (process.env.NODE_ENV !== 'production') {
