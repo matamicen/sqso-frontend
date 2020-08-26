@@ -41,7 +41,14 @@ class PublicNavigation extends React.PureComponent {
           <Menu.Item style={{ padding: '5px' }}>
             <Link to="/">
               <Icon.Group size="large">
-                <Icon name="home" />
+                <Icon
+                  name="home"
+                  onClick={async () => {
+                    if (!this.props.isAuthenticated) {
+                      this.props.actions.doFetchPublicFeed();
+                    }
+                  }}
+                />
               </Icon.Group>
             </Link>
           </Menu.Item>
