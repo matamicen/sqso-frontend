@@ -7,31 +7,8 @@ import {
   COMMENT_DELETE,
   DELETE_MEDIA,
   DELETE_QSO,
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  EMBEDDED_SESSION, FOLLOW_CLEAR,
+  EMBEDDED_SESSION,
+  FOLLOW_CLEAR,
   FOLLOW_RECEIVE,
   FOLLOW_REQUEST,
   LOGIN,
@@ -55,7 +32,6 @@ import {
   RECEIVE_USER_DATA_INFO,
   REFRESH_TOKEN,
   REPOST_QSO,
-
   REQUEST_FEED,
   REQUEST_QRA,
   REQUEST_QSO,
@@ -557,13 +533,13 @@ function generalReducers(state = initialState, action) {
       });
       return newStore;
     case RECEIVE_USER_DATA_INFO: {
-      const qra = {
-        ...state.qra,
-        qra: action.qra
-      };
       newStore = Object.assign({}, state, {
         ...state,
-        qra: qra
+        userData: {
+          ...state.userData,
+          qra: { ...state.userData.qra, ...action.qra }
+        },
+        qra: { ...state.qra, qra: { ...state.qra.qra, ...action.qra } }
       });
       return newStore;
     }
@@ -647,7 +623,6 @@ function generalReducers(state = initialState, action) {
       });
       return newStore;
     case EMBEDDED_SESSION:
-      
       newStore = Object.assign({}, state, {
         ...state,
         embeddedSession: true

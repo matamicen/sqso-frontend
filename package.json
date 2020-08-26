@@ -1,6 +1,6 @@
 {
   "name": "sqso-frontend",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "private": true,
   "homepage": "https://www.superqso.com/",
   "dependencies": {
@@ -18,7 +18,7 @@
     "draft-js": "^0.10.5",
     "draftjs-to-html": "^0.8.4",
     "express": "^4.16.2",
-    "formik": "^1.5.4",
+    "formik": "^2.1.5",
     "glamor": "^2.20.40",
     "history": "^4.6.3",
     "html-to-draftjs": "^1.4.0",
