@@ -121,7 +121,7 @@ class QSOComments extends React.PureComponent {
             rows={4}
           />
 
-          <Button size="mini" content={t('qso.add')} />
+          <Button positive size="mini" content={t('qso.add')} />
         </Form.Group>
       </Form>
     );
