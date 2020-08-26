@@ -92,11 +92,12 @@ class QRAProfileInfo extends React.Component {
     return (
       <Fragment>
         <Segment raised>
-          <Form size="mini">
+          <Form >
             {this.props.isAuthenticated &&
               this.props.currentQRA === this.props.qraInfo.qra && (
                 <div>
                   <Button
+                    positive
                     fluid
                     size="mini"
                     onClick={() => this.setState({ edit: true })}
