@@ -108,10 +108,6 @@ class AuthenticatedNavigation extends React.PureComponent {
                     Sentry.captureException(error);
                   }
                 }
-
-                if (!this.props.isAuthenticated) {
-                  this.props.actions.doFetchPublicFeed();
-                }
               }}
             >
               <Icon.Group size="large">
@@ -147,35 +143,46 @@ class AuthenticatedNavigation extends React.PureComponent {
                 {t('navBar.editProfile')}
               </Dropdown.Item>
               <Dropdown.Divider />
-              <Dropdown.Item
-                onClick={() => this.props.history.push('/changepassword')}
-              >
-                {t('navBar.changePassword')}
-              </Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item onClick={() => this.props.history.push('/follow')}>
-                {t('navBar.whoToFollow')}
-              </Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item onClick={this.logout.bind(this)}>
-                {t('navBar.logOut')}
-              </Dropdown.Item>
-              <Dropdown.Divider />
+              {!this.props.embeddedSession && (
+                <Dropdown.Item
+                  onClick={() => this.props.history.push('/changepassword')}
+                >
+                  {t('navBar.changePassword')}
+                </Dropdown.Item>
+              )}
+              {!this.props.embeddedSession && <Dropdown.Divider />}
+              {!this.props.embeddedSession && (
+                <Dropdown.Item
+                  onClick={() => this.props.history.push('/follow')}
+                >
+                  {t('navBar.whoToFollow')}
+                </Dropdown.Item>
+              )}
+              {!this.props.embeddedSession && <Dropdown.Divider />}
+              {!this.props.embeddedSession && (
+                <Dropdown.Item onClick={this.logout.bind(this)}>
+                  {t('navBar.logOut')}
+                </Dropdown.Item>
+              )}
+              {!this.props.embeddedSession && <Dropdown.Divider />}
               <Link to="/privacy">
                 <Dropdown.Item>{t('navBar.privacyPolicy')} </Dropdown.Item>
               </Link>
               <Link to="/terms">
                 <Dropdown.Item>{t('navBar.termsOfService')}</Dropdown.Item>
               </Link>
-              <Link to="/contact">
-                <Dropdown.Item>{t('navBar.contactUs')}</Dropdown.Item>
-              </Link>
-             
-              <Link to="/download">
-                <Dropdown.Item>
-                  <b>{t('navBar.downloadApp')}</b>
-                </Dropdown.Item>
-              </Link>
+              {!this.props.embeddedSession && (
+                <Link to="/contact">
+                  <Dropdown.Item>{t('navBar.contactUs')}</Dropdown.Item>
+                </Link>
+              )}
+              {!this.props.embeddedSession && (
+                <Link to="/download">
+                  <Dropdown.Item>
+                    <b>{t('navBar.downloadApp')}</b>
+                  </Dropdown.Item>
+                </Link>
+              )}
             </Dropdown.Menu>
           </Dropdown>
         </Menu.Menu>
