@@ -17,6 +17,7 @@ class QRAProfileContainer extends React.PureComponent {
       adClosed: false,
       tab: null,
       followed: null,
+      qra: null,
       qraError: null
     };
     this.handleButtonClick = this.handleButtonClick.bind(this);
@@ -24,6 +25,7 @@ class QRAProfileContainer extends React.PureComponent {
   }
 
   componentDidMount() {
+    if (this.props.qra) this.setState({ qra: this.props.qra });
     if (process.env.NODE_ENV !== 'production')
       this.setState({ adActive: false });
 
@@ -89,6 +91,10 @@ class QRAProfileContainer extends React.PureComponent {
   }
   handleOpen = () => this.setState({ adActive: true });
   handleClose = () => this.setState({ adActive: false, adClosed: true });
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.qra !== prevProps.qra)
+      this.setState({ qra: this.props.qra });
+  }
   static getDerivedStateFromProps(props, prevState) {
     // let followed;
 
@@ -110,6 +116,7 @@ class QRAProfileContainer extends React.PureComponent {
       ) {
         return {
           adActive: true,
+          qra: props.qra,
           // followed: props.following.some(o => o.qra === props.match.params.qra),
           loaderActive: false
         };
@@ -119,12 +126,14 @@ class QRAProfileContainer extends React.PureComponent {
       ) {
         return {
           adActive: true,
+          qra: props.qra,
           loaderActive: false
         };
       } else {
         return {
           // followed: props.following.some(o => o.qra === props.match.params.qra),
-          loaderActive: false
+          loaderActive: false,
+          qra: props.qra
         };
       }
     }
@@ -180,10 +189,10 @@ class QRAProfileContainer extends React.PureComponent {
     ) {
       if (this.props.isAuthenticated) {
         if (process.env.REACT_APP_STAGE === 'production')
-        window.gtag('event', 'qraFollowProfile_WEBPRD', {
-          event_category: 'User',
-          event_label: 'follow'
-        });
+          window.gtag('event', 'qraFollowProfile_WEBPRD', {
+            event_category: 'User',
+            event_label: 'follow'
+          });
         this.props.actions.doFollowQRA(
           this.props.token,
           this.props.match.params.qra
@@ -244,7 +253,7 @@ class QRAProfileContainer extends React.PureComponent {
           qraInfo={qraInfo}
           following={this.props.following}
           loaderActive={this.state.loaderActive}
-          qra={this.props.qra}
+          qra={this.state.qra}
           onClick={this.handleButtonClick}
           isAuthenticated={this.props.isAuthenticated}
           userFetched={this.props.userFetched}

@@ -41,7 +41,14 @@ class PublicNavigation extends React.PureComponent {
           <Menu.Item style={{ padding: '5px' }}>
             <Link to="/">
               <Icon.Group size="large">
-                <Icon name="home" />
+                <Icon
+                  name="home"
+                  onClick={async () => {
+                    if (!this.props.isAuthenticated) {
+                      this.props.actions.doFetchPublicFeed();
+                    }
+                  }}
+                />
               </Icon.Group>
             </Link>
           </Menu.Item>
@@ -65,13 +72,15 @@ class PublicNavigation extends React.PureComponent {
               >
                 <Dropdown.Item>{t('navBar.login')}</Dropdown.Item>
               </Link>
-              <Link
-                to={{
-                  pathname: '/signup'
-                }}
-              >
-                <Dropdown.Item> {t('navBar.signUp')} </Dropdown.Item>
-              </Link>
+              {!this.props.embeddedSession && (
+                <Link
+                  to={{
+                    pathname: '/signup'
+                  }}
+                >
+                  <Dropdown.Item> {t('navBar.signUp')} </Dropdown.Item>
+                </Link>
+              )}
               <Dropdown.Divider />
               <Link to="/privacy">
                 <Dropdown.Item>{t('navBar.privacyPolicy')} </Dropdown.Item>
@@ -79,15 +88,18 @@ class PublicNavigation extends React.PureComponent {
               <Link to="/terms">
                 <Dropdown.Item>{t('navBar.termsOfService')}</Dropdown.Item>
               </Link>
-              <Link to="/contact">
-                <Dropdown.Item>{t('navBar.contactUs')}</Dropdown.Item>
-              </Link>
-
-              <Link to="/download">
-                <Dropdown.Item>
-                  <b>{t('navBar.downloadApp')}</b>
-                </Dropdown.Item>
-              </Link>
+              {!this.props.embeddedSession && (
+                <Link to="/contact">
+                  <Dropdown.Item>{t('navBar.contactUs')}</Dropdown.Item>
+                </Link>
+              )}
+              {!this.props.embeddedSession && (
+                <Link to="/download">
+                  <Dropdown.Item>
+                    <b>{t('navBar.downloadApp')}</b>
+                  </Dropdown.Item>
+                </Link>
+              )}
             </Dropdown.Menu>
           </Dropdown>
         </Menu.Menu>
