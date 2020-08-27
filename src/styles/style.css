@@ -1,3 +1,6 @@
+.rdw-image-modal {
+  position: relative !important;
+}
 .ReactVirtualized__Grid__innerScrollContainer {
   overflow: visible !important;
 }
@@ -179,9 +182,9 @@
 .feed-item-qras::after {
   content: '';
   /* Insert pseudo-element */
-  /* margin: auto; */
-  /* Make it push flex items to the center */
-/* } */ 
+/* margin: auto; */
+/* Make it push flex items to the center */
+/* } */
 .slick-prev:before,
 .slick-next:before {
   color: black;
@@ -433,7 +436,6 @@
     width: 100%;
   }
   .notifIcon {
-    display: none;
     flex: '1 1 auto';
     padding: 0;
   }

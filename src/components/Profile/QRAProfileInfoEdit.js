@@ -104,9 +104,12 @@ const QraProfileInfoEdit = props => {
   return (
     <Fragment>
       <Modal
+        centered={false}
         size="small"
         open={props.modalOpen}
-        onClose={() => props.closeModal}
+
+        closeIcon
+        onClose={() => props.closeModal()}
       >
         <Header content={t('qra.editInfo')} />
         <Modal.Content>
