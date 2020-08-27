@@ -116,11 +116,13 @@ class AuthenticatedNavigation extends React.PureComponent {
             </Link>
           </Menu.Item>
         )}
-        <div className="notifIcon">
-          <Menu.Item>
-            <Link to="/notifications">{this.notificationIcon()}</Link>
-          </Menu.Item>
-        </div>
+        {!this.props.embeddedSession && (
+          <div className="notifIcon">
+            <Menu.Item style={{ padding: '5px' }}>
+              <Link to="/notifications">{this.notificationIcon()}</Link>
+            </Menu.Item>
+          </div>
+        )}
         <Menu.Menu style={{ flex: '0 1 auto' }}>
           <Dropdown
             item
