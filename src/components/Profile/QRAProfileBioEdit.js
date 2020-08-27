@@ -2,29 +2,44 @@ import API from '@aws-amplify/api';
 import Auth from '@aws-amplify/auth';
 import Storage from '@aws-amplify/storage';
 import * as Sentry from '@sentry/browser';
+import { ContentState, convertToRaw, EditorState } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
+import htmlToDraft from 'html-to-draftjs';
 import React, { Fragment } from 'react';
+import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import ReactHtmlParser from 'react-html-parser';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import Confirm from 'semantic-ui-react/dist/commonjs/addons/Confirm';
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
+import Container from 'semantic-ui-react/dist/commonjs/elements/Container';
+import Header from 'semantic-ui-react/dist/commonjs/elements/Header';
+import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
 import * as Actions from '../../actions';
 import global_config from '../../global_config.json';
 import '../../styles/style.css';
-import QRAProfileBioEdit from './QRAProfileBioEdit';
-
-class QRAProfileBio extends React.Component {
+class QRAProfileBioEdit extends React.PureComponent {
   constructor(props) {
     super(props);
-
+    let editorState;
+    if (this.props.qraInfo.bio) {
+      const contentBlock = htmlToDraft(this.props.qraInfo.bio);
+      // const contentBlock = stateFromHTML(this.props.qraInfo.bio)
+      if (contentBlock) {
+        const contentState = ContentState.createFromBlockArray(
+          contentBlock.contentBlocks
+        );
+        editorState = EditorState.createWithContent(contentState);
+      }
+    }
     this.state = {
       edit: false,
-      openPornConfirm: false
+      openPornConfirm: false,
+      editorState: editorState
     };
 
+    this.handleOnSaveBio = this.handleOnSaveBio.bind(this);
     this.uploadImageCallBack = this.uploadImageCallBack.bind(this);
   }
 
@@ -166,46 +181,84 @@ class QRAProfileBio extends React.Component {
     });
   }
 
+  close = () => this.setState({ edit: false });
+  open = () => this.setState({ edit: true });
+  handleOnSaveBio = () => {
+    this.props.actions.doSaveUserBio(
+      this.props.token,
+      draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())),
+      this.props.identityId
+    );
+    this.props.closeModal();
+  };
+  onEditorStateChange = editorState => {
+    this.setState({ editorState: editorState });
+  };
   render() {
-    const { edit } = this.state;
+    const { editorState } = this.state;
     const { t } = this.props;
     return (
       <Fragment>
-        <Confirm
-          size="mini"
-          open={this.state.openPornConfirm}
-          onCancel={() => this.setState({ openPornConfirm: false })}
-          onConfirm={() => this.setState({ openPornConfirm: false })}
-          cancelButton={t('global.cancel')}
-          confirmButton={t('global.ok')}
-          content={t('global.imageContainNudity')}
-        />
-        {/* <Segment raised> */}
-          {this.props.isAuthenticated &&
-            this.props.currentQRA === this.props.qraInfo.qra && (
-              <div>
-                <Button
-                  positive
-                  fluid
-                  size="mini"
-                  onClick={() => this.setState({ edit: true })}
-                >
-                  {t('qra.editBio')}
-                </Button>
-              </div>
-            )}
-
-          <div>{ReactHtmlParser(this.props.qraInfo.bio)}</div>
-
-          {edit && (
-            <QRAProfileBioEdit
-              qraInfo={this.props.qraInfo}
-              doSaveUserInfo={this.props.actions.doSaveUserInfo}
-              modalOpen={edit}
-              closeModal={() => this.setState({ edit: false })}
+        <Modal
+        centered={false}
+          size="small"
+          open={this.props.modalOpen}
+          onClose={() => this.props.closeModal()}
+        >
+          <Header content={t('qra.editBio')} />
+          <Modal.Content>
+            <Container>
+              <Editor
+                editorState={editorState}
+                wrapperClassName="demo-wrapper"
+                editorClassName="demo-editor"
+                onEditorStateChange={this.onEditorStateChange}
+                toolbar={{
+                  inline: {
+                    inDropdown: true
+                  },
+                  list: {
+                    inDropdown: true
+                  },
+                  textAlign: {
+                    inDropdown: true
+                  },
+                  link: {
+                    inDropdown: true
+                  },
+                  history: {
+                    inDropdown: true
+                  },
+                  image: {
+                    urlEnabled: false,
+                    previewImage: true,
+                    alignmentEnabled: true,
+                    uploadCallback: this.uploadImageCallBack,
+                    alt: {
+                      present: true,
+                      mandatory: false
+                    }
+                  }
+                }}
+              />
+            </Container>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button
+              positive
+              icon="save"
+              type="submit"
+              labelPosition="right"
+              content={t('qra.saveBio')}
+              onClick={this.handleOnSaveBio}
             />
-          )}
-        {/* </Segment> */}
+            <Button
+              icon="check"
+              content={t('global.cancel')}
+              onClick={() => this.props.closeModal()}
+            />
+          </Modal.Actions>
+        </Modal>
       </Fragment>
     );
   }
@@ -227,5 +280,5 @@ export default withRouter(
     mapDispatchToProps,
     null,
     { pure: false }
-  )(withTranslation()(QRAProfileBio))
+  )(withTranslation()(QRAProfileBioEdit))
 );
