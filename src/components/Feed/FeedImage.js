@@ -60,8 +60,9 @@ class FeedImage extends React.Component {
   render() {
     var settings = {
       infinite: true,
-      dots: true,
+      dots: false,
       // arrows: true,
+      // adaptiveHeight: true,
       speed: 150,
       centerPadding: "0px",
       centerMode: true,
