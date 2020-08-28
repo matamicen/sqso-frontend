@@ -30,7 +30,7 @@ const QRAProfileHeader = props => {
           <div className="pic">
             <Image
               src={
-                props.qraInfo.profilepic
+                (props.qraInfo && props.qraInfo.profilepic)
                   ? props.qraInfo.profilepic
                   : '/emptyprofile.png'
               }

@@ -1,9 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
-import Loader from 'semantic-ui-react/dist/commonjs/elements/Loader';
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment';
-import Dimmer from 'semantic-ui-react/dist/commonjs/modules/Dimmer';
 import '../../styles/style.css';
 import Ad from '../Ad/Ad';
 import AppNavigation from '../Home/AppNavigation';
@@ -13,13 +11,13 @@ import QRAProfileHeader from './QRAProfileHeader';
 import QRAProfileInfo from './QRAProfileInfo';
 import QRAProfileQsos from './QRAProfileQsos';
 
+
+
 const QRAProfile = props => {
   const { t } = props;
   return (
     <div className="profile-container">
-      <Dimmer active={props.loaderActive} page>
-        <Loader>{t('qra.loading')}</Loader>
-      </Dimmer>
+     
       {/* <Dimmer
         active={props.adActive}
         onClick={props.handleClose}

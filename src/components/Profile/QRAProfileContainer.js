@@ -1,12 +1,14 @@
 import React, { Fragment } from 'react';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { Modal } from 'semantic-ui-react';
+import Loader from 'semantic-ui-react/dist/commonjs/elements/Loader';
+import Dimmer from 'semantic-ui-react/dist/commonjs/modules/Dimmer';
 import * as Actions from '../../actions';
 import '../../styles/style.css';
 import QRAProfile from './QRAProfilePresentational';
-
 class QRAProfileContainer extends React.PureComponent {
   constructor() {
     super();
@@ -92,22 +94,23 @@ class QRAProfileContainer extends React.PureComponent {
   handleOpen = () => this.setState({ adActive: true });
   handleClose = () => this.setState({ adActive: false, adClosed: true });
   componentDidUpdate(prevProps, prevState) {
+    console.log(this.props);
     if (this.props.qra !== prevProps.qra)
       this.setState({ qra: this.props.qra });
+    if (this.props.qraError && prevState.loaderActive) {
+      this.setState({
+        qraError: this.props.qraError,
+        loaderActive: false
+      });
+    }
   }
+
   static getDerivedStateFromProps(props, prevState) {
     // let followed;
 
-    if (props.qraError && prevState.loaderActive) {
-      return {
-        qraError: props.qraError,
-        loaderActive: false
-      };
-    }
-
     if (props.QRAFetched && prevState.loaderActive) {
       if (
-        process.env.NODE_ENV === 'production' &&
+        // process.env.NODE_ENV === 'production' &&
         !prevState.adClosed &&
         props.qraUserData &&
         props.qraUserData.account_type &&
@@ -121,7 +124,7 @@ class QRAProfileContainer extends React.PureComponent {
           loaderActive: false
         };
       } else if (
-        process.env.NODE_ENV === 'production' &&
+        // process.env.NODE_ENV === 'production' &&
         !props.isAuthenticated
       ) {
         return {
@@ -160,7 +163,7 @@ class QRAProfileContainer extends React.PureComponent {
     //   followed :   props.following.some(o => o.qra === props.match.params.qra)
 
     // };
-    return null;
+    return { qra: props.qra };
   }
   handleTabClick(i) {
     switch (i) {
@@ -218,6 +221,7 @@ class QRAProfileContainer extends React.PureComponent {
   }
 
   render() {
+    const { t } = this.props;
     let qraInfo = null;
     if (this.props.qra) qraInfo = this.props.qra.qra;
 
@@ -225,7 +229,7 @@ class QRAProfileContainer extends React.PureComponent {
       return (
         <Modal
           open={this.props.qraError ? true : false}
-          onClose={() => this.props.history.goBack()}
+          onClose={() =>  this.props.history.push('/')}
           size="small"
         >
           <Modal.Content>
@@ -249,23 +253,28 @@ class QRAProfileContainer extends React.PureComponent {
     }
     return (
       <Fragment>
-        <QRAProfile
-          qraInfo={qraInfo}
-          following={this.props.following}
-          loaderActive={this.state.loaderActive}
-          qra={this.state.qra}
-          onClick={this.handleButtonClick}
-          isAuthenticated={this.props.isAuthenticated}
-          userFetched={this.props.userFetched}
-          currentQRA={this.props.currentQRA}
-          followed={this.followed}
-          handleTabClick={this.handleTabClick}
-          tab={this.state.tab}
-          adActive={this.state.adActive}
-          handleClose={this.handleClose}
-          fetchingQRA={this.props.fetchingQRA}
-          QRAFetched={this.props.QRAFetched}
-        />
+        <Dimmer active={this.state.loaderActive} page>
+          <Loader>{t('qra.loading')}</Loader>
+        </Dimmer>
+        {qraInfo && (
+          <QRAProfile
+            qraInfo={qraInfo}
+            following={this.props.following}
+            loaderActive={this.state.loaderActive}
+            qra={this.state.qra}
+            onClick={this.handleButtonClick}
+            isAuthenticated={this.props.isAuthenticated}
+            userFetched={this.props.userFetched}
+            currentQRA={this.props.currentQRA}
+            followed={this.followed}
+            handleTabClick={this.handleTabClick}
+            tab={this.state.tab}
+            adActive={this.state.adActive}
+            handleClose={this.handleClose}
+            fetchingQRA={this.props.fetchingQRA}
+            QRAFetched={this.props.QRAFetched}
+          />
+        )}
       </Fragment>
     );
   }
@@ -295,5 +304,5 @@ export default withRouter(
     mapDispatchToProps,
     null,
     { pure: false }
-  )(QRAProfileContainer)
+  )(withTranslation()(QRAProfileContainer))
 );
