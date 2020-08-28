@@ -237,7 +237,11 @@ class QRAProfileBioEdit extends React.PureComponent {
                     alt: {
                       present: true,
                       mandatory: false
-                    }
+                    },
+                    defaultSize: {
+                      height: 'auto',
+                      width: '100%',
+                    },
                   }
                 }}
               />
