@@ -1,6 +1,9 @@
 .rdw-image-modal {
   position: relative !important;
 }
+.ReactVirtualized__Grid ReactVirtualized__List{
+  overflow: visible !important;
+}
 .ReactVirtualized__Grid__innerScrollContainer {
   overflow: visible !important;
 }
