@@ -92,7 +92,7 @@ class QRAProfileInfo extends React.Component {
     return (
       <Fragment>
         <Segment raised>
-          <Form >
+          <Form size="large">
             {this.props.isAuthenticated &&
               this.props.currentQRA === this.props.qraInfo.qra && (
                 <div>
@@ -125,7 +125,7 @@ class QRAProfileInfo extends React.Component {
             <Form.Input
               name="email"
               label={t('qra.email')}
-              inline
+              
               transparent
               value={email ? email : ''}
             />
@@ -145,7 +145,7 @@ class QRAProfileInfo extends React.Component {
             <Form.Input
               name="address"
               label={t('qra.addressLine1')}
-              inline
+
               transparent
               value={address ? address : ''}
             />
@@ -153,7 +153,7 @@ class QRAProfileInfo extends React.Component {
             <Form.Input
               name="address2"
               label={t('qra.addressLine2')}
-              inline
+              
               transparent
               value={address2 ? address2 : ''}
             />
@@ -228,7 +228,7 @@ class QRAProfileInfo extends React.Component {
             <Form.Input
               name="qslinfo"
               label={t('qra.qsoInfo')}
-              inline
+              
               transparent
               value={qslinfo ? qslinfo : ''}
             />
