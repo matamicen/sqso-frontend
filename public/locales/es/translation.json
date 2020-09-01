@@ -1,5 +1,6 @@
 {
   "navBar": {
+    "myPosts": "Mis Publicaciones",
     "changePassword": "Cambiar Contraseña",
     "editProfile": "Editar mi Perfil",
     "logOut": "Salir",
