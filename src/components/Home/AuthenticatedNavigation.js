@@ -66,22 +66,23 @@ class AuthenticatedNavigation extends React.PureComponent {
         {isMobile && window.location.pathname !== '/' && (
           <Menu.Item style={{ padding: '5px' }}>
             <Button
-            style={{ background: "none" }}
+              style={{ background: 'none' }}
               icon
-              onClick={() =>
+              onClick={() => {
                 this.props.history.length > 1
                   ? this.props.history.goBack()
-                  : this.props.history.push('/')
-              }
+                  : this.props.history.push('/');
+                if (process.env.REACT_APP_STAGE === 'production')
+                  window.gtag('event', 'navHomeButton_WEBPRD', {});
+              }}
             >
               <Icon.Group size="large">
-                <Icon name="arrow left" style={{color: '#243665'}}/>
+                <Icon name="arrow left" style={{ color: '#243665' }} />
               </Icon.Group>
             </Button>
           </Menu.Item>
         )}
-        {(!isMobile ||
-          (isMobile && window.location.pathname === '/')) && (
+        {(!isMobile || (isMobile && window.location.pathname === '/')) && (
           <Menu.Item
             style={{ flex: '0 1 auto', justifyContent: 'center', padding: '0' }}
           >
@@ -116,8 +117,8 @@ class AuthenticatedNavigation extends React.PureComponent {
                   this.props.actions.refreshToken(token);
                   this.props.actions.doFetchUserInfo(this.props.token);
                   this.props.actions.doFetchPublicFeed(this.props.currentQRA);
-                  //   }
-                  // );
+                  if (process.env.REACT_APP_STAGE === 'production')
+                    window.gtag('event', 'navHomeButton_WEBPRD', {});
                 } catch (error) {
                   if (process.env.NODE_ENV !== 'production') {
                     console.log('Unable to refresh Token');
