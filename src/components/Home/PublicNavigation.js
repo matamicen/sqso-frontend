@@ -22,11 +22,13 @@ class PublicNavigation extends React.PureComponent {
             <Button
               style={{ background: 'none' }}
               icon
-              onClick={() =>
+              onClick={() => {
                 this.props.history.length > 1
                   ? this.props.history.goBack()
-                  : this.props.history.push('/')
-              }
+                  : this.props.history.push('/');
+                if (process.env.REACT_APP_STAGE === 'production')
+                  window.gtag('event', 'navHomeButton_WEBPRD', {});
+              }}
             >
               <Icon.Group size="large">
                 <Icon name="arrow left" style={{ color: '#243665' }} />
@@ -59,16 +61,18 @@ class PublicNavigation extends React.PureComponent {
         </Menu.Item>
         {!this.props.embeddedSession && (
           <Menu.Item style={{ padding: '5px' }}>
-            <Link to="/">
+            <Link
+              to="/"
+              onClick={async () => {
+                if (process.env.REACT_APP_STAGE === 'production')
+                  window.gtag('event', 'navHomeButton_WEBPRD', {});
+                if (!this.props.isAuthenticated) {
+                  this.props.actions.doFetchPublicFeed();
+                }
+              }}
+            >
               <Icon.Group size="large">
-                <Icon
-                  name="home"
-                  onClick={async () => {
-                    if (!this.props.isAuthenticated) {
-                      this.props.actions.doFetchPublicFeed();
-                    }
-                  }}
-                />
+                <Icon name="home" />
               </Icon.Group>
             </Link>
           </Menu.Item>
@@ -81,13 +85,13 @@ class PublicNavigation extends React.PureComponent {
             style={{
               minWidth: '90px',
               padding: '4px',
-              justifyContent: 'center'
+              justifyContent: 'center',
             }}
           >
             <Dropdown.Menu>
               <Link
                 to={{
-                  pathname: '/login'
+                  pathname: '/login',
                 }}
               >
                 <Dropdown.Item>{t('navBar.login')}</Dropdown.Item>
@@ -95,7 +99,7 @@ class PublicNavigation extends React.PureComponent {
               {!this.props.embeddedSession && (
                 <Link
                   to={{
-                    pathname: '/signup'
+                    pathname: '/signup',
                   }}
                 >
                   <Dropdown.Item> {t('navBar.signUp')} </Dropdown.Item>
@@ -127,21 +131,18 @@ class PublicNavigation extends React.PureComponent {
     );
   }
 }
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   currentQRA: state.userData.currentQRA,
   isAuthenticated: state.userData.isAuthenticated,
   token: state.userData.token,
   embeddedSession: state.embeddedSession,
-  notifications: state.userData.notifications
+  notifications: state.userData.notifications,
 });
-const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(Actions, dispatch)
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(Actions, dispatch),
 });
 export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-    null,
-    { pure: false }
-  )(withTranslation()(PublicNavigation))
+  connect(mapStateToProps, mapDispatchToProps, null, { pure: false })(
+    withTranslation()(PublicNavigation)
+  )
 );

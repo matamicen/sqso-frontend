@@ -70,10 +70,10 @@ class Home extends React.PureComponent {
   handleOpen = () => this.setState({ adActive: true });
   handleClose = () => this.setState({ adActive: false });
 
-  // static getDerivedStateFromProps(props, state) {
-  //   if (props.qsos.length > 0) return { active: false };
-  //   else if (props.qsos.length === 0) return { active: true };
-  // }
+  static getDerivedStateFromProps(props, state) {
+    if (props.qsos.length > 0) return { active: false, qsos: props.qsos };
+    else if (props.qsos.length === 0) return { active: true };
+  }
   componentDidUpdate(prevProps, prevState) {
     if (this.props.qsos.length > 0)
       this.setState({ qsos: this.props.qsos, active: false });

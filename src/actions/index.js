@@ -67,7 +67,7 @@ export function doNotificationRead(idnotif = null, token) {
       //     }
       const currentSession = await Auth.currentSession();
 
-      const token = currentSession.getIdToken().getJwtToken();
+      const token = await currentSession.getIdToken().getJwtToken();
 
       dispatch(refreshToken(token));
       const apiName = 'superqso';
@@ -138,7 +138,7 @@ export function doCommentDelete(idcomment, idqso, token) {
       //     token = session.idToken.jwtToken;
       const currentSession = await Auth.currentSession();
 
-      const token = currentSession.getIdToken().getJwtToken();
+      const token = await currentSession.getIdToken().getJwtToken();
       dispatch(refreshToken(token));
       const apiName = 'superqso';
       const path = '/qso-comment';
@@ -209,7 +209,7 @@ export function doCommentAdd(idqso, comment, token, idqso_shared = null) {
       //     token = session.idToken.jwtToken;
       const currentSession = await Auth.currentSession();
 
-      const token = currentSession.getIdToken().getJwtToken();
+      const token = await currentSession.getIdToken().getJwtToken();
       dispatch(refreshToken(token));
       const apiName = 'superqso';
       const path = '/qso-comment';
@@ -316,7 +316,7 @@ export function doDeleteQso(idqso, token) {
       //     token = session.idToken.jwtToken;
       const currentSession = await Auth.currentSession();
 
-      const token = currentSession.getIdToken().getJwtToken();
+      const token = await currentSession.getIdToken().getJwtToken();
       dispatch(refreshToken(token));
       const apiName = 'superqso';
       const path = '/qsonew';
@@ -398,7 +398,7 @@ export function doDeleteMedia(idmedia, idqso, token) {
       //     }
       //     token = session.idToken.jwtToken;
       const currentSession = await Auth.currentSession();
-      const token = currentSession.getIdToken().getJwtToken();
+      const token = await currentSession.getIdToken().getJwtToken();
       dispatch(refreshToken(token));
 
       const apiName = 'superqso';
@@ -557,7 +557,7 @@ export function doFetchUserInfo(token) {
   return async dispatch => {
     try {
       const currentSession = await Auth.currentSession();
-      const token = currentSession.getIdToken().getJwtToken();
+      const token = await currentSession.getIdToken().getJwtToken();
       // const cognitoUser = await Auth.currentAuthenticatedUser();
       // const currentSession = await cognitoUser.signInUserSession;
       // await  cognitoUser.refreshSession(
@@ -647,7 +647,7 @@ export function doRepost(idqso, token, qso) {
       //     }
       //     token = session.idToken.jwtToken;
       const currentSession = await Auth.currentSession();
-      const token = currentSession.getIdToken().getJwtToken();
+      const token = await currentSession.getIdToken().getJwtToken();
       dispatch(refreshToken(token));
       dispatch(doRequestUserInfo());
       const apiName = 'superqso';
@@ -755,7 +755,7 @@ export function doSaveUserInfo(token, qra) {
       //       Sentry.captureException(error);
       //     }
       const currentSession = await Auth.currentSession();
-      const token = currentSession.getIdToken().getJwtToken();
+      const token = await currentSession.getIdToken().getJwtToken();
 
       dispatch(refreshToken(token));
       dispatch(doRequestUserInfo());
@@ -831,7 +831,7 @@ export function doSaveUserBio(token, bio, identityId) {
       //     }
       //     token = session.idToken.jwtToken;
       const currentSession = await Auth.currentSession();
-      const token = currentSession.getIdToken().getJwtToken();
+      const token = await currentSession.getIdToken().getJwtToken();
       dispatch(refreshToken(token));
 
       const apiName = 'superqso';
@@ -912,7 +912,7 @@ export function doFetchUserFeed(token, qra) {
       //     }
       //     token = session.idToken.jwtToken;
       const currentSession = await Auth.currentSession();
-      const token = currentSession.getIdToken().getJwtToken();
+      const token = await currentSession.getIdToken().getJwtToken();
       dispatch(refreshToken(token));
       dispatch(doRequestFeed());
       const apiName = 'superqso';
@@ -983,7 +983,7 @@ export function doFollowFetch(token) {
       //     }
       //     token = session.idToken.jwtToken;
       const currentSession = await Auth.currentSession();
-      const token = currentSession.getIdToken().getJwtToken();
+      const token = await currentSession.getIdToken().getJwtToken();
       dispatch(refreshToken(token));
       dispatch(doFollowRequest());
       const apiName = 'superqso';
@@ -1050,7 +1050,7 @@ export function doFetchNotifications(token) {
       //     }
       //     token = session.idToken.jwtToken;
       const currentSession = await Auth.currentSession();
-      const token = currentSession.getIdToken().getJwtToken();
+      const token = await currentSession.getIdToken().getJwtToken();
       dispatch(refreshToken(token));
       dispatch(doRequestFeed());
       const apiName = 'superqso';
@@ -1231,7 +1231,7 @@ export function doFetchQSO(idqso, token = null) {
         //     // console.log('session', err, session);
         //     token = session.idToken.jwtToken;
         const currentSession = await Auth.currentSession();
-        const token = currentSession.getIdToken().getJwtToken();
+        const token = await currentSession.getIdToken().getJwtToken();
         dispatch(refreshToken(token));
         const apiName = 'superqso';
         const path = '/qso-detail/secured';
@@ -1418,7 +1418,7 @@ export function doFetchQRA(qra, token = null) {
         //     // console.log('session', err, session);
         //     token = session.idToken.jwtToken;
         const currentSession = await Auth.currentSession();
-        const token = currentSession.getIdToken().getJwtToken();
+        const token = await currentSession.getIdToken().getJwtToken();
         dispatch(refreshToken(token));
         const apiName = 'superqso';
         const path = '/qra-info/secured';
@@ -1535,7 +1535,7 @@ export function doFollowQRA(token, follower) {
       //     }
       //     token = session.idToken.jwtToken;
       const currentSession = await Auth.currentSession();
-      const token = currentSession.getIdToken().getJwtToken();
+      const token = await currentSession.getIdToken().getJwtToken();
       dispatch(refreshToken(token));
       const apiName = 'superqso';
       const path = '/qra-follower';
@@ -1728,7 +1728,7 @@ export function doQsoMediaPlay(idMedia, token, idqso) {
       //     }
       //     token = session.idToken.jwtToken;
       const currentSession = await Auth.currentSession();
-      const token = currentSession.getIdToken().getJwtToken();
+      const token = await currentSession.getIdToken().getJwtToken();
       dispatch(refreshToken(token));
       const apiName = 'superqso';
       const path = '/qso/media-play';
@@ -1869,7 +1869,7 @@ export function doQslCardPrint(idqso, token) {
       //     }
       //     token = session.idToken.jwtToken;
       const currentSession = await Auth.currentSession();
-      const token = currentSession.getIdToken().getJwtToken();
+      const token = await currentSession.getIdToken().getJwtToken();
       dispatch(refreshToken(token));
       const apiName = 'superqso';
       const path = '/qso/qslcard-print';
