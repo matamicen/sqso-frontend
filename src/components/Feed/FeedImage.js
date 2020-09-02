@@ -86,6 +86,7 @@ class FeedImage extends React.Component {
                   style={{
                     objectFit: "contain",
                     width: "100%",
+                    height: m.height,
                     margin: "0 auto"
                   }}
                 />
