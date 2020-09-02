@@ -161,6 +161,13 @@ class AuthenticatedNavigation extends React.PureComponent {
               <Dropdown.Divider />
               <Dropdown.Item
                 onClick={() =>
+                  this.props.history.push('/' + this.props.currentQRA )
+                }
+              >
+                {t('navBar.myPosts')}
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() =>
                   this.props.history.push('/' + this.props.currentQRA + '/bio')
                 }
               >
