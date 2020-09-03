@@ -162,7 +162,7 @@ class AuthenticatedNavigation extends React.PureComponent {
               <Dropdown.Item
                 onClick={() => this.props.history.push('/fielddays')}
               >
-                {t('navBar.lastFieldDays')}
+                <b> {t('navBar.lastFieldDays')}</b>
               </Dropdown.Item>
               <Dropdown.Item
                 onClick={() =>
