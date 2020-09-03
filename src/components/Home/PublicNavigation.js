@@ -1,10 +1,11 @@
 import React from 'react';
-import { BrowserView, MobileView } from 'react-device-detect';
+import { BrowserView, isMobile, MobileView } from 'react-device-detect';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import Menu from 'semantic-ui-react/dist/commonjs/collections/Menu';
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
 import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
 import * as Actions from '../../actions';
@@ -16,39 +17,62 @@ class PublicNavigation extends React.PureComponent {
     const { t } = this.props;
     return (
       <Menu fixed="top" style={{ height: '50px', display: 'flex' }}>
-        <Menu.Item
-          style={{ flex: '0 1 auto', justifyContent: 'center', padding: '0' }}
-        >
-          <MobileView>
-            <img
-              src={global_config.s3Cloudfront + '/superqsoIconAzul.png'}
-              alt="SuperQSO.com"
-              className="mobile"
-            />
-          </MobileView>
-          <BrowserView>
-            <img
-              src={global_config.s3Cloudfront + '/logoDesk.jpg'}
-              alt="SuperQSO.com"
-              className="desktop"
-            />
-          </BrowserView>
-        </Menu.Item>
+        {isMobile && window.location.pathname !== '/' && (
+          <Menu.Item style={{ padding: '5px' }}>
+            <Button
+              style={{ background: 'none' }}
+              icon
+              onClick={() => {
+                this.props.history.length > 1
+                  ? this.props.history.goBack()
+                  : this.props.history.push('/');
+                if (process.env.REACT_APP_STAGE === 'production')
+                  window.gtag('event', 'navHomeButton_WEBPRD', {});
+              }}
+            >
+              <Icon.Group size="large">
+                <Icon name="arrow left" style={{ color: '#243665' }} />
+              </Icon.Group>
+            </Button>
+          </Menu.Item>
+        )}
+        {(!isMobile || (isMobile && window.location.pathname === '/')) && (
+          <Menu.Item
+            style={{ flex: '0 1 auto', justifyContent: 'center', padding: '0' }}
+          >
+            <MobileView>
+              <img
+                src={global_config.s3Cloudfront + '/superqsoIconAzul.png'}
+                alt="SuperQSO.com"
+                className="mobile"
+              />
+            </MobileView>
+            <BrowserView>
+              <img
+                src={global_config.s3Cloudfront + '/logoDesk.jpg'}
+                alt="SuperQSO.com"
+                className="desktop"
+              />
+            </BrowserView>
+          </Menu.Item>
+        )}
         <Menu.Item style={{ flex: '1 1 auto', padding: '5px' }}>
           <ServerAutoSuggest />
         </Menu.Item>
         {!this.props.embeddedSession && (
           <Menu.Item style={{ padding: '5px' }}>
-            <Link to="/">
+            <Link
+              to="/"
+              onClick={async () => {
+                if (process.env.REACT_APP_STAGE === 'production')
+                  window.gtag('event', 'navHomeButton_WEBPRD', {});
+                if (!this.props.isAuthenticated) {
+                  this.props.actions.doFetchPublicFeed();
+                }
+              }}
+            >
               <Icon.Group size="large">
-                <Icon
-                  name="home"
-                  onClick={async () => {
-                    if (!this.props.isAuthenticated) {
-                      this.props.actions.doFetchPublicFeed();
-                    }
-                  }}
-                />
+                <Icon name="home" />
               </Icon.Group>
             </Link>
           </Menu.Item>
@@ -61,13 +85,13 @@ class PublicNavigation extends React.PureComponent {
             style={{
               minWidth: '90px',
               padding: '4px',
-              justifyContent: 'center'
+              justifyContent: 'center',
             }}
           >
             <Dropdown.Menu>
               <Link
                 to={{
-                  pathname: '/login'
+                  pathname: '/login',
                 }}
               >
                 <Dropdown.Item>{t('navBar.login')}</Dropdown.Item>
@@ -75,7 +99,7 @@ class PublicNavigation extends React.PureComponent {
               {!this.props.embeddedSession && (
                 <Link
                   to={{
-                    pathname: '/signup'
+                    pathname: '/signup',
                   }}
                 >
                   <Dropdown.Item> {t('navBar.signUp')} </Dropdown.Item>
@@ -107,21 +131,18 @@ class PublicNavigation extends React.PureComponent {
     );
   }
 }
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   currentQRA: state.userData.currentQRA,
   isAuthenticated: state.userData.isAuthenticated,
   token: state.userData.token,
   embeddedSession: state.embeddedSession,
-  notifications: state.userData.notifications
+  notifications: state.userData.notifications,
 });
-const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(Actions, dispatch)
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(Actions, dispatch),
 });
 export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-    null,
-    { pure: false }
-  )(withTranslation()(PublicNavigation))
+  connect(mapStateToProps, mapDispatchToProps, null, { pure: false })(
+    withTranslation()(PublicNavigation)
+  )
 );

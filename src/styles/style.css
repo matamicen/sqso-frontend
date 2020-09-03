@@ -1,6 +1,12 @@
 .rdw-image-modal {
   position: relative !important;
 }
+.rdw-emoji-modal{
+  position: relative !important;
+}
+.rdw-embedded-modal{
+  position: relative !important;
+}
 .ReactVirtualized__Grid {
   overflow: visible !important;
 }

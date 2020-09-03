@@ -12,6 +12,7 @@ import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
 // import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
 import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
 const QSOShareButtons = ({ idqso, t, title }) => {
+  
   return (
     <Button>
       <div style={{ display: 'grid', justifyItems: 'center' }}>
@@ -82,24 +83,33 @@ const QSOShareButtons = ({ idqso, t, title }) => {
                       title + ' ' + window.location.origin + '/qso/' + idqso
                     )
                   }
+                  onClick={() => {
+                    if (process.env.REACT_APP_STAGE === 'production')
+
+                      window.gtag('event', 'qsoShareWAPP_WEBPRD', {
+                        event_category: 'QSO',
+                        event_label: 'shareWAPP'
+                      });
+                  }}
                   data-action="share/whatsapp/share"
                 >
                   {' '}
                   <WhatsappIcon size={40} round={true} />
                 </a>
-                <a
-                  href={
-                    'http://www.facebook.com/sharer.php?u=' +
-                    encodeURIComponent(window.location.origin +
-                      '/qso/' +
-                      idqso) +
-                    '&quote=' +
-                    encodeURIComponent(title)
-                  }
+                <FacebookShareButton
+                  quote={title}
+                  url={window.location.origin + '/qso/' + idqso}
+                  beforeOnClick={() => {
+                    if (process.env.REACT_APP_STAGE === 'production')
+
+                      window.gtag('event', 'qsoShareFB_WEBPRD', {
+                        event_category: 'QSO',
+                        event_label: 'shareFB'
+                      });
+                  }}
                 >
-                  
                   <FacebookIcon size={40} round={true} />
-                </a>
+                </FacebookShareButton>
                 <a
                   href={
                     'https://twitter.com/intent/tweet?url=' +
@@ -109,6 +119,14 @@ const QSOShareButtons = ({ idqso, t, title }) => {
                     '&text=' +
                     encodeURIComponent(title)
                   }
+                  onClick={() => {
+                    if (process.env.REACT_APP_STAGE === 'production')
+
+                      window.gtag('event', 'qsoShareTW_WEBPRD', {
+                        event_category: 'QSO',
+                        event_label: 'shareTW'
+                      });
+                  }}
                 >
                   
                   <TwitterIcon size={40} round={true} />

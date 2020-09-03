@@ -2,12 +2,13 @@ import Auth from '@aws-amplify/auth';
 import * as Sentry from '@sentry/browser';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { BrowserView, MobileView } from 'react-device-detect';
+import { BrowserView, isMobile, MobileView } from 'react-device-detect';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import Menu from 'semantic-ui-react/dist/commonjs/collections/Menu';
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
 import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
 import * as Actions from '../../actions';
@@ -59,27 +60,48 @@ class AuthenticatedNavigation extends React.PureComponent {
 
   render() {
     const { t } = this.props;
-
+    console.log();
     return (
       <Menu fixed="top" style={{ height: '50px', display: 'flex' }}>
-        <Menu.Item
-          style={{ flex: '0 1 auto', justifyContent: 'center', padding: '0' }}
-        >
-          <MobileView>
-            <img
-              src={global_config.s3Cloudfront + '/superqsoIconAzul.png'}
-              alt="SuperQSO.com"
-              className="mobile"
-            />
-          </MobileView>
-          <BrowserView>
-            <img
-              src={global_config.s3Cloudfront + '/logoDesk.jpg'}
-              alt="SuperQSO.com"
-              className="desktop"
-            />
-          </BrowserView>
-        </Menu.Item>
+        {isMobile && window.location.pathname !== '/' && (
+          <Menu.Item style={{ padding: '5px' }}>
+            <Button
+              style={{ background: 'none' }}
+              icon
+              onClick={() => {
+                this.props.history.length > 1
+                  ? this.props.history.goBack()
+                  : this.props.history.push('/');
+                if (process.env.REACT_APP_STAGE === 'production')
+                  window.gtag('event', 'navHomeButton_WEBPRD', {});
+              }}
+            >
+              <Icon.Group size="large">
+                <Icon name="arrow left" style={{ color: '#243665' }} />
+              </Icon.Group>
+            </Button>
+          </Menu.Item>
+        )}
+        {(!isMobile || (isMobile && window.location.pathname === '/')) && (
+          <Menu.Item
+            style={{ flex: '0 1 auto', justifyContent: 'center', padding: '0' }}
+          >
+            <MobileView>
+              <img
+                src={global_config.s3Cloudfront + '/superqsoIconAzul.png'}
+                alt="SuperQSO.com"
+                className="mobile"
+              />
+            </MobileView>
+            <BrowserView>
+              <img
+                src={global_config.s3Cloudfront + '/logoDesk.jpg'}
+                alt="SuperQSO.com"
+                className="desktop"
+              />
+            </BrowserView>
+          </Menu.Item>
+        )}
         <Menu.Item style={{ flex: '1 1 auto', padding: '5px' }}>
           <ServerAutoSuggest />
         </Menu.Item>
@@ -95,8 +117,8 @@ class AuthenticatedNavigation extends React.PureComponent {
                   this.props.actions.refreshToken(token);
                   this.props.actions.doFetchUserInfo(this.props.token);
                   this.props.actions.doFetchPublicFeed(this.props.currentQRA);
-                  //   }
-                  // );
+                  if (process.env.REACT_APP_STAGE === 'production')
+                    window.gtag('event', 'navHomeButton_WEBPRD', {});
                 } catch (error) {
                   if (process.env.NODE_ENV !== 'production') {
                     console.log('Unable to refresh Token');
@@ -137,6 +159,18 @@ class AuthenticatedNavigation extends React.PureComponent {
             <Dropdown.Menu>
               <Dropdown.Header content={this.props.currentQRA} />
               <Dropdown.Divider />
+              <Dropdown.Item
+                onClick={() => this.props.history.push('/fielddays')}
+              >
+                <b> {t('navBar.lastFieldDays')}</b>
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() =>
+                  this.props.history.push('/' + this.props.currentQRA)
+                }
+              >
+                {t('navBar.myPosts')}
+              </Dropdown.Item>
               <Dropdown.Item
                 onClick={() =>
                   this.props.history.push('/' + this.props.currentQRA + '/bio')

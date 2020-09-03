@@ -10,7 +10,7 @@ import '../../styles/style.css';
 import Ad from '../Ad/Ad';
 import FeedQSO from '../Feed/NewsFeedContainer';
 import AppNavigation from './AppNavigation';
-class Home extends React.PureComponent {
+class FieldDaysFeed extends React.PureComponent {
   state = {
     adActive: true,
     active: true,
@@ -34,18 +34,8 @@ class Home extends React.PureComponent {
     if (process.env.NODE_ENV !== 'production')
       this.setState({ adActive: false });
 
-    if (this.props.qsos.length === 0) {
-      if (this.props.isAuthenticated) {
-        // this.props.actions.doFetchUserFeed(
-        //   this.props.token,
-        //   this.props.currentQRA
-        // );
-        this.props.actions.doFetchPublicFeed(this.props.currentQRA);
-      } else {
-        // if (!visited) this.setState({ modalOpen: true });
-        this.props.actions.doFetchPublicFeed();
-      }
-    }
+    this.props.actions.doFetchFieldDaysFeed();
+
     //Comentado Adsense
     window.googletag.cmd.push(function() {
       window.googletag.destroySlots();
@@ -121,7 +111,9 @@ class Home extends React.PureComponent {
                 />
               </div>
 
-              <div className="site-main"><FeedQSO /></div>
+              <div className="site-main">
+                <FeedQSO />
+              </div>
 
               <div className="site-right">
                 <Ad
@@ -218,5 +210,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(withTranslation()(Home))
+  )(withTranslation()(FieldDaysFeed))
 );

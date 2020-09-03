@@ -1,5 +1,7 @@
 {
   "navBar": {
+    "lastFieldDays": "Last Activities",
+    "myPosts": "My Posts",
     "changePassword": "Change Password",
     "editProfile": "Edit my Profile",
     "logOut": "Log Out",
