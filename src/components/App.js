@@ -30,6 +30,7 @@ const QSODetail = lazy(() => import('./QSODetail'));
 const LogIn = lazy(() => import('./Auth/LogIn'));
 const SignUp = lazy(() => import('./Auth/SignUp'));
 const Home = lazy(() => import('./Home/Home'));
+const FieldDaysFeed = lazy(()=> import('./Home/FieldDaysFeed'));
 
 // if (process.env.NODE_ENV !== 'production') {     const {whyDidYouUpdate} =
 // require('why-did-you-update')     whyDidYouUpdate(React)   }
@@ -46,7 +47,7 @@ class App extends Component {
   async componentDidMount() {
     
     let query = new URLSearchParams(this.props.location.search);
-    console.log(query.get('embedded'))
+    
     if (isMobile) {
       if (query.get('embedded')) this.props.actions.doSetEmbedded();
 
@@ -258,6 +259,7 @@ class App extends Component {
             }}
           />
           <Route exact path="/signup" component={SignUp} />
+          <Route exact path="/fielddays" component={FieldDaysFeed}/>
           <Route
             exact
             location={{

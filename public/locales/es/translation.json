@@ -1,5 +1,6 @@
 {
   "navBar": {
+    "lastFieldDays": "Últimas Activaciones",
     "myPosts": "Mis Publicaciones",
     "changePassword": "Cambiar Contraseña",
     "editProfile": "Editar mi Perfil",
@@ -121,7 +122,6 @@
     "upgradePremium": "Suscribite al Plan Premium",
     "imageContainNudity": "La imagen que intenta subir contiene desnudos o contenido sexual",
     "userMaxReached": "Ha alcanzado el máximo permitido para usuarios gratuitos. Suscribite al Plan Premium en nuestra APP"
-   
   },
   "notification": {
     "congratulations": "Felicitaciones!!!",

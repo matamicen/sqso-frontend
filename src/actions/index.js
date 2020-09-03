@@ -119,7 +119,7 @@ export function doCommentDelete(idcomment, idqso, token) {
         event_category: 'QSO',
         event_label: 'commentDel'
       });
-      dispatch(doCommentDeleteResponse(idcomment, idqso));
+    dispatch(doCommentDeleteResponse(idcomment, idqso));
     try {
       // const cognitoUser = Auth.currentAuthenticatedUser();
       // const currentSession = cognitoUser.signInUserSession;
@@ -154,7 +154,6 @@ export function doCommentDelete(idcomment, idqso, token) {
       API.del(apiName, path, myInit)
         .then(response => {
           if (response.body.error === 0) {
-           
           } else console.log(response.body.message);
         })
         .catch(async error => {
@@ -486,7 +485,7 @@ export function doSetPublicSession() {
     type: PUBLIC_SESSION
   };
 }
-export function doSetEmbedded(){
+export function doSetEmbedded() {
   return {
     type: EMBEDDED_SESSION
   };
@@ -759,7 +758,7 @@ export function doSaveUserInfo(token, qra) {
 
       dispatch(refreshToken(token));
       dispatch(doRequestUserInfo());
-      dispatch(doReceiveUserDataInfo(qra))
+      dispatch(doReceiveUserDataInfo(qra));
       const apiName = 'superqso';
       const path = '/qra-info/info';
       const myInit = {
@@ -1172,7 +1171,46 @@ export function doFetchPublicFeed(qra = null) {
     // }
   };
 }
+export function doFetchFieldDaysFeed(qra = null) {
+  // console.log('doFetchPublicFeed');
+  window.gtag('config', 'G-H8G28LYKBY', {
+    custom_map: { dimension1: 'userQRA' }
+  });
 
+  if (process.env.REACT_APP_STAGE === 'production')
+    window.gtag('event', 'getFieldDaysFeed_WEBPRD', {
+      event_category: 'User',
+      event_label: 'getFieldDaysFeed',
+      userQRA: qra
+    });
+
+  return dispatch => {
+    dispatch(doRequestFeed());
+    const apiName = 'superqso';
+    const path = '/qsoGetByType';
+    const myInit = {
+      body: { type: 'FLDDAY' }, // replace this with attributes you need
+      headers: {} // OPTIONAL
+    };
+    API.post(apiName, path, myInit)
+      .then(response => {
+        // console.log(response);
+        if (response.body.error === 0) {
+          dispatch(doReceiveFeed(response.body.message));
+        } else console.log(response.body.message);
+      })
+      .catch(async error => {
+        if (process.env.NODE_ENV !== 'production') {
+          console.log(error.message);
+        } else {
+          Sentry.configureScope(function(scope) {
+            scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+          });
+          Sentry.captureException(error);
+        }
+      });
+  };
+}
 export function doRequestQSO() {
   return {
     type: REQUEST_QSO
@@ -1515,8 +1553,6 @@ export function doFetchQRA(qra, token = null) {
 }
 
 export function doFollowQRA(token, follower) {
-
-
   return async dispatch => {
     try {
       // const cognitoUser = Auth.currentAuthenticatedUser();
