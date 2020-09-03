@@ -12,7 +12,7 @@ import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
 // import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
 import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
 const QSOShareButtons = ({ idqso, t, title }) => {
-  console.log(window.location.origin)
+  
   return (
     <Button>
       <div style={{ display: 'grid', justifyItems: 'center' }}>

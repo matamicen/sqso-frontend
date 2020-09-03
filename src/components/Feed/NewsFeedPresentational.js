@@ -205,7 +205,7 @@ class NewsFeed extends React.PureComponent {
                   rowHeight={this._cache.rowHeight}
                   rowRenderer={this._rowRenderer}
                   width={width}
-                  style={{ overflow: 'visible' }}
+                  // style={{ overflow: 'visible' }}
                 />
               )}
             </AutoSizer>
