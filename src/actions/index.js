@@ -966,31 +966,17 @@ export function doFollowFetch(token) {
         event_label: 'getRecFollow'
       });
     try {
-      // const cognitoUser = Auth.currentAuthenticatedUser();
-      // const currentSession = cognitoUser.signInUserSession;
-      // cognitoUser.refreshSession(
-      //   currentSession.refreshToken,
-      //   (error, session) => {
-      //     if (process.env.NODE_ENV !== 'production') {
-      //       console.log('Unable to refresh Token');
-      //       console.log(error);
-      //     } else {
-      //       Sentry.configureScope(function(scope) {
-      //         scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-      //       });
-      //       Sentry.captureException(error);
-      //     }
-      //     token = session.idToken.jwtToken;
-      const currentSession = await Auth.currentSession();
-      const token = await currentSession.getIdToken().getJwtToken();
-      dispatch(refreshToken(token));
-      dispatch(doFollowRequest());
+
+      // const currentSession = await Auth.currentSession();
+      // const token = await currentSession.getIdToken().getJwtToken();
+      // dispatch(refreshToken(token));
+      // dispatch(doFollowRequest());
       const apiName = 'superqso';
-      const path = '/qra/getRecFollowers';
+      const path = '/qra/getMostActive';
       const myInit = {
         body: {}, // replace this with attributes you need
         headers: {
-          Authorization: token
+          // Authorization: token
         } // OPTIONAL
       };
       API.get(apiName, path, myInit)
@@ -1021,7 +1007,7 @@ export function doFollowFetch(token) {
         });
         Sentry.captureException(error);
       }
-      dispatch(doLogout());
+      // dispatch(doLogout());
     }
   };
 }

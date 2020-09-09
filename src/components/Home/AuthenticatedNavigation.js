@@ -116,6 +116,7 @@ class AuthenticatedNavigation extends React.PureComponent {
 
                   this.props.actions.refreshToken(token);
                   this.props.actions.doFetchUserInfo(this.props.token);
+                  this.props.actions.doFollowFetch();
                   this.props.actions.doFetchPublicFeed(this.props.currentQRA);
                   if (process.env.REACT_APP_STAGE === 'production')
                     window.gtag('event', 'navHomeButton_WEBPRD', {});

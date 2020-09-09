@@ -67,12 +67,7 @@ class App extends Component {
         document.addEventListener('message', event =>
           this.loginFromAndroid(event)
         );
-        // console.log('android');
-        // window.addEventListener('WebViewBridge', event => {
-        //   // console.log(event);
-        //   // this.loginFromAndroid(event)F
-        //   this._onMessage.bind(this);
-        // });
+        
 
         // const event = new Event('WebViewBridge');
         // document.dispatchEvent(event);
@@ -104,7 +99,7 @@ class App extends Component {
         await this.props.actions.doStartingLogin();
         token = user.signInUserSession.idToken.jwtToken;
         const credentials = await Auth.currentCredentials();
-
+        this.props.actions.doFollowFetch();
         if (!credentials.authenticated) {
           await Auth.signOut();
 
@@ -139,7 +134,7 @@ class App extends Component {
   }
   async login() {
     this.props.actions.doStartingLogin();
-
+    this.props.actions.doFollowFetch();
     const session = await Auth.currentSession().catch(error => {
       this.props.actions.doLogout();
     });
@@ -201,7 +196,7 @@ class App extends Component {
           await this.props.actions.doStartingLogin();
           token = user.signInUserSession.idToken.jwtToken;
           const credentials = await Auth.currentCredentials();
-
+          this.props.actions.doFollowFetch();
           if (!credentials.authenticated) {
             await Auth.signOut();
 

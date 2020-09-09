@@ -1,56 +1,49 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-import Slider from 'react-slick';
-import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
 import Header from 'semantic-ui-react/dist/commonjs/elements/Header';
-import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
-import Image from 'semantic-ui-react/dist/commonjs/elements/Image';
 import Loader from 'semantic-ui-react/dist/commonjs/elements/Loader';
-import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment';
 import Dimmer from 'semantic-ui-react/dist/commonjs/modules/Dimmer';
-import Card from 'semantic-ui-react/dist/commonjs/views/Card';
 import '../../styles/style.css';
 import Ad from '../Ad/Ad';
 import AppNavigation from '../Home/AppNavigation';
 
-var settings = {
-  // dots: false,
-  infinite: false,
-  // speed: 500,
-  // adaptiveHeight: false,
-  slidesToShow: 4,
+// var settings = {
+//   // dots: false,
+//   infinite: false,
+//   // speed: 500,
+//   // adaptiveHeight: false,
+//   slidesToShow: 4,
 
-  slidesToScroll: 4,
-  // initialSlide: 0,
+//   slidesToScroll: 4,
+//   // initialSlide: 0,
 
-  responsive: [
-    {
-      breakpoint: 1024,
-      settings: {
-        slidesToShow: 3,
-        slidesToScroll: 3,
-        infinite: false,
-        dots: false
-      }
-    },
-    {
-      breakpoint: 600,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2,
-        initialSlide: 2
-      }
-    },
-    {
-      breakpoint: 480,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1
-      }
-    }
-  ]
-};
+//   responsive: [
+//     {
+//       breakpoint: 1024,
+//       settings: {
+//         slidesToShow: 3,
+//         slidesToScroll: 3,
+//         infinite: false,
+//         dots: false
+//       }
+//     },
+//     {
+//       breakpoint: 600,
+//       settings: {
+//         slidesToShow: 2,
+//         slidesToScroll: 2,
+//         initialSlide: 2
+//       }
+//     },
+//     {
+//       breakpoint: 480,
+//       settings: {
+//         slidesToShow: 1,
+//         slidesToScroll: 1
+//       }
+//     }
+//   ]
+// };
 const qraFollowRecommendPresentational = ({
   t,
   active,
@@ -93,7 +86,7 @@ const qraFollowRecommendPresentational = ({
       <Header as="h1" attached="top" textAlign="center">
         {t('navBar.whoToFollow')}
       </Header>
-      {follow.followingMe && follow.followingMe.length > 0 && (
+      {/* {follow.followingMe && follow.followingMe.length > 0 && (
         <Segment>
           <Header as="h3" block>
             {t('whoToFollow.callsignsFollowYou')}
@@ -321,7 +314,7 @@ const qraFollowRecommendPresentational = ({
             ))}
           </Slider>
         </Segment>
-      )}
+      )} */}
     </div>
 
     <div className="site-right">

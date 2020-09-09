@@ -67,6 +67,7 @@ class PublicNavigation extends React.PureComponent {
                 if (process.env.REACT_APP_STAGE === 'production')
                   window.gtag('event', 'navHomeButton_WEBPRD', {});
                 if (!this.props.isAuthenticated) {
+                  this.props.actions.doFollowFetch();
                   this.props.actions.doFetchPublicFeed();
                 }
               }}
