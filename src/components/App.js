@@ -30,7 +30,7 @@ const QSODetail = lazy(() => import('./QSODetail'));
 const LogIn = lazy(() => import('./Auth/LogIn'));
 const SignUp = lazy(() => import('./Auth/SignUp'));
 const Home = lazy(() => import('./Home/Home'));
-const FieldDaysFeed = lazy(()=> import('./Home/FieldDaysFeed'));
+const FieldDaysFeed = lazy(() => import('./Home/FieldDaysFeed'));
 
 // if (process.env.NODE_ENV !== 'production') {     const {whyDidYouUpdate} =
 // require('why-did-you-update')     whyDidYouUpdate(React)   }
@@ -45,15 +45,12 @@ class App extends Component {
     };
   }
   async componentDidMount() {
-    
     let query = new URLSearchParams(this.props.location.search);
-    
+
     if (isMobile) {
       if (query.get('embedded')) this.props.actions.doSetEmbedded();
 
       window.addEventListener('newURLfromWebView', event => {
-        alert(event);
-        console.log(event);
         this.props.actions.doSetEmbedded();
       });
       if (isIOS) {
@@ -67,7 +64,6 @@ class App extends Component {
         document.addEventListener('message', event =>
           this.loginFromAndroid(event)
         );
-        
 
         // const event = new Event('WebViewBridge');
         // document.dispatchEvent(event);
@@ -76,7 +72,6 @@ class App extends Component {
     this.login();
   }
   async _onMessage(data) {
-    console.log('_onMessage');
     let token;
 
     let mobileSession = JSON.parse(data);
@@ -170,7 +165,7 @@ class App extends Component {
     }
   }
   async loginFromAndroid(event) {
-    console.log('loginFromAndroid');
+    
     this.props.actions.doSetEmbedded();
     let token;
 
@@ -254,7 +249,7 @@ class App extends Component {
             }}
           />
           <Route exact path="/signup" component={SignUp} />
-          <Route exact path="/fielddays" component={FieldDaysFeed}/>
+          <Route exact path="/fielddays" component={FieldDaysFeed} />
           <Route
             exact
             location={{

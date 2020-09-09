@@ -7,9 +7,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _path = _interopRequireDefault(require("path"));
-
 var _fs = _interopRequireDefault(require("fs"));
+
+var _path = _interopRequireDefault(require("path"));
 
 // import React from 'react';
 // import { renderToString } from 'react-dom/server';
@@ -34,8 +34,7 @@ var prepHTML = (data, _ref) => {
 
 var universalLoader = (req, res) => {
   // console.log(req.path);
-  console.log(req.params); // Load in our HTML file from our build
-
+  // Load in our HTML file from our build
   var filePath = _path.default.resolve(__dirname, "../build/index.html");
 
   _fs.default.readFile(filePath, "utf8", (err, htmlData) => {

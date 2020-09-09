@@ -60,7 +60,7 @@ class AuthenticatedNavigation extends React.PureComponent {
 
   render() {
     const { t } = this.props;
-    console.log();
+    
     return (
       <Menu fixed="top" style={{ height: '50px', display: 'flex' }}>
         {isMobile && window.location.pathname !== '/' && (

@@ -38,8 +38,6 @@ var replace_qso_tags = /*#__PURE__*/function () {
 
     var t = _i18next.default.t.bind(_i18next.default);
 
-    console.log(req.params);
-
     if (req.params['idQSO'] !== 'empty') {
       var apigClientFactory = require('aws-api-gateway-client').default;
 
@@ -60,7 +58,6 @@ var replace_qso_tags = /*#__PURE__*/function () {
       var body = {
         qso: req.params['idQSO']
       };
-      console.log(body);
       apigClient.invokeApi(params, pathTemplate, method, additionalParams, body).then( /*#__PURE__*/function () {
         var _ref3 = (0, _asyncToGenerator2.default)(function* (result) {
           var filePath = _path.default.resolve(__dirname, '../build/index.html');
@@ -80,7 +77,6 @@ var replace_qso_tags = /*#__PURE__*/function () {
                 return res.status(404).end();
               }
 
-              console.log(result.data);
               var title;
               var image = null;
 
