@@ -22,6 +22,7 @@ class FeedItemFollow extends React.PureComponent {
   };
 
   render() {
+    
     if (this.props.follow)
       return (
         <Segment
