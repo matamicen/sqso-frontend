@@ -71,7 +71,7 @@ const initialState = {
   qraError: null,
   followFetched: false,
   followFetching: false,
-  follow: {},
+  follow: null,
   embeddedSession: false
 };
 
@@ -490,7 +490,7 @@ function generalReducers(state = initialState, action) {
     case FOLLOW_CLEAR:
       newStore = Object.assign({}, state, {
         ...state,
-        follow: {}
+        follow: null
       });
       return newStore;
     case FOLLOW_RECEIVE:
@@ -672,7 +672,7 @@ function generalReducers(state = initialState, action) {
         qsosFetched: false,
         FetchingQRA: false,
         QRAFetched: false,
-        follow: {}
+        follow: null
       });
 
       return newStore;
@@ -712,7 +712,7 @@ function generalReducers(state = initialState, action) {
         qsosFetched: false,
         FetchingQRA: false,
         QRAFetched: false,
-        follow: {},
+        follow: null,
         followFetching: false,
         followFetched: false
       });
@@ -741,7 +741,7 @@ function generalReducers(state = initialState, action) {
         qsosFetched: false,
         FetchingQRA: false,
         QRAFetched: false,
-        follow: {},
+        follow: null,
         followFetching: false,
         followFetched: false
       });

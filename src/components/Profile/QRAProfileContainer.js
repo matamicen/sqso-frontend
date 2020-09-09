@@ -94,7 +94,7 @@ class QRAProfileContainer extends React.PureComponent {
   handleOpen = () => this.setState({ adActive: true });
   handleClose = () => this.setState({ adActive: false, adClosed: true });
   componentDidUpdate(prevProps, prevState) {
-    console.log(this.props);
+    
     if (this.props.qra !== prevProps.qra)
       this.setState({ qra: this.props.qra });
     if (this.props.qraError && prevState.loaderActive) {
@@ -260,6 +260,7 @@ class QRAProfileContainer extends React.PureComponent {
           <QRAProfile
             qraInfo={qraInfo}
             following={this.props.following}
+            followers={this.props.followers}
             loaderActive={this.state.loaderActive}
             qra={this.state.qra}
             onClick={this.handleButtonClick}
@@ -284,6 +285,7 @@ const mapStateToProps = (state, ownProps) => ({
   currentQRA: state.userData.currentQRA,
   isAuthenticated: state.userData.isAuthenticated,
   following: state.userData.following,
+  followers: state.userData.followers,
   token: state.userData.token,
   fetchingQRA: state.FetchingQRA,
   userFetched: state.userData.userFetched,

@@ -113,7 +113,7 @@ class QSOLikeText extends React.PureComponent {
         case likes.length > 1 && a <= counter - 2 && counter < likes.length: //Before Last
           outputText = outputText + ', ';
           break;
-        default:
+        default:  
           break;
       }
     }

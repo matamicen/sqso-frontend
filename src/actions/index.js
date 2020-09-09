@@ -966,20 +966,19 @@ export function doFollowFetch(token) {
         event_label: 'getRecFollow'
       });
     try {
-
       // const currentSession = await Auth.currentSession();
       // const token = await currentSession.getIdToken().getJwtToken();
       // dispatch(refreshToken(token));
       // dispatch(doFollowRequest());
       const apiName = 'superqso';
-      const path = '/qra/getMostActive';
+      const path = '/qra/recFollow';
       const myInit = {
-        body: {}, // replace this with attributes you need
+        body: { query: 1 }, // replace this with attributes you need
         headers: {
           // Authorization: token
         } // OPTIONAL
       };
-      API.get(apiName, path, myInit)
+      API.post(apiName, path, myInit)
         .then(response => {
           if (response.body.error === 0) {
             dispatch(doFollowReceive(response.body.message));

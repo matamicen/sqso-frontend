@@ -30,10 +30,10 @@ class QSOLikeTextModalItem extends React.PureComponent {
     if (this.props.userData.isAuthenticated) {
       if (!this.followed) {
         if (process.env.REACT_APP_STAGE === 'production')
-        window.gtag('event', 'qraFollowLike_WEBPRD', {
-          event_category: 'User',
-          event_label: 'follow'
-        });
+          window.gtag('event', 'qraFollowLike_WEBPRD', {
+            event_category: 'User',
+            event_label: 'follow'
+          });
         this.props.actions.doFollowQRA(this.props.userData.token, idqra);
         this.followed = true;
         this.setState({ followed: this.followed });
@@ -106,12 +106,16 @@ class QSOLikeTextModalItem extends React.PureComponent {
             l.qra !== this.props.userData.currentQRA && (
               <Button
                 style={{
-                  width: '100px'
+                  
+                  paddingLeft: '1em',
+                  paddingRight: '1em'
                 }}
                 positive={!this.followed}
                 onClick={() => this.handleButtonClick(l.qra)}
               >
-                {this.followed ? t('qra.unfollow') : t('qra.follow')}
+                {this.props.followers.some(o => o.qra === l.qra)
+                  ? t('qra.followToo')
+                  : t('qra.follow')}
               </Button>
             )}
         </div>
@@ -124,6 +128,7 @@ const mapStateToProps = state => ({
   isAuthenticated: state.userData.isAuthenticated,
   currentQRA: state.userData.currentQRA,
   userData: state.userData,
+  followers: state.userData.followers,
   userFetched: state.userData.userFetched,
   token: state.userData.token
 });

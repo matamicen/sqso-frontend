@@ -14,7 +14,9 @@ const QRAProfileHeader = props => {
   if (props.followed) {
     buttonText = t('qra.unfollow');
   } else {
-    buttonText = t('qra.follow');
+    buttonText = props.followers.some(o => o.qra === props.qraInfo.qra)
+      ? t('qra.followToo')
+      : t('qra.follow');
   }
 
   var result = props.qraInfo
@@ -30,7 +32,7 @@ const QRAProfileHeader = props => {
           <div className="pic">
             <Image
               src={
-                (props.qraInfo && props.qraInfo.profilepic)
+                props.qraInfo && props.qraInfo.profilepic
                   ? props.qraInfo.profilepic
                   : '/emptyprofile.png'
               }
@@ -98,6 +100,7 @@ const QRAProfileHeader = props => {
                     // positive={!props.following.some(o => o.qra === props.qraInfo.qra)}
                     positive={!props.followed}
                     onClick={() => props.onClick()}
+                    style={{paddingLeft: "1em", paddingRight: "1em"}}
                   >
                     {buttonText}
                   </Button>
