@@ -189,6 +189,7 @@
     "loading": "Loading Callsign...",
     "views": "Views",
     "follow": "Follow",
+    "followToo": "Follow Too",
     "unfollow": "Unfollow",
     "editInfo": "Edit Info",
     "saveInfo": "Save Info",

@@ -20,7 +20,12 @@ const Right = props => (
     }}
     onClick={props.onClick}
   >
-    <Button circular icon="arrow circle right" size="mini" style={{ background: '#8BD8BD', color: '#243665' }} />
+    <Button
+      circular
+      icon="arrow circle right"
+      size="mini"
+      style={{ background: '#8BD8BD', color: '#243665' }}
+    />
   </div>
 );
 
@@ -30,7 +35,12 @@ const Left = props => (
     style={{ ...props.style, display: 'block', left: '-10px', zIndex: 1 }}
     onClick={props.onClick}
   >
-    <Button circular icon="arrow circle left" size="mini" style={{ background: '#8BD8BD', color: '#243665' }}/>
+    <Button
+      circular
+      icon="arrow circle left"
+      size="mini"
+      style={{ background: '#8BD8BD', color: '#243665' }}
+    />
   </div>
 );
 var settings = {
@@ -76,6 +86,7 @@ const FollowCarrousel = ({
   active,
   follow,
   following,
+  followers,
   doFollow,
   currentQRA
 }) => (
@@ -144,7 +155,7 @@ const FollowCarrousel = ({
                   </Card.Header>
 
                   <Card.Description>
-                    <Icon name="microphone" />
+                    <Icon name="edit outline" />
                     {qra.qsos_counter} {t('whoToFollow.qsosCreated')}
                     {/* <br /> */}
                     {/* <Icon name="user" />
@@ -153,12 +164,22 @@ const FollowCarrousel = ({
                 </Card.Content>
                 <Card.Content extra>
                   {following.some(o => o.qra === qra.qra) ? (
-                    <Button basic color="grey">
+                    <Button
+                      basic
+                      color="grey"
+                      style={{ paddingLeft: '1em', paddingRight: '1em' }}
+                    >
                       {t('qra.following')}
                     </Button>
                   ) : (
-                    <Button positive onClick={() => doFollow(qra.qra)}>
-                      {t('qra.follow')}
+                    <Button
+                      positive
+                      onClick={() => doFollow(qra.qra)}
+                      style={{ paddingLeft: '1em', paddingRight: '1em' }}
+                    >
+                      {followers.some(o => o.qra === qra.qra)
+                        ? t('qra.followToo')
+                        : t('qra.follow')}
                     </Button>
                   )}
                 </Card.Content>

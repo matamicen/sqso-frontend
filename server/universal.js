@@ -1,5 +1,5 @@
-import path from "path";
 import fs from "fs";
+import path from "path";
 
 // import React from 'react';
 // import { renderToString } from 'react-dom/server';
@@ -24,7 +24,7 @@ const prepHTML = (data, { html, head, body }) => {
 const universalLoader = (req, res) => {
   // console.log(req.path);
 
-  console.log(req.params);
+  
   // Load in our HTML file from our build
   const filePath = path.resolve(__dirname, "../build/index.html");
 

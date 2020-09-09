@@ -108,7 +108,7 @@ class LogIn extends React.Component {
         await this.props.actions.doStartingLogin();
         token = user.signInUserSession.idToken.jwtToken;
         const credentials = await Auth.currentCredentials();
-        
+        this.props.actions.doFollowFetch();
         if (!credentials.authenticated) {
           await Auth.signOut();
 

@@ -24,10 +24,10 @@ class QSOCommentItem extends React.Component {
     if (this.props.userData.isAuthenticated) {
       if (!this.followed) {
         if (process.env.REACT_APP_STAGE === 'production')
-        window.gtag('event', 'qraFollowComment_WEBPRD', {
-          event_category: 'User',
-          event_label: 'follow'
-        });
+          window.gtag('event', 'qraFollowComment_WEBPRD', {
+            event_category: 'User',
+            event_label: 'follow'
+          });
         this.props.actions.doFollowQRA(this.props.token, idqra);
         this.followed = true;
         this.setState({ followed: this.followed });
@@ -79,18 +79,24 @@ class QSOCommentItem extends React.Component {
                 float: 'right'
               }}
             >
-              {this.props.isAuthenticated && !this.followed &&
+              {this.props.isAuthenticated &&
+                !this.followed &&
                 this.props.comment.qra !== this.props.currentQRA && (
                   <Button
                     style={{
-                      width: '100px'
+                      paddingLeft: '1em',
+                      paddingRight: '1em'
                     }}
                     positive={!this.followed}
                     onClick={() =>
                       this.handleButtonClick(this.props.comment.qra)
                     }
                   >
-                    {this.followed ? t('qra.unfollow') : t('qra.follow')}
+                    {this.props.followers.some(
+                      o => o.qra === this.props.comment.qra
+                    )
+                      ? t('qra.followToo')
+                      : t('qra.follow')}
                   </Button>
                 )}
 
@@ -157,6 +163,7 @@ const mapStateToProps = state => ({
   token: state.userData.token,
   currentQRA: state.userData.currentQRA,
   userData: state.userData,
+  followers: state.userData.followers,
   isAuthenticated: state.userData.isAuthenticated
 });
 const mapDispatchToProps = dispatch => ({
