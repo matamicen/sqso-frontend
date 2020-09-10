@@ -14,7 +14,7 @@
     "whatIsSuperQSO": "¿Qué es SuperQSO?",
     "downloadApp": "Descargar App",
     "tutorial": "Ver Tutoriales",
-    "whoToFollow": "A Quien Seguir",
+    "exploreUsers": "Explorar Usuarios",
     "searchCallsign": "BUSCAR SD (Ej: LU2ACH)"
   },
   "whatIsSuperQSO": {
@@ -247,7 +247,8 @@
     "listenedQSO": "Escuchó un QSO con ",
     "workedQSO": "Trabajó un QSO con "
   },
-  "whoToFollow": {
+  "exploreUsers": {
+    "lookWhoInQSO": "Mirá quien más está en SuperQSO",
     "qsosCreated": "Publicaciones",
     "callsignsYouTagged": "Señales Distintivas que has mencionado",
     "callsignsTaggedYou": "Señales Distintivas que te han mencionado",

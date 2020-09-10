@@ -1,22 +1,24 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import Confirm from 'semantic-ui-react/dist/commonjs/addons/Confirm';
-import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment';
 import * as Actions from '../../actions';
-import '../../styles/style.css';
-import FollowCarrousel from '../follow/followCarrousel';
-class FeedItemFollow extends React.PureComponent {
-  state = {
-    followed: [],
-    openLogin: false,
-    follow: null
-  };
-  componentDidUpdate(prevProps, prevState) {
-    if (this.props.follow !== prevProps.follow)
-      this.setState({ follow: this.props.follow });
+import ExploreUsers from './exploreUsersPresentational';
+class exploreUsersContainer extends React.PureComponent {
+  constructor() {
+    super();
+    this.state = { openLogin: false, followed: [] };
+  }
+  componentDidMount() {
+    // if (
+    //   // this.props.isAuthenticated &&
+    //   // !this.props.followFetched &&
+    //   // !this.props.followFetching
+    // ) {
+    this.props.actions.doLatestUsersFetch();
+    // }
   }
   doFollow = param => {
     if (this.props.isAuthenticated) {
@@ -30,24 +32,18 @@ class FeedItemFollow extends React.PureComponent {
     } else this.setState({ openLogin: true });
   };
   // doUnfollow = param => {
-  //   if (this.props.isAuthenticated) {
-  //     this.setState({ followed: this.state.followed.filter(f => f === param) });
+  //   if (this.props.isAuthenticated)
   //     this.props.actions.doUnfollowQRA(this.props.token, param);
-  //   } else this.setState({ openLogin: true });
   // };
 
   render() {
     const { t } = this.props;
-    if (this.props.follow)
+    if (this.props.latestUsers)
       return (
-        <Segment
-          raised
-          secondary
-          style={{ padding: 'initial', textAlign: 'center' }}
-        >
-          <FollowCarrousel
+        <Fragment>
+          <ExploreUsers
             followed={this.state.followed}
-            follow={this.props.follow}
+            users={this.props.latestUsers}
             following={this.props.following}
             followers={this.props.followers}
             doFollow={e => this.doFollow(e)}
@@ -68,19 +64,18 @@ class FeedItemFollow extends React.PureComponent {
             confirmButton={t('auth.login')}
             content={t('auth.loginToPerformAction')}
           />
-        </Segment>
+        </Fragment>
       );
     else return null;
   }
 }
-
 const mapStateToProps = (state, ownProps) => ({
-  currentQRA: state.userData.currentQRA,
   followFetched: state.followFetched,
   followFetching: state.followFetching,
-  follow: state.follow,
+  latestUsers: state.latestUsers,
   following: state.userData.following,
   followers: state.userData.followers,
+  currentQRA: state.userData.currentQRA,
   isAuthenticated: state.userData.isAuthenticated,
   token: state.userData.token
 });
@@ -94,5 +89,5 @@ export default withRouter(
     mapDispatchToProps,
     null,
     { pure: false }
-  )(withTranslation()(FeedItemFollow))
+  )(withTranslation()(exploreUsersContainer))
 );

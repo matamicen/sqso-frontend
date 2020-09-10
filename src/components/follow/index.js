@@ -1,3 +1,3 @@
-import qraFollowRecommend from "./followContainer";
+import exploreUsersContainer from "./exploreUsersContainer";
 
-export default qraFollowRecommend;
+export default exploreUsersContainer;

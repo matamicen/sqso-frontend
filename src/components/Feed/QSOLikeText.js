@@ -38,6 +38,15 @@ class QSOLikeText extends React.PureComponent {
   //   //   };
   //   // });
   // }
+  componentDidUpdate(prevProps, prevState) {
+
+    if (
+      this.props.qso.likes.length === 1 &&
+      this.props.qso.likes[0].qra === this.props.userData.currentQRA
+    ) {
+      this.props.recalculateRowHeight();
+    }
+  }
   render() {
     const { qso, t } = this.props;
     let counter;
@@ -61,7 +70,7 @@ class QSOLikeText extends React.PureComponent {
       likes.length === 1 &&
       likes[0].qra === this.props.userData.currentQRA
     ) {
-      this.props.recalculateRowHeight();
+      // this.props.recalculateRowHeight();
       counter = likes.length;
       finalText = t('qso.youLikeThis');
       //  + (this.props.qso.type === 'POST' ? ' POST' : ' QSO');
@@ -113,7 +122,7 @@ class QSOLikeText extends React.PureComponent {
         case likes.length > 1 && a <= counter - 2 && counter < likes.length: //Before Last
           outputText = outputText + ', ';
           break;
-        default:  
+        default:
           break;
       }
     }
@@ -168,7 +177,8 @@ class QSOLikeText extends React.PureComponent {
           }}
         >
           <Modal.Header>
-            {t('qso.likeModalHeader')} {qso.type === 'POST' ? t('qso.POST') : ' QSO'}
+            {t('qso.likeModalHeader')}{' '}
+            {qso.type === 'POST' ? t('qso.POST') : ' QSO'}
           </Modal.Header>
           <Modal.Content>
             <Modal.Description>

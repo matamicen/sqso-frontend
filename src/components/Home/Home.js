@@ -21,19 +21,9 @@ class Home extends React.PureComponent {
   };
 
   componentDidMount() {
-    // let visited = localStorage['alreadyVisited'];
-
-    // if (visited) {
-    //   this.setState({ videoAlreadyDisplayed: true });
-    //   //do not view Popup
-    // } else {
-    //   //this is the first time
-
-    //   this.setState({ videoAlreadyDisplayed: false });
-    // }
     if (process.env.NODE_ENV !== 'production')
       this.setState({ adActive: false });
-
+    this.props.actions.doFollowFetch();
     if (this.props.qsos.length === 0) {
       if (this.props.isAuthenticated) {
         // this.props.actions.doFetchUserFeed(
@@ -42,7 +32,6 @@ class Home extends React.PureComponent {
         // );
         this.props.actions.doFetchPublicFeed(this.props.currentQRA);
       } else {
-        // if (!visited) this.setState({ modalOpen: true });
         this.props.actions.doFetchPublicFeed();
       }
     }
@@ -121,7 +110,9 @@ class Home extends React.PureComponent {
                 />
               </div>
 
-              <div className="site-main"><FeedQSO /></div>
+              <div className="site-main">
+                <FeedQSO />
+              </div>
 
               <div className="site-right">
                 <Ad
