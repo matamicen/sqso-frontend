@@ -5,7 +5,6 @@ import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import Confirm from 'semantic-ui-react/dist/commonjs/addons/Confirm';
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
 import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider';
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
@@ -242,7 +241,7 @@ class FeedItemPost extends React.PureComponent {
             />
           )}
         </Segment>
-        <Confirm
+        {/* <Confirm
           size="mini"
           open={this.state.openLogin}
           onCancel={() => this.setState({ openLogin: false })}
@@ -255,7 +254,7 @@ class FeedItemPost extends React.PureComponent {
           cancelButton={t('global.cancel')}
           confirmButton={t('auth.login')}
           content={t('auth.loginToPerformAction')}
-        />
+        /> */}
       </Fragment>
     );
   }

@@ -10,6 +10,7 @@ import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment';
 import Card from 'semantic-ui-react/dist/commonjs/views/Card';
 import '../../styles/style.css';
 const Right = props => (
+  
   <div
     className="slick-next"
     style={{
@@ -58,9 +59,9 @@ var settings = {
     {
       breakpoint: 1024,
       settings: {
-        slidesToShow: 3,
-        slidesToScroll: 3,
-        infinite: false,
+        slidesToShow: 2,
+        slidesToScroll: 4,
+        infinite: true,
         dots: false
       }
     },
@@ -68,22 +69,22 @@ var settings = {
       breakpoint: 600,
       settings: {
         slidesToShow: 2,
-        slidesToScroll: 2,
+        slidesToScroll: 1,
         initialSlide: 2
       }
     },
     {
-      breakpoint: 480,
+      breakpoint: 360,
       settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2
+        slidesToShow: 1,
+        slidesToScroll: 1
       }
     }
   ]
 };
 const FollowCarrousel = ({
   t,
-  active,
+  followed,
   follow,
   following,
   followers,
@@ -92,7 +93,7 @@ const FollowCarrousel = ({
 }) => (
   <Segment>
     <Header as="h3" attached="top" textAlign="left">
-      {t('navBar.whoToFollow')}
+      {t('navBar.exploreUsers')}
     </Header>
     <Slider {...settings}>
       {follow.map((qra, i) => {
@@ -134,8 +135,8 @@ const FollowCarrousel = ({
                       </div>
                       <div
                         style={{
-                          flex: '1 1 auto'
-                          // justifyContent: 'center',
+                          flex: '1 1 auto',
+                         
                           // paddingRigth: '5px'
                         }}
                       >
@@ -156,14 +157,14 @@ const FollowCarrousel = ({
 
                   <Card.Description>
                     <Icon name="edit outline" />
-                    {qra.qsos_counter} {t('whoToFollow.qsosCreated')}
+                    {qra.qsos_counter} {t('exploreUsers.qsosCreated')}
                     {/* <br /> */}
                     {/* <Icon name="user" />
                     {qra.followers_counter} {t('qra.followers')} */}
                   </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
-                  {following.some(o => o.qra === qra.qra) ? (
+                  {(following.some(o => o.qra === qra.qra)|| followed.some(o => o === qra.qra)) ? (
                     <Button
                       basic
                       color="grey"

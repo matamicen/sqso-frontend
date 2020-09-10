@@ -14,7 +14,7 @@
     "whatIsSuperQSO": "¿What is SuperQSO?",
     "downloadApp": "Download App",
     "tutorial": "Tutorial",
-    "whoToFollow": "Who to Follow",
+    "exploreUsers": "Explore Users",
     "searchCallsign": "Search CALLSIGN"
   },
   "whatIsSuperQSO": {
@@ -247,7 +247,8 @@
     "listenedQSO": "Listened a QSO with",
     "workedQSO": "Worked a QSO with "
   },
-  "whoToFollow": {
+  "exploreUsers": {
+    "lookWhoInQSO": "Look who is on SuperQSO",
     "qsosCreated": "Posts",
     "callsignsYouTagged": "Callsigns that you have already tagged",
     "callsignsTaggedYou": "Callsigns that already tagged you",

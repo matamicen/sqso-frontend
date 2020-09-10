@@ -190,9 +190,9 @@ class AuthenticatedNavigation extends React.PureComponent {
               {!this.props.embeddedSession && <Dropdown.Divider />}
               {!this.props.embeddedSession && (
                 <Dropdown.Item
-                  onClick={() => this.props.history.push('/follow')}
+                  onClick={() => this.props.history.push('/explore')}
                 >
-                  {t('navBar.whoToFollow')}
+                  {t('navBar.exploreUsers')}
                 </Dropdown.Item>
               )}
               {!this.props.embeddedSession && <Dropdown.Divider />}

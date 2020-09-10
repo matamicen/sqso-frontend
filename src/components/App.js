@@ -402,9 +402,9 @@ class App extends Component {
           />
           <Route
             exact
-            path="/follow"
+            path="/explore"
             location={{
-              pathname: '/follow',
+              pathname: '/explore',
               state: { from: this.props.location.pathname }
             }}
             component={() => {

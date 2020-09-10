@@ -39,6 +39,7 @@ export const FOLLOW_CLEAR = 'FOLLOW_CLEAR';
 export const FOLLOW_FETCH = 'FOLLOW_FETCH';
 export const FOLLOW_REQUEST = 'FOLLOW_REQUEST';
 export const FOLLOW_RECEIVE = 'FOLLOW_RECEIVE';
+export const LATEST_USERS_RECEIVE = "LATEST_USERS_RECEIVE";
 export const QSO_DISLIKE = 'QSO_DISLIKE';
 export const QSO_LIKE = 'QSO_LIKE';
 export const EMBEDDED_SESSION = 'EMBEDDED_SESSION';
@@ -538,6 +539,12 @@ export function doFollowReceive(follow) {
     follow: follow
   };
 }
+export function doLatestUsersReceive(follow) {
+  return {
+    type: LATEST_USERS_RECEIVE,
+    follow: follow
+  };
+}
 export function doReceiveNotifications(notifications) {
   return {
     type: RECEIVE_NOTIFICATIONS,
@@ -958,7 +965,7 @@ export function doFetchUserFeed(token, qra) {
     }
   };
 }
-export function doFollowFetch(token) {
+export function doFollowFetch() {
   return async dispatch => {
     if (process.env.REACT_APP_STAGE === 'production')
       window.gtag('event', 'getRecFollow_WEBPRD', {
@@ -982,6 +989,58 @@ export function doFollowFetch(token) {
         .then(response => {
           if (response.body.error === 0) {
             dispatch(doFollowReceive(response.body.message));
+          } else console.log(response.body.message);
+        })
+        .catch(async error => {
+          if (process.env.NODE_ENV !== 'production') {
+            console.log(error.message);
+          } else {
+            Sentry.configureScope(function(scope) {
+              scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+            });
+            Sentry.captureException(error);
+          }
+        });
+      //   }
+      // );
+    } catch (error) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('Unable to refresh Token');
+        console.log(error);
+      } else {
+        Sentry.configureScope(function(scope) {
+          scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+        });
+        Sentry.captureException(error);
+      }
+      // dispatch(doLogout());
+    }
+  };
+}
+export function doLatestUsersFetch() {
+  return async dispatch => {
+    if (process.env.REACT_APP_STAGE === 'production')
+      window.gtag('event', 'getLatestUsers_WEBPRD', {
+        event_category: 'User',
+        event_label: 'getLatestUsers'
+      });
+    try {
+      // const currentSession = await Auth.currentSession();
+      // const token = await currentSession.getIdToken().getJwtToken();
+      // dispatch(refreshToken(token));
+      // dispatch(doFollowRequest());
+      const apiName = 'superqso';
+      const path = '/qra/recFollow';
+      const myInit = {
+        body: { query: 2 }, // replace this with attributes you need
+        headers: {
+          // Authorization: token
+        } // OPTIONAL
+      };
+      API.post(apiName, path, myInit)
+        .then(response => {
+          if (response.body.error === 0) {
+            dispatch(doLatestUsersReceive(response.body.message));
           } else console.log(response.body.message);
         })
         .catch(async error => {

@@ -1,5 +1,8 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { Fragment } from 'react';
+import { withTranslation } from 'react-i18next';
+import { withRouter } from 'react-router-dom';
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
 import FeedItemAd from './FeedItemAd';
 import FeedItemFollow from './FeedItemFollow';
 import FeedItemPost from './FeedItemPost';
@@ -51,7 +54,30 @@ const FeedItem = props => {
         />
       );
     case 'AD':
-      if (props.index === 0 || (props.index % 9 === 0 && props.index !== 0)) {
+      if (props.index === 0) {
+        return (
+          <Fragment>
+            <div>
+              <Button
+                style={{backgroundColor: "#243665"}}
+                positive
+                fluid
+                size="small"
+                onClick={() => props.history.push('/explore')}
+              >
+                {props.t('exploreUsers.lookWhoInQSO')}
+              </Button>
+              <FeedItemFollow
+                source={props.source}
+                ad={props.ad}
+                measure={props.measure}
+                recalculateRowHeight={props.recalculateRowHeight}
+                index={props.index}
+              />
+            </div>
+          </Fragment>
+        );
+      } else if (props.index % 9 === 0)
         return (
           <FeedItemFollow
             source={props.source}
@@ -61,7 +87,7 @@ const FeedItem = props => {
             index={props.index}
           />
         );
-      } else {
+      else {
         return (
           <FeedItemAd
             source={props.source}
@@ -77,4 +103,4 @@ const FeedItem = props => {
   }
 };
 
-export default FeedItem;
+export default withRouter(withTranslation()(FeedItem));
