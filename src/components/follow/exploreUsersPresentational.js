@@ -81,25 +81,27 @@ const ExploreUsers = ({
                         >
                           <div
                             style={{
-                              flex: '0 1 auto',
+                              flex: '0 0 auto',
                               alignSelf: 'center'
                               // justifyContent: 'center',
                               // paddingRigth: '5px'
                             }}
                           >
-                            <Image
-                              size="mini"
-                              avatar
-                              style={{
-                                width: '50px',
-                                height: '50px'
-                              }}
-                              src={
-                                qra.avatarpic
-                                  ? qra.avatarpic
-                                  : '/emptyprofile.png'
-                              }
-                            />
+                            <Link to={'/' + qra.qra}>
+                              <Image
+                                size="mini"
+                                avatar
+                                style={{
+                                  width: '50px',
+                                  height: '50px'
+                                }}
+                                src={
+                                  qra.avatarpic
+                                    ? qra.avatarpic
+                                    : '/emptyprofile.png'
+                                }
+                              />
+                            </Link>
                           </div>
                           <div
                             style={{
