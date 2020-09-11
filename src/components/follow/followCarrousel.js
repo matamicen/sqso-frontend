@@ -47,7 +47,7 @@ var settings = {
   // dots: false,
   infinite: true,
   // speed: 500,
-  // adaptiveHeight: false,
+  adaptiveHeight: false,
   slidesToShow: 4,
 
   slidesToScroll: 4,
@@ -60,9 +60,10 @@ var settings = {
       settings: {
         slidesToShow: 4,
         slidesToScroll: 4,
-        infinite: true,
+        
         dots: false,
         infinite: true,
+        variableWidth: true
       }
     },
     {

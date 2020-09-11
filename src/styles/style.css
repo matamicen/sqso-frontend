@@ -1,3 +1,6 @@
+.slick-track {
+  display: flex;
+}
 .rdw-image-modal {
   position: relative !important;
 }
@@ -337,7 +340,7 @@
 }
 .exploreUsers {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 2fr));
+  grid-template-columns: repeat(auto-fill, minmax(170px, 2fr));
   grid-template-rows: 200px;
   grid-column-gap: 20px;
   grid-row-gap: 20px;

@@ -72,7 +72,7 @@ const ExploreUsers = ({
                   //   marginLeft: '1em'
                   // }}
                 >
-                  <Card raised>
+                  <Card raised style={{ width: 'fit-content' }}>
                     <Card.Content>
                       <Card.Header>
                         <div

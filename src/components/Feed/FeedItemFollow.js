@@ -14,9 +14,11 @@ class FeedItemFollow extends React.PureComponent {
     openLogin: false,
     follow: null
   };
+
   componentDidUpdate(prevProps, prevState) {
     if (this.props.follow !== prevProps.follow)
       this.setState({ follow: this.props.follow });
+     
   }
   doFollow = param => {
     if (this.props.isAuthenticated) {
@@ -43,7 +45,7 @@ class FeedItemFollow extends React.PureComponent {
         <Segment
           raised
           secondary
-          style={{ padding: 'initial', textAlign: 'center' }}
+          style={{ padding: 'initial', textAlign: 'center', height: "max-content" }}
         >
           <FollowCarrousel
             followed={this.state.followed}
