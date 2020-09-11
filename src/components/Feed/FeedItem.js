@@ -54,12 +54,13 @@ const FeedItem = props => {
         />
       );
     case 'AD':
+      console.log(props.index)
       if (props.index === 0) {
         return (
           <Fragment>
             <div>
               <Button
-                style={{backgroundColor: "#243665"}}
+                // style={{ backgroundColor: '#243665' }}
                 positive
                 fluid
                 size="small"
@@ -67,17 +68,10 @@ const FeedItem = props => {
               >
                 {props.t('exploreUsers.lookWhoInQSO')}
               </Button>
-              <FeedItemFollow
-                source={props.source}
-                ad={props.ad}
-                measure={props.measure}
-                recalculateRowHeight={props.recalculateRowHeight}
-                index={props.index}
-              />
             </div>
           </Fragment>
         );
-      } else if (props.index % 9 === 0)
+      } else if (props.index === 4 || (props.index -1)  % 9 === 0)
         return (
           <FeedItemFollow
             source={props.source}
