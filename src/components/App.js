@@ -30,7 +30,7 @@ const QSODetail = lazy(() => import('./QSODetail'));
 const LogIn = lazy(() => import('./Auth/LogIn'));
 const SignUp = lazy(() => import('./Auth/SignUp'));
 const Home = lazy(() => import('./Home/Home'));
-const FieldDaysFeed = lazy(()=> import('./Home/FieldDaysFeed'));
+const FieldDaysFeed = lazy(() => import('./Home/FieldDaysFeed'));
 
 // if (process.env.NODE_ENV !== 'production') {     const {whyDidYouUpdate} =
 // require('why-did-you-update')     whyDidYouUpdate(React)   }
@@ -45,15 +45,12 @@ class App extends Component {
     };
   }
   async componentDidMount() {
-    
     let query = new URLSearchParams(this.props.location.search);
-    
+
     if (isMobile) {
       if (query.get('embedded')) this.props.actions.doSetEmbedded();
 
       window.addEventListener('newURLfromWebView', event => {
-        alert(event);
-        console.log(event);
         this.props.actions.doSetEmbedded();
       });
       if (isIOS) {
@@ -67,12 +64,6 @@ class App extends Component {
         document.addEventListener('message', event =>
           this.loginFromAndroid(event)
         );
-        // console.log('android');
-        // window.addEventListener('WebViewBridge', event => {
-        //   // console.log(event);
-        //   // this.loginFromAndroid(event)F
-        //   this._onMessage.bind(this);
-        // });
 
         // const event = new Event('WebViewBridge');
         // document.dispatchEvent(event);
@@ -81,7 +72,6 @@ class App extends Component {
     this.login();
   }
   async _onMessage(data) {
-    console.log('_onMessage');
     let token;
 
     let mobileSession = JSON.parse(data);
@@ -104,7 +94,7 @@ class App extends Component {
         await this.props.actions.doStartingLogin();
         token = user.signInUserSession.idToken.jwtToken;
         const credentials = await Auth.currentCredentials();
-
+        this.props.actions.doFollowFetch();
         if (!credentials.authenticated) {
           await Auth.signOut();
 
@@ -139,7 +129,7 @@ class App extends Component {
   }
   async login() {
     this.props.actions.doStartingLogin();
-
+    this.props.actions.doFollowFetch();
     const session = await Auth.currentSession().catch(error => {
       this.props.actions.doLogout();
     });
@@ -175,7 +165,7 @@ class App extends Component {
     }
   }
   async loginFromAndroid(event) {
-    console.log('loginFromAndroid');
+    
     this.props.actions.doSetEmbedded();
     let token;
 
@@ -201,7 +191,7 @@ class App extends Component {
           await this.props.actions.doStartingLogin();
           token = user.signInUserSession.idToken.jwtToken;
           const credentials = await Auth.currentCredentials();
-
+          this.props.actions.doFollowFetch();
           if (!credentials.authenticated) {
             await Auth.signOut();
 
@@ -259,7 +249,7 @@ class App extends Component {
             }}
           />
           <Route exact path="/signup" component={SignUp} />
-          <Route exact path="/fielddays" component={FieldDaysFeed}/>
+          <Route exact path="/fielddays" component={FieldDaysFeed} />
           <Route
             exact
             location={{
@@ -412,9 +402,9 @@ class App extends Component {
           />
           <Route
             exact
-            path="/follow"
+            path="/explore"
             location={{
-              pathname: '/follow',
+              pathname: '/explore',
               state: { from: this.props.location.pathname }
             }}
             component={() => {

@@ -60,7 +60,7 @@ class AuthenticatedNavigation extends React.PureComponent {
 
   render() {
     const { t } = this.props;
-    console.log();
+
     return (
       <Menu fixed="top" style={{ height: '50px', display: 'flex' }}>
         {isMobile && window.location.pathname !== '/' && (
@@ -116,6 +116,7 @@ class AuthenticatedNavigation extends React.PureComponent {
 
                   this.props.actions.refreshToken(token);
                   this.props.actions.doFetchUserInfo(this.props.token);
+                  this.props.actions.doFollowFetch();
                   this.props.actions.doFetchPublicFeed(this.props.currentQRA);
                   if (process.env.REACT_APP_STAGE === 'production')
                     window.gtag('event', 'navHomeButton_WEBPRD', {});
@@ -189,9 +190,14 @@ class AuthenticatedNavigation extends React.PureComponent {
               {!this.props.embeddedSession && <Dropdown.Divider />}
               {!this.props.embeddedSession && (
                 <Dropdown.Item
-                  onClick={() => this.props.history.push('/follow')}
+                  onClick={() => {
+                    if (process.env.REACT_APP_STAGE === 'production')
+                      window.gtag('event', 'exploreUsersMenu_WEBPRD', {});
+
+                    this.props.history.push('/explore');
+                  }}
                 >
-                  {t('navBar.whoToFollow')}
+                  {t('navBar.exploreUsers')}
                 </Dropdown.Item>
               )}
               {!this.props.embeddedSession && <Dropdown.Divider />}

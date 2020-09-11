@@ -30,8 +30,6 @@ var prepHTML = (data, _ref) => {
 };
 
 var replace_qra_tags = (req, res) => {
-  console.log(req.params);
-
   if (req.params['idQRA'] !== 'empty') {
     var apigClientFactory = require('aws-api-gateway-client').default;
 
@@ -52,7 +50,6 @@ var replace_qra_tags = (req, res) => {
     var body = {
       qra: req.params['idQRA']
     };
-    console.log(body);
     apigClient.invokeApi(params, pathTemplate, method, additionalParams, body).then(function (result) {
       var filePath = _path.default.resolve(__dirname, '../build/index.html');
 
@@ -72,7 +69,6 @@ var replace_qra_tags = (req, res) => {
             return res.status(404).end();
           }
 
-          console.log(result.data);
           var title;
           var url;
 

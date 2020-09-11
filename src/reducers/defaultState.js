@@ -11,6 +11,7 @@ import {
   FOLLOW_CLEAR,
   FOLLOW_RECEIVE,
   FOLLOW_REQUEST,
+  LATEST_USERS_RECEIVE,
   LOGIN,
   LOGOUT,
   NOTIFICATION_READ,
@@ -71,7 +72,8 @@ const initialState = {
   qraError: null,
   followFetched: false,
   followFetching: false,
-  follow: {},
+  follow: null,
+  latestUsers: null,
   embeddedSession: false
 };
 
@@ -490,7 +492,15 @@ function generalReducers(state = initialState, action) {
     case FOLLOW_CLEAR:
       newStore = Object.assign({}, state, {
         ...state,
-        follow: {}
+        follow: null
+      });
+      return newStore;
+    case LATEST_USERS_RECEIVE:
+      newStore = Object.assign({}, state, {
+        ...state,
+        latestUsers: action.follow,
+        followFetched: true,
+        followFetching: false
       });
       return newStore;
     case FOLLOW_RECEIVE:
@@ -672,7 +682,8 @@ function generalReducers(state = initialState, action) {
         qsosFetched: false,
         FetchingQRA: false,
         QRAFetched: false,
-        follow: {}
+        follow: null,
+        latestUsers: null,
       });
 
       return newStore;
@@ -712,7 +723,8 @@ function generalReducers(state = initialState, action) {
         qsosFetched: false,
         FetchingQRA: false,
         QRAFetched: false,
-        follow: {},
+        follow: null,
+        latestUsers: null,
         followFetching: false,
         followFetched: false
       });
@@ -741,7 +753,8 @@ function generalReducers(state = initialState, action) {
         qsosFetched: false,
         FetchingQRA: false,
         QRAFetched: false,
-        follow: {},
+        follow: null,
+        latestUsers: null,
         followFetching: false,
         followFetched: false
       });

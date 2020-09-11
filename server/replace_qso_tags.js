@@ -11,7 +11,7 @@ const prepHTML = (data, { html, head, body }) => {
 const replace_qso_tags = async (req, res) => {
   i18next.changeLanguage(req.language);
   const t = i18next.t.bind(i18next);
-  console.log(req.params);
+  
 
   if (req.params['idQSO'] !== 'empty') {
     var apigClientFactory = require('aws-api-gateway-client').default;
@@ -34,7 +34,7 @@ const replace_qso_tags = async (req, res) => {
     let body = {
       qso: req.params['idQSO']
     };
-    console.log(body);
+    
     apigClient
       .invokeApi(params, pathTemplate, method, additionalParams, body)
       .then(async function(result) {
@@ -53,7 +53,7 @@ const replace_qso_tags = async (req, res) => {
 
             return res.status(404).end();
           }
-          console.log(result.data);
+          
 
           let title;
           let image = null;
