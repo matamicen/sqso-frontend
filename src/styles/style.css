@@ -1,3 +1,6 @@
+.slick-track {
+  display: flex;
+}
 .rdw-image-modal {
   position: relative !important;
 }

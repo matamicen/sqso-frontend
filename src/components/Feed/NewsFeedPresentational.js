@@ -2,7 +2,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
-import { CellMeasurer, CellMeasurerCache } from 'react-virtualized/dist/commonjs/CellMeasurer';
+import {
+  CellMeasurer,
+  CellMeasurerCache
+} from 'react-virtualized/dist/commonjs/CellMeasurer';
 import List from 'react-virtualized/dist/commonjs/List';
 import WindowScroller from 'react-virtualized/dist/commonjs/WindowScroller';
 import '../../styles/style.css';
@@ -37,7 +40,7 @@ class NewsFeed extends React.PureComponent {
     //     .bind(this)
     this._rowRenderer = this._rowRenderer.bind(this);
     this.recalculateRowHeight = this.recalculateRowHeight.bind(this);
-    
+
     this._setListRef = this._setListRef.bind(this);
   }
 
@@ -61,7 +64,7 @@ class NewsFeed extends React.PureComponent {
   _rowRenderer({ index, isScrolling, key, parent, style }) {
     let row = this.state.list[index];
     if (row === null || row === undefined) return null;
-
+    style = { ...style, marginBottom: '1vh'};
     return (
       <CellMeasurer
         cache={this._cache}
@@ -72,7 +75,7 @@ class NewsFeed extends React.PureComponent {
       >
         {({ measure }) => (
           <div style={style} key={key}>
-            <div style={{ marginBottom: '1vh' }}>
+            {/* <div style={{ marginBottom: '1vh' }}> */}
               <FeedItem
                 key={key}
                 qso={row.qso}
@@ -81,10 +84,9 @@ class NewsFeed extends React.PureComponent {
                 source={row.source}
                 measure={measure}
                 recalculateRowHeight={this.recalculateRowHeight}
-               
                 index={index}
               />
-            </div>
+            {/* </div> */}
           </div>
         )}
       </CellMeasurer>
@@ -109,7 +111,6 @@ class NewsFeed extends React.PureComponent {
     this.setState({ _list: ref });
   };
 
-
   recalculateRowHeight(index) {
     this._cache.clearAll();
 
@@ -120,37 +121,35 @@ class NewsFeed extends React.PureComponent {
   }
   // static getDerivedStateFromProps(props, state) {
 
-    // if (props.list.length !== state.list.length || props.list !== state.list) {
-     
-    //   // this._cache.clearAll();
-    //   // this._list.recomputeRowHeights();
-    //   state._list.forceUpdateGrid();
-    // }
-    // if (props.list) return { list: props.list };
-    // //Default
-    // return null;
+  // if (props.list.length !== state.list.length || props.list !== state.list) {
+
+  //   // this._cache.clearAll();
+  //   // this._list.recomputeRowHeights();
+  //   state._list.forceUpdateGrid();
+  // }
+  // if (props.list) return { list: props.list };
+  // //Default
+  // return null;
   // }
 
   componentDidUpdate(prevProps, prevState) {
-    
     if (
-      this.props.list.length > 0 &&    
+      this.props.list.length > 0 &&
       JSON.stringify(this.props.list) !== JSON.stringify(prevProps.list)
       // ((prevProps.qsosFetched && !prevProps.fetchingQsos) ||
       //   (prevProps.QRAFetched && !prevProps.FetchingQRA))
     ) {
-      this.setState({list: this.props.list})
+      this.setState({ list: this.props.list });
       this._cache.clearAll();
       // this._list.recomputeRowHeights();
       this.state._list.forceUpdateGrid();
-      
     }
     // if (  this.state.list !== prevState.list )
     // {
     //   this._cache.clearAll();
     //   // this._list.recomputeRowHeights();
     //   this.state._list.forceUpdateGrid();
-      
+
     // }
   }
   componentWillUnmount() {
@@ -158,7 +157,6 @@ class NewsFeed extends React.PureComponent {
   }
 
   render() {
-    
     const { rowCount, overscanRowCount } = this.state;
 
     // if (
