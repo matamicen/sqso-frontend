@@ -54,24 +54,28 @@ const FeedItem = props => {
         />
       );
     case 'AD':
-      console.log(props.index);
+      
       if (props.index === 0) {
         return (
           <Fragment>
-            <div style={{textAlign: "-webkit-center"}}>
+            <div style={{ textAlign: '-webkit-center' }}>
               <Button
                 style={{ width: '90%' }}
                 positive
                 fluid
                 size="medium"
-                onClick={() => props.history.push('/explore')}
+                onClick={() => {
+                  if (process.env.REACT_APP_STAGE === 'production')
+                    window.gtag('event', 'exploreUsersButton_WEBPRD', {});
+                  props.history.push('/explore');
+                }}
               >
                 {props.t('exploreUsers.lookWhoInQSO')}
               </Button>
             </div>
           </Fragment>
         );
-      } else if (props.index === 4 || (props.index - 1) % 9 === 0)
+      } else if (props.index === 4 || (props.index ) % 16 === 0)
         return (
           <FeedItemFollow
             source={props.source}

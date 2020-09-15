@@ -349,30 +349,59 @@ class Notification extends React.Component {
           // </Link>
           // // </List.Description>
         );
+      case 70: //Marketing Notification
+        return (
+          <Feed.Content>
+            <Feed.Summary>
+              <a href={notif.url} onClick={this.handleOnClick}>
+                {notif.comment}
+              </a>
+              <Feed.Date>{moment(datetime).fromNow()}</Feed.Date>
+            </Feed.Summary>
+            <Feed.Extra text>
+              {' '}
+              <a href={notif.url} onClick={this.handleOnClick}>
+                {notif.message}
+              </a>
+            </Feed.Extra>
+          </Feed.Content>
+        );
       default:
         return null;
     }
   }
   render() {
     return (
-
-
       <Feed.Event>
         {' '}
         <Feed.Label>
-          <Link
-            to={'/' + this.props.notification.QRA}
-            onClick={this.handleOnClick}
-          >
-            <Image
-              avatar
-              src={
-                this.props.notification.qra_avatarpic
-                  ? this.props.notification.qra_avatarpic
-                  : '/emptyprofile.png'
-              }
-            />
-          </Link>
+          {this.props.notification.QRA && (
+            <Link
+              to={'/' + this.props.notification.QRA}
+              onClick={this.handleOnClick}
+            >
+              <Image
+                avatar
+                src={
+                  this.props.notification.qra_avatarpic
+                    ? this.props.notification.qra_avatarpic
+                    : '/emptyprofile.png'
+                }
+              />
+            </Link>
+          )}
+          {!this.props.notification.QRA && (
+            <a href={this.props.notification.url} onClick={this.handleOnClick}>
+              <Image
+                avatar
+                src={
+                  this.props.notification.qra_avatarpic
+                    ? this.props.notification.qra_avatarpic
+                    : '/emptyprofile.png'
+                }
+              />
+            </a>
+          )}
         </Feed.Label>
         {this.formatNotification()}{' '}
       </Feed.Event>

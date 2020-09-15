@@ -60,7 +60,7 @@ class AuthenticatedNavigation extends React.PureComponent {
 
   render() {
     const { t } = this.props;
-    
+
     return (
       <Menu fixed="top" style={{ height: '50px', display: 'flex' }}>
         {isMobile && window.location.pathname !== '/' && (
@@ -190,7 +190,12 @@ class AuthenticatedNavigation extends React.PureComponent {
               {!this.props.embeddedSession && <Dropdown.Divider />}
               {!this.props.embeddedSession && (
                 <Dropdown.Item
-                  onClick={() => this.props.history.push('/explore')}
+                  onClick={() => {
+                    if (process.env.REACT_APP_STAGE === 'production')
+                      window.gtag('event', 'exploreUsersMenu_WEBPRD', {});
+
+                    this.props.history.push('/explore');
+                  }}
                 >
                   {t('navBar.exploreUsers')}
                 </Dropdown.Item>
