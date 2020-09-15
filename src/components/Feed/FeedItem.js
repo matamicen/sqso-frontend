@@ -54,7 +54,7 @@ const FeedItem = props => {
         />
       );
     case 'AD':
-      console.log(props.index);
+      
       if (props.index === 0) {
         return (
           <Fragment>
@@ -75,7 +75,7 @@ const FeedItem = props => {
             </div>
           </Fragment>
         );
-      } else if (props.index === 4 || (props.index - 1) % 9 === 0)
+      } else if (props.index === 4 || (props.index ) % 16 === 0)
         return (
           <FeedItemFollow
             source={props.source}
