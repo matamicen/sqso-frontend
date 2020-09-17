@@ -325,11 +325,7 @@ class Notification extends React.Component {
                 : ''}
             </Feed.Extra>
           </Feed.Content>
-          // // <List.Description>
-          // <Link to={'/qso/' + notif.QSO_GUID} onClick={this.handleOnClick}>
-          //   {notif.message}
-          // </Link>
-          // // </List.Description>
+        
         );
 
       case 50: //Bio updated
@@ -364,6 +360,18 @@ class Notification extends React.Component {
                 {notif.message}
               </a>
             </Feed.Extra>
+          </Feed.Content>
+        );
+        case 71: // QSO Comment Mention
+        return (
+          <Feed.Content>
+            <Feed.Summary>
+              <Link to={'/qso/' + notif.QSO_GUID} onClick={this.handleOnClick}>
+                {t('notification.mentionedComment', { QRA: notif.QRA })}
+              </Link>
+              <Feed.Date>{moment(datetime).fromNow()}</Feed.Date>
+            </Feed.Summary>
+            <Feed.Extra text>{notif.comment}</Feed.Extra>
           </Feed.Content>
         );
       default:
