@@ -39,7 +39,7 @@ export const FOLLOW_CLEAR = 'FOLLOW_CLEAR';
 export const FOLLOW_FETCH = 'FOLLOW_FETCH';
 export const FOLLOW_REQUEST = 'FOLLOW_REQUEST';
 export const FOLLOW_RECEIVE = 'FOLLOW_RECEIVE';
-export const LATEST_USERS_RECEIVE = "LATEST_USERS_RECEIVE";
+export const LATEST_USERS_RECEIVE = 'LATEST_USERS_RECEIVE';
 export const QSO_DISLIKE = 'QSO_DISLIKE';
 export const QSO_LIKE = 'QSO_LIKE';
 export const EMBEDDED_SESSION = 'EMBEDDED_SESSION';
@@ -50,67 +50,53 @@ export function doNotificationRead(idnotif = null, token) {
         event_category: 'User',
         event_label: 'notificationRead'
       });
-    try {
-      // const cognitoUser = Auth.currentAuthenticatedUser();
-      // const currentSession = cognitoUser.signInUserSession;
-      // cognitoUser.refreshSession(
-      //   currentSession.refreshToken,
+    // try {
 
-      //   (error, session) => {
-      //     if (process.env.NODE_ENV !== 'production') {
-      //       console.log('Unable to refresh Token');
-      //       console.log(error);
-      //     } else {
-      //       Sentry.configureScope(function(scope) {
-      //         scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-      //       });
-      //       Sentry.captureException(error);
-      //     }
-      const currentSession = await Auth.currentSession();
+    //   const currentSession = await Auth.currentSession();
 
-      const token = await currentSession.getIdToken().getJwtToken();
+    //   const token = await currentSession.getIdToken().getJwtToken();
 
-      dispatch(refreshToken(token));
-      const apiName = 'superqso';
-      const path = '/qra-notification/set-read';
-      const myInit = {
-        body: {
-          idqra_notifications: idnotif
-        }, // replace this with attributes you need
-        headers: {
-          Authorization: token
-        } // OPTIONAL
-      };
-      API.post(apiName, path, myInit)
-        .then(response => {
-          if (response.body.error === 0) {
-            dispatch(doNotificationReadResponse(idnotif));
-          } else console.log(response.body.message);
-        })
-        .catch(async error => {
-          if (process.env.NODE_ENV !== 'production') {
-            console.log(error.message);
-          } else {
-            Sentry.configureScope(function(scope) {
-              scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-            });
-            Sentry.captureException(error);
-          }
-        });
-      //   }
-      // );
-    } catch (error) {
-      if (process.env.NODE_ENV !== 'production') {
-        console.log('Unable to refresh Token');
-        console.log(error);
-      } else {
-        Sentry.configureScope(function(scope) {
-          scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-        });
-        Sentry.captureException(error);
-      }
-      dispatch(doLogout());
-    }
+    //   dispatch(refreshToken(token));
+    //   const apiName = 'superqso';
+    //   const path = '/qra-notification/set-read';
+    //   const myInit = {
+    //     body: {
+    //       idqra_notifications: idnotif
+    //     }, // replace this with attributes you need
+    //     headers: {
+    //       Authorization: token
+    //     } // OPTIONAL
+    //   };
+    //   API.post(apiName, path, myInit)
+    //     .then(response => {
+    //       if (response.body.error === 0) {
+    //         dispatch(doNotificationReadResponse(idnotif));
+    //       } else console.log(response.body.message);
+    //     })
+    //     .catch(async error => {
+    //       if (process.env.NODE_ENV !== 'production') {
+    //         console.log(error.message);
+    //       } else {
+    //         Sentry.configureScope(function(scope) {
+    //           scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+    //         });
+    //         Sentry.captureException(error);
+    //       }
+    //     });
+    //   //   }
+    //   // );
+    // } catch (error) {
+    //   if (process.env.NODE_ENV !== 'production') {
+    //     console.log('Unable to refresh Token');
+    //     console.log(error);
+    //   } else {
+    //     Sentry.configureScope(function(scope) {
+    //       scope.setExtra('ENV', process.env.REACT_APP_STAGE);
+    //     });
+    //     Sentry.captureException(error);
+    //   }
+    //   dispatch(doLogout());
+    // }
   };
 }
 export function doCommentDelete(idcomment, idqso, token) {
@@ -190,23 +176,30 @@ export function doCommentAdd(idqso, comment, token, idqso_shared = null) {
         event_category: 'QSO',
         event_label: 'commentAdd'
       });
+    let m;
+    const regex = /(?:^|[ ])@([a-zA-Z0-9]+)/gm;
+
+    let message = comment.comment;
+
+    do {
+      m = regex.exec(comment.comment);
+      if (m) {
+        var oldWord = '@' + m[1];
+        comment.comment = comment.comment.replace(
+          new RegExp(oldWord, 'g'),
+          "<a href='" +
+            window.location.origin +
+            '/' +
+            m[1] +
+            "'>" +
+            m[1] +
+            '</a>'
+        );
+      }
+    } while (m);
+
     dispatch(doCommentAddResponse(idqso, comment));
     try {
-      // const cognitoUser = Auth.currentAuthenticatedUser();
-      // const currentSession = cognitoUser.signInUserSession;
-      // cognitoUser.refreshSession(
-      //   currentSession.refreshToken,
-      //   (error, session) => {
-      //     if (process.env.NODE_ENV !== 'production') {
-      //       console.log('Unable to refresh Token');
-      //       console.log(error);
-      //     } else {
-      //       Sentry.configureScope(function(scope) {
-      //         scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-      //       });
-      //       Sentry.captureException(error);
-      //     }
-      //     token = session.idToken.jwtToken;
       const currentSession = await Auth.currentSession();
 
       const token = await currentSession.getIdToken().getJwtToken();
@@ -216,7 +209,7 @@ export function doCommentAdd(idqso, comment, token, idqso_shared = null) {
       const myInit = {
         body: {
           qso: idqso_shared ? idqso_shared : idqso,
-          comment: comment.comment,
+          comment: message,
           datetime: comment.datetime
         }, // replace this with attributes you need
         headers: {
@@ -231,9 +224,9 @@ export function doCommentAdd(idqso, comment, token, idqso_shared = null) {
             );
           } else console.log(response.body.message);
         })
-        .catch(async error => {
+        .catch(error => {
           if (process.env.NODE_ENV !== 'production') {
-            console.log(error.message);
+            console.log(error);
           } else {
             Sentry.configureScope(function(scope) {
               scope.setExtra('ENV', process.env.REACT_APP_STAGE);

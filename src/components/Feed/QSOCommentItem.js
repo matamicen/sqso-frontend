@@ -1,5 +1,6 @@
 import i18n from 'i18next';
 import React from 'react';
+import ReactHtmlParser from 'react-html-parser';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -150,7 +151,8 @@ class QSOCommentItem extends React.Component {
           </Comment.Metadata>
           <Comment.Text>
             <span style={{ fontSize: '1.1rem' }}>
-              {this.props.comment.comment}
+            <div>{ReactHtmlParser(this.props.comment.comment)}</div>
+              
             </span>
           </Comment.Text>
         </Comment.Content>
