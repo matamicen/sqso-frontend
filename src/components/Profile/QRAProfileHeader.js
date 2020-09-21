@@ -5,112 +5,162 @@ import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider';
 import Flag from 'semantic-ui-react/dist/commonjs/elements/Flag';
 import Image from 'semantic-ui-react/dist/commonjs/elements/Image';
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment';
+import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
 import '../../styles/style.css';
 import { MY_COUNTRIES_DATA } from './countries.js';
-const QRAProfileHeader = props => {
-  const { t } = props;
-  let buttonText;
+class QRAProfileHeader extends React.Component {
+  state = { showModal: false };
+  close = () => this.setState({ showModal: false });
+  open = () => {
+    if (this.props.qraInfo && this.props.qraInfo.profilepic) {
+      if (process.env.REACT_APP_STAGE === 'production')
+        window.gtag('event', 'profilePicModalOpen_WEBPRD', {
 
-  if (props.followed) {
-    buttonText = t('qra.unfollow');
-  } else {
-    buttonText = props.followers.some(o => o.qra === props.qraInfo.qra)
-      ? t('qra.followToo')
-      : t('qra.follow');
-  }
+        });
+      this.setState({ showModal: true });
+    }
+  };
+  render() {
+    const { t } = this.props;
+    let buttonText;
 
-  var result = props.qraInfo
-    ? MY_COUNTRIES_DATA.filter(obj => {
-        return obj.key === props.qraInfo.country;
-      })
-    : null;
+    if (this.props.followed) {
+      buttonText = t('qra.unfollow');
+    } else {
+      buttonText = this.props.followers.some(
+        o => o.qra === this.props.qraInfo.qra
+      )
+        ? t('qra.followToo')
+        : t('qra.follow');
+    }
 
-  return (
-    <div className="profile-header">
-      <Segment>
-        <div className="inner">
-          <div className="pic">
-            <Image
-              src={
-                props.qraInfo && props.qraInfo.profilepic
-                  ? props.qraInfo.profilepic
-                  : '/emptyprofile.png'
-              }
-              centered
-              size="small"
-              circular
-            />
-          </div>
-          <div className="detail">
-            {/* <div> */}
-            <h1 style={{ display: 'inline', marginRight: '2%' }}>
-              <span className="qra">{props.qraInfo.qra}</span>
-            </h1>
-            <Flag
-              name={
-                props.qraInfo.country !== '' && props.qraInfo.country !== null
-                  ? props.qraInfo.country.toLowerCase()
-                  : null
-              }
-            />
-            <span>{result.length > 0 ? result[0].text : null}</span>
-            {/* </div> */}
-            <Divider
-              hidden
-              style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
-            />
-            <h2 style={{ margin: 'initial' }}>
-              <div className="name">
-                {props.qraInfo.firstname && props.qraInfo.firstname + ' '}
-                {props.qraInfo.lastname && props.qraInfo.lastname}
-              </div>
-            </h2>
+    var result = this.props.qraInfo
+      ? MY_COUNTRIES_DATA.filter(obj => {
+          return obj.key === this.props.qraInfo.country;
+        })
+      : null;
 
-            <div className="kpi">
-              {props.qraInfo.views_counter ? (
-                <div style={{ marginRight: '5%' }}>
-                  {t('qra.views')}: {props.qraInfo.views_counter}
-                </div>
-              ) : (
-                ''
-              )}
-              {props.qraInfo.qsos_counter ? (
-                <div style={{ marginRight: '5%' }}>
-                  {t('qra.qsos')}: {props.qraInfo.qsos_counter}
-                </div>
-              ) : (
-                ''
-              )}
-              {props.qraInfo.followers_counter ? (
-                <div style={{ marginRight: '5%' }}>
-                  {t('qra.followers')}: {props.qraInfo.followers_counter}
-                </div>
-              ) : (
-                ''
-              )}
+    return (
+      <div className="profile-header">
+        <Segment>
+          <div className="inner">
+            <div className="pic">
+              <Image
+                src={
+                  this.props.qraInfo && this.props.qraInfo.profilepic
+                    ? this.props.qraInfo.profilepic
+                    : '/emptyprofile.png'
+                }
+                onClick={() => this.open()}
+                centered
+                size="small"
+                circular
+              />
             </div>
+            <div className="detail">
+              {/* <div> */}
+              <h1 style={{ display: 'inline', marginRight: '2%' }}>
+                <span className="qra">{this.props.qraInfo.qra}</span>
+              </h1>
+              <Flag
+                name={
+                  this.props.qraInfo.country !== '' &&
+                  this.props.qraInfo.country !== null
+                    ? this.props.qraInfo.country.toLowerCase()
+                    : null
+                }
+              />
+              <span>{result.length > 0 ? result[0].text : null}</span>
+              {/* </div> */}
+              <Divider
+                hidden
+                style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
+              />
+              <h2 style={{ margin: 'initial' }}>
+                <div className="name">
+                  {this.props.qraInfo.firstname &&
+                    this.props.qraInfo.firstname + ' '}
+                  {this.props.qraInfo.lastname && this.props.qraInfo.lastname}
+                </div>
+              </h2>
 
-            <Divider hidden style={{ marginBottom: '0vh' }} />
-            <div className="follow">
-              {props.isAuthenticated &&
-                props.userFetched &&
-                props.qraInfo.qra !== props.currentQRA && (
-                  <Button
-                    size="small"
-                    // positive={!props.following.some(o => o.qra === props.qraInfo.qra)}
-                    positive={!props.followed}
-                    onClick={() => props.onClick()}
-                    style={{paddingLeft: "1em", paddingRight: "1em"}}
-                  >
-                    {buttonText}
-                  </Button>
+              <div className="kpi">
+                {this.props.qraInfo.views_counter ? (
+                  <div style={{ marginRight: '5%' }}>
+                    {t('qra.views')}: {this.props.qraInfo.views_counter}
+                  </div>
+                ) : (
+                  ''
                 )}
+                {this.props.qraInfo.qsos_counter ? (
+                  <div style={{ marginRight: '5%' }}>
+                    {t('qra.qsos')}: {this.props.qraInfo.qsos_counter}
+                  </div>
+                ) : (
+                  ''
+                )}
+                {this.props.qraInfo.followers_counter ? (
+                  <div style={{ marginRight: '5%' }}>
+                    {t('qra.followers')}: {this.props.qraInfo.followers_counter}
+                  </div>
+                ) : (
+                  ''
+                )}
+              </div>
+
+              <Divider hidden style={{ marginBottom: '0vh' }} />
+              <div className="follow">
+                {this.props.isAuthenticated &&
+                  this.props.userFetched &&
+                  this.props.qraInfo.qra !== this.props.currentQRA && (
+                    <Button
+                      size="small"
+                      // positive={!props.following.some(o => o.qra === this.props.qraInfo.qra)}
+                      positive={!this.props.followed}
+                      onClick={() => this.props.onClick()}
+                      style={{ paddingLeft: '1em', paddingRight: '1em' }}
+                    >
+                      {buttonText}
+                    </Button>
+                  )}
+              </div>
             </div>
           </div>
-        </div>
-      </Segment>
-    </div>
-  );
-};
+        </Segment>
+        <Modal
+          centered={false}
+          closeIcon={{
+            style: { top: '0.0535rem', right: '0rem' },
+            color: 'black',
+            name: 'close'
+          }}
+          open={this.state.showModal}
+          onClose={this.close}
+          // style={{ height: '90%', overflowY: 'auto' }}
+          style={{ width: 'fit-content' }}
+        >
+          <Modal.Content >
+            <Modal.Description>
+              <div style={{ padding: '1vh' }}>
+                <Image
+                  centered
+                  rounded
+                  alt={'no description'}
+                  // size="medium"
+                  src={this.props.qraInfo.profilepic}
+                  style={{
+                    objectFit: 'contain',
+                    width: '100%',
+                    margin: '0 auto'
+                  }}
+                />
+              </div>
+            </Modal.Description>
+          </Modal.Content>
+        </Modal>
+      </div>
+    );
+  }
+}
 
 export default withTranslation()(QRAProfileHeader);
