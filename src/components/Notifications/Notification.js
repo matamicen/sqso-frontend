@@ -339,11 +339,7 @@ class Notification extends React.Component {
             </Feed.Summary>
             <Feed.Extra text>{notif.comment}</Feed.Extra>
           </Feed.Content>
-          // // <List.Description>
-          // <Link to={'/' + notif.QRA} onClick={this.handleOnClick}>
-          //   {notif.message}
-          // </Link>
-          // // </List.Description>
+         
         );
       case 70: //Marketing Notification
         return (
@@ -373,6 +369,19 @@ class Notification extends React.Component {
             </Feed.Summary>
             <Feed.Extra text>{notif.comment}</Feed.Extra>
           </Feed.Content>
+        );
+        case 51: //Profile Picture Updated
+        return (
+          <Feed.Content>
+            <Feed.Summary>
+              <Link to={'/' + notif.QRA} onClick={this.handleOnClick}>
+                {t('notification.updatedProfilePic', { QRA: notif.QRA })}
+              </Link>
+              <Feed.Date>{moment(datetime).fromNow()}</Feed.Date>
+            </Feed.Summary>
+            <Feed.Extra text>{notif.comment}</Feed.Extra>
+          </Feed.Content>
+         
         );
       default:
         return null;
