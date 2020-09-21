@@ -40,7 +40,7 @@ class FeedItemFollow extends React.PureComponent {
 
   render() {
     const { t } = this.props;
-    if (this.props.follow)
+    if (this.props.follow.length > 0)
       return (
         <Segment
           raised

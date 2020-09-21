@@ -506,10 +506,15 @@ function generalReducers(state = initialState, action) {
     case FOLLOW_RECEIVE:
       newStore = Object.assign({}, state, {
         ...state,
-        follow: action.follow,
+        follow: action.follow.filter(f => {
+          return !state.userData.following.some(
+            o => o.idqra_followed === f.idqras
+          );
+        }),
         followFetched: true,
         followFetching: false
       });
+
       return newStore;
     case FOLLOW_REQUEST:
       newStore = Object.assign({}, state, {
@@ -683,7 +688,7 @@ function generalReducers(state = initialState, action) {
         FetchingQRA: false,
         QRAFetched: false,
         follow: null,
-        latestUsers: null,
+        latestUsers: null
       });
 
       return newStore;

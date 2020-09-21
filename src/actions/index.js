@@ -557,22 +557,6 @@ export function doFetchUserInfo(token) {
     try {
       const currentSession = await Auth.currentSession();
       const token = await currentSession.getIdToken().getJwtToken();
-      // const cognitoUser = await Auth.currentAuthenticatedUser();
-      // const currentSession = await cognitoUser.signInUserSession;
-      // await  cognitoUser.refreshSession(
-      //   currentSession.refreshToken,
-      //   (error, session) => {
-      //     if (process.env.NODE_ENV !== 'production') {
-      //       console.log('Unable to refresh Token');
-      //       console.log(error);
-      //     } else {
-      //       Sentry.configureScope(function(scope) {
-      //         scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-      //       });
-      //       Sentry.captureException(error);
-      //     }
-      // token = session.idToken.jwtToken;
-
       dispatch(refreshToken(token));
       dispatch(doRequestUserInfo());
       const apiName = 'superqso';
@@ -960,16 +944,8 @@ export function doFetchUserFeed(token, qra) {
 }
 export function doFollowFetch() {
   return async dispatch => {
-    if (process.env.REACT_APP_STAGE === 'production')
-      window.gtag('event', 'getRecFollow_WEBPRD', {
-        event_category: 'User',
-        event_label: 'getRecFollow'
-      });
+ 
     try {
-      // const currentSession = await Auth.currentSession();
-      // const token = await currentSession.getIdToken().getJwtToken();
-      // dispatch(refreshToken(token));
-      // dispatch(doFollowRequest());
       const apiName = 'superqso';
       const path = '/qra/recFollow';
       const myInit = {
