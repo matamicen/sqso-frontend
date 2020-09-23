@@ -177,7 +177,7 @@ export function doCommentAdd(idqso, comment, token, idqso_shared = null) {
         event_label: 'commentAdd'
       });
     let m;
-    const regex = /(?:^|[ ])@([a-zA-Z0-9]+)/gm;
+    const regex = /(?:^|[ ])@([a-zA-Z0-9]+)/;
 
     let message = comment.comment;
 
@@ -185,6 +185,7 @@ export function doCommentAdd(idqso, comment, token, idqso_shared = null) {
       m = regex.exec(comment.comment);
       if (m) {
         var oldWord = '@' + m[1];
+
         comment.comment = comment.comment.replace(
           new RegExp(oldWord, 'g'),
           "<a href='" +
@@ -192,6 +193,7 @@ export function doCommentAdd(idqso, comment, token, idqso_shared = null) {
             '/' +
             m[1] +
             "'>" +
+            '@' +
             m[1] +
             '</a>'
         );
@@ -944,7 +946,6 @@ export function doFetchUserFeed(token, qra) {
 }
 export function doFollowFetch() {
   return async dispatch => {
- 
     try {
       const apiName = 'superqso';
       const path = '/qra/recFollow';

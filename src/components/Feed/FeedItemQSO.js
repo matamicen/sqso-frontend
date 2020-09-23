@@ -14,9 +14,8 @@ import * as Actions from '../../actions';
 import '../../styles/style.css';
 import PopupToFollow from '../PopupToFollow';
 import TextToFollow from '../TextToFollow';
-import FeedAudioList from './FeedAudioList';
-import FeedImage from './FeedImage';
 import FeedLinkList from './FeedLinkList';
+import FeedMedia from './FeedMedia';
 import FeedOptionsMenu from './FeedOptionsMenu';
 import QRAs from './QRAs';
 import QSOComments from './QSOComments';
@@ -60,12 +59,13 @@ class FeedItemQSO extends React.PureComponent {
   }
   render() {
     const { t } = this.props;
-    const picList = this.props.qso.media.filter(
-      media => media.type === 'image'
-    );
-    const audioList = this.props.qso.media.filter(
-      media => media.type === 'audio'
-    );
+    
+      // const picList = this.props.qso.media.filter(
+      //   media => media.type === 'image'
+      // );
+      // const audioList = this.props.qso.media.filter(
+      //   media => media.type === 'audio'
+      // );
     const commentsCounter = '(' + this.props.qso.comments.length + ')';
 
     let text;
@@ -195,8 +195,13 @@ class FeedItemQSO extends React.PureComponent {
             qso_owner={this.props.qso.qra}
             qras={this.props.qso.qras}
           />
-
-          {picList.length > 0 && (
+          <FeedMedia
+            qso={this.props.qso}
+            measure={this.props.measure}
+            idqso={this.props.qso.idqsos}
+            qso_owner={this.props.qso.qra}
+          />
+          {/* {picList.length > 0 && (
             <Fragment>
               <Divider
                 hidden
@@ -223,7 +228,7 @@ class FeedItemQSO extends React.PureComponent {
                 recalculateRowHeight={this.recalculateRowHeight}
               />
             </Fragment>
-          )}
+          )} */}
           {this.props.qso.links && (
             <FeedLinkList links={this.props.qso.links} />
           )}
