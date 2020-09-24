@@ -5,17 +5,23 @@ class FeedVideo extends React.PureComponent {
   render() {
     return (
       <div>
-        {/* <video controls>
-          <source src={this.props.media.url} type="video/mp4" preload="none" onLoad={()=> this.props.measure()}/>
-          {/* <source src="movie.ogg" type="video/ogg" /> */}
-        {/* Your browser does not support the video tag. */}
-        {/* </video>  */}
         <ReactPlayer
+          ref={player => {
+            this.player = player;
+          }}
           url={this.props.media.url}
+          config={{
+            file: {
+              attributes: {
+                crossOrigin: 'anonymous'
+              }
+            }
+          }}
           controls
           light
-          // width="100%"
-          // height="100%"
+          onLoadedData={() => this.props.measure()}
+          width="100%"
+          height="100%"
         />
       </div>
     );
