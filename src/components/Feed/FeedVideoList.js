@@ -9,7 +9,7 @@ class FeedVideoList extends React.Component {
       return (
         <Item.Group style={{ margin: "0px" }}>
           {this.props.mediaList.map((m, i) => (
-            <Item key={i} style={{ margin: "6px", display: "block", textAlign: "-webkit-center" }}>
+            <Item key={i} >
               <FeedVideo
                 key={i}
                 index={i}
