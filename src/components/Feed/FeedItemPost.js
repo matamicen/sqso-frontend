@@ -171,6 +171,7 @@ class FeedItemPost extends React.PureComponent {
             measure={this.props.measure}
             idqso={this.props.qso.idqsos}
             qso_owner={this.props.qso.qra}
+            recalculateRowHeight={this.recalculateRowHeight}
           />
          
           {this.props.qso.links && (

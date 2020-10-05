@@ -200,35 +200,9 @@ class FeedItemQSO extends React.PureComponent {
             measure={this.props.measure}
             idqso={this.props.qso.idqsos}
             qso_owner={this.props.qso.qra}
+            recalculateRowHeight={this.recalculateRowHeight}
           />
-          {/* {picList.length > 0 && (
-            <Fragment>
-              <Divider
-                hidden
-                style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
-              />
-              <FeedImage
-                img={picList}
-                measure={this.props.measure}
-                idqso={this.props.qso.idqsos}
-                qso_owner={this.props.qso.qra}
-              />
-            </Fragment>
-          )}
-          {audioList.length > 0 && (
-            <Fragment>
-              <Divider
-                hidden
-                style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
-              />
-              <FeedAudioList
-                mediaList={audioList}
-                idqso={this.props.qso.idqsos}
-                qso_owner={this.props.qso.qra}
-                recalculateRowHeight={this.recalculateRowHeight}
-              />
-            </Fragment>
-          )} */}
+
           {this.props.qso.links && (
             <FeedLinkList links={this.props.qso.links} />
           )}

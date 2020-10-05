@@ -11,6 +11,7 @@ import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
 import Image from 'semantic-ui-react/dist/commonjs/elements/Image';
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment';
 import * as Actions from '../../actions';
+import '../../styles/style.css';
 import PopupToFollow from '../PopupToFollow';
 import TextToFollow from '../TextToFollow';
 import FeedMedia from './FeedMedia';
@@ -266,23 +267,9 @@ class FeedItemRepost extends React.Component {
             measure={this.props.measure}
             idqso={this.props.qso.idqsos}
             qso_owner={this.props.qso.qra}
+            recalculateRowHeight={this.recalculateRowHeight}
           />
-            {/* {picList.length > 0 && (
-              <FeedImage
-                img={picList}
-                measure={this.props.measure}
-                idqso={this.props.qso.idqsos}
-                qso_owner={this.props.qso.original[0].qra}
-              />
-            )}
-            {audioList.length > 0 && (
-              <FeedAudioList
-                mediaList={audioList}
-                idqso={this.props.qso.idqsos}
-                qso_owner={this.props.qso.original[0].qra}
-                recalculateRowHeight={this.recalculateRowHeight}
-              />
-            )} */}
+          
           </Segment>
 
           <Divider

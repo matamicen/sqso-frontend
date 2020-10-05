@@ -85,7 +85,7 @@ class FeedAudio extends React.Component {
                 size="small"
                 circular
                 icon="play"
-                onClick={this.onClick}
+                onClick={()=>this.onClick()}
                 style={{ background: '#8BD8BD', color: '#243665' }}
               />
               <span>

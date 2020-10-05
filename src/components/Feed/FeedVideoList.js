@@ -15,7 +15,6 @@ class FeedVideoList extends React.Component {
                 index={i}
                 media={m}
                 measure={() => {
-                  console.log('measure');
                   this.props.measure();
                 }}
                 qso_owner={this.props.qso_owner}
