@@ -177,7 +177,7 @@ export function doCommentAdd(idqso, comment, token, idqso_shared = null) {
         event_label: 'commentAdd'
       });
     let m;
-    const regex = /(?:^|[ ])@([a-zA-Z0-9]+)/gm;
+    const regex = /(?:^|[ ])@([a-zA-Z0-9]+)/;
 
     let message = comment.comment;
 
@@ -185,6 +185,7 @@ export function doCommentAdd(idqso, comment, token, idqso_shared = null) {
       m = regex.exec(comment.comment);
       if (m) {
         var oldWord = '@' + m[1];
+
         comment.comment = comment.comment.replace(
           new RegExp(oldWord, 'g'),
           "<a href='" +
@@ -192,6 +193,7 @@ export function doCommentAdd(idqso, comment, token, idqso_shared = null) {
             '/' +
             m[1] +
             "'>" +
+            '@' +
             m[1] +
             '</a>'
         );
@@ -557,22 +559,6 @@ export function doFetchUserInfo(token) {
     try {
       const currentSession = await Auth.currentSession();
       const token = await currentSession.getIdToken().getJwtToken();
-      // const cognitoUser = await Auth.currentAuthenticatedUser();
-      // const currentSession = await cognitoUser.signInUserSession;
-      // await  cognitoUser.refreshSession(
-      //   currentSession.refreshToken,
-      //   (error, session) => {
-      //     if (process.env.NODE_ENV !== 'production') {
-      //       console.log('Unable to refresh Token');
-      //       console.log(error);
-      //     } else {
-      //       Sentry.configureScope(function(scope) {
-      //         scope.setExtra('ENV', process.env.REACT_APP_STAGE);
-      //       });
-      //       Sentry.captureException(error);
-      //     }
-      // token = session.idToken.jwtToken;
-
       dispatch(refreshToken(token));
       dispatch(doRequestUserInfo());
       const apiName = 'superqso';
@@ -960,16 +946,7 @@ export function doFetchUserFeed(token, qra) {
 }
 export function doFollowFetch() {
   return async dispatch => {
-    if (process.env.REACT_APP_STAGE === 'production')
-      window.gtag('event', 'getRecFollow_WEBPRD', {
-        event_category: 'User',
-        event_label: 'getRecFollow'
-      });
     try {
-      // const currentSession = await Auth.currentSession();
-      // const token = await currentSession.getIdToken().getJwtToken();
-      // dispatch(refreshToken(token));
-      // dispatch(doFollowRequest());
       const apiName = 'superqso';
       const path = '/qra/recFollow';
       const myInit = {

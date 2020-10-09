@@ -12,8 +12,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import * as Actions from '../actions';
 import AwsExports from '../aws-exports';
-// const Tutorials = lazy(() => import('./help/tutorials'));
-// import QRAProfileContainer from './Profile/QRAProfileContainer';
+
 
 const ChangePassword = lazy(() => import('./Auth/ChangePassword'));
 const ForgotPassword = lazy(() => import('./Auth/ForgotPassword'));

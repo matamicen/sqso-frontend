@@ -5,25 +5,18 @@ import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
 import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider';
-import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
 import Image from 'semantic-ui-react/dist/commonjs/elements/Image';
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment';
 import * as Actions from '../../actions';
 import '../../styles/style.css';
 import PopupToFollow from '../PopupToFollow';
 import TextToFollow from '../TextToFollow';
-import FeedAudioList from './FeedAudioList';
-import FeedImage from './FeedImage';
 import FeedLinkList from './FeedLinkList';
+import FeedMedia from './FeedMedia';
 import FeedOptionsMenu from './FeedOptionsMenu';
+import FeedSocialButtons from './FeedSocialButtons';
 import QRAs from './QRAs';
-import QSOComments from './QSOComments';
-import QSOLikeButton from './QSOLikeButton';
-import QSOLikeText from './QSOLikeText';
-import QSORePostButton from './QSORePostButton';
-import QSOShareButtons from './QSOShareButtons';
 import './style.css';
 class FeedItemPost extends React.PureComponent {
   constructor() {
@@ -64,28 +57,28 @@ class FeedItemPost extends React.PureComponent {
   render() {
     const { t } = this.props;
 
-    let picList = this.props.qso.media.filter(media => media.type === 'image');
-    let audioList = this.props.qso.media.filter(
-      media => media.type === 'audio'
-    );
+    // let picList = this.props.qso.media.filter(media => media.type === 'image');
+    // let audioList = this.props.qso.media.filter(
+    //   media => media.type === 'audio'
+    // );
 
-    const commentsCounter = '(' + this.props.qso.comments.length + ')';
+    // const commentsCounter = '(' + this.props.qso.comments.length + ')';
 
     let text;
-    let shareText;
+    // let shareText;
 
     switch (this.props.qso.type) {
       case 'POST':
         text = t('qso.createdPost');
-        shareText = t('qso.checkOutPost');
+        // shareText = t('qso.checkOutPost');
         break;
       case 'QAP':
         text = t('qso.createdQAP');
-        shareText = t('qso.checkOutQAP');
+        // shareText = t('qso.checkOutQAP');
         break;
       case 'FLDDAY':
         text = t('qso.createdFLDDAY');
-        shareText = t('qso.checkOutFLDDAY');
+        // shareText = t('qso.checkOutFLDDAY');
         break;
       default:
     }
@@ -173,34 +166,14 @@ class FeedItemPost extends React.PureComponent {
               />
             </Fragment>
           )}
-          {picList.length > 0 && (
-            <Fragment>
-              <Divider
-                hidden
-                style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
-              />
-              <FeedImage
-                img={picList}
-                measure={this.props.measure}
-                idqso={this.props.qso.idqsos}
-                qso_owner={this.props.qso.qra}
-              />
-            </Fragment>
-          )}
-          {audioList.length > 0 && (
-            <Fragment>
-              <Divider
-                hidden
-                style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
-              />
-              <FeedAudioList
-                mediaList={audioList}
-                idqso={this.props.qso.idqsos}
-                qso_owner={this.props.qso.qra}
-                recalculateRowHeight={this.recalculateRowHeight}
-              />
-            </Fragment>
-          )}
+          <FeedMedia
+            qso={this.props.qso}
+            measure={this.props.measure}
+            idqso={this.props.qso.idqsos}
+            qso_owner={this.props.qso.qra}
+            recalculateRowHeight={this.recalculateRowHeight}
+          />
+         
           {this.props.qso.links && (
             <FeedLinkList links={this.props.qso.links} />
           )}
@@ -208,38 +181,16 @@ class FeedItemPost extends React.PureComponent {
             hidden
             style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
           />
-          <QSOLikeText
+           <FeedSocialButtons
             qso={this.props.qso}
-            likes={this.state.likes}
             recalculateRowHeight={this.recalculateRowHeight}
+            measure={this.props.measure}
+            comments={this.props.comments}
+            idqso={this.props.qso.idqsos}
+            index={this.props.index}
+            qso_owner={this.props.qso.qra}
           />
-          <Button.Group fluid basic>
-            <QSOLikeButton
-              qso={this.props.qso}
-              recalculateRowHeight={this.recalculateRowHeight}
-            />
-            <Button onClick={() => this.setState({ showComments: true })}>
-              <div>
-                <Icon name="comment outline" />{' '}
-                {this.props.qso.comments.length > 0 && commentsCounter}
-              </div>
-            </Button>
-            <QSORePostButton qso={this.props.qso} />
-            <QSOShareButtons
-              idqso={this.props.qso.GUID_URL}
-              title={shareText}
-            />
-          </Button.Group>
-          {this.state.showComments && (
-            <QSOComments
-              showComments={this.state.showComments}
-              doClose={() => this.setState({ showComments: false })}
-              index={this.props.index}
-              qso={this.props.qso}
-              comments={this.props.comments}
-              recalculateRowHeight={this.recalculateRowHeight}
-            />
-          )}
+         
         </Segment>
         {/* <Confirm
           size="mini"
