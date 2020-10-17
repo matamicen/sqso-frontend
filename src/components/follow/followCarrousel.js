@@ -95,7 +95,10 @@ const FollowCarrousel = ({
   followers,
   doFollow,
   currentQRA
-}) => (
+}) => 
+  {
+    if (follow.length > 1) 
+    return (
   <Segment>
     <Header as="h3" attached="top" textAlign="left">
       {t('navBar.whoToFollow')}
@@ -201,6 +204,9 @@ const FollowCarrousel = ({
         else return null;
       })}
     </Slider>
-  </Segment>
-);
+  </Segment>)
+  else return null;
+}
+
+
 export default withTranslation()(FollowCarrousel);
