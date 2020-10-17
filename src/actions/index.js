@@ -460,7 +460,7 @@ export function doReceiveUserInfo(
   following = null,
   qra = null,
   notifications = null
-) {
+) {  
   return {
     type: RECEIVE_USERINFO,
     followers: followers,
@@ -570,7 +570,7 @@ export function doFetchUserInfo(token) {
         } // OPTIONAL
       };
       API.get(apiName, path, myInit)
-        .then(response => {
+        .then(response => {          
           if (response.body.error === 0) {
             dispatch(
               doReceiveUserInfo(

@@ -425,11 +425,11 @@ function generalReducers(state = initialState, action) {
       };
       newStore = Object.assign({}, state, {
         ...state,
-        follow: state.follow.filter(f => {
+        follow: state.follow?state.follow.filter(f => {
           return !action.following.some(
             o => o.idqra_followed === f.idqras
           );
-        }),
+        }): [],
         userData: userInfo
       });
       return newStore;
