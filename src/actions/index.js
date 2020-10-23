@@ -188,14 +188,9 @@ export function doCommentAdd(idqso, comment, token, idqso_shared = null) {
 
         comment.comment = comment.comment.replace(
           new RegExp(oldWord, 'g'),
-          "<a href='" +
-            window.location.origin +
-            '/' +
+          "<MENTION>" +  '@' +           
             m[1] +
-            "'>" +
-            '@' +
-            m[1] +
-            '</a>'
+            "</MENTION>"
         );
       }
     } while (m);
