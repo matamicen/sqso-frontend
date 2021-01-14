@@ -11,6 +11,8 @@ import Comment from 'semantic-ui-react/dist/commonjs/views/Comment';
 import Item from 'semantic-ui-react/dist/commonjs/views/Item';
 import * as Actions from '../../actions';
 import FeedOptionsMenu from './FeedOptionsMenu';
+
+
 class QSOCommentItem extends React.Component {
   constructor() {
     super();
@@ -44,7 +46,37 @@ class QSOCommentItem extends React.Component {
   };
   render() {
     const { t } = this.props;
+    let withTags;
+    const regex = /<(MENTION)>.*<\/\1>/;
 
+    let message = this.props.comment.comment;
+
+    do {
+      withTags = regex.exec(message);
+      if (withTags) {
+        let qra;
+        const regex2 = />@([a-zA-Z0-9]+)/;
+    
+        let message2 =      withTags[0];
+        qra = regex2.exec(message2);    
+
+        var oldWord = withTags[0];
+
+        message = message.replace(
+          new RegExp(oldWord, 'g'),
+          "<a href='" +
+          window.location.origin +
+          '/' +
+          qra[1] +
+          "'>" +
+          '@' +
+          qra[1] +
+          '</a>'
+        );
+        console.log(message)
+      }
+    } while (withTags);
+    console.log(message)
     var date = new Date(this.props.comment.datetime);
     var timestamp = '';
     if (
@@ -151,7 +183,7 @@ class QSOCommentItem extends React.Component {
           </Comment.Metadata>
           <Comment.Text>
             <span style={{ fontSize: '1.1rem' }}>
-            <div>{ReactHtmlParser(this.props.comment.comment)}</div>
+            <div>{ReactHtmlParser(message)}</div>
               
             </span>
           </Comment.Text>
