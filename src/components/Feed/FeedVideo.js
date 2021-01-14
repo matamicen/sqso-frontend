@@ -41,6 +41,7 @@ export const FeedVideo = props => {
       >
         <source src={props.media.url} type="video/mp4" />
       </video>
+      <p style={{ textAlign: 'center' }}>{props.media.description}</p>
     </div>
   );
 };
