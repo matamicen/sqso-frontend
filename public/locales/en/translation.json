@@ -77,6 +77,7 @@
     "loginAgain": "Your password has been changed. Please login again!",
     "loginToSeeField": "Please login to see this field",
     "loginToPerformAction": "Please Login to perform this action",
+    "PendingValidationConfirmMessage": "This action cannot be performed since your user was not validated yet. Please send a copy of your licence to info@superqso.com. This approval may take 24hs",
     "passwordChangedContent": "Your password has been changed. Please login again!",
     "years13Restriction": "You should be older than 13 years",
     "signupNotAvailable": "SignUp is no available yet. Please wait a few days!",

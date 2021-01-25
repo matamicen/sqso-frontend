@@ -12,6 +12,7 @@ class FeedItemFollow extends React.PureComponent {
   state = {
     followed: [],
     openLogin: false,
+    openUserNotValidated: false,
     follow: null
   };
 
@@ -21,7 +22,9 @@ class FeedItemFollow extends React.PureComponent {
      
   }
   doFollow = param => {
-    if (this.props.isAuthenticated) {
+    if (!this.props.isAuthenticated) this.setState({ openLogin: true });
+    else if (this.props.pendingVerification) this.setState({openUserNotValidated: true})
+    else {
       if (process.env.REACT_APP_STAGE === 'production')
         window.gtag('event', 'qraFollowRecommended_WEBPRD', {
           event_category: 'User',
@@ -29,7 +32,7 @@ class FeedItemFollow extends React.PureComponent {
         });
       this.setState({ followed: [...this.state.followed, param] });
       this.props.actions.doFollowQRA(this.props.token, param);
-    } else this.setState({ openLogin: true });
+    }
   };
   // doUnfollow = param => {
   //   if (this.props.isAuthenticated) {
@@ -70,6 +73,17 @@ class FeedItemFollow extends React.PureComponent {
             confirmButton={t('auth.login')}
             content={t('auth.loginToPerformAction')}
           />
+          <Confirm
+          size="mini"
+          open={this.state.openUserNotValidated}
+          onCancel={() => this.setState({ openUserNotValidated: false })}
+          onConfirm={() =>
+            this.setState({ openUserNotValidated: false })
+          }
+          // cancelButton={t('global.cancel')}
+          confirmButton={t('global.ok')}
+          content={t('auth.PendingValidationConfirmMessage')}
+        />
         </Segment>
       );
     else return null;
@@ -84,6 +98,7 @@ const mapStateToProps = (state, ownProps) => ({
   following: state.userData.following,
   followers: state.userData.followers,
   isAuthenticated: state.userData.isAuthenticated,
+  pendingVerification: state.userData.qra.pendingVerification,
   token: state.userData.token
 });
 const mapDispatchToProps = dispatch => ({

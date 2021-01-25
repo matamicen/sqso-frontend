@@ -77,6 +77,7 @@
     "loginAgain": "La contraseña fue cambiada. Por favor ingresar nuevamente!",
     "loginToSeeField": "Debe ingresar para ver este campo",
     "loginToPerformAction": "Debe ingresar para realizar esta acción",
+    "PendingValidationConfirmMessage": "No se puede realizar esta acción ya que su usuario todavía no fue validado. Por favor envie una constancia de la licencia a  info@superqso.com. Este tramite puede demorar 24hs",
     "passwordChangedContent": "La contraseña fue cambiada. Por favor ingresar nuevamente!",
     "years13Restriction": "Debe ser mayor de 13 años",
     "signupNotAvailable": "Registración no disponible todavía. Espere unos dias!",

@@ -18,6 +18,7 @@ class QSOComments extends React.PureComponent {
       comments: [],
       comment: '',
       openLogin: false,
+      openUserNotValidated: false,
       qso: { comments: [] }
     };
 
@@ -36,7 +37,9 @@ class QSOComments extends React.PureComponent {
   }
 
   handleAddComment = e => {
+    
     if (!this.props.isAuthenticated) this.setState({ openLogin: true });
+    else if (this.props.pendingVerification) this.setState({openUserNotValidated: true})
     else {
       // e.preventDefault();
       if (this.state.comment === '') return;
@@ -168,6 +171,17 @@ class QSOComments extends React.PureComponent {
           confirmButton={t('auth.login')}
           content={t('auth.loginToPerformAction')}
         />
+        <Confirm
+          size="mini"
+          open={this.state.openUserNotValidated}
+          onCancel={() => this.setState({ openUserNotValidated: false })}
+          onConfirm={() =>
+            this.setState({ openUserNotValidated: false })
+          }
+          // cancelButton={t('global.cancel')}
+          confirmButton={t('global.ok')}
+          content={t('auth.PendingValidationConfirmMessage')}
+        />
       </Fragment>
     );
   }
@@ -175,7 +189,7 @@ class QSOComments extends React.PureComponent {
 
 const mapStateToProps = state => ({
   qsos: state.qsos,
-  
+  pendingVerification: state.userData.qra.pendingVerification,
   token: state.userData.token,
   currentQRA: state.userData.currentQRA,
   firstname: state.userData.qra.firstname,
