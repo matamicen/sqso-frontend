@@ -13,6 +13,7 @@ class QSORePostButton extends React.Component {
     super()
     this.state = {
       showConfirmationRequest: false,
+      openUserNotValidated: false,
       openLogin: false
     }
   }
@@ -29,10 +30,10 @@ class QSORePostButton extends React.Component {
   }
 
   openConfirmationRequest () {
-    if (this.props.isAuthenticated) {
+    if (!this.props.isAuthenticated) this.setState({ openLogin: true });
+    else if (this.props.pendingVerification) this.setState({openUserNotValidated: true})
+    else {
       this.setState({ showConfirmationRequest: true })
-    } else {
-      this.setState({ openLogin: true })
     }
   }
 
@@ -64,6 +65,17 @@ s
           cancelButton={t('global.cancel')}
           confirmButton={t('auth.login')}
           content={t('auth.loginToPerformAction')}
+        />
+        <Confirm
+          size="mini"
+          open={this.state.openUserNotValidated}
+          onCancel={() => this.setState({ openUserNotValidated: false })}
+          onConfirm={() =>
+            this.setState({ openUserNotValidated: false })
+          }
+          // cancelButton={t('global.cancel')}
+          confirmButton={t('global.ok')}
+          content={t('auth.PendingValidationConfirmMessage')}
         />
         <Confirm
           size="mini"
@@ -103,6 +115,7 @@ QSORePostButton.propTypes = {
 }
 const mapStateToProps = state => ({
   token: state.userData.token,
+  pendingVerification: state.userData.qra.pendingVerification,
   isAuthenticated: state.userData.isAuthenticated
 })
 const mapDispatchToProps = dispatch => ({

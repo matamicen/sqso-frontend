@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { Modal } from 'semantic-ui-react';
 import Loader from 'semantic-ui-react/dist/commonjs/elements/Loader';
+import Confirm from 'semantic-ui-react/dist/commonjs/addons/Confirm';
 import Dimmer from 'semantic-ui-react/dist/commonjs/modules/Dimmer';
 import * as Actions from '../../actions';
 import '../../styles/style.css';
@@ -17,6 +18,7 @@ class QRAProfileContainer extends React.PureComponent {
       loaderActive: true,
       adActive: false,
       adClosed: false,
+      openUserNotValidated: false,
       tab: null,
       followed: null,
       qra: null,
@@ -186,7 +188,8 @@ class QRAProfileContainer extends React.PureComponent {
   }
   handleButtonClick() {
     if (!this.props.token) return null;
-    if (
+    if (this.props.pendingVerification) this.setState({openUserNotValidated: true})
+    else if (
       // !this.props.following.some(o => o.qra === this.props.match.params.qra)
       !this.followed
     ) {
@@ -276,6 +279,17 @@ class QRAProfileContainer extends React.PureComponent {
             QRAFetched={this.props.QRAFetched}
           />
         )}
+          <Confirm
+          size="mini"
+          open={this.state.openUserNotValidated}
+          onCancel={() => this.setState({ openUserNotValidated: false })}
+          onConfirm={() =>
+            this.setState({ openUserNotValidated: false })
+          }
+          // cancelButton={t('global.cancel')}
+          confirmButton={t('global.ok')}
+          content={t('auth.PendingValidationConfirmMessage')}
+        />
       </Fragment>
     );
   }
@@ -293,7 +307,7 @@ const mapStateToProps = (state, ownProps) => ({
   qra: state.qra,
   qraUserData: state.userData.qra,
   fetchingUser: state.userData.fetchingUser,
-
+  pendingVerification: state.userData.qra.pendingVerification,
   qraError: state.qraError
 });
 const mapDispatchToProps = dispatch => ({

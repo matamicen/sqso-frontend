@@ -192,20 +192,7 @@ class FeedItemPost extends React.PureComponent {
           />
          
         </Segment>
-        {/* <Confirm
-          size="mini"
-          open={this.state.openLogin}
-          onCancel={() => this.setState({ openLogin: false })}
-          onConfirm={() =>
-            this.props.history.push({
-              pathname: '/login',
-              state: { from: this.props.location.pathname }
-            })
-          }
-          cancelButton={t('global.cancel')}
-          confirmButton={t('auth.login')}
-          content={t('auth.loginToPerformAction')}
-        /> */}
+
       </Fragment>
     );
   }

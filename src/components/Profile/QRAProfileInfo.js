@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import Form from 'semantic-ui-react/dist/commonjs/collections/Form';
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment';
+import Confirm from 'semantic-ui-react/dist/commonjs/addons/Confirm';
 import * as Actions from '../../actions';
 import '../../styles/style.css';
 import QRAProfileInfoEdit from './QRAProfileInfoEdit';
@@ -19,6 +20,7 @@ class QRAProfileInfo extends React.Component {
     super(props);
 
     this.state = {
+      openUserNotValidated: false,
       qra: {
         firstname: this.props.qraInfo.firstname,
         lastname: this.props.qraInfo.lastname,
@@ -100,7 +102,11 @@ class QRAProfileInfo extends React.Component {
                     positive
                     fluid
                     size="mini"
-                    onClick={() => this.setState({ edit: true })}
+                    onClick={() => {
+                      if (this.props.pendingVerification)
+                        this.setState({ openUserNotValidated: true });
+                      else this.setState({ edit: true });
+                    }}
                   >
                     {t('qra.editInfo')}
                   </Button>
@@ -125,7 +131,6 @@ class QRAProfileInfo extends React.Component {
             <Form.Input
               name="email"
               label={t('qra.email')}
-              
               transparent
               value={email ? email : ''}
             />
@@ -145,7 +150,6 @@ class QRAProfileInfo extends React.Component {
             <Form.Input
               name="address"
               label={t('qra.addressLine1')}
-
               transparent
               value={address ? address : ''}
             />
@@ -153,7 +157,6 @@ class QRAProfileInfo extends React.Component {
             <Form.Input
               name="address2"
               label={t('qra.addressLine2')}
-              
               transparent
               value={address2 ? address2 : ''}
             />
@@ -228,7 +231,6 @@ class QRAProfileInfo extends React.Component {
             <Form.Input
               name="qslinfo"
               label={t('qra.qsoInfo')}
-              
               transparent
               value={qslinfo ? qslinfo : ''}
             />
@@ -242,6 +244,15 @@ class QRAProfileInfo extends React.Component {
             closeModal={() => this.setState({ edit: false })}
           />
         )}
+        <Confirm
+          size="mini"
+          open={this.state.openUserNotValidated}
+          onCancel={() => this.setState({ openUserNotValidated: false })}
+          onConfirm={() => this.setState({ openUserNotValidated: false })}
+          // cancelButton={t('global.cancel')}
+          confirmButton={t('global.ok')}
+          content={t('auth.PendingValidationConfirmMessage')}
+        />
       </Fragment>
     );
   }
@@ -250,6 +261,7 @@ const mapStateToProps = (state, ownProps) => ({
   //state: state,
   currentQRA: state.userData.currentQRA,
   isAuthenticated: state.userData.isAuthenticated,
+  pendingVerification: state.userData.qra.pendingVerification,
   token: state.userData.token
 });
 const mapDispatchToProps = dispatch => ({
