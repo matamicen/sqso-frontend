@@ -134,6 +134,7 @@
     "followOther": "{{QRA}} started to follow {{QRA_REF}}",
     "commentedQSO": "{{QRA}} commented a Post",
     "mentionedComment": "{{QRA}} mentioned you in his comment",    
+    "userApproved": "Your user has been validated and approved. You can start using SuperQSO ! :)",
     "updatedBio": "{{QRA}} updated his Biography",
     "updatedProfilePic":  "{{QRA}} updated his Profile Pic",
     "workedQSO": "{{QRA}} worked a QSO",
