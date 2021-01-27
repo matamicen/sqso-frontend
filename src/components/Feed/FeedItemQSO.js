@@ -86,7 +86,11 @@ class FeedItemQSO extends React.PureComponent {
         break;
       default:
     }
-    var date = new Date(this.props.qso.datetime);
+    var date = new Date(
+      this.props.qso.realDateTime
+        ? this.props.qso.realDateTime
+        : this.props.qso.datetime
+    );
 
     return (
       <Fragment>
