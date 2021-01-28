@@ -56,7 +56,7 @@ class FeedItemRepost extends React.Component {
   }
   render() {
     const { t } = this.props;
-  
+
     const commentsCounter = '(' + this.props.qso.comments.length + ')';
 
     let text;
@@ -84,8 +84,16 @@ class FeedItemRepost extends React.Component {
         break;
       default:
     }
-    var repostDate = new Date(this.props.qso.datetime);
-    var date = new Date(this.props.qso.original[0].datetime);
+    var repostDate = new Date(
+      this.props.qso.realDateTime
+        ? this.props.qso.realDateTime
+        : this.props.qso.datetime
+    );
+    var date = new Date(
+      this.props.qso.original[0].realDateTime
+        ? this.props.qso.original[0].realDateTime
+        : this.props.qso.original[0].datetime
+    );
     return (
       <Fragment>
         <Segment raised>
@@ -262,14 +270,13 @@ class FeedItemRepost extends React.Component {
                 />
               </Fragment>
             )}
-                      <FeedMedia
-            qso={this.props.qso}
-            measure={this.props.measure}
-            idqso={this.props.qso.idqsos}
-            qso_owner={this.props.qso.qra}
-            recalculateRowHeight={this.recalculateRowHeight}
-          />
-          
+            <FeedMedia
+              qso={this.props.qso}
+              measure={this.props.measure}
+              idqso={this.props.qso.idqsos}
+              qso_owner={this.props.qso.qra}
+              recalculateRowHeight={this.recalculateRowHeight}
+            />
           </Segment>
 
           <Divider
@@ -308,7 +315,6 @@ class FeedItemRepost extends React.Component {
             />
           )}
         </Segment>
-   
       </Fragment>
     );
   }
