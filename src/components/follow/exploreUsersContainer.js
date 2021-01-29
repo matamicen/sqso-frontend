@@ -9,7 +9,7 @@ import ExploreUsers from './exploreUsersPresentational';
 class exploreUsersContainer extends React.PureComponent {
   constructor() {
     super();
-    this.state = { openLogin: false, followed: [] };
+    this.state = { openLogin: false, openUserNotValidated: false,  followed: [] };
   }
   componentDidMount() {
     // if (
@@ -21,7 +21,9 @@ class exploreUsersContainer extends React.PureComponent {
     // }
   }
   doFollow = param => {
-    if (this.props.isAuthenticated) {
+    if (!this.props.isAuthenticated) this.setState({ openLogin: true });
+    else if (this.props.pendingVerification) this.setState({openUserNotValidated: true})
+    else {    
       if (process.env.REACT_APP_STAGE === 'production')
         window.gtag('event', 'qraFollowRecommended_WEBPRD', {
           event_category: 'User',
@@ -29,7 +31,7 @@ class exploreUsersContainer extends React.PureComponent {
         });
       this.setState({ followed: [...this.state.followed, param] });
       this.props.actions.doFollowQRA(this.props.token, param);
-    } else this.setState({ openLogin: true });
+      }
   };
   // doUnfollow = param => {
   //   if (this.props.isAuthenticated)
@@ -64,6 +66,17 @@ class exploreUsersContainer extends React.PureComponent {
             confirmButton={t('auth.login')}
             content={t('auth.loginToPerformAction')}
           />
+          <Confirm
+          size="mini"
+          open={this.state.openUserNotValidated}
+          onCancel={() => this.setState({ openUserNotValidated: false })}
+          onConfirm={() =>
+            this.setState({ openUserNotValidated: false })
+          }
+          // cancelButton={t('global.cancel')}
+          confirmButton={t('global.ok')}
+          content={t('auth.PendingValidationConfirmMessage')}
+        />
         </Fragment>
       );
     else return null;
@@ -77,6 +90,7 @@ const mapStateToProps = (state, ownProps) => ({
   followers: state.userData.followers,
   currentQRA: state.userData.currentQRA,
   isAuthenticated: state.userData.isAuthenticated,
+  pendingVerification: state.userData.qra.pendingVerification,
   token: state.userData.token
 });
 const mapDispatchToProps = dispatch => ({

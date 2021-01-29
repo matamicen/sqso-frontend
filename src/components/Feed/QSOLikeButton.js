@@ -21,6 +21,7 @@ class QSOLikeButton extends React.Component {
       liked: null,
       likeCounter: 0,
       openLogin: false,
+      openUserNotValidated: false,
       likes: [],
       idqra: null
     };
@@ -246,6 +247,7 @@ class QSOLikeButton extends React.Component {
 
   handleOnLike() {
     if (!this.props.isAuthenticated) this.setState({ openLogin: true });
+    else if (this.props.pendingVerification) this.setState({openUserNotValidated: true})
     else {
       if (!this.liked) {
         this.likeCounter++;
@@ -314,6 +316,17 @@ class QSOLikeButton extends React.Component {
           confirmButton={t('auth.login')}
           content={t('auth.loginToPerformAction')}
         />
+        <Confirm
+          size="mini"
+          open={this.state.openUserNotValidated}
+          onCancel={() => this.setState({ openUserNotValidated: false })}
+          onConfirm={() =>
+            this.setState({ openUserNotValidated: false })
+          }
+          // cancelButton={t('global.cancel')}
+          confirmButton={t('global.ok')}
+          content={t('auth.PendingValidationConfirmMessage')}
+        />
         <Button icon active={false} onClick={() => this.handleOnLike()}>
           <Icon name={icon} /> {this.likeCounter}{' '}
         </Button>
@@ -326,6 +339,7 @@ const mapStateToProps = state => ({
   isAuthenticated: state.userData.isAuthenticated,
   currentQRA: state.userData.currentQRA,
   userData: state.userData,
+  pendingVerification: state.userData.qra.pendingVerification,
   token: state.userData.token
 });
 const mapDispatchToProps = dispatch => ({

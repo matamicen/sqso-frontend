@@ -22,7 +22,8 @@ class QRAProfileBio extends React.Component {
 
     this.state = {
       edit: false,
-      openPornConfirm: false
+      openPornConfirm: false,
+      openUserNotValidated: false
     };
 
     this.uploadImageCallBack = this.uploadImageCallBack.bind(this);
@@ -180,32 +181,44 @@ class QRAProfileBio extends React.Component {
           confirmButton={t('global.ok')}
           content={t('global.imageContainNudity')}
         />
-        {/* <Segment raised> */}
-          {this.props.isAuthenticated &&
-            this.props.currentQRA === this.props.qraInfo.qra && (
-              <div>
-                <Button
-                  positive
-                  fluid
-                  size="mini"
-                  onClick={() => this.setState({ edit: true })}
-                >
-                  {t('qra.editBio')}
-                </Button>
-              </div>
-            )}
 
-          <div>{ReactHtmlParser(this.props.qraInfo.bio)}</div>
-
-          {edit && (
-            <QRAProfileBioEdit
-              qraInfo={this.props.qraInfo}
-              doSaveUserInfo={this.props.actions.doSaveUserInfo}
-              modalOpen={edit}
-              closeModal={() => this.setState({ edit: false })}
-            />
+        {this.props.isAuthenticated &&
+          this.props.currentQRA === this.props.qraInfo.qra && (
+            <div>
+              <Button
+                positive
+                fluid
+                size="mini"
+                onClick={() => {
+                  if (this.props.pendingVerification)
+                    this.setState({ openUserNotValidated: true });
+                  else this.setState({ edit: true });
+                }}
+              >
+                {t('qra.editBio')}
+              </Button>
+            </div>
           )}
-        {/* </Segment> */}
+
+        <div>{ReactHtmlParser(this.props.qraInfo.bio)}</div>
+
+        {edit && (
+          <QRAProfileBioEdit
+            qraInfo={this.props.qraInfo}
+            doSaveUserInfo={this.props.actions.doSaveUserInfo}
+            modalOpen={edit}
+            closeModal={() => this.setState({ edit: false })}
+          />
+        )}
+        <Confirm
+          size="mini"
+          open={this.state.openUserNotValidated}
+          onCancel={() => this.setState({ openUserNotValidated: false })}
+          onConfirm={() => this.setState({ openUserNotValidated: false })}
+          // cancelButton={t('global.cancel')}
+          confirmButton={t('global.ok')}
+          content={t('auth.PendingValidationConfirmMessage')}
+        />
       </Fragment>
     );
   }
@@ -215,6 +228,7 @@ const mapStateToProps = (state, ownProps) => ({
   currentQRA: state.userData.currentQRA,
   identityId: state.userData.identityId,
   isAuthenticated: state.userData.isAuthenticated,
+  pendingVerification: state.userData.qra.pendingVerification,
   token: state.userData.token
 });
 const mapDispatchToProps = dispatch => ({

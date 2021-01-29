@@ -358,6 +358,23 @@ class Notification extends React.Component {
             </Feed.Extra>
           </Feed.Content>
         );
+        case 72: //User Approved
+        return (
+          <Feed.Content>
+            <Feed.Summary>
+              <a href={notif.url} onClick={this.handleOnClick}>
+              {t('notification.userApproved')}
+              </a>
+              <Feed.Date>{moment(datetime).fromNow()}</Feed.Date>
+            </Feed.Summary>
+            <Feed.Extra text>
+              {' '}
+              <a href={notif.url} onClick={this.handleOnClick}>
+                {notif.message}
+              </a>
+            </Feed.Extra>
+          </Feed.Content>
+        );
         case 71: // QSO Comment Mention
         return (
           <Feed.Content>
