@@ -11,6 +11,8 @@ import * as Actions from '../actions';
 import '../styles/style.css';
 import Ad from './Ad/Ad';
 import NewsFeed from './Feed/NewsFeedPresentational';
+import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment';
+
 import AppNavigation from './Home/AppNavigation';
 class QSODetail extends React.PureComponent {
   state = {
@@ -178,6 +180,30 @@ class QSODetail extends React.PureComponent {
 
         <div className="qsoDetail-main">
           {this.props.qso && <NewsFeed list={qsos} />}
+          <Segment
+            raised
+            secondary
+            style={{ padding: 'initial', textAlign: 'center' }}
+          >
+            <div className="adDesktop">
+              <Ad
+                adslot="/22031658057/qsoDetail/qsoDetailFeed"
+                width={300}
+                height={250}
+                // id="div-ads-instance-home-feed"
+                displayOnly={false}
+              />
+            </div>
+            <div className="adMobile">
+              <Ad
+                adslot="/22031658057/qsoDetail/qsoDetailFeed"
+                width={300}
+                height={250}
+                // id="div-ads-instance-home-feed"
+                displayOnly={false}
+              />
+            </div>
+          </Segment>
         </div>
 
         <div className="site-right">
