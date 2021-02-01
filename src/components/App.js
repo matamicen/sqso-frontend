@@ -27,7 +27,7 @@ const QRAProfileContainer = lazy(() => import('./Profile/QRAProfileContainer'));
 const Notifications = lazy(() => import('./Notifications/Notifications'));
 const QSODetail = lazy(() => import('./QSODetail'));
 const LogIn = lazy(() => import('./Auth/LogIn'));
-const SignUp = lazy(() => import('./Auth/SignUp'));
+const SignUp = lazy(() => import('./Auth/SignUpDownload'));
 const Home = lazy(() => import('./Home/Home'));
 const FieldDaysFeed = lazy(() => import('./Home/FieldDaysFeed'));
 
