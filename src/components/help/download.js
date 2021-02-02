@@ -26,6 +26,7 @@ const Download = ({ t }) => (
           rounded
           href="https://play.google.com/store/apps/details?id=com.sqsomobile&hl=es_AR"
           target="_blank"
+          onClick={()=>window.gtag('event', 'signupDownloadAndroid_WEBPRD')}
         />
         <Image
           src={global_config.s3Cloudfront +"/ios_en_badge_web_generic.png"}
@@ -33,6 +34,7 @@ const Download = ({ t }) => (
           rounded
           href="https://apps.apple.com/ar/app/superqso/id1478967853"
           target="_blank"
+          onClick={()=>window.gtag('event', 'signupDownloadiOS_WEBPRD')}
         />
       </div>
       <div className="site-right">
