@@ -28,7 +28,7 @@
     "i18next-http-middleware": "^2.1.2",
     "ignore-styles": "^5.0.1",
     "immutable": "^3.8.2",
-    "jspdf": "^1.5.3",
+    "jspdf": "^2.3.1",
     "moment": "^2.25.3",
     "morgan": "^1.9.0",
     "prop-types": "^15.6.0",
