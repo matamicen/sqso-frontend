@@ -1,7 +1,7 @@
 {
 
-    "s3Cloudfront": "https://d30o7j00smmz5f.cloudfront.net/",
-    "apiEndpoint": "https://hlcyk2ty6c.execute-api.us-east-1.amazonaws.com/Prod", 
+    "s3Cloudfront": "https://d1dwfud4bi54v7.cloudfront.net/",
+    "apiEndpoint": "https://api.zxcvbnmasd.com",
     "dynamic_link": "https://superqso.page.link/?link=https://www.superqso.com/?",
     "dynamic_apn": "&apn=com.sqsomobile",
     "dynamic_ibi": "&ibi=org.reactjs.native.example.sqsoMobile",
