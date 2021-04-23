@@ -8,11 +8,24 @@ import {
   WhatsappIcon,
   WhatsappShareButton
 } from 'react-share';
+import global_config from '../../global_config.json';
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
 // import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
 import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
 const QSOShareButtons = ({ idqso, t, title }) => {
-  
+  const url =
+  global_config.dynamic_link +
+  'QSO=' +
+  idqso +
+  global_config.dynamic_apn +
+  global_config.dynamic_ibi +
+  global_config.dynamic_afl +
+  '/qso/' +
+  idqso +
+  global_config.dynamic_isi +
+  global_config.dynamic_ifl +
+  '/qso/' +
+  idqso;
   return (
     <Button>
       <div style={{ display: 'grid', justifyItems: 'center' }}>
@@ -32,7 +45,7 @@ const QSOShareButtons = ({ idqso, t, title }) => {
               <div className="socialDesktop">
                 <WhatsappShareButton
                   title={title}
-                  url={window.location.origin + '/qso/' + idqso}
+                  url={url}
                   beforeOnClick={() => {
                     if (process.env.REACT_APP_STAGE === 'production')
 
@@ -47,7 +60,7 @@ const QSOShareButtons = ({ idqso, t, title }) => {
 
                 <FacebookShareButton
                   quote={title}
-                  url={window.location.origin + '/qso/' + idqso}
+                  url={url}
                   beforeOnClick={() => {
                     if (process.env.REACT_APP_STAGE === 'production')
 
@@ -62,7 +75,7 @@ const QSOShareButtons = ({ idqso, t, title }) => {
 
                 <TwitterShareButton
                   title={title}
-                  url={window.location.origin + '/qso/' + idqso}
+                  url={url}
                   beforeOnClick={() => {
                     if (process.env.REACT_APP_STAGE === 'production')
 
@@ -80,7 +93,7 @@ const QSOShareButtons = ({ idqso, t, title }) => {
                   href={
                     'whatsapp://send?text=' +
                     encodeURIComponent(
-                      title + ' ' + window.location.origin + '/qso/' + idqso
+                      title + ' ' + url
                     )
                   }
                   onClick={() => {
@@ -98,7 +111,7 @@ const QSOShareButtons = ({ idqso, t, title }) => {
                 </a>
                 <FacebookShareButton
                   quote={title}
-                  url={window.location.origin + '/qso/' + idqso}
+                  url={url}
                   beforeOnClick={() => {
                     if (process.env.REACT_APP_STAGE === 'production')
 
@@ -113,9 +126,7 @@ const QSOShareButtons = ({ idqso, t, title }) => {
                 <a
                   href={
                     'https://twitter.com/intent/tweet?url=' +
-                    encodeURIComponent(window.location.origin +
-                      '/qso/' +
-                      idqso) +
+                    encodeURIComponent(url) +
                     '&text=' +
                     encodeURIComponent(title)
                   }
