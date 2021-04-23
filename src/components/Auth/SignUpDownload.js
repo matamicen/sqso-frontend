@@ -23,7 +23,7 @@ const Download = ({ t }) => (
             <b>{t('forms.downloadAPP')}</b>
           </p>
         <Image
-          src={global_config.s3Cloudfront + "/en_badge_web_generic.png"}
+          src={global_config.s3Cloudfront + "en_badge_web_generic.png"}
           size="medium"
           rounded
           href="https://play.google.com/store/apps/details?id=com.sqsomobile&hl=es_AR"
@@ -31,7 +31,7 @@ const Download = ({ t }) => (
           onClick={()=>window.gtag('event', 'signupDownloadAndroid_WEBPRD')}
         />
         <Image
-          src={global_config.s3Cloudfront +"/ios_en_badge_web_generic.png"}
+          src={global_config.s3Cloudfront +"ios_en_badge_web_generic.png"}
           size="medium"
           rounded
           href="https://apps.apple.com/ar/app/superqso/id1478967853"

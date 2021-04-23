@@ -1,5 +1,5 @@
 {
-    "s3Cloudfront": "https://d30o7j00smmz5f.cloudfront.net/1/",
+    "s3Cloudfront": "https://d30o7j00smmz5f.cloudfront.net/",
     "apiEndpoint": "https://hlcyk2ty6c.execute-api.us-east-1.amazonaws.com/Prod", 
     "dynamic_link": "https://superqso.page.link/?link=https://test.dd39wvlkuxk5j.amplifyapp.com/?",
     "dynamic_apn": "&apn=com.sqsomobile",

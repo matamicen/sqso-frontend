@@ -87,7 +87,7 @@ class QRAProfileBio extends React.Component {
 
             filepath =
               global_config.s3Cloudfront +
-              '/1/' +
+              '1/' +
               encodeURIComponent(this.props.identityId) +
               '/' +
               encodeURIComponent(result.key);
