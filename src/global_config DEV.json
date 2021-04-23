@@ -6,5 +6,6 @@
     "dynamic_ibi": "&ibi=org.reactjs.native.example.sqsoMobile",
     "dynamic_afl": "&afl=https://test.dd39wvlkuxk5j.amplifyapp.com",
     "dynamic_isi": "&isi=1478967853",
-    "dynamic_ifl": "&ifl=https://test.dd39wvlkuxk5j.amplifyapp.com"
+    "dynamic_ifl": "&ifl=https://test.dd39wvlkuxk5j.amplifyapp.com",
+    "dynamic_ofl": "&ifl=https://test.dd39wvlkuxk5j.amplifyapp.com"
 }
