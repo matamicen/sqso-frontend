@@ -1,5 +1,4 @@
 {
-
     "s3Cloudfront": "https://d30o7j00smmz5f.cloudfront.net/1/",
     "apiEndpoint": "https://hlcyk2ty6c.execute-api.us-east-1.amazonaws.com/Prod", 
     "dynamic_link": "https://superqso.page.link/?link=https://test.dd39wvlkuxk5j.amplifyapp.com/?",
@@ -9,4 +8,3 @@
     "dynamic_isi": "&isi=1478967853",
     "dynamic_ifl": "&ifl=https://test.dd39wvlkuxk5j.amplifyapp.com"
 }
-
