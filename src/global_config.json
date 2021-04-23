@@ -7,6 +7,7 @@
     "dynamic_ibi": "&ibi=org.reactjs.native.example.sqsoMobile",
     "dynamic_afl": "&afl=https://www.superqso.com",
     "dynamic_isi": "&isi=1478967853",
-    "dynamic_ifl": "&ifl=https://www.superqso.com"
+    "dynamic_ifl": "&ifl=https://www.superqso.com",
+    "dynamic_ofl": "&ifl=https://www.superqso.com"
 }
 
