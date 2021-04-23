@@ -42,14 +42,14 @@ class PublicNavigation extends React.PureComponent {
           >
             <MobileView>
               <img
-                src={global_config.s3Cloudfront + '/superqsoIconAzul.png'}
+                src={global_config.s3Cloudfront + 'superqsoIconAzul.png'}
                 alt="SuperQSO.com"
                 className="mobile"
               />
             </MobileView>
             <BrowserView>
               <img
-                src={global_config.s3Cloudfront + '/logoDesk.jpg'}
+                src={global_config.s3Cloudfront + 'logoDesk.jpg'}
                 alt="SuperQSO.com"
                 className="desktop"
               />

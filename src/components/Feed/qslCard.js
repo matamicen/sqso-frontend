@@ -122,7 +122,7 @@ async function QslCardPrint(props) {
       pdf.roundedRect(2.9, 3.1, 2.6, 0.7, 0.1, 0.1, 'FD');
     }
     /*QSO LOGO */
-    imgData = await loadImage(global_config.s3Cloudfront + '/logoMobile.jpg');
+    imgData = await loadImage(global_config.s3Cloudfront + 'logoMobile.jpg');
     pdf.addImage(imgData, 'JPEG', 5.8, 3.1, 1.09, 0.7, 'logo', 'FAST');
 
     if (props.qso.qras[0]) {
