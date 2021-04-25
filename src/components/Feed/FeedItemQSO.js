@@ -23,6 +23,7 @@ import QSOLikeButton from './QSOLikeButton';
 import QSOLikeText from './QSOLikeText';
 import QSORePostButton from './QSORePostButton';
 import QSOShareButtons from './QSOShareButtons';
+import Flag from 'semantic-ui-react/dist/commonjs/elements/Flag';
 import './style.css';
 class FeedItemQSO extends React.PureComponent {
   constructor() {
@@ -121,6 +122,14 @@ class FeedItemQSO extends React.PureComponent {
                   <Link to={'/' + this.props.qso.qra}>
                     {this.props.qso.qra}
                   </Link>
+                }
+              />{' '}
+                <Flag
+                name={
+                  this.props.qso.country !== '' &&
+                  this.props.qso.country !== null
+                    ? this.props.qso.country.toLowerCase()
+                    : null
                 }
               />
               {text}
