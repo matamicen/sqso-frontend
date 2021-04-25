@@ -1,12 +1,13 @@
 {
 
-    "s3Cloudfront": "https://d30o7j00smmz5f.cloudfront.net/1/",
-    "apiEndpoint": "https://hlcyk2ty6c.execute-api.us-east-1.amazonaws.com/Prod", 
-    "dynamic_link": "https://superqso.page.link/?link=https://test.dd39wvlkuxk5j.amplifyapp.com/?",
+    "s3Cloudfront": "https://d1dwfud4bi54v7.cloudfront.net/",
+    "apiEndpoint": "https://api.zxcvbnmasd.com",
+    "dynamic_link": "https://superqso.page.link/?link=https://www.superqso.com/?",
     "dynamic_apn": "&apn=com.sqsomobile",
     "dynamic_ibi": "&ibi=org.reactjs.native.example.sqsoMobile",
-    "dynamic_afl": "&afl=https://test.dd39wvlkuxk5j.amplifyapp.com",
+    "dynamic_afl": "&afl=https://www.superqso.com",
     "dynamic_isi": "&isi=1478967853",
-    "dynamic_ifl": "&ifl=https://test.dd39wvlkuxk5j.amplifyapp.com"
+    "dynamic_ifl": "&ifl=https://www.superqso.com",
+    "dynamic_ofl": "&ofl=https://www.superqso.com"
 }
 

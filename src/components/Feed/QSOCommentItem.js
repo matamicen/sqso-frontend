@@ -11,7 +11,7 @@ import Comment from 'semantic-ui-react/dist/commonjs/views/Comment';
 import Item from 'semantic-ui-react/dist/commonjs/views/Item';
 import * as Actions from '../../actions';
 import FeedOptionsMenu from './FeedOptionsMenu';
-
+import Flag from 'semantic-ui-react/dist/commonjs/elements/Flag';
 
 class QSOCommentItem extends React.Component {
   constructor() {
@@ -166,6 +166,14 @@ class QSOCommentItem extends React.Component {
               <Link to={'/' + this.props.comment.qra}>
                 <span style={{ fontSize: '1.2rem' }}>
                   {this.props.comment.qra.toUpperCase()}{' '}
+                  <Flag
+                name={
+                  this.props.comment.country !== '' &&
+                  this.props.comment.country !== null
+                    ? this.props.comment.country.toLowerCase()
+                    : null
+                }
+              />{' '}
                   {this.props.comment.firstname} {this.props.comment.lastname}{' '}
                 </span>
               </Link>{' '}

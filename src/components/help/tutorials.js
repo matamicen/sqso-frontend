@@ -36,7 +36,7 @@ const Tutorials = ({ t }) => (
           }}
         >
           <source
-            src={global_config.s3Cloudfront + 'https://d1dwfud4bi54v7.cloudfront.net/faq/tutorialCompleto_j.mp4'}
+            src={ 'https://d1dwfud4bi54v7.cloudfront.net/faq/tutorialCompleto_j.mp4'}
             type="video/mp4"
           />
           Your browser does not support the video tag.
@@ -53,7 +53,7 @@ const Tutorials = ({ t }) => (
               });
           }}>
           <source
-            src={global_config.s3Cloudfront + '/faq/PostQSO_alta_j.mp4'}
+            src={global_config.s3Cloudfront + 'faq/PostQSO_alta_j.mp4'}
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -81,7 +81,7 @@ const Tutorials = ({ t }) => (
               });
           }}>
           <source
-            src={global_config.s3Cloudfront + '/faq/Post+de+una+escucha_j.mp4'}
+            src={global_config.s3Cloudfront + 'faq/Post+de+una+escucha_j.mp4'}
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -109,7 +109,7 @@ const Tutorials = ({ t }) => (
               });
           }}>
           <source
-            src={global_config.s3Cloudfront + '/faq/PostANY_j.mp4'}
+            src={global_config.s3Cloudfront + 'faq/PostANY_j.mp4'}
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -135,7 +135,7 @@ const Tutorials = ({ t }) => (
               });
           }}>
           <source
-            src={global_config.s3Cloudfront + '/faq/Seguir+a+un+colega_j.mp4'}
+            src={global_config.s3Cloudfront + 'faq/Seguir+a+un+colega_j.mp4'}
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -156,7 +156,7 @@ const Tutorials = ({ t }) => (
               });
           }}>
           <source
-            src={global_config.s3Cloudfront + '/faq/Leer+notificaciones_j.mp4'}
+            src={global_config.s3Cloudfront + 'faq/Leer+notificaciones_j.mp4'}
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -186,7 +186,7 @@ const Tutorials = ({ t }) => (
               });
           }}>
           <source
-            src={global_config.s3Cloudfront + '/faq/Imprimir+tarjeta+QSL_j.mp4'}
+            src={global_config.s3Cloudfront + 'faq/Imprimir+tarjeta+QSL_j.mp4'}
             type="video/mp4"
             controlsList="nodownload"
           />
@@ -211,7 +211,7 @@ const Tutorials = ({ t }) => (
           <source
             src={
               global_config.s3Cloudfront +
-              '/faq/Escanear+c%C3%B3digo+QR+de+tarjeta+QSL_j.mp4'
+              'faq/Escanear+c%C3%B3digo+QR+de+tarjeta+QSL_j.mp4'
             }
             type="video/mp4"
             controlsList="nodownload"
@@ -239,7 +239,7 @@ const Tutorials = ({ t }) => (
           <source
             src={
               global_config.s3Cloudfront +
-              '/faq/Compartir+en+redes+sociales+desde+la+APP_j.mp4'
+              'faq/Compartir+en+redes+sociales+desde+la+APP_j.mp4'
             }
             type="video/mp4"
             controlsList="nodownload"
@@ -263,7 +263,7 @@ const Tutorials = ({ t }) => (
           <source
             src={
               global_config.s3Cloudfront +
-              '/faq/Compartir+en+redes+sociales+desde+la+Web_j.mp4'
+              'faq/Compartir+en+redes+sociales+desde+la+Web_j.mp4'
             }
             type="video/mp4"
             controlsList="nodownload"
@@ -285,7 +285,7 @@ const Tutorials = ({ t }) => (
           <source
             src={
               global_config.s3Cloudfront +
-              '/faq/Comentar%2C+Like+y+Repostear_j.mp4'
+              'faq/Comentar%2C+Like+y+Repostear_j.mp4'
             }
             type="video/mp4"
             controlsList="nodownload"

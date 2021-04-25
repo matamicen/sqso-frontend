@@ -17,6 +17,7 @@ import FeedMedia from './FeedMedia';
 import FeedOptionsMenu from './FeedOptionsMenu';
 import FeedSocialButtons from './FeedSocialButtons';
 import QRAs from './QRAs';
+import Flag from 'semantic-ui-react/dist/commonjs/elements/Flag';
 import './style.css';
 class FeedItemPost extends React.PureComponent {
   constructor() {
@@ -117,6 +118,14 @@ class FeedItemPost extends React.PureComponent {
                   <Link to={'/' + this.props.qso.qra}>
                     {this.props.qso.qra}
                   </Link>
+                }
+              />{' '}
+              <Flag
+                name={
+                  this.props.qso.country !== '' &&
+                  this.props.qso.country !== null
+                    ? this.props.qso.country.toLowerCase()
+                    : null
                 }
               />
               {text}

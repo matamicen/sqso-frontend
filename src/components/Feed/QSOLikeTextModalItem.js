@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
 import Image from 'semantic-ui-react/dist/commonjs/elements/Image';
 import * as Actions from '../../actions';
+import Flag from 'semantic-ui-react/dist/commonjs/elements/Flag';
 class QSOLikeTextModalItem extends React.PureComponent {
   constructor() {
     super();
@@ -88,6 +89,14 @@ class QSOLikeTextModalItem extends React.PureComponent {
         >
           <Link to={'/' + l.qra}>
             <span style={{ fontSize: '1.5rem' }}>{l.qra}</span>
+            <Flag
+                name={
+                  l.country !== '' &&
+                  l.country !== null
+                    ? l.country.toLowerCase()
+                    : null
+                }
+              />
             <br />
             <span style={{ fontSize: '1rem' }}>
               {l.firstname + ' ' + l.lastname}

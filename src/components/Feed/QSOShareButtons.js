@@ -25,6 +25,9 @@ const QSOShareButtons = ({ idqso, t, title }) => {
   global_config.dynamic_isi +
   global_config.dynamic_ifl +
   '/qso/' +
+  idqso +
+  global_config.dynamic_ofl +
+  '/qso/' +
   idqso;
   return (
     <Button>

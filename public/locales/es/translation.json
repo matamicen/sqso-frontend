@@ -169,7 +169,7 @@
     "playAudio": "Reproducir",
     "qsoReposted": "Republicado con éxito!",
     "qsoDeleted": "QSO Eliminado",
-    "workedAQSO": " trabajó un QSO",
+    "workedAQSO": " realizó un QSO",
     "createdPost": " creó una publicación",
     "createdQAP": " publicó que está QAP",
     "createdFLDDAY": " promocionó una activación",
@@ -250,7 +250,7 @@
     "createdPost": "Creó una Publicación",
     "createdPostWith": "Creó una Publicación  con",
     "listenedQSO": "Escuchó un QSO con ",
-    "workedQSO": "Trabajó un QSO con "
+    "workedQSO": "Realizó un QSO con "
   },
   "exploreUsers": {
     "lookWhoInQSO": "Mirá quien está en SuperQSO",

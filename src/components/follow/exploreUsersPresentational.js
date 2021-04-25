@@ -10,6 +10,7 @@ import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment';
 import Dimmer from 'semantic-ui-react/dist/commonjs/modules/Dimmer';
 import Card from 'semantic-ui-react/dist/commonjs/views/Card';
 import '../../styles/style.css';
+import Flag from 'semantic-ui-react/dist/commonjs/elements/Flag';
 import Ad from '../Ad/Ad';
 import AppNavigation from '../Home/AppNavigation';
 const ExploreUsers = ({
@@ -72,7 +73,7 @@ const ExploreUsers = ({
                   //   marginLeft: '1em'
                   // }}
                 >
-                  <Card raised style={{ width: '190px' }}>
+                  <Card raised style={{ width: '200px' }}>
                     <Card.Content>
                       <Card.Header>
                         <div
@@ -113,6 +114,14 @@ const ExploreUsers = ({
                             <Link to={'/' + qra.qra}>
                               <span style={{ fontSize: '1.5rem' }}>
                                 {qra.qra}
+                                <Flag
+                name={
+                  qra.country !== '' &&
+                  qra.country !== null
+                    ? qra.country.toLowerCase()
+                    : null
+                }
+              />
                               </span>
                               <br />
                               <span style={{ fontSize: '1rem' }}>
