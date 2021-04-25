@@ -38,7 +38,7 @@ i18next
         translation: {
           qso: {
             workedQSO:
-              '{{QRA}} trabajó un QSO con {{QRA2}} en la banda {{band}} y modo {{mode}}',
+              '{{QRA}} realizó un QSO con {{QRA2}} en la banda {{band}} y modo {{mode}}',
             listenedQSO:
               '{{QRA}} escuchó un QSO de {{QRA2}} en la banda {{band}} y modo {{mode}}',
             createdQAP: '{{QRA}} publicó que está QAP',
