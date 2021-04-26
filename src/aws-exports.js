@@ -55,12 +55,12 @@ const config = {
     // identityPoolId: 'us-east-1:2cf52faa-ca6d-41a5-9bd0-70d7a57f025a',
     region: 'us-east-1', // OPTIONAL -  Amazon service region
     identityPoolId: 'us-east-1:daa39e2c-c363-4b97-91a9-de1ae54c7590'
+  },
+  Analytics: {
+    // OPTIONAL -  Amazon Pinpoint App ID
+    disabled: true,
+    // OPTIONAL -  Amazon service region
+    region: "us-east-1"
   }
-  // Analytics: {
-  //   // OPTIONAL -  Amazon Pinpoint App ID
-  //   disabled: true,
-  //   // OPTIONAL -  Amazon service region
-  //   region: "us-east-1"
-  // }
 };
 export default config;
