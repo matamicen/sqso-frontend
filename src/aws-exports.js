@@ -13,7 +13,7 @@ const config = {
     endpoints: [
       {
         name: 'superqso',
-        endpoint: 'https: //hlcyk2ty6c.execute-api.us-east-1.amazonaws.com/Prod',
+        endpoint: 'https://hlcyk2ty6c.execute-api.us-east-1.amazonaws.com/Prod',
         region: 'us-east-1'
       }
     ]
