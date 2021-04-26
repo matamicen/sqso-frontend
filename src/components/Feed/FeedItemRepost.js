@@ -299,8 +299,10 @@ class FeedItemRepost extends React.Component {
             </Button>
             <QSORePostButton qso={this.props.qso} />
             <QSOShareButtons
+            qso={this.props.qso}
               idqso={this.props.qso.GUID_URL}
               title={shareText}
+              socialTitle={this.props.qso.qra  + text}
             />
           </Button.Group>
 

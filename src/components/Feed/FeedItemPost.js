@@ -202,6 +202,7 @@ class FeedItemPost extends React.PureComponent {
             idqso={this.props.qso.idqsos}
             index={this.props.index}
             qso_owner={this.props.qso.qra}
+            socialTitle={this.props.qso.qra  + text}
           />
          
         </Segment>
