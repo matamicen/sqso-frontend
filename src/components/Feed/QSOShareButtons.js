@@ -12,23 +12,38 @@ import global_config from '../../global_config.json';
 import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
 // import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
 import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
-const QSOShareButtons = ({ idqso, t, title }) => {
+const QSOShareButtons = ({ idqso, t, title, qso, socialTitle }) => {
+  let picList = qso.media.filter(media => media.type === 'image');
+
+  let videoList = qso.media.filter(media => media.type === 'video');
+
+  let videoImage = videoList.length > 0 ? videoList[0].videoPreview : null;
+  let picImage = picList.length > 0 ? picList[0].url : null;
+  let socialImage = picImage
+    ? picImage
+    : videoImage
+    ? videoImage
+    : global_config.s3Cloudfront + 'superqsoIconAzul.png';
   const url =
-  global_config.dynamic_link +
-  'QSO=' +
-  idqso +
-  global_config.dynamic_apn +
-  global_config.dynamic_ibi +
-  global_config.dynamic_afl +
-  '/qso/' +
-  idqso +
-  global_config.dynamic_isi +
-  global_config.dynamic_ifl +
-  '/qso/' +
-  idqso +
-  global_config.dynamic_ofl +
-  '/qso/' +
-  idqso;
+    global_config.dynamic_link +
+    'QSO=' +
+    idqso +
+    global_config.dynamic_apn +
+    global_config.dynamic_ibi +
+    global_config.dynamic_afl +
+    '/qso/' +
+    idqso +
+    global_config.dynamic_isi +
+    global_config.dynamic_ifl +
+    '/qso/' +
+    idqso +
+    global_config.dynamic_ofl +
+    '/qso/' +
+    idqso +
+    '&st=' +
+    socialTitle.replace(/ /g,"+") +
+    '&si=' +
+    socialImage;
   return (
     <Button>
       <div style={{ display: 'grid', justifyItems: 'center' }}>
@@ -51,7 +66,6 @@ const QSOShareButtons = ({ idqso, t, title }) => {
                   url={url}
                   beforeOnClick={() => {
                     if (process.env.REACT_APP_STAGE === 'production')
-
                       window.gtag('event', 'qsoShareWAPP_WEBPRD', {
                         event_category: 'QSO',
                         event_label: 'shareWAPP'
@@ -66,7 +80,6 @@ const QSOShareButtons = ({ idqso, t, title }) => {
                   url={url}
                   beforeOnClick={() => {
                     if (process.env.REACT_APP_STAGE === 'production')
-
                       window.gtag('event', 'qsoShareFB_WEBPRD', {
                         event_category: 'QSO',
                         event_label: 'shareFB'
@@ -81,7 +94,6 @@ const QSOShareButtons = ({ idqso, t, title }) => {
                   url={url}
                   beforeOnClick={() => {
                     if (process.env.REACT_APP_STAGE === 'production')
-
                       window.gtag('event', 'qsoShareTW_WEBPRD', {
                         event_category: 'QSO',
                         event_label: 'shareTW'
@@ -95,13 +107,10 @@ const QSOShareButtons = ({ idqso, t, title }) => {
                 <a
                   href={
                     'whatsapp://send?text=' +
-                    encodeURIComponent(
-                      title + ' ' + url
-                    )
+                    encodeURIComponent(title + ' ' + url)
                   }
                   onClick={() => {
                     if (process.env.REACT_APP_STAGE === 'production')
-
                       window.gtag('event', 'qsoShareWAPP_WEBPRD', {
                         event_category: 'QSO',
                         event_label: 'shareWAPP'
@@ -117,7 +126,6 @@ const QSOShareButtons = ({ idqso, t, title }) => {
                   url={url}
                   beforeOnClick={() => {
                     if (process.env.REACT_APP_STAGE === 'production')
-
                       window.gtag('event', 'qsoShareFB_WEBPRD', {
                         event_category: 'QSO',
                         event_label: 'shareFB'
@@ -135,14 +143,12 @@ const QSOShareButtons = ({ idqso, t, title }) => {
                   }
                   onClick={() => {
                     if (process.env.REACT_APP_STAGE === 'production')
-
                       window.gtag('event', 'qsoShareTW_WEBPRD', {
                         event_category: 'QSO',
                         event_label: 'shareTW'
                       });
                   }}
                 >
-                  
                   <TwitterIcon size={40} round={true} />
                 </a>
               </div>

@@ -13,7 +13,6 @@ import QSORePostButton from './QSORePostButton';
 import QSOShareButtons from './QSOShareButtons';
 import './style.css';
 
-
 class FeedSocialButtons extends React.PureComponent {
   constructor(props, context) {
     super(props, context);
@@ -55,37 +54,39 @@ class FeedSocialButtons extends React.PureComponent {
     return (
       <Fragment>
         <QSOLikeText
+          qso={this.props.qso}
+          likes={this.state.likes}
+          recalculateRowHeight={this.props.recalculateRowHeight}
+        />
+        <Button.Group fluid basic>
+          <QSOLikeButton
             qso={this.props.qso}
-            likes={this.state.likes}
             recalculateRowHeight={this.props.recalculateRowHeight}
           />
-          <Button.Group fluid basic>
-            <QSOLikeButton
-              qso={this.props.qso}
-              recalculateRowHeight={this.props.recalculateRowHeight}
-            />
-            <Button onClick={() => this.setState({ showComments: true })}>
-              <div>
-                <Icon name="comment outline" />{' '}
-                {this.props.qso.comments.length > 0 && commentsCounter}
-              </div>
-            </Button>
-            <QSORePostButton qso={this.props.qso} />
-            <QSOShareButtons
-              idqso={this.props.qso.GUID_URL}
-              title={shareText}
-            />
-          </Button.Group>
-          {this.state.showComments && (
-            <QSOComments
-              showComments={this.state.showComments}
-              doClose={() => this.setState({ showComments: false })}
-              index={this.props.index}
-              qso={this.props.qso}
-              comments={this.props.comments}
-              recalculateRowHeight={this.props.recalculateRowHeight}
-            />
-          )}
+          <Button onClick={() => this.setState({ showComments: true })}>
+            <div>
+              <Icon name="comment outline" />{' '}
+              {this.props.qso.comments.length > 0 && commentsCounter}
+            </div>
+          </Button>
+          <QSORePostButton qso={this.props.qso} />
+          <QSOShareButtons
+            qso={this.props.qso}
+            idqso={this.props.qso.GUID_URL}
+            title={shareText}
+            socialTitle={this.props.socialTitle}
+          />
+        </Button.Group>
+        {this.state.showComments && (
+          <QSOComments
+            showComments={this.state.showComments}
+            doClose={() => this.setState({ showComments: false })}
+            index={this.props.index}
+            qso={this.props.qso}
+            comments={this.props.comments}
+            recalculateRowHeight={this.props.recalculateRowHeight}
+          />
+        )}
       </Fragment>
     );
   }
