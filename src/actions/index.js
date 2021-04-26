@@ -188,9 +188,7 @@ export function doCommentAdd(idqso, comment, token, idqso_shared = null) {
 
         comment.comment = comment.comment.replace(
           new RegExp(oldWord, 'g'),
-          "<MENTION>" +  '@' +           
-            m[1] +
-            "</MENTION>"
+          '<MENTION>' + '@' + m[1] + '</MENTION>'
         );
       }
     } while (m);
@@ -455,7 +453,7 @@ export function doReceiveUserInfo(
   following = null,
   qra = null,
   notifications = null
-) {  
+) {
   return {
     type: RECEIVE_USERINFO,
     followers: followers,
@@ -565,7 +563,7 @@ export function doFetchUserInfo(token) {
         } // OPTIONAL
       };
       API.get(apiName, path, myInit)
-        .then(response => {          
+        .then(response => {
           if (response.body.error === 0) {
             dispatch(
               doReceiveUserInfo(

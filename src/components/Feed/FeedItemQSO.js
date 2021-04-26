@@ -60,13 +60,13 @@ class FeedItemQSO extends React.PureComponent {
   }
   render() {
     const { t } = this.props;
-    
-      // const picList = this.props.qso.media.filter(
-      //   media => media.type === 'image'
-      // );
-      // const audioList = this.props.qso.media.filter(
-      //   media => media.type === 'audio'
-      // );
+
+    // const picList = this.props.qso.media.filter(
+    //   media => media.type === 'image'
+    // );
+    // const audioList = this.props.qso.media.filter(
+    //   media => media.type === 'audio'
+    // );
     const commentsCounter = '(' + this.props.qso.comments.length + ')';
 
     let text;
@@ -124,7 +124,7 @@ class FeedItemQSO extends React.PureComponent {
                   </Link>
                 }
               />{' '}
-                <Flag
+              <Flag
                 name={
                   this.props.qso.country !== '' &&
                   this.props.qso.country !== null
@@ -238,8 +238,10 @@ class FeedItemQSO extends React.PureComponent {
             </Button>
             <QSORePostButton qso={this.props.qso} />
             <QSOShareButtons
+              qso={this.props.qso}
               idqso={this.props.qso.GUID_URL}
               title={shareText}
+              socialTitle={this.props.qso.qra  + text}
             />
           </Button.Group>
 
@@ -254,7 +256,6 @@ class FeedItemQSO extends React.PureComponent {
             />
           )}
         </Segment>
-  
       </Fragment>
     );
   }
