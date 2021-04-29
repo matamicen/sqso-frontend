@@ -1,4 +1,5 @@
 import i18n from 'i18next';
+import 'moment/locale/es';
 import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
 import { withTranslation } from 'react-i18next';
@@ -15,6 +16,7 @@ import TextToFollow from '../TextToFollow';
 import FeedLinkList from './FeedLinkList';
 import FeedMedia from './FeedMedia';
 import FeedOptionsMenu from './FeedOptionsMenu';
+import moment from 'moment';
 import FeedSocialButtons from './FeedSocialButtons';
 import QRAs from './QRAs';
 import Flag from 'semantic-ui-react/dist/commonjs/elements/Flag';
@@ -88,7 +90,9 @@ class FeedItemPost extends React.PureComponent {
         ? this.props.qso.realDateTime
         : this.props.qso.datetime
     );
-
+    var startDate = new Date(this.props.qso.activityBegin);
+    var endDate = new Date(this.props.qso.activityEnd);
+    moment.locale();
     return (
       <Fragment>
         <Segment raised>
@@ -130,23 +134,60 @@ class FeedItemPost extends React.PureComponent {
               />
               {text}
             </div>
-            <div className="qso-header-info-post">
-              <div>
-                <b>{t('qso.date')}: </b>
-                {date.toLocaleDateString(i18n.language, { month: 'short' }) +
-                  ' ' +
-                  date.getDate() +
-                  ', ' +
-                  date.getFullYear()}
+            {this.props.qso.type === 'FLDDAY' && (
+              <div >
+                <p>
+                  <b>
+                    {moment(this.props.qso.activityBegin).isSameOrBefore(
+                      Date.now()
+                    ) &&
+                      t('qso.startedAt', {
+                        text: moment(this.props.qso.activityBegin).fromNow(true)
+                      })}
+
+                    {moment(this.props.qso.activityBegin).isAfter(Date.now()) &&
+                      t('qso.willStart', {
+                        text: moment(this.props.qso.activityBegin).toNow(true)
+                      })}
+                  </b>
+                  
+                  </p>
+                <p>
+                <b>{t('qso.start')}:</b>{' '}
+                {moment(new Date(startDate))
+                  .utc()
+                  .format('lll')}
+                {' UTC'}
+                </p>  
+               
+                <p>
+                <b> {t('qso.end')}:</b>{' '}
+                {moment(new Date(endDate))
+                  .utc()
+                  .format('lll')}
+                {' UTC'}
+                </p>
               </div>
-              <div>
-                <b>UTC: </b>
-                {date.getUTCHours() +
-                  ':' +
-                  (date.getMinutes() < 10 ? '0' : '') +
-                  date.getMinutes()}
+            )}
+            {this.props.qso.type !== 'FLDDAY' && (
+              <div className="qso-header-info-post">
+                <div>
+                  <b>{t('qso.date')}: </b>
+                  {date.toLocaleDateString(i18n.language, { month: 'short' }) +
+                    ' ' +
+                    date.getDate() +
+                    ', ' +
+                    date.getFullYear()}
+                </div>
+                <div>
+                  <b>UTC: </b>
+                  {date.getUTCHours() +
+                    ':' +
+                    (date.getMinutes() < 10 ? '0' : '') +
+                    date.getMinutes()}
+                </div>
               </div>
-            </div>
+            )}
 
             <div
               className="qso-header-button"
@@ -186,7 +227,7 @@ class FeedItemPost extends React.PureComponent {
             qso_owner={this.props.qso.qra}
             recalculateRowHeight={this.recalculateRowHeight}
           />
-         
+
           {this.props.qso.links && (
             <FeedLinkList links={this.props.qso.links} />
           )}
@@ -194,7 +235,7 @@ class FeedItemPost extends React.PureComponent {
             hidden
             style={{ marginTop: '0.5vh', marginBottom: '0.5vh' }}
           />
-           <FeedSocialButtons
+          <FeedSocialButtons
             qso={this.props.qso}
             recalculateRowHeight={this.recalculateRowHeight}
             measure={this.props.measure}
@@ -202,11 +243,9 @@ class FeedItemPost extends React.PureComponent {
             idqso={this.props.qso.idqsos}
             index={this.props.index}
             qso_owner={this.props.qso.qra}
-            socialTitle={this.props.qso.qra  + text}
+            socialTitle={this.props.qso.qra + text}
           />
-         
         </Segment>
-
       </Fragment>
     );
   }

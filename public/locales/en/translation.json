@@ -149,6 +149,10 @@
     "sharedPOST": "{{QRA}} reposted a post"
   },
   "qso": {
+    "startedAt": "Started {{text}} ago",
+    "willStart": "Will Start in {{text}}",    
+    "start": "Start Date",
+    "end": "End Date",
     "comments": "Comments",
     "audioPlays": " - {{count}} Play",
     "audioPlays_plural": " - {{count}} Plays",
