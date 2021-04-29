@@ -44,9 +44,9 @@
   height: 100vh; */
 }
 .qso-header-info-post {
-  grid-area: infoSection;
+  /* grid-area: infoSection; */
   margin-top: 0.1rem;
-  margin-left: 4px;
+  /* margin-left: 4px; */
   display: flex;
   justify-content: flex-start;
   text-align: center;
@@ -117,9 +117,9 @@
     height: 100vh; */
   }
   .qso-header-info-post {
-    grid-area: infoSection;
+    /* grid-area: infoSection; */
     margin-top: 0.1rem;
-    margin-left: 4px;
+    /* margin-left: 4px; */
     display: flex;
     justify-content: flex-start;
     text-align: center;

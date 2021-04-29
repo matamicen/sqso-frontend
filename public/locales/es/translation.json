@@ -149,6 +149,10 @@
     "sharedPOST": "{{QRA}} republicó una publicación"
   },
   "qso": {
+    "startedAt": "Comenzó hace {{text}}",
+    "willStart": "Comenzará en {{text}}",    
+    "start": "Comienzo",
+    "end": "Fin",
     "comments": "Comentarios",
     "audioPlays": " - {{count}} Reproducción",
     "audioPlays_plural": " - {{count}} Reproducciones",
