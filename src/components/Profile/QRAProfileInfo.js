@@ -118,14 +118,16 @@ class QRAProfileInfo extends React.Component {
               transparent
               name="firstname"
               label={t('qra.firstName')}
-              value={firstname ? firstname : ''}
+              // value={firstname ? firstname : ''}
+              value={this.props.isAuthenticated ? firstname : t('auth.loginToSeeField')}
             />
             <Form.Input
               inline
               transparent
               name="lastname"
               label={t('qra.lastName')}
-              value={lastname ? lastname : ''}
+              // value={lastname ? lastname : ''}
+              value={this.props.isAuthenticated ? lastname : t('auth.loginToSeeField')}
             />
 
             <Form.Input
@@ -140,25 +142,29 @@ class QRAProfileInfo extends React.Component {
               type="date"
               inline
               transparent
-              value={
-                birthday
-                  ? new Date(birthday).toISOString().substring(0, 10)
-                  : ''
-              }
+              // value={
+              //   birthday
+              //     ? new Date(birthday).toISOString().substring(0, 10)
+              //     : ''
+              // }
+              value={this.props.isAuthenticated ? new Date(birthday).toISOString().substring(0, 10) : t('auth.loginToSeeField')}
+              
             />
 
             <Form.Input
               name="address"
               label={t('qra.addressLine1')}
               transparent
-              value={address ? address : ''}
+              // value={address ? address : ''}
+              value={this.props.isAuthenticated ? address : t('auth.loginToSeeField')}
             />
 
             <Form.Input
               name="address2"
               label={t('qra.addressLine2')}
               transparent
-              value={address2 ? address2 : ''}
+              // value={address2 ? address2 : ''}
+              value={this.props.isAuthenticated ? address2 : t('auth.loginToSeeField')}
             />
 
             <Form.Input
@@ -166,21 +172,24 @@ class QRAProfileInfo extends React.Component {
               label={t('qra.city')}
               inline
               transparent
-              value={city ? city : ''}
+              // value={city ? city : ''}
+              value={this.props.isAuthenticated ? city : t('auth.loginToSeeField')}
             />
             <Form.Input
               name="state"
               label={t('qra.state')}
               inline
               transparent
-              value={state ? state : ''}
+              // value={state ? state : ''}
+              value={this.props.isAuthenticated ? state : t('auth.loginToSeeField')}
             />
             <Form.Input
               name="zipcode"
               label={t('qra.zipCode')}
               inline
               transparent
-              value={zipcode ? zipcode : ''}
+              // value={zipcode ? zipcode : ''}
+              value={this.props.isAuthenticated ? zipcode : t('auth.loginToSeeField')}
             />
 
             <Form.Input
