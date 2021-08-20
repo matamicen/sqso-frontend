@@ -8,14 +8,10 @@ import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { Image } from 'semantic-ui-react';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import * as Actions from '../actions';
 import AwsExports from '../aws-exports';
-import './index.css';
-
-
 
 
 const ChangePassword = lazy(() => import('./Auth/ChangePassword'));
@@ -38,8 +34,6 @@ const FieldDaysFeed = lazy(() => import('./Home/FieldDaysFeed'));
 // if (process.env.NODE_ENV !== 'production') {     const {whyDidYouUpdate} =
 // require('why-did-you-update')     whyDidYouUpdate(React)   }
 
-
-
 Amplify.configure(AwsExports);
 
 class App extends Component {
@@ -50,8 +44,6 @@ class App extends Component {
     };
   }
   async componentDidMount() {
-    
-    
     let query = new URLSearchParams(this.props.location.search);
 
     if (isMobile) {
@@ -76,7 +68,7 @@ class App extends Component {
         // document.dispatchEvent(event);
       }
     }
-    // this.login();
+    this.login();
   }
   async _onMessage(data) {
     let token;
@@ -232,14 +224,9 @@ class App extends Component {
   }
   render() {
     const { t } = this.props;
- 
-    var userLang = navigator.language || navigator.userLanguage; 
-    
-    
-
     return (
       <Suspense fallback={<div>{t('global.loading')}</div>}>
-        {/* <Switch>
+        <Switch>
           <Route
             exact
             path="/"
@@ -373,7 +360,19 @@ class App extends Component {
               </ErrorBoundary>
             )}
           />
-      
+          {/* <Route
+            exact
+            path="/tutorials"
+            location={{
+              pathname: '/tutorials',
+              state: { from: this.props.location.pathname }
+            }}
+            component={() => (
+              <ErrorBoundary key="tutorials">
+                <Tutorials />
+              </ErrorBoundary>
+            )}
+          /> */}
           <Route
             exact
             path="/download"
@@ -525,91 +524,7 @@ class App extends Component {
               } else return null;
             }}
           />
-        </Switch> */}
-        <div class='center'> 
-        <img src={require('./SuperQSOHoriz.jpg')} class='center'/>
-        {/* <div><p>{userLang.substring(0, 2)}</p></div> */}
-        {/* <div><p>{i18n.language}</p></div> */}
-       
-            <div>
-              {userLang.substring(0, 2) === 'es' ?
-              <video
-              id="my-video"
-              // className="video-js"
-              controls
-              preload="metadata"
-              responsive="true"
-               width='42%'
-              // height={(props.media.height * width) / props.media.width}
-              // poster={props.media.videoPreview}
-            >
-              <source src='https://d1dwfud4bi54v7.cloudfront.net/Intro_ES.mp4' type="video/mp4" />
-              </video>
-            :
-
-            userLang.substring(0, 2) === 'ja' ?
-              <video
-              id="my-video"
-              // className="video-js"
-              controls
-              preload="metadata"
-              responsive="true"
-               width='42%'
-              // height={(props.media.height * width) / props.media.width}
-              // poster={props.media.videoPreview}
-            >
-              <source src='https://d1dwfud4bi54v7.cloudfront.net/Intro_JP.mp4' type="video/mp4" />
-              </video>
-              :
-              <video
-              id="my-video"
-              // className="video-js"
-              controls
-              preload="metadata"
-              responsive="true"
-               width='42%'
-              // height={(props.media.height * width) / props.media.width}
-              // poster={props.media.videoPreview}
-            >
-              <source src='https://d1dwfud4bi54v7.cloudfront.net/Intro_EN.mp4' type="video/mp4" />
-              </video>
-
-             }
-
-            </div>
-         
-         
-          
-      
-          </div>
-          {/* <div className='rows'> */}
-          <div class="contenedor">
-         
-            
-             
-              
-            <div class="it1">
-            <a href="https://apps.apple.com/ar/app/superqso/id1478967853">
-            <img src={require('./downApp.png')}  height="80px" />
-            </a>
-              </div>
-              <div class="it2">
-                <a href="https://play.google.com/store/apps/details?id=com.sqsomobile">
-                 <img src={require('./downGoogle.png')}  height="80px"/>
-               </a>
-              </div>
-              {/* <div class="item3">
-            <img src={require('./downAppStore.png')} class='center'  width='20%'/>
-              </div>
-              <div class="item4">
-            <img src={require('./downAppStore.png')} class='center'  width='20%'/>
-              </div> */}
-          </div>
-              {/* </div> */}
-
-             
-   
-    
+        </Switch>
       </Suspense>
     );
   }
