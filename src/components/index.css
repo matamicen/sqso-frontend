@@ -1,10 +1,31 @@
+/* @media only screen and (min-width: 512px) {
+} */
+.center0{
+    text-align: center;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    /* width:calc( 0px+ 20vw); */
+  }
+
 .center{
     text-align: center;
     display: block;
     justify-content: center;
     align-items: center;
     margin: auto;
-    width:45%;
+    width:calc( 35px + 25vw);
+  }
+
+  .image{
+    text-align: center;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    /* width:100vw;  */
+    /* width:50vw; */
   }
 
 
@@ -14,7 +35,7 @@
   .contenedor{
 	display: flex;
 	flex-direction: row;
-    margin-top: 60px;
+    margin-top: 20px; 
 	/* flex-wrap: nowrap; */
 	/* justify-content: space-between; */
 	/* align-items: center; */
@@ -27,17 +48,17 @@
     align-items: flex-end;
     justify-content: flex-end; 
     align-self: flex-end;
-    margin-right: 100px;
+    /* margin-right: 100px; */
    
 }
 .it2{
-    display: flex;
+   display: flex;
     flex:50%;
-    margin-left: 100px;
+    margin-left: 90px;
     flex-direction: row;
 	align-items: flex-start;
     justify-content: flex-start;
-    align-self: flex-start;
+    align-self: flex-start; 
 
    
 }

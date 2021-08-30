@@ -2,7 +2,7 @@ import Auth from '@aws-amplify/auth';
 import Amplify from '@aws-amplify/core';
 import * as Sentry from '@sentry/browser';
 import PropTypes from 'prop-types';
-import React, { Component, lazy, Suspense } from 'react';
+import React, { Component, lazy, Suspense, useCallback } from 'react';
 import { isIOS, isMobile } from 'react-device-detect';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
@@ -526,12 +526,14 @@ class App extends Component {
             }}
           />
         </Switch> */}
-        <div class='center'> 
-        <img src={require('./SuperQSOHoriz.jpg')} class='center'/>
+        <div class='center0'> 
+        <img src={require('./SuperQSOHoriz.jpg')} 
+        class='center'
+        />
         {/* <div><p>{userLang.substring(0, 2)}</p></div> */}
         {/* <div><p>{i18n.language}</p></div> */}
        
-            <div>
+            <div >
               {userLang.substring(0, 2) === 'es' ?
               <video
               id="my-video"
@@ -539,7 +541,7 @@ class App extends Component {
               controls
               preload="metadata"
               responsive="true"
-               width='42%'
+               width='300vw'
               // height={(props.media.height * width) / props.media.width}
               // poster={props.media.videoPreview}
             >
@@ -554,7 +556,7 @@ class App extends Component {
               controls
               preload="metadata"
               responsive="true"
-               width='42%'
+               width='300vw'
               // height={(props.media.height * width) / props.media.width}
               // poster={props.media.videoPreview}
             >
@@ -567,7 +569,8 @@ class App extends Component {
               controls
               preload="metadata"
               responsive="true"
-               width='42%'
+              width='300vw'
+              //  width='100vw'
               // height={(props.media.height * width) / props.media.width}
               // poster={props.media.videoPreview}
             >
@@ -590,12 +593,12 @@ class App extends Component {
               
             <div class="it1">
             <a href="https://apps.apple.com/ar/app/superqso/id1478967853">
-            <img src={require('./downApp.png')}  height="80px" />
+            <img src={require('./downApp.png')}  height="40vw" />
             </a>
               </div>
               <div class="it2">
                 <a href="https://play.google.com/store/apps/details?id=com.sqsomobile">
-                 <img src={require('./downGoogle.png')}  height="80px"/>
+                 <img src={require('./downGoogle.png')}  height="40vw"/>
                </a>
               </div>
               {/* <div class="item3">
