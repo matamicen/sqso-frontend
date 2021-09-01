@@ -535,19 +535,19 @@ class App extends Component {
         {/* <div><p>{userLang.substring(0, 2)}</p></div> */}
         {/* <div><p>{userLang.substring(0, 2)}</p></div> */}
        
-            <div class="jpg">
+            <div class="but">
               {userLang.substring(0, 2) === 'es' ?
          
           this.state.showjpg ?
         
-          <button
-          type="button"
-          class="but"
+        //   <button
+        //   type="button"
+        //   class="but"
 
-          onClick={() => this.setState({ showjpg: false })}    
-        >
-              <img src={require('./superQSOWEB_ES.jpg')}  height='400' />
-          </button>
+        //   onClick={() => this.setState({ showjpg: false })}    
+        // >
+              <img src={require('./superQSOWEB_ES.jpg')}  onClick={() => this.setState({ showjpg: false })} />
+          // </button>
       
           :
       
@@ -573,13 +573,13 @@ class App extends Component {
             userLang.substring(0, 2) === 'ja' ?
             this.state.showjpg ?
         
-            <button
-            type="button"
-            class="but"
-            onClick={() => this.setState({ showjpg: false })}    
-          >
-                <img src={require('./superQSOWEB_JP.jpg')} height='400' />
-            </button>
+          //   <button
+          //   type="button"
+          //   class="but"
+          //   onClick={() => this.setState({ showjpg: false })}    
+          // >
+                <img src={require('./superQSOWEB_JP.jpg')} onClick={() => this.setState({ showjpg: false })} />
+            // </button>
             :
               <video
               id="my-video"
@@ -597,13 +597,13 @@ class App extends Component {
               :
               this.state.showjpg ?
         
-              <button
-              type="button"
-              class="but"
-              onClick={() => this.setState({ showjpg: false })}    
-            >
-                  <img src={require('./superQSOWEB_EN.jpg')} height='400' />
-              </button>
+            //   <button
+            //    type="butios"
+             
+            //   onClick={() => this.setState({ showjpg: false })}    
+            // >
+                  <img src={require('./superQSOWEB_EN.jpg')} onClick={() => this.setState({ showjpg: false })} />
+              //  </button>
               :
               <video
               id="my-video"

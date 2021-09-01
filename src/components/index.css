@@ -30,9 +30,26 @@
 .jpg{
   border: 15px;
 }
-.butt{
-  cursor: 'pointer'
-}
+
+.butios{
+  /* cursor: 'pointer'; */
+  /* height: 400; */
+   /* display: flex; */
+  /* height: 400  */
+    /* flex:100%; */
+    height: 100%;
+
+ } 
+
+/* .but{ */
+  /* cursor: 'pointer'; */
+  /* height: 400px; */
+  /* display: flex;
+  height: 400 */
+    /* flex:100%; */
+  
+
+/* } */
 
   .texto{
     display: flex;
