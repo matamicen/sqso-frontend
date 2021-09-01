@@ -546,7 +546,7 @@ class App extends Component {
 
           onClick={() => this.setState({ showjpg: false })}    
         >
-              <img src={require('./superQSOWEB_ES.jpg')}  />
+              <img src={require('./superQSOWEB_ES.jpg')}  height='400' />
           </button>
       
           :
@@ -578,7 +578,7 @@ class App extends Component {
             class="but"
             onClick={() => this.setState({ showjpg: false })}    
           >
-                <img src={require('./superQSOWEB_JP.jpg')}  />
+                <img src={require('./superQSOWEB_JP.jpg')} height='400' />
             </button>
             :
               <video
@@ -602,7 +602,7 @@ class App extends Component {
               class="but"
               onClick={() => this.setState({ showjpg: false })}    
             >
-                  <img src={require('./superQSOWEB_EN.jpg')}  />
+                  <img src={require('./superQSOWEB_EN.jpg')} height='400' />
               </button>
               :
               <video
