@@ -14,6 +14,7 @@ import 'slick-carousel/slick/slick.css';
 import * as Actions from '../actions';
 import AwsExports from '../aws-exports';
 import './index.css';
+import i18n from 'i18next';
 
 
 
@@ -46,7 +47,8 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      mobileSession: null
+      mobileSession: null,
+      showjpg: true
     };
   }
   async componentDidMount() {
@@ -531,10 +533,24 @@ class App extends Component {
         class='center'
         />
         {/* <div><p>{userLang.substring(0, 2)}</p></div> */}
-        {/* <div><p>{i18n.language}</p></div> */}
+        {/* <div><p>{userLang.substring(0, 2)}</p></div> */}
        
-            <div >
+            <div class="jpg">
               {userLang.substring(0, 2) === 'es' ?
+         
+          this.state.showjpg ?
+        
+          <button
+          type="button"
+          class="but"
+
+          onClick={() => this.setState({ showjpg: false })}    
+        >
+              <img src={require('./superQSOWEB_ES.jpg')}  />
+          </button>
+      
+          :
+      
               <video
               id="my-video"
               // className="video-js"
@@ -542,14 +558,29 @@ class App extends Component {
               preload="metadata"
               responsive="true"
                width='300vw'
+               autoPlay={true}
               // height={(props.media.height * width) / props.media.width}
               // poster={props.media.videoPreview}
             >
               <source src='https://d1dwfud4bi54v7.cloudfront.net/Intro_ES.mp4' type="video/mp4" />
               </video>
+    
+          
+          
+         
             :
 
             userLang.substring(0, 2) === 'ja' ?
+            this.state.showjpg ?
+        
+            <button
+            type="button"
+            class="but"
+            onClick={() => this.setState({ showjpg: false })}    
+          >
+                <img src={require('./superQSOWEB_JP.jpg')}  />
+            </button>
+            :
               <video
               id="my-video"
               // className="video-js"
@@ -557,11 +588,22 @@ class App extends Component {
               preload="metadata"
               responsive="true"
                width='300vw'
+               autoPlay={true}
               // height={(props.media.height * width) / props.media.width}
               // poster={props.media.videoPreview}
             >
               <source src='https://d1dwfud4bi54v7.cloudfront.net/Intro_JP.mp4' type="video/mp4" />
               </video>
+              :
+              this.state.showjpg ?
+        
+              <button
+              type="button"
+              class="but"
+              onClick={() => this.setState({ showjpg: false })}    
+            >
+                  <img src={require('./superQSOWEB_EN.jpg')}  />
+              </button>
               :
               <video
               id="my-video"
@@ -570,6 +612,7 @@ class App extends Component {
               preload="metadata"
               responsive="true"
               width='300vw'
+              autoPlay={true}
               //  width='100vw'
               // height={(props.media.height * width) / props.media.width}
               // poster={props.media.videoPreview}
@@ -586,7 +629,19 @@ class App extends Component {
       
           </div>
           {/* <div className='rows'> */}
+          <div class="texto">
+          {userLang.substring(0, 2) === 'es' ?
+            <p class="tx1">Descargalo de tu tienda de aplicaciones:</p>
+            :
+            userLang.substring(0, 2) === 'ja' ?
+            <p class="tx1">あなたの店からダウンロードしてください：</p>
+            :
+            <p class="tx1">Download from your store:</p>
+          }
+
+          </div>
           <div class="contenedor">
+         
          
             
              
