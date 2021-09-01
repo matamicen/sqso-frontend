@@ -288,6 +288,19 @@ class App extends Component {
               </ErrorBoundary>
             )}
           />
+            <Route
+            exact
+            path="/contact"
+            location={{
+              pathname: '/contact',
+              state: { from: this.props.location.pathname }
+            }}
+            component={() => (
+              <ErrorBoundary key="contact">
+                <ContactForm />
+              </ErrorBoundary>
+            )}
+          />
           </Switch>
         {/* <Switch>
           <Route
@@ -712,6 +725,31 @@ class App extends Component {
               </div> */}
           </div>
               {/* </div> */}
+
+              <div class="contenedor">
+         
+         
+            
+             
+              
+         <div class="it1">
+         <a href="https://www.superqso.com/terms">
+         {/* <img src={require('./downApp.png')}  height="40vw" /> */} Terms and Conditions
+         </a>
+           </div>
+           <div class="it2">
+             <a href="https://www.superqso.com/privacy">
+              {/* <img src={require('./downGoogle.png')}  height="40vw"/> */}
+              Privacy Policy
+            </a>
+           </div>
+           {/* <div class="item3">
+         <img src={require('./downAppStore.png')} class='center'  width='20%'/>
+           </div>
+           <div class="item4">
+         <img src={require('./downAppStore.png')} class='center'  width='20%'/>
+           </div> */}
+       </div>
 
              
    
