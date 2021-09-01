@@ -241,6 +241,54 @@ class App extends Component {
 
     return (
       <Suspense fallback={<div>{t('global.loading')}</div>}>
+        <Switch>
+         {/* <Route
+            exact
+            path="/"
+            location={{
+              pathname: '/',
+              state: { from: this.props.location.pathname }
+            }}
+            component={() => {
+              if (
+                !this.props.authenticating &&
+                (this.props.isAuthenticated || this.props.public)
+              ) {
+                return (
+                  <ErrorBoundary key="home">
+                    <Home />
+                  </ErrorBoundary>
+                );
+              } else return null;
+            }}
+          /> */}
+                  <Route
+            exact
+            path="/privacy"
+            location={{
+              pathname: '/privacy',
+              state: { from: this.props.location.pathname }
+            }}
+            component={() => (
+              <ErrorBoundary key="privacy">
+                <PrivacyPolicy />
+              </ErrorBoundary>
+            )}
+          />
+          <Route
+            exact
+            path="/terms"
+            location={{
+              pathname: '/terms',
+              state: { from: this.props.location.pathname }
+            }}
+            component={() => (
+              <ErrorBoundary key="terms">
+                <TermsOfService />
+              </ErrorBoundary>
+            )}
+          />
+          </Switch>
         {/* <Switch>
           <Route
             exact
